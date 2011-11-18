@@ -7,7 +7,7 @@
 	
 	<bean id="jpfastcontenteditContentActionHelper" parent="jacmsContentActionHelper" 
 			class="com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.helper.ContentActionHelper" >
-		<property name="defaultAuthor" value="Autore" />
+		<!-- <property name="defaultAuthor" value="Autore" /> -->
 	</bean>
 	
 	<bean id="jpfastcontenteditIntroNewContentAction" scope="prototype" 
@@ -21,6 +21,7 @@
 		<property name="pageManager" ref="PageManager" />
 		<property name="configManager" ref="BaseConfigManager" />
 		<property name="urlManager" ref="URLManager" />
+                <property name="resourceIconUtil" ref="jacmsResourceIconUtil" />
 		<property name="contentActionHelper" ref="jpfastcontenteditContentActionHelper" />
 	</bean>
 	
