@@ -1,0 +1,54 @@
+body.client-normal .contentAttribute-ImageMap .jpimage-areas-list li {
+	border-bottom: 1px solid #DEDEDE;
+    margin-bottom: 1.5em;
+    padding-bottom: 0.5em;
+    vertical-align: top;
+}
+
+body.client-normal .contentAttribute-ImageMap .jpimage-areas-list li * {
+    vertical-align: top;
+}
+body.client-normal .contentAttribute-ImageMap .jpimage-areas-list li span.important,
+body.client-normal .contentAttribute-ImageMap .jpimage-areas-list li label {
+	display: inline;
+}
+
+body.client-normal .jpimage-areas-list ul li .jpimagemap-compositeAttribute {
+	margin-top: 0.5em;
+}
+
+body.client-normal .jpimage-areas-list ul li .jpimagemap-compositeAttribute-element {
+	margin-bottom: 0.5em;
+}
+/******** adv **********/
+body.client-advanced .imagebox {
+	position: relative;
+}
+
+body.client-advanced .jpimage-areas-list {
+	margin-left: 10px;
+}
+body.client-advanced .jpimage-areas-list ul { 
+	display: inline-block;
+    list-style-type: none;
+    padding-left: 8px;
+    width: 650px;
+    margin-left: 79px;
+}
+body.client-advanced .jpimage-areas-list ul li {
+	position: relative;	
+} 
+body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute {
+	display: inline-block;
+    vertical-align: top;
+    width: 547px;
+}
+body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute-element {
+	position: relative;
+	margin-bottom: 8px;
+	padding: 4px;
+}
+body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute-element label, 
+body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute-element span.important {
+	border-bottom: medium none;
+} 

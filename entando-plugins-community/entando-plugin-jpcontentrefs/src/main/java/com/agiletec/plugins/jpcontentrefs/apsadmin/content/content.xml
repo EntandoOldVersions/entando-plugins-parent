@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	
+    <package name="jpcontentrefs_do/jacms/Content" namespace="/do/jacms/Content" extends="jacms_do/jacms/Content">
+		
+		<action name="showCategoryBlockOnEntryContent" class="jpcontentrefsContentCategoryAction" method="buildTree">
+            <result type="dispatcher">/WEB-INF/plugins/jpcontentrefs/apsadmin/jsp/content/entryContent_categoryBlock.jsp</result>
+        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        </action>
+		
+        <action name="joinCategory" class="jpcontentrefsContentCategoryAction" method="joinCategory">
+            <result type="redirectAction">
+            	<param name="actionName">entryContent</param>
+            	<param name="categoryCode">${categoryCode}</param>
+            </result>
+        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        </action>
+		
+        <action name="removeCategory*" class="jpcontentrefsContentCategoryAction" method="removeCategory">
+           	<result type="redirectAction">entryContent</result>
+        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        </action>
+		
+    </package>
+	
+</struts>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	
+    <package name="jpuserprofile_do/jpuserprofile/Entity" namespace="/do/jpuserprofile/Entity" extends="japs-default">
+		
+		<action name="viewEntityTypes" class="jpuserprofileUserProfileTypesAction">
+			<result name="input" type="chain">
+				<param name="namespace">/do/Entity</param>
+				<param name="actionName">viewManagers</param>
+			</result>
+			<result type="tiles">admin.jpuserprofile.entityManagement.viewEntityTypes</result>
+			<interceptor-ref name="japsValidationStack">
+				<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
+				<param name="requestAuth.requiredPermission">superuser</param>
+			</interceptor-ref>
+		</action>
+		
+		<action name="trash" class="jpuserprofileUserProfileTypesAction" method="checkDeleteProfile" >
+			<result name="input" type="tiles">admin.jpuserprofile.entityManagement.viewEntityTypes</result>
+			<result type="chain">
+				<param name="namespace">/do/Entity</param>
+				<param name="actionName">trashEntityType</param>
+			</result>
+			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+		</action>
+		
+		<!-- Operation not Allowed
+		<action name="addEntityType" class="entityTypeConfigAction" method="addEntityType">
+			<result name="wrongEntityManager" type="chain">
+				<param name="namespace">/do/Entity</param>
+				<param name="actionName">viewManagers</param>
+			</result>
+			<result type="tiles">admin.entityManagement.entryEntityType</result>
+			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+		</action>
+		-->
+		
+		<action name="editEntityType" class="entityTypeConfigAction" method="editEntityType">
+			<result name="wrongEntityManager" type="chain">
+				<param name="namespace">/do/Entity</param>
+				<param name="actionName">viewManagers</param>
+			</result>
+			<result name="input" type="chain">initViewEntityTypes</result>
+			<result type="tiles">admin.entityManagement.entryEntityType</result>
+			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+		</action>
+		
+		<action name="entryEntityType" class="entityTypeConfigAction" >
+			<result type="tiles">admin.entityManagement.entryEntityType</result>
+			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+		</action>
+		
+		<action name="addAttribute" class="entityTypeConfigAction" method="addAttribute">
+			<result name="input" type="tiles">admin.entityManagement.entryEntityType</result>
+			<result type="redirectAction">
+				<param name="namespace">/do/Entity/Attribute</param>
+				<param name="actionName">addAttribute</param>
+				<param name="attributeTypeCode">${attributeTypeCode}</param>
+			</result>
+			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+		</action>
+		
+		<action name="editAttribute*" class="entityTypeConfigAction" method="editAttribute">
+			<result name="input" type="tiles">admin.entityManagement.entryEntityType</result>
+			<result type="redirectAction">
+				<param name="namespace">/do/Entity/Attribute</param>
+				<param name="actionName">editAttribute</param>
+				<param name="attributeName">${attributeName}</param>
+			</result>
+			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+		</action>
+		
+		<action name="moveAttribute*" class="entityTypeConfigAction" method="moveAttribute">
+			<result type="redirectActionWithAnchor">
+        		<param name="actionName">entryEntityType</param>
+        		<param name="anchorDest">fagiano_entityTypesList</param>
+        	</result>
+			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+		</action>
+		
+		<action name="removeAttribute*" class="entityTypeConfigAction" method="removeAttribute">
+			<result type="redirectActionWithAnchor">
+        		<param name="actionName">entryEntityType</param>
+        		<param name="anchorDest">fagiano_entityTypesList</param>
+        	</result>
+			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+		</action>
+		
+		<action name="saveEntityType" class="entityTypeConfigAction" method="saveEntityType">
+			<result name="input" type="tiles">admin.entityManagement.entryEntityType</result>
+			<result type="redirectAction">
+				<param name="namespace">/do/Entity</param>
+				<param name="actionName">initViewEntityTypes</param>
+				<param name="entityManagerName">${entityManagerName}</param>
+			</result>
+			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+		</action>
+		
+    </package>
+    
+</struts>

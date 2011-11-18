@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://wscontent.services.system.aps.jpwscontent.plugins.agiletec.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://wscontent.services.system.aps.jpwscontent.plugins.agiletec.com" xmlns:intf="http://wscontent.services.system.aps.jpwscontent.plugins.agiletec.com" xmlns:tns1="http://resource.services.system.aps.jpwscontent.plugins.agiletec.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://wscontent.services.system.aps.jpwscontent.plugins.agiletec.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://resource.services.system.aps.jpwscontent.plugins.agiletec.com"/>
+   <element name="addContent">
+    <complexType>
+     <sequence>
+      <element name="envelope" type="impl:WsContentEnvelope"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_tns1_WsResource">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns1:WsResource"/>
+    </sequence>
+   </complexType>
+   <complexType name="WsContentEnvelope">
+    <sequence>
+     <element name="content" nillable="true" type="xsd:string"/>
+     <element name="resources" nillable="true" type="impl:ArrayOf_tns1_WsResource"/>
+    </sequence>
+   </complexType>
+   <element name="addContentResponse">
+    <complexType>
+     <sequence>
+      <element name="addContentReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getContent">
+    <complexType>
+     <sequence>
+      <element name="contentId" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getContentResponse">
+    <complexType>
+     <sequence>
+      <element name="getContentReturn" type="impl:WsContentEnvelope"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://resource.services.system.aps.jpwscontent.plugins.agiletec.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://wscontent.services.system.aps.jpwscontent.plugins.agiletec.com"/>
+   <complexType name="WsResource">
+    <sequence>
+     <element name="description" nillable="true" type="xsd:string"/>
+     <element name="fileBinary" nillable="true" type="xsd:base64Binary"/>
+     <element name="id" nillable="true" type="xsd:string"/>
+     <element name="mimeType" nillable="true" type="xsd:string"/>
+     <element name="nameFile" nillable="true" type="xsd:string"/>
+     <element name="typeCode" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="addContentRequest">
+
+      <wsdl:part element="impl:addContent" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addContentResponse">
+
+      <wsdl:part element="impl:addContentResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getContentResponse">
+
+      <wsdl:part element="impl:getContentResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getContentRequest">
+
+      <wsdl:part element="impl:getContent" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="WsContentEndpoint">
+
+      <wsdl:operation name="addContent">
+
+         <wsdl:input message="impl:addContentRequest" name="addContentRequest"/>
+
+         <wsdl:output message="impl:addContentResponse" name="addContentResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getContent">
+
+         <wsdl:input message="impl:getContentRequest" name="getContentRequest"/>
+
+         <wsdl:output message="impl:getContentResponse" name="getContentResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="WsContentEndpointSoapBinding" type="impl:WsContentEndpoint">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="addContent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addContentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addContentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getContent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getContentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getContentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="WsContentEndpointService">
+
+      <wsdl:port binding="impl:WsContentEndpointSoapBinding" name="WsContentEndpoint">
+
+         <wsdlsoap:address location="http://localhost:8080/jAPS2/services/WsContentEndpoint"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,12 @@
+<shortcut-def>
+	<shortcuts>
+		<shortcut id="jpmyportal.widget.configure" requiredPermission="superuser" menusection="plugins" source="jpmyportal">
+			<description key="jpmyportal.shortcut.widget.configure.shortDesc" />
+			<longdesc key="jpmyportal.shortcut.widget.configure.longDesc" />
+			<url>
+				<param name="namespace">/do/jpmyportal/MyPortal/Config</param>
+				<param name="actionName">edit</param>
+			</url>
+		</shortcut>
+	</shortcuts>
+</shortcut-def>

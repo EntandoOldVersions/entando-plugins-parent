@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	
+    <definition extends="main.layout" name="admin.jpuserprofile.CurrentUser.Profile.entry" >
+		<put-attribute name="title" value="jpuserprofile.title.changeUserProfile" />
+		<put-attribute name="extraResources" value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/common/template/extraresources/profile-current-entry.jsp" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/common/profile-current-entry.jsp" />
+	</definition>
+	
+	<!-- ********* INIZIO Area Gestione Entità ********* -->
+    
+    <definition extends="main.layout" name="admin.jpuserprofile.entityManagement.viewEntityTypes">
+		<put-attribute name="title" value="jpuserprofile.title.profileTypesManagement" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/entity/entity-type-list.jsp" />
+	</definition>
+    
+    <!-- ********* FINE Area Gestione Entità ********* -->
+    
+    <!-- ********* INIZIO Area Gestione PROFILI ********* -->
+    
+    <definition extends="main.layout" name="admin.jpuserprofile.User.list">
+		<put-attribute name="title" value="jpuserprofile.title.profileManagement" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/profile/userFinding.jsp" />
+	</definition>
+	
+	<definition extends="main.layout" name="admin.jpuserprofile.chooseType">
+		<put-attribute name="title" value="jpuserprofile.title.profileManagement" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/profile/profile-chooseType.jsp" />
+	</definition>
+	
+	<definition extends="main.layout" name="admin.jpuserprofile.entry">
+		<put-attribute name="title" value="jpuserprofile.title.profileManagement" />
+		<put-attribute name="extraResources" value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/common/template/extraresources/profile-current-entry.jsp" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/profile/profile-entry.jsp" />
+	</definition>
+	
+	<!-- ********* FINE Area Gestione PROFILI ********* -->
+    
+    <!-- INIZIO ricerca profili -->
+    <definition extends="main.layout" name="admin.jpuserprofile.search">
+		<put-attribute name="title" value="jpuserprofile.title.profileManagement" />
+		<put-attribute name="extraResources" value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/common/template/extraresources/profile-list.jsp" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/search/profile-list.jsp" />
+	</definition>
+	
+	<definition extends="main.layout" name="admin.jpuserprofile.viewProfile">
+		<put-attribute name="title" value="jpuserprofile.title.profileManagement" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/search/profile-detail.jsp" />
+	</definition>
+	
+</tiles-definitions>

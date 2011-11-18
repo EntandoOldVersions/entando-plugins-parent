@@ -1,0 +1,172 @@
+/*
+*
+* Copyright 2005 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
+*
+* This file is part of jAPS software.
+* jAPS is a free software; 
+* you can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2005 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
+*
+*/
+package com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.common.AbstractService;
+import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.keygenerator.IKeyGeneratorManager;
+import com.agiletec.aps.util.DateConverter;
+import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
+import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
+import com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator.event.AggregatorItemsChangedEvent;
+import com.agiletec.plugins.jprssaggregator.aps.system.services.converter.IRssConverterManager;
+
+/**
+ * Implementation for the manager that handles
+ * the operations on the ApsAggregatorItem
+ */
+public class AggregatorManager extends AbstractService implements IAggregatorManager {
+
+	@Override
+	public void init() throws Exception {
+		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized");
+	}
+	
+	@Override
+	public void addItem(ApsAggregatorItem item) throws ApsSystemException {
+		try {
+			int code = this.getKeyGeneratorManager().getUniqueKeyCurrentValue();
+			item.setLastUpdate(this.getNeverUpdatedDate());
+			item.setCode(code);
+			this.getAggregatorDAO().addItem(item);
+			this.updateSource(item);
+			notifyItemsChangedEvent(item.getCode(), AggregatorItemsChangedEvent.INSERT_OPERATION_CODE);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "searchTrashedResourceIds");
+			throw new ApsSystemException("An error occurred adding a new ApsAggregatorItem", t);
+		}
+	}
+	
+	@Override
+	public ApsAggregatorItem getItem(int code) throws ApsSystemException {
+		ApsAggregatorItem item = null;
+		try {
+			item = this.getAggregatorDAO().getItem(code);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "getItem");
+			throw new ApsSystemException("An error occurred getting the ApsAggregatorItem with code: " + code, t);
+		}
+		return item;
+	}
+	
+	@Override
+	public void deleteItem(int code) throws ApsSystemException {
+		try {
+			this.getAggregatorDAO().deleteItem(code);
+			notifyItemsChangedEvent(code, AggregatorItemsChangedEvent.REMOVE_OPERATION_CODE);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "deleteItem");
+			throw new ApsSystemException ("An error occurred trying to delete the ApsAggregatorItem: " + code, t);
+		}
+	}
+	
+	@Override
+	public List<ApsAggregatorItem> getItems() throws ApsSystemException {
+		List<ApsAggregatorItem> items = new ArrayList<ApsAggregatorItem>();
+		try {
+			items = this.getAggregatorDAO().getItems();
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "getItems");
+			throw new ApsSystemException ("An error occurred loading the list", t);
+		}
+		return items;
+	}
+	
+	@Override
+	public void update(ApsAggregatorItem item) throws ApsSystemException {
+		try {
+			this.getAggregatorDAO().update(item);
+			notifyItemsChangedEvent(item.getCode(), AggregatorItemsChangedEvent.UPDATE_OPERATION_CODE);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "update");
+			throw new ApsSystemException ("An error occurred updating the item " + item.getCode(), t);
+		}
+	}
+	
+	@Override
+	public synchronized void updateSource(ApsAggregatorItem item) throws ApsSystemException {
+		try {
+			List<Content> contents = this.getRssConverterManager().getContents(item);
+			Iterator<Content> contentListIterator = contents.iterator();
+			while (contentListIterator.hasNext()) {
+				Content content = contentListIterator.next();
+				content.setLastEditor("rss_aggregator");
+				this.getContentManager().saveContent(content);
+				if (this.getRssConverterManager().getAggregatorConfig(content.getTypeCode()).isInsertOnline()) {
+					this.getContentManager().insertOnLineContent(content);
+				}
+			}
+			item.setLastUpdate(new Date());
+			this.update(item);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "updateSource");
+			throw new ApsSystemException("An error occurred in updateSource for the item " + item.getCode(), t);
+		}
+	}
+	
+	private void notifyItemsChangedEvent(int code, int operationCode) {
+		AggregatorItemsChangedEvent event = new AggregatorItemsChangedEvent();
+		event.setItemCode(code);
+		event.setOperationCode(operationCode);
+		this.notifyEvent(event);
+	}
+	
+	private Date getNeverUpdatedDate() {
+		Date date = DateConverter.parseDate("01/01/1900", ApsAggregatorItem.DATE_FORMAT);
+		return date;
+	}
+	
+	protected IAggregatorDAO getAggregatorDAO() {
+		return _aggregatorDAO;
+	}
+	public void setAggregatorDAO(IAggregatorDAO aggregatorDAO) {
+		this._aggregatorDAO = aggregatorDAO;
+	}
+	
+	protected IKeyGeneratorManager getKeyGeneratorManager() {
+		return _keyGeneratorManager;
+	}
+	public void setKeyGeneratorManager(IKeyGeneratorManager keyGeneratorManager) {
+		this._keyGeneratorManager = keyGeneratorManager;
+	}
+	
+	protected IContentManager getContentManager() {
+		return _contentManager;
+	}
+	public void setContentManager(IContentManager contentManager) {
+		this._contentManager = contentManager;
+	}
+	
+	protected IRssConverterManager getRssConverterManager() {
+		return _rssConverterManager;
+	}
+	public void setRssConverterManager(IRssConverterManager rssConverterManager) {
+		this._rssConverterManager = rssConverterManager;
+	}
+
+	private IAggregatorDAO _aggregatorDAO;
+	private IKeyGeneratorManager _keyGeneratorManager;
+	private IRssConverterManager _rssConverterManager;
+	private IContentManager _contentManager;
+}

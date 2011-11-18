@@ -1,0 +1,66 @@
+ 
+ 	::::::::::::::::::::
+	:: 09 - 11 - 2011 ::
+	::::::::::::::::::::
+	
+ 
+ - fatti girare test, ad esempio mock smtp.
+ 
+ - interfaccia di back end di configurazione, sostituzione del contesto, 
+ 	con parametri su db in sysconfig.
+ 	
+ - ldap parte disattivo perchè admin deve inserire i parametri da backend
+ poi dopo lo attiva ...
+ 
+ 
+ - plugi ufficiali stima chiusura del cerchio
+ 
+ controllo ETC
+ 
+ - plugin della demo.
+ 
+ 
+ 
+ :: UFFICIALI ::
+ 
+jpcalendar 
+	- installare e provare - non ha dipendenze ne problemi segnalati 4h
+
+jpldap 
+	- introdurre parametro di config, per abilitazione disabilitazione.
+		2 h
+	- interfaccia di backend per la config dei parametri ora presenti nel context.
+		8h
+	- mock del LDAP e scrittura dei test
+	http://directory.apache.org/apacheds/1.0/using-apacheds-for-unit-tests.html
+		12h 
+	
+		
+jpmail -  mock del smtp - interfaccia amministrazione già presente
+		- scelta del tool, implementazione ventuali correzioni dei test
+		
+		http://sujitpal.blogspot.com/2006/12/mock-objects-for-javamail-unit-tests.html
+		
+		dumbster non ha imap ed smtp
+		
+		http://www.icegreen.com/greenmail/
+		
+		8h
+
+jpsharewith - installare provare 2h
+
+jpuserprofile - installare provare 2h
+
+jpuserreg - integrazione modifica mock smtp installazione verifica test 6h
+
+jpwscontent - solo installazione e verifica generale 2h
+
+jprss - solo installazione e verifica generale 2h
+
+		TOTALE 48h = 6gg
+
+
+ :: DEMO ::
+ 
+ 
+ 

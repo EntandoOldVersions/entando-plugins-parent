@@ -1,0 +1,99 @@
+/* Calendar: a Javascript class for Mootools that adds accessible and unobtrusive date pickers to your form elements <http://electricprism.com/aeron/calendar> */
+/* Default CSS for Calendar (navigation: 1), Copyright (c) 2007 Aeron Glemann <http://electricprism.com/aeron> */
+
+.calendar .hidden {
+	opacity: 0;
+	position: absolute;
+}
+
+.calendar .visible {
+	opacity: 1;
+}
+
+input.calendar {
+	width: 8.3em;
+	text-align: right;
+}
+
+button.calendar {
+	background-image: url("../img/calendar.png");
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+	border: none; 
+	cursor: pointer;
+	height: 24px;
+	vertical-align: middle;
+	width: 24px;
+	margin: 0 0 0 0.5em;
+	padding: 0;
+}
+
+div.calendar {
+	padding: 0 0.5em;
+	text-align: center;
+}	
+
+div.calendar div {
+	border: 1px dashed #000000;
+	background-color: #ffffff;
+	cursor: move;
+	padding: 1em;
+}
+
+div.calendar table {
+	width: 20em;
+	cursor: default;	
+}
+
+div.calendar table td {
+	background-color: #aa4400;
+	color: #aa4400;
+	border-color: #ffffff;	
+}
+
+div.calendar table td.valid {
+	background-color: #ffffff;
+	color: #000000;
+	border-color: #aa4400;	
+}
+
+div.calendar table td.today, div.calendar table td.active {
+	background-color: #aa4400;
+	color: #ffffff;
+	border-color: #ffffff;	
+}
+
+div.calendar caption {
+	text-align: center;
+	width: 100%;
+	position: relative;
+	border: 0.1em solid #000000;	
+}
+
+div.calendar caption span.month {
+	margin-right: 0.5em;
+}
+
+div.calendar caption a {
+	cursor: pointer;
+	overflow: hidden;
+	text-indent: -100px;
+	padding: 0 0;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	display: block;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	top: 1em;
+}
+
+div.calendar caption a.prev {
+	background-image: url("../img/previous.png");
+	left: 2em;
+}
+
+div.calendar caption a.next {
+	background-image: url("../img/next.png");
+	right: 2em;
+}

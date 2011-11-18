@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	
+    <!-- ********* INIZIO Area Configurazione showlet Photogallery ********* -->
+    <definition extends="main.layout" name="admin.jpphotogallery.Page.Showlet.Photogallery.config">
+		<put-attribute name="title" value="title.pageManagement" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpphotogallery/apsadmin/jsp/page/specialshowlet/photogallery/configPhotogalleryViewer.jsp" />
+	</definition>
+    <definition extends="main.layout" name="admin.jpphotogallery.Page.Showlet.Photogallery.entryFilter">
+		<put-attribute name="title" value="title.pageManagement" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpphotogallery/apsadmin/jsp/page/specialshowlet/photogallery/entryFilter.jsp" />
+	</definition>
+	<!-- *** Fine Area Configurazione showlet Photogallery *** -->
+	
+</tiles-definitions>
