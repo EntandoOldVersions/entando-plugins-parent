@@ -24,6 +24,7 @@
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.config.parse;
 
 import java.io.StringReader;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -91,12 +92,15 @@ public class MyPortalPlusConfigDOM {
 	
 	private Element createShowletsElement(MyPortalConfig config) {
 		Element showletsElement = new Element(ALLOWED_SHOWLETS_ELEM);
-		
 		Set<String> showlets = config.getAllowedShowlets();
-		for (String showletCode : showlets) {
-			Element showletElem = new Element(SHOWLET_ELEM);
-			showletElem.setAttribute(SHOWLET_CODE_ATTR, showletCode);
-			showletsElement.addContent(showletElem);
+		if (null != showlets && showlets.size() > 0) {
+			Iterator<String> iter = showlets.iterator();
+			while (iter.hasNext()) {
+				String showletCode = iter.next();
+				Element showletElem = new Element(SHOWLET_ELEM);
+				showletElem.setAttribute(SHOWLET_CODE_ATTR, showletCode);
+				showletsElement.addContent(showletElem);
+			}
 		}
 		return showletsElement;
 	}

@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * Contains the map of the configuration of jpmyportalplus. 
- * @author M. Minnai E. Santoboni
+ * @author M. Minnai - E.Santoboni
  */
 public class MyPortalConfig {
 	

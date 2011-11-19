@@ -21,6 +21,9 @@ import com.agiletec.ConfigTestUtils;
 import com.agiletec.aps.BaseTestCase;
 import com.agiletec.plugins.jpmyportalplus.PluginConfigTestUtils;
 
+/**
+ * @author E.Santoboni
+ */
 public class ApsPluginBaseTestCase extends BaseTestCase {
 	
 	@Override

@@ -108,9 +108,7 @@ public class MyPortalPageModelDOM {
 			throw new ApsSystemException("The 'pos' attribute exceeds the available frames in the page model");
 		} 
 		Frame frame = new Frame();
-		//FIXME aggiunto setter per la posizione
 		frame.setPos(pos);
-		
 		String main = frameElement.getAttributeValue(ATTRIBUTE_MAIN);
 		if (null != main && main.equals("true")) {
 			_existMainFrame = true;
@@ -118,7 +116,7 @@ public class MyPortalPageModelDOM {
 			frame.setMainFrame(true);
 		}
 		String fixed = frameElement.getAttributeValue("locked");
-		if (null != fixed && fixed.equals("true")) {
+		if (null == fixed || fixed.equals("true")) {
 			frame.setLocked(true);
 		}
 		String column = frameElement.getAttributeValue("column");

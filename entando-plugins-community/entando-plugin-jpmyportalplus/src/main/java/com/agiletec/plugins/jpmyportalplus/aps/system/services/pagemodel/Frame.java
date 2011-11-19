@@ -20,7 +20,7 @@ package com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel;
 import com.agiletec.aps.system.services.page.Showlet;
 
 /**
- * Representation of a page model
+ * Representation of a frame of page model
  * @author E.Santoboni
  */
 public class Frame {

@@ -64,8 +64,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 					ApsSystemUtils.getLogger().info(JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM + ": deleting unknown showlet '"+currentCode+"' from the configuration bean");
 					this.purgeConfigurationFromInvalidShowlets(conn, currentCode);
 				} else {
-					if (currentConfiguredShowlet != null && 
-							!allowedShowletCodes.contains(currentCode) && !currentCode.equals(voidShowletCode)) {
+					if (!allowedShowletCodes.contains(currentCode) && !currentCode.equals(voidShowletCode)) {
 						ApsSystemUtils.getLogger().info(JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM + ": removing the no longer configurable showlet '"+currentCode+"' from the configuration bean");
 						this.purgeConfigurationFromInvalidShowlets(conn, currentCode);
 					}

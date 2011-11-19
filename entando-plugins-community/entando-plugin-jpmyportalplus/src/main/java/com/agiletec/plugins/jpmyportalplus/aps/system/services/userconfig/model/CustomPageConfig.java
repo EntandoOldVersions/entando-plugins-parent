@@ -20,7 +20,6 @@ package com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +37,6 @@ import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
 import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.system.services.showlettype.ShowletTypeParameter;
-import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 

@@ -1,4 +1,3 @@
--- -- tabella con le preferenze
 CREATE TABLE jpmyportalplus_userpageconfig
 (
   username character varying(40) NOT NULL,
@@ -24,8 +23,6 @@ INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpmyportalplus_
 <frame pos="6" column="3" locked="false"><descr>Right Column II</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
 <frame pos="7" locked="true"><descr>Footer</descr></frame>
 </frames>', 'jpmyportalplus');
-
-ALTER TABLE showletcatalog ADD COLUMN jpmyportalplus_swappable smallint;
 
 -- -- showlet void
 INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (

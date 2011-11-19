@@ -30,9 +30,7 @@ import com.agiletec.aps.system.services.controller.ControllerManager;
 import com.agiletec.aps.system.services.controller.control.ControlServiceInterface;
 
 /**
- * Implementazione del sottoservizio di controllo che 
- * genera l'output destinato al client.
- * @author M.Diana
+ * @author M.Diana - E.Santoboni
  */
 public class Executor implements ControlServiceInterface {
 	

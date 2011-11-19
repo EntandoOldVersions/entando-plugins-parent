@@ -17,9 +17,9 @@
 */
 package com.agiletec.plugins.jpmyportalplus;
 
-
-import com.agiletec.plugins.jpmyportalplus.aps.TestApsSample;
-import com.agiletec.plugins.jpmyportalplus.apsadmin.TestApsAdminSample;
+import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.TestMyPortalConfigManager;
+import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.TestPageModelManager;
+import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.TestPageUserConfigManager;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,8 +29,9 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Change me with a suitable description");
 
-		suite.addTestSuite(TestApsSample.class);
-		suite.addTestSuite(TestApsAdminSample.class);
+		suite.addTestSuite(TestMyPortalConfigManager.class);
+		suite.addTestSuite(TestPageModelManager.class);
+		suite.addTestSuite(TestPageUserConfigManager.class);
 		
 		return suite;
 	}
