@@ -43,6 +43,11 @@ import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystem
 
 public class AllowedContentsTag extends TagSupport implements IContentListTagBean {
 	
+	public AllowedContentsTag() {
+		super();
+		this.release();
+	}
+	
 	@Override
 	public int doStartTag() throws JspException {
 		HttpSession session = this.pageContext.getSession();
@@ -63,12 +68,17 @@ public class AllowedContentsTag extends TagSupport implements IContentListTagBea
 			EntitySearchFilter lastEditorFilter = new EntitySearchFilter(IContentManager.CONTENT_LAST_EDITOR_FILTER_KEY, false, currentUser.getUsername(), false);
 			this.addFilter(lastEditorFilter);
 			contentIds.addAll(contentListHelper.getContentsId(this, reqCtx));
-			this.pageContext.setAttribute(this.getVar(), contentIds);
+                        this.pageContext.setAttribute(this.getVar(), contentIds);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "doStartTag");
 			throw new JspException("Error during tag initialization ", t);
 		}
 		return super.doStartTag();
+	}
+        
+        public int doEndTag() throws JspException {
+		this.release();
+		return super.doEndTag();
 	}
 	
 	@Override
@@ -101,7 +111,7 @@ public class AllowedContentsTag extends TagSupport implements IContentListTagBea
 	}
 	@Override
 	public String getListName() {
-		return null;
+		return "AllowedContentsTag_list_name_";
 	}
 	@Override
 	public boolean isCacheable() {
