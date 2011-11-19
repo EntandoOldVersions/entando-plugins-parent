@@ -19,7 +19,10 @@
 			<email>e.santoboni@agiletec.it</email>
 		</developer>
 	</developers>
-	<url>http://www.entando.com/</url>	
+	<url>http://www.entando.com/</url>
+	<properties>
+		<project.parent.build.directory>../../target</project.parent.build.directory>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
