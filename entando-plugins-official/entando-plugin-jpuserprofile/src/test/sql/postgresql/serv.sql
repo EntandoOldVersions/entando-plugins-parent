@@ -2,7 +2,7 @@ CREATE TABLE jpuserprofile_authuserprofiles
 (
   username character varying(40) NOT NULL,
   profiletype character varying(30) NOT NULL,
-  "xml" character varying NOT NULL,
+  profilexml character varying NOT NULL,
   publicprofile smallint NOT NULL,
   CONSTRAINT jpuserprofile_autuserprofiles_pkey PRIMARY KEY (username)
 );
@@ -20,7 +20,7 @@ CREATE TABLE jpuserprofile_profilesearch
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
-INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicprofile) VALUES ('editorCustomers', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) VALUES ('editorCustomers', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
 <profile id="editorCustomers" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
 	<attributes>
 		<attribute name="Name" attributetype="Monotext"><monotext>Sean</monotext></attribute>
@@ -32,7 +32,7 @@ INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicpr
 		<attribute name="boolean2" attributetype="Boolean"><boolean>false</boolean></attribute>
 	</attributes>
 </profile>', 0);
-INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicprofile) VALUES ('mainEditor', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) VALUES ('mainEditor', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
 <profile id="editorCustomers" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
 	<attributes>
 		<attribute name="Name" attributetype="Monotext"><monotext>Amanda</monotext></attribute>
@@ -44,7 +44,7 @@ INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicpr
 		<attribute name="boolean2" attributetype="Boolean"><boolean>false</boolean></attribute>
 	</attributes>
 </profile>', 0);
-INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicprofile) VALUES ('pageManagerCoach', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) VALUES ('pageManagerCoach', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
 <profile id="editorCustomers" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
 	<attributes>
 		<attribute name="Name" attributetype="Monotext"><monotext>Raimond</monotext></attribute>
@@ -56,7 +56,7 @@ INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicpr
 		<attribute name="boolean2" attributetype="Boolean"><boolean>false</boolean></attribute>
 	</attributes>
 </profile>', 0);
-INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicprofile) VALUES ('editorCoach', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) VALUES ('editorCoach', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
 <profile id="editorCoach" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
 	<attributes>
 		<attribute name="Name" attributetype="Monotext"><monotext>Rick</monotext></attribute>

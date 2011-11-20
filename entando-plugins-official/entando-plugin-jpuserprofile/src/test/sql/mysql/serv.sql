@@ -1,7 +1,7 @@
 CREATE TABLE `jpuserprofile_authuserprofiles` (
   `username` varchar(40) NOT NULL,
   `profiletype` varchar(30) NOT NULL,
-  `xml` longtext NOT NULL,
+  `profilexml` longtext NOT NULL,
   `publicprofile` smallint(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -17,7 +17,7 @@ CREATE TABLE `jpuserprofile_profilesearch` (
   CONSTRAINT `jpuserprofile_profilesearch_username_fkey` FOREIGN KEY (`username`) REFERENCES `jpuserprofile_authuserprofiles` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicprofile) VALUES ('editorCustomers', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) VALUES ('editorCustomers', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
 <profile id="editorCustomers" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
 	<attributes>
 		<attribute name="Name" attributetype="Monotext"><monotext>Sean</monotext></attribute>
@@ -29,7 +29,7 @@ INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicpr
 		<attribute name="boolean2" attributetype="Boolean"><boolean>false</boolean></attribute>
 	</attributes>
 </profile>', 0);
-INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicprofile) VALUES ('mainEditor', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) VALUES ('mainEditor', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
 <profile id="editorCustomers" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
 	<attributes>
 		<attribute name="Name" attributetype="Monotext"><monotext>Amanda</monotext></attribute>
@@ -41,7 +41,7 @@ INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicpr
 		<attribute name="boolean2" attributetype="Boolean"><boolean>false</boolean></attribute>
 	</attributes>
 </profile>', 0);
-INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicprofile) VALUES ('pageManagerCoach', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) VALUES ('pageManagerCoach', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
 <profile id="editorCustomers" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
 	<attributes>
 		<attribute name="Name" attributetype="Monotext"><monotext>Raimond</monotext></attribute>
@@ -53,7 +53,7 @@ INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicpr
 		<attribute name="boolean2" attributetype="Boolean"><boolean>false</boolean></attribute>
 	</attributes>
 </profile>', 0);
-INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicprofile) VALUES ('editorCoach', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) VALUES ('editorCoach', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
 <profile id="editorCoach" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
 	<attributes>
 		<attribute name="Name" attributetype="Monotext"><monotext>Rick</monotext></attribute>

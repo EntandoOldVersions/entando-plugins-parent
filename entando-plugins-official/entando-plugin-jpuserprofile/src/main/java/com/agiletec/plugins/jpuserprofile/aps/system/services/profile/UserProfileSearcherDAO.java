@@ -34,7 +34,7 @@ public class UserProfileSearcherDAO extends AbstractEntitySearcherDAO {
 	protected ApsEntityRecord createRecord(ResultSet result) throws Throwable {
 		UserProfileRecord record = new UserProfileRecord();
 		record.setId(result.getString("username"));
-		record.setXml(result.getString("xml"));
+		record.setXml(result.getString("profilexml"));
 		record.setTypeCode(result.getString("profiletype"));
 		record.setPublicProfile(result.getInt("publicprofile") == 1);
 		return record;

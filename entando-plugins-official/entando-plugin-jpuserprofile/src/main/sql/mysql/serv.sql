@@ -4,7 +4,7 @@ INSERT INTO authpermissions (permissionname, descr) VALUES ('jpuserprofile_profi
 CREATE TABLE `jpuserprofile_authuserprofiles` (
   `username` varchar(40) NOT NULL,
   `profiletype` varchar(30) NOT NULL,
-  `xml` longtext NOT NULL,
+  `profilexml` longtext NOT NULL,
   `publicprofile` smallint(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

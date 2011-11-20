@@ -99,7 +99,7 @@ public class UserProfileDAO extends AbstractEntityDAO implements IUserProfileDAO
 		UserProfileRecord profile = new UserProfileRecord();
 		profile.setId(res.getString("username"));
 		profile.setTypeCode(res.getString("profiletype"));
-		profile.setXml(res.getString("xml"));
+		profile.setXml(res.getString("profilexml"));
 		profile.setPublicProfile(res.getInt("publicprofile") == 1);
 		return profile;
 	}
@@ -213,15 +213,15 @@ public class UserProfileDAO extends AbstractEntityDAO implements IUserProfileDAO
 		"SELECT username FROM jpuserprofile_authuserprofiles";
 	
 	private final String INSERT_PROFILE = 
-		"INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, xml, publicprofile) values ( ? , ? , ? , ? ) ";
+		"INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) values ( ? , ? , ? , ? ) ";
 	
 	private final String DELETE_PROFILE_BY_USER = 
 		"DELETE FROM jpuserprofile_authuserprofiles WHERE username = ? ";
 	
 	private final String GET_PROFILE_VO = 
-		"SELECT username, profiletype, xml, publicprofile FROM jpuserprofile_authuserprofiles WHERE username = ? ";
+		"SELECT username, profiletype, profilexml, publicprofile FROM jpuserprofile_authuserprofiles WHERE username = ? ";
 	
 	private final String UPDATE_PROFILE = 
-		"UPDATE jpuserprofile_authuserprofiles SET profiletype = ? , xml = ? , publicprofile = ? WHERE username = ? ";
+		"UPDATE jpuserprofile_authuserprofiles SET profiletype = ? , profilexml = ? , publicprofile = ? WHERE username = ? ";
 	
 }

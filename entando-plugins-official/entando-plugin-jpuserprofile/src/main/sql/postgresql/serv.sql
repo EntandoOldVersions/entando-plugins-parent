@@ -5,7 +5,7 @@ CREATE TABLE jpuserprofile_authuserprofiles
 (
   username character varying(40) NOT NULL,
   profiletype character varying(30) NOT NULL,
-  "xml" character varying NOT NULL,
+  profilexml character varying NOT NULL,
   publicprofile smallint NOT NULL,
   CONSTRAINT jpuserprofile_autuserprofiles_pkey PRIMARY KEY (username)
 );
