@@ -5,7 +5,7 @@ CREATE TABLE jpwebdynamicform_messages
   langcode character varying(2) NOT NULL,
   messagetype character varying(30) NOT NULL,
   creationdate timestamp without time zone NOT NULL,
-  "xml" character varying NOT NULL,
+  messagexml character varying NOT NULL,
   CONSTRAINT jpwebdynamicform_messages_pkey PRIMARY KEY (messageid)
 )
 WITH (OIDS=TRUE);

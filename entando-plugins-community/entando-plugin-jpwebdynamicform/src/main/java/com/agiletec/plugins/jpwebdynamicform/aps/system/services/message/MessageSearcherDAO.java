@@ -40,7 +40,7 @@ public class MessageSearcherDAO extends AbstractEntitySearcherDAO implements IMe
 	protected ApsEntityRecord createRecord(ResultSet result) throws Throwable {
 		MessageRecordVO record = new MessageRecordVO();
 		record.setId(result.getString("messageid"));
-		record.setXml(result.getString("xml"));
+		record.setXml(result.getString("messagexml"));
 		record.setTypeCode(result.getString("messagetype"));
 		record.setUsername(result.getString("username"));
 		record.setLangCode(result.getString("langcode"));

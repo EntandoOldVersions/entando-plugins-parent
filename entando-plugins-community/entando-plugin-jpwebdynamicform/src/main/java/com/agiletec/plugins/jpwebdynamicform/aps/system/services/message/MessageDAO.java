@@ -238,7 +238,7 @@ public class MessageDAO extends AbstractEntityDAO implements IMessageDAO {
 	}
 
 	private final String ADD_MESSAGE =
-		"INSERT INTO jpwebdynamicform_messages ( messageid, username, langcode, messagetype, creationdate, xml ) values ( ?, ?, ? , ? , ?, ? ) ";
+		"INSERT INTO jpwebdynamicform_messages ( messageid, username, langcode, messagetype, creationdate, messagexml ) values ( ?, ?, ? , ? , ?, ? ) ";
 
 	private final String ADD_MESSAGE_SEARCH_RECORD =
 		"INSERT INTO jpwebdynamicform_messagesearch ( messageid, attrname, textvalue, datevalue, numvalue, langcode ) " +
@@ -251,7 +251,7 @@ public class MessageDAO extends AbstractEntityDAO implements IMessageDAO {
 		"SELECT messageid FROM jpwebdynamicform_messages";
 
 	private final String LOAD_MESSAGE_VO =
-		"SELECT messageid, username, langcode, messagetype, creationdate, xml FROM jpwebdynamicform_messages WHERE messageid = ? ";
+		"SELECT messageid, username, langcode, messagetype, creationdate, messagexml FROM jpwebdynamicform_messages WHERE messageid = ? ";
 
 	private final String GET_MESSAGE_ANSWERS =
 		"SELECT answerid, messageid, operator, senddate, text FROM jpwebdynamicform_messageanswers WHERE messageid = ? ORDER BY senddate DESC ";

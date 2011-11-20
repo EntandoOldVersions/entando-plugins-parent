@@ -4,7 +4,7 @@ CREATE TABLE `jpwebdynamicform_messages` (
   `langcode` varchar(2) NOT NULL,
   `messagetype` varchar(30) NOT NULL,
   `creationdate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `xml` longtext NOT NULL,
+  `messagexml` longtext NOT NULL,
   PRIMARY KEY (`messageid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
