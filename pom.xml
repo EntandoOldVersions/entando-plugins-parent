@@ -8,7 +8,7 @@
 	</parent>	
 	<groupId>org.entando.entando.plugins</groupId>
 	<artifactId>entando-plugins-parent</artifactId>
-	<version>2.4.0-SNAPSHOT</version>
+	<version>2.4.0</version>
 	<packaging>pom</packaging>
 	<name>Entando: Plugins parent</name>
 	<url>http://www.entando.com/</url>
@@ -427,7 +427,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile/>
+							<outputFile />
 							<srcFiles>
 								<srcFile>${project.parent.build.directory}/test/sql/entando-core-enginetestPort_data.sql</srcFile>
 							</srcFiles>
@@ -444,7 +444,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile/>
+							<outputFile />
 							<srcFiles>
 								<srcFile>${project.parent.build.directory}/test/sql/entando-core-enginetestServ_data.sql</srcFile>
 							</srcFiles>
@@ -461,7 +461,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile/>
+							<outputFile />
 							<onError>continue</onError>
 							<fileset>
 								<basedir>${project.build.directory}</basedir>
@@ -482,7 +482,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile/>
+							<outputFile />
 							<onError>continue</onError>
 							<fileset>
 								<basedir>${project.build.directory}</basedir>
@@ -503,7 +503,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile/>
+							<outputFile />
 							<srcFiles>
 								<srcFile>src/test/sql/postgresql/port.sql</srcFile>
 							</srcFiles>
@@ -520,7 +520,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile/>
+							<outputFile />
 							<srcFiles>
 								<srcFile>src/test/sql/postgresql/serv.sql</srcFile>
 							</srcFiles>
@@ -556,7 +556,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore/>
+										<ignore />
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -577,7 +577,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<execute/>
+										<execute />
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
