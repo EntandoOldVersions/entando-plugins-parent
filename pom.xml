@@ -56,7 +56,7 @@
 		<!-- <module>entando-plugins-community/entando-plugin-jpimagemap</module> -->
 		<!-- <module>entando-plugins-community/entando-plugin-jpphotogallery</module> -->
 		<!-- WARNING! Comment out if you want to run global tests -->
-		<module>entando-plugins-community/entando-plugin-jprssaggregator</module>
+		<!-- <module>entando-plugins-community/entando-plugin-jprssaggregator</module> -->
 		<!-- //WARNING -->		
 		<!-- <module>entando-plugins-community/entando-plugin-jpshowletreplicator</module> -->
 		<!-- <module>entando-plugins-community/entando-plugin-jpwtt</module> -->
