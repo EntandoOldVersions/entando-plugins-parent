@@ -30,7 +30,7 @@
 		<module>entando-plugins-official/entando-plugin-jpmail</module>
 		<module>entando-plugins-community/entando-plugin-jpwebdynamicform</module>
 		<!--  <module>entando-plugins-official/entando-plugin-jprss</module> -->
-		<module>entando-plugins-official/entando-plugin-jpsharewith</module> -->
+		<module>entando-plugins-official/entando-plugin-jpsharewith</module>
 		<!-- <module>entando-plugins-official/entando-plugin-jpcalendar</module> -->
 		<!-- WARNING! Comment out if you want to run global tests -->
 		<!-- <module>entando-plugins-official/entando-plugin-jpldap</module> -->
