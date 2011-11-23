@@ -1,7 +1,7 @@
 CREATE TABLE jpmyportalplus_userpageconfig
 (
   username character varying(40) NOT NULL,
-  pagecode character varying(80) NOT NULL DEFAULT ''::character varying,
+  pagecode character varying(30) NOT NULL DEFAULT ''::character varying,
   framepos integer NOT NULL,
   showletcode character varying(40) NOT NULL,
   config character varying,
