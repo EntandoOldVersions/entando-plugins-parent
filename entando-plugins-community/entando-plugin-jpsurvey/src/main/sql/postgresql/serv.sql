@@ -1,4 +1,3 @@
-
 CREATE TABLE jpsurvey
 (
   id integer NOT NULL,
@@ -54,7 +53,7 @@ CREATE TABLE jpsurvey_voters
   id integer NOT NULL,
   age smallint,
   country character varying(2),
-  sex "char",
+  sex char,
   votedate date NOT NULL,
   surveyid integer NOT NULL,
   username character varying(30) NOT NULL,
