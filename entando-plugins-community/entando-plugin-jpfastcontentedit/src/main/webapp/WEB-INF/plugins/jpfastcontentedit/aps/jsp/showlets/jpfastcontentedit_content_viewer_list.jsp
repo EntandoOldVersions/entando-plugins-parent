@@ -1,4 +1,4 @@
-<%@ taglib prefix="jacms" uri="jacms-aps-core" %>
+<%@ taglib prefix="jacms" uri="/jacms-aps-core" %>
 <%@ taglib prefix="fce" uri="/jpfastcontentedit-aps-core" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
