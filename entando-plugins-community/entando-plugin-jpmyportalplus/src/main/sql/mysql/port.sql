@@ -1,6 +1,6 @@
 CREATE TABLE `jpmyportalplus_userpageconfig` (
   `username` varchar(40) DEFAULT NULL,
-  `pagecode` varchar(80) NOT NULL,
+  `pagecode` varchar(30) NOT NULL,
   `framepos` integer NOT NULL,
   `showletcode` varchar(40) NOT NULL,
   `config` longtext,
