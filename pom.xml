@@ -323,12 +323,12 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>sql-maven-plugin</artifactId>
-				<version>1.4</version>
+				<version>1.5</version>
 				<dependencies>
 					<dependency>
 						<groupId>postgresql</groupId>
 						<artifactId>postgresql</artifactId>
-						<version>8.3-603.jdbc4</version>
+						<version>9.1-901.jdbc4</version>
 					</dependency>
 				</dependencies>
 				<configuration>
@@ -549,7 +549,7 @@
 											sql-maven-plugin
 										</artifactId>
 										<versionRange>
-											[1.4,)
+											[1.5,)
 										</versionRange>
 										<goals>
 											<goal>execute</goal>
@@ -629,7 +629,7 @@
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>8.3-603.jdbc4</version>
+			<version>9.1-901.jdbc4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
