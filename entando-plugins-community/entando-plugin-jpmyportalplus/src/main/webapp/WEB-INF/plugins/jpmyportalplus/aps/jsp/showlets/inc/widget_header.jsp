@@ -10,7 +10,7 @@
 --%>
 
 <%-- variabile showletId: il prefisso showlet id "__s__" è referenziato in jpmyportalplus.js --%>
-<c:set var="showletId" scope="request"><wp:currentShowlet param="code" />__s__<mppl:requestContextParam param="currentFrame" /></c:set>
+<c:set var="showletId" scope="request">showlet_<wp:currentShowlet param="code" />__s__<mppl:requestContextParam param="currentFrame" /></c:set>
 
 <%--
 Struttura del box trascinabile
