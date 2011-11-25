@@ -15,10 +15,10 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 <property key="it">Albero delle faccette</property>
 </properties>', '<config>
 	<parameter name="facetRootNodes">
-		Faccette radice da visualizzare nell''albero
+		Facet Category Root
 	</parameter>
 	<parameter name="contentTypesFilter">
-		Tipi di contenuto dei risultati da erogare (OPZIONALE)
+		Content Type (optional)
 	</parameter>
 	<action name="facetNavTreeConfig"/>
 </config>', 'jpfacetnav', NULL, NULL, 1);
@@ -26,15 +26,9 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_REMOVE_FILTER', 'it', 'Rimuovi');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_REMOVE_FILTER', 'en', 'Remove');
+
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_TITLE_TREE', 'it', 'Albero delle Faccette');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_TITLE_TREE', 'en', 'Facet Tree');
+
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_TITLE_FACET_RESULTS', 'it', 'Faccette');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_TITLE_FACET_RESULTS', 'en', 'Facets');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_REMOVE_FILTER', 'it', 'Rimuovi');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_REMOVE_FILTER', 'en', 'Remove');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_TITLE_TREE', 'it', 'Albero delle Faccette');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_TITLE_TREE', 'en', 'Facet Tree');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_TITLE_FACET_RESULTS', 'it', 'Faccette');
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfacetnav_TITLE_FACET_RESULTS', 'en', 'Facets');
-
-
