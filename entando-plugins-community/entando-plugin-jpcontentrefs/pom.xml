@@ -4,7 +4,7 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
-        <version>2.4.0.1-SNAPSHOT</version>
+        <version>2.4.0.2-SNAPSHOT</version>
     </parent>
 	<artifactId>entando-plugin-jpcontentrefs</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
