@@ -18,6 +18,7 @@
 package com.agiletec.plugins.jpcasclient.aps.system.common;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
 
 /**
  * 
@@ -59,6 +60,9 @@ public class AuthCommon {
 	}
 
 	private boolean verifyRealm(String realmDomain) {
+		
+		String realm = this.getCasConfigManager().getClientConfig().getRealm();
+		this.setRealmDomain(realm);
 		ApsSystemUtils.getLogger().finest(" verifyRealm with Realm Domain conf: " + this.getRealmDomain() + " for Realm: " + realmDomain);
 		if (realmDomain.equals('@' + this.getRealmDomain())) {
 			return true;
@@ -73,6 +77,16 @@ public class AuthCommon {
 		return _realmDomain;
 	}
 
+
+	public ICasClientConfigManager getCasConfigManager() {
+		return _casConfigManager;
+	}
+	public void setCasConfigManager(ICasClientConfigManager casConfigManager) {
+		this._casConfigManager = casConfigManager;
+	}
+
+
 	private String _realmDomain;
+	private ICasClientConfigManager _casConfigManager;
 	
 }

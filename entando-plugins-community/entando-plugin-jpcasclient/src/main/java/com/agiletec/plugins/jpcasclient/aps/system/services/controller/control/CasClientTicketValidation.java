@@ -23,13 +23,14 @@ import org.jasig.cas.client.validation.Assertion;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
-import com.agiletec.aps.system.services.baseconfig.BaseConfigManager;
 import com.agiletec.aps.system.services.controller.ControllerManager;
 import com.agiletec.aps.system.services.controller.control.AbstractControlService;
 import com.agiletec.aps.system.services.url.IURLManager;
 import com.agiletec.aps.system.services.url.PageURL;
 import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.system.services.auth.CasClientUtils;
+import com.agiletec.plugins.jpcasclient.aps.system.services.config.CasClientConfig;
+import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
 
 /**
  * Control Service for CAS ticket validation
@@ -40,7 +41,8 @@ public class CasClientTicketValidation extends AbstractControlService {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		String urlCasValidate = this.getConfigManager().getParam(CasClientPluginSystemCostants.JPCASCLIENT_VALIDATE_URL);
+		this.setCasClientConfig(this.getCasClientConfigManager().getClientConfig());
+		String urlCasValidate = this.getCasClientConfig().getCasValidateURL();
 		_ticketValidationUtil = new CasClientTicketValidationUtil(urlCasValidate);
 		this._log.config(this.getClass().getName() + ": initialization");
 	}
@@ -56,9 +58,9 @@ public class CasClientTicketValidation extends AbstractControlService {
 		if (status == ControllerManager.ERROR) {
 			return status;
 		}
-		String isActive = 
-			this.getConfigManager().getParam(CasClientPluginSystemCostants.JPCASCLIENT_EXTENDED_ISACTIVE);
-		if (!isActive.equals("true")) {
+		boolean isActive = 
+			this.getCasClientConfig().isActive();
+		if (!isActive) {
 			return retStatus;			
 		}
 		try {
@@ -91,15 +93,23 @@ public class CasClientTicketValidation extends AbstractControlService {
 		this._urlManager = urlManager;
 	}
 	
-	public void setConfigManager(BaseConfigManager _configManager) {
-		this._configManager = _configManager;
+	public void setCasClientConfigManager(ICasClientConfigManager _configManager) {
+		this._casClientConfigManager = _configManager;
 	}
-	public BaseConfigManager getConfigManager() {
-		return _configManager;
+	public ICasClientConfigManager getCasClientConfigManager() {
+		return _casClientConfigManager;
+	}
+
+	public CasClientConfig getCasClientConfig() {
+		return _casClientConfig;
+	}
+	public void setCasClientConfig(CasClientConfig casClientConfig) {
+		this._casClientConfig = casClientConfig;
 	}
 
 	private CasClientTicketValidationUtil _ticketValidationUtil;
 	private IURLManager _urlManager;
-	private BaseConfigManager _configManager;
+	private ICasClientConfigManager _casClientConfigManager;
+	private CasClientConfig _casClientConfig;
 	
 }

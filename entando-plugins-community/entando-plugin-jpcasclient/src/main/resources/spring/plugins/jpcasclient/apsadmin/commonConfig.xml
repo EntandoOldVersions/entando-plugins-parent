@@ -14,7 +14,7 @@
 		<property name="authorizationManager" ref="AuthorizationManager" />
 		<property name="userManager" ref="UserManager" />
 		<property name="authCommon" ref="AuthCommon"/>
-		<property name="baseConfigManager" ref="BaseConfigManager"/>
+		<property name="casClientConfigManager" ref="jpcasclient_CasClientConfigManager"/>
 	</bean>
 	
 </beans>

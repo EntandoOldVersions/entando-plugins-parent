@@ -28,13 +28,12 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.services.authorization.IAuthorizationManager;
-import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.controller.control.RequestAuthorizator;
 import com.agiletec.aps.system.services.user.IUserManager;
 import com.agiletec.apsadmin.common.DispatchAction;
 import com.agiletec.apsadmin.common.IDispatchAction;
-import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.system.common.AuthCommon;
+import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
 import com.agiletec.plugins.jpcasclient.aps.system.services.user.CasAuthProviderManager;
 
 /**
@@ -49,13 +48,13 @@ public class CasDispatchAction extends DispatchAction implements IDispatchAction
 	public String doLogout() {
 		ApsSystemUtils.getLogger().info("Exec Logout from jAPS and from CAS.");
 		this.getSession().invalidate();
-		String isActive = this.getBaseConfigManager().getParam(CasClientPluginSystemCostants.JPCASCLIENT_EXTENDED_ISACTIVE);
-		if (isActive.equals("true")) {
-			String baseServerUrl = this.getBaseConfigManager().getParam(CasClientPluginSystemCostants.JPCASCLIENT_SERVER_BASE_URL);
+		boolean isActive = this.getCasClientConfigManager().getClientConfig().isActive();
+		if (isActive) {
+			String baseServerUrl = this.getCasClientConfigManager().getClientConfig().getServerBaseURL();
 			if (baseServerUrl.endsWith("/")) {
 				baseServerUrl = baseServerUrl.substring(0, baseServerUrl.length()-1);
 			}
-			String logoutBaseUrl = this.getBaseConfigManager().getParam(CasClientPluginSystemCostants.JPCASCLIENT_LOGOUT_URL);
+			String logoutBaseUrl = this.getCasClientConfigManager().getClientConfig().getCasLogoutURL();
 			StringBuffer logoutUrl = new StringBuffer(logoutBaseUrl);
 			logoutUrl.append("?url=");
 			logoutUrl.append(baseServerUrl);
@@ -144,12 +143,13 @@ public class CasDispatchAction extends DispatchAction implements IDispatchAction
 		return _password;
 	}
 
-	public void setBaseConfigManager(ConfigInterface baseConfigManager) {
-		this._baseConfigManager = baseConfigManager;
+	public ICasClientConfigManager getCasClientConfigManager() {
+		return _casClientConfigManager;
 	}
-	public ConfigInterface getBaseConfigManager() {
-		return _baseConfigManager;
+	public void setCasClientConfigManager(ICasClientConfigManager casClientConfigManager) {
+		this._casClientConfigManager = casClientConfigManager;
 	}
+
 
 	private String _username;
 	private String _password;
@@ -161,6 +161,6 @@ public class CasDispatchAction extends DispatchAction implements IDispatchAction
 	private IUserManager _userManager; 
 	private RequestAuthorizator _requestAuthorizator;
 	private HttpServletResponse _httpServletResponse;
-	private ConfigInterface _baseConfigManager;
+	private ICasClientConfigManager _casClientConfigManager;
 
 }

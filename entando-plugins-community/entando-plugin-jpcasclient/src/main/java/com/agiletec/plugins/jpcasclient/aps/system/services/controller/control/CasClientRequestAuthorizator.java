@@ -33,8 +33,9 @@ import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.url.PageURL;
 import com.agiletec.aps.system.services.user.UserDetails;
-import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.system.services.auth.CasClientUtils;
+import com.agiletec.plugins.jpcasclient.aps.system.services.config.CasClientConfig;
+import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
 
 /**
  * Extends RequestAuthorizator for redirection to CAS pages if
@@ -46,6 +47,14 @@ import com.agiletec.plugins.jpcasclient.aps.system.services.auth.CasClientUtils;
  * */
 public class CasClientRequestAuthorizator extends RequestAuthorizator {
 
+	
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		CasClientConfig casClientConfig = this.getCasConfigManager().getClientConfig();
+		this.setCasClientConfig(casClientConfig);
+		super.afterPropertiesSet();
+	}
+	
 	@Override
 	public int service(RequestContext reqCtx, int status) {
 		if (_log.isLoggable(Level.FINEST)) {
@@ -56,9 +65,9 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 			return status;
 		}
 		try {
-			String isActive = 
-				this.getConfigManager().getParam(CasClientPluginSystemCostants.JPCASCLIENT_EXTENDED_ISACTIVE);
-			if (!isActive.equals("true")) {
+			boolean isActive = this.getCasClientConfig().isActive();
+			
+			if (!isActive) {
 				// if cas client is disactivate normal Authorization on request				
 				return super.service(reqCtx, retStatus);
 			} else { 
@@ -74,8 +83,7 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 				} else if (SystemConstants.GUEST_USER_NAME.equals(currentUser.getUsername())) {
 					_log.info("CAS - user not authorized and guest");
 					CasClientUtils casClientUtils = new CasClientUtils();
-					String loginBaseUrl = 
-						this.getConfigManager().getParam(CasClientPluginSystemCostants.JPCASCLIENT_LOGIN_URL);
+					String loginBaseUrl = this.getCasClientConfig().getCasLoginURL();
 					StringBuffer loginUrl = new StringBuffer(loginBaseUrl);
 					loginUrl.append("?service=");
 					PageURL pageUrl = this.getUrlManager().createURL(reqCtx);
@@ -86,7 +94,7 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 				} else {
 					_log.info("CAS - user authenticated but not authorized");
 					Lang currentLang = (Lang) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_LANG);
-	            	String notAuthPageCode = this.getConfigManager().getParam(CasClientPluginSystemCostants.JPCASCLIENT_NO_AUTH_PAGE);
+	            	String notAuthPageCode = this.getCasClientConfig().getNotAuthPage();
 	            	IPage page = this.getPageManager().getPage(notAuthPageCode);
 	            	String url = this.getUrlManager().createUrl(page, currentLang, new HashMap<String, String>());
 	            	reqCtx.addExtraParam(RequestContext.EXTRAPAR_REDIRECT_URL, url);
@@ -107,6 +115,22 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 		return _pageManager;
 	}
 
+	public ICasClientConfigManager getCasConfigManager() {
+		return _casConfigManager;
+	}
+	public void setCasConfigManager(ICasClientConfigManager casClientConfigManager) {
+		this._casConfigManager = casClientConfigManager;
+	}
+
+	public CasClientConfig getCasClientConfig() {
+		return _casClientConfig;
+	}
+	public void setCasClientConfig(CasClientConfig casClientConfig) {
+		this._casClientConfig = casClientConfig;
+	}
+
 	private IPageManager _pageManager;
+	private ICasClientConfigManager _casConfigManager;
+	private CasClientConfig _casClientConfig;
 	
 }

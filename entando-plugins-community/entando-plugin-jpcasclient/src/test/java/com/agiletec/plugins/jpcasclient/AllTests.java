@@ -21,6 +21,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import com.agiletec.plugins.jpcasclient.aps.system.services.auth.TestCasClientUtils;
+import com.agiletec.plugins.jpcasclient.aps.system.services.config.parse.TestConfigDOM;
 
 public class AllTests {
 	
@@ -28,7 +29,9 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Test for jpcasclient");
 		System.out.println("Test for jpcasclient");
 		
-		suite.addTestSuite(TestCasClientUtils.class);
+//		suite.addTestSuite(TestCasClientUtils.class);
+		
+		suite.addTestSuite(TestConfigDOM.class);
 
 		
 		return suite;

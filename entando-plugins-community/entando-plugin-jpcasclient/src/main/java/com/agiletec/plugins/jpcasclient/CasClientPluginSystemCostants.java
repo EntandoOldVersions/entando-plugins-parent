@@ -37,5 +37,9 @@ public interface CasClientPluginSystemCostants {
 	public static final String JPCASCLIENT_SERVER_BASE_URL = "jpcasclient_serverBaseURL";
 
 	public static final String JPCASCLIENT_NO_AUTH_PAGE = "jpcasclient_notAuthPage";
+
+	public static final String JPCASCLIENT_CONFIG_ITEM = "jpcasclient_config";
+	
+	public static final String JPCASCLIENT_CONFIG_MANAGER= "jpcasclient_CasClientConfigManager";
 	
 }

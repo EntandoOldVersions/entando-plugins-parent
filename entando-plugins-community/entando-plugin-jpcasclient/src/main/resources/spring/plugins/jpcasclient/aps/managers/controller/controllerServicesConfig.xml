@@ -26,7 +26,7 @@
 	<bean id="CasClientTicketValidation" class="com.agiletec.plugins.jpcasclient.aps.system.services.controller.control.CasClientTicketValidation"
 		parent="abstractControlService">
 		<property name="urlManager" ref="URLManager"/>
-		<property name="configManager" ref="BaseConfigManager"/>
+		<property name="casClientConfigManager" ref="jpcasclient_CasClientConfigManager"/>
 	</bean>
 	
 	<!-- CAS AUTH CONF -->	
@@ -43,10 +43,11 @@
 		<property name="authManager" ref="AuthorizationManager"/>
 		<property name="configManager" ref="BaseConfigManager"/>
 		<property name="pageManager" ref="PageManager"/>
+		<property name="casConfigManager" ref="jpcasclient_CasClientConfigManager"/>
 	</bean>
 	
 	<bean id="AuthCommon" class="com.agiletec.plugins.jpcasclient.aps.system.common.AuthCommon" >
-		<property name="realmDomain" ><jee:jndi-lookup jndi-name="java:comp/env/REALM" /></property>
+		<property name="casConfigManager" ref="jpcasclient_CasClientConfigManager"/>
 	</bean>
 	
 </beans>

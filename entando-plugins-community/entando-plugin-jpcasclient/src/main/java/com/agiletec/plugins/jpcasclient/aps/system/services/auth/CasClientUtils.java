@@ -33,6 +33,7 @@ import com.agiletec.aps.system.services.page.PageUtils;
 import com.agiletec.aps.system.services.url.PageURL;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
+import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
 
 /**
  * Utility for generating URLs without ticket parameter.
@@ -46,6 +47,8 @@ public class CasClientUtils {
 			(ILangManager) ApsWebApplicationUtils.getBean(SystemConstants.LANGUAGE_MANAGER, reqCtx.getRequest());
 		BaseConfigManager configManager = 
 			(BaseConfigManager) ApsWebApplicationUtils.getBean(SystemConstants.BASE_CONFIG_MANAGER, reqCtx.getRequest());
+		ICasClientConfigManager casClientConfigManager = 
+				(ICasClientConfigManager) ApsWebApplicationUtils.getBean(CasClientPluginSystemCostants.JPCASCLIENT_CONFIG_MANAGER, reqCtx.getRequest());
 		IPageManager pageManager = 
 			(IPageManager) ApsWebApplicationUtils.getBean(SystemConstants.PAGE_MANAGER, reqCtx.getRequest());
 		Lang lang = langManager.getLang(langCode);
@@ -64,7 +67,7 @@ public class CasClientUtils {
 			page = pageManager.getRoot();
 		}
 		StringBuffer url = new StringBuffer();
-		String serverBaseUrl = configManager.getParam(CasClientPluginSystemCostants.JPCASCLIENT_SERVER_BASE_URL);
+		String serverBaseUrl = casClientConfigManager.getClientConfig().getServerBaseURL();
 		if (serverBaseUrl.endsWith("/")) {
 			serverBaseUrl = serverBaseUrl.substring(0, serverBaseUrl.length()-1);
 		}
