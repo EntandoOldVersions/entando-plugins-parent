@@ -16,7 +16,12 @@ public class CasClientConfigManager extends AbstractService implements ICasClien
 		CasClientConfig casClientConfig = configDOM.extractConfig(configItem);
 		this.setClientConfig(casClientConfig);
 	}
-		
+	
+	@Override
+	protected void release() {
+		this.setClientConfig(null);
+	}
+	
 	@Override
 	public void updateConfig(CasClientConfig config) throws ApsSystemException {
 		ConfigDOM configDOM = new ConfigDOM();
@@ -24,6 +29,7 @@ public class CasClientConfigManager extends AbstractService implements ICasClien
 		try {
 			configurationItem = configDOM.createConfigXml(config);
 			this.getConfigManager().updateConfigItem(CasClientPluginSystemCostants.JPCASCLIENT_CONFIG_ITEM, configurationItem);
+			this.setClientConfig(config);
 		} catch (ApsSystemException t) {
 			ApsSystemUtils.logThrowable(t, this, "updateConfig");
 			throw new ApsSystemException("Errore in fase di aggiornamento configurazione mail", t);

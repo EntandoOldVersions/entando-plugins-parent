@@ -39,7 +39,7 @@
 		 <fieldset class="margin-more-top">
 			<legend><s:text name="jpcasclient.legend.status" /></legend>
 			<p>
-				<wpsf:checkbox useTabindexAutoIncrement="true" name="config.active" id="active" cssClass="radiocheck" />&nbsp;<label for="active"><s:text name="label.active" /></label>
+				<wpsf:checkbox useTabindexAutoIncrement="true" name="config.active" id="active" cssClass="radiocheck" />&nbsp;<label for="active"><s:text name="jpcasclient.label.active" /></label>
 			</p>
 		</fieldset>
 		
@@ -47,27 +47,27 @@
 			<legend><s:text name="jpcasclient.legend.configuration" /></legend>
 
 			<p>
-				<label for="casLoginURL" class="basic-mint-label"><s:text name="casLoginURL" />:</label>
+				<label for="casLoginURL" class="basic-mint-label"><s:text name="jpcasclient.label.casLoginURL" />:</label>
 				<wpsf:textfield useTabindexAutoIncrement="true" name="config.casLoginURL" id="casLoginURL" cssClass="text" />
 			</p>
 			<p>
-				<label for="casLogoutURL" class="basic-mint-label"><s:text name="label.casLogoutURL" />:</label>
+				<label for="casLogoutURL" class="basic-mint-label"><s:text name="jpcasclient.label.casLogoutURL" />:</label>
 				<wpsf:textfield useTabindexAutoIncrement="true" name="config.casLogoutURL" id="casLogoutURL" cssClass="text" />
 			</p>
 			<p>
-				<label for="casValidateURL" class="basic-mint-label"><s:text name="label.casValidateURL" />:</label>
+				<label for="casValidateURL" class="basic-mint-label"><s:text name="jpcasclient.label.casValidateURL" />:</label>
 				<wpsf:textfield useTabindexAutoIncrement="true" name="config.casValidateURL" id="casValidateURL" cssClass="text" />
 			</p>
 			<p>
-				<label for="serverBaseURL" class="basic-mint-label"><s:text name="label.serverBaseURL" />:</label>
+				<label for="serverBaseURL" class="basic-mint-label"><s:text name="jpcasclient.label.serverBaseURL" />:</label>
 				<wpsf:textfield useTabindexAutoIncrement="true" name="config.serverBaseURL" id="serverBaseURL" cssClass="text" />
 			</p>
 			<p>
-				<label for="notAuthPage" class="basic-mint-label"><s:text name="label.notAuthPage" />:</label>
+				<label for="notAuthPage" class="basic-mint-label"><s:text name="jpcasclient.label.notAuthPage" />:</label>
 				<wpsf:textfield useTabindexAutoIncrement="true" name="config.notAuthPage" id="notAuthPage" cssClass="text" />
 			</p>
 			<p>
-				<label for="realm" class="basic-mint-label"><s:text name="label.realm" />:</label>
+				<label for="realm" class="basic-mint-label"><s:text name="jpcasclient.label.realm" />:</label>
 				<wpsf:textfield useTabindexAutoIncrement="true" name="config.realm" id="realm" cssClass="text" />
 			</p>
 

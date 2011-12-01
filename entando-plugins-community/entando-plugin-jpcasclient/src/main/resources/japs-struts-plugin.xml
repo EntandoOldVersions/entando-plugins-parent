@@ -7,5 +7,7 @@
 	
 	<!-- ### jpcasclient ### -->
 	<include file="com/agiletec/plugins/jpcasclient/apsadmin/config/configAction.xml"/>
+	<include file="com/agiletec/plugins/jpcasclient/apsadmin/common/common.xml"/>
+   
     
 </struts>

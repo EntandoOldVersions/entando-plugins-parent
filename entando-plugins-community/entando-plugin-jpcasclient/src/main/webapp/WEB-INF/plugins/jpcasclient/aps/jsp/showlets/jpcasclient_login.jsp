@@ -1,7 +1,8 @@
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="jpcc" uri="/jpcasclient" %>
 
-<wp:info key="systemParam" var="isCasActive" paramName="jpcasclient_isactive" />
+<jpcc:CasConfigParamTag var="jpcasclient_is_active" param="active" />
 
 <c:choose>
 	<c:when test="${sessionScope.currentUser != 'guest'}">
@@ -31,13 +32,13 @@
 	<c:otherwise>
 	
 	<c:if test="${accountExpired}">
-		<div><p>UTENTE SCADUTO. Contatta Gnappo</p></div>
+		<div><p>UTENTE SCADUTO. Contatta l'ammnistratore.</p></div>
 	</c:if>
 	<c:if test="${wrongAccountCredential}">
 		<div><p>CREDENZIALI NON VALIDE</p></div>
 	</c:if>
 	
-	<c:if test="${isCasActive != 'true'}">
+	<c:if test="${!jpcasclient_is_active}">
 	<form id="loginForm" action="<wp:url/>" method="post">
 		<fieldset>
 			<div class="formPair">
@@ -53,12 +54,9 @@
 	</form>
 	</c:if>
 	
-	<c:if test="${isCasActive == 'true'}">
+	<c:if test="${jpcasclient_is_active}">
 	<p>
-		<%--  
-			<a href="<wp:info key="systemParam" paramName="jpcasclient_casLoginURL" />?service=<wp:url />" title="<wp:i18n key="LOGIN_TITLE" />" ><wp:i18n key="LOGIN" /></a>
-		 --%>
-		<a href="<wp:info key="systemParam" paramName="jpcasclient_casLoginURL" />?service=<wp:url paramRepeat="true"  />"><wp:i18n key="LOGIN" /></a>
+		<a href="<jpcc:CasConfigParamTag param="casLoginURL"/>?service=<wp:url paramRepeat="true"  />"><wp:i18n key="LOGIN" /></a>
 	</p>
 	</c:if>
 	
