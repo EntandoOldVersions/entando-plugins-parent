@@ -27,6 +27,7 @@
 	<url>http://www.entando.com/</url>
 	<properties>
 		<project.parent.build.directory>../../target</project.parent.build.directory>
+		<project.parent.basedir>../..</project.parent.basedir>
 	</properties>
 	<build>
 		<plugins>
