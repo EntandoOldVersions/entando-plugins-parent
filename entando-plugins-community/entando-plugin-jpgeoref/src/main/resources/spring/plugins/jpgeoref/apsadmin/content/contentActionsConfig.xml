@@ -18,6 +18,7 @@
 		</property>
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="pageManager" ref="PageManager" />
+		<property name="contentAuthorizationHelper" ref="jacmsContentAuthorizationHelper" />
 	</bean>
 	
 	<bean id="jpgeorefEntryContentHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
