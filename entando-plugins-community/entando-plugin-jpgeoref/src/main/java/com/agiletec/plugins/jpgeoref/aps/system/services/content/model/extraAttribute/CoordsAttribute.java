@@ -91,56 +91,42 @@ public class CoordsAttribute extends AbstractAttribute {
 	 * @param x coordinate x
 	 */
 	public void setX(double x){
-		this.getCoords()[0] = x;
+		_x = x;
 	}
 	/**
 	 * Sets coordinate y
 	 * @param y coordinate y
 	 */
 	public void setY(double y){
-		this.getCoords()[1] = y;
+		_y = y;
 	}
 	/**
 	 * Sets coordinate z
 	 * @param z coordinate z
 	 */
 	public void setZ(double z){
-		this.getCoords()[2] = z;
+		_z = z ;
 	}
 	/**
 	 * Returns coordinate x
 	 * @return coordinate x
 	 */
 	public double getX() {
-		return this.getCoords()[0];
+		return _x;
 	}
 	/**
 	 * Returns coordinate y
 	 * @return coordinate y
 	 */
 	public double getY() {
-		return this.getCoords()[1];
+		return _y;
 	}
 	/**
 	 * Returns coordinate z
 	 * @return coordinate z
 	 */
 	public double getZ() {
-		return this.getCoords()[2];
-	}
-	/**
-	 * Returns coordinate
-	 * @return coordinate
-	 */
-	public double[] getCoords() {
-		return _coords;
-	}
-	/**
-	 * Sets coordinate
-	 * @param coords coordinate
-	 */
-	public void setCoords(double[] coords) {
-		this._coords = coords;
+		return _z;
 	}
 	
 	@Override
@@ -150,13 +136,25 @@ public class CoordsAttribute extends AbstractAttribute {
 	
 	@Override
 	protected Object getJAXBValue(String langCode) {
-		return this._coords;
+		StringBuffer coords = new StringBuffer();
+		coords.append("(");
+		coords.append(this.getX());
+		coords.append(",");
+		coords.append(this.getY());
+		if (this.getZ() != 0) {
+			coords.append(",");
+			coords.append(this.getZ());
+		}
+		coords.append(")");
+		return coords.toString();
 	}
 
 	private static final String ATTRIBUTE_ELEMENT = "attribute";
 	private static final String ATTRIBUTE_ELEMENT_NAME = "name";
 	private static final String ATTRIBUTE_ELEMENT_TYPE = "attributetype";
 
-	private double[] _coords = new double[3];
+	private double _x;
+	private double _y;
+	private double _z;
 
 }
