@@ -248,8 +248,6 @@ public class MailManager extends AbstractService implements IMailManager {
 		// auth
 		if (!config.hasAnonimousAuth()) {
 			props.put("mail.smtp.auth", "true");
-			Authenticator auth = new SMTPAuthenticator(config);
-			session = Session.getInstance(props, auth);
 			switch (config.getSmtpProtocol()) {
 			case JpmailSystemConstants.PROTO_SSL:
 				props.put("mail.smtp.socketFactory.port", port);
@@ -262,6 +260,8 @@ public class MailManager extends AbstractService implements IMailManager {
 			case JpmailSystemConstants.PROTO_STD:
 				// do nothing just use previous properties WITH the authenticator
 			}
+			Authenticator auth = new SMTPAuthenticator(config);
+			session = Session.getInstance(props, auth);
 		} else {
 			session = Session.getDefaultInstance(props);
 		}
