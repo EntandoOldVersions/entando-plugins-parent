@@ -14,13 +14,13 @@
 		<tag-class>com.agiletec.plugins.jpcasclient.aps.tag.CasConfigParamTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>var</name>
 			<description>the name of the variable for loading the param in page context</description>
+			<name>var</name>
 			<required>false</required>
 		</attribute>
 		<attribute>
-			<name>param</name>
 			<description>the param of the CAS client plugin configuration to read</description>
+			<name>param</name>
 			<required>true</required>
 		</attribute>
 	</tag>
