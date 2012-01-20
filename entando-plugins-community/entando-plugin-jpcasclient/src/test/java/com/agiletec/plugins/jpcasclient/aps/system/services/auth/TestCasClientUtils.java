@@ -31,8 +31,6 @@ public class TestCasClientUtils extends BaseTestCase {
 		_urlManager = (IURLManager) this.getApplicationContext().getBean(SystemConstants.URL_MANAGER);
 		_casClientUtils = new CasClientUtils();
 	}
-
-	
 	
 	public void test () {
 		RequestContext reqCtx = this.getRequestContext();
@@ -55,7 +53,6 @@ public class TestCasClientUtils extends BaseTestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}
-
 	
 	private CasClientUtils _casClientUtils;
 	private IURLManager _urlManager;
