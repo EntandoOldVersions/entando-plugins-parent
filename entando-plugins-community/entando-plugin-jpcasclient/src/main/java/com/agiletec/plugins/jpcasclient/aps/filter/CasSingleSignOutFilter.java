@@ -24,10 +24,9 @@ import org.jasig.cas.client.util.CommonUtils;
 import org.jasig.cas.client.util.XmlUtils;
 
 import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.baseconfig.BaseConfigManager;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
+import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
 
 /**
  * Implements the Single Sign Out protocol. It handles registering the session and destroying the session.
@@ -47,9 +46,9 @@ public class CasSingleSignOutFilter implements Filter {
 	public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
 		final HttpServletRequest request = (HttpServletRequest) servletRequest;
 		request.setCharacterEncoding("UTF-8");
-		BaseConfigManager configManager = (BaseConfigManager) ApsWebApplicationUtils.getBean(SystemConstants.BASE_CONFIG_MANAGER, request);
-		String isActive = configManager.getParam(CasClientPluginSystemCostants.JPCASCLIENT_EXTENDED_ISACTIVE);
-		if (isActive.equals("true")) {
+		ICasClientConfigManager configManager = (ICasClientConfigManager) ApsWebApplicationUtils.getBean(CasClientPluginSystemCostants.JPCASCLIENT_CONFIG_MANAGER, request);
+		boolean isActive = configManager.getClientConfig().isActive();
+		if (isActive) {
 			if ("POST".equals(request.getMethod())) {
 				final String logoutRequest = request.getParameter("logoutRequest");
 
