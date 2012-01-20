@@ -89,6 +89,7 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 					PageURL pageUrl = this.getUrlManager().createURL(reqCtx);
 					String serviceUrl = casClientUtils.getURLStringWithoutTicketParam(pageUrl, reqCtx);
 					loginUrl.append(serviceUrl);
+					_log.info("CAS - Redirecting to " + loginUrl.toString());
 					reqCtx.addExtraParam(RequestContext.EXTRAPAR_REDIRECT_URL, loginUrl.toString());
 					retStatus = ControllerManager.REDIRECT;
 				} else {
@@ -97,6 +98,7 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 	            	String notAuthPageCode = this.getCasClientConfig().getNotAuthPage();
 	            	IPage page = this.getPageManager().getPage(notAuthPageCode);
 	            	String url = this.getUrlManager().createUrl(page, currentLang, new HashMap<String, String>());
+	            	_log.info("CAS - Redirecting to " + url);
 	            	reqCtx.addExtraParam(RequestContext.EXTRAPAR_REDIRECT_URL, url);
 	            	retStatus = ControllerManager.REDIRECT;
 	            }

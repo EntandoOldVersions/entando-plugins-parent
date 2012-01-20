@@ -69,7 +69,7 @@ public class CasClientTicketValidation extends AbstractControlService {
 				CasClientUtils casClientUtils = new CasClientUtils();
 				PageURL pageUrl = this.getUrlManager().createURL(reqCtx);
 				String serviceUrl = casClientUtils.getURLStringWithoutTicketParam(pageUrl, reqCtx);
-				_log.info(" service " + serviceUrl + ", ticket " + ticket);
+				_log.info("CAS - service " + serviceUrl + ", ticket " + ticket);
 				Assertion assertion;
 				assertion = _ticketValidationUtil.validateTicket(serviceUrl, ticket);
 				request.getSession().setAttribute(CasClientPluginSystemCostants.JPCASCLIENT_CONST_CAS_ASSERTION, assertion);
