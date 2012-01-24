@@ -66,6 +66,12 @@
 		    <groupId>com.googlecode.s2rome</groupId>
 		    <artifactId>struts2-rome-plugin</artifactId>
 		    <version>0.3</version>
+		    <exclusions>
+				<exclusion>
+					<artifactId>struts2-core</artifactId>
+					<groupId>org.apache.struts</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>
