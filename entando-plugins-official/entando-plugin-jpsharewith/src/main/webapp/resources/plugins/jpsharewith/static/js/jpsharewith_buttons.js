@@ -24,7 +24,7 @@ var	jpsharewith_buttons = [
 		'image' : 'delicious.gif'
 	},
 	{ 	'title' : 'Facebook', 
-		'link' : 'http://www.facebook.com/sharer.php?u=§URL§',
+		'link' : 'http://www.facebook.com/sharer.php?u=§URL§&t=§TITLE§',
 		'image' : 'facebook.gif'		
 	},
 	{ 	'title' : 'Google', 
