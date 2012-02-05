@@ -22,13 +22,4 @@
 		<property name="entityActionHelper" ref="jpuserprofileCurrentUserProfileActionHelper"/>
 	</bean>
 	
-	<!-- INIZIO AZIONI DI RICERCA -->
-	
-	<bean id="jpuserprofileUserProfileFinderAction" scope="prototype" 
-			class="com.agiletec.plugins.jpuserprofile.apsadmin.search.UserProfileFinderAction" 
-			parent="abstractBaseAction" >
-		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
-		<property name="entityActionHelper" ref="entityActionHelper" />
-	</bean>
-	
 </beans>

@@ -4,75 +4,86 @@
     "http://struts.apache.org/dtds/struts-2.1.dtd">
 
 <struts>
-	
-	<package name="jpuserprofile_do/jpuserprofile" namespace="/do/jpuserprofile" extends="japs-default">
-		
-    	<action name="list" class="jpuserprofileUserFinderAction">
-            <result type="tiles">admin.jpuserprofile.User.list</result>
-        	<interceptor-ref name="japsDefaultStack">
-        		<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
-        		<param name="requestAuth.requiredPermission">superuser</param>
-        	</interceptor-ref>
+    
+    <package name="jpuserprofile_do/jpuserprofile" namespace="/do/jpuserprofile" extends="japs-default">
+        
+        <action name="list" class="jpuserprofileUserProfileFinderAction">
+            <result type="tiles">admin.jpuserprofile.list</result>
+            <interceptor-ref name="japsDefaultStack">
+                <param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
+                <param name="requestAuth.requiredPermission">jpuserprofile_profile_view</param>
+            </interceptor-ref>
         </action>
         
-        <action name="search" class="jpuserprofileUserFinderAction">
-            <result type="tiles">admin.jpuserprofile.User.list</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+        <action name="search" class="jpuserprofileUserProfileFinderAction">
+            <result type="tiles">admin.jpuserprofile.list</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpuserprofile_profile_view</param></interceptor-ref>
         </action>
         
-		<action name="edit" class="jpuserprofileUserProfileAction" method="edit">
-			<result type="tiles">admin.jpuserprofile.entry</result>
-			<result name="createNew" type="tiles">admin.jpuserprofile.chooseType</result>
-			<result name="nullUsername" type="chain">list</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
-		</action>
-		
-		<action name="new" class="jpuserprofileUserProfileAction" method="createNew" >
-			<result type="tiles">admin.jpuserprofile.entry</result>
-			<result name="edit" type="tiles">admin.jpuserprofile.entry</result>
-			<result name="input" type="tiles">admin.jpuserprofile.chooseType</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
-		</action>
-		
-		<action name="save" class="jpuserprofileUserProfileAction" method="save">
-			<result type="redirectAction">
-				<param name="namespace">/do/jpuserprofile/Search</param>
-				<param name="actionName">list</param>
-			</result>
-			<result name="input" type="tiles">admin.jpuserprofile.entry</result>
-			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
-		</action>
-		
-    	<action name="entryProfile" class="jpuserprofileUserProfileAction">
+        <action name="changeProfileType" class="jpuserprofileUserProfileFinderAction" >
+                <result type="tiles">admin.jpuserprofile.list</result>
+                <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpuserprofile_profile_view</param></interceptor-ref>
+        </action>
+        
+        <action name="view" class="jpuserprofileUserProfileAction" method="view">
+            <result type="tiles">admin.jpuserprofile.view</result>
+            <result name="input" type="chain">list</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpuserprofile_profile_view</param></interceptor-ref>
+        </action>
+        
+        <action name="edit" class="jpuserprofileUserProfileAction" method="edit">
             <result type="tiles">admin.jpuserprofile.entry</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+            <result name="chooseType" type="tiles">admin.jpuserprofile.chooseType</result>
+            <result name="input" type="chain">list</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpuserprofile_profile_edit</param></interceptor-ref>
+        </action>
+        
+        <action name="new" class="jpuserprofileUserProfileAction" method="createNew" >
+            <result type="tiles">admin.jpuserprofile.entry</result>
+            <result name="edit" type="tiles">admin.jpuserprofile.entry</result>
+            <result name="input" type="tiles">admin.jpuserprofile.chooseType</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpuserprofile_profile_edit</param></interceptor-ref>
+        </action>
+        
+        <action name="save" class="jpuserprofileUserProfileAction" method="save">
+            <result type="redirectAction">
+                <param name="namespace">/do/jpuserprofile/Search</param>
+                <param name="actionName">list</param>
+            </result>
+            <result name="input" type="tiles">admin.jpuserprofile.entry</result>
+            <interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">jpuserprofile_profile_edit</param></interceptor-ref>
+        </action>
+        
+        <action name="entryProfile" class="jpuserprofileUserProfileAction">
+            <result type="tiles">admin.jpuserprofile.entry</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpuserprofile_profile_edit</param></interceptor-ref>
         </action>
     	
     	<!-- ######## INIZIO GESTIONE ATTRIBUTI IN LISTA ######## -->
         
         <action name="addListElement*" class="jpuserprofileUserProfileListAttributeAction" method="addListElement">
-        	<result type="redirectActionWithAnchor">
-        		<param name="actionName">entryProfile</param>
-        	</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+            <result type="redirectActionWithAnchor">
+                <param name="actionName">entryProfile</param>
+            </result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpuserprofile_profile_edit</param></interceptor-ref>
         </action>
         
         <action name="removeListElement*" class="jpuserprofileUserProfileListAttributeAction" method="removeListElement">
             <result type="redirectAction">
-        		<param name="actionName">entryProfile</param>
-        	</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+                <param name="actionName">entryProfile</param>
+            </result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpuserprofile_profile_edit</param></interceptor-ref>
         </action>
         
         <action name="moveListElement*" class="jpuserprofileUserProfileListAttributeAction" method="moveListElement">
             <result type="redirectAction">
-        		<param name="actionName">entryProfile</param>
-        	</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+                <param name="actionName">entryProfile</param>
+            </result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpuserprofile_profile_edit</param></interceptor-ref>
         </action>
         
         <!-- ######## FINE GESTIONE ATTRIBUTI IN LISTA ######## -->
     	
-	</package>
+    </package>
 	
 </struts>

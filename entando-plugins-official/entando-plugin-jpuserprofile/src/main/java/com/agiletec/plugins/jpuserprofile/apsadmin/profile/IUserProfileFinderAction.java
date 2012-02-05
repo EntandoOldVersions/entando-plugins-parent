@@ -15,7 +15,7 @@
 * Copyright 2005 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
 *
 */
-package com.agiletec.plugins.jpuserprofile.apsadmin.search;
+package com.agiletec.plugins.jpuserprofile.apsadmin.profile;
 
 import com.agiletec.apsadmin.system.entity.IApsEntityFinderAction;
 
@@ -23,9 +23,8 @@ import com.agiletec.apsadmin.system.entity.IApsEntityFinderAction;
  * @author F.Deidda
  */
 public interface IUserProfileFinderAction extends IApsEntityFinderAction {
-	
-	public String getUsername();
-	
-	public String viewProfile();
-	
+
+    public String getUsername();
+
+    public String viewProfile();
 }

@@ -29,6 +29,7 @@ import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfi
 /**
  * @author E.Santoboni
  */
+@Deprecated
 public class UserFinderAction extends com.agiletec.apsadmin.user.UserFinderAction {
 	
 	@Override

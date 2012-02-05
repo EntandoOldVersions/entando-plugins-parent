@@ -9,7 +9,7 @@
 <c:choose>
 	<c:when test="${sessionScope.currentUser != 'guest'}">
 		
-		<form action="<wp:action path="/ExtStr2/do/jpuserprofile/Front/CurrentUser/Profile/save.action" />" method="post" enctype="multipart/form-data" class="newContentForm">
+		<form action="<wp:action path="/ExtStr2/do/jpuserprofile/Front/CurrentUser/Profile/save.action" />" method="post" class="newContentForm">
 			
 			<s:if test="hasFieldErrors()">
 				<h3><wp:i18n key="jpuserprofile_MESSAGE_TITLE_FIELDERRORS" /></h3>
