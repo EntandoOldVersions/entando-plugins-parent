@@ -37,5 +37,45 @@
 			<rtexprvalue>false</rtexprvalue>
 		</attribute>
 	</tag>
+
+	<tag>
+		<description>
+			<![CDATA[User Profile tag. Return a attribute value from the profile givea an username.]]>
+		</description>
+		<name>profileAttribute</name>
+		<tag-class>com.agiletec.plugins.jpuserprofile.aps.tags.ProfileAttributeTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>
+				<![CDATA[the name of the attribute from which extract the value. Can be the name of a attribute role.]]>
+			</description>
+			<name>key</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[the username]]>
+			</description>
+			<name>username</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Name used to reference the value pushed into the pageContext.]]>
+			</description>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Decides whether to escape the special characters in the information retrieved or not.
+				Value admitted (true|false), the default is true.]]></description>
+			<name>escapeXml</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
 	
 </taglib>
