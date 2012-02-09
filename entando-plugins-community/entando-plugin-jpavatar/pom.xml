@@ -87,5 +87,43 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.6.8</version>
         </dependency>
+				<!-- X X X X X X X X X X X X X X X X X  -->
+				<dependency>
+					<groupId>org.entando.entando.plugins</groupId>
+					<artifactId>entando-plugin-jpuserprofile</artifactId>
+					<version>1.8.1-SNAPSHOT</version>
+					<type>war</type>
+				</dependency>
+		 		<dependency>
+					<groupId>org.entando.entando.plugins</groupId>
+					<artifactId>entando-plugin-jpuserprofile</artifactId>
+					<version>1.8.1-SNAPSHOT</version>
+					<type>jar</type>
+					<classifier>classes</classifier>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.entando.entando.plugins</groupId>
+					<artifactId>entando-plugin-jpuserprofile</artifactId>
+					<version>1.8.1-SNAPSHOT</version>
+					<type>zip</type>
+					<classifier>misc</classifier>
+				</dependency>		
+				<dependency>
+					<groupId>org.entando.entando.plugins</groupId>
+					<artifactId>entando-plugin-jpuserprofile</artifactId>
+					<version>1.8.1-SNAPSHOT</version>
+					<type>jar</type>
+					<classifier>tests</classifier>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.entando.entando.plugins</groupId>
+					<artifactId>entando-plugin-jpuserprofile</artifactId>
+					<version>1.8.1-SNAPSHOT</version>
+					<type>zip</type>
+					<classifier>misc-test</classifier>
+				</dependency>
+				<!-- X X X X X X X X X X X X X X X X X  -->
     </dependencies>
 </project>
