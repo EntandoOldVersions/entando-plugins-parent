@@ -61,5 +61,10 @@ public interface IAvatarManager {
 	 * @throws ApsSystemException if an error occurs
 	 */
 	public String getAvatar(String username) throws ApsSystemException;
+	
+	public boolean isGravatarActive();
+	
+	public String getAvatarURL(String username) throws ApsSystemException;
+	
 
 }
