@@ -1,20 +1,20 @@
 /*
-*
-* Copyright 2009 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
-*
-* This file is part of jAPS software.
-* jAPS is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
-* and limitations under the License
-* 
-* 
-* 
-* Copyright 2009 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
-*
-*/
+ *
+ * Copyright 2009 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
+ *
+ * This file is part of jAPS software.
+ * jAPS is a free software; 
+ * you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+ * 
+ * See the file License for the specific language governing permissions   
+ * and limitations under the License
+ * 
+ * 
+ * 
+ * Copyright 2009 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
+ *
+ */
 package com.agiletec.plugins.jpavatar.apsadmin.tags;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,12 +45,15 @@ public class AvatarTag extends TagSupport {
 			if (null == currentUser|| currentUser.getUsername().trim().length() == 0 || currentUser.getUsername().equalsIgnoreCase(SystemConstants.GUEST_USER_NAME)) {
 				this.doOut(this.getNullAvatar(avatarManager));
 			} else {
-				String avatarName = avatarManager.getAvatar(currentUser.getUsername());
+
+				//String avatarName = avatarManager.getAvatar(currentUser.getUsername());
+				String avatarName = avatarManager.getAvatarURL(currentUser.getUsername());
 				if (null != avatarName) {
-					this.doOut(avatarManager.getAvatarURL() + "avatar" + System.getProperty("file.separator") + avatarName);
+					this.doOut(avatarName);
 				} else {
 					this.doOut(this.getNullAvatar(avatarManager));
 				}
+
 			}
 		} catch (Throwable e) {
 			ApsSystemUtils.logThrowable(e, this, "doEndTag");
@@ -71,7 +74,7 @@ public class AvatarTag extends TagSupport {
 		} 
 		return nullAvatar;
 	}
-	
+
 	private void doOut(String value) throws Throwable {
 		if (null != this.getVar() && this.getVar().trim().length() > 0) {
 			this.pageContext.getRequest().setAttribute(this.getVar(), value);
@@ -79,7 +82,7 @@ public class AvatarTag extends TagSupport {
 			pageContext.getOut().print(value);
 		}
 	}
-	
+
 	public void setReturnDefaultAvatar(String returnDefaultAvatar) {
 		this._returnDefaultAvatar = returnDefaultAvatar;
 	}
