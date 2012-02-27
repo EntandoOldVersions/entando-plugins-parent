@@ -31,7 +31,9 @@
 		<module>entando-plugins-official/entando-plugin-jpmail</module>
 		<module>entando-plugins-community/entando-plugin-jpwebdynamicform</module>
 		<module>entando-plugins-official/entando-plugin-jprss</module>
+                -->
 		<module>entando-plugins-official/entando-plugin-jpsharewith</module>
+                <!--
 		<module>entando-plugins-official/entando-plugin-jpcalendar</module>
                 -->
 		<!-- WARNING! Comment out if you want to run global tests -->
@@ -60,8 +62,8 @@
 		<module>entando-plugins-community/entando-plugin-jpcontentnotifier</module>
                 -->
 		<!-- //WARNING -->
-                <!--
 		<module>entando-plugins-community/entando-plugin-jpfastcontentedit</module>
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpgeoref</module>
                 -->
 		<!-- WARNING! Comment out if you want to run global tests -->
@@ -101,8 +103,8 @@
 		<module>entando-plugins-community/entando-plugin-jpcontentfeedback</module>
 		<module>entando-plugins-community/entando-plugin-jpcmstagcloud</module>
 		<module>entando-plugins-community/entando-plugin-jpcontentrefs</module>
-		<module>entando-plugins-community/entando-plugin-jpmyportalplus</module>
                 -->
+		<module>entando-plugins-community/entando-plugin-jpmyportalplus</module>
 	</modules>
 	<!--
 	<distributionManagement>
