@@ -15,18 +15,16 @@
 * Copyright 2005 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
 *
 */
-package com.agiletec.plugins.jpuserprofile.apsadmin.system.entity;
+package com.agiletec.plugins.jpuserprofile.apsadmin.profile;
 
-import com.agiletec.apsadmin.system.entity.type.EntityTypesAction;
+import com.agiletec.apsadmin.system.entity.IApsEntityFinderAction;
 
 /**
- * @author E.Mezzano
+ * @author F.Deidda
  */
-public class UserProfileTypesAction extends EntityTypesAction {
-	
-	public String checkDeleteProfile() {
-		this.addActionError(this.getText("jpuserprofile.profileType.deletionNotAllowed"));
-		return INPUT;
-	}
-	
+public interface IUserProfileFinderAction extends IApsEntityFinderAction {
+
+    public String getUsername();
+
+    public String viewProfile();
 }

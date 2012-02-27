@@ -24,7 +24,7 @@ import com.agiletec.plugins.jpuserprofile.aps.internalservlet.common.TestFrontCu
 import com.agiletec.plugins.jpuserprofile.aps.system.services.TestUserManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.TestUserProfileManager;
 import com.agiletec.plugins.jpuserprofile.apsadmin.common.TestCurrentUserProfileAction;
-import com.agiletec.plugins.jpuserprofile.apsadmin.search.TestUserProfileFinderAction;
+import com.agiletec.plugins.jpuserprofile.apsadmin.profile.TestUserProfileFinderAction;
 
 public class AllTests {
 	
