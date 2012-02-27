@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-		<version>2.4.0.2-SNAPSHOT</version>
+		<version>2.4.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>entando-plugin-jpwebdynamicform</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
@@ -16,7 +16,7 @@
 		<developer>
 			<id>e.santoboni</id>
 			<name>Eugenio Santoboni</name>
-			<email>e.santoboni@agiletec.it</email>
+			<email>e.santoboni@entando.com</email>
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>

@@ -28,9 +28,11 @@
 	<modules>
 		<!--
                 <module>entando-plugins-community/entando-plugin-jpfacetnav</module>
-		<module>entando-plugins-official/entando-plugin-jpmail</module>
-		<module>entando-plugins-community/entando-plugin-jpwebdynamicform</module>
-		<module>entando-plugins-official/entando-plugin-jprss</module>
+		-->
+                <module>entando-plugins-official/entando-plugin-jpmail</module>
+                <module>entando-plugins-community/entando-plugin-jpwebdynamicform</module>
+		<!--
+                <module>entando-plugins-official/entando-plugin-jprss</module>
                 -->
 		<module>entando-plugins-official/entando-plugin-jpsharewith</module>
                 <!--
@@ -46,8 +48,8 @@
 		<module>entando-plugins-official/entando-plugin-jpuserreg</module>
 		<module>entando-plugins-community/entando-plugin-jpaddressbook</module>
 		<module>entando-plugins-community/entando-plugin-jpnewsletter</module>
-		<module>entando-plugins-community/entando-plugin-jpsurvey</module>
                 -->
+		<module>entando-plugins-community/entando-plugin-jpsurvey</module>
 		<!-- WARNING! Comment out if you want to run global tests -->
                 <!--
 		<module>entando-plugins-official/entando-plugin-jpwscontent</module>
@@ -100,7 +102,9 @@
 		<module>entando-plugins-community/entando-plugin-jpcasclient</module>
 		<module>entando-plugins-community/entando-plugin-jpstats</module>
 		<module>entando-plugins-community/entando-plugin-jpcontentworkflow</module>
+                -->
 		<module>entando-plugins-community/entando-plugin-jpcontentfeedback</module>
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpcmstagcloud</module>
 		<module>entando-plugins-community/entando-plugin-jpcontentrefs</module>
                 -->

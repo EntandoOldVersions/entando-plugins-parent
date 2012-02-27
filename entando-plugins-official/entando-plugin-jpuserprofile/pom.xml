@@ -10,7 +10,7 @@
 	<version>1.8.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Manage User Profile</name>
-	<description>CHANGE ME! Enter some quick and useful info</description>
+	<description>This plugin allows to manage User Profile Types</description>
 	<developers>
 		<developer>
 			<id>e.santoboni</id>
