@@ -1,0 +1,12 @@
+<apiMethodDefinitions>
+    
+    <resource name="myUserProfile">
+        <description>The User profile</description>
+        <source pluginCode="jpuserprofile">plugins</source>
+        <method httpMethod="GET" active="true" requiredAuth="true">
+            <description>Return current user profile</description>
+            <springBean name="ApiMyProfileInterface" method="getMyUserProfile" />
+        </method>
+    </resource>
+    
+</apiMethodDefinitions>
