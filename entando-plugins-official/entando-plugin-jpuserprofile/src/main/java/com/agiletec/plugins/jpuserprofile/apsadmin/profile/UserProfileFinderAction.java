@@ -50,7 +50,7 @@ public class UserProfileFinderAction extends AbstractApsEntityFinderAction imple
             this.addFilter(filter);
         } catch (Throwable t) {
             ApsSystemUtils.logThrowable(t, this, "execute");
-            throw new RuntimeException("Error while creating filter by username", t);
+            return FAILURE;
         }
         return super.execute();
     }
@@ -108,7 +108,7 @@ public class UserProfileFinderAction extends AbstractApsEntityFinderAction imple
     public UserDetails getUser(String username) {
         UserDetails user = null;
         try {
-            user = this.getUserDetailsMap().get(user.getUsername());
+            user = this.getUserDetailsMap().get(username);
             if (null == user) {
                 user = this.getUserManager().getUser(username);
             }

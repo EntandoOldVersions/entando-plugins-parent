@@ -24,56 +24,54 @@ import org.entando.entando.aps.system.services.api.model.BaseApiResponse;
 import org.entando.entando.aps.system.services.api.server.IResponseBuilder;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
+import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+import org.entando.entando.aps.system.services.api.IApiErrorCodes;
 import org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model.JAXBUserProfile;
 
 /**
  * @author E.Santoboni
  */
 public class ApiUserProfileInterface {
-
+    
     public JAXBUserProfile getUserProfile(Properties properties) throws ApiException, Throwable {
         JAXBUserProfile jaxbUserProfile = null;
         try {
-            //throw new ApiException("xxx", "yyy");
-            /*
-            String typeCode = properties.getProperty("profileTypeCode");
-            IApsEntity masterProfileType = this.getUserProfileManager().getEntityPrototype(typeCode);
-            if (null == masterProfileType) {
-            throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + typeCode + "' does not exist");
+            String username = properties.getProperty("username");
+            IUserProfile userProfile = this.getUserProfileManager().getProfile(username);
+            if (null == userProfile) {
+                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile of user '" + username + "' does not exist");
             }
-            jaxbProfileType = new JAXBUserProfileType(masterProfileType);
-             */
-            //} catch (ApiException ae) {
-            //    throw ae;
+            jaxbUserProfile = new JAXBUserProfile(userProfile, null);
+        } catch (ApiException ae) {
+            throw ae;
         } catch (Throwable t) {
             ApsSystemUtils.logThrowable(t, this, "getUserProfile");
             throw new ApsSystemException("Error extracting user profile", t);
         }
         return jaxbUserProfile;
     }
-
-    public BaseApiResponse addUserProfileType(JAXBUserProfile jaxbUserProfile) throws Throwable {
+    
+    public BaseApiResponse addUserProfile(JAXBUserProfile jaxbUserProfile) throws Throwable {
         BaseApiResponse response = new BaseApiResponse();
         try {
-            /*
-            String typeCode = jaxbProfileType.getTypeCode();
-            IApsEntity masterProfileType = this.getUserProfileManager().getEntityPrototype(typeCode);
-            if (null != masterProfileType) {
-            throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + typeCode + "' already exists");
+            String username = jaxbUserProfile.getId();
+            if (null != this.getUserProfileManager().getProfile(username)) {
+                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile of user '" + username + "' already exist");
             }
-            if (typeCode == null || typeCode.length() != 3) {
-            throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "Invalid type code - '" + typeCode + "'");
+            IApsEntity profilePrototype = this.getUserProfileManager().getEntityPrototype(jaxbUserProfile.getTypeCode());
+            if (null == profilePrototype) {
+                throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + jaxbUserProfile.getTypeCode() + "' does not exist");
             }
-            Map<String, AttributeInterface> attributes = this.getUserProfileManager().getEntityAttributePrototypes();
-            IApsEntity profileType = jaxbProfileType.buildEntityType(this.getUserProfileManager().getEntityClass(), attributes);
-            ((IEntityTypesConfigurer) this.getUserProfileManager()).addEntityPrototype(profileType);
-             */
+            IUserProfile userProfile = (IUserProfile) jaxbUserProfile.buildEntity(profilePrototype, null);
+            //TODO VALIDATE
+            this.getUserProfileManager().addProfile(username, userProfile);
             response.setResult(IResponseBuilder.SUCCESS, null);
-            //} catch (ApiException ae) {
-            //    response.addErrors(ae.getErrors());
-            //    response.setResult(IResponseBuilder.FAILURE, null);
+        } catch (ApiException ae) {
+            response.addErrors(ae.getErrors());
+            response.setResult(IResponseBuilder.FAILURE, null);
         } catch (Throwable t) {
             ApsSystemUtils.logThrowable(t, this, "addUserProfile");
             throw new ApsSystemException("Error adding user profile", t);
@@ -84,44 +82,41 @@ public class ApiUserProfileInterface {
     public BaseApiResponse updateUserProfile(JAXBUserProfile jaxbUserProfile) throws Throwable {
         BaseApiResponse response = new BaseApiResponse();
         try {
-            /*
-            String typeCode = jaxbProfileType.getTypeCode();
-            IApsEntity masterProfileType = this.getUserProfileManager().getEntityPrototype(typeCode);
-            if (null == masterProfileType) {
-            throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + typeCode + "' doesn't exist");
+            String username = jaxbUserProfile.getId();
+            if (null == this.getUserProfileManager().getProfile(username)) {
+                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile of user '" + username + "' does not exist");
             }
-            Map<String, AttributeInterface> attributes = this.getUserProfileManager().getEntityAttributePrototypes();
-            IApsEntity profileType = jaxbProfileType.buildEntityType(this.getUserProfileManager().getEntityClass(), attributes);
-            ((IEntityTypesConfigurer) this.getUserProfileManager()).updateEntityPrototype(profileType);
-             */
+            IApsEntity profilePrototype = this.getUserProfileManager().getEntityPrototype(jaxbUserProfile.getTypeCode());
+            if (null == profilePrototype) {
+                throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + jaxbUserProfile.getTypeCode() + "' does not exist");
+            }
+            IUserProfile userProfile = (IUserProfile) jaxbUserProfile.buildEntity(profilePrototype, null);
+            //TODO VALIDATE
+            this.getUserProfileManager().updateProfile(username, userProfile);
             response.setResult(IResponseBuilder.SUCCESS, null);
-            //} catch (ApiException ae) {
-            //    response.addErrors(ae.getErrors());
-            //    response.setResult(IResponseBuilder.FAILURE, null);
+        } catch (ApiException ae) {
+            response.addErrors(ae.getErrors());
+            response.setResult(IResponseBuilder.FAILURE, null);
         } catch (Throwable t) {
             ApsSystemUtils.logThrowable(t, this, "updateUserProfile");
             throw new ApsSystemException("Error updating user profile", t);
         }
         return response;
     }
-
+    
     public void deleteUserProfile(Properties properties) throws ApiException, Throwable {
+        BaseApiResponse response = new BaseApiResponse();
         try {
-            /*
-            String typeCode = properties.getProperty("profileTypeCode");
-            IApsEntity masterProfileType = this.getUserProfileManager().getEntityPrototype(typeCode);
-            if (null == masterProfileType) {
-            throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + typeCode + "' doesn't exist");
+            String username = properties.getProperty("username");
+            IUserProfile userProfile = this.getUserProfileManager().getProfile(username);
+            if (null == userProfile) {
+                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile of user '" + username + "' does not exist");
             }
-            EntitySearchFilter filter = new EntitySearchFilter(IEntityManager.ENTITY_TYPE_CODE_FILTER_KEY, false, typeCode, false);
-            List<String> profileIds = this.getUserProfileManager().searchId(new EntitySearchFilter[]{filter});
-            if (null != profileIds && !profileIds.isEmpty()) {
-            throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User profile type '" + typeCode + "' are used into " + profileIds.size() + " profiles");
-            }
-            ((IEntityTypesConfigurer) this.getUserProfileManager()).removeEntityPrototype(typeCode);
-             */
-            //} catch (ApiException ae) {
-            //    throw ae;
+            this.getUserProfileManager().deleteProfile(username);
+            response.setResult(IResponseBuilder.SUCCESS, null);
+        } catch (ApiException ae) {
+            response.addErrors(ae.getErrors());
+            response.setResult(IResponseBuilder.FAILURE, null);
         } catch (Throwable t) {
             ApsSystemUtils.logThrowable(t, this, "deleteUserProfile");
             throw new ApsSystemException("Error deleting user Profile", t);

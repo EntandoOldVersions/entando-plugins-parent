@@ -41,4 +41,9 @@
         <property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
     </bean>
     
+    <bean id="jpuserprofileApiUserProfileInterface" 
+            class="org.entando.entando.plugins.jpuserprofile.aps.system.services.api.ApiUserProfileInterface" >
+        <property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
+    </bean>
+    
 </beans>

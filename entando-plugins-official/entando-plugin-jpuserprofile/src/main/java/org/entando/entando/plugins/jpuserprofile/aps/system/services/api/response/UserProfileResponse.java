@@ -17,10 +17,16 @@
  */
 package org.entando.entando.plugins.jpuserprofile.aps.system.services.api.response;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.entando.entando.aps.system.services.api.model.AbstractApiResponse;
+import org.entando.entando.aps.system.services.api.model.AbstractApiResponseResult;
+import org.entando.entando.aps.system.services.api.model.ListResponse;
+import org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model.JAXBUserProfile;
 
 /**
  * @author E.Santoboni
@@ -37,5 +43,27 @@ public class UserProfileResponse extends AbstractApiResponse {
     
     @XmlElement(name = "result", required = true)
     private UserProfileResponseResult _result;
+    
+    public static class UserProfileResponseResult extends AbstractApiResponseResult {
+        
+        @XmlElement(name = "userProfile", required = false)
+        public JAXBUserProfile getResult() {
+            if (this.getMainResult() instanceof JAXBUserProfile) {
+                return (JAXBUserProfile) this.getMainResult();
+            }
+            return null;
+        }
+        
+        @XmlElement(name = "userProfile", required = false)
+        public ListResponse getResults() {
+            if (this.getMainResult() instanceof Collection) {
+                List<JAXBUserProfile> contentTypes = new ArrayList<JAXBUserProfile>();
+                contentTypes.addAll((Collection<JAXBUserProfile>) this.getMainResult());
+                ListResponse listResponse = new ListResponse(contentTypes) {};
+                return listResponse;
+            }
+            return null;
+        }
+    }
     
 }
