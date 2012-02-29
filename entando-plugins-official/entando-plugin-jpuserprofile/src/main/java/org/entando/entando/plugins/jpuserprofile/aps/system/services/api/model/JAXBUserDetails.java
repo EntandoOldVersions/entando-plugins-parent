@@ -15,7 +15,7 @@
  * Copyright 2005 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
  *
  */
-package com.agiletec.plugins.jpuserprofile.aps.system.services.api;
+package org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model;
 
 import java.util.ArrayList;
 import java.util.List;

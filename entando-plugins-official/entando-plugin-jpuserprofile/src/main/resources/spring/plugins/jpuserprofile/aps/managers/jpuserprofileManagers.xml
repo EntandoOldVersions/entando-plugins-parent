@@ -30,8 +30,15 @@
         </property>
     </bean>
     
-    <bean id="ApiMyProfileInterface" 
-            class="com.agiletec.plugins.jpuserprofile.aps.system.services.api.ApiMyUserProfileInterface" >
+    <!-- API -->
+    
+    <bean id="jpuserprofileApiMyProfileInterface" 
+            class="org.entando.entando.plugins.jpuserprofile.aps.system.services.api.ApiMyUserProfileInterface" >
+    </bean>
+    
+    <bean id="jpuserprofileApiUserProfileTypeInterface" 
+            class="org.entando.entando.plugins.jpuserprofile.aps.system.services.api.ApiUserProfileTypeInterface" >
+        <property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
     </bean>
     
 </beans>

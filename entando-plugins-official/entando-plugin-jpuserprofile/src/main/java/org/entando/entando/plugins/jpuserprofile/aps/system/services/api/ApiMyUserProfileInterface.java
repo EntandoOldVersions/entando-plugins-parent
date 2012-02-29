@@ -15,8 +15,9 @@
  * Copyright 2005 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
  *
  */
-package com.agiletec.plugins.jpuserprofile.aps.system.services.api;
+package org.entando.entando.plugins.jpuserprofile.aps.system.services.api;
 
+import org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model.JAXBUserDetails;
 import java.util.Properties;
 
 import org.entando.entando.aps.system.services.api.IApiErrorCodes;
