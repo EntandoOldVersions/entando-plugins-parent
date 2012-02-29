@@ -29,51 +29,48 @@ import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.User
  * @author E.Santoboni
  */
 public class UserProfileSearcherDAO extends AbstractEntitySearcherDAO {
-	
-	@Override
-	protected ApsEntityRecord createRecord(ResultSet result) throws Throwable {
-		UserProfileRecord record = new UserProfileRecord();
-		record.setId(result.getString("username"));
-		record.setXml(result.getString("profilexml"));
-		record.setTypeCode(result.getString("profiletype"));
-		record.setPublicProfile(result.getInt("publicprofile") == 1);
-		return record;
-	}
-	
-	@Override
-	protected String getEntityMasterTableIdFieldName() {
-		return "username";
-	}
-	
-	@Override
-	protected String getEntityMasterTableIdTypeFieldName() {
-		return "profiletype";
-	}
-	
-	@Override
-	protected String getEntityMasterTableName() {
-		return "jpuserprofile_authuserprofiles";
-	}
-	
-	@Override
-	protected String getEntitySearchTableIdFieldName() {
-		return "username";
-	}
-	
-	@Override
-	protected String getEntitySearchTableName() {
-		return "jpuserprofile_profilesearch";
-	}
-	
-	@Override
-	protected String getTableFieldName(String metadataFieldKey) {
-		if (metadataFieldKey.equals(IEntityManager.ENTITY_ID_FILTER_KEY)) {
-			return this.getEntityMasterTableIdFieldName();
-		} else if (metadataFieldKey.equals(IEntityManager.ENTITY_TYPE_CODE_FILTER_KEY)) {
-			return this.getEntityMasterTableIdTypeFieldName();
-		} else if (metadataFieldKey.equals(IUserProfileManager.PUBLIC_PROFILE_FILTER_KEY)) {
-			return "publicprofile";
-		} else throw new RuntimeException("Chiave di ricerca '" + metadataFieldKey + "' non riconosciuta");
-	}
-
+    
+    protected ApsEntityRecord createRecord(ResultSet result) throws Throwable {
+        UserProfileRecord record = new UserProfileRecord();
+        record.setId(result.getString("username"));
+        record.setXml(result.getString("profilexml"));
+        record.setTypeCode(result.getString("profiletype"));
+        record.setPublicProfile(result.getInt("publicprofile") == 1);
+        return record;
+    }
+    
+    protected String getEntityMasterTableIdFieldName() {
+        return "username";
+    }
+    
+    protected String getEntityMasterTableIdTypeFieldName() {
+        return "profiletype";
+    }
+    
+    protected String getEntityMasterTableName() {
+        return "jpuserprofile_authuserprofiles";
+    }
+    
+    protected String getEntitySearchTableIdFieldName() {
+        return "username";
+    }
+    
+    protected String getEntitySearchTableName() {
+        return "jpuserprofile_profilesearch";
+    }
+    
+    protected String getTableFieldName(String metadataFieldKey) {
+        if (metadataFieldKey.equalsIgnoreCase("username")) {
+            return this.getEntityMasterTableIdFieldName();
+        } else if (metadataFieldKey.equals(IEntityManager.ENTITY_ID_FILTER_KEY)) {
+            return this.getEntityMasterTableIdFieldName();
+        } else if (metadataFieldKey.equals(IEntityManager.ENTITY_TYPE_CODE_FILTER_KEY)) {
+            return this.getEntityMasterTableIdTypeFieldName();
+        } else if (metadataFieldKey.equals(IUserProfileManager.PUBLIC_PROFILE_FILTER_KEY)) {
+            return "publicprofile";
+        } else {
+            throw new RuntimeException("Chiave di ricerca '" + metadataFieldKey + "' non riconosciuta");
+        }
+    }
+    
 }

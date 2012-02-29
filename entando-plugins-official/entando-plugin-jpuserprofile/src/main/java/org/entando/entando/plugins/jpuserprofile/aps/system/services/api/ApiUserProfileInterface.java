@@ -18,23 +18,50 @@
 package org.entando.entando.plugins.jpuserprofile.aps.system.services.api;
 
 import java.util.Properties;
+import java.util.List;
 
 import org.entando.entando.aps.system.services.api.model.ApiException;
 import org.entando.entando.aps.system.services.api.model.BaseApiResponse;
 import org.entando.entando.aps.system.services.api.server.IResponseBuilder;
+import org.entando.entando.aps.system.services.api.IApiErrorCodes;
+
+import org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model.JAXBUserProfile;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.common.entity.helper.BaseFilterUtils;
+import com.agiletec.aps.system.common.entity.model.EntitySearchFilter;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
-import org.entando.entando.aps.system.services.api.IApiErrorCodes;
-import org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model.JAXBUserProfile;
 
 /**
  * @author E.Santoboni
  */
 public class ApiUserProfileInterface {
+    
+    public List<String> getUserProfiles(Properties properties) throws Throwable {
+        List<String> usernames = null;
+        try {
+            String userProfileType = properties.getProperty("userProfileType");
+            IUserProfile prototype = (IUserProfile) this.getUserProfileManager().getEntityPrototype(userProfileType);
+            if (null == prototype) {
+                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile Type '" + userProfileType + "' does not exist");
+            }
+            String langCode = properties.getProperty(SystemConstants.API_LANG_CODE_PARAMETER);
+            String filtersParam = properties.getProperty("filters");
+            BaseFilterUtils filterUtils = new BaseFilterUtils();
+            EntitySearchFilter[] filters = filterUtils.getFilters(prototype, filtersParam, langCode);
+            usernames = this.getUserProfileManager().searchId(userProfileType, filters);
+        } catch (ApiException ae) {
+            throw ae;
+        } catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "getUserProfiles");
+            throw new ApsSystemException("Error searching usernames", t);
+        }
+        return usernames;
+    }
     
     public JAXBUserProfile getUserProfile(Properties properties) throws ApiException, Throwable {
         JAXBUserProfile jaxbUserProfile = null;

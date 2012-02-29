@@ -54,16 +54,17 @@ public class UserProfileResponse extends AbstractApiResponse {
             return null;
         }
         
-        @XmlElement(name = "userProfile", required = false)
+        @XmlElement(name = "userProfiles", required = false)
         public ListResponse getResults() {
             if (this.getMainResult() instanceof Collection) {
-                List<JAXBUserProfile> contentTypes = new ArrayList<JAXBUserProfile>();
-                contentTypes.addAll((Collection<JAXBUserProfile>) this.getMainResult());
+                List<String> contentTypes = new ArrayList<String>();
+                contentTypes.addAll((Collection<String>) this.getMainResult());
                 ListResponse listResponse = new ListResponse(contentTypes) {};
                 return listResponse;
             }
             return null;
         }
+        
     }
     
 }
