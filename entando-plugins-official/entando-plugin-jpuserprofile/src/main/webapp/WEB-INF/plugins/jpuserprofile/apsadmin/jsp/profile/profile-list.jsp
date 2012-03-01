@@ -5,9 +5,7 @@
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 <h1><s:text name="jpuserprofile.title.profileManagement" /></h1>
-
 <div id="main">
-
 	<s:form action="search">
 		<s:if test="hasActionErrors()">
 		<div class="message message_error">
@@ -34,17 +32,16 @@
 					<wpsf:select useTabindexAutoIncrement="true" name="withProfile" id="withProfile" list="#{1:getText('label.yes'),0:getText('label.no')}" headerKey="" headerValue="%{getText('label.bothYesAndNo')}" />
 					--%>
 					<wpsf:radio cssClass="radiocheck" id="jpuserprofile_src_withProfile_yes" name="withProfile" value="1" checked="%{withProfile.toString().equalsIgnoreCase('1')}" useTabindexAutoIncrement="true" />
-					<label for="jpuserprofile_src_withProfile_yes">Users with Profile</label>
+					<label for="jpuserprofile_src_withProfile_yes"><s:text name="jpuserprofile.label.search.usersWithProfile" /></label>
 					<wpsf:radio id="jpuserprofile_src_withProfile_no" name="withProfile" value="0" checked="%{withProfile.toString().equalsIgnoreCase('0')}" useTabindexAutoIncrement="true" />
-					<label for="jpuserprofile_src_withProfile_no">Users without Profile</label>
+					<label for="jpuserprofile_src_withProfile_no"><s:text name="jpuserprofile.label.search.usersWithoutProfile" /></label>
 					<wpsf:radio id="jpuserprofile_src_withProfile_both" name="withProfile" value="" checked="%{withProfile==null}" useTabindexAutoIncrement="true" />
-					<label for="jpuserprofile_src_withProfile_both">All</label>
-
+					<label for="jpuserprofile_src_withProfile_both"><s:text name="jpuserprofile.label.search.usersAllProfile" /></label>
 				</p>
 				<p>
-						<label for="jpuserprofile_src_entityPrototypes" class="basic-mint-label"><s:text name="jpuserprofile.note.search.profileType" />:</label>
-						<wpsf:select useTabindexAutoIncrement="true" id="jpuserprofile_src_entityPrototypes" list="entityPrototypes" name="entityTypeCode" headerKey="" headerValue="%{getText('label.all')}" listKey="typeCode" listValue="typeDescr" cssClass="text" />
-						<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.set')}" cssClass="button" action="changeProfileType" />
+					<label for="jpuserprofile_src_entityPrototypes" class="basic-mint-label"><s:text name="jpuserprofile.note.search.profileType" />:</label>
+					<wpsf:select useTabindexAutoIncrement="true" id="jpuserprofile_src_entityPrototypes" list="entityPrototypes" name="entityTypeCode" headerKey="" headerValue="%{getText('label.all')}" listKey="typeCode" listValue="typeDescr" cssClass="text" />
+					<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.set')}" cssClass="button" action="changeProfileType" />
 				</p>
 				<div class="subsection">
 						<s:set var="searcheableAttributes" value="searcheableAttributes" ></s:set>
@@ -128,7 +125,6 @@
 		</p>
 
 		<div class="subsection-light">
-
 			<s:set var="usernamesVar" value="searchResult" />
 			<wpsa:subset source="#usernamesVar" count="10" objectName="usernamesGroup" advanced="true" offset="5">
 				<s:set name="group" value="#usernamesGroup" />
@@ -150,89 +146,44 @@
 					<th class="icon_double"><abbr title="<s:text name="jpuserprofile.label.profile.action.long" />"><s:text name="jpuserprofile.label.profile.action.short" /></abbr></th>
 				</tr>
 				<s:iterator id="usernameVar">
-
-				<s:set var="user" value="%{getUser(#usernameVar)}" />
-
-				<s:if test="!#user.japsUser">
-					<s:set name="statusIconImagePath" id="statusIconImagePath"><wp:resourceURL/>administration/common/img/icons/user-status-notjAPSUser.png</s:set>
-					<s:set name="statusIconText" id="statusIconText"><s:text name="note.userStatus.notjAPSUser" /></s:set>
-				</s:if>
-				<s:elseif test="#user.disabled">
-					<s:set name="statusIconImagePath" id="statusIconImagePath"><wp:resourceURL/>administration/common/img/icons/user-status-notActive.png</s:set>
-					<s:set name="statusIconText" id="statusIconText"><s:text name="note.userStatus.notActive" /></s:set>
-				</s:elseif>
-				<s:elseif test="!#user.accountNotExpired">
-					<s:set name="statusIconImagePath" id="statusIconImagePath"><wp:resourceURL/>administration/common/img/icons/user-status-expiredAccount.png</s:set>
-					<s:set name="statusIconText" id="statusIconText"><s:text name="note.userStatus.expiredAccount" /></s:set>
-				</s:elseif>
-				<s:elseif test="!#user.credentialsNotExpired">
-					<s:set name="statusIconImagePath" id="statusIconImagePath"><wp:resourceURL/>administration/common/img/icons/user-status-expiredPassword.png</s:set>
-					<s:set name="statusIconText" id="statusIconText"><s:text name="note.userStatus.expiredPassword" /></s:set>
-				</s:elseif>
-				<s:elseif test="!#user.disabled">
-					<s:set name="statusIconImagePath" id="statusIconImagePath"><wp:resourceURL/>administration/common/img/icons/user-status-active.png</s:set>
-					<s:set name="statusIconText" id="statusIconText"><s:text name="note.userStatus.active" /></s:set>
-				</s:elseif>
-
-				<tr>
-
+					<s:set var="user" value="%{getUser(#usernameVar)}" />
+					<s:if test="!#user.japsUser">
+						<s:set name="statusIconImagePath" id="statusIconImagePath"><wp:resourceURL/>administration/common/img/icons/user-status-notjAPSUser.png</s:set>
+						<s:set name="statusIconText" id="statusIconText"><s:text name="note.userStatus.notjAPSUser" /></s:set>
+					</s:if>
+					<s:elseif test="#user.disabled">
+						<s:set name="statusIconImagePath" id="statusIconImagePath"><wp:resourceURL/>administration/common/img/icons/user-status-notActive.png</s:set>
+						<s:set name="statusIconText" id="statusIconText"><s:text name="note.userStatus.notActive" /></s:set>
+					</s:elseif>
+					<s:elseif test="!#user.accountNotExpired">
+						<s:set name="statusIconImagePath" id="statusIconImagePath"><wp:resourceURL/>administration/common/img/icons/user-status-expiredAccount.png</s:set>
+						<s:set name="statusIconText" id="statusIconText"><s:text name="note.userStatus.expiredAccount" /></s:set>
+					</s:elseif>
+					<s:elseif test="!#user.credentialsNotExpired">
+						<s:set name="statusIconImagePath" id="statusIconImagePath"><wp:resourceURL/>administration/common/img/icons/user-status-expiredPassword.png</s:set>
+						<s:set name="statusIconText" id="statusIconText"><s:text name="note.userStatus.expiredPassword" /></s:set>
+					</s:elseif>
+					<s:elseif test="!#user.disabled">
+						<s:set name="statusIconImagePath" id="statusIconImagePath"><wp:resourceURL/>administration/common/img/icons/user-status-active.png</s:set>
+						<s:set name="statusIconText" id="statusIconText"><s:text name="note.userStatus.active" /></s:set>
+					</s:elseif>
 					<s:set var="userProfileVar" value="null" />
 					<wpsa:entity entityManagerName="jpuserprofileUserProfileManager" key="%{#usernameVar}" var="userProfileVar"/>
-
-					<td>
-						<s:property value="#usernameVar" />
-					</td>
-
-					<td class="centerText monospace">
-							<s:if test="null != #userProfileVar">
-							<s:property value="#userProfileVar.getValue(#userProfileVar.firstNameAttributeName)"/>&nbsp;<s:property value="#userProfileVar.getValue(#userProfileVar.surnameAttributeName)"/>
-							</s:if>
-							<s:else><abbr title="<s:text name="jpuserprofile.label.noProfile" />">&ndash;</abbr></s:else>
-					</td>
-
-					<td class="centerText monospace">
-						<s:if test="null != #userProfileVar">
-							<s:set var="mail" value="#userProfileVar.getValue(#userProfileVar.mailAttributeName)" />
-							<s:if test="#mail.length()>16">
-								<abbr title="<s:property value="#mail" />">
-									<s:property value="%{#mail.substring(0,8) + '...' + #mail.substring(#mail.length()-8)}" />
-								</abbr>
-							</s:if>
-							<s:else>
-								<s:property value="#userProfileVar.getValue(#userProfileVar.mailAttributeName)"/>
-							</s:else>
-						</s:if>
-						<s:else><abbr title="<s:text name="jpuserprofile.label.noProfile" />">&ndash;</abbr></s:else>
-					</td>
-
-					<td class="icon">
-						<img src="<s:property value="#statusIconImagePath" />" alt="<s:property value="#statusIconText" />" title="<s:property value="#statusIconText" />" />
-					</td>
-					<td class="icon_double">
-						<c:if test="${hasEditProfilePermission}">
-							<a href="<s:url action="edit" namespace="/do/jpuserprofile"><s:param name="username" value="#usernameVar"/></s:url>"
-									title="<s:text name="jpuserprofile.label.editProfile" />: <s:property value="#usernameVar" />">
-											<img src="<wp:resourceURL/>plugins/jpuserprofile/administration/common/img/icons/edit.png" alt="<s:text name="jpuserprofile.label.editProfile" />" />
-							</a>
-						</c:if>
-						<s:if test="null != #userProfileVar">
-						<a href="<s:url action="view" namespace="/do/jpuserprofile"><s:param name="username" value="#usernameVar"/></s:url>"
-								title="<s:text name="jpuserprofile.label.viewProfile" />: <s:property value="#usernameVar" />">
-							<img src="<wp:resourceURL/>plugins/jpuserprofile/administration/common/img/icons/details.png" alt="<s:text name="jpuserprofile.label.viewProfile" />" />
-						</a>
-						</s:if>
-					</td>
-				</s:iterator>
+						<tr>
+							<td><s:property value="#usernameVar" /></td>
+							<td><s:if test="null != #userProfileVar"><s:property value="#userProfileVar.getValue(#userProfileVar.firstNameAttributeName)"/>&#32;<s:property value="#userProfileVar.getValue(#userProfileVar.surnameAttributeName)"/></s:if><s:else><abbr title="<s:text name="jpuserprofile.label.noProfile" />">&ndash;</abbr></s:else></td>
+							<td class="monospace"><s:if test="null != #userProfileVar"><s:set var="mail" value="#userProfileVar.getValue(#userProfileVar.mailAttributeName)" /><s:if test="#mail.length()>16"><abbr title="<s:property value="#mail" />"><s:property value="%{#mail.substring(0,8) + '...' + #mail.substring(#mail.length()-8)}" /></abbr></s:if><s:else><s:property value="#userProfileVar.getValue(#userProfileVar.mailAttributeName)"/></s:else></s:if><s:else><abbr title="<s:text name="jpuserprofile.label.noProfile" />">&ndash;</abbr></s:else></td>
+							<td class="icon"><img src="<s:property value="#statusIconImagePath" />" alt="<s:property value="#statusIconText" />" title="<s:property value="#statusIconText" />" /></td>
+							<td class="icon_double"><c:if test="${hasEditProfilePermission}"><a href="<s:url action="edit" namespace="/do/jpuserprofile"><s:param name="username" value="#usernameVar"/></s:url>"
+											title="<s:text name="jpuserprofile.label.editProfile" />: <s:property value="#usernameVar" />"><img src="<wp:resourceURL/>plugins/jpuserprofile/administration/common/img/icons/edit.png" alt="<s:text name="jpuserprofile.label.editProfile" />" /></a></c:if><s:if test="null != #userProfileVar"><a href="<s:url action="view" namespace="/do/jpuserprofile"><s:param name="username" value="#usernameVar"/></s:url>"
+											title="<s:text name="jpuserprofile.label.viewProfile" />: <s:property value="#usernameVar" />"><img src="<wp:resourceURL/>plugins/jpuserprofile/administration/common/img/icons/details.png" alt="<s:text name="jpuserprofile.label.viewProfile" />" /></a></s:if></td>
+						</tr>
+					</s:iterator>
 				</table>
-
 				<div class="pager">
 					<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pager_formBlock.jsp" />
 				</div>
-
 			</wpsa:subset>
-
 		</div>
-
 	</s:form>
-
 </div>
