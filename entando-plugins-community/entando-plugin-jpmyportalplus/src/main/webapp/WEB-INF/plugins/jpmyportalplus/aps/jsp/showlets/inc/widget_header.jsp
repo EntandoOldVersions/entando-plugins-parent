@@ -3,12 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="charset=UTF-8" %>
 
-<%--
-<c:set var="info"><wp:internalServlet actionPath="/ExtStr2/do/jpcmsshortcut/testIntroHeader" /></c:set>
-<wp:headInfo type="JS_JQUERY_TEST" info="${info}" />
-<wp:internalServlet actionPath="/ExtStr2/do/jpcmsshortcut/testIntro" />
---%>
-
 <%-- variabile showletId: il prefisso showlet id "__s__" è referenziato in jpmyportalplus.js --%>
 <c:set var="showletId" scope="request">showlet_<wp:currentShowlet param="code" />__s__<mppl:requestContextParam param="currentFrame" /></c:set>
 
