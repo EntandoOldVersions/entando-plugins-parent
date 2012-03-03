@@ -9,14 +9,14 @@
 	<h2 class="margin-more-bottom"><s:text name="jpuserprofile.title.profileDetail" /></h2>
 	
 	<s:set name="lang" value="defaultLang" />
-	<s:set var="userProfile" value="%{getUserProfile(username)}" />
-	<s:if test="%{null != #userProfile}">
+	<s:set var="userProfileVar" value="%{getUserProfile(username)}" />
+	<s:if test="%{null != #userProfileVar}">
 		<div class="centerText">
 			<dl class="table-display">
 				<dt><s:text name="jpuserprofile.label.username" /></dt>
 				<dd><s:property value="username" /> </dd>
 				<s:set name="lang" value="defaultLang" />
-				<s:iterator value="#userProfile.attributeList" id="attribute">
+				<s:iterator value="#userProfileVar.attributeList" id="attribute">
 				<%-- INIZIALIZZAZIONE TRACCIATORE --%>
 				<s:set name="attributeTracer" value="initAttributeTracer(#attribute, #lang)" />
 					<%-- VISUALIZZAZIONE CONTENUTO ATTRIBUTI  --%>	
@@ -93,6 +93,6 @@
 	</s:if>
 	
 	<p>
-		<a href="<s:url namespace="/do/jpuserprofile/Search" action="search" />" ><s:text name="jpuserprofile.note.returnTo.search" /></a> 
+		<a href="<s:url namespace="/do/jpuserprofile" action="list" />" ><s:text name="jpuserprofile.note.returnTo.search" /></a> 
 	</p>
 </div>

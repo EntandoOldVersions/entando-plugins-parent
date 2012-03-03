@@ -6,7 +6,7 @@
 				<![CDATA[Edit your profile]]>
 			</longdesc>
 			<url>
-				<param name="namespace">/do/jpuserprofile/Profile</param>
+				<param name="namespace">/do/jpuserprofile/MyProfile</param>
 				<param name="actionName">edit</param>
 			</url>
 		</shortcut>

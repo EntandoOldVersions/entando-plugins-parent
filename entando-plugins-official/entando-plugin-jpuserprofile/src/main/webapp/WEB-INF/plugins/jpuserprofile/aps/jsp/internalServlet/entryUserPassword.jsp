@@ -4,22 +4,12 @@
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 
-<%--
-jpuserprofile_EDITPASSWORD = Modifica Password
-jpuserprofile_OLDPASSWORD = Vecchia password
-jpuserprofile_NEWPASS = Nuova password
-jpuserprofile_CONFIRM_NEWPASS = Conferma nuova password
-jpuserprofile_SAVE_PASSWORD = Salva password
-jpuserprofile_PLEASE_LOGIN_TO_EDIT_PASSWORD = E' necessario logarsi per cambiare la password
-
---%>
-
 <h2><wp:i18n key="jpuserprofile_EDITPASSWORD" /></h2>
 
 <c:choose>
 	<c:when test="${sessionScope.currentUser != 'guest'}">
 		
-		<form action="<wp:action path="/ExtStr2/do/jpuserprofile/Front/CurrentUser/changePassword.action" />" method="post" enctype="multipart/form-data" class="newContentForm">
+		<form action="<wp:action path="/ExtStr2/do/jpuserprofile/Front/CurrentUser/changePassword.action" />" method="post" class="newContentForm">
 			
 			<s:if test="hasFieldErrors()">
 				<h3><wp:i18n key="jpuserprofile_MESSAGE_TITLE_FIELDERRORS" /></h3>

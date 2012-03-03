@@ -34,6 +34,9 @@ import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.event.Prof
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.UserProfile;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.UserProfileRecord;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Implementation of ProfileManager.
@@ -44,209 +47,192 @@ import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.User
  */
 @Aspect
 public class UserProfileManager extends ApsEntityManager implements IUserProfileManager {
-	
-	@Override
-	public void init() throws Exception {
-		super.init();
-		if (null == this.getDefaultProfileType()) {
-			IApsEntity defaultProfileType = (IApsEntity) this.getEntityClass().newInstance();
-			defaultProfileType.setTypeCode(ProfileSystemConstants.DEFAULT_PROFILE_TYPE_CODE);
-			defaultProfileType.setTypeDescr("Default Profile Type");
-			this.addEntityPrototype(defaultProfileType);
-		}
-	}
-	
-	@AfterReturning(
-			pointcut="execution(* com.agiletec.aps.system.services.user.IUserManager.getUser(..))", 
-			returning="user")
-	public void injectProfile(Object user) {
-		if (user != null) {
-			AbstractUser userDetails = (AbstractUser) user;
-			if (null == userDetails.getProfile()) {
-				try {
-					IUserProfile profile = this.getProfile(userDetails.getUsername());
-					userDetails.setProfile(profile);
-				} catch (Throwable t) {
-					ApsSystemUtils.logThrowable(t, this, "injectProfile", "ERRORE INIEZIONE PROFILO su utente " + userDetails.getUsername());
-				}
-			}
-		}
-	}
-	
-	@AfterReturning(
-			pointcut="execution(* com.agiletec.aps.system.services.user.IUserManager.addUser(..)) && args(user,..)")
-	public void addProfile(Object user) {
-		if (user != null) {
-			UserDetails userDetails = (UserDetails) user;
-			Object profile = userDetails.getProfile();
-			if (null != profile) {
-				try {
-					this.addProfile(userDetails.getUsername(), (IUserProfile) profile);
-				} catch (Throwable t) {
-					ApsSystemUtils.logThrowable(t, this, "addProfile", "ERRORE AGGIUNTA PROFILO su utente " + userDetails.getUsername());
-				}
-			}
-		}
-	}
-	
-	@AfterReturning(
-			pointcut="execution(* com.agiletec.aps.system.services.user.IUserManager.updateUser(..)) && args(user,..)")
-	public void updateProfile(Object user) {
-		if (user != null) {
-			UserDetails userDetails = (UserDetails) user;
-			Object profile = userDetails.getProfile();
-			if (null != profile) {
-				try {
-					this.updateProfile(userDetails.getUsername(), (IUserProfile) profile);
-				} catch (Throwable t) {
-					ApsSystemUtils.logThrowable(t, this, "updateProfile", "ERRORE Aggiornamento PROFILO su utente " + userDetails.getUsername());
-				}
-			}
-		}
-	}
-	
-	@AfterReturning(
-			pointcut="execution(* com.agiletec.aps.system.services.user.IUserManager.removeUser(..)) && args(key)")
-	public void deleteProfile(Object key) {
-		String username = null;
-		if (key instanceof String) {
-			username = key.toString();
-		} else if (key instanceof UserDetails) {
-			UserDetails userDetails = (UserDetails) key;
-			username = userDetails.getUsername();
-		}
-		if (username != null) {
-			try {
-				this.deleteProfile(username);
-			} catch (Throwable t) {
-				ApsSystemUtils.logThrowable(t, this, "addProfile", "ERRORE CANCELLAZIONE PROFILO su utente " + username);
-			}
-		}
-	}
-	
-	@Override
-	public IApsEntity getEntity(String entityId) throws ApsSystemException {
-		return this.getProfile(entityId);
-	}
-	
-	@Override
-	public IUserProfile getDefaultProfileType() {
-		return (IUserProfile) super.getEntityPrototype(ProfileSystemConstants.DEFAULT_PROFILE_TYPE_CODE);
-	}
-	
-	@Override
-	@Deprecated
-	public UserProfile getProfileType() {
-		return (UserProfile) this.getDefaultProfileType();
-	}
-	
-	@Override
-	public IUserProfile getProfileType(String typeCode) {
-		return (IUserProfile) super.getEntityPrototype(typeCode);
-	}
-	
-	@Override
-	@Deprecated
-	public void addProfile(String username, UserProfile profile) throws ApsSystemException {
-		this.addProfile(username, (IUserProfile) profile);
-	}
-	
-	@Override
-	public void addProfile(String username, IUserProfile profile) throws ApsSystemException {
-		try {
-			profile.setId(username);
-			this.getProfileDAO().addEntity(profile);
-			this.notifyProfileChanging(profile, ProfileChangedEvent.INSERT_OPERATION_CODE);
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addProfile");
-			throw new ApsSystemException("Errore salvataggio profilo", t);
-		}
-	}
-	
-	@Override
-	public void deleteProfile(String username) throws ApsSystemException {
-		try {
-			IUserProfile profileToDelete = this.getProfile(username);
-			if (null == profileToDelete) return;
-			this.getProfileDAO().deleteEntity(username);
-			this.notifyProfileChanging(profileToDelete, ProfileChangedEvent.REMOVE_OPERATION_CODE);
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteProfile");
-			throw new ApsSystemException("Errore eliminazione profile per utente", t);
-		}
-	}	
-	
-	@Override
-	public IUserProfile getProfile(String username) throws ApsSystemException {
-		IUserProfile profile = null;
-		try {
-			UserProfileRecord profileVO = (UserProfileRecord) this.getProfileDAO().loadEntityRecord(username);
-			if (profileVO != null) {
-				profile = (IUserProfile) this.createEntityFromXml(profileVO.getTypeCode(), profileVO.getXml());
-				profile.setPublicProfile(profileVO.isPublicProfile());
-			}
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getProfile");
-			throw new ApsSystemException("Errore recupero profileVO", t);
-		}
-		return profile;
-	}
-	
-	@Override
-	@Deprecated
-	public void updateProfile(String username, UserProfile profile) throws ApsSystemException {
-		this.updateProfile(username, (IUserProfile) profile);
-	}
-	
-	@Override
-	public void updateProfile(String username, IUserProfile profile) throws ApsSystemException {
-		try {
-			profile.setId(username);
-			this.getProfileDAO().updateEntity(profile);
-			this.notifyProfileChanging(profile, ProfileChangedEvent.UPDATE_OPERATION_CODE);
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateProfile");
-			throw new ApsSystemException("Errore aggiornamento profilo", t);
-		}
-	}
-	
-	private void notifyProfileChanging(IUserProfile profile, int operationCode) throws ApsSystemException {
-		ProfileChangedEvent event = new ProfileChangedEvent();
-		event.setProfile(profile);
-		event.setOperationCode(operationCode);
-		this.notifyEvent(event);
-	}
-	
-	@Override
-	protected ICategoryManager getCategoryManager() {
-		return null;
-	}
-	
-	@Override
-	protected IEntityDAO getEntityDao() {
-		return (IEntityDAO) this.getProfileDAO();
-	}
-	
-	@Override
-	protected IEntitySearcherDAO getEntitySearcherDao() {
-		return _entitySearcherDAO;
-	}
-	
-	protected IUserProfileDAO getProfileDAO() {
-		return _profileDAO;
-	}
-	public void setProfileDAO(IUserProfileDAO profileDAO) {
-		this._profileDAO = profileDAO;
-	}
-	
-	protected IEntitySearcherDAO getEntitySearcherDAO() {
-		return _entitySearcherDAO;
-	}
-	public void setEntitySearcherDAO(IEntitySearcherDAO entitySearcherDAO) {
-		this._entitySearcherDAO = entitySearcherDAO;
-	}
+    
+    @AfterReturning(pointcut = "execution(* com.agiletec.aps.system.services.user.IUserManager.getUser(..))", returning = "user")
+    public void injectProfile(Object user) {
+        if (user != null) {
+            AbstractUser userDetails = (AbstractUser) user;
+            if (null == userDetails.getProfile()) {
+                try {
+                    IUserProfile profile = this.getProfile(userDetails.getUsername());
+                    userDetails.setProfile(profile);
+                } catch (Throwable t) {
+                    ApsSystemUtils.logThrowable(t, this, "injectProfile", "ERRORE INIEZIONE PROFILO su utente " + userDetails.getUsername());
+                }
+            }
+        }
+    }
 
-	private IUserProfileDAO _profileDAO;
-	private IEntitySearcherDAO _entitySearcherDAO;
-	
+    @AfterReturning(pointcut = "execution(* com.agiletec.aps.system.services.user.IUserManager.addUser(..)) && args(user,..)")
+    public void addProfile(Object user) {
+        if (user != null) {
+            UserDetails userDetails = (UserDetails) user;
+            Object profile = userDetails.getProfile();
+            if (null != profile) {
+                try {
+                    this.addProfile(userDetails.getUsername(), (IUserProfile) profile);
+                } catch (Throwable t) {
+                    ApsSystemUtils.logThrowable(t, this, "addProfile", "ERRORE AGGIUNTA PROFILO su utente " + userDetails.getUsername());
+                }
+            }
+        }
+    }
+
+    @AfterReturning(pointcut = "execution(* com.agiletec.aps.system.services.user.IUserManager.updateUser(..)) && args(user,..)")
+    public void updateProfile(Object user) {
+        if (user != null) {
+            UserDetails userDetails = (UserDetails) user;
+            Object profile = userDetails.getProfile();
+            if (null != profile) {
+                try {
+                    this.updateProfile(userDetails.getUsername(), (IUserProfile) profile);
+                } catch (Throwable t) {
+                    ApsSystemUtils.logThrowable(t, this, "updateProfile", "ERRORE Aggiornamento PROFILO su utente " + userDetails.getUsername());
+                }
+            }
+        }
+    }
+
+    @AfterReturning(pointcut = "execution(* com.agiletec.aps.system.services.user.IUserManager.removeUser(..)) && args(key)")
+    public void deleteProfile(Object key) {
+        String username = null;
+        if (key instanceof String) {
+            username = key.toString();
+        } else if (key instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) key;
+            username = userDetails.getUsername();
+        }
+        if (username != null) {
+            try {
+                this.deleteProfile(username);
+            } catch (Throwable t) {
+                ApsSystemUtils.logThrowable(t, this, "addProfile", "ERRORE CANCELLAZIONE PROFILO su utente " + username);
+            }
+        }
+    }
+    
+    public IApsEntity getEntity(String entityId) throws ApsSystemException {
+        return this.getProfile(entityId);
+    }
+    
+    public IUserProfile getDefaultProfileType() {
+        IUserProfile profileType = (IUserProfile) super.getEntityPrototype(ProfileSystemConstants.DEFAULT_PROFILE_TYPE_CODE);
+        if (null == profileType) {
+            List<String> entityTypes = new ArrayList<String>();
+            entityTypes.addAll(this.getEntityPrototypes().keySet());
+            if (!entityTypes.isEmpty()) {
+                Collections.sort(entityTypes);
+                profileType = (IUserProfile) super.getEntityPrototype(entityTypes.get(0));
+            }
+        }
+        return profileType;
+    }
+    
+    @Deprecated
+    public UserProfile getProfileType() {
+        return (UserProfile) this.getDefaultProfileType();
+    }
+
+    @Override
+    public IUserProfile getProfileType(String typeCode) {
+        return (IUserProfile) super.getEntityPrototype(typeCode);
+    }
+    
+    @Deprecated
+    public void addProfile(String username, UserProfile profile) throws ApsSystemException {
+        this.addProfile(username, (IUserProfile) profile);
+    }
+    
+    public void addProfile(String username, IUserProfile profile) throws ApsSystemException {
+        try {
+            profile.setId(username);
+            this.getProfileDAO().addEntity(profile);
+            this.notifyProfileChanging(profile, ProfileChangedEvent.INSERT_OPERATION_CODE);
+        } catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "addProfile");
+            throw new ApsSystemException("Errore salvataggio profilo", t);
+        }
+    }
+    
+    public void deleteProfile(String username) throws ApsSystemException {
+        try {
+            IUserProfile profileToDelete = this.getProfile(username);
+            if (null == profileToDelete) {
+                return;
+            }
+            this.getProfileDAO().deleteEntity(username);
+            this.notifyProfileChanging(profileToDelete, ProfileChangedEvent.REMOVE_OPERATION_CODE);
+        } catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "deleteProfile");
+            throw new ApsSystemException("Errore eliminazione profile per utente", t);
+        }
+    }
+    
+    public IUserProfile getProfile(String username) throws ApsSystemException {
+        IUserProfile profile = null;
+        try {
+            UserProfileRecord profileVO = (UserProfileRecord) this.getProfileDAO().loadEntityRecord(username);
+            if (profileVO != null) {
+                profile = (IUserProfile) this.createEntityFromXml(profileVO.getTypeCode(), profileVO.getXml());
+                profile.setPublicProfile(profileVO.isPublicProfile());
+            }
+        } catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "getProfile");
+            throw new ApsSystemException("Errore recupero profileVO", t);
+        }
+        return profile;
+    }
+    
+    @Deprecated
+    public void updateProfile(String username, UserProfile profile) throws ApsSystemException {
+        this.updateProfile(username, (IUserProfile) profile);
+    }
+    
+    public void updateProfile(String username, IUserProfile profile) throws ApsSystemException {
+        try {
+            profile.setId(username);
+            this.getProfileDAO().updateEntity(profile);
+            this.notifyProfileChanging(profile, ProfileChangedEvent.UPDATE_OPERATION_CODE);
+        } catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "updateProfile");
+            throw new ApsSystemException("Errore aggiornamento profilo", t);
+        }
+    }
+
+    private void notifyProfileChanging(IUserProfile profile, int operationCode) throws ApsSystemException {
+        ProfileChangedEvent event = new ProfileChangedEvent();
+        event.setProfile(profile);
+        event.setOperationCode(operationCode);
+        this.notifyEvent(event);
+    }
+    
+    protected ICategoryManager getCategoryManager() {
+        return null;
+    }
+    
+    protected IEntityDAO getEntityDao() {
+        return (IEntityDAO) this.getProfileDAO();
+    }
+    
+    protected IEntitySearcherDAO getEntitySearcherDao() {
+        return _entitySearcherDAO;
+    }
+
+    protected IUserProfileDAO getProfileDAO() {
+        return _profileDAO;
+    }
+    public void setProfileDAO(IUserProfileDAO profileDAO) {
+        this._profileDAO = profileDAO;
+    }
+
+    protected IEntitySearcherDAO getEntitySearcherDAO() {
+        return _entitySearcherDAO;
+    }
+    public void setEntitySearcherDAO(IEntitySearcherDAO entitySearcherDAO) {
+        this._entitySearcherDAO = entitySearcherDAO;
+    }
+    
+    private IUserProfileDAO _profileDAO;
+    private IEntitySearcherDAO _entitySearcherDAO;
+    
 }

@@ -4,9 +4,10 @@
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 <h1><s:text name="jpuserprofile.menu.profileAdmin" /></h1>
 <div id="main">
-	<h2><s:text name="jpuserprofile.title.profile.choose" />:&#32;<em><s:property value="username" /></em></h2>
+	<h2><s:text name="jpuserprofile.title.profile.choose" /></em></h2>
 
 	<s:form action="new">
+
 		<p><s:text name="jpuserprofile.note.intro" /></p>
 
 		<s:if test="hasFieldErrors()">
@@ -23,10 +24,9 @@
 		</s:if>
 
 		<p>
-			<wpsf:hidden name="username" />
 			<label for="profileTypeCode"><s:text name="name.profile" />:</label>
 			<wpsf:select useTabindexAutoIncrement="true" list="userProfileTypes" id="profileTypeCode" name="profileTypeCode" listKey="typeCode" listValue="typeDescr" cssClass="text" />
-			&#32;<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.next')}" cssClass="button"/>
+			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.next')}" cssClass="button"/>
 		</p>
 	</s:form>
 </div>
