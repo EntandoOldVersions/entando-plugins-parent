@@ -50,92 +50,91 @@ import com.agiletec.plugins.jpmyportalplus.aps.tags.util.WidgetCheckInfo;
  * @author E.Santoboni
  */
 public class CustomizableShowletsTag extends TagSupport {
-	
-	@Override
-	public int doStartTag() throws JspException {
-		RequestContext reqCtx = (RequestContext) this.pageContext.getRequest().getAttribute(RequestContext.REQCTX);
-		List<WidgetCheckInfo> checkInfos = new ArrayList<WidgetCheckInfo>();
-		IPageUserConfigManager pageUserConfigManager = (IPageUserConfigManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.PAGE_USER_CONFIG_MANAGER, pageContext);
-		try {
-			Lang currentLang = (Lang) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_LANG);
-			IPage currentPage = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
-			Showlet[] customShowletConfig = this.getCustomShowletConfig(currentPage);
-			Showlet[] showletsToRender = pageUserConfigManager.getShowletsToRender(currentPage, customShowletConfig);
-			List<String> allowedShowlets = new ArrayList<String>();
-			Map<String, ShowletType> customizableShowlets = this.getCustomizableShowlets(pageUserConfigManager);
-			allowedShowlets.addAll(customizableShowlets.keySet());
-			Frame[] frames = ((MyPortalPageModel) currentPage.getModel()).getFrameConfigs();
-			for (int i = 0; i < frames.length; i++) {
-				Frame frame = frames[i];
-				if (!frame.isLocked()) {
-					Showlet showlet = showletsToRender[i];
-					if (null != showlet && allowedShowlets.contains(showlet.getType().getCode())) {
-						WidgetCheckInfo info = new WidgetCheckInfo(showlet.getType(), true, currentLang);
-						allowedShowlets.remove(showlet.getType().getCode());
-						checkInfos.add(info);
-					}
-				}
-			}
-			for (int i = 0; i < allowedShowlets.size(); i++) {
-				String code = allowedShowlets.get(i);
-				ShowletType type = customizableShowlets.get(code);
-				WidgetCheckInfo info = new WidgetCheckInfo(type, false, currentLang);
-				checkInfos.add(info);
-			}
-			BeanComparator comparator = new BeanComparator("code");
-			Collections.sort(checkInfos, comparator);
-			this.pageContext.setAttribute(this.getVar(), checkInfos);
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Errore inizializzazione tag", t);
-		}
-		return super.doStartTag();
-	}
-	
-	protected Showlet[] getCustomShowletConfig(IPage currentPage) throws Throwable {
-		Showlet[] customShowlets = null;
-		try {
-			CustomPageConfig customPageConfig = 
-				(CustomPageConfig) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG);
-			if (customPageConfig != null && !customPageConfig.getPageCode().equals(currentPage.getCode())) {
-				throw new RuntimeException("Current page '" + currentPage.getCode() 
-						+ "' not equals then pageCode of custom config param '" + customPageConfig.getPageCode() + "'");
-			}
-			if (null != customPageConfig) {
-				customShowlets = customPageConfig.getConfig();
-			}
-		} catch (Throwable t) {
-			String message = "Errore in estrazione custom showlets";
-			ApsSystemUtils.logThrowable(t, this, "getCustomShowletConfig", message);
-			throw new ApsSystemException(message, t);
-		}
-		return customShowlets;
-	}
-	
-	private Map<String, ShowletType> getCustomizableShowlets(IPageUserConfigManager pageUserConfigManager) throws ApsSystemException {
-		Map<String, ShowletType> map = new HashMap<String, ShowletType>();
-		UserDetails currentUser = (UserDetails) this.pageContext.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
-		try {
-			List<ShowletType> list = pageUserConfigManager.getCustomizableShowlets(currentUser);
-			for (int i = 0; i < list.size(); i++) {
-				ShowletType type = list.get(i);
-				map.put(type.getCode(), type);
-			}
-		} catch (Throwable t) {
-			String message = "Errore in estrazione customizzabili showlets per utente '" + currentUser.getUsername() + "'";
-			ApsSystemUtils.logThrowable(t, this, "getCustomizableShowlets", message);
-			throw new ApsSystemException(message, t);
-		}
-		return map;
-	}
-	
-	public String getVar() {
-		return var;
-	}
-	public void setVar(String var) {
-		this.var = var;
-	}
-	
-	private String var;
-	
+    
+    public int doStartTag() throws JspException {
+        RequestContext reqCtx = (RequestContext) this.pageContext.getRequest().getAttribute(RequestContext.REQCTX);
+        List<WidgetCheckInfo> checkInfos = new ArrayList<WidgetCheckInfo>();
+        IPageUserConfigManager pageUserConfigManager = (IPageUserConfigManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.PAGE_USER_CONFIG_MANAGER, pageContext);
+        try {
+            Lang currentLang = (Lang) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_LANG);
+            IPage currentPage = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
+            Showlet[] customShowletConfig = this.getCustomShowletConfig(currentPage);
+            Showlet[] showletsToRender = pageUserConfigManager.getShowletsToRender(currentPage, customShowletConfig);
+            List<String> allowedShowlets = new ArrayList<String>();
+            Map<String, ShowletType> customizableShowlets = this.getCustomizableShowlets(pageUserConfigManager);
+            allowedShowlets.addAll(customizableShowlets.keySet());
+            Frame[] frames = ((MyPortalPageModel) currentPage.getModel()).getFrameConfigs();
+            for (int i = 0; i < frames.length; i++) {
+                Frame frame = frames[i];
+                if (!frame.isLocked()) {
+                    Showlet showlet = showletsToRender[i];
+                    if (null != showlet && allowedShowlets.contains(showlet.getType().getCode())) {
+                        WidgetCheckInfo info = new WidgetCheckInfo(showlet.getType(), true, currentLang);
+                        allowedShowlets.remove(showlet.getType().getCode());
+                        checkInfos.add(info);
+                    }
+                }
+            }
+            for (int i = 0; i < allowedShowlets.size(); i++) {
+                String code = allowedShowlets.get(i);
+                ShowletType type = customizableShowlets.get(code);
+                WidgetCheckInfo info = new WidgetCheckInfo(type, false, currentLang);
+                checkInfos.add(info);
+            }
+            BeanComparator comparator = new BeanComparator("title");
+            Collections.sort(checkInfos, comparator);
+            this.pageContext.setAttribute(this.getVar(), checkInfos);
+        } catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "doStartTag");
+            throw new JspException("Error on doStartTag", t);
+        }
+        return super.doStartTag();
+    }
+
+    protected Showlet[] getCustomShowletConfig(IPage currentPage) throws Throwable {
+        Showlet[] customShowlets = null;
+        try {
+            CustomPageConfig customPageConfig =
+                    (CustomPageConfig) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG);
+            if (customPageConfig != null && !customPageConfig.getPageCode().equals(currentPage.getCode())) {
+                throw new RuntimeException("Current page '" + currentPage.getCode()
+                        + "' not equals then pageCode of custom config param '" + customPageConfig.getPageCode() + "'");
+            }
+            if (null != customPageConfig) {
+                customShowlets = customPageConfig.getConfig();
+            }
+        } catch (Throwable t) {
+            String message = "Error extracting custom showlets";
+            ApsSystemUtils.logThrowable(t, this, "getCustomShowletConfig", message);
+            throw new ApsSystemException(message, t);
+        }
+        return customShowlets;
+    }
+
+    private Map<String, ShowletType> getCustomizableShowlets(IPageUserConfigManager pageUserConfigManager) throws ApsSystemException {
+        Map<String, ShowletType> map = new HashMap<String, ShowletType>();
+        UserDetails currentUser = (UserDetails) this.pageContext.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
+        try {
+            List<ShowletType> list = pageUserConfigManager.getCustomizableShowlets(currentUser);
+            for (int i = 0; i < list.size(); i++) {
+                ShowletType type = list.get(i);
+                map.put(type.getCode(), type);
+            }
+        } catch (Throwable t) {
+            String message = "Error extracting customizable Showlets by user '" + currentUser.getUsername() + "'";
+            ApsSystemUtils.logThrowable(t, this, "getCustomizableShowlets", message);
+            throw new ApsSystemException(message, t);
+        }
+        return map;
+    }
+    
+    public String getVar() {
+        return var;
+    }
+    public void setVar(String var) {
+        this.var = var;
+    }
+    
+    private String var;
+    
 }
