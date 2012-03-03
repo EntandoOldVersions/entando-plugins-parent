@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>org.entando.entando.plugins</groupId>
 	<artifactId>entando-plugins-parent</artifactId>
-	<version>2.4.0.2-SNAPSHOT</version>
+	<version>2.4.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Entando: Plugins parent</name>
 	<url>http://www.entando.com/</url>
@@ -26,54 +26,86 @@
 	</scm>	
 	<description>Plugins parent for Entando: an agile, modern and user-centric open source Portal platform.</description>
 	<modules>
-		<module>entando-plugins-community/entando-plugin-jpfacetnav</module>
-		<module>entando-plugins-official/entando-plugin-jpmail</module>
-		<module>entando-plugins-community/entando-plugin-jpwebdynamicform</module>
-		<module>entando-plugins-official/entando-plugin-jprss</module>
+		<!--
+                <module>entando-plugins-community/entando-plugin-jpfacetnav</module>
+		-->
+                <module>entando-plugins-official/entando-plugin-jpmail</module>
+                <module>entando-plugins-community/entando-plugin-jpwebdynamicform</module>
+		<!--
+                <module>entando-plugins-official/entando-plugin-jprss</module>
+                -->
 		<module>entando-plugins-official/entando-plugin-jpsharewith</module>
 		<module>entando-plugins-official/entando-plugin-jpcalendar</module>
 		<!-- WARNING! Comment out if you want to run global tests -->
+                <!--
 		<module>entando-plugins-official/entando-plugin-jpldap</module>
+                -->
 		<!-- //WARNING -->
 		<module>entando-plugins-official/entando-plugin-jpuserprofile</module>
+                <!--
 		<module>entando-plugins-official/entando-plugin-jpuserreg</module>
 		<module>entando-plugins-community/entando-plugin-jpaddressbook</module>
 		<module>entando-plugins-community/entando-plugin-jpnewsletter</module>
+                -->
 		<module>entando-plugins-community/entando-plugin-jpsurvey</module>
 		<!-- WARNING! Comment out if you want to run global tests -->
+                <!--
 		<module>entando-plugins-official/entando-plugin-jpwscontent</module>
-		<!-- //WARNING -->		
+                -->
+		<!-- //WARNING -->
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpavatar</module>
 		<module>entando-plugins-community/entando-plugin-jpactionlogger</module>
+                -->
 		<!-- WARNING! Comment out if you want to run global tests -->
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpcontentnotifier</module>
+                -->
 		<!-- //WARNING -->
 		<module>entando-plugins-community/entando-plugin-jpfastcontentedit</module>
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpgeoref</module>
+                -->
 		<!-- WARNING! Comment out if you want to run global tests -->
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpwebmail</module>
-		<!-- //WARNING -->		
+                -->
+		<!-- //WARNING -->
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpimagemap</module>
 		<module>entando-plugins-community/entando-plugin-jpphotogallery</module>
+                -->
 		<!-- WARNING! Comment out if you want to run global tests -->
+                <!--
 		<module>entando-plugins-community/entando-plugin-jprssaggregator</module>
-		<!-- //WARNING -->		
+                -->
+		<!-- //WARNING -->	
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpshowletreplicator</module>
 		<module>entando-plugins-community/entando-plugin-jpwtt</module>
 		<module>entando-plugins-community/entando-plugin-jpmyportal</module>
 		<module>entando-plugins-community/entando-plugin-jpmassiveresourceloader</module>
+                -->
 		<!-- WARNING! Comment out if you want to run global tests -->
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpremoteresourceloader</module>
+                -->
 		<!-- //WARNING -->
 		<!-- WARNING! Comment out if you want to run global tests -->
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpversioning</module>
+                -->
 		<!-- //WARNING -->		
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpcasclient</module>
 		<module>entando-plugins-community/entando-plugin-jpstats</module>
 		<module>entando-plugins-community/entando-plugin-jpcontentworkflow</module>
+                -->
 		<module>entando-plugins-community/entando-plugin-jpcontentfeedback</module>
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpcmstagcloud</module>
 		<module>entando-plugins-community/entando-plugin-jpcontentrefs</module>
+                -->
 		<module>entando-plugins-community/entando-plugin-jpmyportalplus</module>
 	</modules>
 	<!--
@@ -603,19 +635,19 @@
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>2.4.0.1</version>
+			<version>2.4.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>2.4.0.1</version>
+			<version>2.4.1-SNAPSHOT</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>2.4.0.1</version>
+			<version>2.4.1-SNAPSHOT</version>
 			<type>zip</type>
 			<classifier>misc-test</classifier>
 			<scope>test</scope>
@@ -623,7 +655,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.0.5.RELEASE</version>
+			<version>3.0.6.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
