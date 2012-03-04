@@ -29,6 +29,7 @@ import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.IUserManager;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.system.entity.AbstractApsEntityAction;
+
 import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
@@ -36,12 +37,11 @@ import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegManager;
 
 /**
- * Action to manage User Account Registration Requests
- * 
+ * Action to manage User Account Registration Requests.
  * @author S.Puddu
  * @author E.Mezzano
  * @author G.Cocco
- * */
+ */
 public class UserRegistrationAction extends AbstractApsEntityAction implements IUserRegistrationAction {
 	
 	@Override
@@ -112,7 +112,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		try {
 			IUserProfile userProfile = this.getUserProfile();
 			if (userProfile!=null) {
-				userProfile.setId(this.getUsername());
+				userProfile.setId(this.getUsername().trim());
 				this._userRegManager.regAccount(userProfile);
 				this.setUserProfile(null);
 			} else {
@@ -155,7 +155,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 	 * @throws Throwable In error case.
 	 */
 	protected boolean existsUser(String username) throws Throwable {
-		boolean exists = (username!=null && username.trim().length()>=0 && this.getUserManager().getUser(username)!=null);
+		boolean exists = (username!=null && username.trim().length()>=0 && this.getUserManager().getUser(username.trim())!=null);
 		return exists;
 	}
 	
