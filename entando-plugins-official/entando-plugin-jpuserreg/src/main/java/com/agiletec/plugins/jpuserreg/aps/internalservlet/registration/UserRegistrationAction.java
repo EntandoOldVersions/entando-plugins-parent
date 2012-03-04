@@ -112,7 +112,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		try {
 			IUserProfile userProfile = this.getUserProfile();
 			if (userProfile!=null) {
-				userProfile.setId(this.getUsername());
+				userProfile.setId(this.getUsername().trim());
 				this._userRegManager.regAccount(userProfile);
 				this.setUserProfile(null);
 			} else {
@@ -155,7 +155,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 	 * @throws Throwable In error case.
 	 */
 	protected boolean existsUser(String username) throws Throwable {
-		boolean exists = (username!=null && username.trim().length()>=0 && this.getUserManager().getUser(username)!=null);
+		boolean exists = (username!=null && username.trim().length()>=0 && this.getUserManager().getUser(username.trim())!=null);
 		return exists;
 	}
 	
