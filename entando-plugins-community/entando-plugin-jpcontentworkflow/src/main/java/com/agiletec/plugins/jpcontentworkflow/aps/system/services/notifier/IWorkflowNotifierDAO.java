@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2005 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
+* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of jAPS software.
 * jAPS is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2005 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
+* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcontentworkflow.aps.system.services.notifier;

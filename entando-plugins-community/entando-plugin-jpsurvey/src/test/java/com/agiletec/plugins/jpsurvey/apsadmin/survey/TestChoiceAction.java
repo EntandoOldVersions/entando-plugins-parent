@@ -3,10 +3,10 @@ package com.agiletec.plugins.jpsurvey.apsadmin.survey;
 
 /*
  *
- * Copyright 2005 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
+ * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
- * This file is part of jAPS software.
- * jAPS is a free software; 
+ * This file is part of Entando software.
+ * Entando is a free software; 
  * you can redistribute it and/or modify it
  * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
  * 
@@ -15,7 +15,7 @@ package com.agiletec.plugins.jpsurvey.apsadmin.survey;
  * 
  * 
  * 
- * Copyright 2005 AgileTec s.r.l. (http://www.agiletec.it) All rights reserved.
+ * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  */
 import com.agiletec.plugins.jpsurvey.apsadmin.ApsAdminPluginBaseTestCase;
