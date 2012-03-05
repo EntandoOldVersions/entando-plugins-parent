@@ -4,19 +4,19 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
-        <version>2.4.0.2-SNAPSHOT</version>
+        <version>3.0.0-TP1</version>
     </parent>
 	<artifactId>entando-plugin-jpavatar</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
 	<version>1.3.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Avatar</name>
-	<description>CHANGE ME! Enter some quick and useful info</description>
+	<description>Avatar</description>
 	<developers>
 		<developer>
-			<id>myUsername</id>
-			<name>John J. Doe</name>
-			<email>me@myself.com</email>
+			<id>.spuddu</id>
+			<name>Stefano Puddu</name>
+			<email>s.puddo@agiletec.it</email>
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>

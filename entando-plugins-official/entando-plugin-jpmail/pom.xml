@@ -4,19 +4,19 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
-        <version>2.4.1-SNAPSHOT</version>
+        <version>3.0.0-TP1</version>
     </parent>
 	<artifactId>entando-plugin-jpmail</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.5.1-TP1</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Email Sender</name>
-	<description>CHANGE ME! Enter some quick and useful info</description>
+	<description>Email Sender Plugin</description>
 	<developers>
 		<developer>
 			<id>e.santoboni</id>
 			<name>Eugenio Santoboni</name>
-			<email>e.santoboni@agiletec.it</email>
+			<email>e.santoboni@entando.com</email>
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>
@@ -70,15 +70,12 @@
 			<version>1.4.4</version>
 		</dependency>
 		
-		
-		
 		<dependency>
 			<groupId>org.subethamail</groupId>
     		<artifactId>subethasmtp</artifactId>
     		<version>3.1.6</version>
 			<scope>test</scope>
 		</dependency>
-		
 		
 		<!-- 
 		<dependency>

@@ -4,11 +4,11 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
-        <version>2.4.1-SNAPSHOT</version>
+        <version>3.0.0-TP1</version>
     </parent>
 	<artifactId>entando-plugin-jpmyportalplus</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.1.1-TP1</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: My Portal Plus</name>
 	<description>My Portal Plus</description>
@@ -16,7 +16,7 @@
 		<developer>
 			<id>e.santoboni</id>
 			<name>Eugenio Santoboni</name>
-			<email>e.santoboni@agiletec.it</email>
+			<email>e.santoboni@entando.com</email>
 		</developer>
 		<developer>
 			<id>a.dessi</id>

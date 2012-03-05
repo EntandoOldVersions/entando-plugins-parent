@@ -4,19 +4,19 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
-        <version>2.4.1-SNAPSHOT</version>
+        <version>3.0.0-TP1</version>
     </parent>
 	<artifactId>entando-plugin-jpsharewith</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>1.4.1-SNAPSHOT</version>
+	<version>1.4.1-TP1</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Share With</name>
 	<description>CHANGE ME! Enter some quick and useful info</description>
 	<developers>
 		<developer>
-			<id>e.santoboni</id>
-			<name>Eugenio Santoboni</name>
-			<email>e.santoboni@agiletec.it</email>
+			<id>a.dessi</id>
+			<name>Andrea Dessì</name>
+			<email>a.dessi@agiletec.it</email>
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>

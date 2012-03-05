@@ -4,19 +4,19 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
-        <version>2.4.0.2-SNAPSHOT</version>
+        <version>3.0.0-TP1</version>
     </parent>
 	<artifactId>entando-plugin-jpstats</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
 	<version>1.3.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Statistics</name>
-	<description>CHANGE ME! Enter some quick and useful info</description>
+	<description>Statistics</description>
 	<developers>
 		<developer>
 			<id>e.santoboni</id>
 			<name>Eugenio Santoboni</name>
-			<email>e.santoboni@agiletec.it</email>
+			<email>e.santoboni@entando.com</email>
 		</developer>
 		<developer>
 			<id>s.puddu</id>
@@ -26,7 +26,7 @@
 		<developer>
 			<id>g.cocco</id>
 			<name>Giovanni Cocco</name>
-			<email>g.cocco@tzente.it</email>
+			<email>g.cocco@entando.com</email>
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>

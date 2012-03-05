@@ -4,10 +4,10 @@
 	<parent>
 		<artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-		<version>2.4.1-SNAPSHOT</version>
+		<version>3.0.0-TP1</version>
 	</parent>
 	<artifactId>entando-plugin-jpsurvey</artifactId>
-	<version>1.4.1-SNAPSHOT</version>
+	<version>1.4.1-TP1</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Survey - Questionnaire</name>
 	<description>Allow to manage Survey and Questionnaireo</description>

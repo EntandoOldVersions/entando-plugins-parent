@@ -4,10 +4,10 @@
 	<parent>
 		<artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-		<version>2.4.1-SNAPSHOT</version>
+		<version>3.0.0-TP1</version>
 	</parent>
 	<artifactId>entando-plugin-jpuserprofile</artifactId>
-	<version>1.8.1-SNAPSHOT</version>
+	<version>1.8.1-TP1</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Manage User Profile</name>
 	<description>This plugin allows to manage User Profile Types</description>
@@ -15,7 +15,7 @@
 		<developer>
 			<id>e.santoboni</id>
 			<name>Eugenio Santoboni</name>
-			<email>e.santoboni@agiletec.it</email>
+			<email>e.santoboni@entando.com</email>
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>
