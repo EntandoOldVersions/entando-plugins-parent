@@ -20,11 +20,7 @@ package org.entando.entando.plugins.jpuserprofile.aps.system.services.api.respon
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.entando.entando.aps.system.common.entity.api.JAXBEntityType;
 import org.entando.entando.aps.system.services.api.model.AbstractApiResponse;
-import org.entando.entando.aps.system.services.api.model.AbstractApiResponseResult;
-import org.entando.entando.aps.system.services.api.model.ListResponse;
-import org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model.JAXBUserProfileType;
 
 /**
  * @author E.Santoboni
@@ -32,43 +28,14 @@ import org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model.J
 @XmlRootElement(name = "response")
 public class UserProfileTypeResponse extends AbstractApiResponse {
     
-    public void setResult(Object result, String html) {
-        UserProfileTypeResponseResult responseResult = new UserProfileTypeResponseResult();
-        responseResult.setMainResult(result);
-        responseResult.setHtml(html);
-        this._result = responseResult;
+    @XmlElement(name = "result", required = true)
+    public UserProfileTypeResponseResult getResult() {
+        return (UserProfileTypeResponseResult) super.getResult();
     }
     
-    @XmlElement(name = "result", required = true)
-    private UserProfileTypeResponseResult _result;
-    
-    public static class UserProfileTypeResponseResult extends AbstractApiResponseResult {
-        
-        @XmlElement(name = "userProfileType", required = false)
-        public JAXBUserProfileType getResult() {
-            if (this.getMainResult() instanceof JAXBEntityType) {
-                return (JAXBUserProfileType) this.getMainResult();
-            }
-            return null;
-        }
-        /*
-        @XmlElement(name = "userProfileTypes", required = false)
-        public ListResponse getResults() {
-        if (this.getMainResult() instanceof Collection) {
-        List<JAXBUserProfileType> contentTypes = new ArrayList<JAXBUserProfileType>();
-        contentTypes.addAll((Collection<JAXBUserProfileType>) this.getMainResult());
-        ListResponse listResponse = new ListResponse(contentTypes){};
-        return listResponse;
-        }
-        return null;
-        }
-         */
-        
-        @XmlElement(name = "userProfileTypes", required = false)
-        public ListResponse getResults() {
-            return null;
-        }
-        
+    @Override
+    protected UserProfileTypeResponseResult createResponseResultInstance() {
+        return new UserProfileTypeResponseResult();
     }
     
 }

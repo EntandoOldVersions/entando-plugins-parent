@@ -18,23 +18,17 @@
 package org.entando.entando.plugins.jpuserprofile.aps.system.services.api.response;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.entando.entando.aps.system.services.api.model.AbstractApiResponse;
+import org.entando.entando.aps.system.services.api.model.AbstractApiResponseResult;
+import org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model.JAXBUserProfile;
 
 /**
  * @author E.Santoboni
  */
-@XmlRootElement(name = "response")
-public class UserProfileResponse extends AbstractApiResponse {
+public class UserProfileResponseResult extends AbstractApiResponseResult {
     
-    @XmlElement(name = "result", required = true)
-    public UserProfileResponseResult getResult() {
-        return (UserProfileResponseResult) super.getResult();
-    }
-    
-    protected UserProfileResponseResult createResponseResultInstance() {
-        return new UserProfileResponseResult();
+    @XmlElement(name = "userProfile", required = false)
+    public JAXBUserProfile getResult() {
+        return (JAXBUserProfile) this.getMainResult();
     }
     
 }

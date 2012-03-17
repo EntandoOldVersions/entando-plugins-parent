@@ -49,7 +49,7 @@
         <method httpMethod="GET" active="true">
             <description>Returns a list of usernames, composed using the specified filters to user profiles.</description>
             <springBean name="jpuserprofileApiUserProfileInterface" method="getUserProfiles" />
-            <responseClass>org.entando.entando.plugins.jpuserprofile.aps.system.services.api.response.UserProfileResponse</responseClass>
+            <responseClass>org.entando.entando.aps.system.services.api.model.StringListApiResponse</responseClass>
             <parameters>
                 <parameter key="userProfileType" required="true">
                     <description>The code of a user profile type.</description>
