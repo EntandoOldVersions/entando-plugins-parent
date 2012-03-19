@@ -44,6 +44,7 @@
     <bean id="jpuserprofileApiUserProfileInterface" 
             class="org.entando.entando.plugins.jpuserprofile.aps.system.services.api.ApiUserProfileInterface" >
         <property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
+        <property name="groupManager" ref="GroupManager" />
     </bean>
     
 </beans>

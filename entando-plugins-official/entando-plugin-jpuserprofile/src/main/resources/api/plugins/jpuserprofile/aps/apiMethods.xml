@@ -17,7 +17,7 @@
             <springBean name="jpuserprofileApiUserProfileTypeInterface" method="getUserProfileType" />
             <responseClass>org.entando.entando.plugins.jpuserprofile.aps.system.services.api.response.UserProfileTypeResponse</responseClass>
             <parameters>
-                <parameter key="profileTypeCode" required="true">
+                <parameter key="typeCode" required="true">
                     <description>The code of the type to return</description>
                 </parameter>
             </parameters>
@@ -36,7 +36,7 @@
             <description>Delete an user profile type</description>
             <springBean name="jpuserprofileApiUserProfileTypeInterface" method="deleteUserProfileType" />
             <parameters>
-                <parameter key="profileTypeCode" required="true">
+                <parameter key="typeCode" required="true">
                     <description>The code of the type to delete</description>
                 </parameter>
             </parameters>
@@ -51,7 +51,7 @@
             <springBean name="jpuserprofileApiUserProfileInterface" method="getUserProfiles" />
             <responseClass>org.entando.entando.aps.system.services.api.model.StringListApiResponse</responseClass>
             <parameters>
-                <parameter key="userProfileType" required="true">
+                <parameter key="typeCode" required="true">
                     <description>The code of a user profile type.</description>
                 </parameter>
                 <parameter key="filters" required="false">
