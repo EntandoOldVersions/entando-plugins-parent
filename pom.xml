@@ -43,7 +43,6 @@
                 -->
 		<module>entando-plugins-community/entando-plugin-jpsurvey</module>
 		<!--
-		<module>entando-plugins-official/entando-plugin-jpwscontent</module>
 		<module>entando-plugins-community/entando-plugin-jpavatar</module>
 		<module>entando-plugins-community/entando-plugin-jpactionlogger</module>
 		<module>entando-plugins-community/entando-plugin-jpcontentnotifier</module>
