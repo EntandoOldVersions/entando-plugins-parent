@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+
+ 	<package name="jpcontentfeedback_do/jpcontentfeedback/FrontEnd/contentfeedback" namespace="/do/jpcontentfeedback/FrontEnd/contentfeedback" extends="japs-front-default">
+
+		<interceptors>
+			<interceptor name="japsToken" class="com.agiletec.plugins.jpcontentfeedback.aps.system.TokenInterceptor" />
+		</interceptors>
+
+		<global-results>
+    		<result name="userNotAllowed" type="redirect">/</result>
+		</global-results>
+
+
+	    <action name="intro" class="jpcontentfeedbackCommentsFrontAction" >
+	    	<result type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
+	    	<interceptor-ref name="japsFrontEndFreeStack">
+	    		<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
+	    	</interceptor-ref>
+	    </action>
+
+	    <action name="insert" class="jpcontentfeedbackCommentsFrontAction" method="addComment">
+	    	<result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
+	    	<result name="success" type="chain">intro</result>
+			<result name="invalid.token" type="chain">intro</result>
+			<interceptor-ref name="japsToken" >
+				<param name="typeMessages">message</param>
+			</interceptor-ref>
+	      	<interceptor-ref name="japsFrontEndFreeValidationStack">
+	      		<!--<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param> -->
+	      	</interceptor-ref>
+	    </action>
+
+	    <action name="delete" class="jpcontentfeedbackCommentsFrontAction" method="delete">
+	    	<result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
+	    	<result type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
+	      	<interceptor-ref name="japsFrontEndFreeStack">
+	      		<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param>
+	      	</interceptor-ref>
+	    </action>
+
+	    <action name="insertVote" class="jpcontentfeedbackCommentsFrontAction" method="insertVote">
+	    	<result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
+	    	<result type="chain">intro</result>
+			<interceptor-ref name="japsFrontEndFreeStack">
+	      		<!--<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param> -->
+			</interceptor-ref>
+	    </action>
+
+		<action name="insertCommentVote" class="jpcontentfeedbackCommentsFrontAction" method="insertVote">
+	    	<result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
+			<result type="chain">intro</result>
+	      	<interceptor-ref name="japsFrontEndFreeStack">
+	      		<!--<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param> -->
+	      	</interceptor-ref>
+	    </action>
+
+	</package>
+</struts>
