@@ -19,20 +19,25 @@ package org.entando.entando.plugins.jpuserprofile.aps.system.services.api;
 
 import java.util.Properties;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.entando.entando.aps.system.services.api.model.ApiException;
-import org.entando.entando.aps.system.services.api.model.BaseApiResponse;
 import org.entando.entando.aps.system.services.api.server.IResponseBuilder;
+import org.entando.entando.aps.system.services.api.model.StringApiResponse;
 import org.entando.entando.aps.system.services.api.IApiErrorCodes;
+import org.entando.entando.aps.system.services.api.model.ApiError;
 
 import org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model.JAXBUserProfile;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.entity.helper.BaseFilterUtils;
+import com.agiletec.aps.system.common.entity.model.AttributeFieldError;
 import com.agiletec.aps.system.common.entity.model.EntitySearchFilter;
+import com.agiletec.aps.system.common.entity.model.FieldError;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.group.IGroupManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 
@@ -44,7 +49,7 @@ public class ApiUserProfileInterface {
     public List<String> getUserProfiles(Properties properties) throws Throwable {
         List<String> usernames = null;
         try {
-            String userProfileType = properties.getProperty("userProfileType");
+            String userProfileType = properties.getProperty("typeCode");
             IUserProfile prototype = (IUserProfile) this.getUserProfileManager().getEntityPrototype(userProfileType);
             if (null == prototype) {
                 throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile Type '" + userProfileType + "' does not exist");
@@ -81,8 +86,8 @@ public class ApiUserProfileInterface {
         return jaxbUserProfile;
     }
     
-    public BaseApiResponse addUserProfile(JAXBUserProfile jaxbUserProfile) throws Throwable {
-        BaseApiResponse response = new BaseApiResponse();
+    public StringApiResponse addUserProfile(JAXBUserProfile jaxbUserProfile) throws Throwable {
+        StringApiResponse response = new StringApiResponse();
         try {
             String username = jaxbUserProfile.getId();
             if (null != this.getUserProfileManager().getProfile(username)) {
@@ -93,7 +98,12 @@ public class ApiUserProfileInterface {
                 throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + jaxbUserProfile.getTypeCode() + "' does not exist");
             }
             IUserProfile userProfile = (IUserProfile) jaxbUserProfile.buildEntity(profilePrototype, null);
-            //TODO VALIDATE
+            List<ApiError> errors = this.validate(userProfile);
+            if (errors.size() > 0) {
+                response.addErrors(errors);
+                response.setResult(IResponseBuilder.FAILURE, null);
+                return response;
+            }
             this.getUserProfileManager().addProfile(username, userProfile);
             response.setResult(IResponseBuilder.SUCCESS, null);
         } catch (ApiException ae) {
@@ -105,9 +115,9 @@ public class ApiUserProfileInterface {
         }
         return response;
     }
-
-    public BaseApiResponse updateUserProfile(JAXBUserProfile jaxbUserProfile) throws Throwable {
-        BaseApiResponse response = new BaseApiResponse();
+    
+    public StringApiResponse updateUserProfile(JAXBUserProfile jaxbUserProfile) throws Throwable {
+        StringApiResponse response = new StringApiResponse();
         try {
             String username = jaxbUserProfile.getId();
             if (null == this.getUserProfileManager().getProfile(username)) {
@@ -118,7 +128,12 @@ public class ApiUserProfileInterface {
                 throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + jaxbUserProfile.getTypeCode() + "' does not exist");
             }
             IUserProfile userProfile = (IUserProfile) jaxbUserProfile.buildEntity(profilePrototype, null);
-            //TODO VALIDATE
+            List<ApiError> errors = this.validate(userProfile);
+            if (errors.size() > 0) {
+                response.addErrors(errors);
+                response.setResult(IResponseBuilder.FAILURE, null);
+                return response;
+            }
             this.getUserProfileManager().updateProfile(username, userProfile);
             response.setResult(IResponseBuilder.SUCCESS, null);
         } catch (ApiException ae) {
@@ -131,8 +146,30 @@ public class ApiUserProfileInterface {
         return response;
     }
     
+    private List<ApiError> validate(IUserProfile userProfile) throws ApsSystemException {
+        List<ApiError> errors = new ArrayList<ApiError>();
+        try {
+            List<FieldError> fieldErrors = userProfile.validate(this.getGroupManager());
+            if (null != fieldErrors) {
+                for (int i = 0; i < fieldErrors.size(); i++) {
+                    FieldError fieldError = fieldErrors.get(i);
+                    if (fieldError instanceof AttributeFieldError) {
+                        AttributeFieldError attributeError = (AttributeFieldError) fieldError;
+                        errors.add(new ApiError(IApiErrorCodes.API_VALIDATION_ERROR, attributeError.getFullMessage()));
+                    } else {
+                        errors.add(new ApiError(IApiErrorCodes.API_VALIDATION_ERROR, fieldError.getMessage()));
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "validate");
+            throw new ApsSystemException("Error validating profile", t);
+        }
+        return errors;
+    }
+    
     public void deleteUserProfile(Properties properties) throws ApiException, Throwable {
-        BaseApiResponse response = new BaseApiResponse();
+        StringApiResponse response = new StringApiResponse();
         try {
             String username = properties.getProperty("username");
             IUserProfile userProfile = this.getUserProfileManager().getProfile(username);
@@ -157,6 +194,14 @@ public class ApiUserProfileInterface {
         this._userProfileManager = userProfileManager;
     }
     
+    protected IGroupManager getGroupManager() {
+        return _groupManager;
+    }
+    public void setGroupManager(IGroupManager groupManager) {
+        this._groupManager = groupManager;
+    }
+    
     private IUserProfileManager _userProfileManager;
+    private IGroupManager _groupManager;
     
 }

@@ -26,14 +26,10 @@
 	</scm>	
 	<description>Plugins parent for Entando: an agile, modern and user-centric open source Portal platform.</description>
 	<modules>
-		<!--
                 <module>entando-plugins-community/entando-plugin-jpfacetnav</module>
-		-->
                 <module>entando-plugins-official/entando-plugin-jpmail</module>
                 <module>entando-plugins-community/entando-plugin-jpwebdynamicform</module>
-		<!--
                 <module>entando-plugins-official/entando-plugin-jprss</module>
-                -->
 		<module>entando-plugins-official/entando-plugin-jpsharewith</module>
 		<module>entando-plugins-official/entando-plugin-jpcalendar</module>
 		<!--
@@ -47,7 +43,6 @@
                 -->
 		<module>entando-plugins-community/entando-plugin-jpsurvey</module>
 		<!--
-		<module>entando-plugins-official/entando-plugin-jpwscontent</module>
 		<module>entando-plugins-community/entando-plugin-jpavatar</module>
 		<module>entando-plugins-community/entando-plugin-jpactionlogger</module>
 		<module>entando-plugins-community/entando-plugin-jpcontentnotifier</module>

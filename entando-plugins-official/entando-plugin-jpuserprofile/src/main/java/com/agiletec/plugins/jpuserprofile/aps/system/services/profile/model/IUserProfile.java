@@ -18,7 +18,6 @@
 package com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model;
 
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
 
 /**
  * Provides core UserProfile information.

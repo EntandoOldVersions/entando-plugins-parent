@@ -23,7 +23,7 @@ import java.util.Properties;
 
 import org.entando.entando.aps.system.services.api.IApiErrorCodes;
 import org.entando.entando.aps.system.services.api.model.ApiException;
-import org.entando.entando.aps.system.services.api.model.BaseApiResponse;
+import org.entando.entando.aps.system.services.api.model.StringApiResponse;
 import org.entando.entando.aps.system.services.api.server.IResponseBuilder;
 
 import org.entando.entando.plugins.jpuserprofile.aps.system.services.api.model.JAXBUserProfileType;
@@ -45,7 +45,7 @@ public class ApiUserProfileTypeInterface {
     public JAXBUserProfileType getUserProfileType(Properties properties) throws ApiException, Throwable {
         JAXBUserProfileType jaxbProfileType = null;
         try {
-            String typeCode = properties.getProperty("profileTypeCode");
+            String typeCode = properties.getProperty("typeCode");
             IApsEntity masterProfileType = this.getUserProfileManager().getEntityPrototype(typeCode);
             if (null == masterProfileType) {
                 throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + typeCode + "' does not exist");
@@ -60,8 +60,8 @@ public class ApiUserProfileTypeInterface {
         return jaxbProfileType;
     }
     
-    public BaseApiResponse addUserProfileType(JAXBUserProfileType jaxbProfileType) throws Throwable {
-        BaseApiResponse response = new BaseApiResponse();
+    public StringApiResponse addUserProfileType(JAXBUserProfileType jaxbProfileType) throws Throwable {
+        StringApiResponse response = new StringApiResponse();
         try {
             String typeCode = jaxbProfileType.getTypeCode();
             IApsEntity masterProfileType = this.getUserProfileManager().getEntityPrototype(typeCode);
@@ -85,8 +85,8 @@ public class ApiUserProfileTypeInterface {
         return response;
     }
     
-    public BaseApiResponse updateUserProfileType(JAXBUserProfileType jaxbProfileType) throws Throwable {
-        BaseApiResponse response = new BaseApiResponse();
+    public StringApiResponse updateUserProfileType(JAXBUserProfileType jaxbProfileType) throws Throwable {
+        StringApiResponse response = new StringApiResponse();
         try {
             String typeCode = jaxbProfileType.getTypeCode();
             IApsEntity masterProfileType = this.getUserProfileManager().getEntityPrototype(typeCode);
@@ -109,7 +109,7 @@ public class ApiUserProfileTypeInterface {
     
     public void deleteUserProfileType(Properties properties) throws ApiException, Throwable {
         try {
-            String typeCode = properties.getProperty("profileTypeCode");
+            String typeCode = properties.getProperty("typeCode");
             IApsEntity masterProfileType = this.getUserProfileManager().getEntityPrototype(typeCode);
             if (null == masterProfileType) {
                 throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + typeCode + "' doesn't exist");

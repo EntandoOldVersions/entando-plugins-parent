@@ -18,6 +18,11 @@
 			<name>Eugenio Santoboni</name>
 			<email>e.santoboni@entando.com</email>
 		</developer>
+		<developer>
+			<id>s.puddu</id>
+			<name>Stefano Puddu</name>
+			<email>s.puddu@agiletec.it</email>
+		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>
 	<properties>
@@ -61,17 +66,6 @@
 			<groupId>rome</groupId>
 			<artifactId>rome</artifactId>
 			<version>1.0</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.googlecode.s2rome</groupId>
-		    <artifactId>struts2-rome-plugin</artifactId>
-		    <version>0.3</version>
-		    <exclusions>
-				<exclusion>
-					<artifactId>struts2-core</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 </project>
