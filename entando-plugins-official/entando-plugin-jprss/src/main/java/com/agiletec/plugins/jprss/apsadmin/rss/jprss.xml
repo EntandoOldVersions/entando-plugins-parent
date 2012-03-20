@@ -5,7 +5,7 @@
 
 <struts>
     
-    <package name="jprss_do/jprss/Rss/Feed" namespace="/do/jprss/Rss/Feed" extends="rss-default">
+    <package name="jprss_do/jprss/Rss/Feed" namespace="/do/jprss/Rss/Feed" extends="japs-default">
 	
         <result-types>
             <result-type name="rss" class="com.agiletec.plugins.jprss.apsadmin.rss.RomeResult"/>
