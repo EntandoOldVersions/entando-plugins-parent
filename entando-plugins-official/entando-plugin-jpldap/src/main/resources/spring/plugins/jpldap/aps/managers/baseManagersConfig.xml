@@ -9,30 +9,22 @@
 				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
 				http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd" >
 				
-	<bean id="UserManager" class="com.agiletec.plugins.jpldap.aps.system.services.user.LdapUserManager" 
-			parent="abstractService" >
-		<property name="userDAO" >
-			<bean class="com.agiletec.aps.system.services.user.UserDAO">
-				<property name="dataSource" ref="servDataSource" />
-				<property name="encrypter">
-					<bean class="com.agiletec.aps.util.DefaultApsEncrypter"></bean>
-				</property>
-			</bean>
-		</property>
-		<property name="ldapUserDAO" >
-			<bean class="com.agiletec.plugins.jpldap.aps.system.services.user.LdapUserDAO">
-				<property name="providerUrl"><jee:jndi-lookup jndi-name="java:comp/env/ldap.provider.url" /></property>
-				<property name="securityPrincipal"><jee:jndi-lookup jndi-name="java:comp/env/ldap.provider.securityPrincipal" /></property>
-				<property name="securityCredentials"><jee:jndi-lookup jndi-name="java:comp/env/ldap.provider.securityCredentials" /></property>
-				<property name="userObjectClass"><jee:jndi-lookup jndi-name="java:comp/env/ldap.provider.userObjectClass" /></property>
-				<property name="userIdAttributeName"><jee:jndi-lookup jndi-name="java:comp/env/ldap.provider.userIdAttributeName" /></property>
-				<property name="userToStringConfig"><jee:jndi-lookup jndi-name="java:comp/env/ldap.provider.userToString" /></property>
-				<property name="filterGroup"><jee:jndi-lookup jndi-name="java:comp/env/ldap.provider.filterGroup" /></property>
-				<property name="filterGroupAttributeName"><jee:jndi-lookup jndi-name="java:comp/env/ldap.provider.filterGroupAttributeName" /></property>
-				<!-- <property name="searchResultMaxSize"><value>100</value></property> -->
-			</bean>
-		</property>
-		<property name="configManager" ref="BaseConfigManager"/>
-	</bean>
+    <bean id="UserManager" class="com.agiletec.plugins.jpldap.aps.system.services.user.LdapUserManager" 
+            parent="abstractService" >
+        <property name="userDAO" >
+            <bean class="com.agiletec.aps.system.services.user.UserDAO">
+                <property name="dataSource" ref="servDataSource" />
+                <property name="encrypter">
+                    <bean class="com.agiletec.aps.util.DefaultApsEncrypter"></bean>
+                </property>
+            </bean>
+        </property>
+        <property name="ldapUserDAO" >
+            <bean class="com.agiletec.plugins.jpldap.aps.system.services.user.LdapUserDAO">
+                <property name="configManager" ref="BaseConfigManager"/>
+            </bean>
+        </property>
+        <property name="configManager" ref="BaseConfigManager"/>
+    </bean>
 	
 </beans>

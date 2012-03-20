@@ -27,77 +27,43 @@ import com.agiletec.aps.system.services.user.AbstractUser;
  * @author E.Santoboni
  */
 public class LdapUser extends AbstractUser {
-	
-	public LdapUser(String userToStringConfig) {
-		this._userToStringConfig = userToStringConfig;
-	}
-
-	@Override
-	public boolean isJapsUser() {
-		return false;
-	}
-	
-	@Override
-	public String toString() {
-		
-		
-		String[] attrsConf = _userToStringConfig.split(",");
-		
-		Attributes attrs = this.getAttributes();
-		StringBuffer definition = null;
-		if (attrs != null && null != attrsConf) {
-			definition = new StringBuffer();
-			try {
-				
-				for (int i = 0; i < attrsConf.length; i++) {
-
-					if (i>0) {
-						definition.append(" ");
-					}
-					definition.append(attrs.get(attrsConf[i]).get(0).toString());
-					
-				}
-			} catch (Throwable t) {
-				throw new RuntimeException("Errore", t);
-			}
-		}
-		if (null != definition && definition.length() > 0) {
-			return definition.toString();		
-		}
-		
-		return super.toString();
-	}
+    
+    public LdapUser() {}
+    
+    @Override
+    public boolean isJapsUser() {
+        return false;
+    }
     
     /**
      * Crea una copia dell'oggetto user e lo restituisce.
      * @return Oggetto di tipo User clonato.
      */
     public Object clone() {
-        LdapUser cl = new LdapUser(this._userToStringConfig);
+        LdapUser cl = new LdapUser();
         cl.setUsername(this.getUsername());
         cl.setPassword("");
         cl.setAuthorities(this.getAuthorities());
         cl.setAttributes(this.getAttributes());
         return cl;
     }
-	
+    
     /**
      * Return the attributes that have been retrieved from the Ldap server.
      * @return The ldap Attributes.
      */
-	public Attributes getAttributes() {
-		return _attributes;
-	}
-	
-	/**
-	 * Set the attributes that have been retrieved from the Ldap server.
-	 * @param attributes The ldap Attributes.
-	 */
-	protected void setAttributes(Attributes attributes) {
-		this._attributes = attributes;
-	}
-	
-	private Attributes _attributes;
-	private String _userToStringConfig;
-	
+    public Attributes getAttributes() {
+        return _attributes;
+    }
+
+    /**
+     * Set the attributes that have been retrieved from the Ldap server.
+     * @param attributes The ldap Attributes.
+     */
+    protected void setAttributes(Attributes attributes) {
+        this._attributes = attributes;
+    }
+    
+    private Attributes _attributes;
+    
 }
