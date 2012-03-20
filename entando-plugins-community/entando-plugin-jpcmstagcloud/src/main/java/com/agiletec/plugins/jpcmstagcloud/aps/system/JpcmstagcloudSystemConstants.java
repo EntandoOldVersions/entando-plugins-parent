@@ -21,7 +21,13 @@ package com.agiletec.plugins.jpcmstagcloud.aps.system;
  * @author E.Santoboni
  */
 public interface JpcmstagcloudSystemConstants {
-	
-	public static final String TAG_CLOUD_MANAGER = "jpcmstagcloudTagCloudManager";
-	
+    
+    public static final String TAG_CLOUD_MANAGER = "jpcmstagcloudTagCloudManager";
+    
+    public static final String CATEGORY_ROOT_PARAM_NAME = "jpcmstagcloud_categoryRoot";
+    public static final String DEFAULT_CATEGORY_ROOT = "jptagcloud_categoryRoot";
+    
+    public static final String DELAY_DAYS_PARAM_NAME = "jpcmstagcloud_delayDays";
+    public static final int DEFAULT_DELAY_DAYS = -1;
+    
 }

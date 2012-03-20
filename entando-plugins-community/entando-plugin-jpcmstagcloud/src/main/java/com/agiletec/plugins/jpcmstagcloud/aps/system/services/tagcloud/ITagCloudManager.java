@@ -33,6 +33,4 @@ public interface ITagCloudManager {
 	
 	public List<String> loadPublicTaggedContentsId(String categoryCode, UserDetails currentUser) throws ApsSystemException;
 	
-	public static final String DEFAULT_CATEGORY_ROOT = "jptagcloud_categoryRoot"; 
-	
 }

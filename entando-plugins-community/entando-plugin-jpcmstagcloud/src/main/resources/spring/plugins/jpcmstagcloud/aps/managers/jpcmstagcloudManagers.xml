@@ -4,14 +4,14 @@
 		xmlns:context="http://www.springframework.org/schema/context"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	
-	<bean id="jpcmstagcloudTagCloudManager" class="com.agiletec.plugins.jpcmstagcloud.aps.system.services.tagcloud.TagCloudManager" parent="abstractService" >
-		<property name="contentManager" ref="jacmsContentManager" />
-		<property name="categoryManager" ref="CategoryManager" />
-		<property name="groupManager" ref="GroupManager" />
-		<property name="tagCloudDAO" ref="jacmsPublicContentSearcherDAO" />
-		<!-- <property name="delayDays"><value>30</value></property> -->
-		<!-- <property name="tagCloudCategoryRoot"><value>${jpcmstagcloud_categoryRoot}</value></property> -->
-	</bean>
-	
+    
+    <bean id="jpcmstagcloudTagCloudManager" 
+            class="com.agiletec.plugins.jpcmstagcloud.aps.system.services.tagcloud.TagCloudManager" parent="abstractService" >
+        <property name="contentManager" ref="jacmsContentManager" />
+        <property name="categoryManager" ref="CategoryManager" />
+        <property name="groupManager" ref="GroupManager" />
+        <property name="configManager" ref="BaseConfigManager" />
+        <property name="tagCloudDAO" ref="jacmsPublicContentSearcherDAO" />
+    </bean>
+    
 </beans>
