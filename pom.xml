@@ -65,10 +65,8 @@
 		<module>entando-plugins-community/entando-plugin-jpcontentworkflow</module>
                 -->
 		<module>entando-plugins-community/entando-plugin-jpcontentfeedback</module>
-                <!--
 		<module>entando-plugins-community/entando-plugin-jpcmstagcloud</module>
 		<module>entando-plugins-community/entando-plugin-jpcontentrefs</module>
-                -->
 		<module>entando-plugins-community/entando-plugin-jpmyportalplus</module>
 	</modules>
 	<!--
