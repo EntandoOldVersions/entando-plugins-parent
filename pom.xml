@@ -32,19 +32,17 @@
 		<module>entando-plugins-official/entando-plugin-jprss</module>
 		<module>entando-plugins-official/entando-plugin-jpsharewith</module>
 		<module>entando-plugins-official/entando-plugin-jpcalendar</module>
-		<!--
 		<module>entando-plugins-official/entando-plugin-jpldap</module>
-		-->
 		<module>entando-plugins-official/entando-plugin-jpuserprofile</module>
 		<module>entando-plugins-official/entando-plugin-jpuserreg</module>
 		<module>entando-plugins-community/entando-plugin-jpaddressbook</module>
 		<module>entando-plugins-community/entando-plugin-jpnewsletter</module>
 		<module>entando-plugins-community/entando-plugin-jpsurvey</module>
-		<!--
 		<module>entando-plugins-community/entando-plugin-jpavatar</module>
 		<module>entando-plugins-community/entando-plugin-jpactionlogger</module>
+                <!--
 		<module>entando-plugins-community/entando-plugin-jpcontentnotifier</module>
-		-->
+                -->
 		<module>entando-plugins-community/entando-plugin-jpfastcontentedit</module>
 		<!--
 		<module>entando-plugins-community/entando-plugin-jpgeoref</module>
