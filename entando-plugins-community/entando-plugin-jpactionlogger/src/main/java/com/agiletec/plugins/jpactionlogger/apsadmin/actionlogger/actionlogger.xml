@@ -30,7 +30,8 @@
 			<interceptor name="jpactionlogger_actionLogger" class="com.agiletec.plugins.jpactionlogger.apsadmin.system.ActionLoggerInterceptor" />
 		</interceptors>
 		<action name="ping" class="jpactionloggerActionLoggerAction" >
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+			<result type="tiles">jpactionlogger.admin.actionlogger.testResult</result>
+                        <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
 			<interceptor-ref name="jpactionlogger_actionLogger"><param name="excludeParams">password</param></interceptor-ref>
 		</action>
     </package>
