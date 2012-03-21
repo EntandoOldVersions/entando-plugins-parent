@@ -1,4 +1,3 @@
-
 CREATE TABLE jpcontentnotifier_contentchangingevents
 (
   id integer NOT NULL,
@@ -9,6 +8,6 @@ CREATE TABLE jpcontentnotifier_contentchangingevents
   descr character varying(100) NOT NULL,
   maingroup character varying(20) NOT NULL,
   groups character varying,
-  notified smallint
-)
-WITH (OIDS=FALSE);
+  notified smallint,
+  CONSTRAINT jpcontentnotifier_contentchangingevents_pkey PRIMARY KEY (id)
+);

@@ -7,5 +7,6 @@ CREATE TABLE `jpcontentnotifier_contentchangingevents` (
   `descr` varchar(100) NOT NULL,
   `maingroup` varchar(20) NOT NULL,
   `groups` longtext,
-  `notified` smallint(6) DEFAULT NULL
+  `notified` smallint(6) DEFAULT NULL,
+  CONSTRAINT jpcontentnotifier_id_pkey PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
