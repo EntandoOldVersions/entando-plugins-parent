@@ -74,6 +74,11 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 	}
 	
 	@Override
+	public void destroy() {
+		this.closeScheduler();
+	}
+	
+	@Override
 	public void updateFromPublicContentChanged(PublicContentChangedEvent event) {
 		NotifierConfig config = this.getConfig();
 		if (config.isActive()) {
