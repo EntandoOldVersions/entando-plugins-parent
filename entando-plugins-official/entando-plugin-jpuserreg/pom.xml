@@ -7,7 +7,7 @@
         <version>3.0.0-SNAPSHOT</version>
     </parent>
 	<artifactId>entando-plugin-jpuserreg</artifactId>
-	<version>1.4.1-SNAPSHOT</version>
+	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: User Registration</name>
 	<description>User Registration</description>
@@ -59,13 +59,13 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>1.8.1-SNAPSHOT</version>
+			<version>${parent.version}</version>
 			<type>war</type>
 		</dependency>
  		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>1.8.1-SNAPSHOT</version>
+			<version>${parent.version}</version>
 			<type>jar</type>
 			<classifier>classes</classifier>
 			<scope>provided</scope>
@@ -73,14 +73,14 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>1.8.1-SNAPSHOT</version>
+			<version>${parent.version}</version>
 			<type>zip</type>
 			<classifier>misc</classifier>
 		</dependency>		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>1.8.1-SNAPSHOT</version>
+			<version>${parent.version}</version>
 			<type>jar</type>
 			<classifier>tests</classifier>
 			<scope>test</scope>
@@ -88,20 +88,20 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>1.8.1-SNAPSHOT</version>
+			<version>${parent.version}</version>
 			<type>zip</type>
 			<classifier>misc-test</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>1.5.1-SNAPSHOT</version>
+			<version>${parent.version}</version>
 			<type>war</type>
 		</dependency>
  		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>1.5.1-SNAPSHOT</version>
+			<version>${parent.version}</version>
 			<type>jar</type>
 			<classifier>classes</classifier>
 			<scope>provided</scope>
@@ -109,14 +109,14 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>1.5.1-SNAPSHOT</version>
+			<version>${parent.version}</version>
 			<type>zip</type>
 			<classifier>misc</classifier>
 		</dependency>		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>1.5.1-SNAPSHOT</version>
+			<version>${parent.version}</version>
 			<type>jar</type>
 			<classifier>tests</classifier>
 			<scope>test</scope>
@@ -124,7 +124,7 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>1.5.1-SNAPSHOT</version>
+			<version>${parent.version}</version>
 			<type>zip</type>
 			<classifier>misc-test</classifier>
 		</dependency>		

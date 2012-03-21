@@ -8,7 +8,7 @@
     </parent>
 	<artifactId>entando-plugin-jpcontentfeedback</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>1.2.1-SNAPSHOT</version>
+	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Content Feedback</name>
 	<description>You can comment and vote any content of cms</description>
