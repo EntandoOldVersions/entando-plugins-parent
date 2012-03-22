@@ -1,7 +1,7 @@
 <%@ taglib prefix="jpph" uri="/jpphotogallery-aps-core" %>
 <%@ taglib prefix="jacms" uri="/jacms-aps-core" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
-<%@ taglib prefix="c" http://java.sun.com/jsp/jstl/core %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <wp:currentShowlet param="config" configParam="modelIdMaster" var="modelIdMaster" />
 <wp:currentShowlet param="config" configParam="modelIdPreview" var="modelIdPreview" />
