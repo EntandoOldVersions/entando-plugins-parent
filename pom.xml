@@ -48,10 +48,14 @@
 		<module>entando-plugins-community/entando-plugin-jpgeoref</module>
 		<module>entando-plugins-community/entando-plugin-jpwebmail</module>
 		<module>entando-plugins-community/entando-plugin-jpimagemap</module>
+                -->
 		<module>entando-plugins-community/entando-plugin-jpphotogallery</module>
+                <!--
 		<module>entando-plugins-community/entando-plugin-jprssaggregator</module>
+                -->
 		<module>entando-plugins-community/entando-plugin-jpshowletreplicator</module>
-		<module>entando-plugins-community/entando-plugin-jpwtt</module>
+		<!--
+                <module>entando-plugins-community/entando-plugin-jpwtt</module>
 		<module>entando-plugins-community/entando-plugin-jpmyportal</module>
 		<module>entando-plugins-community/entando-plugin-jpmassiveresourceloader</module>
 		<module>entando-plugins-community/entando-plugin-jpremoteresourceloader</module>
