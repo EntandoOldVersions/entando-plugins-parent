@@ -44,11 +44,12 @@
 <p>
 	<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
 	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" cssClass="text" />
-	<wpsf:submit useTabindexAutoIncrement="true" action="configShowlet" value="%{getText('label.continue')}" cssClass="button" />	
+	<wpsf:submit useTabindexAutoIncrement="true" action="configShowlet" value="%{getText('label.continue')}" cssClass="button" />
 </p>
 </fieldset>
 </s:if>
 <s:else>
+
 <fieldset class="margin-bit-bottom"><legend><s:text name="title.contentInfo" /></legend>
 <p>
 	<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
@@ -57,12 +58,55 @@
 </p>
 <p class="noscreen">
 	<wpsf:hidden name="contentType" value="%{getShowlet().getConfig().get('contentType')}" />
-</p>	
-<p>
-	<label for="category" class="basic-mint-label"><s:text name="label.category" />:</label>
-	<wpsf:select useTabindexAutoIncrement="true" name="category" id="category" list="categories" listKey="code" listValue="getShortFullTitle(currentLang.code)" headerKey="" headerValue="%{getText('label.all')}" value="%{getShowlet().getConfig().get('category')}" cssClass="text" />
+	<wpsf:hidden name="categories" value="%{getShowlet().getConfig().get('categories')}" />
+	<s:iterator value="categoryCodes" var="categoryCodeVar" status="rowstatus">
+	<input type="hidden" name="categoryCodes" value="<s:property value="#categoryCodeVar" />" id="categoryCodes-<s:property value="#rowstatus.index" />"/>
+	</s:iterator>
 </p>
+
+	<p>
+		<label for="category" class="basic-mint-label"><s:text name="label.categories" />:</label>
+		<wpsf:select useTabindexAutoIncrement="true" name="categoryCode" id="category" list="categories" listKey="code" listValue="getShortFullTitle(currentLang.code)" headerKey="" headerValue="%{getText('label.all')}" cssClass="text" />
+		<wpsf:submit useTabindexAutoIncrement="true" action="addCategory" value="%{getText('label.join')}" cssClass="button" />
+	</p>
+	
+	<s:if test="null != categoryCodes && categoryCodes.size() > 0">
+		<table class="generic" summary="<s:text name="note.resourceCategories.summary"/>">
+		<caption><span><s:text name="title.resourceCategories.list"/></span></caption>
+		<tr>
+			<th><s:text name="label.category"/></th>
+			<th class="icon"><abbr title="<s:text name="label.remove" />">&ndash;</abbr></th>
+		</tr>
+		<s:iterator value="categoryCodes" var="categoryCodeVar">
+		<s:set name="showletCategory" value="%{getCategory(#categoryCodeVar)}"></s:set>
+		<tr>
+			<td><s:property value="#showletCategory.getFullTitle(currentLang.code)"/></td>
+			<td class="icon">
+				<wpsa:actionParam action="removeCategory" var="actionName" >
+					<wpsa:actionSubParam name="categoryCode" value="%{#categoryCodeVar}" />
+				</wpsa:actionParam>
+				<wpsa:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/22x22/delete.png</wpsa:set>
+				<wpsf:submit useTabindexAutoIncrement="true" type="image" src="%{#iconImagePath}" action="%{#actionName}" value="%{getText('label.remove')}" title="%{getText('label.remove') + ': ' + #showletCategory.getFullTitle(currentLang.code)}" />
+			</td>
+		</tr>
+		</s:iterator>
+		</table>
+	</s:if>
+	<s:else>
+		<p><s:text name="note.categories.none" /></p>		
+	</s:else>
 </fieldset>
+
+<fieldset><legend><s:text name="title.filterOptions" /></legend>
+<p>
+	<label for="filterKey" class="basic-mint-label"><s:text name="label.filter" />:</label>
+	<wpsf:select useTabindexAutoIncrement="true" name="filterKey" id="filterKey" list="allowedFilterTypes" listKey="key" listValue="value" cssClass="text" />
+	<wpsf:submit useTabindexAutoIncrement="true" action="setFilterType" value="%{getText('label.add')}" cssClass="button" />
+</p>
+
+<p class="noscreen">
+	<wpsf:hidden name="filters" value="%{getShowlet().getConfig().get('filters')}" />
+</p>
 
 <s:if test="null != filtersProperties && filtersProperties.size()>0" >
 <table class="generic margin-bit-top" summary="<s:text name="note.page.contentListViewer.summary" />">
@@ -148,22 +192,46 @@
 </table>
 </s:if>
 <s:else>
-	<p><span class="important"><s:text name="title.filterOptions" />:</span> <s:text name="note.filters.none" /></p>		
+	<p><s:text name="note.filters.none" /></p>		
 </s:else>
+</fieldset>
 
-<p class="margin-more-bottom"><wpsf:submit useTabindexAutoIncrement="true" action="newFilter" value="%{getText('label.add')}" cssClass="button" /></p>
-<p class="noscreen">
-	<wpsf:hidden name="filters" value="%{getShowlet().getConfig().get('filters')}" />
-</p>
+<%-- TITLES --%>
+<fieldset><legend class="accordion_toggler"><s:text name="title.extraOption" /></legend>
+<div class="accordion_element">
+<p><s:text name="note.extraOption.intro" /></p>
+	<s:iterator id="lang" value="langs">
+		<p>
+			<label for="title_<s:property value="#lang.code" />"  class="basic-mint-label"><span class="monospace">(<s:property value="#lang.code" />)</span><s:text name="label.title" />:</label>
+			<wpsf:textfield useTabindexAutoIncrement="true" name="title_%{#lang.code}" id="title_%{#lang.code}" value="%{showlet.config.get('title_' + #lang.code)}" cssClass="text" />
+		</p>
+	</s:iterator>
+
+	<p>
+		<label for="pageLink"  class="basic-mint-label"><s:text name="label.link.page" />:</label>
+		<wpsf:select useTabindexAutoIncrement="true" list="pages" name="pageLink" id="pageLink" listKey="code" listValue="getShortFullTitle(currentLang.code)" 
+				value="%{showlet.config.get('pageLink')}" headerKey="" headerValue="- %{getText('label.select')} -" />
+	</p>
+	
+	<s:iterator var="lang" value="langs">
+		<p>
+			<label for="linkDescr_<s:property value="#lang.code" />"  class="basic-mint-label"><span class="monospace">(<s:property value="#lang.code" />)</span><s:text name="label.link.descr"/>:</label>
+			<wpsf:textfield useTabindexAutoIncrement="true" name="linkDescr_%{#lang.code}" id="linkDescr_%{#lang.code}" value="%{showlet.config.get('linkDescr_' + #lang.code)}" cssClass="text" />
+		</p>
+	</s:iterator>
+
+</div>
+</fieldset>
+
 
 <fieldset><legend><s:text name="title.publishingOptions" /></legend>
 <p>
-	<label for="modelIdMaster"><s:text name="label.contentModelMaster" />:</label><br />
+	<label for="modelIdMaster"><s:text name="label.contentModelMaster" />:</label>
 	<wpsf:select useTabindexAutoIncrement="true" name="modelIdMaster" id="modelIdMaster" value="%{getShowlet().getConfig().get('modelIdMaster')}" 
 		list="%{getModelsForContentType(showlet.config['contentType'])}" headerKey="" headerValue="%{getText('label.default')}" listKey="id" listValue="description" cssClass="text" />
 </p>
 <p>
-	<label for="modelIdPreview"><s:text name="label.contentModelPreview" />:</label><br />
+	<label for="modelIdPreview"><s:text name="label.contentModelPreview" />:</label>
 	<wpsf:select useTabindexAutoIncrement="true" name="modelIdPreview" id="modelIdPreview" value="%{getShowlet().getConfig().get('modelIdPreview')}" 
 		list="%{getModelsForContentType(showlet.config['contentType'])}" headerKey="" headerValue="%{getText('label.default')}" listKey="id" listValue="description" cssClass="text" />
 </p>
