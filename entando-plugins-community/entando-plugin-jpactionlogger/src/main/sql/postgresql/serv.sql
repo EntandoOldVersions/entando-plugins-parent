@@ -7,7 +7,4 @@ CREATE TABLE jpactionlogger_records
   actionname character varying(255),
   params character varying,
   CONSTRAINT jpactionlogger_records_pkey PRIMARY KEY (id)
-)
-WITH (
-  OIDS=TRUE
 );
