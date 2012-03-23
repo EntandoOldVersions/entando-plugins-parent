@@ -40,6 +40,7 @@ import org.xml.sax.InputSource;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.category.ICategoryManager;
 import com.agiletec.plugins.jacms.aps.system.services.resource.IResourceDAO;
 import com.agiletec.plugins.jacms.aps.system.services.resource.IResourceManager;
@@ -49,6 +50,7 @@ import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceIns
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceRecordVO;
 import com.agiletec.plugins.jacms.aps.system.services.resource.parse.ResourceHandler;
+import com.agiletec.plugins.jpversioning.aps.system.JpversioningSystemConstants;
 
 /**
  * Manager of trashed resources.
@@ -58,6 +60,7 @@ import com.agiletec.plugins.jacms.aps.system.services.resource.parse.ResourceHan
 public class TrashedResourceManager extends AbstractService implements ITrashedResourceManager {
 	
 	public void init() throws Exception {
+		this.checkTrashedResourceDiskFolder(this.getResourceTrashRootDiskFolder());
 		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized ");
 		ApsSystemUtils.getLogger().config("Folder trashed resources: " + this.getResourceTrashRootDiskFolder());
 	}
@@ -129,36 +132,6 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 		this.getTrashedResourceDAO().delTrashedResource(resourceId);
 	}
 	
-	/**
-	 * Carica una risorsa dal cestino per il ripristino, occupandosi quindi anche 
-	 * della sua rimozione dal cestino.
-	 * 
-	 * @param resourceId l'identificativo della risorsa
-	 * @param basePath il percorso RealPath di esecuzione per il calcolo dei percorsi sul filesystem
-	 * */
-	private ResourceInterface getResourceToRestore(String resourceId) throws Throwable {
-		// Ripristina la risorsa leggendola dalle "tabelle-cestino"
-		// e solo dopo cancella la risorsa con il metodo del TrashedResourceDAO 
-		ResourceInterface resource = this.loadTrashedResource(resourceId);
-		if (null != resource) {
-			try {
-				// spostamento file fisici e cancellazione del cestino
-				Map<String, String> filesPathDestination = this.resourceInstancesArchiveFilePaths(resource);
-				Map<String, String> filesPathSource = this.resourceInstancesTrashFilePaths(resource);
-				String destionationDirPath = filesPathDestination.values().iterator().next();
-				this.checkTrashedResourceDiskFolder(destionationDirPath);		
-				this.moveResourcesIstances(filesPathSource, filesPathDestination);
-	    		this.getResourceDAO().addResource(resource);
-				this.deleteInstancesFromTrash(filesPathSource.values());
-				this.getTrashedResourceDAO().delTrashedResource(resourceId);
-			} catch (Throwable t) {
-				ApsSystemUtils.logThrowable(t, this, "getResourceToRestore", "Error while doading trashed resource to testore : resource id " + resourceId);
-				throw t;
-			}
-		}
-		return resource;
-	}
-	
 	@Override
 	public void addTrashedResource(ResourceInterface resource) throws ApsSystemException {
 		// Invoca cancellazione della risorsa dal Manager esteso
@@ -177,24 +150,27 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 	
 	/*
 	 * Cancella le istanze di una risorsa presenti nel cestino 
-	 * */
-	private void deleteInstancesFromTrash(Collection<String> paths) {		
-		for ( String path : paths) {
+	 */
+	private void deleteInstancesFromTrash(Collection<String> paths) {
+		Iterator<String> iter = paths.iterator();
+		while (iter.hasNext()) {
+			String path = iter.next();
 			File file = new File(path);
 			if (null != file) {
 				file.delete();
 			} else {
-				ApsSystemUtils.getLogger().info(" rimozione di " + path + " file non trovato.");
+				ApsSystemUtils.getLogger().info("File " + path + " not found.");
 			}
 		}
 	}
 	
 	/*
 	 * Spostamento delle risorse di tutte le istanze di una risorsa
-	 * */
+	 */
 	private void moveResourcesIstances(Map<String, String> filesPath, Map<String, String> filesPathDestination) throws ApsSystemException {
-		Set<String> keys = filesPath.keySet();
-		for (String key : keys ) {
+		Iterator<String> iter = filesPath.keySet().iterator();
+		while (iter.hasNext()) {
+			String key = iter.next();
 			this.save(filesPath.get(key), filesPathDestination.get(key));
 		}
 	}
@@ -214,13 +190,16 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 	 * */
 	private void save(String filePathSource, String filePathDestination) throws ApsSystemException {
     	try {
-    		FileInputStream inStream = new FileInputStream(filePathSource);
-    		FileOutputStream outStream = new FileOutputStream(filePathDestination);
-    		while (inStream.available() > 0) {
-    			outStream.write(inStream.read());
-    		}
-    		outStream.close();
-    		inStream.close();
+			FileInputStream is = new FileInputStream(filePathSource);
+			byte[] buffer = new byte[1024];
+            int length = -1;
+            FileOutputStream outStream = new FileOutputStream(filePathDestination);
+            while ((length = is.read(buffer)) != -1) {
+                outStream.write(buffer, 0, length);
+                outStream.flush();
+            }
+            outStream.close();
+            is.close();
     	} catch (FileNotFoundException e) {
     		ApsSystemUtils.logThrowable(e, this, "save", "File not found : " + filePathSource);
     	} catch (IOException e) {
@@ -327,21 +306,18 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
     		parser.parse(is, handler);
     	} catch (Throwable t) {
     		ApsSystemUtils.logThrowable(t, this, "fillEmptyResourceFromXml");
-    		throw new ApsSystemException("Error on loading resource risorsa", t);
+    		throw new ApsSystemException("Error on loading resource", t);
     	}
     }
 	
-	private boolean isValidNumericString(String integerNumber) {
-		return (integerNumber.trim().length() > 0 && integerNumber.matches("\\d+"));
-	}
-    
 	protected String getResourceTrashRootDiskFolder() {
-		return _resourceTrashRootDiskFolder;
+		String folderName = this.getConfigManager().getParam(JpversioningSystemConstants.CONFIG_PARAM_RESOURCE_TRASH_FOLDER);
+		if (null == folderName || folderName.trim().length() == 0) {
+			folderName = JpversioningSystemConstants.DEFAULT_RESOURCE_TRASH_FOLDER_NAME;
+		}
+		return folderName;
 	}
-	public void setResourceTrashRootDiskFolder(String resourceTrashRootDiskFolder) {
-		this._resourceTrashRootDiskFolder = resourceTrashRootDiskFolder;
-	}
-    
+	
 	protected IResourceManager getResourceManager() {
 		return _resourceManager;
 	}
@@ -356,6 +332,13 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 		this._categoryManager = categoryManager;
 	}
     
+	protected ConfigInterface getConfigManager() {
+		return _configManager;
+	}
+	public void setConfigManager(ConfigInterface configManager) {
+		this._configManager = configManager;
+	}
+	
     protected ITrashedResourceDAO getTrashedResourceDAO() {
 		return _trashedResourceDAO;
 	}
@@ -370,11 +353,13 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 		this._resourceDAO = resourceDAO;
 	}
 	
-	private String _resourceTrashRootDiskFolder;
+	//private String _resourceTrashRootDiskFolder;
 	
     private IResourceManager _resourceManager;
     private ICategoryManager _categoryManager;
     
+	private ConfigInterface _configManager;
+	
     private ITrashedResourceDAO _trashedResourceDAO;
     private IResourceDAO _resourceDAO;
 	

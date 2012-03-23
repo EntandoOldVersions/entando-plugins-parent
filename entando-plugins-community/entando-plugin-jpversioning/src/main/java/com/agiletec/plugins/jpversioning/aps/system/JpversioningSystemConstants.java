@@ -38,4 +38,8 @@ public interface JpversioningSystemConstants {
 	
 	public final static String CONFIG_PARAM_DELETE_MID_VERSIONS = "jpversioning_deleteMidVersions";
 	
+	public final static String CONFIG_PARAM_RESOURCE_TRASH_FOLDER = "jpversioning_resourceTrashRootDiskFolder";
+	
+	public final static String DEFAULT_RESOURCE_TRASH_FOLDER_NAME = "trashedresources";
+	
 }

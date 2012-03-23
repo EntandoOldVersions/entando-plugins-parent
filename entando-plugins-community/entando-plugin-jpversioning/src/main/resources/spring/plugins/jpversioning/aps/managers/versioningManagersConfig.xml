@@ -29,7 +29,6 @@
 	
 	<bean id="jpversioningTrashedResourceManager" class="com.agiletec.plugins.jpversioning.aps.system.services.resource.TrashedResourceManager" 
 			parent="abstractService" >
-		<property name="resourceTrashRootDiskFolder" ><jee:jndi-lookup jndi-name="java:comp/env/jpversioning_resourceTrashRootDiskFolder" /></property>
 		<property name="categoryManager" ref="CategoryManager" />
 		<property name="resourceManager" ref="jacmsResourceManager" />
 		<property name="trashedResourceDAO" >
@@ -42,6 +41,7 @@
 				<property name="dataSource" ref="portDataSource" />
 			</bean>
 		</property>
+		<property name="configManager" ref="BaseConfigManager" />
 	</bean>
 	
 </beans>
