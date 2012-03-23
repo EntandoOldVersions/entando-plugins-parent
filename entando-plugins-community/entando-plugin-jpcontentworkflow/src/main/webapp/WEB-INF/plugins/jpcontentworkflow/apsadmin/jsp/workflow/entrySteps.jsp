@@ -2,8 +2,11 @@
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
-
-<h1><a href="<s:url action="list" />" title="<s:text name="note.goToSomewhere" />: <s:text name="title.workflowManagement" />"><s:text name="title.workflowManagement" /></a></h1> 
+<h1><s:text name="title.workflowManagement" /><%-- anchor print --%>
+	<a href="<s:url action="list" />" title="<s:text name="label.list" />">
+		<img src="<wp:resourceURL/>administration/common/img/icons/32x32/general-list.png" alt="<s:text name="label.list" />" />
+	</a>
+</h1> 
 <div id="main">
 	<h2><s:text name="title.workflowManagement.editSteps" /></h2>
 	<p>
@@ -12,7 +15,6 @@
 		<em><s:property value="contentType.descr"/></em>
 	</p>
 	<s:form action="saveSteps" >
-		<div class="subsection-light">
 			<s:if test="hasFieldErrors()">
 				<div class="message message_error">	
 					<h3><s:text name="message.title.FieldErrors" /></h3>
@@ -39,7 +41,9 @@
 				<wpsf:hidden name="typeCode" />
 				<wpsf:hidden name="stepCodes" />
 			</p>
-			<s:if test="%{steps==null || steps.size()==0}"><s:text name="note.stepList.empty" /></s:if>
+			<s:if test="%{steps==null || steps.size()==0}">
+				<p><s:text name="note.stepList.empty" /></p>
+			</s:if>
 			<s:else>
 				<table class="generic">
 					<caption>
@@ -53,9 +57,7 @@
 					</tr>
 					<s:iterator var="step" value="steps" status="rowstatus" >
 						<tr>
-							<td class="icon monospace">
-								<s:property value="#step.code"/>
-							</td>
+							<td class="icon monospace"><s:property value="#step.code"/></td>
 							<td>
 								<wpsf:textfield useTabindexAutoIncrement="true" name="%{code + '_SEP_descr'}" value="%{#step.descr}" cssClass="text" />
 							</td>
@@ -90,8 +92,9 @@
 					</s:iterator>
 				</table>
 			</s:else>
+			<div class="subsection-light">
 			<fieldset>
-				<legend><s:text name="title.newStep" /> </legend>
+				<legend><s:text name="title.newStep" /></legend>
 				<p> 
 					<label for="jpcontentworkflow_stepCode" class="basic-mint-label"><s:text name="label.code" />:</label>
 					<wpsf:textfield useTabindexAutoIncrement="true" name="stepCode" id="jpcontentworkflow_stepCode" cssClass="text" />
@@ -105,12 +108,12 @@
 					<wpsf:select useTabindexAutoIncrement="true" id="jpcontentworkflow_stepRole" name="stepRole" headerKey="" headerValue="" 
 							list="roles" listKey="name" listValue="description" />
 				</p>
+				<p>
+					<wpsa:actionParam action="addStep" var="actionName" />
+					<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" value="%{getText('label.addStep')}" title="%{getText('label.addStep')}" cssClass="button" />
+				</p>
 			</fieldset>
-			<p>
-				<wpsa:actionParam action="addStep" var="actionName" />
-				<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" value="%{getText('label.addStep')}" title="%{getText('label.addStep')}" cssClass="button" />
-			</p>
-		</div>
+			</div>
 		<div class="subsection-light">
 			<p class="centerText">
 				<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.save')}" cssClass="button" />

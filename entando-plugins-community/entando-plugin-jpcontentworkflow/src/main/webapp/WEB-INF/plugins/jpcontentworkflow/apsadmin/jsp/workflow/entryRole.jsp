@@ -2,7 +2,12 @@
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
-<h1><a href="<s:url action="list" />" title="<s:text name="note.goToSomewhere" />: <s:text name="title.workflowManagement" />"><s:text name="title.workflowManagement" /></a></h1> 
+<h1><s:text name="title.workflowManagement" /><%-- anchor print --%>
+	<a href="<s:url action="list" />" title="<s:text name="label.list" />">
+		<img src="<wp:resourceURL/>administration/common/img/icons/32x32/general-list.png" alt="<s:text name="label.list" />" />
+	</a>
+</h1> 
+
 <div id="main">
 	<h2><s:text name="title.workflowManagement.editRole" /></h2>
 	<%-- 
