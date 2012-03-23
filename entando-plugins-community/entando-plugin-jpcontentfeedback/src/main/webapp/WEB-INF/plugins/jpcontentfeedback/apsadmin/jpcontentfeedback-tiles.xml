@@ -24,7 +24,7 @@
 	</definition>
 
 	<definition extends="main.layout" name="admin.jpcontentfeedback.config.edit">
-		<put-attribute name="title" value="jpcontentfeedback.title.config" />
+		<put-attribute name="title" value="jpcontentfeedback.title.configuration" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/config/config_edit.jsp" />
 	</definition>
 

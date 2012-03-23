@@ -3,7 +3,7 @@
 <%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
 <%@ taglib prefix="jpcf" uri="/jpcontentfeedback-aps-core" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
-<%@ taglib prefix="fmt" uri="/jpcontentfeedback-fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <wp:headInfo type="CSS" info="../../plugins/jpcontentfeedback/static/css/jpcontentfeedback.css"/>
 <s:set var="htmlIdPrefix">jpfeedback_<wp:currentPage param="code" /><wp:currentShowlet param="code"/>_</s:set>
 <div class="jpcontentfeedback">
