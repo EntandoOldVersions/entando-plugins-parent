@@ -6,12 +6,21 @@
 <wp:currentShowlet param="config" configParam="modelIdMaster" var="modelIdMaster" />
 <wp:currentShowlet param="config" configParam="modelIdPreview" var="modelIdPreview" />
 
-<jacms:contentList listName="contentList" /> 
+<jacms:contentList listName="contentList" titleVar="titleVar" 
+	pageLinkVar="pageLinkVar" pageLinkDescriptionVar="pageLinkDescriptionVar" /> 
 
 <c:if test="${contentList != null}">
 	<wp:headInfo type="CSS" info="../../plugins/jpphotogallery/jpphotogallery.css"/>
 	<div class="jpphotogallery">
-	<h2 class="title"><wp:i18n key="jpphotogallery_TITLE" /> </h2>
+	
+	<c:if test="${not empty titleVar}">
+		<h2 class="title"><c:out value="${titleVar}" /></h2>
+	</c:if>
+	<c:if test="${empty titleVar}">
+		<h2 class="title"><wp:i18n key="jpphotogallery_TITLE" /> </h2>
+	</c:if>
+	
+		
 	<jpph:pager listName="contentList" objectName="groupContent" max="1" advanced="true" offset="5" >
 		<c:set var="group" value="${groupContent}" scope="request" />
 		
@@ -72,8 +81,17 @@
 		<%--  paginatore basso --%>
 		<c:import url="/WEB-INF/plugins/jpphotogallery/aps/jsp/showlets/inc/jpphotogallery_pagerBlock.jsp" />
 		<%--  paginatore basso--%>
-	
 		
 	</jpph:pager>
+	
+	<c:if test="${null != pageLinkVar && null != pageLinkDescriptionVar}">
+		<p><a href="<wp:url page="${pageLinkVar}"/>"><c:out value="${pageLinkDescriptionVar}" /></a></p>
+	</c:if>
+	
+	<%-- Important: reset variables --%>
+	<c:set var="userFilterOptionsVar" value="${null}" scope="request" />
+	<c:set var="contentList" value="${null}"  scope="request" />
+	<c:set var="group" value="${null}"  scope="request" />
+	
 </div>
 </c:if>	

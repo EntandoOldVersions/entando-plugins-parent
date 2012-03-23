@@ -4,11 +4,11 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 		<property key="it">Galleria Fotografica</property>
 	</properties>', '<config>
 	<parameter name="contentType">Content Type (mandatory)</parameter>
-        <parameter name="modelIdMaster">Main Model</parameter>
+    <parameter name="modelIdMaster">Main Model</parameter>
 	<parameter name="modelIdPreview">Preview Model</parameter>
 	<parameter name="category">Content Category **deprecated**</parameter>
 	<parameter name="categories">Content Category codes (comma separeted)</parameter>
-        <parameter name="orClauseCategoryFilter" />
+    <parameter name="orClauseCategoryFilter" />
 	<parameter name="filters" />
 	<parameter name="title_{lang}">Showlet Title in lang {lang}</parameter>
 	<parameter name="pageLink">The code of the Page to link</parameter>
