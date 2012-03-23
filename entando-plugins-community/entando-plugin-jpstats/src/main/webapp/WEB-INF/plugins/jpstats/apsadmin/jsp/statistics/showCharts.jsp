@@ -23,7 +23,7 @@
 	</s:if>
 
 	<p>
-		<s:text name="jpstats.message.intro.stats" />&#32;<s:date name="startDate" format="dd/MM/yyyy" />&#32;&mdash;&#32;<s:date name="endDate" format="dd/MM/yyyy" />. 
+		<s:text name="jpstats.message.intro.stats"  />&#32;<s:date name="startDate" format="dd/MM/yyyy" />&#32;&mdash;&#32;<s:date name="endDate" format="dd/MM/yyyy" />. 
 	</p>
 
 	<%-- hits --%>
@@ -31,7 +31,14 @@
 		<div class="subsection-light">
 			<s:set name="hitsProducer" value="hitsTimeData"></s:set>
 			<s:if test="#hitsProducer != null">
-				<cewolf:chart id="hitsChart" type="verticalXYBar" xaxislabel="Intervallo" yaxislabel="Hits" showlegend="false">
+				<s:set var="xaxisLabelVar" value="%{getText('label.axis.intervallo')}" scope="page" />
+				<s:set var="yaxisLabelVar" value="%{getText('label.axis.hits')}" scope="page" />
+				<cewolf:chart 
+					id="hitsChart" 
+					type="verticalXYBar" 
+					xaxislabel="${xaxisLabelVar}" 
+					yaxislabel="${yaxisLabelVar}" 
+					showlegend="false">
 					<cewolf:colorpaint color="#FFFFFF" />
 					<cewolf:data>
 						<cewolf:producer id="hitsProducer" />
@@ -50,8 +57,12 @@
 		<div class="subsection-light">
 			<s:set name="topPagesProducer" value="mostVisitedPagestimeData"></s:set>
 			<s:if test="#topPagesProducer != null">
-				<cewolf:chart id="topPagesChart" type="horizontalBar"
-						xaxislabel="pagecode" yaxislabel="Number of Visits"
+				<s:set var="xaxisLabelVar" value="%{getText('label.axis.pagecode')}" scope="page" />
+				<s:set var="yaxisLabelVar" value="%{getText('label.axis.hits')}" scope="page" />
+				<cewolf:chart 
+						id="topPagesChart" type="horizontalBar"
+						xaxislabel="${xaxisLabelVar}" 
+						yaxislabel="${yaxisLabelVar}"
 						showlegend="false">
 					<cewolf:colorpaint color="#FFFFFF" />
 					<cewolf:data>
@@ -71,8 +82,13 @@
 		<div class="subsection-light">
 		<s:set name="topContentsProducer" value="topContentsDataset"></s:set>
 		<s:if test="#topContentsProducer != null">
-			<cewolf:chart id="topContentsChart" type="horizontalBar"
-				xaxislabel="content" yaxislabel="hits"
+			<s:set var="xaxisLabelVar" value="%{getText('label.axis.content')}" scope="page" />
+			<s:set var="yaxisLabelVar" value="%{getText('label.axis.hits')}" scope="page" />
+			<cewolf:chart 
+				id="topContentsChart"
+				type="horizontalBar"
+				xaxislabel="${xaxisLabelVar}" 
+				yaxislabel="${yaxisLabelVar}"
 				showlegend="false">
 				<cewolf:colorpaint color="#FFFFFF" />
 				<cewolf:data>
@@ -103,4 +119,3 @@
 		</div>
 	</s:if>
 </div>
-
