@@ -40,9 +40,8 @@ import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.dispenser.ContentAuthorizationInfo;
 import com.agiletec.plugins.jpcontentfeedback.aps.internalservlet.feedback.ContentFeedbackAction;
+import com.agiletec.plugins.jpcontentfeedback.aps.internalservlet.system.TokenInterceptor;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.JpcontentfeedbackSystemConstants;
-import com.agiletec.plugins.jpcontentfeedback.aps.system.TokenInterceptor;
-import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.ICommentManager;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.model.CommentSearchBean;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.IRatingManager;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.RatingDAO;
@@ -93,10 +92,10 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 			String result1 = this.executeAction();
 			assertEquals(Action.SUCCESS, result1);
-
+			
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "insert");
 			assertEquals(TokenInterceptor.INVALID_TOKEN_CODE, this.executeAction());
-
+			
 			CommentSearchBean searchBean = new CommentSearchBean();
 			searchBean.setComment("Testo ");
 			listaIds = this._commentManager.searchCommentIds(null);

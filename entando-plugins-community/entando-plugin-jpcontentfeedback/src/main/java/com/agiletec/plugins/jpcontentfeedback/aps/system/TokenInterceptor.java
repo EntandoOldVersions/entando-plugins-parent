@@ -17,10 +17,6 @@
 */
 package com.agiletec.plugins.jpcontentfeedback.aps.system;
 
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.ValidationAware;
-import com.opensymphony.xwork2.util.LocalizedTextUtil;
-
 /**
  * This interceptor can make sure that back buttons and double clicks don't cause un-intended side affects.
  * For example, you can use this to prevent careless users who might double click on a "checkout" button at an online store.
@@ -33,49 +29,8 @@ import com.opensymphony.xwork2.util.LocalizedTextUtil;
  * 	  none: don't return message
  *
  * @author D.Cherchi
- *
+ * @deprecated use com.agiletec.plugins.jpcontentfeedback.aps.internalservlet.system.TokenInterceptor
  */
-public class TokenInterceptor extends org.apache.struts2.interceptor.TokenInterceptor {
-
-	@Override
-    protected String handleInvalidToken(ActionInvocation invocation) throws Exception {
-        Object action = invocation.getAction();
-        String errorMessage = LocalizedTextUtil.findText(this.getClass(), "struts.messages.invalid.token",
-                invocation.getInvocationContext().getLocale(),
-                "The form has already been processed or no token was supplied, please try again.", new Object[0]);
-
-        String message = LocalizedTextUtil.findText(this.getClass(), "struts.messages.invalid.token.message",
-                invocation.getInvocationContext().getLocale(),
-                "Stop double-submission of forms.", new Object[0]);
-
-        if (action instanceof ValidationAware) {
-        	if (this.getTypeMessages().equalsIgnoreCase(TYPE_RETURN_ACTION_ERROR_MESSAGE)){
-        		((ValidationAware) action).addActionError(errorMessage);
-        	}else if (this.getTypeMessages().equalsIgnoreCase(TYPE_RETURN_ACTION_MESSAGE)){
-        		((ValidationAware) action).addActionMessage(message);
-        	}else if (this.getTypeMessages().equalsIgnoreCase(TYPE_RETURN_NONE_MESSAGE)){
-        	}
-        } else {
-            log.warn(errorMessage);
-        }
-        return INVALID_TOKEN_CODE;
-    }
-
-	public void setTypeMessages(String typeMessages) {
-		this._typeMessages = typeMessages;
-	}
-
-	public String getTypeMessages() {
-		return _typeMessages;
-	}
-
-	private String _typeMessages;
-
-	public static final String TYPE_RETURN_ACTION_ERROR_MESSAGE = "error";
-	public static final String TYPE_RETURN_ACTION_MESSAGE = "message";
-	public static final String TYPE_RETURN_NONE_MESSAGE = "none";
-
-
-
-
+public class TokenInterceptor extends com.agiletec.plugins.jpcontentfeedback.aps.internalservlet.system.TokenInterceptor {
+	
 }
