@@ -24,6 +24,9 @@ public class ContentFeedbackConfigAction extends BaseAction {
     
     public String update() {
         try {
+			if (null == this.getConfig()) {
+				this.setConfig(new ContentFeedbackConfig());
+			}
             this.getContentFeedbackManager().updateConfig(this.getConfig());
             this.addActionMessage(this.getText("jpcontentfeedback.message.config.updated"));
         } catch (Throwable t) {
