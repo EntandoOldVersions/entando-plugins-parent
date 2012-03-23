@@ -48,3 +48,11 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 	</parameter>
 	<action name="viewerContentFeedbackConfig"/>
 </config>', 'jpcontentfeedback', NULL, NULL, 1);
+
+INSERT INTO sysconfig (version, item, descr, config) VALUES ('test', 'jpcontentfeedback_config', 'Content Feedback global configuration', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentFeedbackConfig>
+		<anonymousComment>true</anonymousComment>
+		<comment>true</comment>
+		<rateComment>true</rateComment>
+		<rateContent>true</rateContent>
+</contentFeedbackConfig>');
