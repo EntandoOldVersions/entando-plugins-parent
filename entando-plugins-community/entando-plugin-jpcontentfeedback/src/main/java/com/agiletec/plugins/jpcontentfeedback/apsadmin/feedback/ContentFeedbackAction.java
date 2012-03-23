@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.ICommentManager;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.model.CommentSearchBean;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.model.IComment;
@@ -38,17 +39,6 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	public String search() {
 		try {
 			ICommentSearchBean searchBean = this.prepareSearchBean();
-			boolean hasAuthor = null != this.getAuthor() && this.getAuthor().trim().length() > 0;
-			boolean hasComment = null != this.getText() && this.getText().trim().length() > 0;
-			boolean hasStatus = -1 != this.getStatus();
-			boolean hasFromData = null != this.getFrom() ;
-			boolean hasToData = null != this.getTo();
-			if ((!hasAuthor) && (!hasComment) && (!hasFromData) && (!hasToData) && (!hasStatus)) {
-				this.addActionError(this.getText("error.filters.empty"));
-				return INPUT;
-			} else {
-				this.setExecuteSearch(true);
-			}
 			this.setSearchBean(searchBean);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "search");
@@ -61,7 +51,6 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	public List<String> getCommentIds() {
 		List<String> comments = new ArrayList<String>();
 		try {
-			if (null == this.getExecuteSearch() || !this.getExecuteSearch()) return null;
 			ICommentSearchBean searchBean = this.getSearchBean();
 			comments = this.getCommentManager().searchCommentIds(searchBean);
 		} catch (Throwable t) {
@@ -124,14 +113,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		searchBean.setStatus(this.getStatus());
 		return searchBean;
 	}
-
-	public void setExecuteSearch(Boolean executeSearch) {
-		this._executeSearch = executeSearch;
-	}
-	public Boolean getExecuteSearch() {
-		return _executeSearch;
-	}
-
+	
 	public void setCommentManager(ICommentManager commentManager) {
 		this._commentManager = commentManager;
 	}
@@ -198,7 +180,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	public void setRatingManager(IRatingManager ratingManager) {
 		this._ratingManager = ratingManager;
 	}
-	public IRatingManager getRatingManager() {
+	protected IRatingManager getRatingManager() {
 		return _ratingManager;
 	}
 
@@ -228,7 +210,6 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	private Date _from;
 	private Date _to;
 	private ICommentManager _commentManager;
-	private Boolean _executeSearch;
 	private ICommentSearchBean _searchBean;
 	private int _selectedComment;
 	private IComment _comment;

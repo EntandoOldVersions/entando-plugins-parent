@@ -6,8 +6,8 @@
 <struts>
 
 	<package name="jpcontentfeedback_do/jpcontentfeedback/Comments" namespace="/do/jpcontentfeedback/Comments" extends="japs-default">
-
-		<action name="list" class="jpcontentfeedbackContentFeedbackAction">
+		
+		<action name="list" class="jpcontentfeedbackContentFeedbackAction" method="search">
 	        <result type="tiles">admin.jpcontentfeedback.comments.search</result>
 	      	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpcontentfeedback_moderate</param></interceptor-ref>
 	    </action>
