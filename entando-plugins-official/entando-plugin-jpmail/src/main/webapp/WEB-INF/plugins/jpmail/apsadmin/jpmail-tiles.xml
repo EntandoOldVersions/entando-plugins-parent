@@ -6,14 +6,9 @@
 <tiles-definitions>
 	
     <!-- ######### Start - Editing of SMTP configuration ######### -->
-    <definition extends="main.layout" name="admin.jpmail.MailConfig.entrySmtp">
+    <definition extends="main.layout" name="admin.jpmail.MailConfig.entrySmtpServer">
 		<put-attribute name="title" value="title.eMailManagement" />
-		<put-attribute name="body" value="/WEB-INF/plugins/jpmail/apsadmin/jsp/mail/smtp-entry.jsp" />
-	</definition>
-	
-    <definition extends="main.layout" name="admin.jpmail.MailConfig.saveConfirmed">
-		<put-attribute name="title" value="title.eMailManagement" />
-		<put-attribute name="body" value="/WEB-INF/plugins/jpmail/apsadmin/jsp/mail/smtp-save-confirmed.jsp" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpmail/apsadmin/jsp/mail/smtpServer-entry.jsp" />
 	</definition>
 	<!-- ######### End - Editing of SMTP configuration ######### -->
 	

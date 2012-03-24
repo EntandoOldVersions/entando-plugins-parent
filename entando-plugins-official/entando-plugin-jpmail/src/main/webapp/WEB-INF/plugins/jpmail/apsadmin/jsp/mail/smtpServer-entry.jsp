@@ -35,10 +35,30 @@
 				</ul>
 			</div>
 		</s:if>
+		<s:if test="hasActionMessages()">
+			<div class="message message_confirm">
+				<h3><s:text name="message.title.ActionMessages" /></h3>
+				<ul>
+					<s:iterator value="actionMessages">
+						<li><s:property escape="false" /></li>
+					</s:iterator>
+				</ul>
+			</div>
+		</s:if>
+		
+		<fieldset class="margin-more-top">
+			<legend><s:text name="legend.generalSettings" /></legend>
+			<p>
+				<wpsf:checkbox useTabindexAutoIncrement="true" name="active" id="active" cssClass="radiocheck" />&nbsp;<label for="active"><s:text name="label.active" /></label>
+			</p>
+			<p>
+				<wpsf:checkbox useTabindexAutoIncrement="true" name="debug" id="debug" cssClass="radiocheck" />&nbsp;<label for="debug"><s:text name="label.debug" /></label>
+			</p>
+		</fieldset> 
 		
 		<fieldset class="margin-more-top">
 			<legend><s:text name="legend.connection" /></legend>
-
+			
 			<p>
 				<label for="smtpHost" class="basic-mint-label"><s:text name="smtpHost" />:</label>
 				<wpsf:textfield useTabindexAutoIncrement="true" name="smtpHost" id="smtpHost" cssClass="text" />
@@ -67,9 +87,6 @@
 			<p>
 				<label for="smtpTimeout" class="basic-mint-label"><s:text name="label.smtpTimeout" />:</label>
 				<wpsf:textfield useTabindexAutoIncrement="true" name="smtpTimeout" id="smtpTimeout" cssClass="text" />
-			</p>
-			<p>
-				<wpsf:checkbox useTabindexAutoIncrement="true" name="debug" id="debug" cssClass="radiocheck" />&nbsp;<label for="debug"><s:text name="label.debug" /></label>
 			</p>
 		</fieldset> 
 		<fieldset>

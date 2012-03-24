@@ -30,9 +30,12 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpmail.aps.services.JpmailSystemConstants;
 import com.agiletec.plugins.jpmail.aps.services.mail.MailConfig;
+import java.util.Iterator;
+import org.jdom.output.Format;
 
 /*
 <mailConfig>
+	<active>true</active>
 	<senders>
 		<sender code="CODE1">EMAIL1@EMAIL.COM</sender>
 		<sender code="CODE2">EMAIL2@EMAIL.COM</sender>
@@ -50,8 +53,6 @@ import com.agiletec.plugins.jpmail.aps.services.mail.MailConfig;
 
 /**
  * Class that provides read and update operations for the jpmail plugin xml configuration.
- * 
- * @version 1.0
  * @author E.Santoboni, E.Mezzano
  */
 public class MailConfigDOM {
@@ -65,6 +66,11 @@ public class MailConfigDOM {
 	public MailConfig extractConfig(String xml) throws ApsSystemException {
 		MailConfig config = new MailConfig();
 		Element root = this.getRootElement(xml);
+		Element activeElem = root.getChild(ACTIVE_ELEM);
+		if (activeElem != null) {
+			String active = activeElem.getText();
+			config.setActive(null != active && active.equalsIgnoreCase("true"));
+		}
 		this.extractSenders(root, config);
 		this.extractSmtp(root, config);
 		return config;
@@ -79,8 +85,11 @@ public class MailConfigDOM {
 	public String createConfigXml(MailConfig config) throws ApsSystemException {
 		Element root = this.createConfigElement(config);
 		Document doc = new Document(root);
-		String xml = new XMLOutputter().outputString(doc);
-		return xml;
+		XMLOutputter out = new XMLOutputter();
+		Format format = Format.getPrettyFormat();
+		format.setIndent("\t");
+		out.setFormat(format);
+		return out.outputString(doc);
 	}
 	
 	/**
@@ -108,7 +117,7 @@ public class MailConfigDOM {
 	 */
 	private void extractSmtp(Element root, MailConfig config) {
 		Element smtpElem = root.getChild(SMTP_ELEM);
-		if (smtpElem!=null) {
+		if (smtpElem != null) {
 			String debug = smtpElem.getAttributeValue(SMTP_DEBUG_ATTR);
 			config.setDebug("true".equalsIgnoreCase(debug));
 			config.setSmtpHost(smtpElem.getChildText(SMTP_HOST_CHILD));
@@ -143,6 +152,9 @@ public class MailConfigDOM {
 	 */
 	private Element createConfigElement(MailConfig config) {
 		Element configElem = new Element(ROOT);
+		Element activeElement = new Element(ACTIVE_ELEM);
+		activeElement.setText(String.valueOf(config.isActive()));
+		configElem.addContent(activeElement);
 		Element sendersElem = this.createSendersElement(config);
 		configElem.addContent(sendersElem);
 		Element smtpElem = this.createSmtpElement(config);
@@ -156,11 +168,15 @@ public class MailConfigDOM {
 	 */
 	private Element createSendersElement(MailConfig config) {
 		Element sendersElem = new Element(SENDERS_ELEM);
-		for (Entry<String, String> senderEntry : config.getSenders().entrySet()) {
-			Element senderElement = new Element(SENDER_CHILD);
-			senderElement.setAttribute(SENDER_CODE_ATTR, (String) senderEntry.getKey());
-			senderElement.addContent((String) senderEntry.getValue());
-			sendersElem.addContent(senderElement);
+		if (null != config.getSenders()) {
+			Iterator<String> codeIter = config.getSenders().keySet().iterator();
+			while (codeIter.hasNext()) {
+				String key = codeIter.next();
+				Element senderElement = new Element(SENDER_CHILD);
+				senderElement.setAttribute(SENDER_CODE_ATTR, key);
+				senderElement.addContent(config.getSenders().get(key));
+				sendersElem.addContent(senderElement);
+			}
 		}
 		return sendersElem;
 	}
@@ -198,7 +214,6 @@ public class MailConfigDOM {
 		Element passwordElem = new Element(SMTP_PASSWORD_CHILD);
 		passwordElem.addContent(config.getSmtpPassword());
 		smtpElem.addContent(passwordElem);
-		
 		
 		if (null != config.getSmtpProtocol()) {
 			Element protocolElem = new Element(SMTP_PROTOCOL_CHILD);
@@ -242,6 +257,8 @@ public class MailConfigDOM {
 	private final String SENDERS_ELEM = "senders";
 	private final String SENDER_CHILD = "sender";
 	private final String SENDER_CODE_ATTR = "code";
+	
+	private final String ACTIVE_ELEM = "active";
 	
 	private final String SMTP_ELEM = "smtp";
 	private final String SMTP_DEBUG_ATTR = "debug";

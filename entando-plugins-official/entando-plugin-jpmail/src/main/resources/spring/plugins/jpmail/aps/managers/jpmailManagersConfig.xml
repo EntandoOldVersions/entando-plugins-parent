@@ -10,7 +10,6 @@
 	<bean id="jpmailMailManager" class="com.agiletec.plugins.jpmail.aps.services.mail.MailManager" 
 			parent="abstractService" >
 		<property name="configManager" ref="BaseConfigManager"/>
-		<property name="active"><value>true</value></property>
 	</bean>
 	
 </beans>

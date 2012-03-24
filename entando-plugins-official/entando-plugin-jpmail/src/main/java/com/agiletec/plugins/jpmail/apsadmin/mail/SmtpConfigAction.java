@@ -42,6 +42,7 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 		try {
 			MailConfig config = this.prepareConfig();
 			this.getMailManager().updateMailConfig(config);
+			this.addActionMessage(this.getText("Message.eMailConfig.savedConfirm"));
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "save");
 			return FAILURE;
@@ -54,7 +55,8 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 	 * @param config The configuration used to populate the action.
 	 */
 	protected void populateForm(MailConfig config) {
-		if (config!=null) {
+		if (config != null) {
+			this.setActive(config.isActive());
 			this.setDebug(config.isDebug());
 			this.setSmtpHost(config.getSmtpHost());
 			this.setSmtpPort(config.getSmtpPort());
@@ -74,6 +76,7 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 	 */
 	protected MailConfig prepareConfig() throws ApsSystemException {
 		MailConfig config = this.getMailManager().getMailConfig();
+		config.setActive(this.isActive());
 		config.setDebug(this.isDebug());
 		config.setSmtpHost(this.getSmtpHost());
 		config.setSmtpPort(this.getSmtpPort());
@@ -82,6 +85,13 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 		config.setSmtpPassword(this.getSmtpPassword());
 		config.setSmtpProtocol(this.getSmtpProtocol());
 		return config;
+	}
+	
+	public boolean isActive() {
+		return _active;
+	}
+	public void setActive(boolean active) {
+		this._active = active;
 	}
 	
 	/**
@@ -205,6 +215,7 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 		return _smtpProtocol;
 	}
 	
+	private boolean _active;
 	private String _smtpHost;
 	private Integer _smtpPort;
 	private Integer _smtpTimeout;

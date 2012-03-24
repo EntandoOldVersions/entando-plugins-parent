@@ -205,14 +205,7 @@ public class MailManager extends AbstractService implements IMailManager {
 		Transport bus = session.getTransport("smtp");
 		if (config.hasAnonimousAuth()) {
 			bus.connect();
-		} // else if (config.getSmtpProtocol() == JpmailSystemConstants.PROTO_STD) {
-//			Integer port = config.getSmtpPort();
-//			if (port != null && port.intValue() > 0) {
-//				bus.connect(config.getSmtpHost(), port.intValue(), config.getSmtpUserName(), config.getSmtpPassword());
-//			} else {
-//				bus.connect(config.getSmtpHost(), config.getSmtpUserName(), config.getSmtpPassword());
-//			}
-//		}
+		}
 		return bus;
 	}
 	
@@ -327,12 +320,6 @@ public class MailManager extends AbstractService implements IMailManager {
 	}
 	
 	/**
-	 * Aggiunge destinatari alla mail.
-	 * @param msg Il messaggio al quale aggiungere i destinatari.
-	 * @param recType Il tipo di destinatario.
-	 * @param recipients Gli indirizzi mail dei destinatari.
-	 */
-	/**
 	 * Add recipient addresses to the e-mail.
 	 * @param msg The mime message to which add the addresses.
 	 * @param recType The specific recipient type to which add the addresses.
@@ -383,10 +370,11 @@ public class MailManager extends AbstractService implements IMailManager {
 		this._config = config;
 	}
 	
-	protected boolean isActive() {
-		return _active;
+	protected Boolean isActive() {
+		if (null != this._active) return this._active.booleanValue();
+		return this.getConfig().isActive();
 	}
-	public void setActive(boolean active) {
+	public void setActive(Boolean active) {
 		this._active = active;
 	}
 	
@@ -405,8 +393,8 @@ public class MailManager extends AbstractService implements IMailManager {
 		this._configManager = configManager;
 	}
 	
+	private Boolean _active;
 	private MailConfig _config;
-	private boolean _active;
 	
 	private ConfigInterface _configManager;
 	

@@ -24,7 +24,6 @@ import com.agiletec.plugins.jpmail.aps.services.JpmailSystemConstants;
 
 /**
  * Bean class containing the basic configuration for the IMailManager service.
- * @version 1.0
  * @author E.Santoboni, E.Mezzano
  */
 public class MailConfig implements Cloneable {
@@ -32,6 +31,7 @@ public class MailConfig implements Cloneable {
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		MailConfig config = new MailConfig();
+		config.setActive(this.isActive());
 		config.setDebug(this.isDebug());
 		config.setSmtpHost(this.getSmtpHost());
 		config.setSmtpPort(this.getSmtpPort());
@@ -42,6 +42,13 @@ public class MailConfig implements Cloneable {
 		config.setSmtpProtocol(this.getSmtpProtocol());
 		config.setSenders(new TreeMap<String, String>(this.getSenders()));
 		return config;
+	}
+	
+	public boolean isActive() {
+		return _active;
+	}
+	public void setActive(boolean active) {
+		this._active = active;
 	}
 	
 	/**
@@ -191,11 +198,11 @@ public class MailConfig implements Cloneable {
 	public void setSmtpProtocol(Integer smtpProtocol) {
 		this._smtpProtocol = smtpProtocol;
 	}
-
 	public Integer getSmtpProtocol() {
 		return _smtpProtocol;
 	}
-
+	
+	private boolean _active;
 	private Map<String, String> _senders = new TreeMap<String, String>();
 	private String _smtpHost;
 	private Integer _smtpPort;

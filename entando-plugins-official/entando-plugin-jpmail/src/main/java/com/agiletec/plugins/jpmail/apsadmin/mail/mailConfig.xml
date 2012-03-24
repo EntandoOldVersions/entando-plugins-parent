@@ -10,13 +10,13 @@
     	<!-- ######### Start - Editing of SMTP configuration ######### -->
     	
     	<action name="editSmtp" class="jpmailSmtpConfigAction" method="edit">
-            <result type="tiles">admin.jpmail.MailConfig.entrySmtp</result>
+            <result type="tiles">admin.jpmail.MailConfig.entrySmtpServer</result>
         	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
         
     	<action name="saveSmtp" class="jpmailSmtpConfigAction" method="save">
-            <result name="input" type="tiles">admin.jpmail.MailConfig.entrySmtp</result>
-        	<result type="tiles">admin.jpmail.MailConfig.saveConfirmed</result>
+            <result name="input" type="tiles">admin.jpmail.MailConfig.entrySmtpServer</result>
+        	<result type="tiles">admin.jpmail.MailConfig.entrySmtpServer</result>
         	<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
         
