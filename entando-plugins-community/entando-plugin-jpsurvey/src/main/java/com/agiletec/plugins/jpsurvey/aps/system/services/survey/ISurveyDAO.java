@@ -74,4 +74,7 @@ public interface ISurveyDAO {
 	 * @return The list of the questions of the given survey, or an empty list
 	 */
 	public List<Question> getSurveyQuestions(int id);
+	
+	public List<Integer> loadResourceUtilizers(String resourceId);
+	
 }

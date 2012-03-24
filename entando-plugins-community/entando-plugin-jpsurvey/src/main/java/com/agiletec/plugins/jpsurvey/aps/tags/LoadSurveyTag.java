@@ -15,7 +15,7 @@
  * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
  * 
  */
-package com.agiletec.plugins.jpsurvey.aps.system.tags;
+package com.agiletec.plugins.jpsurvey.aps.tags;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -43,8 +43,8 @@ public class LoadSurveyTag extends TagSupport {
 		try {
 			String defaultLang = langManager.getDefaultLang().getCode();
 			survey = surveyManager.loadSurvey(this.getSurveyId());
-			if (_preferredLang == null) {
-				_preferredLang = defaultLang;
+			if (this._preferredLang == null) {
+				this._preferredLang = defaultLang;
 			}
 			this.pageContext.setAttribute(this.getCtxName(), survey);
 			// fetch image
@@ -56,7 +56,6 @@ public class LoadSurveyTag extends TagSupport {
 					this.pageContext.setAttribute(this.getCtxImageUrl(), resource.getImagePath("0"));
 				}
 			}
-			
 			if (null != this.getVotedParamName()) {
 				boolean voted = CheckVotingUtil.isSurveyVoted(survey, (HttpServletRequest) this.pageContext.getRequest());
 				this.pageContext.setAttribute(this.getVotedParamName(), new Boolean(voted));

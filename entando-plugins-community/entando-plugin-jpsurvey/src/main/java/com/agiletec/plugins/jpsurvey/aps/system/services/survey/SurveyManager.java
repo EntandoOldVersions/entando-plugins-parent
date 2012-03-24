@@ -31,6 +31,7 @@ import com.agiletec.aps.system.services.authorization.IAuthorizationManager;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.group.GroupUtilizer;
 import com.agiletec.aps.system.services.user.UserDetails;
+import com.agiletec.plugins.jacms.aps.system.services.resource.ResourceUtilizer;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.IResponseDAO;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.IVoterDAO;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Choice;
@@ -38,7 +39,7 @@ import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Question;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Survey;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.SurveyRecord;
 
-public class SurveyManager extends AbstractService implements ISurveyManager, GroupUtilizer {
+public class SurveyManager extends AbstractService implements ISurveyManager, GroupUtilizer, ResourceUtilizer {
 	
 	@Override
 	public void init() throws Exception {
@@ -337,34 +338,45 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		return surveys;
 	}
 	
+	@Override
+	public List getResourceUtilizers(String resourceId) throws ApsSystemException {
+		List<Survey> surveys = null;
+		try {
+			List<Integer> surveyIds = this.getSurveyDAO().loadResourceUtilizers(resourceId);
+			if (null == surveyIds || surveyIds.size() == 0) return null;
+			surveys = new ArrayList<Survey>(surveyIds.size());
+			for (int i = 0; i < surveyIds.size(); i++) {
+				Integer id = surveyIds.get(i);
+				surveys.add(this.loadSurvey(id));
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "getGroupUtilizers");
+			throw new ApsSystemException("Error loading surveys by resource " + resourceId, t);
+		}
+		return surveys;
+	}
+	
 	public void setSurveyDAO(ISurveyDAO surveyDAO) {
 		this._surveyDAO = surveyDAO;
 	}
 	protected ISurveyDAO getSurveyDAO() {
 		return _surveyDAO;
 	}
-
+	
 	public void setQuestionDAO(IQuestionDAO questionDAO) {
 		this._questionDAO = questionDAO;
 	}
 	protected IQuestionDAO getQuestionDAO() {
 		return _questionDAO;
 	}
-
+	
 	public void setChoiceDAO(IChoiceDAO choiceDAO) {
 		this._choiceDAO = choiceDAO;
 	}
 	protected IChoiceDAO getChoiceDAO() {
 		return _choiceDAO;
 	}
-
-	public void setAuthorizationManager(IAuthorizationManager authorizationManager) {
-		this._authorizationManager = authorizationManager;
-	}
-	protected IAuthorizationManager getAuthorizationManager() {
-		return _authorizationManager;
-	}
-
+	
 	public void setResponseDAO(IResponseDAO responseDAO) {
 		this._responseDAO = responseDAO;
 	}
@@ -379,11 +391,19 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		return _voterDAO;
 	}
 	
+	public void setAuthorizationManager(IAuthorizationManager authorizationManager) {
+		this._authorizationManager = authorizationManager;
+	}
+	protected IAuthorizationManager getAuthorizationManager() {
+		return _authorizationManager;
+	}
+	
 	private ISurveyDAO _surveyDAO;
 	private IQuestionDAO _questionDAO;
 	private IChoiceDAO _choiceDAO;
 	private IResponseDAO _responseDAO;
 	private IVoterDAO _voterDAO;
+	
 	private IAuthorizationManager _authorizationManager;
 	
 }

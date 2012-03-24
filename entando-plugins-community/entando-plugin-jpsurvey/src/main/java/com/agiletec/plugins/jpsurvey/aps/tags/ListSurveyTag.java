@@ -15,7 +15,7 @@
  * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
  * 
  */
-package com.agiletec.plugins.jpsurvey.aps.system.tags;
+package com.agiletec.plugins.jpsurvey.aps.tags;
 
 import java.util.List;
 

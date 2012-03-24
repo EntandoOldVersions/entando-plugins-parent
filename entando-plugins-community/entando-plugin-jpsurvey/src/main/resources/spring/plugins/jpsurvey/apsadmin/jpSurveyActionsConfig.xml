@@ -97,8 +97,13 @@
 	</bean>
 	
 	<bean id="jpsurveyGroupReferencesHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
-		<property name="filePath"><value>/WEB-INF/plugins/jpsurvey/apsadmin/jsp/group/groupReferences-jack.jsp</value></property>
+		<property name="filePath"><value>/WEB-INF/plugins/jpsurvey/apsadmin/jsp/include/referencingSurveys-jack.jsp</value></property>
 		<property name="hookPointKey"><value>core.groupReferences</value></property>
+	</bean>
+	
+	<bean id="jpsurveyResourceReferencesHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
+		<property name="filePath"><value>/WEB-INF/plugins/jpsurvey/apsadmin/jsp/include/referencingSurveys-jack.jsp</value></property>
+		<property name="hookPointKey"><value>jacms.resourceReferences</value></property>
 	</bean>
 	
 </beans>

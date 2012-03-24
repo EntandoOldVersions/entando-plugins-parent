@@ -11,7 +11,7 @@
 			Load a list containing all the ACTIVE surveys 
 		</description>
 		<name>surveyList</name>
-		<tag-class>com.agiletec.plugins.jpsurvey.aps.system.tags.ListSurveyTag</tag-class>
+		<tag-class>com.agiletec.plugins.jpsurvey.aps.tags.ListSurveyTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
     		<description>
@@ -44,7 +44,7 @@
 			Load a survey record, excuding the related questions and choices 
 		</description>
 		<name>loadSurvey</name>
-		<tag-class>com.agiletec.plugins.jpsurvey.aps.system.tags.LoadSurveyTag</tag-class>
+		<tag-class>com.agiletec.plugins.jpsurvey.aps.tags.LoadSurveyTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
     		<description>

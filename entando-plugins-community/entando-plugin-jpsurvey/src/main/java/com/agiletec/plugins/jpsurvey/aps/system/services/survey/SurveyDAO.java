@@ -515,6 +515,27 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 		return false;
 	}
 	
+	public List<Integer> loadResourceUtilizers(String resourceId) {
+		PreparedStatement stat = null;
+		ResultSet res = null;
+		Connection conn = null;
+		List<Integer> utilizers = new ArrayList<Integer>();
+		try {
+			conn = this.getConnection();
+			stat = conn.prepareStatement(SELECT_RESOURCE_UTILIZERS);
+			stat.setString(1, resourceId);
+			res = stat.executeQuery();
+			while (res.next()) {
+				utilizers.add(res.getInt(1));
+			}
+		} catch (Throwable t) {
+			processDaoException(t, "Error while loading resource utilizers", "loadResourceUtilizers");
+		} finally {
+			closeConnection(conn);
+		}
+		return utilizers;
+	}
+	
 	private static final String GET_COMPLETE_SURVEY_BY_ID = 
 		"SELECT " +
 			// survey: 1 - 16
@@ -542,4 +563,8 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 	
 	private static final String DELETE_SURVEY_BY_ID = 
 		"DELETE FROM jpsurvey WHERE id = ? ";
+	
+	private static final String SELECT_RESOURCE_UTILIZERS = 
+		"SELECT jpsurvey.id FROM jpsurvey WHERE imageid = ? ";
+	
 }
