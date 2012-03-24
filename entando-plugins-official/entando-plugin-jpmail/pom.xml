@@ -75,16 +75,13 @@
     		<artifactId>subethasmtp</artifactId>
     		<version>3.1.6</version>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		
-		<!-- 
-		<dependency>
-			<groupId>org.jvnet.mock-javamail</groupId>
-			<artifactId>mock-javamail</artifactId>
-			<version>1.9</version>
-			<scope>test</scope>
-		</dependency>
-		-->
 		
 	</dependencies>
 </project>
