@@ -58,7 +58,7 @@ public class TestMailManager extends AbstractMailConfigTestCase {
 		String[] mailAddresses = JpmailTestHelper.MAIL_ADDRESSES;
 		this._mailManager.sendMail(MAIL_TEXT, "Mail semplice", mailAddresses, mailAddresses, mailAddresses, SENDER_CODE);
 		
-		MockMessageHandler messageHandler = myFactory.getMessageHandler();
+		MockMessageHandler messageHandler = this._myFactory.getMessageHandler();
 		List<MockMailMessage> messages = messageHandler.getMessages();
 		
 		assertNotNull(messages);
@@ -67,7 +67,6 @@ public class TestMailManager extends AbstractMailConfigTestCase {
 	}
 	
 	public void testSendMailWithChangedPort() throws Throwable {
-		
 		
 		MockMessageHandlerFactory myFactory2 = new MockMessageHandlerFactory();
 		MockAuthenticationHandlerFactory myAuthFactory2 = new MockAuthenticationHandlerFactory();
@@ -101,7 +100,7 @@ public class TestMailManager extends AbstractMailConfigTestCase {
 		this._mailManager.sendMail(MAIL_TEXT, "Mail with contentType text/html", 
 				JpmailTestHelper.MAIL_ADDRESSES, null, null, SENDER_CODE, IMailManager.CONTENTTYPE_TEXT_HTML);
 		
-		MockMessageHandler messageHandler = myFactory.getMessageHandler();
+		MockMessageHandler messageHandler = this._myFactory.getMessageHandler();
 		List<MockMailMessage> messages = messageHandler.getMessages();
 		
 		assertNotNull(messages);
@@ -122,7 +121,7 @@ public class TestMailManager extends AbstractMailConfigTestCase {
 		this._mailManager.sendMail(MAIL_TEXT, "Mail with attachment & text html", 
 				IMailManager.CONTENTTYPE_TEXT_HTML, attachments, JpmailTestHelper.MAIL_ADDRESSES, null, null, SENDER_CODE);
 		
-		MockMessageHandler messageHandler = myFactory.getMessageHandler();
+		MockMessageHandler messageHandler = this._myFactory.getMessageHandler();
 		List<MockMailMessage> messages = messageHandler.getMessages();
 		
 		assertNotNull(messages);
@@ -144,7 +143,7 @@ public class TestMailManager extends AbstractMailConfigTestCase {
 		this._mailManager.sendMixedMail("AAAAAAAAAMixed"+MAIL_TEXT, "Mixed"+MAIL_TEXT, "Oggetto Mail composta", 
 				attachments, mailAddresses, mailAddresses, mailAddresses, SENDER_CODE);
 		
-		MockMessageHandler messageHandler = myFactory.getMessageHandler();
+		MockMessageHandler messageHandler = this._myFactory.getMessageHandler();
 		List<MockMailMessage> messages = messageHandler.getMessages();
 		
 		assertNotNull(messages);
@@ -153,28 +152,28 @@ public class TestMailManager extends AbstractMailConfigTestCase {
 	
 	@Override
 	protected void setUp() throws Exception {
-		myFactory = new MockMessageHandlerFactory();
-		myAuthFactory = new MockAuthenticationHandlerFactory();
-        smtpServer = new SMTPServer(myFactory, myAuthFactory);
-        smtpServer.setPort(25000);
-        smtpServer.start();
+		this._myFactory = new MockMessageHandlerFactory();
+		this._myAuthFactory = new MockAuthenticationHandlerFactory();
+		this._smtpServer = new SMTPServer(this._myFactory, this._myAuthFactory);
+		this._smtpServer.setPort(25000);
+		this._smtpServer.start();
 		super.setUp();
 	}
 	
 	@Override
 	protected void tearDown() throws Exception {
-		myFactory = null;
-		myAuthFactory = null;
-		smtpServer.stop();
-		smtpServer = null;
+		this._myFactory = null;
+		this._myAuthFactory = null;
+		this._smtpServer.stop();
+		this._smtpServer = null;
 		super.tearDown();
 	}
 	
 	private final String MAIL_TEXT = "<a href=\"http://www.japsportal.org/\" >Test Mail di prova</a>";
 	private final String SENDER_CODE = "CODE1";
 	
-	private SMTPServer smtpServer;
-	private MockMessageHandlerFactory myFactory;
-	private MockAuthenticationHandlerFactory myAuthFactory;
+	private SMTPServer _smtpServer;
+	private MockMessageHandlerFactory _myFactory;
+	private MockAuthenticationHandlerFactory _myAuthFactory;
 	
 }

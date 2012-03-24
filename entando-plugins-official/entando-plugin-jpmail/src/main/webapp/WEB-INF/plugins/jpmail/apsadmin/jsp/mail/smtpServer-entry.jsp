@@ -37,7 +37,7 @@
 		</s:if>
 		<s:if test="hasActionMessages()">
 			<div class="message message_confirm">
-				<h3><s:text name="message.title.ActionMessages" /></h3>
+				<h3><s:text name="messages.confirm" /></h3>	
 				<ul>
 					<s:iterator value="actionMessages">
 						<li><s:property escape="false" /></li>

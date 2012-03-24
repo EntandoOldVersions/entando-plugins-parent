@@ -1,5 +1,6 @@
 INSERT INTO sysconfig (version, item, descr, config) VALUES ('test', 'jpmail_config', 'Configurazione del servizio di invio eMail', '<?xml version="1.0" encoding="UTF-8"?>
 <mailConfig>
+	<active>true</active>
 	<senders>
 		<sender code="CODE1">EMAIL1@EMAIL.COM</sender>
 		<sender code="CODE2">EMAIL2@EMAIL.COM</sender>

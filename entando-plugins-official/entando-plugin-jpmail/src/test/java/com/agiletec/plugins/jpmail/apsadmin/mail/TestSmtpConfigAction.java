@@ -21,15 +21,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.agiletec.plugins.jpmail.apsadmin.ApsAdminPluginBaseTestCase;
-import com.agiletec.plugins.jpmail.util.JpmailTestHelper;
-
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
+
 import com.agiletec.plugins.jpmail.aps.services.JpmailSystemConstants;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
 import com.agiletec.plugins.jpmail.aps.services.mail.MailConfig;
-import com.agiletec.plugins.jpmail.apsadmin.mail.SmtpConfigAction;
+import com.agiletec.plugins.jpmail.apsadmin.ApsAdminPluginBaseTestCase;
+import com.agiletec.plugins.jpmail.util.JpmailTestHelper;
+
 import com.opensymphony.xwork2.Action;
 
 public class TestSmtpConfigAction extends ApsAdminPluginBaseTestCase {
@@ -58,15 +58,11 @@ public class TestSmtpConfigAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(config.getSmtpPassword(), action.getSmtpPassword());
 	}
 	
-	/**
-	 * Tests the 'save' action with not successful result.
-	 * @throws Throwable
-	 */
-	public void testSaveFailure() throws Throwable {
+	public void testSaveFailure_1() throws Throwable {
 		Map<String, String> params = new HashMap<String, String>();
 		String result = this.executeSave("admin", params);
 		assertEquals(Action.INPUT, result);
-		assertEquals(1, this.getAction().getFieldErrors().size());
+		assertEquals(2, this.getAction().getFieldErrors().size());
 		assertEquals(0, this.getAction().getActionErrors().size());
 		
 		params.put("debug", "true");
@@ -75,8 +71,74 @@ public class TestSmtpConfigAction extends ApsAdminPluginBaseTestCase {
 		result = this.executeSave("admin", params);
 		assertEquals(Action.INPUT, result);
 		Map<String, List<String>> fieldErrors = this.getAction().getFieldErrors();
-		assertEquals(1, fieldErrors.size());
+		assertEquals(2, fieldErrors.size());
 		assertEquals(1, fieldErrors.get("smtpHost").size());
+		assertEquals(1, fieldErrors.get("smtpProtocol").size());
+	}
+
+	public void testSaveFailure_2() throws Throwable {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("smtpProtocol", "invalidNumber");
+		params.put("smtpPort", "invalidNumber");
+		String result = this.executeSave("admin", params);
+		assertEquals(Action.INPUT, result);
+		Map<String, List<String>> fieldErrors = this.getAction().getFieldErrors();
+		assertEquals(3, fieldErrors.size());
+		assertEquals(1, fieldErrors.get("smtpHost").size());
+		assertEquals(2, fieldErrors.get("smtpProtocol").size());
+		assertEquals(1, fieldErrors.get("smtpPort").size());
+	}
+
+	public void testSaveFailure_3() throws Throwable {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("debug", "true");
+		params.put("smtpProtocol", "1");
+		params.put("smtpPort", "invalidNumber");
+		String result = this.executeSave("admin", params);
+		assertEquals(Action.INPUT, result);
+		Map<String, List<String>> fieldErrors = this.getAction().getFieldErrors();
+		assertEquals(4, fieldErrors.size());
+		assertEquals(1, fieldErrors.get("smtpHost").size());
+		assertEquals(1, fieldErrors.get("smtpPort").size());
+		assertEquals(1, fieldErrors.get("smtpUserName").size());
+		assertEquals(1, fieldErrors.get("smtpPassword").size());
+		
+		params.put("smtpProtocol", "0");
+		params.put("smtpPort", "invalidNumber");
+		result = this.executeSave("admin", params);
+		assertEquals(Action.INPUT, result);
+		
+		System.out.println(this.getAction().getFieldErrors());
+		
+		fieldErrors = this.getAction().getFieldErrors();
+		assertEquals(2, fieldErrors.size());
+		assertEquals(1, fieldErrors.get("smtpHost").size());
+		assertEquals(1, fieldErrors.get("smtpPort").size());
+		
+		params.put("smtpHost", "localhost");
+		params.put("smtpPort", "25");
+		params.put("smtpProtocol", "1");
+		params.put("smtpUserName", "");
+		params.put("smtpPassword", "");
+		result = this.executeSave("admin", params);
+		assertEquals(Action.INPUT, result);
+		fieldErrors = this.getAction().getFieldErrors();
+		assertEquals(2, fieldErrors.size());
+		assertEquals(1, fieldErrors.get("smtpUserName").size());
+		assertEquals(1, fieldErrors.get("smtpPassword").size());
+	}
+
+	public void testSaveFailure_4() throws Throwable {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("smtpHost", "localhost");
+		params.put("debug", "true");
+		params.put("smtpProtocol", "6");
+		params.put("smtpPort", "25");
+		String result = this.executeSave("admin", params);
+		assertEquals(Action.INPUT, result);
+		Map<String, List<String>> fieldErrors = this.getAction().getFieldErrors();
+		assertEquals(1, fieldErrors.size());
+		assertEquals(1, fieldErrors.get("smtpProtocol").size());
 	}
 	
 	/**
@@ -87,6 +149,7 @@ public class TestSmtpConfigAction extends ApsAdminPluginBaseTestCase {
 		try {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("smtpHost", "host");
+			params.put("smtpProtocol", "0");
 			params.put("smtpUserName", "username");
 			params.put("smtpPassword", "password");
 			String result = this.executeSave("admin", params);
@@ -120,8 +183,7 @@ public class TestSmtpConfigAction extends ApsAdminPluginBaseTestCase {
 		this.setUserOnSession(currentUser);
 		this.initAction("/do/jpmail/MailConfig", "saveSmtp");
 		this.addParameters(params);
-		String result = this.executeAction();
-		return result;
+		return this.executeAction();
 	}
 	
     protected void init() throws Exception {

@@ -92,7 +92,7 @@ public class TestMailSenderConfigAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(2, fieldErrors.size());
 		codeErrors = fieldErrors.get("code");
 		assertEquals(1, codeErrors.size());
-		assertTrue(((String) codeErrors.get(0)).contains(this.getAction().getText("Message.config.sender.code.duplicated")));
+		assertTrue(((String) codeErrors.get(0)).contains(this.getAction().getText("error.config.sender.code.duplicated")));
 		mailErrors = fieldErrors.get("mail");
 		assertEquals(1, mailErrors.size());
 		assertTrue(((String) mailErrors.get(0)).contains(this.getAction().getText("requiredstring")));
@@ -103,10 +103,10 @@ public class TestMailSenderConfigAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(2, fieldErrors.size());
 		codeErrors = fieldErrors.get("code");
 		assertEquals(1, codeErrors.size());
-		assertTrue(((String) codeErrors.get(0)).contains(this.getAction().getText("Message.config.sender.code.duplicated")));
+		assertTrue(((String) codeErrors.get(0)).contains(this.getAction().getText("error.config.sender.code.duplicated")));
 		mailErrors = fieldErrors.get("mail");
 		assertEquals(1, mailErrors.size());
-		assertTrue(((String) mailErrors.get(0)).contains(this.getAction().getText("Message.config.sender.mail.notValid")));
+		assertTrue(((String) mailErrors.get(0)).contains(this.getAction().getText("error.config.sender.mail.notValid")));
 	}
 	
 	public void testSaveSenderSuccessful() throws Throwable {

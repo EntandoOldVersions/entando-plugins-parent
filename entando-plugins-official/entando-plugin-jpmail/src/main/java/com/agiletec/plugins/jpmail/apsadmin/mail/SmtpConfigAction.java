@@ -42,7 +42,7 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 		try {
 			MailConfig config = this.prepareConfig();
 			this.getMailManager().updateMailConfig(config);
-			this.addActionMessage(this.getText("Message.eMailConfig.savedConfirm"));
+			this.addActionMessage(this.getText("message.eMailConfig.savedConfirm"));
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "save");
 			return FAILURE;
@@ -85,6 +85,15 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 		config.setSmtpPassword(this.getSmtpPassword());
 		config.setSmtpProtocol(this.getSmtpProtocol());
 		return config;
+	}
+	
+	/*
+	 * Validation Service method
+	 */
+	public boolean isValidProtocol() {
+		return (null != this.getSmtpProtocol() 
+				&& this.getSmtpProtocol().intValue() >= 0 
+				&& this.getSmtpProtocol().intValue() <= 2);
 	}
 	
 	public boolean isActive() {

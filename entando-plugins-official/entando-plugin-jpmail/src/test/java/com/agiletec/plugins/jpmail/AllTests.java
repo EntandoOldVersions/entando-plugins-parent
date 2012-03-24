@@ -28,12 +28,11 @@ import com.agiletec.plugins.jpmail.apsadmin.mail.TestSmtpConfigAction;
 /**
  * Launch class for all the jpmail tests.
  * @version 1.0
- *
  */
 public class AllTests {
 	
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for jAPS Plugin Mail");
+		TestSuite suite = new TestSuite("Test for Entando Plugin Mail");
 		
 		suite.addTestSuite(TestEmailAddressValidator.class);
 		suite.addTestSuite(TestMailConfigDOM.class);

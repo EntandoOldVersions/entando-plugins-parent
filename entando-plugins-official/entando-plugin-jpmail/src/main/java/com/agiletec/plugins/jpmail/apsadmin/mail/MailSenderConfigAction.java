@@ -30,9 +30,7 @@ import com.agiletec.plugins.jpmail.aps.services.mail.util.EmailAddressValidator;
 /**
  * Implementation for the actions of editing senders of MailManager configuration.<br />
  * The saving action doesn't save the sender permanently but only in a session object, so must be followed by save operation in MailConfigAction.
- * @version 1.0
  * @author E.Mezzano
- *
  */
 public class MailSenderConfigAction extends BaseAction implements IMailSenderConfigAction {
 	
@@ -45,12 +43,12 @@ public class MailSenderConfigAction extends BaseAction implements IMailSenderCon
 			String mail = this.getMail();
 			if (code!=null && code.length()>0 && (ApsAdminSystemConstants.ADD==this.getStrutsAction() || !code.equals(oldCode))) {
 				if (null!=this.getConfig().getSender(code)) {
-					this.addFieldError("code", this.getText("Message.config.sender.code.duplicated"));
+					this.addFieldError("code", this.getText("error.config.sender.code.duplicated"));
 				}
 			}
 			if (mail!=null && mail.length()>0 && !EmailAddressValidator.isValidEmailAddress(mail)) {
 				String[] args = { mail };
-				this.addFieldError("mail", this.getText("Message.config.sender.mail.notValid", args));
+				this.addFieldError("mail", this.getText("error.config.sender.mail.notValid", args));
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "validate");
@@ -71,7 +69,7 @@ public class MailSenderConfigAction extends BaseAction implements IMailSenderCon
 			String code = this.getCode();
 			String mail = config.getSender(code);
 			if (mail==null || mail.length()==0) {
-				this.addActionError(this.getText("Message.config.sender.notExists"));
+				this.addActionError(this.getText("error.config.sender.notExists"));
 				return ERROR;
 			}
 			this.setCurrentCode(code);
@@ -102,7 +100,7 @@ public class MailSenderConfigAction extends BaseAction implements IMailSenderCon
 			MailConfig config = this.getConfig();
 			String code = this.getCode();
 			if (null == code && null == config.getSender(code)) {
-				this.addActionError(this.getText("Message.config.sender.notExists"));
+				this.addActionError(this.getText("error.config.sender.notExists"));
 				return INPUT;
 			}
 		} catch (Throwable t) {
@@ -118,7 +116,7 @@ public class MailSenderConfigAction extends BaseAction implements IMailSenderCon
 			MailConfig config = this.getConfig();
 			String code = this.getCode();
 			if (null == code && null == config.getSender(code)) {
-				this.addActionError(this.getText("Message.config.sender.notExists"));
+				this.addActionError(this.getText("error.config.sender.notExists"));
 				return INPUT;
 			} else {
 				config.getSenders().remove(code);
