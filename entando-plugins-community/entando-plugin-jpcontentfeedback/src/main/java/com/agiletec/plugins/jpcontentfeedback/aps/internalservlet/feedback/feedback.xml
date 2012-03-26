@@ -19,6 +19,7 @@
 	    	<result type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
 	    	<interceptor-ref name="japsFrontEndFreeStack">
 	    		<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
+				<param name="params.excludeParams">struts.token,struts.token.name</param>
 	    	</interceptor-ref>
 	    </action>
 		
@@ -31,6 +32,7 @@
 			</interceptor-ref>
 	      	<interceptor-ref name="japsFrontEndFreeValidationStack">
 	      		<!--<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param> -->
+				<param name="params.excludeParams">struts.token,struts.token.name</param>
 	      	</interceptor-ref>
 	    </action>
 		
@@ -41,7 +43,7 @@
 	      		<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param>
 	      	</interceptor-ref>
 	    </action>
-
+		
 	    <action name="insertVote" class="jpcontentfeedbackCommentsFrontAction" method="insertVote">
 	    	<result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
 	    	<result type="chain">intro</result>
@@ -49,7 +51,7 @@
 	      		<!--<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param> -->
 			</interceptor-ref>
 	    </action>
-
+		
 		<action name="insertCommentVote" class="jpcontentfeedbackCommentsFrontAction" method="insertVote">
 	    	<result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
 			<result type="chain">intro</result>
@@ -57,6 +59,7 @@
 	      		<!--<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param> -->
 	      	</interceptor-ref>
 	    </action>
-
+		
 	</package>
+	
 </struts>
