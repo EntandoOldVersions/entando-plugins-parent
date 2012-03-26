@@ -26,7 +26,6 @@ import com.agiletec.plugins.jpcontentfeedback.apsadmin.JpContentFeedbackApsAdmin
 
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.authorization.IAuthorizationManager;
 import com.agiletec.aps.system.services.cache.ICacheManager;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.Showlet;
@@ -35,7 +34,6 @@ import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
-import com.agiletec.plugins.jacms.aps.system.services.content.ContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.dispenser.ContentAuthorizationInfo;
@@ -50,19 +48,20 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 
-public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTestCase{
+public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTestCase {
 
 	protected void setUp() throws Exception {
         super.setUp();
         this.init();
     }
-
+	
 	public void testAddDeleteCommentByShowletConfig()throws Throwable{
+		String contentId = "ART1";
 		try{
-			Content content = this._contentManager.loadContent("ART1", true);
+			Content content = this._contentManager.loadContent(contentId, true);
 			ICacheManager cacheManager = (ICacheManager) ApsWebApplicationUtils.getBean(SystemConstants.CACHE_MANAGER, this.getRequest());
 			ContentAuthorizationInfo authInfo = new ContentAuthorizationInfo(content);
-			cacheManager.putInCache(ContentManager.getContentAuthInfoCacheKey("ART1"), authInfo);
+			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
 			Showlet showlet = new Showlet();
             IShowletTypeManager showletTypeMan =
@@ -70,9 +69,9 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
             ShowletType showletType = showletTypeMan.getShowletType("content_feedback_viewer");
             showlet.setType(showletType);
             ApsProperties prop = new ApsProperties();
-            prop.put("contentId", "ART1");
+            prop.put("contentId", contentId);
             showlet.setConfig(prop);
-            showlet.setPublishedContent("ART1");
+            showlet.setPublishedContent(contentId);
 
             List<String> listaIds = this._commentManager.searchCommentIds(null);
 			assertEquals(0, listaIds.size());
@@ -85,7 +84,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
             this.getRequest().setAttribute(RequestContext.REQCTX, e);
 
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "insert");
-			this.addParameter("contentId", "ART1");
+			this.addParameter("contentId", contentId);
 			this.addParameter("commentText", "testComment");
 
 			this.setToken();
@@ -103,9 +102,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "delete");
 			this.addParameter("contentId", listaIds.get(0));
-
 		} catch (Throwable t) {
-			t.printStackTrace();
 			throw t;
 		} finally{
 			List<String> listaIds = this._commentManager.searchCommentIds(null);
@@ -127,12 +124,13 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 	}
 
 
-	public void testAddContentRatingByShowletConfig()throws Throwable{
-		try{
-			Content content = this._contentManager.loadContent("ART1", true);
+	public void testAddContentRatingByShowletConfig()throws Throwable {
+		String contentId = "ART1";
+		try {
+			Content content = this._contentManager.loadContent(contentId, true);
 			ICacheManager cacheManager = (ICacheManager) ApsWebApplicationUtils.getBean(SystemConstants.CACHE_MANAGER, this.getRequest());
 			ContentAuthorizationInfo authInfo = new ContentAuthorizationInfo(content);
-			cacheManager.putInCache(ContentManager.getContentAuthInfoCacheKey("ART1"), authInfo);
+			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
 			Showlet showlet = new Showlet();
             IShowletTypeManager showletTypeMan =
@@ -140,9 +138,9 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
             ShowletType showletType = showletTypeMan.getShowletType("content_feedback_viewer");
             showlet.setType(showletType);
             ApsProperties prop = new ApsProperties();
-            prop.put("contentId", "ART1");
+            prop.put("contentId", contentId);
             showlet.setConfig(prop);
-            showlet.setPublishedContent("ART1");
+            showlet.setPublishedContent(contentId);
 
             RequestContext e = new RequestContext();
             e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET, showlet);
@@ -164,7 +162,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "insert");
 			this.setToken();
-			this.addParameter("contentId", "ART1");
+			this.addParameter("contentId", contentId);
 			this.addParameter("title", "testTitle");
 			this.addParameter("commentText", "testComment");
 			String result2 = this.executeAction();
@@ -174,11 +172,11 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			searchBean.setComment("Testo ");
 			listaIds = this._commentManager.searchCommentIds(null);
 			assertEquals(2, listaIds.size());
-
-		// Inserimento votazione su commento 1
+			
+			// Inserimento votazione su commento 1
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "insertVote");
 
-			this.addParameter("contentId", "ART1");
+			this.addParameter("contentId", contentId);
 			this.addParameter("selectedComment", listaIds.get(0));
 			this.addParameter("vote", 2);
 			result2 = this.executeAction();
@@ -198,7 +196,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 		// Inserimento votazione su contenuto
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "insertVote");
-			this.addParameter("contentId", "ART1");
+			this.addParameter("contentId", contentId);
 			this.addParameter("vote", 4);
 			result2 = this.executeAction();
 			assertEquals(Action.SUCCESS, result2);
@@ -228,7 +226,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 				}
 				this._commentManager.deleteComment(Integer.parseInt(listaIds.get(i)));
 			}
-			IRating rating = this._ratingManager.getContentRating("ART1");
+			IRating rating = this._ratingManager.getContentRating(contentId);
 			if (rating!=null){
 				((RatingDAO)ratingDao).removeContentRating(rating.getContentId());
 			}
@@ -237,13 +235,14 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 
 	public void testViewContentAndAddCommentByRequest()throws Throwable{
-		try{
-			Content content = this._contentManager.loadContent("ART1", true);
+		String contentId = "ART1";
+		try {
+			Content content = this._contentManager.loadContent(contentId, true);
 			ICacheManager cacheManager = (ICacheManager) ApsWebApplicationUtils.getBean(SystemConstants.CACHE_MANAGER, this.getRequest());
 			ContentAuthorizationInfo authInfo = new ContentAuthorizationInfo(content);
-			cacheManager.putInCache(ContentManager.getContentAuthInfoCacheKey("ART1"), authInfo);
+			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
-			this._contentManager.loadContent("ART1", true);
+			this._contentManager.loadContent(contentId, true);
 			Showlet showlet = new Showlet();
             IShowletTypeManager showletTypeMan =
             	(IShowletTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
@@ -259,7 +258,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 			this.setUserOnSession("admin");
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "intro");
-			this.addParameter("contentId", "ART1");
+			this.addParameter("contentId", contentId);
 			String result = this.executeAction();
 			assertEquals(Action.SUCCESS, result);
 
@@ -268,7 +267,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			assertEquals(0, commentIds.size());
 
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "insert");
-			this.addParameter("contentId", "ART1");
+			this.addParameter("contentId", contentId);
 			this.addParameter("title", "testTitle");
 			this.addParameter("commentText", "testComment");
 			this.setToken();
@@ -277,7 +276,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 			this.setUserOnSession("admin");
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "intro");
-			this.addParameter("contentId", "ART1");
+			this.addParameter("contentId", contentId);
 			result = this.executeAction();
 			assertEquals(Action.SUCCESS, result);
 
@@ -286,7 +285,6 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			assertEquals(1, commentIds.size());
 
 		} catch (Throwable t) {
-			t.printStackTrace();
 			throw t;
 		} finally{
 			List<String> listaIds = this._commentManager.searchCommentIds(null);
@@ -301,7 +299,6 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
     		this._commentManager = (ICommentManager) this.getService(JpcontentfeedbackSystemConstants.COMMENTS_MANAGER);
     		this._ratingManager = (IRatingManager) this.getService(JpcontentfeedbackSystemConstants.RATING_MANAGER);
     		this._contentManager = (IContentManager) this.getService(JacmsSystemConstants.CONTENT_MANAGER);
-    		this._authorizationManager = (IAuthorizationManager) this.getService(SystemConstants.AUTHORIZATION_SERVICE);
     	} catch (Throwable t) {
             throw new Exception(t);
         }
@@ -310,5 +307,4 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 	private ICommentManager _commentManager = null;
 	private IRatingManager _ratingManager = null;
 	private IContentManager _contentManager;
-	private IAuthorizationManager _authorizationManager;
 }
