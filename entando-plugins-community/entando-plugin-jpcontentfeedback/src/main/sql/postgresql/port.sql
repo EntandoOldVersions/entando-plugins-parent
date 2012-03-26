@@ -7,10 +7,7 @@ CREATE TABLE jpcontentfeedback_comments
   status integer NOT NULL,
   username character varying(40) NOT NULL,
   CONSTRAINT jpcontentfeedback_comments_pkey PRIMARY KEY (id)
-)
-WITH (OIDS=TRUE);
-
-
+);
 
 CREATE TABLE jpcontentfeedback_rating
 (
@@ -23,8 +20,7 @@ CREATE TABLE jpcontentfeedback_rating
   CONSTRAINT jpcontentfeedback_rating_refcommentid_fkey FOREIGN KEY (commentid)
       REFERENCES jpcontentfeedback_comments (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (OIDS=TRUE);
+);
 
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpcontentfeedback_CONTENT_RATING', 'it', 'Valutazione del Contenuto');
