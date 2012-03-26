@@ -25,6 +25,7 @@ import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.keygenerator.IKeyGeneratorManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
+import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.event.ContentFeedbackChangedEvent;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.model.IRating;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.model.Rating;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.model.RatingSearchBean;
@@ -50,10 +51,11 @@ public class RatingManager extends AbstractService implements IRatingManager{
 				rating.setContentId(contentId);
 				rating.setVote(1, vote);
 				this.getRatingDAO().addRating(rating);
-			}else{
+			} else {
 				rating.setVote(rating.getVoters()+1, rating.getSumvote()+vote);
 				this.getRatingDAO().updateRating(rating);
 			}
+            this.notifyEvent(contentId, -1, ContentFeedbackChangedEvent.CONTENT_RATING, ContentFeedbackChangedEvent.INSERT_OPERATION_CODE);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "addRatingToContent");
 			throw new ApsSystemException("Error add rating to content", t);
@@ -73,10 +75,11 @@ public class RatingManager extends AbstractService implements IRatingManager{
 				rating.setCommentId(commentId);
 				rating.setVote(1, vote);
 				this.getRatingDAO().addRating(rating);
-			}else{
+			} else {
 				rating.setVote(rating.getVoters()+1, rating.getSumvote()+vote);
 				this.getRatingDAO().updateRating(rating);
 			}
+            this.notifyEvent(null, commentId, ContentFeedbackChangedEvent.COMMENT_RATING, ContentFeedbackChangedEvent.INSERT_OPERATION_CODE);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "addRatingToComment");
 			throw new ApsSystemException("Error add rating to comment", t);
@@ -116,29 +119,37 @@ public class RatingManager extends AbstractService implements IRatingManager{
 	public void deleteContentRating(Content content) throws ApsSystemException{
 		try{
 			this.getRatingDAO().removeContentRating(content.getId());
+            this.notifyEvent(content.getId(), -1, ContentFeedbackChangedEvent.CONTENT_RATING, ContentFeedbackChangedEvent.REMOVE_OPERATION_CODE);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "deleteContentRating");
 			throw new ApsSystemException("Error while remove content rating", t);
 		}
 	}
-	public void setRatingDAO(IRatingDAO ratingDAO) {
-		this._ratingDAO = ratingDAO;
+	
+	private void notifyEvent(String contentId, int commentId, int objectCode, int operationCode) throws ApsSystemException {
+		ContentFeedbackChangedEvent event = new ContentFeedbackChangedEvent();
+		event.setContentId(contentId);
+		event.setCommentId(commentId);
+		event.setObjectCode(objectCode);
+		event.setOperationCode(operationCode);
+		this.notifyEvent(event);
 	}
-
+    
 	public IRatingDAO getRatingDAO() {
 		return _ratingDAO;
 	}
-
+	public void setRatingDAO(IRatingDAO ratingDAO) {
+		this._ratingDAO = ratingDAO;
+	}
+	
+	protected IKeyGeneratorManager getKeyGeneratorManager() {
+		return _keyGeneratorManager;
+	}
 	public void setKeyGeneratorManager(IKeyGeneratorManager keyGeneratorManager) {
 		this._keyGeneratorManager = keyGeneratorManager;
 	}
-
-	public IKeyGeneratorManager getKeyGeneratorManager() {
-		return _keyGeneratorManager;
-	}
-
+	
 	private IRatingDAO _ratingDAO;
 	private IKeyGeneratorManager _keyGeneratorManager;
-
-
+	
 }
