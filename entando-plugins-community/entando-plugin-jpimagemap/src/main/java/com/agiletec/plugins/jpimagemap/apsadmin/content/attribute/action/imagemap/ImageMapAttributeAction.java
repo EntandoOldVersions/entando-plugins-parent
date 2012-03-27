@@ -11,7 +11,7 @@ public class ImageMapAttributeAction extends AbstractContentAction implements II
 	
 	@Override
 	public String removeImage() {
-		this.getContentActionHelper().updateContent(this.getContent(), this.getRequest());
+		this.getContentActionHelper().updateEntity(this.getContent(), this.getRequest());
 		Logger log = ApsSystemUtils.getLogger();
 		try {
 			ImageMapAttribute currentAttribute = this.getAttribute();
@@ -28,7 +28,7 @@ public class ImageMapAttributeAction extends AbstractContentAction implements II
 	
 	@Override
 	public String addArea() {
-		this.getContentActionHelper().updateContent(this.getContent(), this.getRequest());
+		this.getContentActionHelper().updateEntity(this.getContent(), this.getRequest());
 		Logger log = ApsSystemUtils.getLogger();
 		try {
 			ImageMapAttribute currentAttribute = this.getAttribute();
@@ -43,7 +43,7 @@ public class ImageMapAttributeAction extends AbstractContentAction implements II
 	
 	@Override
 	public String removeArea() {
-		this.getContentActionHelper().updateContent(this.getContent(), this.getRequest());
+		this.getContentActionHelper().updateEntity(this.getContent(), this.getRequest());
 		Logger log = ApsSystemUtils.getLogger();
 		try {
 			int elementIndex = this.getElementIndex();
@@ -61,7 +61,7 @@ public class ImageMapAttributeAction extends AbstractContentAction implements II
 	
 	@Override
 	public String defineArea() {
-		this.getContentActionHelper().updateContent(this.getContent(), this.getRequest());
+		this.getContentActionHelper().updateEntity(this.getContent(), this.getRequest());
 		return SUCCESS;
 	}
 	

@@ -71,7 +71,7 @@ public class ImageMapAttributeManager extends AbstractAttributeManager {
 		ImageMapAttribute imageMapAttribute = (ImageMapAttribute) attribute;
 		ImageAttribute imageAttr = imageMapAttribute.getImage();		
 		AttributeTracer imageTracer = (AttributeTracer) tracer.clone();
-		ResourceAttributeManager imageManager = (ResourceAttributeManager) this.getManager(imageAttr.getType());
+		ResourceAttributeManager imageManager = (ResourceAttributeManager) this.getManager(imageAttr);
 		imageManager.updateAttribute(imageAttr, imageTracer, request);
 		List<LinkedArea> areas = imageMapAttribute.getAreas();
 		for (int i = 0; i < areas.size(); i++) {
@@ -80,7 +80,7 @@ public class ImageMapAttributeManager extends AbstractAttributeManager {
 			areaTracer.setMonoListElement(true);
 			areaTracer.setListIndex(i);
 			LinkAttribute link = area.getLink();
-			LinkAttributeManager linkManager = (LinkAttributeManager) this.getManager(link.getType());
+			LinkAttributeManager linkManager = (LinkAttributeManager) this.getManager(link);
 			String coords = request.getParameter(imageMapAttribute.getName() + "_coords_" + tracer.getListIndex());
 			linkManager.updateAttribute(link, areaTracer, request);
 			area.setCoords(coords);
