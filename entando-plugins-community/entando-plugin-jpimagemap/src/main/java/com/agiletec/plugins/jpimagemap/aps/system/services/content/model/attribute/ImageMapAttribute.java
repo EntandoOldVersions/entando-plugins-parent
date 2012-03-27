@@ -22,21 +22,31 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jdom.Element;
 
 import com.agiletec.aps.system.common.entity.model.attribute.AbstractComplexAttribute;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
+import com.agiletec.aps.system.common.entity.model.attribute.DefaultJAXBAttribute;
 import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.common.entity.model.AttributeFieldError;
+import com.agiletec.aps.system.common.entity.model.AttributeTracer;
+import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.extraAttribute.ImageAttribute;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.extraAttribute.JAXBLinkValue;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.extraAttribute.JAXBResourceValue;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.extraAttribute.LinkAttribute;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.extraAttribute.ResourceAttributeInterface;
+import com.agiletec.plugins.jacms.aps.system.services.resource.IResourceManager;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
 import com.agiletec.plugins.jpimagemap.aps.system.services.content.model.attribute.model.JAXBAreaValue;
 import com.agiletec.plugins.jpimagemap.aps.system.services.content.model.attribute.model.JAXBImageMapValue;
 import com.agiletec.plugins.jpimagemap.aps.system.services.content.model.attribute.util.LinkedArea;
+
+import java.awt.Rectangle;
 
 /**
  * Rappresenta un informazione tipo ImageMap.
@@ -211,11 +221,114 @@ public class ImageMapAttribute extends AbstractComplexAttribute implements Resou
 			JAXBAreaValue areaValue = new JAXBAreaValue();
 			JAXBLinkValue areaLinkValue = (JAXBLinkValue) area.getLink().getJAXBAttribute(langCode).getValue();
 			areaValue.setLink(areaLinkValue);
+			areaValue.setShape(area.getShape());
 			areaValue.setCoords(area.getCoords());
 			imageMapValue.addArea(areaValue);
 		}
 		return imageMapValue;
 	}
+	
+    public void valueFrom(DefaultJAXBAttribute jaxbAttribute) {
+        JAXBImageMapValue value = (JAXBImageMapValue) jaxbAttribute.getValue();
+        if (null == value) return;
+        JAXBResourceValue jaxbImageValue = value.getImage();
+        if (null == jaxbImageValue) return;
+        try {
+            IResourceManager resourceManager = this.getResourceManager();
+            ResourceInterface resource = resourceManager.loadResource(jaxbImageValue.getResourceId().toString());
+            if (null != resource) {
+                this.setResource(resource, this.getDefaultLangCode());
+            }
+			if (null != value.getAreas()) {
+				for (int i = 0; i < value.getAreas().size(); i++) {
+					JAXBAreaValue areaValue = value.getAreas().get(i);
+					JAXBLinkValue areaLinkValue = areaValue.getLink();
+					if (null == areaValue || null == areaLinkValue) continue;
+					LinkedArea linkedArea = (LinkedArea) this.getPrototype().clone();
+					linkedArea.setShape(areaValue.getShape());
+					linkedArea.setCoords(areaValue.getCoords());
+					linkedArea.getLink().setSymbolicLink(areaLinkValue.getSymbolikLink());
+					Object textValue = areaLinkValue.getText();
+					if (null == textValue) return;
+					linkedArea.getLink().getTextMap().put(this.getDefaultLangCode(), textValue.toString());
+				}
+			}
+        } catch (Exception e) {
+            ApsSystemUtils.logThrowable(e, this, "valueFrom", "Error extracting linked area from jaxbAttribute");
+        }
+    }
+    
+    protected IResourceManager getResourceManager() {
+        return (IResourceManager) this.getBeanFactory().getBean(JacmsSystemConstants.RESOURCE_MANAGER);
+    }
+    
+    public Status getStatus() {
+        Status resourceStatus = (null != this.getResource()) ? Status.VALUED : Status.EMPTY;
+        Status linksStatus = (null != this.getAreas() && this.getAreas().size() > 0) ? Status.VALUED : Status.EMPTY;
+        if (!linksStatus.equals(resourceStatus)) return Status.INCOMPLETE;
+        if (linksStatus.equals(resourceStatus) && linksStatus.equals(Status.VALUED)) return Status.VALUED;
+        return Status.EMPTY;
+    }
+    
+    public List<AttributeFieldError> validate(AttributeTracer tracer) {
+        List<AttributeFieldError> errors = super.validate(tracer);
+        try {
+            if (null == this.getResource()) return errors;
+			List<LinkedArea> areas = this.getAreas();
+			for (int i = 0; i < areas.size(); i++) {
+				LinkedArea area = (LinkedArea) areas.get(i);
+				AttributeTracer areaTracer = (AttributeTracer) tracer.clone();
+				areaTracer.setMonoListElement(true);
+				areaTracer.setListIndex(i);
+				LinkAttribute linkAttribute = area.getLink();
+				if (null != linkAttribute) {
+					errors.addAll(linkAttribute.validate(areaTracer));
+				}
+				String coords = area.getCoords();
+				boolean isShapeValued = (area.getShape() != null && area.getShape().trim().length() > 0 );
+				boolean isCoordsValued = (coords!= null && coords.trim().length() > 0 && this.isValidNumber(coords));
+				if (!isShapeValued || !isCoordsValued) {
+					errors.add(new AttributeFieldError(this, INVALID_LINKED_AREA_ERROR, areaTracer));
+					/*
+					String formFieldName = tracer.getFormFieldName(imageMapAttribute);
+					String[] args = { imageMapAttribute.getName(), String.valueOf(tracer.getListIndex()+1) };
+					this.addFieldError(action, formFieldName, "Content.linkedAreaElement.invalidArea.maskmsg", args);
+					 */
+				}
+				this.isIntersected(area, areaTracer, errors);
+			}
+        } catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "validate");
+            throw new RuntimeException("Error validating image map attribute", t);
+        }
+        return errors;
+    }
+    
+	private boolean isValidNumber(String coords) {
+		Pattern pattern = Pattern.compile("^\\d+,\\d+,\\d+,\\d+$");
+		Matcher matcher = pattern.matcher(coords.trim());
+		return matcher.matches();
+	}
+	
+	private void isIntersected(LinkedArea area, AttributeTracer tracer, List<AttributeFieldError> errors) {
+		int index = tracer.getListIndex();
+		Integer[] coordsArray = area.getArrayCoords();
+		Rectangle areaRect = 
+			new Rectangle(coordsArray[0].intValue(), coordsArray[1].intValue(), coordsArray[2].intValue() - coordsArray[0].intValue() , coordsArray[3].intValue() - coordsArray[1].intValue());
+		for (int i=index-1; i>=0 ; i--){
+			LinkedArea currentArea = this.getArea(i);
+			Integer[] currentCoordsArray = currentArea.getArrayCoords();
+			Rectangle currentAreaRect = new Rectangle(currentCoordsArray[0].intValue(),currentCoordsArray[1].intValue(), 
+					currentCoordsArray[2].intValue() - currentCoordsArray[0].intValue() , currentCoordsArray[3].intValue() - currentCoordsArray[1].intValue());
+			boolean intersect = areaRect.intersects(currentAreaRect);
+			if (intersect) {
+				errors.add(new AttributeFieldError(this, INVALID_LINKED_AREA_ERROR, tracer));
+			}
+		}
+	}
+	
+	public static final String INVALID_LINKED_AREA_ERROR = "INVALID_LINKED_AREA_ERROR";
+	public static final String INTERSECTED_AREA_ERROR = "INTERSECTED_AREA_ERROR";
 	
 	private ImageAttribute _image;
 	private String _timestamp;

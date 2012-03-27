@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
-import com.agiletec.apsadmin.system.entity.attribute.AttributeTracer;
+import com.agiletec.aps.system.common.entity.model.AttributeTracer;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -15,12 +15,19 @@ public class ResourceAttributeManager extends com.agiletec.plugins.jacms.apsadmi
 	
 	@Override
 	protected void checkAttribute(ActionSupport action,
-			AttributeInterface attribute, AttributeTracer tracer,
+			AttributeInterface attribute, com.agiletec.apsadmin.system.entity.attribute.AttributeTracer tracer,
 			IApsEntity entity) {
 		super.checkAttribute(action, attribute, tracer, entity);
 	}
 	
+	/**
+	 * @deprecated As of version 2.4.1 of Entando, moved validation within single attribute.
+	 */
 	@Override
+	protected void updateAttribute(AttributeInterface attribute, com.agiletec.apsadmin.system.entity.attribute.AttributeTracer tracer, HttpServletRequest request) {
+		super.updateAttribute(attribute, tracer, request);		
+	}
+	
 	protected void updateAttribute(AttributeInterface attribute, AttributeTracer tracer, HttpServletRequest request) {
 		super.updateAttribute(attribute, tracer, request);		
 	}

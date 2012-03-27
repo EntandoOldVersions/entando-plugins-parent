@@ -19,38 +19,17 @@ package com.agiletec.plugins.jpgeoref.apsadmin.content.attribute.manager;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
-import com.agiletec.apsadmin.system.entity.attribute.AttributeTracer;
+import com.agiletec.aps.system.common.entity.model.AttributeTracer;
 import com.agiletec.apsadmin.system.entity.attribute.manager.AbstractMonoLangAttributeManager;
 import com.agiletec.plugins.jpgeoref.aps.system.GeoRefSystemConstants;
 import com.agiletec.plugins.jpgeoref.aps.system.services.content.model.extraAttribute.CoordsAttribute;
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * @author E.Santoboni
  */
 public class CoordsAttributeManager extends AbstractMonoLangAttributeManager {
-
-	/**
-	 * Returns attribute value
-	 * @return attribute value
-	 */
-	@Override
-	protected Object getValue(AttributeInterface attribute) {
-		return null;
-	}
-
-	/**
-	 * Sets attribute value
-	 * @param attribute attribute
-	 * @param value attribute value
-	 */
-	@Override
-	protected void setValue(AttributeInterface attribute, String value) {
-
-	}
-
+	
 	/**
 	 * Update attribute
 	 * @param attribute Attribute to be updated.
@@ -104,41 +83,22 @@ public class CoordsAttributeManager extends AbstractMonoLangAttributeManager {
 		String value = request.getParameter(coordId + "_" + attribute.getName());
 		return value;
 	}
-
-	/**
-	 * Returns attribute state.
-	 * @param attribute Attribute interface
-	 * @param tracer Attribute tracer
-	 */
+	
 	@Override
-	protected int getState(AttributeInterface attribute, AttributeTracer tracer) {
-		CoordsAttribute coordsAttribute = (CoordsAttribute) attribute;
-		double xDouble = coordsAttribute.getX();
-		double yDouble = coordsAttribute.getY();
-		double zDouble = coordsAttribute.getZ();
-		if (0 == xDouble && 0 == yDouble && 0==zDouble) {
-			return this.EMPTY_ATTRIBUTE_STATE;
-		} else if (0 != xDouble && 0 != yDouble) {
-			return this.VALUED_ATTRIBUTE_STATE;
-		}
-		return this.INCOMPLETE_ATTRIBUTE_STATE;
+	protected String getInvalidAttributeMessage() {
+		return "CoordsAttribute.incompleteAttribute";
+	}
+	
+	/**
+     * @deprecated As of version 2.4.1 of Entando, moved validation within single attribute.
+     */
+    protected Object getValue(AttributeInterface attribute) {
+		return null;
 	}
 
-	/**
-	 * Check single attribute
-	 * @param action Action support
-	 * @param attribute Attribute interface
-	 * @param tracer Attribute tracer
-	 * @param entity APS entity
-	 */
 	@Override
-	protected void checkSingleAttribute(ActionSupport action, AttributeInterface attribute, AttributeTracer tracer, IApsEntity entity) {
-		if (this.getState(attribute, tracer) == INCOMPLETE_ATTRIBUTE_STATE) {
-			String[] args = {attribute.getName()};
-			String fieldName = tracer.getFormFieldName(attribute);
-			this.addFieldError(action, fieldName, "CoordsAttribute.incompleteAttribute", args);
-		}
-		super.checkSingleAttribute(action, attribute, tracer, entity);
+	protected void setValue(AttributeInterface attribute, String value) {
+		//do notning
 	}
-
+	
 }

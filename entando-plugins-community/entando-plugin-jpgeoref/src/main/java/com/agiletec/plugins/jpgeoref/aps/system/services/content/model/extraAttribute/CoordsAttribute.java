@@ -17,6 +17,7 @@
  */
 package com.agiletec.plugins.jpgeoref.aps.system.services.content.model.extraAttribute;
 
+import com.agiletec.aps.system.common.entity.model.attribute.DefaultJAXBAttribute;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,6 +122,7 @@ public class CoordsAttribute extends AbstractAttribute {
 	public double getY() {
 		return _y;
 	}
+	
 	/**
 	 * Returns coordinate z
 	 * @return coordinate z
@@ -148,7 +150,34 @@ public class CoordsAttribute extends AbstractAttribute {
 		coords.append(")");
 		return coords.toString();
 	}
-
+	
+	@Override
+	public Status getStatus() {
+		if (0 == this.getX() && 0 == this.getY() && 0==this.getZ()) {
+			return Status.EMPTY;
+		} else if (0 != this.getX() && 0 != this.getY()) {
+			return Status.VALUED;
+		}
+		return Status.INCOMPLETE;
+	}
+	
+	@Override
+	public void valueFrom(DefaultJAXBAttribute jaxbAttribute) {
+		if (null == jaxbAttribute) return;
+		String coords = (String) jaxbAttribute.getValue();
+		if (null == coords) return;
+		String[] coordinates = coords.trim().substring(1, coords.trim().length() - 1).split(",");
+		try {
+			this.setX(Long.parseLong(coordinates[0]));
+		} catch (Exception e) {}
+		try {
+			this.setY(Long.parseLong(coordinates[1]));
+		} catch (Exception e) {}
+		try {
+			this.setZ(Long.parseLong(coordinates[2]));
+		} catch (Exception e) {}
+	}
+	
 	private static final String ATTRIBUTE_ELEMENT = "attribute";
 	private static final String ATTRIBUTE_ELEMENT_NAME = "name";
 	private static final String ATTRIBUTE_ELEMENT_TYPE = "attributetype";
