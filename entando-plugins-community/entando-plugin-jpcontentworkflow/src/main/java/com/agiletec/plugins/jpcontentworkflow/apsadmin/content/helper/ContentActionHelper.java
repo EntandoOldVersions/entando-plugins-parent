@@ -58,7 +58,7 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 	            	String mainGroup = request.getParameter("mainGroup");
 	            	if (mainGroup != null) content.setMainGroup(mainGroup);
 	            }
-	            super.updateEntityAttributes(content, request);
+	            super.updateEntity(content, request);
             }
         } catch (Throwable t) {
         	ApsSystemUtils.logThrowable(t, this, "updateContent");
