@@ -28,7 +28,7 @@ body.client-advanced .imagebox {
 body.client-advanced .jpimage-areas-list {
 	margin-left: 10px;
 }
-body.client-advanced .jpimage-areas-list ul { 
+body.client-advanced .jpimage-areas-list ul {
 	display: inline-block;
     list-style-type: none;
     padding-left: 8px;
@@ -36,8 +36,8 @@ body.client-advanced .jpimage-areas-list ul {
     margin-left: 79px;
 }
 body.client-advanced .jpimage-areas-list ul li {
-	position: relative;	
-} 
+	position: relative;
+}
 body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute {
 	display: inline-block;
     vertical-align: top;
@@ -48,7 +48,7 @@ body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute-el
 	margin-bottom: 8px;
 	padding: 4px;
 }
-body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute-element label, 
+body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute-element label,
 body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute-element span.important {
 	border-bottom: medium none;
 }
@@ -67,9 +67,9 @@ body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute-el
 		float: left;
 }
 .area {
-	position: absolute;  
-	display: block; 
-	opacity: 0.8;	
+	position: absolute;
+	display: block;
+	opacity: 0.8;
 	overflow: hidden;
 	background-color: blue;
 	cursor: not-allowed;
@@ -84,9 +84,6 @@ body.client-advanced .jpimage-areas-list ul li .jpimagemap-compositeAttribute-el
 	cursor: move;
 }
 #jpimagemap_toolbarinfo {
-	background-color: gray;
-	color: #000;
-	text-align: right;
 }
 .handler {
 	opacity: 0.7;
