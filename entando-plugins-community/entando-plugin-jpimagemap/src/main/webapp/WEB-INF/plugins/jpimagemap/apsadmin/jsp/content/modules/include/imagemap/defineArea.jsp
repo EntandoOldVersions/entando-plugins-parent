@@ -4,163 +4,99 @@
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 <html>
-<head>
-<title>Select Area</title>
+	<head>
+		<title><s:text name="jpimagemap.defineArea.Title" /></title>
+		<jsp:include page="/WEB-INF/apsadmin/jsp/common/template/defaultExtraResources.jsp" />
+		<%--
+		<script type="text/javascript" src="<wp:resourceURL />administration/common/js/mootools-core-1.3-full-compat-yc.js"></script>
+		<script type="text/javascript" src="<wp:resourceURL />administration/common/js/mootools-more-1.3-full-compat-yc.js"></script>
+		--%>
+		<script type="text/javascript">
+			var ImageMapAttribute_fieldError_linkedAreaElement_intersectedArea = "<s:property value="%{getText('ImageMapAttribute.fieldError.linkedAreaElement.intersectedArea')}" escapeJavaScript="true" />";
+		</script>
 
-<s:include value="/WEB-INF/plugins/jpimagemap/apsadmin/jsp/content/modules/include/imagemap/defineAreaJS.jsp" />
+		<script type="text/javascript" src="<wp:resourceURL />plugins/jpimagemap/administration/common/js/jpimagemap-areas.js"></script>
+		<link rel="stylesheet" type="text/css" href="<wp:resourceURL />plugins/jpimagemap/administration/common/css/administration-jpimagemap.css" />
+	</head>
 
-<style type="text/css" >
-	body {
-		<s:if test="%{(attribute.resource!=null && attribute.resource.id!=0) || attribute.text!=''}">
-			background-image: url('<s:property value="%{attribute.getResource().getImagePath('0')}"/>');
-			background-repeat: no-repeat;
-		</s:if>
-	}
-</style>
+	<body>
 
-</head>
+		<div id="jpimagemap_toolbarinfo">
+			<div id="main">
+				<h1><s:text name="jacms.menu.contentAdmin" /></h1>
+				<s:form action="saveArea" id="mainform">
+					<p>
+						<input value="" size="4" name="top" type="hidden" />
+						<input value="" size="4" name="left" type="hidden" />
+						<input value="" size="4" name="width" type="hidden" />
+						<input value="" size="4" name="height" type="hidden" />
+						<input value="" size="4" name="bottom" type="hidden"/>
+						<input value="" size="4" name="right" type="hidden" />
 
-<body>
+						<wpsf:hidden name="attributeName"/>
+						<wpsf:hidden name="elementIndex" />
+						<wpsf:hidden name="langCode"/>
 
-<s:if test="%{(attribute.resource != null && attribute.resource.id != 0 ) || attribute.text != ''}">
-	<!-- ciclo sulle aree -->
-	<s:if test="%{attribute.areas != null}">
-		<!-- ciclo sulle aree -->
-		<s:iterator value="%{attribute.areas}" id="area" status="statusElement">
-			<s:if test="%{#area!=null}">
-				<s:if test="%{#statusElement.index == elementIndex}" >
-					
-<div dojoType="LinkedArea" id="<s:property value="%{#statusElement.index}"/>" 
-		title="area <s:property value="%{#statusElement.index+1}"/> - <s:text name="Content.linkedAreaElement.inDefinition"/>"
-		constrainToContainer="true" 
-		hasShadow="false" 
-		resizable="true"
-		taskBarId="mytaskbar" 
-		windowState="normal"
-		displayMinimizeAction="false" 
-		toggle="explode"
-		toggleDuration="300"
-		style="position: absolute;  display: visible; opacity: 0.8;	overflow: hidden;
-	<s:if test="%{#area.coords=='0,0,0,0'}">
-			top: 10px;
-			left: 10px;
-			width: 100px;
-			height: 45px;
-	</s:if>
-	<s:else>
-		<s:iterator value="%{#area.arrayCoords}" id="coord" status="areasStatus">
-			<s:if test="%{#areasStatus.index==0}">
-				left: <s:property value="%{#coord}"/>px; 
-				<s:set name="left" value="%{#coord}"/>	
-			</s:if>
-			<s:elseif test="%{#areasStatus.index==1}">
-				top: <s:property value="%{#coord}"/>px; 
-				<s:set name="top" value="%{#coord}"/>
-			</s:elseif>
-			<s:elseif test="%{#areasStatus.index==2}">
-				width: <s:property value="%{#coord - #left}"/>px;
-			</s:elseif>
-			<s:elseif test="%{#areasStatus.index==3}">
-				height: <s:property value="%{#coord - #top}"/>px; 
-			</s:elseif>
-		</s:iterator>
-	</s:else>" >
-	<div style="text-align: center; position: relative; margin: auto;" >
-		<s:text name="Content.linkedAreaElement.inDefinition"/>
-	</div>
-</div>
+						<s:text name="jpimagemap.defineArea.note.positioning" />
+					</p>
+					<p>
+						<input class="button" id="pulsante" value="<s:text name="jpimagemap.label.save" />" type="submit" />
+						<span id="messages"></span>
+					</p>
+				</s:form>
+			</div>
+
+			<div id="areas">
+				<img src="<s:property value="%{attribute.getResource().getImagePath('0')}"/>" />
+
+				<s:if test="%{(attribute.resource != null && attribute.resource.id != 0 ) || attribute.text != ''}">
+					<s:if test="%{attribute.areas != null}">
+						<s:iterator value="%{attribute.areas}" id="area" status="statusElement">
+							<s:if test="%{#area!=null}">
+								<!-- cords: <s:property value="#area.coords=='0,0,0,0'" /> -->
+								<s:if test="%{#statusElement.index == elementIndex}" >
+									<s:if  test="%{#area.coords == '0,0,0,0'}" >
+										<s:set var="top">0</s:set>
+										<s:set var="left">0</s:set>
+										<s:set var="width">120</s:set>
+										<s:set var="height">120</s:set>
+									</s:if>
+									<s:else>
+										<s:set var="left" value="%{#area.arrayCoords[0]}" />
+										<s:set var="top" value="%{#area.arrayCoords[1]}" />
+										<s:set var="width" value="%{#area.arrayCoords[2]-#left}" />
+										<s:set var="height" value="%{#area.arrayCoords[3]-#top}" />								</s:else>
+									<div class="area area<s:property value="#statusElement.index" /> area-current"
+										style=" top: <s:property value="#top" />px; left: <s:property value="#left" />px; width: <s:property value="#width" />px; height: <s:property value="#height" />px; ">
+											Area <s:property value="#statusElement.count" />
+									</div>
+								</s:if>
+								<s:else>
+									<s:if  test="%{#area.coords == '0,0,0,0'}" >
+										<s:set var="top">0</s:set>
+										<s:set var="left">0</s:set>
+										<s:set var="width">120</s:set>
+										<s:set var="height">120</s:set>
+									</s:if>
+									<s:else>
+										<s:set var="left" value="%{#area.arrayCoords[0]}" />
+										<s:set var="top" value="%{#area.arrayCoords[1]}" />
+										<s:set var="width" value="%{#area.arrayCoords[2]-#left}" />
+										<s:set var="height" value="%{#area.arrayCoords[3]-#top}" />
+									</s:else>
+									<div class="area area<s:property value="#statusElement.index" /> area-blocked"
+										style=" top: <s:property value="#top" />px; left: <s:property value="#left" />px; width: <s:property value="#width" />px; height: <s:property value="#height" />px; ">
+											Area&#32;<s:property value="#statusElement.count" />
+									</div>
+								</s:else>
+							</s:if>
+						</s:iterator>
+					</s:if>
+
 				</s:if>
-				<s:else>
-<div dojoType="LinkedArea"
-	id="<s:property value="%{#statusElement.index}"/>" 
-	title="area <s:property value="%{#statusElement.index+1}"/> - <s:text name="Content.linkedAreaElement.Defined"/> "
-	constrainToContainer="true" 
-	hasShadow="false" 
-	resizable="false"
-	taskBarId="mytaskbar" 
-	windowState="normal"
-	displayMinimizeAction="false" 
-	toggle="explode"
-	toggleDuration="300"
-	style="position: absolute;  display: visible; opacity: 0.8; 																	
-		background-color: blue; border-color: blue; overflow: hidden;
-	<s:if  test="%{#area.coords == '0,0,0,0'}" >
-		top: 10px;
-		left: 10px;
-		width: 100px;
-		height: 45px;
-	</s:if>
-	<s:else>
-		<s:iterator value="%{#area.arrayCoords}" id="coord" status="areasStatus">
-			<s:if test="%{#areasStatus.index==0}">
-		left: <s:property value="%{#coord}"/>px; 
-		<s:set name="left" value="%{#coord}"/>
-			</s:if>
-			<s:elseif test="%{#areasStatus.index==1}">
-		top: <s:property value="%{#coord}"/>px; 
-		<s:set name="top" value="%{#coord}"/>
-			</s:elseif>
-			<s:elseif test="%{#areasStatus.index==2}">
-		width: <s:property value="%{#coord - #left}"/>px;
-			</s:elseif>
-			<s:elseif test="%{#areasStatus.index==3}">
-		height: <s:property value="%{#coord - #top}"/>px; 
-			</s:elseif>
-		</s:iterator>
-	</s:else> " >
-	<div style="text-align: center; position: relative; margin: auto;" >
-		<s:text name="Content.linkedAreaElement.Defined"/>
-	</div>
-</div>
-				</s:else>
-				
-				
-			</s:if>
-		</s:iterator>
-		<!-- fine ciclo sulle aree -->
-		&nbsp;
-	</s:if>
-	<s:else>
-	<div>&nbsp;</div>
-	</s:else>
-</s:if>
-<s:else>
-<div>&nbsp;</div>
-</s:else>
 
-<div dojoType="TaskBar" 
-	id="mytaskbar" 
-	hasShadow="true"
-	resizable="false"
-	style="width: 80%; height: 60px; margin: 0px; padding: 0px; bottom: 30px; left: 5%; overflow: hidden; display: none;">
-</div>
+			</div>
+		</div>
 
-<div style="position: absolute; bottom: 10px; padding: 10px;" >
-<div>
-	<input style="color: red;" type="text" size="28" name="messages" id="messages" ><br/>
-</div>
-
-<h4>Area: <s:property value="%{elementIndex+1}"/></h4>
-<s:form action="saveArea" id="mainform" >
-<div style="float: left; text-align: right; ">
-	
-		Top: <input type="text" size="4" name="top" id="top" /><br/>
-		Left: <input type="text" size="4" name="left" id="left" /><br/>
-		Width: <input type="text" size="4" name="width" id="width" /><br/>
-		Height: <input type="text" size="4" name="height" id="height" /><br/>
-		Bottom: <input type="text" size="4" name="bottom" id="bottom" /><br/>
-		Right: <input type="text" size="4" name="right" id="right" /><br/>
-		<wpsf:hidden name="attributeName"/>
-		<wpsf:hidden name="elementIndex" />
-		<wpsf:hidden name="langCode"/>
-</div>
-<wpsa:actionParam action="saveArea" var="actionName" />
-<s:property value="#actionName"/>
-<s:action name="saveArea" />
-<div style="margin: 20px; padding: 0px; bottom: 30px; overflow: hidden;  ">
-	<input class="button" id="pulsante" type="submit" value="<s:text name="label.save"/>"  />
-</div>
-	</s:form>
-</div>
-</body>
+	</body>
 </html>

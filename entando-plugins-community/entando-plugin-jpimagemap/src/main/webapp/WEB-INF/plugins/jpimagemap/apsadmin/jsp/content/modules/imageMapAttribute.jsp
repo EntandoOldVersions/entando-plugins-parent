@@ -21,7 +21,7 @@
 							<wpsa:actionSubParam name="langCode" value="%{#lang.code}" />
 						</wpsa:actionParam>
 						<wpsa:set name="iconImagePath" ><wp:resourceURL/>administration/common/img/icons/22x22/delete.png</wpsa:set>
-						<wpsf:submit useTabindexAutoIncrement="true" type="image" action="%{#removeResourceActionName}" 
+						<wpsf:submit type="image"useTabindexAutoIncrement="true" action="%{#removeResourceActionName}" 
 							value="%{getText('label.remove')}" title="%{getText('label.remove')}" src="%{#iconImagePath}" />
 						
 						<%-- IMMAGINE E LINK --%>
@@ -75,8 +75,8 @@
 											&#32;
 											<%-- define area button --%>
 											<wpsa:actionParam action="defineImageMapArea" var="defineAreaActionName" ><wpsa:actionSubParam name="attributeName" value="%{#attribute.name}" /><wpsa:actionSubParam name="elementIndex" value="%{#elementStatus.index}" /><wpsa:actionSubParam name="langCode" value="%{#lang.code}" /></wpsa:actionParam>
-											<wpsa:set name="iconImagePath" ><wp:resourceURL/>plugins/jpimagemap/administration/img/tablet.png</wpsa:set>
-											<wpsf:submit useTabindexAutoIncrement="true" type="image" action="%{#defineAreaActionName}" value="%{getText('label.defineArea')}" title="%{getText('label.defineArea')}" src="%{#iconImagePath}" />
+											<wpsa:set name="iconImagePath" ><wp:resourceURL/>plugins/jpimagemap/administration/common/img/tablet.png</wpsa:set>
+											<wpsf:submit type="image" useTabindexAutoIncrement="true" action="%{#defineAreaActionName}" value="%{getText('label.defineArea')}" title="%{getText('label.defineArea')}" src="%{#iconImagePath}" />
 										</div>
 										<div class="jpimagemap-compositeAttribute-element">
 											<label class="basic-mint-label" for="<s:property value="%{#htmlPrefixId+'link'+#elementStatus.count}"/>">Link:</label>
@@ -148,7 +148,7 @@
 						<wpsa:actionSubParam name="attributeName" value="%{#attribute.name}" />
 						<wpsa:actionSubParam name="langCode" value="%{#lang.code}" />
 					</wpsa:actionParam> 
-					<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" cssClass="button" src="%{#iconImagePath}" value="%{getText('label.add')}" title="%{getText('label.add')}" />
+					<wpsf:submit action="%{#actionName}" useTabindexAutoIncrement="true"  cssClass="button" src="%{#iconImagePath}" value="%{getText('label.add')}" title="%{getText('label.add')}" />
 				</p>
 					
 			</div>
@@ -170,7 +170,7 @@
 				alt="<s:property value="#defaultResource.descr"/>" /></a>
 			
 			<%-- TESTO --%>
-			<wpsf:textfield useTabindexAutoIncrement="true" id="%{#attributeTracer.getFormFieldName(#attribute.image)}" 
+			<wpsf:textfield useTabindexAutoIncrement="true"  id="%{#attributeTracer.getFormFieldName(#attribute.image)}" 
 				name="%{#attributeTracer.getFormFieldName(#attribute.image)}" value="%{#attribute.getImage().getTextForLang(#lang.code)}"
 				maxlength="254" cssClass="text" cssClass="text" />
 		</s:else>
