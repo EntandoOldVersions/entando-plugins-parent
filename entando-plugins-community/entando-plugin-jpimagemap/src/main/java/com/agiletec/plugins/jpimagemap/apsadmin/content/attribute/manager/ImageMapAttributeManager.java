@@ -63,11 +63,11 @@ public class ImageMapAttributeManager extends AbstractAttributeManager {
 	
 	@Override
 	protected void updateAttribute(AttributeInterface attribute, AttributeTracer tracer, HttpServletRequest request) {
-		this.manageImageMapAttribute(attribute, tracer, request, null);
+		this.manageImageMapAttribute(attribute, tracer, request);
 	}
 	
 	private void manageImageMapAttribute(AttributeInterface attribute, 
-			AttributeTracer tracer, HttpServletRequest request, IApsEntity entity) {
+			AttributeTracer tracer, HttpServletRequest request) {
 		ImageMapAttribute imageMapAttribute = (ImageMapAttribute) attribute;
 		ImageAttribute imageAttr = imageMapAttribute.getImage();		
 		AttributeTracer imageTracer = (AttributeTracer) tracer.clone();
@@ -81,7 +81,7 @@ public class ImageMapAttributeManager extends AbstractAttributeManager {
 			areaTracer.setListIndex(i);
 			LinkAttribute link = area.getLink();
 			LinkAttributeManager linkManager = (LinkAttributeManager) this.getManager(link);
-			String coords = request.getParameter(imageMapAttribute.getName() + "_coords_" + tracer.getListIndex());
+			String coords = request.getParameter(imageMapAttribute.getName() + "_coords_" + areaTracer.getListIndex());
 			linkManager.updateAttribute(link, areaTracer, request);
 			area.setCoords(coords);
 		}
@@ -91,9 +91,9 @@ public class ImageMapAttributeManager extends AbstractAttributeManager {
 		String errorCode = attributeFieldError.getErrorCode();
         String messageKey = null;
         if (errorCode.equals(ImageMapAttribute.INVALID_LINKED_AREA_ERROR)) {
-            messageKey = "Content.linkedAreaElement.invalidArea.maskmsg";
+            messageKey = "ImageMapAttribute.fieldError.linkedAreaElement.invalidArea";
         } else if (errorCode.equals(ImageMapAttribute.INTERSECTED_AREA_ERROR)) {
-            messageKey = "Content.linkedAreaElement.intersectedArea";
+            messageKey = "ImageMapAttribute.fieldError.linkedAreaElement.intersectedArea";
         }
         if (null != messageKey) {
             return action.getText(messageKey);

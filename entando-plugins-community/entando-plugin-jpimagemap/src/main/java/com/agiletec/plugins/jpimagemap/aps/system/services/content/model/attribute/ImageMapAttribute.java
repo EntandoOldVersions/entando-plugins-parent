@@ -313,6 +313,7 @@ public class ImageMapAttribute extends AbstractComplexAttribute implements Resou
 	private void isIntersected(LinkedArea area, AttributeTracer tracer, List<AttributeFieldError> errors) {
 		int index = tracer.getListIndex();
 		Integer[] coordsArray = area.getArrayCoords();
+		if (null == coordsArray) return;
 		Rectangle areaRect = 
 			new Rectangle(coordsArray[0].intValue(), coordsArray[1].intValue(), coordsArray[2].intValue() - coordsArray[0].intValue() , coordsArray[3].intValue() - coordsArray[1].intValue());
 		for (int i=index-1; i>=0 ; i--){

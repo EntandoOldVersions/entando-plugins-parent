@@ -33,6 +33,7 @@ public class LinkedArea {
 	}
 	
 	public Integer[] getArrayCoords() {
+		if (null == this.getCoords()) return null;
 		String[] array = this.getCoords().split(",");
 		if (array == null || array.length != 4) {
 			array = "0,0,10,10".split(",");
