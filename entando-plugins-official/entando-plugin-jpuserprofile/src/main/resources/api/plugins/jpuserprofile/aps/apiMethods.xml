@@ -1,6 +1,6 @@
 <apiMethodDefinitions>
     
-    <resource name="myUserProfile">
+    <resource name="myUserProfile" namespace="jpuserprofile">
         <description>The User profile of the current user</description>
         <source pluginCode="jpuserprofile">plugins</source>
         <method httpMethod="GET" active="true" requiredAuth="true">
@@ -9,7 +9,7 @@
         </method>
     </resource>
     
-    <resource name="userProfileType">
+    <resource name="userProfileType" namespace="jpuserprofile">
         <description>The rappresentation of the user profile type</description>
         <source pluginCode="jpuserprofile">plugins</source>
         <method httpMethod="GET" active="true">
@@ -43,7 +43,7 @@
         </method>
     </resource>
     
-    <resource name="userProfiles">
+    <resource name="userProfiles" namespace="jpuserprofile">
         <description>The list of usernames, composed using the specified filters to user profiles.</description>
         <source pluginCode="jpuserprofile">plugins</source>
         <method httpMethod="GET" active="true">
@@ -61,7 +61,7 @@
         </method>
     </resource>
     
-    <resource name="userProfile">
+    <resource name="userProfile" namespace="jpuserprofile">
         <description>The rappresentation of the user profile</description>
         <source pluginCode="jpuserprofile">plugins</source>
         <method httpMethod="GET" active="true">

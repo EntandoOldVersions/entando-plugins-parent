@@ -27,6 +27,7 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.user.UserDetails;
+import javax.ws.rs.core.Response;
 
 /**
  * @author E.Santoboni
@@ -37,7 +38,7 @@ public class ApiMyUserProfileInterface {
         try {
             UserDetails userDetail = (UserDetails) properties.get(SystemConstants.API_USER_PARAMETER);
             if (null == userDetail) {
-                throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "Null user");
+                throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "Null user", Response.Status.UNAUTHORIZED);
             }
             return new JAXBUserDetails(userDetail);
         } catch (ApiException ae) {

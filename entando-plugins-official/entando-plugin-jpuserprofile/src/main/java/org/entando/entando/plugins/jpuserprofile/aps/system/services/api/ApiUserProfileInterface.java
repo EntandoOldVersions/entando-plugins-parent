@@ -40,6 +40,7 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.group.IGroupManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+import javax.ws.rs.core.Response;
 
 /**
  * @author E.Santoboni
@@ -52,7 +53,8 @@ public class ApiUserProfileInterface {
             String userProfileType = properties.getProperty("typeCode");
             IUserProfile prototype = (IUserProfile) this.getUserProfileManager().getEntityPrototype(userProfileType);
             if (null == prototype) {
-                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile Type '" + userProfileType + "' does not exist");
+                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, 
+						"Profile Type '" + userProfileType + "' does not exist", Response.Status.CONFLICT);
             }
             String langCode = properties.getProperty(SystemConstants.API_LANG_CODE_PARAMETER);
             String filtersParam = properties.getProperty("filters");
@@ -74,7 +76,8 @@ public class ApiUserProfileInterface {
             String username = properties.getProperty("username");
             IUserProfile userProfile = this.getUserProfileManager().getProfile(username);
             if (null == userProfile) {
-                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile of user '" + username + "' does not exist");
+                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, 
+						"Profile of user '" + username + "' does not exist", Response.Status.CONFLICT);
             }
             jaxbUserProfile = new JAXBUserProfile(userProfile, null);
         } catch (ApiException ae) {
@@ -91,11 +94,13 @@ public class ApiUserProfileInterface {
         try {
             String username = jaxbUserProfile.getId();
             if (null != this.getUserProfileManager().getProfile(username)) {
-                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile of user '" + username + "' already exist");
+                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, 
+						"Profile of user '" + username + "' already exist", Response.Status.CONFLICT);
             }
             IApsEntity profilePrototype = this.getUserProfileManager().getEntityPrototype(jaxbUserProfile.getTypeCode());
             if (null == profilePrototype) {
-                throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + jaxbUserProfile.getTypeCode() + "' does not exist");
+                throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, 
+						"User Profile type with code '" + jaxbUserProfile.getTypeCode() + "' does not exist", Response.Status.CONFLICT);
             }
             IUserProfile userProfile = (IUserProfile) jaxbUserProfile.buildEntity(profilePrototype, null);
             List<ApiError> errors = this.validate(userProfile);
@@ -121,11 +126,13 @@ public class ApiUserProfileInterface {
         try {
             String username = jaxbUserProfile.getId();
             if (null == this.getUserProfileManager().getProfile(username)) {
-                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile of user '" + username + "' does not exist");
+                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, 
+						"Profile of user '" + username + "' does not exist", Response.Status.CONFLICT);
             }
             IApsEntity profilePrototype = this.getUserProfileManager().getEntityPrototype(jaxbUserProfile.getTypeCode());
             if (null == profilePrototype) {
-                throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, "User Profile type with code '" + jaxbUserProfile.getTypeCode() + "' does not exist");
+                throw new ApiException(IApiErrorCodes.API_VALIDATION_ERROR, 
+						"User Profile type with code '" + jaxbUserProfile.getTypeCode() + "' does not exist", Response.Status.CONFLICT);
             }
             IUserProfile userProfile = (IUserProfile) jaxbUserProfile.buildEntity(profilePrototype, null);
             List<ApiError> errors = this.validate(userProfile);
@@ -155,9 +162,11 @@ public class ApiUserProfileInterface {
                     FieldError fieldError = fieldErrors.get(i);
                     if (fieldError instanceof AttributeFieldError) {
                         AttributeFieldError attributeError = (AttributeFieldError) fieldError;
-                        errors.add(new ApiError(IApiErrorCodes.API_VALIDATION_ERROR, attributeError.getFullMessage()));
+                        errors.add(new ApiError(IApiErrorCodes.API_VALIDATION_ERROR, 
+								attributeError.getFullMessage(), Response.Status.CONFLICT));
                     } else {
-                        errors.add(new ApiError(IApiErrorCodes.API_VALIDATION_ERROR, fieldError.getMessage()));
+                        errors.add(new ApiError(IApiErrorCodes.API_VALIDATION_ERROR, 
+								fieldError.getMessage(), Response.Status.CONFLICT));
                     }
                 }
             }
@@ -174,7 +183,8 @@ public class ApiUserProfileInterface {
             String username = properties.getProperty("username");
             IUserProfile userProfile = this.getUserProfileManager().getProfile(username);
             if (null == userProfile) {
-                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, "Profile of user '" + username + "' does not exist");
+                throw new ApiException(IApiErrorCodes.API_PARAMETER_VALIDATION_ERROR, 
+						"Profile of user '" + username + "' does not exist", Response.Status.CONFLICT);
             }
             this.getUserProfileManager().deleteProfile(username);
             response.setResult(IResponseBuilder.SUCCESS, null);
