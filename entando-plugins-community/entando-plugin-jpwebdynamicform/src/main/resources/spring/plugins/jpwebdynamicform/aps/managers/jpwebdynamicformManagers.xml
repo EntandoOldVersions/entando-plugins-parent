@@ -49,5 +49,18 @@
 
 	<bean id="jpwebdynamicformBaseMessageRenderer" class="com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.renderer.BaseMessageRenderer"
 			parent="BaseEntityRenderer" />
-
+	
+    <!-- API -->
+    
+    <bean id="jpwebdynamicformApiMessageTypeInterface" 
+            class="org.entando.entando.plugins.jpwebdynamicform.aps.system.services.api.ApiMessageTypeInterface" >
+        <property name="messageManager" ref="jpwebdynamicformMessageManager" />
+    </bean>
+    
+    <bean id="jpwebdynamicformApiMessageInterface" 
+            class="org.entando.entando.plugins.jpwebdynamicform.aps.system.services.api.ApiMessageInterface" >
+        <property name="messageManager" ref="jpwebdynamicformMessageManager" />
+        <property name="groupManager" ref="GroupManager" />
+    </bean>
+    
 </beans>
