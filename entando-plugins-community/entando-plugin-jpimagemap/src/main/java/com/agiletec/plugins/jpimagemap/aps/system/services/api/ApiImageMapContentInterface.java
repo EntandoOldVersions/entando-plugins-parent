@@ -34,6 +34,10 @@ public class ApiImageMapContentInterface extends ApiContentInterface {
         return (JAXBImageMapContent) super.getContent(properties);
     }
 	
+	public String getContentToHtml(Properties properties) throws Throwable {
+		return super.getContentToHtml(properties);
+	}
+	
 	protected JAXBImageMapContent getJAXBContentInstance(Content mainContent, String langCode) {
 		return new JAXBImageMapContent(mainContent, langCode);
 	}
@@ -45,5 +49,9 @@ public class ApiImageMapContentInterface extends ApiContentInterface {
     public StringApiResponse updateContent(JAXBImageMapContent jaxbContent, Properties properties) throws Throwable {
         return super.updateContent(jaxbContent, properties);
     }
+	
+	public StringApiResponse deleteContent(Properties properties) throws Throwable {
+		return super.deleteContent(properties);
+	}
 	
 }
