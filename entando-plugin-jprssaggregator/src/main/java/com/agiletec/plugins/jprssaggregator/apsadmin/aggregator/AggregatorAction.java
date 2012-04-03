@@ -136,7 +136,6 @@ public class AggregatorAction extends AbstractTreeAction implements IAggregatorA
 				this.getAggregatorManager().update(item);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
 			ApsSystemUtils.logThrowable(t, this, "save");
 			return FAILURE;
 		}
