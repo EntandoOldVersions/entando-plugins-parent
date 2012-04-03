@@ -1,0 +1,115 @@
+.myPortalForm p {
+	margin: 0;
+}
+
+.showlet .box_cappello_up h2.myPortalTitle {
+	padding-left: 26px;
+}
+
+.inputOptions {
+	position: absolute;
+	top: 5px;
+	right: 40px;
+}
+
+.inputEmpty,.inputNew {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.myPortalForm p.inputExchange {
+	float: left;
+	width: 84%;
+	text-align: right;
+}
+
+.myPortalForm p.inputBack {
+	margin-left: 84%;
+}
+
+.myPortalForm p.inputExchange input.inputImage,.myPortalForm p.inputBack input.inputImage
+	{
+	vertical-align: middle;
+	margin-left: 0.5em;
+}
+
+.configureShowlet form input.button {
+	margin: 0.5em 0.5em 0 0.5em;
+}
+
+.swappingEl { 
+	border: 3px dashed #0F4780;
+	border-color: #0F4780;
+	background-color: #ffffff;
+}
+
+.swappingEl *,.swappingEl *:hover,.swappingEl *:active,.swappingEl *:visited,.swappingEl *:focus
+	{
+	background-color: #ffffff;
+	color: #ffffff;
+	border-color: #ffffff;
+	background-image: none;
+	z-index: -1;
+	opacity: 0;
+}
+
+/*************/
+.movingEl {
+	border: 2px dashed green;
+}
+
+.jpmyportalclone,.jpmyportalclone * {
+	z-index: 100;
+}
+
+/*******************/
+.moveHandler {
+	right: 35px;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-image: url("../img/moveicon.png");
+	position: absolute;
+	top: 5px;
+	background-color: trasparent;
+	width: 22px;
+	height: 22px;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+
+.moveHandler2 {
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-image: url("../img/moveicon.png");
+	right: 70px;
+	position: absolute;
+	top: 5px;
+	background-color: trasparent;
+	width: 22px;
+	height: 22px;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+
+.moveHandler_relative {
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-image: url("../img/moveicon.png"); 
+	vertical-align: middle;
+	background-color: trasparent;
+	width: 22px;
+	height: 22px;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+
+.jpmyportalclone_back {
+	/*opacity: 0.5;*/ 
+}

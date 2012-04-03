@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	
+	<definition extends="main.layout" name="admin.Page.Showlet.FacetNavResult.config">
+		<put-attribute name="title" value="title.pageManagement" />
+		<put-attribute name="extraResources" value="/WEB-INF/plugins/jpfacetnav/apsadmin/jsp/common/template/extraresources/facet.jsp" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpfacetnav/apsadmin/jsp/portal/specialshowlet/facetnav-result-entry.jsp" />
+	</definition>
+	
+	<definition extends="main.layout" name="admin.Page.Showlet.FacetNavTree.config">
+		<put-attribute name="title" value="title.pageManagement" />
+		<put-attribute name="extraResources" value="/WEB-INF/plugins/jpfacetnav/apsadmin/jsp/common/template/extraresources/facet.jsp" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpfacetnav/apsadmin/jsp/portal/specialshowlet/facetnav-tree-entry.jsp" />
+	</definition>
+	
+</tiles-definitions>

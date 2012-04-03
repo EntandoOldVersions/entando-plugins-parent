@@ -1,0 +1,282 @@
+/*
+Struttura layout homepage.
+In questo css sono definite solo proprietà
+indispensabili al corretto funzionamento
+del modello di pagina homepage
+
+Si noti che sono definite solo proprietà di posizionamento
+(come larghezze, margini e float) per il funzionamento
+di una precisa struttura
+*/
+
+.jpmyportalplus_page_configuration {
+	float: left;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+.jpmyportalplus_page_configuration #editshowletlist {
+	/*background-color: #EFEFEF;*/
+	float: left;
+	width: 100%;
+	/*border-top: 6px solid #059BD8;*/
+}
+
+/** configurazione showlet per homepage **/
+#editshowlet_title {
+	text-align: right;
+	margin: 2px 0 0 0;
+	padding: 0;
+	font-size: 1px;
+	bottom: -2px;
+	right:0;
+	position: absolute;
+}
+
+#editshowletlist {
+}
+
+.jpmyportalplus_page_configuration p {
+	margin: 0 0 6px 0;
+}
+
+#editshowlet_title  a {
+	/*background-color: #059BD8;*/
+    color: #EFEFEF;
+	padding: 0;
+}
+
+#editshowlet_title a:link,
+#editshowlet_title  a:visited {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#editshowlet_title  a:hover,
+#editshowlet_title  a:active,
+#editshowlet_title  a:focus {
+	text-decoration: none;
+}
+
+.jpmyportalplus_page_configuration form {
+	float: left;
+	width: 96%;
+	margin: 12px 2% 20px 2%;
+	padding: 0;
+}
+
+.jpmyportalplus_page_configuration ul {
+	float: left;
+	width: 100%;
+	margin: 12px 0;
+	padding: 0;
+	list-style-type: none;
+	line-height: 200%;
+}
+.jpmyportalplus_page_configuration ul li {
+	float: left;
+	margin: 0;
+	padding: 0 20px 0 0;
+	line-height: 200%;
+}
+.jpmyportalplus_page_configuration .submit_reset {
+	margin: 12px 0;
+}
+
+/****/
+
+.dragdrop_box { /* classe dei draggabili (il margin-bottom è personalizzabile) */
+	float: left;
+	width: 100%;
+}
+
+.dragdrop_boxClone { /* classe momentanea dei cloni quando si sta trascinando */
+	opacity: 1;
+}
+
+.editContentBox { /* classe del contenitore per il form di modifica */
+	float: left;
+	width: 94%;
+	padding:  8px 3% 8px 3%;
+	margin: -8px 0 8px 0;
+	background-color: #EFF7FA;
+	border-bottom: 1px solid silver;
+}
+
+.dragdrop_draggable_area { /* classe per l'elemento che fa da ancora per il trascinamento. */
+	cursor: move;
+	float: left;
+	width: 100%;
+	margin: 3px 0 8px 0;
+	padding: 0 0 1px 0;
+	border-bottom: 1px solid silver;
+	text-align: right;
+}
+
+#bottomBox { /* box che contiene il reset e l'aggiunta di showlet */
+	float: left;
+	width: 100%;
+}
+
+#bottomBox_aux_spacer { /* spaziatore */
+	margin: 0 1% 0 0.9%;
+}
+#bottomBox_aux { /* spaziatore centratore */
+	float: left;
+	width: 98.1%;
+	margin: 0 1% 0 0.9%;
+}
+
+#editshowlet { /* box collegato all'apertura del form per l'aggiunta di showlet */
+	cursor: pointer;
+}
+
+#editshowletlist { /* contiene il form per l'aggiunta di showlet */
+
+}
+
+.hide {
+	display: none;
+}
+
+/*******************************************************************/
+/*PERSONALIZZAZIONI*/
+/*******************************************************************/
+.dragdrop_box > .boxspacer {
+	margin: 0 3%;
+	padding: 0;
+	width: 94%;
+	float: left;
+}
+
+.dragdrop_box { /* classe dei draggabili (il margin-bottom è personalizzabile), deve stare prima di: .dragdrop_boxClone, dragdrop_while_dragging */
+	margin-bottom: 13px; /* da personalizzare */
+}
+
+.dragdrop_boxClone { /* classe momentanea dei cloni quando si sta trascinando */
+	/* da personalizzare */
+}
+
+.dragdrop_while_dragging,/* classe css che viene attribuita al box quando si sta trascinando */
+.dragdrop_while_dragging > div,
+.dragdrop_while_dragging a:link,
+.dragdrop_while_dragging a:visited {
+	/* da personalizzare */
+	background-color: rgb(52, 190, 239);
+	color: rgb(52, 190, 239);
+	border-color: rgb(52, 190, 239);
+}
+.dragdrop_while_dragging .dragdrop_draggable_area {
+	border: 1px solid  rgb(52, 190, 239);
+}
+
+.dragdrop_draggable_area > .shortcut {
+	/* 3 buttons: width: 48px; */
+	width: 64px;
+	float: left;
+	margin: 0;
+}
+
+.dragdrop_while_dragging img {
+	display: none;
+}
+
+.dragdrop_draggable_area > h2 {
+	color: rgb(52, 190, 239);
+	color: rgba(52, 190, 239, 0.9);
+	font-size: 14px;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.dragdrop_draggable_area > .shortcut > .button {
+	float: left;
+	width: 13px;
+	/*height: 16px;*/
+	border: 0;
+}
+
+.dragdrop_hover { /* classe css che prende il box quando si effettua l'hover sull'elemento ancora di trascinamento */
+	/* da personalizzare */
+}
+
+.dragdrop_box .dragdrop_content h2,
+.dragdrop_box .dragdrop_content h3,
+.dragdrop_box .dragdrop_content h4,
+.dragdrop_box .dragdrop_content h5,
+.dragdrop_box .dragdrop_content h6 {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.dragdrop_box .dragdrop_content p {
+	margin: 0 0 24px 0;
+}
+
+.dragdrop_box .shortcut .jpmyportalplus-loading-tmp-el {
+	background-color: transparent;
+	float: left;
+	width: 16px;
+	height: 16px;
+	border: 0;
+	background-image: url(../img/ajax-loader.gif);
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin-right: 3px;
+}
+
+#editshowletlist ul {
+	float: left;
+	width: 100%;
+	margin: 0 0 1em 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#editshowletlist ul li {
+	list-style-type: none;
+	margin: 0 5% 0 0;
+	width: 20%;
+	/*min-width: 130px;*/
+	float: left;
+	color: rgba(0,0,0, 0.9);
+	font-size: 12px;
+	font-weight: bold;
+	padding: 0 0 10px 0;
+}
+
+#editshowletlist p {
+	color: rgba(0,0,0, 0.9);
+	font-size: 15px;
+}
+
+#applica_submit,
+#reset_submit {
+	background-color: #2C4C61;
+	color: #fff;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 16px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	padding: 4px 8px;
+	border: 1px solid #2C4C61;
+}
+
+#applica_submit:hover,
+#reset_submit:hover {
+	color: #2C4C61;
+	background-color: transparent;
+	border: 1px solid #2C4C61;
+}
+
+
+.dragdrop_content  {
+	float: left;
+	width: 100%;
+}

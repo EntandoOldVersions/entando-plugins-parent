@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+
+    <package name="jpwebdynamicform_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="japs-default">
+		
+    	<global-results>
+    		<result name="pageTree" type="chain">
+    			<param name="namespace">/do/Page</param>
+    			<param name="actionName">viewTree</param>
+    		</result>
+    		<result name="configure" type="chain">
+            	<param name="namespace">/do/Page</param>
+    			<param name="actionName">configure</param>
+            </result>
+		</global-results>
+		
+    	<!-- ##### SHOWLET WEBDYNAMICFORM **** ENTRY POINT ##### -->
+    	<action name="webdynamicformConfig" class="jpwebdynamicformWebdynamicformShowletAction" method="init">
+        	<result type="tiles">admin.jpwebdynamicform.Page.Showlet.Webdynamicform.config</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+    </package>
+	
+	<package name="jpwebdynamicform_do/jpwebdynamicform/Page/SpecialShowlet/Webdynamicform" namespace="/do/jpwebdynamicform/Page/SpecialShowlet/Webdynamicform" extends="japs-default">
+		
+		<global-results>
+    		<result name="pageTree" type="chain">
+    			<param name="namespace">/do/Page</param>
+    			<param name="actionName">viewTree</param>
+    		</result>
+    		<result name="configure" type="chain">
+            	<param name="namespace">/do/Page</param>
+    			<param name="actionName">configure</param>
+            </result>
+		</global-results>
+		
+		<action name="saveConfig" class="jpwebdynamicformWebdynamicformShowletAction" method="save">
+    		<result type="tiles" name="input">admin.jpwebdynamicform.Page.Showlet.Webdynamicform.config</result>
+        	<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+	</package>
+	
+</struts>

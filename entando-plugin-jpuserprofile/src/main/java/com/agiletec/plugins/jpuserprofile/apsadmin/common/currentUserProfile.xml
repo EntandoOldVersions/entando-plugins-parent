@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+    
+    <package name="jpuserprofile_do/jpuserprofile/MyProfile" namespace="/do/jpuserprofile/MyProfile" extends="japs-default">
+    	
+        <action name="edit" class="jpuserprofileCurrentUserProfileAction" method="edit">
+            <result type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
+            <result name="chooseType" type="tiles">admin.jpuserprofile.CurrentUser.Profile.chooseType</result>
+            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        </action>
+        
+        <action name="new" class="jpuserprofileCurrentUserProfileAction" method="createNew" >
+            <result type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
+            <result name="edit" type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
+            <result name="input" type="tiles">admin.jpuserprofile.CurrentUser.Profile.chooseType</result>
+            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        </action>
+        
+        <action name="save" class="jpuserprofileCurrentUserProfileAction" method="save">
+            <result name="input" type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
+            <result type="redirectAction">
+                <param name="namespace">/do</param>
+                <param name="actionName">main</param>
+            </result>
+            <interceptor-ref name="japsValidationStack"></interceptor-ref>
+        </action>
+    	
+        <action name="entryProfile" class="jpuserprofileCurrentUserProfileAction">
+            <result type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
+            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        </action>
+    	
+    	<!-- ######## INIZIO GESTIONE ATTRIBUTI IN LISTA ######## -->
+        
+        <action name="addListElement*" class="jpuserprofileListAttributeAction" method="addListElement">
+            <result type="redirectActionWithAnchor">
+                <param name="actionName">entryProfile</param>
+            </result>
+            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        </action>
+        
+        <action name="removeListElement*" class="jpuserprofileListAttributeAction" method="removeListElement">
+            <result type="redirectAction">
+                <param name="actionName">entryProfile</param>
+            </result>
+            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        </action>
+        
+        <action name="moveListElement*" class="jpuserprofileListAttributeAction" method="moveListElement">
+            <result type="redirectAction">
+                <param name="actionName">entryProfile</param>
+            </result>
+            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        </action>
+        
+        <!-- ######## FINE GESTIONE ATTRIBUTI IN LISTA ######## -->
+    	
+    </package>
+    
+</struts>

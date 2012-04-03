@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	
+	<package name="jpfastcontentedit_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="core_do/Page/SpecialShowlet">
+    	
+    	<global-results>
+    		<result name="pageTree" type="chain">
+    			<param name="namespace">/do/Page</param>
+    			<param name="actionName">viewTree</param>
+    		</result>
+    		<result name="configure" type="chain">
+            	<param name="namespace">/do/Page</param>
+    			<param name="actionName">configure</param>
+            </result>
+		</global-results>
+    	
+    	<!-- ##### SHOWLET jpfastcontentedit **** ENTRY POINT ##### -->
+    	<action name="jpfastcontenteditConfig" class="jfastcontenteditConfigShowletAction" method="init">
+        	<result type="tiles">admin.jpfastcontentedit.Showlet.configParameter</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+    	
+    </package>
+	
+    <package name="jpfastcontentedit_do/jpfastcontentedit/ShowletConfig" namespace="/do/jpfastcontentedit/Page/SpecialShowlet" extends="japs-default">
+    	
+    	<global-results>
+    		<result name="pageTree" type="chain">
+    			<param name="namespace">/do/Page</param>
+    			<param name="actionName">viewTree</param>
+    		</result>
+    		<result name="configure" type="chain">
+            	<param name="namespace">/do/Page</param>
+    			<param name="actionName">configure</param>
+            </result>
+		</global-results>
+		
+    	<action name="fastcontenteditConfigParameter" class="jfastcontenteditConfigShowletAction" method="init">
+        	<result type="tiles">admin.jpfastcontentedit.Showlet.configParameter</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+        
+        <action name="configContentType" class="jfastcontenteditConfigShowletAction" method="configContentType">
+        	<result type="tiles">admin.jpfastcontentedit.Showlet.configParameter</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+        
+    	<action name="changeContentType" class="jfastcontenteditConfigShowletAction" method="changeContentType"  >
+        	<result type="tiles">admin.jpfastcontentedit.Showlet.configParameter</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>    	
+		
+    	<action name="saveConfigParameters" class="jfastcontenteditConfigShowletAction" method="save"  >
+        	<result type="tiles">admin.jpfastcontentedit.Showlet.configParameter</result>
+            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+        
+	</package>
+	
+</struts>

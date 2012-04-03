@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<bean id="jpmyportalSubMenu" class="com.agiletec.apsadmin.system.plugin.PluginSubMenuContainer" >
+		<property name="subMenuFilePath"><value>/WEB-INF/plugins/jpmyportal/apsadmin/jsp/common/template/subMenu.jsp</value></property>
+	</bean>
+	
+	<bean id="jpmyportalMyPortalAction" scope="prototype" 
+			class="com.agiletec.plugins.jpmyportal.aps.internalservlet.myportal.MyPortalAction" parent="abstractBaseAction" >
+		<property name="configManager" ref="BaseConfigManager"/>
+		<property name="pageManager" ref="PageManager" />
+		<property name="pageModelUserConfigManager" ref="jpmyportalPageModelUserConfigManager" />
+		<property name="showletTypeManager" ref="ShowletTypeManager" />	
+	</bean>
+	
+	<bean id="jpmyportalConfigAction" scope="prototype" 
+			class="com.agiletec.plugins.jpmyportal.apsadmin.myportal.config.ConfigAction" parent="abstractBaseAction" >
+		<property name="pageModelUserConfigManager" ref="jpmyportalPageModelUserConfigManager" />
+		<property name="showletTypeManager" ref="ShowletTypeManager" />
+		<property name="stockShowletCodes"><value>${showlets.stock}</value></property>
+	</bean>
+	
+	<bean id="jpmyportalMyPortalAjaxAction" scope="prototype" 
+			class="com.agiletec.plugins.jpmyportal.aps.internalservlet.myportal.ajax.MyPortalAjaxAction" parent="jpmyportalMyPortalAction" >
+	</bean>
+	
+</beans>

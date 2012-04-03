@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	
+    <package name="jpuserprofile_do/jpuserprofile/Front/CurrentUser" namespace="/do/jpuserprofile/Front/CurrentUser" extends="japs-front-default">
+    	
+        <action name="edit">
+        	<result type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/editCurrentUser.jsp</result>
+        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        </action>
+        
+        <action name="editPassword" class="baseCommonAction" method="editPassword">
+        	<result type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/entryUserPassword.jsp</result>
+        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        </action>
+        
+        <action name="changePassword" class="baseCommonAction" method="changePassword">
+        	<result name="input" type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/entryUserPassword.jsp</result>
+        	<result type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/passwordChangingConfirm.jsp</result>
+        	<interceptor-ref name="japsFrontEndFreeValidationStack"></interceptor-ref>
+        </action>
+        
+    </package>
+    
+</struts>

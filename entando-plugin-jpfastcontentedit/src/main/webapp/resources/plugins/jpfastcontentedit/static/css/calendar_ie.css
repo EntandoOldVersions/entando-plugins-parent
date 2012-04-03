@@ -1,0 +1,9 @@
+div.calendar caption a {
+	top: 0;
+}
+
+div.calendar caption {
+	height: 1em;
+	padding: 0.2em 0;
+	width: auto;
+}

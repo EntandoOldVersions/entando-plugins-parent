@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    
+    <bean id="jpuserprofileSubMenu" class="com.agiletec.apsadmin.system.plugin.PluginSubMenuContainer" >
+        <property name="subMenuFilePath"><value>/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/common/template/subMenu.jsp</value></property>
+    </bean>
+    
+    <bean id="jpuserprofileUserProfileFinderAction" scope="prototype" 
+            class="com.agiletec.plugins.jpuserprofile.apsadmin.profile.UserProfileFinderAction" 
+            parent="abstractBaseAction" >
+        <property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
+        <property name="userManager" ref="UserManager" />
+        <property name="entityActionHelper" ref="entityActionHelper" />
+    </bean>
+    
+    <bean id="jpuserprofileUserProfileAction" class="com.agiletec.plugins.jpuserprofile.apsadmin.profile.UserProfileAction" 
+            scope="prototype" parent="abstractEntityAction" >
+        <property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
+        <property name="entityActionHelper" ref="jpuserprofileCurrentUserProfileActionHelper"/>
+    </bean>
+    
+    <bean id="jpuserprofileUserProfileListAttributeAction" scope="prototype" 
+            class="com.agiletec.plugins.jpuserprofile.apsadmin.profile.attribute.action.list.ListAttributeAction" 
+            parent="abstractBaseAction" >
+        <property name="entityActionHelper" ref="jpuserprofileCurrentUserProfileActionHelper"/>
+    </bean>
+    
+    <bean id="jpuserprofileUserFindingThHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
+        <property name="filePath"><value>/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/user/userFinding-table-th-jack.jsp</value></property>
+        <property name="hookPointKey"><value>core.userFinding.list.table.th</value></property>
+    </bean>
+    
+    <bean id="jpuserprofileUserFindingTdHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
+        <property name="filePath"><value>/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/user/userFinding-table-td-jack.jsp</value></property>
+        <property name="hookPointKey"><value>core.userFinding.list.table.td</value></property>
+    </bean>
+    
+</beans>
