@@ -28,6 +28,7 @@ import org.jdom.output.XMLOutputter;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.WebMailConfig;
+import org.jdom.output.Format;
 
 /**
  * @author E.Santoboni
@@ -179,8 +180,11 @@ public class WebMailConfigDOM {
 			throw new ApsSystemException("Error creating config", t);
 		}
 		Document doc = new Document(root);
-		String xml = new XMLOutputter().outputString(doc);
-		return xml;
+		XMLOutputter out = new XMLOutputter();
+		Format format = Format.getPrettyFormat();
+		format.setIndent("\t");
+		out.setFormat(format);
+		return out.outputString(doc);
 	}
 	
 	/**
