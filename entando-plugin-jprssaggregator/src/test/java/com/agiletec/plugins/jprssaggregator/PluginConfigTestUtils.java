@@ -35,6 +35,6 @@ public class PluginConfigTestUtils extends ConfigTestUtils {
 		return filePaths;
     }
 	
-	public static final String TEST_URL = "http://localhost:8080/PortalExamplePlus/resources/plugins/jprssaggregator/test_rss.xml";
+	public static final String TEST_URL = "http://localhost:8080/portalexampleplus/resources/plugins/jprssaggregator/test_rss.xml";
 //	public static final String TEST_URL = "file://src/main/webapp/resources/plugins/jprssaggregator/test_rss.xml";	
 }

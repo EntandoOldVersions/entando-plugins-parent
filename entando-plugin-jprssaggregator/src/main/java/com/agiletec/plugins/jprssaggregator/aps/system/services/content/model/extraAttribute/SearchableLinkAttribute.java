@@ -18,12 +18,13 @@
 package com.agiletec.plugins.jprssaggregator.aps.system.services.content.model.extraAttribute;
 
 import com.agiletec.plugins.jacms.aps.system.services.content.model.extraAttribute.LinkAttribute;
+
 /**
  * This class extends the LinkAttribute 
  * and makes it searchable.
  */
 public class SearchableLinkAttribute extends LinkAttribute {
-
+	
 	@Override
 	public boolean isSearcheable() {
 		return true;

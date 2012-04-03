@@ -136,6 +136,7 @@ public class AggregatorAction extends AbstractTreeAction implements IAggregatorA
 				this.getAggregatorManager().update(item);
 			}
 		} catch (Throwable t) {
+			t.printStackTrace();
 			ApsSystemUtils.logThrowable(t, this, "save");
 			return FAILURE;
 		}
@@ -206,6 +207,7 @@ public class AggregatorAction extends AbstractTreeAction implements IAggregatorA
 			item.setCode(this.getCode());
 			item.setLastUpdate(new Date(this.getLastUpdate().getTime()));
 		}
+		System.out.println(this.getContentType());
 		item.setContentType(this.getContentType());
 		item.setDelay(this.getDelay());
 		item.setLink(this.getLink());

@@ -17,8 +17,6 @@
 */
 package com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator;
 
-import com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator.ApsAggregatorItem;
-
 public class TestAggregatorManagerHelper {
 	
 	public static ApsAggregatorItem createItem(int delay, String descr, String link) {
