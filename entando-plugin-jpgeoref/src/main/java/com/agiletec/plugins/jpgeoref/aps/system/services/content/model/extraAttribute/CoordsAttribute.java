@@ -167,15 +167,18 @@ public class CoordsAttribute extends AbstractAttribute {
 		String coords = (String) jaxbAttribute.getValue();
 		if (null == coords) return;
 		String[] coordinates = coords.trim().substring(1, coords.trim().length() - 1).split(",");
+		if (coordinates.length < 2) return;
 		try {
 			this.setX(Long.parseLong(coordinates[0]));
 		} catch (Exception e) {}
 		try {
 			this.setY(Long.parseLong(coordinates[1]));
 		} catch (Exception e) {}
-		try {
-			this.setZ(Long.parseLong(coordinates[2]));
-		} catch (Exception e) {}
+		if (coordinates.length > 2) {
+			try {
+				this.setZ(Long.parseLong(coordinates[2]));
+			} catch (Exception e) {}
+		}
 	}
 	
 	private static final String ATTRIBUTE_ELEMENT = "attribute";
