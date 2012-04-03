@@ -155,10 +155,7 @@ public class TestTagCloudManager extends JpcmstagcloudBaseTestCase {
             this._contentDao = contentDao;
             
             ConfigInterface configManager = (ConfigInterface) this.getService(SystemConstants.BASE_CONFIG_MANAGER);
-            InputStream is = this.getClass().getResourceAsStream("testConfigParams_params.xml");
-            String xmlConfig = FileTextReader.getText(is);
-            configManager.updateConfigItem(SystemConstants.CONFIG_ITEM_PARAMS, xmlConfig);
-            ((IManager)configManager).refresh();
+            configManager.updateConfigItem(SystemConstants.CONFIG_ITEM_PARAMS, TEST_CONFIG);
         } catch (Throwable t) {
             throw new Exception(t);
         }
@@ -168,5 +165,28 @@ public class TestTagCloudManager extends JpcmstagcloudBaseTestCase {
     private IContentDAO _contentDao;
     private IContentManager _contentManager;
     private IUserManager _userManager;
+    
+    private String TEST_CONFIG = "<Params>" +
+    		"<Param name=\"urlStyle\">classic</Param>" +
+    		"<Param name=\"hypertextEditor\">fckeditor</Param>" +
+    		"<Param name=\"treeStyle_page\">classic</Param>" +
+    		"<Param name=\"treeStyle_category\">classic</Param>" +
+    		"<Param name=\"startLangFromBrowser\">false</Param>" +
+    		"<SpecialPages>" +
+    		"<Param name=\"notFoundPageCode\">notfound</Param>" +
+    		"<Param name=\"homePageCode\">homepage</Param>" +
+    		"<Param name=\"errorPageCode\">errorpage</Param>" +
+    		"<Param name=\"loginPageCode\">login</Param>" +
+    		"</SpecialPages>" +
+    		"<ExtendendPrivacyModule>" +
+    		"<Param name=\"extendedPrivacyModuleEnabled\">false</Param>" +
+    		"<Param name=\"maxMonthsSinceLastAccess\">6</Param>" +
+    		"<Param name=\"maxMonthsSinceLastPasswordChange\">3</Param>        " +
+    		"</ExtendendPrivacyModule>" +
+    		"<ExtraParams>" +
+    		"<Param name=\"jpcmstagcloud_delayDays\" >20000</Param>" +
+    		"<Param name=\"jpcmstagcloud_categoryRoot\" >home</Param>" +
+    		"</ExtraParams>" +
+    		"</Params>";
     
 }

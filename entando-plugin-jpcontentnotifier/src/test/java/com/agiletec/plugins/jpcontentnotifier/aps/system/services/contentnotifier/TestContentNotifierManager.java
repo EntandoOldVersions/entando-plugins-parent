@@ -39,6 +39,9 @@ import com.agiletec.plugins.jpcontentnotifier.aps.system.services.contentnotifie
 import com.agiletec.plugins.jpcontentnotifier.aps.system.services.contentnotifier.IContentNotifierManager;
 import com.agiletec.plugins.jpcontentnotifier.aps.system.services.contentnotifier.model.ContentMailInfo;
 import com.agiletec.plugins.jpcontentnotifier.aps.system.services.contentnotifier.model.NotifierConfig;
+import com.agiletec.plugins.jpmail.aps.services.JpmailSystemConstants;
+import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
+import com.agiletec.plugins.jpmail.aps.services.mail.MailManager;
 
 public class TestContentNotifierManager extends ApsPluginBaseTestCase {
 	
@@ -46,6 +49,7 @@ public class TestContentNotifierManager extends ApsPluginBaseTestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.init();
+		this.activeMailManager(false);
 	}
 	
 	public void testGetConfig() {
@@ -211,6 +215,19 @@ public class TestContentNotifierManager extends ApsPluginBaseTestCase {
 			this._authProvider = (IAuthenticationProviderManager) this.getService("AuthenticationProviderManager");
 		} catch (Throwable e) {
 			throw new Exception(e);
+		}
+	}
+	
+	@Override
+	protected void tearDown() throws Exception {
+		this.activeMailManager(true);
+		super.tearDown();
+	}
+	
+	private void activeMailManager(boolean active) {
+		IMailManager mailManager = (IMailManager) this.getService(JpmailSystemConstants.MAIL_MANAGER);
+		if (mailManager instanceof MailManager) {
+			((MailManager) mailManager).setActive(active);
 		}
 	}
 	
