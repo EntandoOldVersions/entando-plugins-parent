@@ -68,7 +68,7 @@ public class WebMailConfigAction extends BaseAction implements IWebMailConfigAct
 		this._config = config;
 	}
 	
-	public IWebMailManager getWebMailManager() {
+	protected IWebMailManager getWebMailManager() {
 		return _webMailManager;
 	}
 	public void setWebMailManager(IWebMailManager webMailManager) {

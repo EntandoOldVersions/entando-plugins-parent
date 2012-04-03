@@ -129,6 +129,13 @@ public class WebMailConfig implements Cloneable {
 		this._imapProtocol = imapProtocol;
 	}
 	
+	public String getTempDiskRootFolder() {
+		return _tempDiskRootFolder;
+	}
+	public void setTempDiskRootFolder(String tempDiskRootFolder) {
+		this._tempDiskRootFolder = tempDiskRootFolder;
+	}
+	
 	public String getTrashFolderName() {
 		return _trashFolderName;
 	}
@@ -190,6 +197,8 @@ public class WebMailConfig implements Cloneable {
 	private Integer _smtpPort;
 	private boolean _debug;
 	private boolean _smtpJapsUserAuth;
+	
+	private String _tempDiskRootFolder;
 	
 	private String _trashFolderName;
 	private String _sentFolderName;

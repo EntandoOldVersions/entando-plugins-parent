@@ -1,6 +1,6 @@
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="webmail" uri="/webmail-core" %>
-<%@ taglib prefix="c" http://java.sun.com/jsp/jstl/core %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <wp:headInfo type="CSS" info="../../plugins/jpwebmail/static/css/webmail.css" />
 <div class="webmailIntro">
 <p><wp:i18n key="jpwebmail_SERVICE_INTRO" /></p>

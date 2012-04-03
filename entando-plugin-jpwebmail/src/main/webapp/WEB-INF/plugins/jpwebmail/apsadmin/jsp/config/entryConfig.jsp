@@ -102,6 +102,13 @@
 				<wpsf:textfield useTabindexAutoIncrement="true" name="config.sentFolderName" id="config.sentFolderName" cssClass="text" />
 			</p>
 		</fieldset>
+		<fieldset>
+			<legend><s:text name="label.tempDiskRootFolder" /></legend>
+			<p>	
+				<label for="config.tempDiskRootFolder" class="basic-mint-label"><s:text name="label.tempDiskRootFolder" />:</label>
+				<wpsf:textfield useTabindexAutoIncrement="true" name="config.tempDiskRootFolder" id="config.tempDiskRootFolder" cssClass="text" />
+			</p>
+		</fieldset>
 		<p class="centerText">
 			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.save')}" cssClass="button"/>
 		</p>

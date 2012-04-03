@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" http://java.sun.com/jsp/jstl/core %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="webmail" uri="/webmail-core" %>
 
 <webmail:addressComponents ctxName="fromAddress" fullAddressString="${getFromAddress}" roundTo="20" defaultValue="${labelEmpty}" />

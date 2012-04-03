@@ -18,7 +18,7 @@
 	
 	<bean id="jpwebmailNewMessageActionHelper" 
 			class="com.agiletec.plugins.jpwebmail.apsadmin.webmail.message.helper.NewMessageActionHelper" >
-		<property name="tempRootFolder" ><jee:jndi-lookup jndi-name="java:comp/env/jpwebmailTempDiskRootFolder" /></property>
+		<property name="webMailManager" ref="jpwebmailWebMailManager" />
 	</bean>
 	
 	<bean id="jpwebmailWebMailAction" scope="prototype" 
