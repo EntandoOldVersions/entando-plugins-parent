@@ -38,16 +38,15 @@ public class MailSenderConfigAction extends BaseAction implements IMailSenderCon
 	public void validate() {
 		super.validate();
 		try {
-			String oldCode = this.getCurrentCode();
 			String code = this.getCode();
 			String mail = this.getMail();
-			if (code!=null && code.length()>0 && (ApsAdminSystemConstants.ADD==this.getStrutsAction() || !code.equals(oldCode))) {
-				if (null!=this.getConfig().getSender(code)) {
+			if (code != null && code.length() > 0 && ApsAdminSystemConstants.ADD == this.getStrutsAction()) {
+				if (null != this.getConfig().getSender(code)) {
 					this.addFieldError("code", this.getText("error.config.sender.code.duplicated"));
 				}
 			}
-			if (mail!=null && mail.length()>0 && !EmailAddressValidator.isValidEmailAddress(mail)) {
-				String[] args = { mail };
+			if (mail!=null && mail.length() > 0 && !EmailAddressValidator.isValidEmailAddress(mail)) {
+				String[] args = {mail};
 				this.addFieldError("mail", this.getText("error.config.sender.mail.notValid", args));
 			}
 		} catch (Throwable t) {
@@ -72,7 +71,7 @@ public class MailSenderConfigAction extends BaseAction implements IMailSenderCon
 				this.addActionError(this.getText("error.config.sender.notExists"));
 				return ERROR;
 			}
-			this.setCurrentCode(code);
+			this.setCode(code);
 			this.setMail(mail);
 			this.setStrutsAction(ApsAdminSystemConstants.EDIT);
 		} catch (Throwable t) {
@@ -137,12 +136,8 @@ public class MailSenderConfigAction extends BaseAction implements IMailSenderCon
 	protected MailConfig prepareConfig() throws ApsSystemException {
 		MailConfig config = this.getConfig();
 		Map<String, String> senders = config.getSenders();
-		String oldCode = this.getCurrentCode();
 		String code = this.getCode();
 		String mail = this.getMail();
-		if (ApsAdminSystemConstants.EDIT==this.getStrutsAction() && !code.equals(oldCode)) {
-			senders.remove(oldCode);
-		}
 		senders.put(code, mail);
 		return config;
 	}
@@ -161,21 +156,6 @@ public class MailSenderConfigAction extends BaseAction implements IMailSenderCon
 			}
 		}
 		return this._mailConfig;
-	}
-	
-	/**
-	 * Returns the current sender code to be modified.
-	 * @return The current sender code to be modified.
-	 */
-	public String getCurrentCode() {
-		return _currentCode;
-	}
-	/**
-	 * Sets the current sender code to be modified.
-	 * @param oldCode The current sender code to be modified.
-	 */
-	public void setCurrentCode(String currentCode) {
-		this._currentCode = currentCode;
 	}
 	
 	/**
@@ -238,7 +218,6 @@ public class MailSenderConfigAction extends BaseAction implements IMailSenderCon
 		this._mailManager = mailManager;
 	}
 	
-	private String _currentCode;
 	private String _code;
 	private String _mail;
 	private int _strutsAction;

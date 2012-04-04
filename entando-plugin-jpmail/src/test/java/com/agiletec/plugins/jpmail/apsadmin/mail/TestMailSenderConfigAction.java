@@ -29,7 +29,7 @@ import com.agiletec.apsadmin.system.ApsAdminSystemConstants;
 import com.agiletec.plugins.jpmail.aps.services.JpmailSystemConstants;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
 import com.agiletec.plugins.jpmail.aps.services.mail.MailConfig;
-import com.agiletec.plugins.jpmail.apsadmin.mail.MailSenderConfigAction;
+
 import com.opensymphony.xwork2.Action;
 
 public class TestMailSenderConfigAction extends ApsAdminPluginBaseTestCase {
@@ -65,7 +65,6 @@ public class TestMailSenderConfigAction extends ApsAdminPluginBaseTestCase {
 		MailSenderConfigAction action = (MailSenderConfigAction) this.getAction();
 		assertEquals(ApsAdminSystemConstants.EDIT, action.getStrutsAction());
 		assertEquals("CODE2", action.getCode());
-		assertEquals("CODE2", action.getCurrentCode());
 		assertEquals("EMAIL2@EMAIL.COM", action.getMail());
 		
 		result = this.executeEditSender("admin", "CODE100");
@@ -75,35 +74,21 @@ public class TestMailSenderConfigAction extends ApsAdminPluginBaseTestCase {
 	public void testSaveSenderFailure() throws Throwable {
 		String currentUser = "admin";
 		
-		String result = this.executeSaveSender(currentUser, "CODE1", "", "", ApsAdminSystemConstants.ADD);
+		String result = this.executeSaveSender(currentUser, "CODE1", "", ApsAdminSystemConstants.ADD);
 		assertEquals(Action.INPUT, result);
 		Map<String, List<String>> fieldErrors = this.getAction().getFieldErrors();
 		assertEquals(2, fieldErrors.size());
 		List codeErrors = fieldErrors.get("code");
 		assertEquals(1, codeErrors.size());
-		assertTrue(((String) codeErrors.get(0)).contains(this.getAction().getText("requiredstring")));
+		assertTrue(((String) codeErrors.get(0)).contains(this.getAction().getText("error.config.sender.code.duplicated")));
 		List mailErrors = fieldErrors.get("mail");
 		assertEquals(1, mailErrors.size());
 		assertTrue(((String) mailErrors.get(0)).contains(this.getAction().getText("requiredstring")));
 		
-		result = this.executeSaveSender(currentUser, "CODE1", "CODE1", "", ApsAdminSystemConstants.ADD);
+		result = this.executeSaveSender(currentUser, "CODE2", "wrongMailAddress", ApsAdminSystemConstants.EDIT);
 		assertEquals(Action.INPUT, result);
 		fieldErrors = this.getAction().getFieldErrors();
-		assertEquals(2, fieldErrors.size());
-		codeErrors = fieldErrors.get("code");
-		assertEquals(1, codeErrors.size());
-		assertTrue(((String) codeErrors.get(0)).contains(this.getAction().getText("error.config.sender.code.duplicated")));
-		mailErrors = fieldErrors.get("mail");
-		assertEquals(1, mailErrors.size());
-		assertTrue(((String) mailErrors.get(0)).contains(this.getAction().getText("requiredstring")));
-		
-		result = this.executeSaveSender(currentUser, "CODE1", "CODE2", "wrongMailAddress", ApsAdminSystemConstants.EDIT);
-		assertEquals(Action.INPUT, result);
-		fieldErrors = this.getAction().getFieldErrors();
-		assertEquals(2, fieldErrors.size());
-		codeErrors = fieldErrors.get("code");
-		assertEquals(1, codeErrors.size());
-		assertTrue(((String) codeErrors.get(0)).contains(this.getAction().getText("error.config.sender.code.duplicated")));
+		assertEquals(1, fieldErrors.size());
 		mailErrors = fieldErrors.get("mail");
 		assertEquals(1, mailErrors.size());
 		assertTrue(((String) mailErrors.get(0)).contains(this.getAction().getText("error.config.sender.mail.notValid")));
@@ -112,11 +97,11 @@ public class TestMailSenderConfigAction extends ApsAdminPluginBaseTestCase {
 	public void testSaveSenderSuccessful() throws Throwable {
 		String currentUser = "admin";
 		try {
-			String result = this.executeSaveSender(currentUser, "CODE1", "CODE100", "\"Indirizzo di Prova\" <mail@address.it>", ApsAdminSystemConstants.EDIT);
+			String result = this.executeSaveSender(currentUser, "CODE1", "\"Indirizzo di Prova\" <mail@addresstest.it>", ApsAdminSystemConstants.EDIT);
 			assertEquals(Action.SUCCESS, result);
 			MailConfig config = this._mailManager.getMailConfig();
-			assertNull(config.getSender("CODE1"));
-			assertNotNull(config.getSender("CODE100"));
+			assertNotNull(config.getSender("CODE1"));
+			assertEquals("\"Indirizzo di Prova\" <mail@addresstest.it>", config.getSender("CODE1"));
 		} catch (Throwable t) {
 			throw t;
 		} finally {
@@ -170,10 +155,9 @@ public class TestMailSenderConfigAction extends ApsAdminPluginBaseTestCase {
 		return result;
 	}
 	
-	private String executeSaveSender(String currentUser, String currentCode, String code, String mail, int strutsAction) throws Throwable {
+	private String executeSaveSender(String currentUser, String code, String mail, int strutsAction) throws Throwable {
 		this.setUserOnSession(currentUser);
 		this.initAction("/do/jpmail/MailConfig", "saveSender");
-		this.addParameter("currentCode", currentCode);
 		this.addParameter("code", code);
 		this.addParameter("mail", mail);
 		this.addParameter("strutsAction", String.valueOf(strutsAction));

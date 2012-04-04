@@ -37,14 +37,14 @@
 		
 		<p class="noscreen">	
 			<wpsf:hidden name="strutsAction"/>
-			<wpsf:hidden name="currentCode"/>
+			<s:if test="%{strutsAction==2}" ><wpsf:hidden name="code"/></s:if>
 		</p>
 		
 		<fieldset class="margin-more-top"> 
 			<legend><s:text name="label.info" /></legend> 
 			<p>
 				<label for="code" class="basic-mint-label"><s:text name="code" />:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="code" id="code" cssClass="text" />
+				<wpsf:textfield useTabindexAutoIncrement="true" name="code" id="code" disabled="%{strutsAction==2}" cssClass="text" />
 			</p>
 			<p>
 				<label for="mail" class="basic-mint-label"><s:text name="mail" />:</label>
