@@ -9,7 +9,7 @@
 <wpsf:select useTabindexAutoIncrement="true" name="categoryCode" id="categoryCode" list="%{getCategories(content.typeCode)}" 
 	listKey="code" listValue="getFullTitle(currentLang.code)" headerKey="" headerValue="%{getText('label.select')}" 
 	value="%{getShowlet().getConfig().get('category')}" cssClass="text" />
-<wpsf:submit useTabindexAutoIncrement="true" action="joinCategory" value="%{getText('label.join')}" cssClass="button" />
+<wpsf:submit useTabindexAutoIncrement="true" action="joinPrivateCategory" value="%{getText('label.join')}" cssClass="button" />
 </p>
 
 <s:set var="contentCategories" value="content.categories" />
@@ -26,7 +26,7 @@
 <tr>
 	<td><s:property value="#contentCategory.getFullTitle(currentLang.code)"/></td>
 	<td class="icon">
-		<wpsa:actionParam action="removeCategory" var="actionName" >
+		<wpsa:actionParam action="removePrivateCategory" var="actionName" >
 			<wpsa:actionSubParam name="categoryCode" value="%{#contentCategory.code}" />
 		</wpsa:actionParam>
 		<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/delete.png</s:set>

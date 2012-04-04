@@ -10,7 +10,7 @@
 	<definition extends="main.layout" name="admin.jacms.content.entry">
 		<put-attribute name="title" value="title.contentManagement" />
 		<put-attribute name="extraResources" value="/WEB-INF/plugins/jpcontentrefs/apsadmin/jsp/common/template/extraresources/content.jsp" />		
-		<put-attribute name="body" value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/entryContent.jsp" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpcontentrefs/apsadmin/jsp/content/entryContent.jsp" />
 	</definition>
 	
    <!-- ********* FINE Area Gestione Contenuti ********* -->

@@ -7,21 +7,25 @@
 	
     <package name="jpcontentrefs_do/jacms/Content" namespace="/do/jacms/Content" extends="jacms_do/jacms/Content">
 		
-		<action name="showCategoryBlockOnEntryContent" class="jpcontentrefsContentCategoryAction" method="buildTree">
+		<action name="showPrivateCategoryBlockOnEntryContent" class="jpcontentrefsContentCategoryAction" method="buildTree">
             <result type="dispatcher">/WEB-INF/plugins/jpcontentrefs/apsadmin/jsp/content/entryContent_categoryBlock.jsp</result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
 		
-        <action name="joinCategory" class="jpcontentrefsContentCategoryAction" method="joinCategory">
+        <action name="joinPrivateCategory" class="jpcontentrefsContentCategoryAction" method="joinCategory">
             <result type="redirectAction">
+            	<param name="namespace">/do/jacms/Content</param>
             	<param name="actionName">entryContent</param>
             	<param name="categoryCode">${categoryCode}</param>
             </result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
 		
-        <action name="removeCategory*" class="jpcontentrefsContentCategoryAction" method="removeCategory">
-           	<result type="redirectAction">entryContent</result>
+        <action name="removePrivateCategory*" class="jpcontentrefsContentCategoryAction" method="removeCategory">
+           	<result type="redirectAction">
+            	<param name="namespace">/do/jacms/Content</param>
+            	<param name="actionName">entryContent</param>
+            </result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
 		

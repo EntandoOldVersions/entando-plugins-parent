@@ -1,13 +1,13 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
-<%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
+<%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 
 <s:include value="/WEB-INF/apsadmin/jsp/common/template/defaultExtraResources.jsp" />
 <s:include value="/WEB-INF/apsadmin/jsp/common/template/extraresources/inc/snippet-calendar.jsp" />
 
 <s:if test="htmlEditorCode == 'fckeditor'">
 	<!-- per attributo Hypertext -->
-	<script type="text/javascript" src="<wp:resourceURL />administration/common/js/fckeditor/fckeditor.js"></script>
+	<script type="text/javascript" src="<wp:resourceURL />administration/common/js/ckeditor/ckeditor.js"></script>
 </s:if>
 
 <script type="text/javascript">
@@ -60,7 +60,7 @@ window.addEvent('domready', function() { myCal_<s:property value="%{#attributeTr
 		window.addEvent('domready', function() { myCal_<s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" /> = new Calendar({ <s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" />: 'd/m/Y' }, {
 				navigation: 1,
 				months: ['<s:text name="calendar.month.gen" />','<s:text name="calendar.month.feb" />','<s:text name="calendar.month.mar" />','<s:text name="calendar.month.apr" />','<s:text name="calendar.month.may" />','<s:text name="calendar.month.jun" />','<s:text name="calendar.month.jul" />','<s:text name="calendar.month.aug" />','<s:text name="calendar.month.sep" />','<s:text name="calendar.month.oct" />','<s:text name="calendar.month.nov" />','<s:text name="calendar.month.dec" />'],
-				days: ['<s:text name="calendar.week.sun" />','<s:text name="calendar.week.mon" />','<s:text name="calendar.week.tue" />','<s:text name="calendar.week.wen" />','<s:text name="calendar.week.thu" />','<s:text name="calendar.week.fri" />','<s:text name="calendar.week.sat" />'],
+				days: ['<s:text name="calendar.week.mon" />','<s:text name="calendar.week.tue" />','<s:text name="calendar.week.wen" />','<s:text name="calendar.week.thu" />','<s:text name="calendar.week.fri" />','<s:text name="calendar.week.sat" />','<s:text name="calendar.week.sun" />'],
 				calendarTitle: '<s:text name="calendar.button.title" />',
 				//prevTitle: '',
 				//nextTitle: '',
@@ -80,7 +80,7 @@ window.addEvent('domready', function() { myCal_<s:property value="%{#attributeTr
 window.addEvent('domready', function() { myCal_<s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" /> = new Calendar({ <s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" />: 'd/m/Y' }, {
 		navigation: 1,
 		months: ['<s:text name="calendar.month.gen" />','<s:text name="calendar.month.feb" />','<s:text name="calendar.month.mar" />','<s:text name="calendar.month.apr" />','<s:text name="calendar.month.may" />','<s:text name="calendar.month.jun" />','<s:text name="calendar.month.jul" />','<s:text name="calendar.month.aug" />','<s:text name="calendar.month.sep" />','<s:text name="calendar.month.oct" />','<s:text name="calendar.month.nov" />','<s:text name="calendar.month.dec" />'],
-		days: ['<s:text name="calendar.week.sun" />','<s:text name="calendar.week.mon" />','<s:text name="calendar.week.tue" />','<s:text name="calendar.week.wen" />','<s:text name="calendar.week.thu" />','<s:text name="calendar.week.fri" />','<s:text name="calendar.week.sat" />'],
+		days: ['<s:text name="calendar.week.mon" />','<s:text name="calendar.week.tue" />','<s:text name="calendar.week.wen" />','<s:text name="calendar.week.thu" />','<s:text name="calendar.week.fri" />','<s:text name="calendar.week.sat" />','<s:text name="calendar.week.sun" />'],
 		calendarTitle: '<s:text name="calendar.button.title" />',
 		//prevTitle: '',
 		//nextTitle: '',
@@ -109,14 +109,28 @@ window.addEvent('domready', function() { myCal_<s:property value="%{#attributeTr
 		<s:if test="#attribute.type == 'Hypertext'">
 			<s:if test="htmlEditorCode == 'fckeditor'">
 				window.addEvent('domready', function() {
+					var ofckeditor = CKEDITOR.replace("<s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" />", {
+						customConfig : '<wp:resourceURL />administration/common/js/ckeditor/entando-ckeditor_config.js',
+						//EntandoLinkActionPath: CKEDITOR.basePath+"/jAPS/saved-japslink.html"
+						EntandoLinkActionPath: "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jacms/Content/Hypertext/entandoInternalLink.action",
+						language: '<s:property value="locale" />',
+						<s:if test="#myClient == 'advanced'">
+							width: "680px"
+						</s:if>
+						<s:else>
+							width: "580px"
+						</s:else>
+					});
+					/* FCKEDITOR IS DEPRECATED!
 					var ofckeditor = new FCKeditor( "<s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" />" );
 					ofckeditor.Config["AppBaseUrl"] = "<wp:info key="systemParam" paramName="applicationBaseURL" />";
 					ofckeditor.BasePath = "<wp:resourceURL />administration/common/js/fckeditor/";
-					ofckeditor.ToolbarSet = "jAPS";
-					ofckeditor.Config["CustomConfigurationsPath"] = "<wp:resourceURL />administration/common/js/fckeditor/jAPSConfig.js";
+					ofckeditor.ToolbarSet = "Entando";
+					ofckeditor.Config["CustomConfigurationsPath"] = "<wp:resourceURL />administration/common/js/fckeditor/EntandoConfig.js";
 					ofckeditor.Width = 661;
 					ofckeditor.Height = 250;
 					ofckeditor.ReplaceTextarea();
+					*/
 				});
 			</s:if>
 			<s:elseif test="htmlEditorCode == 'hoofed'">
@@ -150,13 +164,22 @@ window.addEvent('domready', function() { myCal_<s:property value="%{#attributeTr
 						<s:if test="#attribute.type == 'Hypertext'">
 							<s:if test="htmlEditorCode == 'fckeditor'">
 								window.addEvent('domready', function() {
+									var ofckeditor = CKEDITOR.replace("<s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" />", {
+										customConfig : '<wp:resourceURL />administration/common/js/ckeditor/entando-ckeditor_config.js',
+										//EntandoLinkActionPath: CKEDITOR.basePath+"/jAPS/saved-japslink.html"
+										EntandoLinkActionPath: "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jacms/Content/Hypertext/entandoInternalLink.action",
+										language: '<s:property value="locale" />',
+										width: "425px"
+									});
+									/* FCKEDITOR IS DEPRECATED!
 									var ofckeditor = new FCKeditor( "<s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" />" );
 									ofckeditor.Config["AppBaseUrl"] = "<wp:info key="systemParam" paramName="applicationBaseURL" />";
 									ofckeditor.BasePath = "<wp:resourceURL />administration/common/js/fckeditor/";
-									ofckeditor.ToolbarSet = "jAPS";
-									ofckeditor.Config["CustomConfigurationsPath"] = "<wp:resourceURL />administration/common/js/fckeditor/jAPSConfig.js";
+									ofckeditor.ToolbarSet = "Entando";
+									ofckeditor.Config["CustomConfigurationsPath"] = "<wp:resourceURL />administration/common/js/fckeditor/EntandoConfig.js";
 									ofckeditor.Height = 250;
 									ofckeditor.ReplaceTextarea();
+									*/
 								});
 							</s:if>
 							<s:elseif test="htmlEditorCode == 'hoofed'">
@@ -182,14 +205,27 @@ window.addEvent('domready', function() { myCal_<s:property value="%{#attributeTr
 				<s:elseif test="#attribute.type == 'Hypertext'">
 					<s:if test="htmlEditorCode == 'fckeditor'">
 						window.addEvent('domready', function() {
-
+							var ofckeditor = CKEDITOR.replace("<s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" />", {
+								customConfig : '<wp:resourceURL />administration/common/js/ckeditor/entando-ckeditor_config.js',
+								//EntandoLinkActionPath: CKEDITOR.basePath+"/jAPS/saved-japslink.html"
+								EntandoLinkActionPath: "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jacms/Content/Hypertext/entandoInternalLink.action",
+								language: '<s:property value="locale" />',
+								<s:if test="#myClient == 'advanced'">
+									width: "640px"
+								</s:if>
+								<s:else>
+									width: "550px"
+								</s:else>
+							});
+							/* FCKEDITOR IS DEPRECATED!
 							var ofckeditor = new FCKeditor( "<s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" />" );
 							ofckeditor.Config["AppBaseUrl"] = "<wp:info key="systemParam" paramName="applicationBaseURL" />";
 							ofckeditor.BasePath = "<wp:resourceURL />administration/common/js/fckeditor/";
-							ofckeditor.ToolbarSet = "jAPS";
-							ofckeditor.Config["CustomConfigurationsPath"] = "<wp:resourceURL />administration/common/js/fckeditor/jAPSConfig.js";
+							ofckeditor.ToolbarSet = "Entando";
+							ofckeditor.Config["CustomConfigurationsPath"] = "<wp:resourceURL />administration/common/js/fckeditor/EntandoConfig.js";
 							ofckeditor.Height = 250;
 							ofckeditor.ReplaceTextarea();
+							*/
 						});
 					</s:if>
 					<s:elseif test="htmlEditorCode == 'hoofed'">
@@ -245,8 +281,6 @@ window.addEvent('domready', function(){
 
 		el.addClass('tip-handler');
 	});
-
-
 });
 </s:if>
 
