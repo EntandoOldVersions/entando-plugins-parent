@@ -10,7 +10,7 @@
 	<artifactId>entando-plugins-parent</artifactId>
 	<version>2.4.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Entando: Plugins parent Eugeniosant</name>
+	<name>Entando: Plugins parent</name>
 	<url>http://www.entando.com/</url>
 	<licenses>
 		<license>
