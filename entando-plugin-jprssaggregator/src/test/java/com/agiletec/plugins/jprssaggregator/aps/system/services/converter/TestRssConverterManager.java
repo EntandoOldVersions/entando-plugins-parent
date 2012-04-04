@@ -62,7 +62,7 @@ public class TestRssConverterManager extends ApsPluginBaseTestCase {
 		assertEquals(0, contentsId.size());
 	}
 
-	public void testLoadConfig() {
+	public void _testLoadConfig() {
 		assertNotNull(_rssConverterManager);
 		RssConverterManager converter = (RssConverterManager) _rssConverterManager;
 		Map<String, AggregatorConfig> mapping = converter.getMappingMap();
@@ -70,13 +70,13 @@ public class TestRssConverterManager extends ApsPluginBaseTestCase {
 		assertTrue(mapping.containsKey("RSS"));
 	}
 	
-	public void testGetRssEntries() throws Throwable {
+	public void _testGetRssEntries() throws Throwable {
 		List<SyndEntryImpl> entries = _rssConverterManager.getRssEntries(IRssConverterManager.RSS_2_0, PluginConfigTestUtils.TEST_URL);
 		assertNotNull(entries);
 		assertEquals(3, entries.size());
 	}
 	
-	public void testGetContents() throws Throwable {
+	public void _testGetContents() throws Throwable {
 		String url = PluginConfigTestUtils.TEST_URL;
 		ApsAggregatorItem item = TestAggregatorManagerHelper.createItem(3600, "dummy_descr", url);
 		//_aggregatorManager.addItem(item);
