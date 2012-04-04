@@ -1,12 +1,25 @@
+INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpgeoref_home', 
+'Home Page for test georef Content', '<frames>
+	<frame pos="0">
+		<descr>Test frame</descr>
+	</frame>
+</frames>', 'jpgeoref');
+
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpgeoref_GoogleListViewer', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Publish contents on Map</property>
 <property key="it">Pubblicazione contenuti su Mappa</property>
 </properties>', '<config>
-	<parameter name="contentType">Tipo di contenuto (obbligatorio)</parameter>
-	<parameter name="modelId">Modello di contenuto</parameter>
-	<parameter name="category">Categoria del contenuto</parameter>
+	<parameter name="contentType">Content Type (mandatory)</parameter>
+	<parameter name="modelId">Content Model form map</parameter>
+	<parameter name="userFilters">Front-End user filter options</parameter>
+	<parameter name="categories">Content Category codes (comma separeted)</parameter>
+    <parameter name="orClauseCategoryFilter" />
+	<parameter name="maxElemForItem">Contents for each page</parameter>
 	<parameter name="filters" />
+	<parameter name="title_{lang}">Showlet Title in lang {lang}</parameter>
+	<parameter name="pageLink">The code of the Page to link</parameter>
+	<parameter name="linkDescr_{lang}">Link description in lang {lang}</parameter>
 	<action name="listViewerConfig"/>
 </config>', 'jpgeoref', NULL, NULL, 1);
 
@@ -15,14 +28,9 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 <property key="en">Route</property>
 <property key="it">Tragitto su Mappa</property>
 </properties>', '<config>
-	<parameter name="contentsId">
-		Identificativi di Contenuto separato da virgola
-	</parameter>
-	<parameter name="listModelId">
-		Id Modello per contenuti in lista semplice
-	</parameter>
-	<parameter name="markerModelId">
-		Id Modello per i marcatori dei contenuti su mappa
-	</parameter>
+	<parameter name="contentsId">Contents id (comma separated)</parameter>
+	<parameter name="listModelId">List Model id</parameter>
+	<parameter name="markerModelId">Model id for marker</parameter>
 	<action name="configSimpleParameter"/>
 </config>', 'jpgeoref', NULL, NULL, 1);
+
