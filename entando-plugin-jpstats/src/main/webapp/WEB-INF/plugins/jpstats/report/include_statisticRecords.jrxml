@@ -16,7 +16,7 @@
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Riepilogo Richieste al portale]]></text>
+				<text><![CDATA[Portal Requests]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -27,28 +27,28 @@
 				<textElement textAlignment="Center">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Codice Lingua]]></text>
+				<text><![CDATA[Lang]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="150" y="1" width="70" height="24"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Codice Pagina]]></text>
+				<text><![CDATA[Page code]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="495" y="1" width="60" height="24"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Codice Browser]]></text>
+				<text><![CDATA[Browser]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="265" y="1" width="120" height="24"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Provenienza]]></text>
+				<text><![CDATA[Refereer]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="385" y="1" width="110" height="24"/>
@@ -62,14 +62,14 @@
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Indirizzo IP]]></text>
+				<text><![CDATA[IP Address]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="219" y="1" width="45" height="24"/>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Id Contenuto]]></text>
+				<text><![CDATA[Content ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="1" width="20" height="24"/>

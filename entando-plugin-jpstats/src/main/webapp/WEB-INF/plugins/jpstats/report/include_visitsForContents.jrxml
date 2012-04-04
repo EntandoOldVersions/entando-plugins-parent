@@ -21,21 +21,21 @@
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Tipo di Contenuto]]></text>
+				<text><![CDATA[Content Type]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="209" y="1" width="218" height="20"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Descrizione]]></text>
+				<text><![CDATA[Description]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="435" y="1" width="115" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Numero di visite]]></text>
+				<text><![CDATA[Number of hits]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="0" width="556" height="1"/>

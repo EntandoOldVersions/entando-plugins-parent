@@ -40,12 +40,12 @@
 				<textElement textAlignment="Center">
 					<font size="24"/>
 				</textElement>
-				<text><![CDATA[Report Accessi]]></text>
+				<text><![CDATA[Report]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="38" width="555" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["###########  Da data " + $P{start} + " a data " + $P{end} +  " ###########"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["###########  from date " + $P{start} + " to date " + $P{end} +  " ###########"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -54,12 +54,12 @@
 			<staticText>
 				<reportElement x="0" y="41" width="250" height="20"/>
 				<textElement/>
-				<text><![CDATA[Numero medio di pagine viste per sessione]]></text>
+				<text><![CDATA[Average number of page views per session]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="21" width="250" height="20"/>
 				<textElement/>
-				<text><![CDATA[Tempo medio di permanenza sulla pagina]]></text>
+				<text><![CDATA[Average time spent on page]]></text>
 			</staticText>
 			<line>
 				<reportElement x="350" y="1" width="1" height="80"/>
@@ -75,7 +75,7 @@
 			<staticText>
 				<reportElement x="0" y="1" width="250" height="20"/>
 				<textElement/>
-				<text><![CDATA[Tempo medio di permanenza sul sito]]></text>
+				<text><![CDATA[Average time spent on site]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="61" width="350" height="1"/>
@@ -147,7 +147,7 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="FixRelativeToBottom" x="1" y="5" width="84" height="20"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
