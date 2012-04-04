@@ -59,13 +59,13 @@ public class MailTicketAlerter implements AlerterThreadListener, ITicketAlerter 
 			ConfigInterface configManager = (ConfigInterface) this.getConfigManager();
 			String xml = configManager.getConfigItem("jpwttMailConfig");
 			if (xml == null) {
-				throw new ApsSystemException("Item configurazione assente: jpwttMailConfig");
+				throw new ApsSystemException("Missing config item: jpwttMailConfig");
 			}
 			WttMailConfigDOM configDOM = new WttMailConfigDOM();
 			this.setConfig(configDOM.extractConfig(xml));
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
-			throw new ApsSystemException("Errore in fase di inizializzazione", t);
+			throw new ApsSystemException("Error loading config", t);
 		}
 	}
 	

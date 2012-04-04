@@ -52,13 +52,13 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 		try {
 			String xml = this.getConfigManager().getConfigItem(JpwebmailSystemConstants.WEBMAIL_CONFIG_ITEM);
 			if (xml == null) {
-				throw new ApsSystemException("Item configurazione assente: " + JpwebmailSystemConstants.WEBMAIL_CONFIG_ITEM);
+				throw new ApsSystemException("Missing confi item: " + JpwebmailSystemConstants.WEBMAIL_CONFIG_ITEM);
 			}
 			WebMailConfigDOM contactConfigDom = new WebMailConfigDOM();
 			this.setConfig(contactConfigDom.extractConfig(xml));
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
-			throw new ApsSystemException("Errore in fase di inizializzazione", t);
+			throw new ApsSystemException("Error loading config", t);
 		}
 	}
 	
@@ -90,19 +90,17 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			store = session.getStore(this.getConfig().getImapProtocol());
 			// Connect to store
 			if (log.isLoggable(Level.INFO)) {
-				log.info("Connessione utente " + username);
+				log.info("Connection of user " + username);
 			}
 //			 System.out.print("** tentivo di connessione con protocollo"+this.getConfig().getImapProtocol()+"" +
 //			 		" a "+this.getConfig().getImapHost()+" ["+this.getConfig().getImapPort()+"]\n");
 			store.connect(this.getConfig().getImapHost(), username, password);
 		} catch (NoSuchProviderException e) {
 			ApsSystemUtils.logThrowable(e, this, "initInboxConnection", "Provider " + this.getConfig().getImapHost() + " non raggiungibile");
-			throw new ApsSystemException("Errore in apertura connessione Provider", e);
+			throw new ApsSystemException("Error opening Provider connection", e);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "initInboxConnection",
-					"Errore generico in apertura connessione");
-			throw new ApsSystemException(
-					"Errore generico in apertura connessione", t);
+			ApsSystemUtils.logThrowable(t, this, "initInboxConnection", "Error opening Provider connection");
+			throw new ApsSystemException("Error opening Provider connection", t);
 		}
 		return store;
 	}
@@ -113,8 +111,8 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			Session session = this.createSession();
 			return new JpMimeMessage(session);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "createNewEmptyMessage", "Errore in creazione messaggio vuoto");
-			throw new ApsSystemException("Errore in creazione messaggio vuoto", t);
+			ApsSystemUtils.logThrowable(t, this, "createNewEmptyMessage", "Error creating void message");
+			throw new ApsSystemException("Error creating void message", t);
 		}
 	}
 	
@@ -149,8 +147,8 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			msg.saveChanges();
 			Transport.send(msg);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "sendMail", "Error on sending mail");
-			throw new ApsSystemException("Errore in spedizione mail", t);
+			ApsSystemUtils.logThrowable(t, this, "sendMail", "Error sending mail");
+			throw new ApsSystemException("Error sending mail", t);
 		} finally {
 			closeTransport(bus);
 		}
@@ -170,25 +168,25 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 		if (null != imapProtocol && imapProtocol.trim().length()>0) {
 			properties.setProperty("mail.store.protocol", imapProtocol);
 		} else {
-			throw new ApsSystemException("Protocollo (IMAP) non specificato");
+			throw new ApsSystemException("IMAP Protocoll missing");
 		}
 		if (null != host && host.trim().length()>0) {
 			properties.setProperty("mail.imap.host", host);
 		} else {
-			throw new ApsSystemException("Host (IMAP) non specificato");
+			throw new ApsSystemException("IMAP host missing");
 		}
 		if (null != port && port.intValue()>0) {
 			properties.setProperty("mail.imap.port", port.toString());
 		} else {
-			throw new ApsSystemException("Porta dell'host (IMAP) non specificata");
+			throw new ApsSystemException("IMAP port missing");
 		}
 		// analizza il certificato dell'host. Se l'handshake è già stato effettuato ritorna immediatamente
 		this.getCertificateHandler().aquireCertificate(host, port.intValue(), imapProtocol, config);
 		// verifica se si possa procedere in sicurezza con la connessione all'host
 		if (!this.getCertificateHandler().proceedWithConnection()) {
-			ApsSystemUtils.getLogger().info("La connessione verso '"+host+"' non risulta fidata");
+			ApsSystemUtils.getLogger().info("Connection to host '" + host + "' not trusted");
 		} else {
-			ApsSystemUtils.getLogger().info("La connessione verso '"+host+"' è fidata");
+			ApsSystemUtils.getLogger().info("Connection to host '" + host + "' trusted");
 		}
 		properties.setProperty("mail.imap.timeout", "5000");
 		if (imapProtocol.equalsIgnoreCase("imaps")) {			
@@ -217,7 +215,7 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			try {
 				transport.close();
 			} catch (MessagingException e) {
-				throw new ApsSystemException("Errore in chiusura connessione", e);
+				throw new ApsSystemException("Error closing connection", e);
 			}
 		}
 	}
@@ -227,7 +225,7 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 		try {
 			if (null != store) store.close();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "closeConnection", "Errore in chiusura connessione");
+			ApsSystemUtils.logThrowable(t, this, "closeConnection", "Error closing connection");
 		}
 	}
 	

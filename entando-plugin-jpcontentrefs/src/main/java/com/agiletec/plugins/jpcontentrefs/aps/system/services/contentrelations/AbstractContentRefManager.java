@@ -45,7 +45,7 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 		try {
 			String xml = this.getConfigInterface().getConfigItem(this.getConfigItemName());
 			if (xml == null) {
-				throw new ApsSystemException("Item configurazione assente: " + this.getConfigItemName());
+				throw new ApsSystemException("Missing config item: " + this.getConfigItemName());
 			} else {
 				log.finest(this.getConfigItemName()+": " + xml);
 				AbstractContentRelactionDOM catDom = this.getConfigDom(xml);
@@ -53,7 +53,7 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "loadContentTypeCategory");
-			throw new ApsSystemException("Errore in fase di inizializzazione", t);
+			throw new ApsSystemException("Errorloading content type element", t);
 		}
 	}
 	
@@ -69,7 +69,7 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 			SmallContentType smallContentType = 
 				(SmallContentType) this.getContentManager().getSmallContentTypesMap().get(contentType);
 			if (null == smallContentType) {
-				throw new ApsSystemException("TIPO Contenuto inesistente : " + contentType);
+				throw new ApsSystemException("Content type missing : " + contentType);
 			}
 			if (null == this.getContentTypeElements().get(contentType)) {
 				this.getContentTypeElements().put(contentType, new ArrayList<String>());
@@ -83,7 +83,7 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 			this.updateConfig();
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "addCategoryRelation");
-			throw new ApsSystemException("Errore in addCategoryRelation", t);
+			throw new ApsSystemException("Error adding Category Relation", t);
 		}
 	}
 	
@@ -108,7 +108,8 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 			String xml = dom.getXMLDocument();
 			this.getConfigInterface().updateConfigItem(this.getConfigItemName(), xml);
 		} catch (Throwable t) {
-			throw new ApsSystemException("Errore in aggiornamento item " + this.getConfigItemName(), t);
+			ApsSystemUtils.logThrowable(t, this, "updateConfig");
+			throw new ApsSystemException("Error adding item " + this.getConfigItemName(), t);
 		}
 	}
 	

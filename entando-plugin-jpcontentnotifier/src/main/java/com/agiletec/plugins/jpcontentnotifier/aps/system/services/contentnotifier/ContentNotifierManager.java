@@ -162,14 +162,14 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			ConfigInterface configManager = this.getConfigManager();
 			String xml = configManager.getConfigItem(JpcontentnotifierSystemConstants.CONTENT_NOTIFIER_CONFIG_ITEM);
 			if (xml == null) {
-				throw new ApsSystemException("Item configurazione assente: " + JpcontentnotifierSystemConstants.CONTENT_NOTIFIER_CONFIG_ITEM);
+				throw new ApsSystemException("Missing content item: " + JpcontentnotifierSystemConstants.CONTENT_NOTIFIER_CONFIG_ITEM);
 			}
 			ApsSystemUtils.getLogger().finest(JpcontentnotifierSystemConstants.CONTENT_NOTIFIER_CONFIG_ITEM + ": " + xml);
 			ContentNotifierConfigDOM configDOM = new ContentNotifierConfigDOM();
 			this.setSchedulerConfig(configDOM.extractConfig(xml));
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
-			throw new ApsSystemException("Errore in fase di inizializzazione", t);
+			throw new ApsSystemException("Error loading config", t);
 		}
 	}
 	
@@ -246,7 +246,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			this.getContentNotifierDao().signNotifiedContents(contentsNotified);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "signNotifiedContents");
-			throw new ApsSystemException ("Errore in signNotifiedContents ", t);
+			throw new ApsSystemException ("Error sign Notified Contents ", t);
 		}
 	}
 	
@@ -257,7 +257,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 		link.append(langCode);
 		link.append("/");
 		link.append(this.getContentManager().getViewPage(info.getContentId()));
-		link.append(".wp?contentId=");
+		link.append(".page?contentId=");
 		link.append(info.getContentId());
 		return link.toString();
 	}
