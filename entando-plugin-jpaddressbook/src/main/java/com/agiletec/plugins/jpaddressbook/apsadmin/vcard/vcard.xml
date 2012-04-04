@@ -5,7 +5,7 @@
 
 <struts>
 	
-    <package name="jpaddressbook_do/jpaddressbook/VCard" namespace="/do/jpaddressbook/VCard" extends="japs-default">
+    <package name="jpaddressbook_do/jpaddressbook/VCard" namespace="/do/jpaddressbook/VCard" extends="entando-default">
     	
         <action name="downloadvcard" class="jpaddressbookVCardAction" method="downloadVCard">
             <result name="success" type="stream">
@@ -18,13 +18,13 @@
         
         <action name="edit" class="jpaddressbookVCardAction" method="edit" >
     		<result type="tiles">jpaddressbook.admin.VCard.entry</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
         
         <action name="filterFields" class="jpaddressbookVCardAction" method="filterFields" >
             <result name="input" type="tiles">jpaddressbook.admin.VCard.entry</result>
     		<result type="tiles">jpaddressbook.admin.VCard.configFields</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
         
         <action name="save" class="jpaddressbookVCardAction" method="save">
@@ -33,7 +33,7 @@
         		<param name="actionName">list</param>
         		<param name="namespace">/do/jpaddressbook/AddressBook</param>
         	</result>
-        	<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+        	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
         
     </package>

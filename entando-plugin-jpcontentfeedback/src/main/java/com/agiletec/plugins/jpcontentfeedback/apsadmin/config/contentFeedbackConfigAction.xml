@@ -5,11 +5,11 @@
 
 <struts>
 
-    <package name="jpcontentfeedback_do/jpcontentfeedback/Config" namespace="/do/jpcontentfeedback/Config" extends="japs-default">
+    <package name="jpcontentfeedback_do/jpcontentfeedback/Config" namespace="/do/jpcontentfeedback/Config" extends="entando-default">
         
         <action name="edit" class="jpcontentfeedbackContentFeedbackConfigAction" method="edit">
             <result type="tiles">admin.jpcontentfeedback.config.edit</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jpcontentfeedback_moderate</param>
                 <param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
             </interceptor-ref>
@@ -18,7 +18,7 @@
         <action name="update" class="jpcontentfeedbackContentFeedbackConfigAction" method="update">
             <result name="input" type="tiles">admin.jpcontentfeedback.config.edit</result>
             <result type="chain">edit</result>
-            <interceptor-ref name="japsValidationStack">
+            <interceptor-ref name="entandoValidationStack">
                 <param name="requestAuth.requiredPermission">jpcontentfeedback_moderate</param>
             </interceptor-ref>
         </action>

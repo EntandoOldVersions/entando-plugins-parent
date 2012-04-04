@@ -11,12 +11,12 @@
  		
  		<action name="swapFrames" class="jpmyportalMyPortalAjaxAction" method="swapFrames">
 			<result name="success" type="dispatcher">/WEB-INF/plugins/jpmyportal/aps/jsp/ajax/myportal/swapFrames.jsp</result>
- 			<interceptor-ref name="japsFreeStack" />
+ 			<interceptor-ref name="entandoFreeStack" />
         </action>
         
  		<action name="emptyFrame" class="jpmyportalMyPortalAjaxAction" method="emptyCustomizableShowlet">
  			<result name="success" type="dispatcher">/WEB-INF/plugins/jpmyportal/aps/jsp/ajax/myportal/emptyFrame.jsp</result>
- 			<interceptor-ref name="japsFreeStack" />
+ 			<interceptor-ref name="entandoFreeStack" />
         </action>  
         
 	</package>

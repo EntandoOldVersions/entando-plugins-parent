@@ -5,19 +5,19 @@
 
 <struts>
     
-    <package name="jpuserprofile_do/jpuserprofile/MyProfile" namespace="/do/jpuserprofile/MyProfile" extends="japs-default">
+    <package name="jpuserprofile_do/jpuserprofile/MyProfile" namespace="/do/jpuserprofile/MyProfile" extends="entando-default">
     	
         <action name="edit" class="jpuserprofileCurrentUserProfileAction" method="edit">
             <result type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
             <result name="chooseType" type="tiles">admin.jpuserprofile.CurrentUser.Profile.chooseType</result>
-            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <action name="new" class="jpuserprofileCurrentUserProfileAction" method="createNew" >
             <result type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
             <result name="edit" type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
             <result name="input" type="tiles">admin.jpuserprofile.CurrentUser.Profile.chooseType</result>
-            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <action name="save" class="jpuserprofileCurrentUserProfileAction" method="save">
@@ -26,12 +26,12 @@
                 <param name="namespace">/do</param>
                 <param name="actionName">main</param>
             </result>
-            <interceptor-ref name="japsValidationStack"></interceptor-ref>
+            <interceptor-ref name="entandoValidationStack"></interceptor-ref>
         </action>
     	
         <action name="entryProfile" class="jpuserprofileCurrentUserProfileAction">
             <result type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
-            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
     	
     	<!-- ######## INIZIO GESTIONE ATTRIBUTI IN LISTA ######## -->
@@ -40,21 +40,21 @@
             <result type="redirectActionWithAnchor">
                 <param name="actionName">entryProfile</param>
             </result>
-            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <action name="removeListElement*" class="jpuserprofileListAttributeAction" method="removeListElement">
             <result type="redirectAction">
                 <param name="actionName">entryProfile</param>
             </result>
-            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <action name="moveListElement*" class="jpuserprofileListAttributeAction" method="moveListElement">
             <result type="redirectAction">
                 <param name="actionName">entryProfile</param>
             </result>
-            <interceptor-ref name="japsDefaultStack"></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <!-- ######## FINE GESTIONE ATTRIBUTI IN LISTA ######## -->

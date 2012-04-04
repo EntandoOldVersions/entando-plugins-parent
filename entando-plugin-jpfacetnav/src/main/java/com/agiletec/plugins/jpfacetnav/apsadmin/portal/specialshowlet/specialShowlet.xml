@@ -10,18 +10,18 @@
     	<!-- ##### SHOWLET FACET NAV RESULT **** ENTRY POINT ##### -->
     	<action name="facetNavResultConfig" class="jpfacetnavFacetNavResultShowletAction" method="init">
         	<result type="tiles">admin.Page.Showlet.FacetNavResult.config</result>
-            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
     	<!-- ##### SHOWLET FACET NAV TREE **** ENTRY POINT ##### -->
     	<action name="facetNavTreeConfig" class="jpfacetnavFacetNavTreeShowletAction" method="init">
         	<result type="tiles">admin.Page.Showlet.FacetNavTree.config</result>
-            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
     </package>
 	
-	<package name="jpfacetnav_do/jpfacetnav/Page/SpecialShowlet/FacetNavResult" namespace="/do/jpfacetnav/Page/SpecialShowlet/FacetNavResult" extends="japs-default">
+	<package name="jpfacetnav_do/jpfacetnav/Page/SpecialShowlet/FacetNavResult" namespace="/do/jpfacetnav/Page/SpecialShowlet/FacetNavResult" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">
@@ -36,22 +36,22 @@
 		
 		<action name="joinContentType" class="jpfacetnavFacetNavResultShowletAction" method="joinContentType">
             <result type="tiles">admin.Page.Showlet.FacetNavResult.config</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
 		<action name="removeContentType*" class="jpfacetnavFacetNavResultShowletAction" method="removeContentType">
             <result type="tiles">admin.Page.Showlet.FacetNavResult.config</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
 		<action name="saveConfig" class="jpfacetnavFacetNavResultShowletAction" method="save">
     		<result type="tiles" name="input">admin.Page.Showlet.FacetNavResult.config</result>
-        	<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
 	</package>
 	
-	<package name="jpfacetnav_do/jpfacetnav/Page/SpecialShowlet/FacetNavTree" namespace="/do/jpfacetnav/Page/SpecialShowlet/FacetNavTree" extends="japs-default">
+	<package name="jpfacetnav_do/jpfacetnav/Page/SpecialShowlet/FacetNavTree" namespace="/do/jpfacetnav/Page/SpecialShowlet/FacetNavTree" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">viewTree</result>
@@ -63,32 +63,32 @@
 		
 		<action name="joinContentType" class="jpfacetnavFacetNavTreeShowletAction" method="joinContentType">
             <result type="tiles">admin.Page.Showlet.FacetNavTree.config</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
 		<action name="removeContentType*" class="jpfacetnavFacetNavTreeShowletAction" method="removeContentType">
             <result type="tiles">admin.Page.Showlet.FacetNavTree.config</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
 		<action name="openCloseFacetTreeNode*" class="jpfacetnavFacetNavTreeShowletAction" method="buildTree">
             <result type="tiles">admin.Page.Showlet.FacetNavTree.config</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
 		<action name="joinFacet" class="jpfacetnavFacetNavTreeShowletAction" method="joinFacet">
             <result type="tiles">admin.Page.Showlet.FacetNavTree.config</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
 		<action name="removeFacet*" class="jpfacetnavFacetNavTreeShowletAction" method="removeFacet">
             <result type="tiles">admin.Page.Showlet.FacetNavTree.config</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
 		<action name="saveConfig" class="jpfacetnavFacetNavTreeShowletAction" method="save">
     		<result type="tiles" name="input">admin.Page.Showlet.FacetNavTree.config</result>
-        	<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
 	</package>

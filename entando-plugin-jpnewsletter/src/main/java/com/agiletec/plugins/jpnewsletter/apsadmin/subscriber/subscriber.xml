@@ -5,26 +5,26 @@
 
 <struts>
 	
-	<package name="jpnewsletter_do/jpnewsletter/Subscriber" namespace="/do/jpnewsletter/Subscriber" extends="japs-default">
+	<package name="jpnewsletter_do/jpnewsletter/Subscriber" namespace="/do/jpnewsletter/Subscriber" extends="entando-default">
 		
 		<action name="list" class="jpnewsletterSubscriberFinderAction">
 			<result type="tiles">admin.jpnewsletter.Subscriber.list</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
 		</action>
 		
 		<action name="search" class="jpnewsletterSubscriberFinderAction">
 			<result type="tiles">admin.jpnewsletter.Subscriber.list</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
 		</action>
 		
 		<action name="delete" class="jpnewsletterSubscriberAction" method="deleteSubscriber">
 			<result type="redirectAction">list</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
 		</action>
 		
 		<action name="trash" class="jpnewsletterSubscriberAction" method="trashSubscriber">
 			<result type="tiles">admin.jpnewsletter.Subscriber.confirm</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">jpnewsletter_management</param></interceptor-ref>
 		</action>
 		
 	</package>

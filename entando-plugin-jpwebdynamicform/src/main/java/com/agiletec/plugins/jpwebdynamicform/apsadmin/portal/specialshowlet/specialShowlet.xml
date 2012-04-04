@@ -5,7 +5,7 @@
 
 <struts>
 
-    <package name="jpwebdynamicform_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="japs-default">
+    <package name="jpwebdynamicform_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="entando-default">
 		
     	<global-results>
     		<result name="pageTree" type="chain">
@@ -21,12 +21,12 @@
     	<!-- ##### SHOWLET WEBDYNAMICFORM **** ENTRY POINT ##### -->
     	<action name="webdynamicformConfig" class="jpwebdynamicformWebdynamicformShowletAction" method="init">
         	<result type="tiles">admin.jpwebdynamicform.Page.Showlet.Webdynamicform.config</result>
-            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
     </package>
 	
-	<package name="jpwebdynamicform_do/jpwebdynamicform/Page/SpecialShowlet/Webdynamicform" namespace="/do/jpwebdynamicform/Page/SpecialShowlet/Webdynamicform" extends="japs-default">
+	<package name="jpwebdynamicform_do/jpwebdynamicform/Page/SpecialShowlet/Webdynamicform" namespace="/do/jpwebdynamicform/Page/SpecialShowlet/Webdynamicform" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">
@@ -41,7 +41,7 @@
 		
 		<action name="saveConfig" class="jpwebdynamicformWebdynamicformShowletAction" method="save">
     		<result type="tiles" name="input">admin.jpwebdynamicform.Page.Showlet.Webdynamicform.config</result>
-        	<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
 	</package>

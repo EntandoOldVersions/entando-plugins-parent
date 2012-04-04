@@ -5,7 +5,7 @@
 
 <struts>
 	
-    <package name="jpaddressbook_do/jpaddressbook/Front/AddressBook" namespace="/do/jpaddressbook/Front/AddressBook" extends="japs-front-default">
+    <package name="jpaddressbook_do/jpaddressbook/Front/AddressBook" namespace="/do/jpaddressbook/Front/AddressBook" extends="entando-front-default">
     	
     	<interceptors>
     		<interceptor name="guestWonderInterceptor" class="com.agiletec.plugins.jpaddressbook.aps.internalservlet.addressbook.GuestWonderInterceptor"></interceptor>
@@ -17,31 +17,31 @@
     	
     	<action name="searchIntro" class="jpaddressbookContactsFinderAction" >
     		<result type="dispatcher">/WEB-INF/plugins/jpaddressbook/aps/jsp/internalServlet/contactFinding_searchForm.jsp</result>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
 
     	<action name="searchIntroAdvanced" class="jpaddressbookContactsFinderAction" >
     		<result type="dispatcher">/WEB-INF/plugins/jpaddressbook/aps/jsp/internalServlet/contactFinding_searchForm_advanced.jsp</result>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
         
     	<action name="resultIntro" class="jpaddressbookContactsFinderAction" >
     		<result type="dispatcher">/WEB-INF/plugins/jpaddressbook/aps/jsp/internalServlet/contactFinding_result.jsp</result>
-    		<interceptor-ref name="japsFrontEndFreeStack"><param name="chain.includeParameters">fieldErrors</param></interceptor-ref>
+    		<interceptor-ref name="entandoFrontEndFreeStack"><param name="chain.includeParameters">fieldErrors</param></interceptor-ref>
         </action>
     	
     	<action name="trash" class="jpaddressbookContactsFinderAction" method="trash" >
     		<result name="input" type="chain">resultIntro</result>
     		<result type="dispatcher">/WEB-INF/plugins/jpaddressbook/aps/jsp/internalServlet/trashContact.jsp</result>
         	<interceptor-ref name="guestWonderInterceptor"></interceptor-ref>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
     	
     	<action name="delete" class="jpaddressbookContactsFinderAction" method="delete" >
     		<result name="input" type="chain">resultIntro</result>
     		<result type="chain">resultIntro</result>
         	<interceptor-ref name="guestWonderInterceptor"></interceptor-ref>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
         
     	<!-- ********************* -->
@@ -49,33 +49,33 @@
     	<action name="view" class="jpaddressbookContactAction" method="view">
     		<result name="input" type="chain">resultIntro</result>
     		<result type="dispatcher">/WEB-INF/plugins/jpaddressbook/aps/jsp/internalServlet/viewContact.jsp</result>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
     	
         <action name="new" class="jpaddressbookContactAction" method="createNew">
     		<result type="dispatcher">/WEB-INF/plugins/jpaddressbook/aps/jsp/internalServlet/entryContact.jsp</result>
         	<interceptor-ref name="guestWonderInterceptor"></interceptor-ref>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
         
         <action name="edit" class="jpaddressbookContactAction" method="edit">
     		<result name="input" type="chain">resultIntro</result>
     		<result type="dispatcher">/WEB-INF/plugins/jpaddressbook/aps/jsp/internalServlet/entryContact.jsp</result>
         	<interceptor-ref name="guestWonderInterceptor"></interceptor-ref>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
         
         <action name="save" class="jpaddressbookContactAction" method="save">
         	<result name="input" type="dispatcher">/WEB-INF/plugins/jpaddressbook/aps/jsp/internalServlet/entryContact.jsp</result>
             <result type="chain">resultIntro</result>
         	<interceptor-ref name="guestWonderInterceptor"></interceptor-ref>
-        	<interceptor-ref name="japsFrontEndFreeValidationStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeValidationStack"></interceptor-ref>
         </action>
     	
     	<action name="entryContact" class="jpaddressbookContactAction">
             <result type="dispatcher">/WEB-INF/plugins/jpaddressbook/aps/jsp/internalServlet/entryContact.jsp</result>
         	<interceptor-ref name="guestWonderInterceptor"></interceptor-ref>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
     	
     	<!-- ######## INIZIO GESTIONE ATTRIBUTI IN LISTA ######## -->
@@ -85,7 +85,7 @@
         		<param name="actionName">entryContact</param>
         	</result>
         	<interceptor-ref name="guestWonderInterceptor"></interceptor-ref>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
         
         <action name="removeListElement*" class="jpaddressbookListAttributeAction" method="removeListElement">
@@ -93,7 +93,7 @@
         		<param name="actionName">entryContact</param>
         	</result>
         	<interceptor-ref name="guestWonderInterceptor"></interceptor-ref>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
         
         <action name="moveListElement*" class="jpaddressbookListAttributeAction" method="moveListElement">
@@ -101,7 +101,7 @@
         		<param name="actionName">entryContact</param>
         	</result>
         	<interceptor-ref name="guestWonderInterceptor"></interceptor-ref>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
         
         <!-- ######## FINE GESTIONE ATTRIBUTI IN LISTA ######## -->

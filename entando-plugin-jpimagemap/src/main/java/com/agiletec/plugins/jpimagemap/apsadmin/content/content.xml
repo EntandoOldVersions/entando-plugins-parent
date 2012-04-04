@@ -5,7 +5,7 @@
 
 <struts>
 	
-    <package name="jpimagemap_do/jacms/Content" namespace="/do/jacms/Content" extends="japs-default">
+    <package name="jpimagemap_do/jacms/Content" namespace="/do/jacms/Content" extends="entando-default">
         
         <!-- ######## INIZIO GESTIONE ATTRIBUTI MAPPA IMMAGINE ######## -->
         
@@ -14,7 +14,7 @@
         		<param name="actionName">entryContent</param>
         		<param name="anchorDest">${langCode}_tab</param>
         	</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
         
         <action name="addImageMapArea*" class="jpimagemapImageMapAttributeAction" method="addArea">
@@ -22,7 +22,7 @@
         		<param name="actionName">entryContent</param>
         		<param name="anchorDest">${langCode}_tab</param>
         	</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
         
         <action name="removeImageMapArea*" class="jpimagemapImageMapAttributeAction" method="removeArea">
@@ -30,7 +30,7 @@
         		<param name="actionName">entryContent</param>
         		<param name="anchorDest">${langCode}_tab</param>
         	</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
         
         <action name="defineImageMapArea*" class="jpimagemapImageMapAttributeAction" method="defineArea">
@@ -38,7 +38,7 @@
             	<param name="namespace">/do/jpimagemap/Content/ImageMap</param>
     			<param name="actionName">defineArea</param>
             </result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
         
         <action name="chooseImageMapLink*" class="linkAttributeAction" method="chooseLink">
@@ -46,7 +46,7 @@
             	<param name="namespace">/do/jpimagemap/Content/ImageMap</param>
     			<param name="actionName">chooseLink</param>
             </result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
         
         <!-- ######## FINE GESTIONE ATTRIBUTI MAPPA IMMAGINE ######## -->

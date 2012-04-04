@@ -5,13 +5,13 @@
 
 <struts>
 	
-	<package name="jpsurvey_do/Survey" namespace="/do/jpsurvey/Survey" extends="japs-default">
+	<package name="jpsurvey_do/Survey" namespace="/do/jpsurvey/Survey" extends="entando-default">
 		
 		<!-- #### BACKEND ACTIONS RELATED TO BOTH QUESTIONNAIRES AND POLLS #### -->
 		
 		<action name="listSurveys" class="jpsurveySurveyFinderAction"> 
 			<result type="tiles">jpsurvey.admin.listSurveys</result>
-			<interceptor-ref name="japsDefaultStack">
+			<interceptor-ref name="entandoDefaultStack">
 				<param name="requestAuth.requiredPermission">manageSurvey</param>
 				<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
 			</interceptor-ref>
@@ -19,7 +19,7 @@
 		
 		<action name="searchSurvey" class="jpsurveySurveyFinderAction">
 			<result type="tiles">jpsurvey.admin.listSurveys</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="view" class="jpsurveySurveyDetailAction" method="view">
@@ -28,7 +28,7 @@
 				<param name="actionName">listSurveys</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="editSurvey" class="jpsurveySurveyAction" method="editSurvey">
@@ -37,7 +37,7 @@
 				<param name="actionName">listSurveys</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsDefaultStack">
+			<interceptor-ref name="entandoDefaultStack">
 				<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
 				<param name="requestAuth.requiredPermission">manageSurvey</param>
 			</interceptor-ref>
@@ -54,18 +54,18 @@
 				<param name="actionName">listSurveys</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="newSurvey" class="jpsurveySurveyAction" method="newSurvey">
 			<result type="tiles">jpsurvey.admin.entrySurvey</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="trashSurvey" class="jpsurveySurveyAction" method="trashSurvey">
 			<result type="tiles">jpsurvey.admin.trashSurvey</result>
 			<result name="input" type="redirectAction">editSurvey</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="deleteSurvey" class="jpsurveySurveyAction" method="deleteSurvey">
@@ -77,7 +77,7 @@
 				<param name="actionName">listSurveys</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="retireSurvey" class="jpsurveySurveyAction" method="retireSurvey">
@@ -89,7 +89,7 @@
 				<param name="actionName">listSurveys</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="publishSurvey" class="jpsurveySurveyAction" method="publishSurvey">
@@ -101,7 +101,7 @@
 				<param name="actionName">listSurveys</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="associateSurveyImageEntry*" class="jpsurveySurveyAction" method="associateSurveyImageEntry">
@@ -111,13 +111,13 @@
 				<param name="surveyId">${surveyId}</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="removeSurveyImage" class="jpsurveySurveyAction" method="removeSurveyImage">
 			<result name="input" type="tiles">jpsurvey.admin.entrySurvey</result>
 			<result type="chain">editSurvey</result>
-			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="addQuestion*" class="jpsurveySurveyAction" method="addQuestion">
@@ -127,13 +127,13 @@
 				<param name="surveyId">${surveyId}</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<!-- this is a trompoline to question actions -->
 		<action name="editQuestion" class="jpsurveySurveyAction" method="editQuestion">
 			<result type="chain">editSingleQuestion</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="editSingleQuestion" class="jpsurveyQuestionAction" method="editSingleQuestion">
@@ -141,7 +141,7 @@
 				<param name="actionName">editSurvey</param>
 			</result>
 			<result type="tiles">jpsurvey.admin.editQuestion</result>
-			<interceptor-ref name="japsDefaultStack">
+			<interceptor-ref name="entandoDefaultStack">
 				<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
 				<param name="requestAuth.requiredPermission">manageSurvey</param>
 			</interceptor-ref>
@@ -149,7 +149,7 @@
 		
 		<action name="addNewQuestion" class="jpsurveyQuestionAction" method="addNewQuestion">
 			<result type="tiles">jpsurvey.admin.editQuestion</result>
-			<interceptor-ref name="japsDefaultStack">
+			<interceptor-ref name="entandoDefaultStack">
 				<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
 				<param name="requestAuth.requiredPermission">manageSurvey</param>
 			</interceptor-ref>
@@ -170,36 +170,36 @@
 				<param name="questionId">${questionId}</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="trashQuestion" class="jpsurveyQuestionAction" method="trashQuestion">
 			<result type="tiles">jpsurvey.admin.trashQuestion</result>
 			<result name="input" type="chain">editSingleQuestion</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="deleteQuestion" class="jpsurveyQuestionAction" method="deleteQuestion">
 			<result type="chain">editSurvey</result>
 			<result name="input" type="chain">editSurvey</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="moveQuestionUp" class="jpsurveyQuestionAction" method="moveQuestionUp">
 			<result type="chain">editSurvey</result>
 			<result name="input" type="chain">editSurvey</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="moveQuestionDown" class="jpsurveyQuestionAction" method="moveQuestionDown">
 			<result type="chain">editSurvey</result>
 			<result name="input" type="chain">editSurvey</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="freeTextListEntry" class="jpsurveyQuestionAction" method="freeTextListEntry">
 			<result type="chain">freeTextList</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="addChoice*" class="jpsurveyQuestionAction" method="addChoice">
@@ -210,7 +210,7 @@
 			</result>
 			<!-- testare con redirectAction -->
 			<result name="input" type="chain">editSingleQuestion</result>
-			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="addFreeText*" class="jpsurveyQuestionAction" method="addFreeText">
@@ -222,13 +222,13 @@
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
 			<result name="noMoreFreeText" type="chain">editSingleQuestion</result>
-			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<!-- this is a trompoline to choice actions -->
 		<action name="editChoice" class="jpsurveyQuestionAction" method="editChoice">
 			<result type="chain">editSingleChoice</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>		
 		
 		<!-- ### BACKEND CHOICE ACTIONS ### -->
@@ -236,7 +236,7 @@
 		<action name="editSingleChoice" class="jpsurveyChoiceAction" method="editSingleChoice">
 			<result name="input" type="chain">editSingleQuestion</result>
 			<result type="tiles">jpsurvey.admin.editChoice</result>
-			<interceptor-ref name="japsDefaultStack">
+			<interceptor-ref name="entandoDefaultStack">
 				<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
 				<param name="requestAuth.requiredPermission">manageSurvey</param>
 			</interceptor-ref>
@@ -244,7 +244,7 @@
 	
 		<action name="addNewChoice" class="jpsurveyChoiceAction" method="addNewChoice">
 			<result type="tiles">jpsurvey.admin.editChoice</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="addNewFreeText" class="jpsurveyChoiceAction" method="addNewFreeText">
@@ -255,7 +255,7 @@
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
 			<result name="input" type="chain">editSingleQuestion</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="saveChoice" class="jpsurveyChoiceAction" method="saveChoice">
@@ -266,36 +266,36 @@
 				<param name="questionId">${questionId}</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="trashChoice" class="jpsurveyChoiceAction" method="trashChoice">
 			<result type="tiles">jpsurvey.admin.trashChoice</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="deleteChoice" class="jpsurveyChoiceAction" method="deleteChoice">
 			<result type="chain">editSingleQuestion</result>
 			<result name="input" type="chain">editSingleQuestion</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="moveChoiceUp" class="jpsurveyChoiceAction" method="moveChoiceUp">
 			<result type="chain">editQuestion</result>
 			<result name="input" type="chain">editSingleQuestion</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="moveChoiceDown" class="jpsurveyChoiceAction" method="moveChoiceDown">
 			<result type="chain">editQuestion</result>
 			<result name="input" type="chain">editSingleQuestion</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="freeTextList" class="jpsurveyChoiceAction" method="freeTextList">
 			<result type="tiles">jpsurvey.admin.freeTextList</result>
 			<result name="input" type="chain">editSingleQuestion</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>		
 		
 		<!-- AZIONI GESTIONE IMMAGINI -->
@@ -303,17 +303,17 @@
 		<action name="associateSurveyImage" class="jpsurveyImageAction" method="associateSurveyImage">
 			<result type="tiles">jpsurvey.admin.associateImage</result>
 			<result name="input" type="tiles">jpsurvey.admin.associateImage</result>
-			<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 				
 		<action name="list" class="jpsurveyImageAction">
 			<result type="tiles">jpsurvey.admin.associateImage</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="search" class="jpsurveyImageAction" >
 			<result type="tiles">jpsurvey.admin.associateImage</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 		<action name="joinImage*" class="jpsurveyImageAction" method="joinImage">
@@ -322,7 +322,7 @@
 				<param name="surveyId">${surveyId}</param>
 				<param name="questionnaire">${questionnaire}</param>
 			</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">manageSurvey</param></interceptor-ref>
 		</action>
 		
 	</package>

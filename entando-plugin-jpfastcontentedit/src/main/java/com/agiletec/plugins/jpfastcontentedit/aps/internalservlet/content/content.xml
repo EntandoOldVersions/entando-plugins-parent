@@ -5,7 +5,7 @@
 
 <struts>
 	
-	<package name="jpfastcontentedit_do/jpfastcontentedit/Content" namespace="/do/jpfastcontentedit/Content" extends="japs-front-default">
+	<package name="jpfastcontentedit_do/jpfastcontentedit/Content" namespace="/do/jpfastcontentedit/Content" extends="entando-front-default">
 		
 		<global-results>
     		<result name="userNotAllowed" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/userNotAllowed.jsp</result>
@@ -17,61 +17,61 @@
 			<result name="editContent" type="chain">edit</result>
 			<result name="deleteContent" type="chain">delete</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		
 		<action name="createNewVoid" class="jpfastcontenteditIntroNewContentAction" method="createNewVoid">
 			<result type="chain">entryContent</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		
     	<action name="edit" class="jpfastcontenteditContentAction" method="edit">
 			<result type="chain">entryContent</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
 		
     	<action name="delete" class="jpfastcontenteditContentAction" method="delete">
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
 		
 		<action name="entryContent" class="jpfastcontenteditContentAction" method="forwardToEntryContent">
 			<result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/entryContent.jsp</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		
 		<action name="joinGroup" class="jpfastcontenteditContentAction" method="joinGroup">
 			<result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/entryContent.jsp</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		
 		<action name="removeGroup*" class="jpfastcontenteditContentAction" method="removeGroup">
 			<result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/entryContent.jsp</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		
 		<action name="joinCategory" class="jpfastcontenteditContentAction" method="joinCategory">
 			<result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/entryContent.jsp</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		
 		<action name="removeCategory*" class="jpfastcontenteditContentAction" method="removeCategory">
 			<result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/entryContent.jsp</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		
 		<action name="save" class="jpfastcontenteditContentAction" 
 				method="saveAndApprove" ><!-- save/saveAndApprove a seconda dell'operazione desiderata -->
 			<result name="input" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/entryContent.jsp</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeValidationStack" />
+			<interceptor-ref name="entandoFrontEndFreeValidationStack" />
 		</action>
 		
 		<!-- ######## INIZIO GESTIONE ATTRIBUTI IN LISTA ######## -->
@@ -85,19 +85,19 @@
         	</result>
 			<result type="chain">entryContent</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		
 		<action name="removeListElement*" class="jacmsListAttributeAction" method="removeListElement">
 			<result type="chain">entryContent</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		
 		<action name="moveListElement*" class="jacmsListAttributeAction" method="moveListElement">
 			<result type="chain">entryContent</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		
 		<!-- ######## FINE GESTIONE ATTRIBUTI IN LISTA ######## -->
@@ -109,12 +109,12 @@
     			<param name="actionName">chooseLink</param>
             </result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		<action name="removeLink*" class="jacmsLinkAttributeAction" method="removeLink">
             <result type="chain">entryContent</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
 		</action>
 		<!-- ########  FINE GESTIONE ATTRIBUTI LINK  ######## -->
 		
@@ -126,13 +126,13 @@
     			<param name="actionName">findResource</param>
             </result>
         	<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
 		
         <action name="removeResource*" class="jacmsResourceAttributeAction" method="removeResource">
             <result type="chain">entryContent</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-			<interceptor-ref name="japsFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
         <!-- ######## FINE GESTIONE ATTRIBUTI RISORSA ######## -->
 		

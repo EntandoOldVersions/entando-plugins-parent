@@ -5,30 +5,30 @@
         
 <struts>
 	
-	<package name="jpmyportal_do/jpmyportal/Config" namespace="/do/jpmyportalplus/Config" extends="japs-default">
+	<package name="jpmyportal_do/jpmyportal/Config" namespace="/do/jpmyportalplus/Config" extends="entando-default">
 		
  		<!-- INIZIO - AREA PER LA CONFIGURAZIONE DEL SERVIZIO -->
  		
  		<action name="edit" class="jpmyportalplusConfigAction" method="edit">
     		<result type="tiles">admin.jpmyportalplus.config.entry</result>
-            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
  		
  		<action name="addShowlet" class="jpmyportalplusConfigAction" method="addShowlet">
     		<result type="tiles" name="input">admin.jpmyportalplus.config.entry</result>
             <result type="tiles">admin.jpmyportalplus.config.entry</result>
-            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
  		
  		<action name="removeShowlet*" class="jpmyportalplusConfigAction" method="removeShowlet">
     		<result type="tiles">admin.jpmyportalplus.config.entry</result>
-            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
         
  		<action name="save" class="jpmyportalplusConfigAction" method="save">
     		<result name="input" type="tiles">admin.jpmyportalplus.config.entry</result>
     		<result type="tiles">admin.jpmyportalplus.config.entry</result>
-            <interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+            <interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
         
 		<!-- FINE - AREA PER LA CONFIGURAZIONE DEL SERVIZIO -->

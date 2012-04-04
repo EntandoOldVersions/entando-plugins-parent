@@ -5,18 +5,18 @@
 
 <struts>
 	
-	<package name="jpcontentnotifier_do/jpcontentnotifier/NotifierConfig" namespace="/do/jpcontentnotifier/NotifierConfig" extends="japs-default">
+	<package name="jpcontentnotifier_do/jpcontentnotifier/NotifierConfig" namespace="/do/jpcontentnotifier/NotifierConfig" extends="entando-default">
 		
 		<action name="config" class="jpcontentnotifierConfigAction" method="config">
 			<result type="tiles">admin.jpcontentnotifier.contentnotifier.config</result>
-			<interceptor-ref name="japsDefaultStack">
+			<interceptor-ref name="entandoDefaultStack">
 				<param name="requestAuth.requiredPermission">superuser</param>
 			</interceptor-ref>
 		</action>
 		
 		<action name="save" class="jpcontentnotifierConfigAction" method="save">
 			<result type="tiles">admin.jpcontentnotifier.contentnotifier.savedConfirm</result>
-			<interceptor-ref name="japsDefaultStack">
+			<interceptor-ref name="entandoDefaultStack">
 				<param name="requestAuth.requiredPermission">superuser</param>
 			</interceptor-ref>
 		</action>

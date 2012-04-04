@@ -5,33 +5,33 @@
 
 <struts>
 	
-    <package name="jpactionlogger_do/jpactionlogger/ActionLogger" namespace="/do/jpactionlogger/ActionLogger" extends="japs-default">
+    <package name="jpactionlogger_do/jpactionlogger/ActionLogger" namespace="/do/jpactionlogger/ActionLogger" extends="entando-default">
     	
 		<action name="list" class="jpactionloggerActionLoggerAction" >
 			<result type="tiles">jpactionlogger.admin.actionlogger.list</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
 		</action>
     	
 		<action name="search" class="jpactionloggerActionLoggerAction" >
 			<result type="tiles">jpactionlogger.admin.actionlogger.list</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
 		</action>
 		
 		<action name="delete" class="jpactionloggerActionLoggerAction" method="delete" >
 			<result type="redirectAction">list</result>
-			<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
 		</action>
 		
     </package>
     
     <!-- used only for test -->
-    <package name="jpactionlogger_do/jpactionlogger/Test" namespace="/do/jpactionlogger/Test" extends="japs-default">
+    <package name="jpactionlogger_do/jpactionlogger/Test" namespace="/do/jpactionlogger/Test" extends="entando-default">
 		<interceptors>
 			<interceptor name="jpactionlogger_actionLogger" class="com.agiletec.plugins.jpactionlogger.apsadmin.system.ActionLoggerInterceptor" />
 		</interceptors>
 		<action name="ping" class="jpactionloggerActionLoggerAction" >
 			<result type="tiles">jpactionlogger.admin.actionlogger.testResult</result>
-                        <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+                        <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
 			<interceptor-ref name="jpactionlogger_actionLogger"><param name="excludeParams">password</param></interceptor-ref>
 		</action>
     </package>

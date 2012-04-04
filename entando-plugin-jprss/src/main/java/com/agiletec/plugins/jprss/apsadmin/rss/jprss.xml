@@ -5,7 +5,7 @@
 
 <struts>
     
-    <package name="jprss_do/jprss/Rss/Feed" namespace="/do/jprss/Rss/Feed" extends="japs-default">
+    <package name="jprss_do/jprss/Rss/Feed" namespace="/do/jprss/Rss/Feed" extends="entando-default">
 	
         <result-types>
             <result-type name="rss" class="com.agiletec.plugins.jprss.apsadmin.rss.RomeResult"/>
@@ -24,25 +24,25 @@
         
     </package>
     
-    <package name="jprss_do/jprss/Rss" namespace="/do/jprss/Rss" extends="japs-default">
+    <package name="jprss_do/jprss/Rss" namespace="/do/jprss/Rss" extends="entando-default">
 		
         <action name="intro" class="jprssAction">
             <result type="tiles">admin.jprss.intro</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
 	
         <action name="list" class="jprssAction">
             <result type="tiles">admin.jprss.list</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
 	
         <action name="new" class="jprssAction" method="newChannel">
             <result type="tiles">admin.jprss.entryChannel</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -50,7 +50,7 @@
         <action name="selectContentType" class="jprssAction" method="selectContentType">
             <result name="input" type="tiles">admin.jprss.entryChannel</result>
             <result type="tiles">admin.jprss.entryChannel</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -58,7 +58,7 @@
         <action name="save" class="jprssAction" method="save">
             <result name="input" type="tiles">admin.jprss.entryChannel</result>
             <result type="redirectAction">list</result>
-            <interceptor-ref name="japsValidationStack">
+            <interceptor-ref name="entandoValidationStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -66,7 +66,7 @@
         <action name="trash" class="jprssAction" method="trash" >
             <result name="input" type="tiles">admin.jprss.list</result>
             <result type="tiles">admin.jprss.trashChannel</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -74,7 +74,7 @@
         <action name="delete" class="jprssAction" method="delete">
             <result name="input" type="tiles">admin.jprss.list</result>
             <result type="redirectAction">list</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -82,7 +82,7 @@
         <action name="edit" class="jprssAction" method="edit">
             <result name="input" type="tiles">admin.jprss.list</result>
             <result type="tiles">admin.jprss.entryChannel</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -91,28 +91,28 @@
 	
         <action name="newFilter" class="jprssFilterAction" method="newFilter">
             <result type="tiles">admin.jprss.entryFilter</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
 	
         <action name="removeFilter*" class="jprssAction" method="removeFilter">
             <result type="tiles">admin.jprss.entryChannel</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
 	
         <action name="moveFilter*" class="jprssAction" method="moveFilter">
             <result type="tiles">admin.jprss.entryChannel</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
 	
         <action name="addFilter" class="jprssAction" method="addFilter">
             <result type="tiles">admin.jprss.entryChannel</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="chain.includeParameters">newFilter</param>
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
@@ -120,14 +120,14 @@
 	
         <action name="setFilterType" class="jprssFilterAction" method="setFilterType">
             <result type="tiles">admin.jprss.entryFilter</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
 	
         <action name="setFilterOption" class="jprssFilterAction" method="setFilterOption">
             <result type="tiles">admin.jprss.entryFilter</result>
-            <interceptor-ref name="japsDefaultStack">
+            <interceptor-ref name="entandoDefaultStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -135,7 +135,7 @@
         <action name="saveFilter" class="jprssFilterAction" method="saveFilter">
             <result name="input" type="tiles">admin.jprss.entryFilter</result>
             <result type="chain">addFilter</result>
-            <interceptor-ref name="japsValidationStack">
+            <interceptor-ref name="entandoValidationStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -145,7 +145,7 @@
         <action name="saveTextFilter" class="jprssTextFilterAction" method="saveFilter">
             <result name="input" type="tiles">admin.jprss.entryFilter</result>
             <result type="chain">addFilter</result>
-            <interceptor-ref name="japsValidationStack">
+            <interceptor-ref name="entandoValidationStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -153,7 +153,7 @@
         <action name="saveNumberFilter" class="jprssNumberFilterAction" method="saveFilter">
             <result name="input" type="tiles">admin.jprss.entryFilter</result>
             <result type="chain">addFilter</result>
-            <interceptor-ref name="japsValidationStack">
+            <interceptor-ref name="entandoValidationStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -161,7 +161,7 @@
         <action name="saveBooleanFilter" class="jprssBooleanFilterAction" method="saveFilter">
             <result name="input" type="tiles">admin.jprss.entryFilter</result>
             <result type="chain">addFilter</result>
-            <interceptor-ref name="japsValidationStack">
+            <interceptor-ref name="entandoValidationStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>
@@ -169,7 +169,7 @@
         <action name="saveDateFilter" class="jprssDateFilterAction" method="saveFilter">
             <result name="input" type="tiles">admin.jprss.entryFilter</result>
             <result type="chain">addFilter</result>
-            <interceptor-ref name="japsValidationStack">
+            <interceptor-ref name="entandoValidationStack">
                 <param name="requestAuth.requiredPermission">jprss_channels_edit</param>
             </interceptor-ref>
         </action>

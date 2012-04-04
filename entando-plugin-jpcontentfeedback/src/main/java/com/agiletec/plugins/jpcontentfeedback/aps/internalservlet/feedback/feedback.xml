@@ -5,7 +5,7 @@
 
 <struts>
 
- 	<package name="jpcontentfeedback_do/jpcontentfeedback/FrontEnd/contentfeedback" namespace="/do/jpcontentfeedback/FrontEnd/contentfeedback" extends="japs-front-default">
+ 	<package name="jpcontentfeedback_do/jpcontentfeedback/FrontEnd/contentfeedback" namespace="/do/jpcontentfeedback/FrontEnd/contentfeedback" extends="entando-front-default">
 		
 		<interceptors>
 			<interceptor name="japsToken" class="com.agiletec.plugins.jpcontentfeedback.aps.internalservlet.system.TokenInterceptor" />
@@ -17,7 +17,7 @@
 		
 	    <action name="intro" class="jpcontentfeedbackCommentsFrontAction" >
 	    	<result type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
-	    	<interceptor-ref name="japsFrontEndFreeStack">
+	    	<interceptor-ref name="entandoFrontEndFreeStack">
 	    		<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
 				<param name="params.excludeParams">struts.token,struts.token.name</param>
 	    	</interceptor-ref>
@@ -30,7 +30,7 @@
 			<interceptor-ref name="japsToken" >
 				<param name="typeMessages">message</param>
 			</interceptor-ref>
-	      	<interceptor-ref name="japsFrontEndFreeValidationStack">
+	      	<interceptor-ref name="entandoFrontEndFreeValidationStack">
 	      		<!--<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param> -->
 				<param name="params.excludeParams">struts.token,struts.token.name</param>
 	      	</interceptor-ref>
@@ -39,7 +39,7 @@
 	    <action name="delete" class="jpcontentfeedbackCommentsFrontAction" method="delete">
 	    	<result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
 	    	<result type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
-	      	<interceptor-ref name="japsFrontEndFreeStack">
+	      	<interceptor-ref name="entandoFrontEndFreeStack">
 	      		<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param>
 	      	</interceptor-ref>
 	    </action>
@@ -47,7 +47,7 @@
 	    <action name="insertVote" class="jpcontentfeedbackCommentsFrontAction" method="insertVote">
 	    	<result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
 	    	<result type="chain">intro</result>
-			<interceptor-ref name="japsFrontEndFreeStack">
+			<interceptor-ref name="entandoFrontEndFreeStack">
 	      		<!--<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param> -->
 			</interceptor-ref>
 	    </action>
@@ -55,7 +55,7 @@
 		<action name="insertCommentVote" class="jpcontentfeedbackCommentsFrontAction" method="insertVote">
 	    	<result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
 			<result type="chain">intro</result>
-	      	<interceptor-ref name="japsFrontEndFreeStack">
+	      	<interceptor-ref name="entandoFrontEndFreeStack">
 	      		<!--<param name="requestAuth.requiredPermission">jpcontentfeedback_comment_edit</param> -->
 	      	</interceptor-ref>
 	    </action>

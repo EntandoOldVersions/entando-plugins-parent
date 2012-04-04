@@ -5,22 +5,22 @@
 
 <struts>
 	
-    <package name="jpuserprofile_do/jpuserprofile/Front/CurrentUser" namespace="/do/jpuserprofile/Front/CurrentUser" extends="japs-front-default">
+    <package name="jpuserprofile_do/jpuserprofile/Front/CurrentUser" namespace="/do/jpuserprofile/Front/CurrentUser" extends="entando-front-default">
     	
         <action name="edit">
         	<result type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/editCurrentUser.jsp</result>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
         
         <action name="editPassword" class="baseCommonAction" method="editPassword">
         	<result type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/entryUserPassword.jsp</result>
-        	<interceptor-ref name="japsFrontEndFreeStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
         
         <action name="changePassword" class="baseCommonAction" method="changePassword">
         	<result name="input" type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/entryUserPassword.jsp</result>
         	<result type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/passwordChangingConfirm.jsp</result>
-        	<interceptor-ref name="japsFrontEndFreeValidationStack"></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeValidationStack"></interceptor-ref>
         </action>
         
     </package>

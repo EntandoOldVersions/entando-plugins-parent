@@ -5,33 +5,33 @@
 
 <struts>
 	
-    <package name="jpaddressbook_do/jpaddressbook/AddressBook" namespace="/do/jpaddressbook/AddressBook" extends="japs-default">
+    <package name="jpaddressbook_do/jpaddressbook/AddressBook" namespace="/do/jpaddressbook/AddressBook" extends="entando-default">
     	
     	<action name="intro" class="jpaddressbookContactsFinderAction" >
     		<result type="tiles">jpaddressbook.admin.AddressBook.Contact.intro</result>
-        	<interceptor-ref name="japsDefaultStack" />
+        	<interceptor-ref name="entandoDefaultStack" />
         </action>
         
     	<action name="list" class="jpaddressbookContactsFinderAction" >
     		<result type="tiles">jpaddressbook.admin.AddressBook.Contact.list</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="chain.includeParameters">fieldErrors</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="chain.includeParameters">fieldErrors</param></interceptor-ref>
         </action>
     	
     	<action name="search" class="jpaddressbookContactsFinderAction" >
     		<result type="tiles">jpaddressbook.admin.AddressBook.Contact.list</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
     	
     	<action name="trash" class="jpaddressbookContactsFinderAction" method="trash" >
     		<result name="input" type="chain">list</result>
     		<result type="tiles">jpaddressbook.admin.AddressBook.Contact.trash</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
     	
     	<action name="delete" class="jpaddressbookContactsFinderAction" method="delete" >
     		<result name="input" type="chain">list</result>
     		<result type="redirectAction">list</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
     	
     	<!-- ********************* -->
@@ -39,29 +39,29 @@
     	<action name="view" class="jpaddressbookContactAction" method="view">
     		<result name="input" type="chain">list</result>
     		<result type="tiles">jpaddressbook.admin.AddressBook.Contact.view</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <action name="new" class="jpaddressbookContactAction" method="createNew">
     		<result type="tiles">jpaddressbook.admin.AddressBook.Contact.entry</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <action name="edit" class="jpaddressbookContactAction" method="edit">
     		<result name="input" type="chain">list</result>
     		<result type="tiles">jpaddressbook.admin.AddressBook.Contact.entry</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <action name="save" class="jpaddressbookContactAction" method="save">
         	<result name="input" type="tiles">jpaddressbook.admin.AddressBook.Contact.entry</result>
             <result type="redirectAction">list</result>
-        	<interceptor-ref name="japsValidationStack"></interceptor-ref>
+        	<interceptor-ref name="entandoValidationStack"></interceptor-ref>
         </action>
     	
     	<action name="entryContact" class="jpaddressbookContactAction">
             <result type="tiles">jpaddressbook.admin.AddressBook.Contact.entry</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
     	
     	<!-- ######## INIZIO GESTIONE ATTRIBUTI IN LISTA ######## -->
@@ -70,21 +70,21 @@
         	<result type="redirectActionWithAnchor">
         		<param name="actionName">entryContact</param>
         	</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <action name="removeListElement*" class="jpaddressbookContactListAttributeAction" method="removeListElement">
             <result type="redirectAction">
         		<param name="actionName">entryContact</param>
         	</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <action name="moveListElement*" class="jpaddressbookContactListAttributeAction" method="moveListElement">
             <result type="redirectAction">
         		<param name="actionName">entryContact</param>
         	</result>
-        	<interceptor-ref name="japsDefaultStack"></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
         <!-- ######## FINE GESTIONE ATTRIBUTI IN LISTA ######## -->

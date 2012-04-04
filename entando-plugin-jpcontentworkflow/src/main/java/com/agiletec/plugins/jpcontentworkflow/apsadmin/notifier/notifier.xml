@@ -5,19 +5,19 @@
 
 <struts>
 	
-	<package name="jpcontentworkflow_do/jpcontentworkflow/Notifier" namespace="/do/jpcontentworkflow/Notifier" extends="japs-default">
+	<package name="jpcontentworkflow_do/jpcontentworkflow/Notifier" namespace="/do/jpcontentworkflow/Notifier" extends="entando-default">
     	
     	<!-- ######### INIZIO OPERAZIONI IN INTERFACCIA CONFIGURAZIONE NOTIFICATORE CAMBIAMENTO STATO CONTENUTI ######### -->
     	
     	<action name="config" class="jpcontentworkflowNotifierConfigAction" method="config" >
             <result type="tiles">admin.jpcontentworkflow.notifier.config</result>
-        	<interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+        	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
         
     	<action name="save" class="jpcontentworkflowNotifierConfigAction" method="save" >
             <result name="input" type="tiles">admin.jpcontentworkflow.notifier.config</result>
             <result type="tiles">admin.jpcontentworkflow.notifier.savedConfirm</result>
-        	<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+        	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
     	
     	<!-- ######### FINE OPERAZIONI IN INTERFACCIA CONFIGURAZIONE NOTIFICATORE CAMBIAMENTO STATO CONTENUTI ######### -->

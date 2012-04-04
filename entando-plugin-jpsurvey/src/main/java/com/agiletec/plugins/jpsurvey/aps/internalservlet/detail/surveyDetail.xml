@@ -5,7 +5,7 @@
 
 <struts>
 	
-	<package name="jpsurvey_do/Front/SurveyDetail" namespace="/do/jpsurvey/Front/SurveyDetail" extends="japs-front-default">
+	<package name="jpsurvey_do/Front/SurveyDetail" namespace="/do/jpsurvey/Front/SurveyDetail" extends="entando-front-default">
 		
 		<interceptors>
 			<interceptor name="jpsurveyDetailWonderInterceptor" class="com.agiletec.plugins.jpsurvey.aps.internalservlet.system.SurveyDetailWonderInterceptor"></interceptor>
@@ -22,7 +22,7 @@
 		<action name="entryPoint" class="jpsurveyFrontSurveyDetailAction"> 
 			<result type="dispatcher">/WEB-INF/plugins/jpsurvey/aps/jsp/internalservlet/detail/entryPoint.jsp</result>
 			<interceptor-ref name="jpsurveyDetailWonderInterceptor"></interceptor-ref>
-        	<interceptor-ref name="japsFrontEndFreeStack" ></interceptor-ref>
+        	<interceptor-ref name="entandoFrontEndFreeStack" ></interceptor-ref>
 		</action>
 		
 	</package>

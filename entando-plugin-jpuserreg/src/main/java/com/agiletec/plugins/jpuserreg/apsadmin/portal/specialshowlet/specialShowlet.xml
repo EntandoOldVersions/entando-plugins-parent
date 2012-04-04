@@ -5,7 +5,7 @@
 
 <struts>
 
-    <package name="jpuserreg_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="japs-default">
+    <package name="jpuserreg_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="entando-default">
     	
     	<global-results>
     		<result name="pageTree" type="chain">
@@ -21,12 +21,12 @@
     	<!-- ##### SHOWLET WEBDYNAMICFORM **** ENTRY POINT ##### -->
     	<action name="userRegConfig" class="jpuserregUserRegShowletAction" method="init">
         	<result type="tiles">admin.jpuserreg.Page.Showlet.UserReg.config</result>
-            <interceptor-ref name="japsDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+            <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
     </package>
 	
-	<package name="jpuserreg_do/jpuserreg/Page/SpecialShowlet/UserReg" namespace="/do/jpuserreg/Page/SpecialShowlet/UserReg" extends="japs-default">
+	<package name="jpuserreg_do/jpuserreg/Page/SpecialShowlet/UserReg" namespace="/do/jpuserreg/Page/SpecialShowlet/UserReg" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">
@@ -41,7 +41,7 @@
 		
 		<action name="saveConfig" class="jpuserregUserRegShowletAction" method="save">
     		<result type="tiles" name="input" >admin.jpuserreg.Page.Showlet.UserReg.config</result>
-        	<interceptor-ref name="japsValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
 	</package>
