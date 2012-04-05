@@ -16,4 +16,24 @@
 		<property name="stockShowletCodes"><value>${showlets.stock}</value></property>
 	</bean>
 	
+	<bean id="showletTypeAction" scope="prototype" 
+			class="com.agiletec.plugins.jpmyportalplus.apsadmin.portal.ShowletTypeAction" parent="abstractPortalAction">
+		<property name="myPortalConfigManager" ref="jpmyportalplusMyPortalConfigManager" />
+	</bean>
+	
+	<bean id="jpmyportalplusUserShowletTypeEntryHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
+		<property name="filePath"><value>/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/showlet-entry-jack.jsp</value></property>
+		<property name="hookPointKey"><value>core.showletType.entry</value></property>
+	</bean>
+	
+	<bean id="jpmyportalplusShowletTypeListThHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
+		<property name="filePath"><value>/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/showlet-list-table-th-jack.jsp</value></property>
+		<property name="hookPointKey"><value>core.showletType.list.table.th</value></property>
+	</bean>
+	
+	<bean id="jpmyportalplusShowletTypeListTdHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
+		<property name="filePath"><value>/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/showlet-list-table-td-jack.jsp</value></property>
+		<property name="hookPointKey"><value>core.showletType.list.table.td</value></property>
+	</bean>
+	
 </beans>
