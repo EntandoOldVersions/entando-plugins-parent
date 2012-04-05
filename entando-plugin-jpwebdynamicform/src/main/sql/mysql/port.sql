@@ -15,15 +15,10 @@ INSERT INTO showletcatalog ( code, titles, parameters, plugincode, parenttypecod
 <properties>
 <property key="en">Dynamic Web Forms - Choice of a type of Message</property>
 <property key="it">Dynamic Web Forms - Scelta tipo di Messaggio</property>
-</properties>', '<config>
-	<parameter name="actionPath">
-		Relative path of an action or a JSP (ex: /ExtStr2/do/jpwebdynamicform/Message/User/listTypes).
-	</parameter>
-	<action name="configSimpleParameter"/>
-</config>', 'jpwebdynamicform', 'formAction', '<?xml version="1.0" encoding="UTF-8"?>
+</properties>', NULL, 'jpwebdynamicform', 'formAction', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="actionPath">/ExtStr2/do/jpwebdynamicform/Message/User/listTypes</property>
-</properties>', 0 );
+</properties>', 1 );
 
 
 

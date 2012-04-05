@@ -10,6 +10,7 @@ INSERT INTO showletcatalog ( code, titles, parameters, plugincode, locked )
 	<parameter name="userFilters">Front-End user filter options</parameter>
 	<parameter name="category">Content Category **deprecated**</parameter>
 	<parameter name="categories">Content Category codes (comma separeted)</parameter>
+	<parameter name="orClauseCategoryFilter" />
 	<parameter name="maxElemForItem">Contents for each page</parameter>
 	<parameter name="filters" />
 	<parameter name="title_{lang}">Showlet Title in lang {lang}</parameter>
