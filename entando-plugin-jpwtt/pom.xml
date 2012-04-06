@@ -59,14 +59,14 @@
                 <dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>${parent.version}</version>
+			<version>3.0.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>war</type>
 		</dependency>
                 
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>${parent.version}</version>
+			<version>3.0.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>classes</classifier>
 			<scope>provided</scope>
@@ -75,7 +75,7 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>${parent.version}</version>
+			<version>3.0.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>zip</type>
 			<classifier>misc</classifier>
 		</dependency>
@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>${parent.version}</version>
+			<version>3.0.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>tests</classifier>
 			<scope>test</scope>
@@ -92,7 +92,7 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>${parent.version}</version>
+			<version>3.0.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>zip</type>
 			<classifier>misc-test</classifier>
 			<scope>test</scope>
