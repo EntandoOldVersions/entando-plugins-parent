@@ -26,6 +26,7 @@
         <property name="entitySearcherDAO" >
             <bean class="com.agiletec.plugins.jpuserprofile.aps.system.services.profile.UserProfileSearcherDAO">
                 <property name="dataSource" ref="servDataSource" />
+		<property name="forceCaseInsensitiveLikeSearch"><value>true</value></property>
             </bean>
         </property>
     </bean>
