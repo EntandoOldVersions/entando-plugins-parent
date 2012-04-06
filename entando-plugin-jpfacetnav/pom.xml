@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpfacetnav</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Faceted Navigation</name>
 	<description>Faceted Navigation</description>

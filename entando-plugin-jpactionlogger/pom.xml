@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpactionlogger</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Action Logger</name>
 	<description>Action Logger</description>

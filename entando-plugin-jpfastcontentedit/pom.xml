@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpfastcontentedit</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Fast Content Edit</name>
 	<description>Editing content on Front-End</description>

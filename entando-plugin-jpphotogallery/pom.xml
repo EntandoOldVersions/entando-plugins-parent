@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpphotogallery</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Photo gallery</name>
 	<description>Photo gallery</description>

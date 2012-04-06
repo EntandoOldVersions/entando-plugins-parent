@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jprssaggregator</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: RSS Aggregator</name>
 	<description>RSS Aggregator</description>

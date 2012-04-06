@@ -9,7 +9,6 @@
 	</parent>
 	<artifactId>entando-plugin-jpnewsletter</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Newsletter</name>
 	<description>Newsletter</description>

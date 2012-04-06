@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpcontentrefs</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Content Types - Categories relactions</name>
 	<description>Content Types - Categories relactions</description>

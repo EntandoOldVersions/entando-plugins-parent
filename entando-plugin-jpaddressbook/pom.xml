@@ -9,7 +9,6 @@
 		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>entando-plugin-jpaddressbook</artifactId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Address Book</name>
 	<description>Address Book</description>

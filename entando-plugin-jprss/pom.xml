@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jprss</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: RSS</name>
 	<description>RSS</description>

@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpgeoref</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: GeoReferenced contents</name>
 	<description>GeoReferenced contents</description>

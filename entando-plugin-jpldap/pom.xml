@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpldap</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: LDAP Connector</name>
 	<description>LDAP Connector</description>

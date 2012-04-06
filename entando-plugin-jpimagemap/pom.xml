@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpimagemap</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Image Map</name>
 	<description>Image Map</description>

@@ -10,7 +10,6 @@
     </parent>
 	<artifactId>entando-plugin-jpwtt</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Web Trouble Ticketing</name>
 	<description>WTT</description>

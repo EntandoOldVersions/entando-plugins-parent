@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpversioning</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Content Versioning</name>
 	<description>Content Versioning</description>

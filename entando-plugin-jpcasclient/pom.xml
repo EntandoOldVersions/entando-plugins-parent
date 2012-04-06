@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpcasclient</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Cas Client</name>
 	<description>provide the Entando CAS client for CAS server authentication</description>
