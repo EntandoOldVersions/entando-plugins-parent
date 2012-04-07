@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-		<version>3.0.0-SNAPSHOT</version>
+		<version>3.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>entando-plugin-jpaddressbook</artifactId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Address Book</name>
 	<description>Address Book</description>
@@ -68,13 +65,13 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>${parent.version}</version>
+			<version>3.0.1-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>war</type>
 		</dependency>
  		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>${parent.version}</version>
+			<version>3.0.1-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>classes</classifier>
 			<scope>provided</scope>
@@ -82,14 +79,14 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>${parent.version}</version>
+			<version>3.0.1-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>zip</type>
 			<classifier>misc</classifier>
 		</dependency>		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>${parent.version}</version>
+			<version>3.0.1-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>tests</classifier>
 			<scope>test</scope>
@@ -97,7 +94,7 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>${parent.version}</version>
+			<version>3.0.1-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>zip</type>
 			<classifier>misc-test</classifier>
 		</dependency>				

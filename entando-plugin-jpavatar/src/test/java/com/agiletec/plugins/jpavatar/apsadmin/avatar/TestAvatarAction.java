@@ -61,7 +61,7 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(1, actionMessages.size());
 		assertEquals(action.getText("jpavatar.message.confirmDelete"), actionMessages.get(0));
 	}
-	/*
+	
 	public void _testDelete() throws Throwable {
 		File file = new File("target/test/jAPS_logo.jpg");
 		this._avatarManager.saveAvatar("admin", file, "jAPS_logo.jpg");
@@ -72,7 +72,7 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 		filename = this._avatarManager.getAvatar("admin");
 		assertNull(filename);	
 	}
-	*/
+	
 	public void testSave_1() throws Throwable {
 		String result = this.executeSave();
 		assertEquals(Action.INPUT, result);
@@ -104,12 +104,13 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 	
 	private void init() {
 		_avatarManager = (IAvatarManager) this.getService(JpAvatarSystemConstants.AVATAR_MANAGER);
+		new File(this._avatarManager.getAvatarDiskFolder() + "avatar").mkdir();
 	}
 	
 	@Override
 	protected void tearDown() throws Exception {
-		super.tearDown();
 		FileUtils.cleanDirectory(new File(this._avatarManager.getAvatarDiskFolder() + "avatar"));
+		super.tearDown();
 	}
 	
 	private IAvatarManager _avatarManager;

@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpremoteresourceloader</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Remote Resource Loader</name>
 	<description>Remote Resource Loader</description>

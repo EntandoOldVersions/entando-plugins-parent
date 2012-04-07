@@ -4,11 +4,10 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.1-SNAPSHOT</version>
     </parent>
 	<artifactId>entando-plugin-jpsharewith</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Share With</name>
 	<description>CHANGE ME! Enter some quick and useful info</description>

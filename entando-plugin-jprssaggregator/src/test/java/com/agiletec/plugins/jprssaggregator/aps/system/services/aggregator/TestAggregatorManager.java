@@ -35,7 +35,7 @@ public class TestAggregatorManager extends ApsPluginBaseTestCase {
 		this.init();
 	}
 
-	public void _testInit() throws Throwable {
+	public void testInit() throws Throwable {
 		assertNotNull(_aggregatorManager);
 		List<ApsAggregatorItem> items = _aggregatorManager.getItems();
 		assertNotNull(items);

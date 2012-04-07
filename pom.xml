@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>org.entando.entando.plugins</groupId>
 	<artifactId>entando-plugins-parent</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
+	<version>3.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Entando: Plugins parent</name>
 	<url>http://www.entando.com/</url>
@@ -59,9 +59,7 @@
 		<module>entando-plugin-jpremoteresourceloader</module>
 		-->
 		<module>entando-plugin-jpversioning</module>
-		<!--
 		<module>entando-plugin-jpcasclient</module>
-		-->
 		<module>entando-plugin-jpstats</module>
 		<module>entando-plugin-jpcontentworkflow</module>
 		<module>entando-plugin-jpcontentfeedback</module>
@@ -596,20 +594,20 @@
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>${project.version}</version>
+			<version>3.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>${project.version}</version>
+			<version>3.0.0</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>${project.version}</version>
+			<version>3.0.0</version>
 			<type>zip</type>
 			<classifier>misc-test</classifier>
 			<scope>test</scope>

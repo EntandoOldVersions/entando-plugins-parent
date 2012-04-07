@@ -4,11 +4,10 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.1-SNAPSHOT</version>
     </parent>
 	<artifactId>entando-plugin-jpimagemap</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Image Map</name>
 	<description>Image Map</description>

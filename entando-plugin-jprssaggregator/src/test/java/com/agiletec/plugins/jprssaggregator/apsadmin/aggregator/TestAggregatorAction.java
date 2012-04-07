@@ -85,7 +85,6 @@ public class TestAggregatorAction extends ApsAdminPluginBaseTestCase {
 	public void testSaveNewOKAction() throws Throwable {
 		this.setUserOnSession("admin");
 		String result = this.executeSaveNewOK();
-		System.out.println("AAAAaaaaaaaaAAA " + result);
 		assertEquals(Action.SUCCESS, result);
 		IAggregatorAction action = (IAggregatorAction) this.getAction();
 		assertEquals(1, action.getAggregatorItems().size());

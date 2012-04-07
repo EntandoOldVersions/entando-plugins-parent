@@ -4,10 +4,9 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.1-SNAPSHOT</version>
     </parent>
 	<artifactId>entando-plugin-jpcontentfeedback</artifactId>
-	<version>${parent.version}</version>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Content Feedback</name>
 	<description>You can comment and vote any content of cms</description>
