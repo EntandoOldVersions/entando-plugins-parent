@@ -4,11 +4,11 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </parent>
 	<artifactId>entando-plugin-jpcmstagcloud</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>3.0.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
+	<version>3.0.0</version><!-- version. Don't remove this comment. -->
     <packaging>war</packaging>
 	<name>Entando Plugin: Tag Cloud</name>
 	<description>Tag Cloud</description>
