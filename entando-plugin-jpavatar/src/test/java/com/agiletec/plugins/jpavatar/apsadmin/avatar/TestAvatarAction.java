@@ -104,12 +104,13 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 	
 	private void init() {
 		_avatarManager = (IAvatarManager) this.getService(JpAvatarSystemConstants.AVATAR_MANAGER);
+		new File(this._avatarManager.getAvatarDiskFolder() + "avatar").mkdir();
 	}
 	
 	@Override
 	protected void tearDown() throws Exception {
-		super.tearDown();
 		FileUtils.cleanDirectory(new File(this._avatarManager.getAvatarDiskFolder() + "avatar"));
+		super.tearDown();
 	}
 	
 	private IAvatarManager _avatarManager;
