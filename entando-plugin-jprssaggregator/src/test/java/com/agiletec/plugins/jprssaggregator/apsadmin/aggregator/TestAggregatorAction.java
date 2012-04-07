@@ -65,7 +65,7 @@ public class TestAggregatorAction extends ApsAdminPluginBaseTestCase {
 		return contentsId;
 	}
 	
-	public void _testListAction() throws Throwable {
+	public void testListAction() throws Throwable {
 		_aggregatorManager.addItem(TestAggregatorManagerHelper.createItem(3600, "descr", "link"));
 		this.setUserOnSession("admin");
 		String result = this.executeList();
@@ -74,7 +74,7 @@ public class TestAggregatorAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(1, action.getAggregatorItems().size());
 	}
 
-	public void _testNewAction() throws Throwable {
+	public void testNewAction() throws Throwable {
 		this.setUserOnSession("admin");
 		String result = this.executeNew();
 		assertEquals(Action.SUCCESS, result);
@@ -85,14 +85,13 @@ public class TestAggregatorAction extends ApsAdminPluginBaseTestCase {
 	public void testSaveNewOKAction() throws Throwable {
 		this.setUserOnSession("admin");
 		String result = this.executeSaveNewOK();
-		System.out.println("AAAAaaaaaaaaAAA " + result);
 		assertEquals(Action.SUCCESS, result);
 		IAggregatorAction action = (IAggregatorAction) this.getAction();
 		assertEquals(1, action.getAggregatorItems().size());
 		assertEquals(3, this.getRSSContents().size());
 	}
 	*/
-	public void _testSaveNewErrorsAction() throws Throwable {
+	public void testSaveNewErrorsAction() throws Throwable {
 		this.setUserOnSession("admin");
 		String result = this.executeSaveNewErrors();
 		assertEquals(Action.INPUT, result);
@@ -104,7 +103,7 @@ public class TestAggregatorAction extends ApsAdminPluginBaseTestCase {
 		assertTrue(actionErrors.isEmpty());
 	}
 	
-	public void _testSaveNewWithDuplicate() throws Throwable {
+	public void testSaveNewWithDuplicate() throws Throwable {
 		this.setUserOnSession("admin");
 		_aggregatorManager.addItem(TestAggregatorManagerHelper.createItem(3600, "descr", "link"));
 		String result = this.executeSaveNewWithDuplicate();
@@ -116,7 +115,7 @@ public class TestAggregatorAction extends ApsAdminPluginBaseTestCase {
 		assertTrue(actionErrors.size() == 0);
 	}
 	
-	public void _testEditAction() throws Throwable {
+	public void testEditAction() throws Throwable {
 		_aggregatorManager.addItem(TestAggregatorManagerHelper.createItem(3600, "descr", "link"));
 		List<ApsAggregatorItem> items = _aggregatorManager.getItems();
 		int code = items.get(0).getCode();
@@ -130,7 +129,7 @@ public class TestAggregatorAction extends ApsAdminPluginBaseTestCase {
 		assertEquals("link", action.getLink());
 	}
 	
-	public void _testDeleteAction() throws Throwable {
+	public void testDeleteAction() throws Throwable {
 		_aggregatorManager.addItem(TestAggregatorManagerHelper.createItem(3600, "descr", "link"));
 		List<ApsAggregatorItem> items = _aggregatorManager.getItems();
 		int code = items.get(0).getCode();
@@ -139,7 +138,7 @@ public class TestAggregatorAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(Action.SUCCESS, result);
 	}
 	
-	public void _testDoDeleteAction() throws Throwable {
+	public void testDoDeleteAction() throws Throwable {
 		_aggregatorManager.addItem(TestAggregatorManagerHelper.createItem(3600, "descr", "link"));
 		List<ApsAggregatorItem> items = _aggregatorManager.getItems();
 		int code = items.get(0).getCode();

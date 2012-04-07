@@ -35,14 +35,14 @@ public class TestAggregatorManager extends ApsPluginBaseTestCase {
 		this.init();
 	}
 
-	public void _testInit() throws Throwable {
+	public void testInit() throws Throwable {
 		assertNotNull(_aggregatorManager);
 		List<ApsAggregatorItem> items = _aggregatorManager.getItems();
 		assertNotNull(items);
 		assertEquals(0, items.size());
 	}
 
-	public void _testAddItem() throws Throwable {
+	public void testAddItem() throws Throwable {
 		ApsAggregatorItem item = TestAggregatorManagerHelper.createItem(3600, "dummy_descr", "dummy_link");
 		_aggregatorManager.addItem(item);
 		assertTrue(item.getCode() > 0);
@@ -51,7 +51,7 @@ public class TestAggregatorManager extends ApsPluginBaseTestCase {
 		assertEquals(1, items.size());
 	}
 
-	public void _testGetItem() throws Throwable {
+	public void testGetItem() throws Throwable {
 		ApsAggregatorItem item = TestAggregatorManagerHelper.createItem(3600, "dummy_descr", "dummy_link");
 		_aggregatorManager.addItem(item);
 		List<ApsAggregatorItem> items = _aggregatorManager.getItems();
@@ -68,7 +68,7 @@ public class TestAggregatorManager extends ApsPluginBaseTestCase {
 		assertEquals(todayString, dummyLastUpdateString);
 	}
 
-	public void _testGetItems() throws Throwable {
+	public void testGetItems() throws Throwable {
 		for (int i = 0; i < 10; i++) {
 			ApsAggregatorItem item = TestAggregatorManagerHelper.createItem(3600, "dummy_descr_" + i, "dummy_link_" + i);
 			_aggregatorManager.addItem(item);
@@ -77,7 +77,7 @@ public class TestAggregatorManager extends ApsPluginBaseTestCase {
 		assertEquals(10, items.size());
 	}
 
-	public void _testDeleteItem() throws Throwable {
+	public void testDeleteItem() throws Throwable {
 		ApsAggregatorItem item = TestAggregatorManagerHelper.createItem(3600, "dummy_descr", "dummy_link");
 		_aggregatorManager.addItem(item);
 		_aggregatorManager.deleteItem(item.getCode());
@@ -85,7 +85,7 @@ public class TestAggregatorManager extends ApsPluginBaseTestCase {
 		assertEquals(0, items.size());
 	}
 
-	public void _testUpdateItem() throws Throwable {
+	public void testUpdateItem() throws Throwable {
 		ApsAggregatorItem item = TestAggregatorManagerHelper.createItem(3600, "dummy_descr", "dummy_link");
 		_aggregatorManager.addItem(item);
 		ApsAggregatorItem dummy = _aggregatorManager.getItem(item.getCode());

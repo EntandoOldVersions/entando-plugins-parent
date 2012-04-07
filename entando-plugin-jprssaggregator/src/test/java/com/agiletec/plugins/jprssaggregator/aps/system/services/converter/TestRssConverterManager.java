@@ -62,7 +62,7 @@ public class TestRssConverterManager extends ApsPluginBaseTestCase {
 		assertEquals(0, contentsId.size());
 	}
 
-	public void _testLoadConfig() {
+	public void testLoadConfig() {
 		assertNotNull(_rssConverterManager);
 		RssConverterManager converter = (RssConverterManager) _rssConverterManager;
 		Map<String, AggregatorConfig> mapping = converter.getMappingMap();
