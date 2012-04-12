@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
 	<groupId>org.entando.entando.plugins</groupId>
 	<artifactId>entando-plugins-parent</artifactId>
-	<version>3.0.1-SNAPSHOT</version>
+	<version>3.0.1-EEE-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Entando: Plugins parent</name>
+	<name>E³ - Entando Enterprise Edition: Plugins parent</name>
 	<url>http://www.entando.com/</url>
 	<licenses>
 		<license>
@@ -19,11 +14,6 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	<scm>
-		<connection>scm:git:git://github.com/entando/entando-plugins-parent.git</connection>
-		<developerConnection>scm:git:git@github.com:entando/entando-plugins-parent.git</developerConnection>
-		<url>https://github.com/entando/entando-plugins-parent</url>
-	</scm>	
 	<description>Plugins parent for Entando: an agile, modern and user-centric open source Portal platform.</description>
 	<modules>
 		<module>entando-plugin-jpfacetnav</module>
@@ -594,20 +584,20 @@
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>3.0.1-SNAPSHOT</version>
+			<version>3.0.1-EEE-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>3.0.1-SNAPSHOT</version>
+			<version>3.0.1-EEE-SNAPSHOT</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>3.0.1-SNAPSHOT</version>
+			<version>3.0.1-EEE-SNAPSHOT</version>
 			<type>zip</type>
 			<classifier>misc-test</classifier>
 			<scope>test</scope>
