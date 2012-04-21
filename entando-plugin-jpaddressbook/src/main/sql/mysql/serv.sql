@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS `jpaddressbook_contacts`;
 CREATE TABLE `jpaddressbook_contacts` (
   `contactkey` varchar(40) NOT NULL,
   `profiletype` varchar(30) NOT NULL,
-  `xml` longtext NOT NULL,
+  `contactxml` longtext NOT NULL,
   `contactowner` varchar(40) NOT NULL,
   `publiccontact` smallint(6) NOT NULL,
   PRIMARY KEY (`contactkey`)
