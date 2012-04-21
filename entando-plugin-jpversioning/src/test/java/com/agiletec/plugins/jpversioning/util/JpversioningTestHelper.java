@@ -158,10 +158,10 @@ public class JpversioningTestHelper extends AbstractDAO {
 	private IContentManager _contentManager;
 	
 	private static final String DELETE_VERSIONS = 
-		"TRUNCATE jpversioning_versionedcontents";
+		"DELETE FROM jpversioning_versionedcontents";
 	
 	private static final String DELETE_TRASHED_RESOURCES = 
-		"TRUNCATE jpversioning_trashedresources";
+		"DELETE FROM jpversioning_trashedresources";
 	
 	private final String ADD_VERSION_RECORD = 
 		"INSERT INTO jpversioning_versionedcontents ( id, contentid, contenttype, descr, " +
