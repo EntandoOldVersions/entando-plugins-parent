@@ -5,14 +5,14 @@ CREATE TABLE jpversioning_versionedcontents
   contenttype character varying(30) NOT NULL,
   descr character varying(100) NOT NULL,
   status character varying(12) NOT NULL,
-  "xml" character varying NOT NULL,
+  contentxml character varying NOT NULL,
   versiondate timestamp without time zone NOT NULL,
-  "version" character varying(7) NOT NULL,
+  versioncode character varying(7) NOT NULL,
   onlineversion integer NOT NULL,
   approved smallint NOT NULL,
   username character varying(40),
   CONSTRAINT jpversioning_versionedcontents_pkey PRIMARY KEY (id),
-  CONSTRAINT jpversioning_versionedcontents_contentid_key UNIQUE (contentid, version)
+  CONSTRAINT jpversioning_versionedcontents_contentid_key UNIQUE (contentid, versioncode)
 );
 
 CREATE TABLE jpversioning_trashedresources

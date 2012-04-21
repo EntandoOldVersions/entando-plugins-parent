@@ -4,14 +4,14 @@ CREATE TABLE `jpversioning_versionedcontents` (
   `contenttype` varchar(30) NOT NULL,
   `descr` varchar(100) NOT NULL,
   `status` varchar(12) NOT NULL,
-  `xml` longtext NOT NULL,
+  `contentxml` longtext NOT NULL,
   `versiondate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `version` varchar(7) NOT NULL,
+  `versioncode` varchar(7) NOT NULL,
   `onlineversion` int(11) NOT NULL,
   `approved` smallint(6) NOT NULL,
   `username` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `contentid` (`contentid`,`version`)
+  UNIQUE KEY `contentid` (`contentid`,`versioncode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

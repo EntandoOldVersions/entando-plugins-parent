@@ -21,14 +21,11 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.agiletec.aps.util.DateConverter;
+
 import com.agiletec.plugins.jpversioning.aps.ApsPluginBaseTestCase;
 import com.agiletec.plugins.jpversioning.util.JpversioningTestHelper;
-
-import com.agiletec.aps.util.DateConverter;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
-import com.agiletec.plugins.jpversioning.aps.system.services.versioning.ContentVersion;
-import com.agiletec.plugins.jpversioning.aps.system.services.versioning.IVersioningDAO;
-import com.agiletec.plugins.jpversioning.aps.system.services.versioning.VersioningDAO;
 
 /**
  * @author G.Cocco

@@ -26,7 +26,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractDAO;
 
 /**
@@ -52,7 +51,7 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 				ids.add(res.getLong(1));
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in caricamento versioni contenuto", "getVersions");
+			processDaoException(t, "Error loading content version", "getVersions");
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -87,7 +86,7 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 				lastVersions.add(res.getLong(1));				
 			}			
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in caricamento ultime versioni contenuti", "getLastVersions");
+			processDaoException(t, "Error loading content versions", "getLastVersions");
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -109,7 +108,7 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 				contentVersion = this.prepareContentVersionFromResultSet(res);
 			}			
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in caricamento versione contenuto", "getVersion");
+			processDaoException(t, "Error loading version", "getVersion");
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -131,7 +130,7 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 				contentVersion = this.prepareContentVersionFromResultSet(res);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in caricamento ultima versione contenuto", "getLastVersion");
+			processDaoException(t, "Error loading last content version", "getLastVersion");
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -146,7 +145,6 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
 			long nextId = this.extractNextId(NEXT_ID, conn);
-			ApsSystemUtils.getLogger().info(" ContentId " + contentVersion.getContentId() + " Next id " + nextId + " , Version: " + contentVersion.getVersion());
 			contentVersion.setId(nextId);
 			stat = conn.prepareStatement(ADD_VERSION_RECORD);
 			stat.setLong(1, contentVersion.getId());
@@ -165,7 +163,7 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Errore in aggiunta VersionRecord", "addVersionRecord");
+			processDaoException(t, "Error adding version record", "addVersionRecord");
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -184,7 +182,7 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Errore in eliminazione versione", "deleteVersion");
+			processDaoException(t, "Error deleting version", "deleteVersion");
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -204,7 +202,7 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Errore in aggiunta deleteWorkVersions", "deleteWorkVersions");
+			processDaoException(t, "Error deleting work versions", "deleteWorkVersions");
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -220,7 +218,7 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 			res.next();
 			id = res.getLong(1) + 1; // N.B.: funziona anche per il primo record
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in estrazione ultimo id", "extractNextId");
+			processDaoException(t, "Error extracting next id", "extractNextId");
 		} finally {
 			closeDaoResources(res, stat);
 		}
@@ -228,7 +226,7 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 	}
 	
 	private String createQueryForGetLastVersions(String contentType, String descr) {
-		StringBuffer query = new StringBuffer(SELECT_LAST_VERSIONS_HEAD);
+		StringBuilder query = new StringBuilder(SELECT_LAST_VERSIONS_HEAD);
 		boolean appendWhere = true;
 		if (null != contentType && contentType.trim().length() > 0 ) {
 			query.append(APPEND_WHERE);
@@ -279,17 +277,17 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 		"( SELECT MAX(id) AS id FROM jpversioning_versionedcontents GROUP BY contentid ) ";
 	
 	private final String SELECT_VERSION_BY_VERSIONID = 
-		"SELECT id, contentid, contenttype, descr, status, xml, versiondate, version, " +
+		"SELECT id, contentid, contenttype, descr, status, contentxml, versiondate, versioncode, " +
 		"onlineversion, approved, username FROM jpversioning_versionedcontents WHERE id = ? ";
 	
 	private final String SELECT_LAST_VERSION_BY_CONTENTID = 
-		"SELECT id, contentid, contenttype, descr, status, xml, versiondate, version, " +
+		"SELECT id, contentid, contenttype, descr, status, contentxml, versiondate, versioncode, " +
 		"onlineversion, approved, username FROM jpversioning_versionedcontents " +
 		"WHERE contentid = ? ORDER BY versiondate DESC, id DESC ";
 	
 	private final String ADD_VERSION_RECORD = 
 		"INSERT INTO jpversioning_versionedcontents ( id, contentid, contenttype, descr, " +
-		"status, xml, versiondate, version, onlineversion, approved, username ) " +
+		"status, contentxml, versiondate, versioncode, onlineversion, approved, username ) " +
 		" VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ?, ?, ? ) ";
 	
 	private final String DELETE_VERSION = "DELETE FROM jpversioning_versionedcontents WHERE id = ? ";
