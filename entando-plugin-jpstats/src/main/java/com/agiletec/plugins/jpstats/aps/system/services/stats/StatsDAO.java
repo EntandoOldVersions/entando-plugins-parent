@@ -284,7 +284,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 			Day initDay = new Day(start.getTime());
 			Day endDay = new Day(end.getTime());
 			while (res.next()) {
-				Day day = new Day(res.getInt("day"),res.getInt("month"),res.getInt("year"));
+				Day day = new Day(res.getInt("day_value"),res.getInt("month_value"),res.getInt("year_value"));
 				hitsPage.add(day,res.getInt("hits"));
 			}
 			try {
@@ -456,7 +456,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				String contentId = res.getString(1);
 				String contentDescr = null;
 				ContentRecordVO content = contentManager.loadContentVO(contentId);
-				if (null == content ) {
+				if (null == content) {
 					contentDescr = "[DELETED]";
 				} else {
 					contentDescr = content.getDescr();
@@ -569,10 +569,10 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	
 	private Calendar extractRecordDate(ResultSet res) throws SQLException {
 		Calendar calendar = Calendar.getInstance();
-		String year = res.getString("year");
-		String month = res.getString("month");
-		String day = res.getString("day");
-		String hour = res.getString("hour");
+		String year = res.getString("year_value");
+		String month = res.getString("month_value");
+		String day = res.getString("day_value");
+		String hour = res.getString("hour_value");
 		calendar.set(Calendar.YEAR, Integer.parseInt(year));
 		calendar.set(Calendar.MONTH, Integer.parseInt(month)-1);
 		calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
@@ -585,7 +585,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		return calendar;
 	}
 	
-	public IContentManager getContentManager() {
+	protected IContentManager getContentManager() {
 		return _contentManager;
 	}
 	public void setContentManager(IContentManager contentManager) {
@@ -611,7 +611,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	private ILangManager _langManager;
 	
 	private final String ADD_RECORD = 
-		"INSERT INTO jpstats_statistics (ip, referer, session_id, role, timestamp, year, month, day, hour, pagecode, langcode, useragent, browserlang, content) "
+		"INSERT INTO jpstats_statistics (ip, referer, session_id, role, timestamp, year_value, month_value, day_value, hour_value, pagecode, langcode, useragent, browserlang, content) "
 		+ "VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
 	
 	private final String REMOVE_RECORDS = 
@@ -621,8 +621,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		"SELECT * FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? ORDER BY timestamp DESC";
 	
 	private final String SEARCH_DAILY_VISITS =
-		"SELECT count(*) as hits, year, month, day FROM jpstats_statistics " +
-		"WHERE (timestamp BETWEEN ? AND ? ) GROUP BY year, month, day ORDER BY hits DESC";
+		"SELECT count(*) as hits, year_value, month_value, day_value FROM jpstats_statistics " +
+		"WHERE (timestamp BETWEEN ? AND ? ) GROUP BY year_value, month_value, day_value ORDER BY hits DESC";
 	
 	private final String SEARCH_PAGE_VISITS = 
 		"SELECT pagecode, COUNT(*) AS hits FROM jpstats_statistics WHERE (timestamp BETWEEN ? AND ?) " +
@@ -637,9 +637,9 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		" FROM jpstats_statistics WHERE (timestamp BETWEEN ? and ?) GROUP BY s HAVING count(session_id)>1 )AS SUBQUERY";
 	
 	private final String HITS_BY_INTERVAL =
-		"SELECT count(*) as hits, day, month, year FROM jpstats_statistics  " +
+		"SELECT count(*) as hits, day_value, month_value, year_value FROM jpstats_statistics  " +
 		" WHERE (timestamp BETWEEN ? and ? )" +
-		" GROUP BY year, month, day ORDER BY year, month, day ASC";
+		" GROUP BY year_value, month_value, day_value ORDER BY year_value, month_value, day_value ASC";
 	
 	private final String AVERAGE_TIME_SITE = 
 		"SELECT avg(x) AS media " +
@@ -678,7 +678,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		"DESC LIMIT 10";
 
 	private final String GET_FIRST_DATE=
-		"SELECT  year, month, day FROM jpstats_statistics ORDER BY timestamp ASC LIMIT 1";
+		"SELECT year_value, month_value, day_value FROM jpstats_statistics ORDER BY timestamp ASC LIMIT 1";
 
 	private final String GET_IP = 
 		"SELECT DISTINCT ip, count(*) as count " +
