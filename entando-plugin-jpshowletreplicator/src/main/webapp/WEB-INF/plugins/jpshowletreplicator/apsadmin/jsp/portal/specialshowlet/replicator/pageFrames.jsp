@@ -63,7 +63,7 @@
 						<s:set var="showletType" value="#showlet.getType()" ></s:set>
 						<tr>
 							<td class="rightText">
-								<s:if test="currentPage.getModel().getMainFrame() == #rowstatus.index"><img src="<wp:resourceURL/>administration/img/icons/16x16/emblem-important.png" alt="<s:text name="name.mainFrame" />: " title="<s:text name="name.mainFrame" />" /><s:property value="#rowstatus.index"/></s:if>
+								<s:if test="targetPage.getModel().getMainFrame() == #rowstatus.index"><img src="<wp:resourceURL/>administration/img/icons/16x16/emblem-important.png" alt="<s:text name="name.mainFrame" />: " title="<s:text name="name.mainFrame" />" /><s:property value="#rowstatus.index"/></s:if>
 								<s:else><s:property value="#rowstatus.index"/></s:else>
 							</td>
 							<td>
@@ -73,7 +73,7 @@
 									<s:param name="showletTypeCode" value="showletTypeCode"/>
 									<s:param name="pageCodeParam" value="pageCodeParam" />
 									<s:param name="frameIdParam" value="#rowstatus.index" />
-								</s:url>"><s:property value="currentPage.getModel().getFrames()[#rowstatus.index]"/></a>
+								</s:url>"><s:property value="targetPage.getModel().getFrames()[#rowstatus.index]"/></a>
 							</td>
 							<td>
 								<s:if test='%{getTitle(#showletType.getCode(), #showletType.getTitles())!="" }'>
