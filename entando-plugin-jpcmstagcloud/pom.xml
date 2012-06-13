@@ -8,7 +8,6 @@
     </parent>
 	<artifactId>entando-plugin-jpcmstagcloud</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
-	<version>3.0.1-EEE-SNAPSHOT</version><!-- version. Don't remove this comment. -->
     <packaging>war</packaging>
 	<name>Entando Plugin: Tag Cloud</name>
 	<description>Tag Cloud</description>
