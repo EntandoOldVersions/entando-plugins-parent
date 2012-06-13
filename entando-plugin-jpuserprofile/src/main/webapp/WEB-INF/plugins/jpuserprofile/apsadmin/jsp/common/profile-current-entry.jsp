@@ -37,6 +37,9 @@
 			<%-- INIZIALIZZAZIONE TRACCIATORE --%>
 			<wpsa:tracerFactory var="attributeTracer" lang="%{#lang.code}" />
 			
+			<s:if test="#attribute.active"><s:set var="attributeActiveMarker" value="'modules'" /></s:if>
+			<s:else><s:set var="attributeActiveMarker" value="'view'" /></s:else>
+			
 			<s:if test="#attribute.type == 'List' || #attribute.type == 'Monolist'">
 			<p class="important">
 				<s:property value="#attribute.name" /><s:include value="/WEB-INF/apsadmin/jsp/entity/modules/include/attributeInfo.jsp" /><span class="monospace">&#32;(<s:text name="label.list" />)</span>:
@@ -54,98 +57,79 @@
 			
 			<s:if test="#attribute.type == 'Monotext'">
 			<!-- ############# ATTRIBUTO TESTO MONOLINGUA ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/monotextAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/monotextAttribute.jsp'}" />
 			</p>
 			</s:if>
 			
 			<s:elseif test="#attribute.type == 'Text'">
 			<!-- ############# ATTRIBUTO TESTO SEMPLICE MULTILINGUA ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/textAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/textAttribute.jsp'}" />
 			</p>
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'Longtext'">
 			<!-- ############# ATTRIBUTO TESTOLUNGO ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/longtextAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/longtextAttribute.jsp'}" />
 			</p>
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'Hypertext'">
 			<!-- ############# ATTRIBUTO HYPERTEXT ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/hypertextAttribute.jsp" />
-			</p>
-			</s:elseif>
-			
-			<s:elseif test="#attribute.type == 'Image'">
-			<!-- ############# ATTRIBUTO Image ############# -->
-			<s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/modules/imageAttribute.jsp" />
-			</p>
-			</s:elseif>
-			
-			<s:elseif test="#attribute.type == 'Attach'">
-			<!-- ############# ATTRIBUTO Attach ############# -->
-			<s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/modules/attachAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/hypertextAttribute.jsp'}" />
 			</p>
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'CheckBox'">
 			<!-- ############# ATTRIBUTO CheckBox ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/checkBoxAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/checkBoxAttribute.jsp'}" />
 			</p>
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'Boolean'">
 			<!-- ############# ATTRIBUTO Boolean ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/booleanAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/booleanAttribute.jsp'}" />
 			</p>
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'ThreeState'">
 			<!-- ############# ATTRIBUTO ThreeState ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/threeStateAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/threeStateAttribute.jsp'}" />
 			</p>
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'Number'">
 			<!-- ############# ATTRIBUTO Number ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/numberAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/numberAttribute.jsp'}" />
 			</p>
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'Date'">
 			<!-- ############# ATTRIBUTO Date ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/dateAttribute.jsp" />
-			</p>
-			</s:elseif>
-			
-			<s:elseif test="#attribute.type == 'Link'">
-			<!-- ############# ATTRIBUTO Link ############# -->
-			<s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/modules/linkAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/dateAttribute.jsp'}" />
 			</p>
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'Enumerator'">
 			<!-- ############# ATTRIBUTO TESTO Enumerator ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/enumeratorAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/enumeratorAttribute.jsp'}" />
 			</p>
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'Monolist'">
 			<!-- ############# ATTRIBUTO Monolist ############# -->
-			<s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/modules/monolistAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/monolistAttribute.jsp'}" />
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'List'">
 			<!-- ############# ATTRIBUTO List ############# -->
-			<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/listAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/listAttribute.jsp'}" />
 			</s:elseif>
 			
 			<s:elseif test="#attribute.type == 'Composite'">
 			<!-- ############# ATTRIBUTO Composite ############# -->
-			<s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/modules/compositeAttribute.jsp" />
+			<s:include value="%{'/WEB-INF/apsadmin/jsp/entity/' + #attributeActiveMarker + '/compositeAttribute.jsp'}" />
 			</p>
 			</s:elseif>
-			
 			
 			</div>
 		</s:iterator>
