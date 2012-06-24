@@ -132,8 +132,8 @@
 				
 				<p class="noscreen">
 					<wpsf:hidden name="entityTypeCode" />
-					<wpsf:hidden name="startDate"/>
-					<wpsf:hidden name="endDate"/>
+					<wpsf:hidden name="from" />
+					<wpsf:hidden name="to" />
 					<wpsf:hidden name="answered"/>
 					<s:iterator var="attribute" value="#searcheableAttributes">
 						<s:if test="#attribute.textAttribute">
