@@ -32,7 +32,7 @@ var MOO_JAPS_JPMYPORTALPLUS = new Class({
 		},
 		"pageEditform": "editshowletlistForm",
 		"boxEdit" : ".editContentBox",
-		"contenitoreColonne": "content_main_aux",
+		"contenitoreColonne": "columns",
 		"cssClass" : {
 			"draggin" : "el",
 			"cloned" : "boxClone",
@@ -78,7 +78,7 @@ var MOO_JAPS_JPMYPORTALPLUS = new Class({
 		var boxes = document.getElements(this.options.selettoreBox);
 		for (var i = 0; i < boxes.length; i++) {
 			var item = boxes[i];
-			var code_pos_arr = item.get("id").split(this.options.showletIdPrefix);
+			var code_pos_arr = item.get("id").substring(8).split(this.options.showletIdPrefix);
 			item.store("code",code_pos_arr[0]);
 			item.store("position",code_pos_arr[1]);
 
@@ -180,7 +180,7 @@ var MOO_JAPS_JPMYPORTALPLUS = new Class({
 			if (($defined(editEl) || $defined(configEl)) && $defined(this.options.boxEdit)) {
 				var boxEditEl = item.getElement(this.options.boxEdit);
 				fxBoxAjaxFormReq = new Request.HTML({
-					"url": url,
+					"url": this.options.ajaxConfig.URL.configWidget,
 					"secure": true,
 					"noCache": true,
 					"link": "cancel",
@@ -213,11 +213,11 @@ var MOO_JAPS_JPMYPORTALPLUS = new Class({
 					"transition": Fx.Transitions.Linear,
 					"mode": "vertical",
 					"onComplete": function() {
-						console.log("onComplete", this);
-						console.log("onComplete", this);
+						//console.log("onComplete", this);
+						//console.log("onComplete", this);
 					},
 					onChainComplete: function() {
-						console.log("onChainComplete", this);
+						//console.log("onChainComplete", this);
 					}
 				});
 			}
@@ -502,7 +502,7 @@ var MOO_JAPS_JPMYPORTALPLUS = new Class({
 	setupButtonsFormStatus: function(element,newPos) {
 		if ($defined(element) && $chk(newPos)) {
 			element.store("position",newPos);
-			element.setProperty("id",element.retrieve("code")+this.options.showletIdPrefix+newPos);
+			element.setProperty("id","showlet_"+element.retrieve("code")+this.options.showletIdPrefix+newPos);
 			var inputEl= element.getElement("input[name="+ this.options.ajaxConfig.URL.paramNames.startFramePos + "]");
 			if ($defined(inputEl)) {
 				inputEl.set("value",newPos);
