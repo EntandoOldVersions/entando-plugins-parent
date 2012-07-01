@@ -26,8 +26,8 @@
 		</property>
 	</bean>
 	
-	<bean id="jpaddressbookAttributeDisablingCodesLoader" class="com.agiletec.aps.system.common.entity.ExtraAttributeDisablingCodes">
-		<property name="entityManagerDest" ref="jpuserprofileUserProfileManager" />
+	<bean id="jpaddressbookAttributeDisablingCodesLoader" class="com.agiletec.aps.system.common.entity.loader.ExtraAttributeDisablingCodesWrapper">
+		<property name="entityManagerNameDest"><value>jpuserprofileUserProfileManager</value></property>
 		<property name="defsFilePath"><value>/WEB-INF/plugins/jpaddressbook/attributeDisablingCodes.xml</value></property>
 	</bean>
 	

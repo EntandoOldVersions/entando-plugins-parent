@@ -16,7 +16,7 @@
 	
 	<bean id="jpgeorefCoordsAttributeWrapper" class="com.agiletec.aps.system.common.entity.loader.ExtraAttributeWrapper" >
 		<property name="attribute" ref="jpgeorefCoordsAttribute" />
-		<property name="entityManagerDest" ref="jacmsContentManager" />
+		<property name="entityManagerNameDest"><value>jacmsContentManager</value></property>
 	</bean>
 	
 </beans>

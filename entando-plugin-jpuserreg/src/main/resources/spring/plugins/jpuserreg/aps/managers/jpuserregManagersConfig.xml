@@ -28,13 +28,13 @@
 		</property>
 	</bean>
 	
-	<bean id="jpuserregAttributeDisablingCodesLoader" class="com.agiletec.aps.system.common.entity.ExtraAttributeDisablingCodes">
-		<property name="entityManagerDest" ref="jpuserprofileUserProfileManager" />
+	<bean id="jpuserregAttributeDisablingCodesLoader" class="com.agiletec.aps.system.common.entity.loader.ExtraAttributeRolesWrapper">
+		<property name="entityManagerNameDest"><value>jpuserprofileUserProfileManager</value></property>
 		<property name="defsFilePath"><value>/WEB-INF/plugins/jpuserreg/attributeDisablingCodes.xml</value></property>
 	</bean>
 	
-	<bean id="jpuserregAttributeRolesLoader" class="com.agiletec.aps.system.common.entity.ExtraAttributeRoles">
-		<property name="entityManagerDest" ref="jpuserprofileUserProfileManager" />
+	<bean id="jpuserregAttributeRolesLoader" class="com.agiletec.aps.system.common.entity.loader.ExtraAttributeRolesWrapper">
+		<property name="entityManagerNameDest"><value>jpuserprofileUserProfileManager</value></property>
 		<property name="defsFilePath"><value>/WEB-INF/plugins/jpuserreg/attributeRoles.xml</value></property>
 	</bean>
 	
