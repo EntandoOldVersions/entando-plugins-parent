@@ -16,20 +16,6 @@
 			value="com.agiletec.plugins.jpimagemap.apsadmin.content.attribute.manager.ImageMapAttributeManager" />
 	</bean>
 	
-	<!--
-	<bean id="jacmsEntityTypeDom" class="com.agiletec.plugins.jacms.aps.system.services.content.parse.ContentTypeDOM" parent="baseEntityTypeDom" >
-		<property name="attributeTypes">
-		<map merge="true">
-			<entry key="Hypertext"><ref bean="jacmsHypertextAttribute" /></entry>
-			<entry key="Link"><ref bean="jacmsLinkAttribute" /></entry>
-			<entry key="Image"><ref bean="jacmsImageAttribute" /></entry>
-			<entry key="Attach"><ref bean="jacmsAttachAttribute" /></entry>
-			<entry key="ImageMap"><ref bean="ImageMapAttribute" /></entry>
-		</map>
-		</property>
-	</bean>
-	-->
-	
 	<bean id="jacmsLinkAttribute" class="com.agiletec.plugins.jacms.aps.system.services.content.model.extraAttribute.LinkAttribute" >
 		<property name="type" value="Link" />
 		<property name="handler" >
@@ -55,7 +41,7 @@
 	
 	<bean id="jpimagemapImageMapAttributeWrapper" class="com.agiletec.aps.system.common.entity.loader.ExtraAttributeWrapper" >
 		<property name="attribute" ref="jpimagemapImageMapAttribute" />
-		<property name="entityManagerDest" ref="jacmsContentManager" />
+		<property name="entityManagerNameDest"><value>jacmsContentManager</value></property>
 	</bean>
 	
 </beans>
