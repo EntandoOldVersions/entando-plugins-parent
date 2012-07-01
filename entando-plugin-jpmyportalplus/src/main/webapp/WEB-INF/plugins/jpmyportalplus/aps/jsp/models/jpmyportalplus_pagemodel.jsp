@@ -23,24 +23,28 @@
 
 		<%-- Header --%><wp:show frame="0" />
 
-		<div id="columns"><%//IMPORTANT: the html id "columns" is referenced in /resources/plugins/jpmyportalplus/static/js/jpmyportalplus.js %>
-			<div id="colonna1"><%//IMPORTANT: the html id "colonna1" is referenced in jpmyportalplus_javascript_variables.jsp %>
+		<div id="widget-columns-container"><%//IMPORTANT: the html id "columns" is referenced in /resources/plugins/jpmyportalplus/static/js/jpmyportalplus.js %>
+			<div id="widget-col1"><%//IMPORTANT: the html id "colonna1" is referenced in jpmyportalplus_javascript_variables.jsp %>
 				<%-- draggable showlets for column="1" here.... --%>
 				<%-- Left Column I --%> <wp:show frame="1" />
 				<%-- Left Column II --%> <wp:show frame="2" />
 			</div>
-			<div id="colonna2"><%//IMPORTANT: the html id "colonna2" is referenced in jpmyportalplus_javascript_variables.jsp %>
+			<div id="widget-col2"><%//IMPORTANT: the html id "colonna2" is referenced in jpmyportalplus_javascript_variables.jsp %>
 				<%-- draggable showlets for column="2" here.... --%>
 				<%-- Middle Column I --%><wp:show frame="3" />
 				<%-- Middle Column II --%><wp:show frame="4" />
 			</div>
-			<div id="colonna3"><%//IMPORTANT: the html id "colonna3" is referenced in jpmyportalplus_javascript_variables.jsp %>
+			<div id="widget-col3"><%//IMPORTANT: the html id "colonna3" is referenced in jpmyportalplus_javascript_variables.jsp %>
 				<%-- draggable showlets for column="3" here.... --%>
 				<%-- Right Column I --%><wp:show frame="5" />
 				<%-- Right Column II --%><wp:show frame="6" />
 			</div>
 		</div>
-
+		
+		<div id="configure-page">
+			<h2 id="editshowlet_title"><a href="#editshowletlist">configure</a></h2>		  		
+		</div>
+		
 		<%-- Remember to include the Page Configuration Block --%>
 		<jsp:include page="/WEB-INF/plugins/jpmyportalplus/aps/jsp/models/inc/page_configuration.jsp" />
 
