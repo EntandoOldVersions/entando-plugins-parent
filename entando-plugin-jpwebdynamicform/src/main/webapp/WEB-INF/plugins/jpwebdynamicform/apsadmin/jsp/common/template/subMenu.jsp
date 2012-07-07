@@ -2,7 +2,7 @@
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<wp:contentNegotiation mimeType="application/xhtml+xml" charset="utf-8"/>
+
 <wp:ifauthorized permission="superuser" var="isSuperuser"/>
 <c:choose>
 	<c:when test="${isSuperuser}">
