@@ -102,7 +102,7 @@
     	
         <!-- ######## INIZIO GESTIONE RICERCA ATTRIBUTI RISORSA ######## -->
         
-        <action name="findResource" class="jacmsExtendedResourceFinderAction">
+        <action name="findResource" class="jacmsExtendedResourceFinderAction" method="entryFindResource">
             <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/resource/${resourceTypeCode}Archive.jsp</result>
         	<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
 			<interceptor-ref name="entandoFrontEndFreeStack" >
