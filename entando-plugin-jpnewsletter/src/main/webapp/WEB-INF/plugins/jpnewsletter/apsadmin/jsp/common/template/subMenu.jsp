@@ -1,7 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
-<wp:contentNegotiation mimeType="application/xhtml+xml" charset="utf-8"/>
 
 <wp:ifauthorized permission="jpnewsletter_management" >
 	<li class="openmenu"><a href="#" rel="fagiano_jpnewsletter" id="menu_jpnewsletter" class="subMenuToggler"><s:text name="jpnewsletter.admin.menu" /></a>
