@@ -12,7 +12,7 @@
 		<property name="userManager" ref="UserManager" />
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="groupManager" ref="GroupManager" />
-		<property name="linkResolver" ref="jpnewsletterLinkResolverManager" />
+		<property name="linkResolver" ref="jacmsLinkResolverManager" />
 		<property name="langManager" ref="LangManager" />
 		<property name="contentRenderer" ref="jacmsBaseContentRenderer" />
 		<property name="configManager" ref="BaseConfigManager"/>
@@ -27,21 +27,6 @@
 				<property name="dataSource" ref="portDataSource" />
 			</bean>
 		</property>
-	</bean>
-	
-	<bean id="jpnewsletterURLManager" class="com.agiletec.plugins.jpnewsletter.aps.system.services.url.JpnewsletterURLManager" 
-			parent="abstractService" >
-		<property name="configManager" ref="BaseConfigManager"/>
-		<property name="pageManager" ref="PageManager"/>
-		<property name="langManager" ref="LangManager"/>
-	</bean>
-	
-	<bean id="jpnewsletterLinkResolverManager" class="com.agiletec.plugins.jpnewsletter.aps.system.services.linkresolver.JpnewsletterLinkResolverManager" 
-			parent="abstractService" >
-		<property name="contentManager" ref="jacmsContentManager" />
-		<property name="contentPageMapperManager" ref="jacmsContentPageMapperManager" />
-		<property name="pageManager" ref="PageManager" />
-		<property name="urlManager" ref="jpnewsletterURLManager" />
 	</bean>
 	
 </beans>
