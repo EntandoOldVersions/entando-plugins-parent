@@ -40,8 +40,10 @@ if (GBrowserIsCompatible()) {
   
   map.setCenter(new GLatLng(<c:out value="${center[0]}"/>, <c:out value="${center[1]}"/>), zoomLevel);
   
-  <c:forEach var="contentId" items="${markers}">
-	<jacms:content contentId="${contentId}" />
+  <c:forEach var="geoInfoBean" items="${markers}">
+  	var point = new GLatLng(<c:out value="${geoInfoBean.x}" />,<c:out value="${geoInfoBean.y}" />);
+  	var marker = createMarker(point,'<jacms:content contentId="${geoInfoBean.contentId}" />');
+  	map.addOverlay(marker);
   </c:forEach>
 }
 

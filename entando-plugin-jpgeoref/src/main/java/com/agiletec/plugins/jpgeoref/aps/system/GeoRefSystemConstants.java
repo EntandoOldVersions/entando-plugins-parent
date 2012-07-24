@@ -28,4 +28,6 @@ public interface GeoRefSystemConstants {
 	public static final String COORDS_ATTRIBUTE_Y = "y";
 	public static final String COORDS_ATTRIBUTE_Z = "z";
 	
+	public static final String ATTRIBUTE_ROLE_COORD = "jpgeroref:coord";
+	
 }
