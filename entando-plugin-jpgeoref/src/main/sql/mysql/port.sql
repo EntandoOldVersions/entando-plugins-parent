@@ -5,22 +5,22 @@ INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpgeoref_home',
 	</frame>
 </frames>', 'jpgeoref');
 
+
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpgeoref_GoogleListViewer', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Publish contents on Map</property>
 <property key="it">Pubblicazione contenuti su Mappa</property>
 </properties>', '<config>
 	<parameter name="contentType">Content Type (mandatory)</parameter>
-	<parameter name="modelId">Content Model form map</parameter>
+	<parameter name="modelId">Content Model</parameter>
 	<parameter name="userFilters">Front-End user filter options</parameter>
 	<parameter name="categories">Content Category codes (comma separeted)</parameter>
     <parameter name="orClauseCategoryFilter" />
-	<parameter name="maxElemForItem">Contents for each page</parameter>
 	<parameter name="filters" />
 	<parameter name="title_{lang}">Showlet Title in lang {lang}</parameter>
 	<parameter name="pageLink">The code of the Page to link</parameter>
 	<parameter name="linkDescr_{lang}">Link description in lang {lang}</parameter>
-	<action name="listViewerConfig"/>
+	<action name="jpgeorefListViewerConfig"/>
 </config>', 'jpgeoref', NULL, NULL, 1);
 
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpgeoref_GoogleRoute', '<?xml version="1.0" encoding="UTF-8"?>
@@ -33,4 +33,3 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 	<parameter name="markerModelId">Model id for marker</parameter>
 	<action name="configSimpleParameter"/>
 </config>', 'jpgeoref', NULL, NULL, 1);
-
