@@ -38,22 +38,28 @@
 </div>
 	</s:if>
 
-<s:if test="showlet.config['contentType'] == null">
+<s:set var="contentTypesVar" value="contentTypes" />
+<s:if test="#contentTypesVar.isEmpty()">
+<p>
+	<s:text name="jpgeoref.error.noContentTypeAvailable" />
+</p>
+</s:if>
+<s:elseif test="showlet.config['contentType'] == null">
 <%-- SELEZIONE DEL TIPO DI CONTENUTO --%>
 <fieldset><legend><s:text name="title.contentInfo" /></legend>
 <p>
 	<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
-	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" cssClass="text" />
+	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="#contentTypesVar" listKey="code" listValue="descr" cssClass="text" />
 	<wpsf:submit useTabindexAutoIncrement="true" action="configListViewer" value="%{getText('label.continue')}" cssClass="button" />	
 </p>
 </fieldset>
-</s:if>
+</s:elseif>
 <s:else>
 
 <fieldset class="margin-bit-bottom"><legend><s:text name="title.contentInfo" /></legend>
 <p>
 	<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
-	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" disabled="true" value="%{getShowlet().getConfig().get('contentType')}" cssClass="text" />
+	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="#contentTypesVar" listKey="code" listValue="descr" disabled="true" value="%{getShowlet().getConfig().get('contentType')}" cssClass="text" />
 	<wpsf:submit useTabindexAutoIncrement="true" action="changeContentType" value="%{getText('label.change')}" cssClass="button" />	
 </p>
 <p class="noscreen">

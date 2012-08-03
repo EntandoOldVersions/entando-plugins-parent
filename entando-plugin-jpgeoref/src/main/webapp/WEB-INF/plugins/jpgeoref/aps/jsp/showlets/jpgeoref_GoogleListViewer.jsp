@@ -7,6 +7,17 @@
 
 <gwp:bodyReader var="htmlBodyTagAttribute">onunload="GUnload()"</gwp:bodyReader>
 
+<jacms:contentList listName="contentList" titleVar="titleVar" 
+	pageLinkVar="pageLinkVar" pageLinkDescriptionVar="pageLinkDescriptionVar" userFilterOptionsVar="userFilterOptionsVar" />
+
+<c:if test="${null != titleVar}">
+	<h2><span><c:out value="${titleVar}" /></span></h2>
+</c:if>
+
+<c:set var="userFilterOptionsVar" value="${userFilterOptionsVar}" scope="request" />
+<c:import url="/WEB-INF/plugins/jacms/aps/jsp/showlets/inc/js_content_viewer_list.jsp" />
+<c:import url="/WEB-INF/plugins/jacms/aps/jsp/showlets/inc/userFilter-module.jsp" />
+
 <div id="map" style="width: 550px; height: 450px"></div>
  
 <script type="text/javascript">
@@ -26,7 +37,6 @@ if (GBrowserIsCompatible()) {
     return marker;
   }
 
-<jacms:contentList listName="contentList" />
 <gwp:geoRenderList centerCoordsParamName="center" southWestCoordsParamName="southWest" northEastCoordsParamName="northEast" master="contentList" markerParamName="markers"/>
 
   // Display the map, with some controls and set the initial location 
@@ -59,3 +69,12 @@ else {
 
 //]]>
 </script>
+
+<c:if test="${null != pageLinkVar && null != pageLinkDescriptionVar}">
+	<p><a href="<wp:url page="${pageLinkVar}"/>"><c:out value="${pageLinkDescriptionVar}" /></a></p>
+</c:if>
+
+<%-- Important: reset variables --%>
+<c:set var="userFilterOptionsVar" value="${null}" scope="request" />
+<c:set var="contentList" value="${null}"  scope="request" />
+<c:set var="group" value="${null}"  scope="request" />
