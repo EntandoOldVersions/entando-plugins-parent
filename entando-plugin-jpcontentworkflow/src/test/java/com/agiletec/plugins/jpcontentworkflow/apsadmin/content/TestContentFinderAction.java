@@ -57,10 +57,13 @@ public class TestContentFinderAction extends ApsAdminPluginBaseTestCase {
 			
 			this.executeSearch("editorCoach", params);
 			action = (IContentFinderAction) this.getAction();
+			System.out.println("***********************");
 			contents = action.getContents();
-			String[] contentsId = { "ART112", "ART111", "ART102", "ART104", "RAH101" };
+			System.out.println(contents);
+			String[] contentsId = { "ART112", "ART102", "ART104", "RAH101" };
 			assertEquals(contentsId.length, contents.size());
-			for (String contentId : contentsId) {
+			for (int i = 0; i < contentsId.length; i++) {
+				String contentId = contentsId[i];
 				assertTrue(contents.contains(contentId));
 			}
 		} catch (Throwable t) {
@@ -87,7 +90,8 @@ public class TestContentFinderAction extends ApsAdminPluginBaseTestCase {
 			contents = action.getContents();
 			String[] contentsId = { "ART102", "ART112" };
 			assertEquals(contentsId.length, contents.size());
-			for (String contentId : contentsId) {
+			for (int i = 0; i < contentsId.length; i++) {
+				String contentId = contentsId[i];
 				assertTrue(contents.contains(contentId));
 			}
 			
@@ -96,10 +100,10 @@ public class TestContentFinderAction extends ApsAdminPluginBaseTestCase {
 			contents = action.getContents();
 			contentsId = new String[]{ "ART102", "ART111", "ART112", "RAH101" };
 			assertEquals(contentsId.length, contents.size());
-			for (String contentId : contentsId) {
+			for (int i = 0; i < contentsId.length; i++) {
+				String contentId = contentsId[i];
 				assertTrue(contents.contains(contentId));
 			}
-			action = (IContentFinderAction) this.getAction();
 		} catch (Throwable t) {
 			throw t;
 		} finally {
