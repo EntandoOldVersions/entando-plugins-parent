@@ -27,7 +27,6 @@ import javax.sql.DataSource;
 import com.agiletec.plugins.jpcmstagcloud.aps.JpcmstagcloudBaseTestCase;
 
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.common.IManager;
 import com.agiletec.aps.system.common.tree.ITreeNode;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
@@ -35,26 +34,27 @@ import com.agiletec.aps.system.services.category.Category;
 import com.agiletec.aps.system.services.lang.ILangManager;
 import com.agiletec.aps.system.services.user.IUserManager;
 import com.agiletec.aps.system.services.user.UserDetails;
-import com.agiletec.aps.util.FileTextReader;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.ContentDAO;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentDAO;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpcmstagcloud.aps.system.JpcmstagcloudSystemConstants;
-import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * @author E.Santoboni
  */
 public class TestTagCloudManager extends JpcmstagcloudBaseTestCase {
     
+	@Override
     protected void setUp() throws Exception {
         super.setUp();
         this.init();
         this.addFakeContents();
     }
     
+    @Override
     protected void tearDown() throws Exception {
         this.removeFakeContents();
         super.tearDown();
@@ -78,17 +78,18 @@ public class TestTagCloudManager extends JpcmstagcloudBaseTestCase {
         Map<String, Integer> expected = new HashMap<String, Integer>();
         expected.put("cat1", new Integer(1));
         expected.put("evento", new Integer(4));
-        expected.put("general", new Integer(1));
-
+        expected.put("general", new Integer(5));
+		
         Map<ITreeNode, Integer> cloudInfos = this._tagCloudManager.getCloudInfos(user);
         this.compareCloudInfos(expected, cloudInfos);
-
+		
         user = this.getUser("editorCoach");
         expected.put("cat1", new Integer(1));
         expected.put("evento", new Integer(3));
+		expected.put("general", new Integer(3));
         cloudInfos = this._tagCloudManager.getCloudInfos(user);
         this.compareCloudInfos(expected, cloudInfos);
-
+		
         user = this._userManager.getGuestUser();
         expected.put("cat1", new Integer(1));
         expected.put("evento", new Integer(2));
@@ -99,22 +100,24 @@ public class TestTagCloudManager extends JpcmstagcloudBaseTestCase {
 
     private void compareIds(String[] expected, List<String> received) {
         assertEquals(expected.length, received.size());
-        for (String id : expected) {
-            if (!received.contains(id)) {
+		for (int i = 0; i < expected.length; i++) {
+			String id = expected[i];
+			if (!received.contains(id)) {
                 fail("Expected " + id + " - not found in " + received.toString());
             }
-        }
+		}
     }
-
+	
     private void compareCloudInfos(Map<String, Integer> expected, Map<ITreeNode, Integer> received) {
-        //assertEquals(expected.size(), received.size());
-        for (Entry<ITreeNode, Integer> current : received.entrySet()) {
-            String key = current.getKey().getCode();
+        Iterator<ITreeNode> iter = received.keySet().iterator();
+		while (iter.hasNext()) {
+			ITreeNode node = iter.next();
+			String key = node.getCode();
             Integer expectedSize = expected.get(key);
             if (expectedSize != null) {
-                assertEquals(expectedSize.intValue(), current.getValue().intValue());
+                assertEquals(expectedSize.intValue(), received.get(node).intValue());
             }
-        }
+		}
     }
     
     private void addFakeContents() throws ApsSystemException {
@@ -130,9 +133,10 @@ public class TestTagCloudManager extends JpcmstagcloudBaseTestCase {
 
         Content content2 = this._contentManager.loadContent("ART120", true);
         content2.setId("ART120b");
-        for (Category category : masterContent.getCategories()) {
-            content2.addCategory(category);
-        }
+        for (int i = 0; i < masterContent.getCategories().size(); i++) {
+			Category category = masterContent.getCategories().get(i);
+			content2.addCategory(category);
+		}
         this._contentDao.addEntity(content2);
         this._contentDao.insertOnLineContent(content2);
     }
