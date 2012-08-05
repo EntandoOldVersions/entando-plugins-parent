@@ -87,8 +87,8 @@
 				<label for="config.debug"><s:text name="label.debug" /></label>
 			</p>
 			<p>	 
-				<wpsf:checkbox useTabindexAutoIncrement="true" name="config.smtpJapsUserAuth" id="config.smtpJapsUserAuth" cssClass="radiocheck" />
-				<label for="config.smtpJapsUserAuth"><s:text name="label.smtpJapsUserAuth" /></label>
+				<wpsf:checkbox useTabindexAutoIncrement="true" name="config.smtpEntandoUserAuth" id="config.smtpEntandoUserAuth" cssClass="radiocheck" />
+				<label for="config.smtpEntandoUserAuth"><s:text name="label.smtpEntandoUserAuth" /></label>
 			</p>
 		</fieldset>
 		<fieldset>

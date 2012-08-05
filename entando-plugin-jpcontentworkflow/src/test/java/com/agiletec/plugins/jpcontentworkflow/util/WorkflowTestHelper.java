@@ -48,6 +48,7 @@ public class WorkflowTestHelper {
 	
 	public void resetWorkflowConfig() throws Exception {
 		this.updateConfig(RESET_CONFIG);
+		this.updateConfig(RESET_CONFIG);
 	}
 	
 	public void setContentStates() throws Exception {
@@ -58,7 +59,8 @@ public class WorkflowTestHelper {
 	}
 	
 	public void resetContentStates() throws Exception {
-		this.executeQuery(RESET_STATES);
+		this.executeQuery(RESET_STATES_1);
+		this.executeQuery(RESET_STATES_2);
 	}
 	
 	private void executeQuery(String query) throws Exception {
@@ -83,9 +85,13 @@ public class WorkflowTestHelper {
 	private static final String SET_STATES_4 = 
 		"UPDATE contents SET status = '" + Content.STATUS_READY + "' WHERE contentid = 'RAH101' ";
     
-	private static final String RESET_STATES = 
+	private static final String RESET_STATES_1 = 
 		"UPDATE contents SET status = '" + Content.STATUS_DRAFT + "' WHERE " +
-				"contentid = 'ART102' OR contentid = 'ART104' OR contentid = 'ART111' OR contentid = 'RAH101'";
+				"contentid = 'ART102' OR contentid = 'ART104' OR contentid = 'RAH101'";
+	
+	private static final String RESET_STATES_2 = 
+		"UPDATE contents SET status = '" + Content.STATUS_READY + "' WHERE " +
+				"contentid = 'ART111'";
 	
 	private static final String SET_CONFIG = 
 		"<contenttypes>" +

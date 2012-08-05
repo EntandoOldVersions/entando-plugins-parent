@@ -1,3 +1,11 @@
+INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpgeoref_home', 
+'Home Page for test georef Content', '<frames>
+	<frame pos="0">
+		<descr>Test frame</descr>
+	</frame>
+</frames>', 'jpgeoref');
+
+
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpgeoref_GoogleListViewer', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Publish contents on Map</property>
@@ -8,12 +16,11 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 	<parameter name="userFilters">Front-End user filter options</parameter>
 	<parameter name="categories">Content Category codes (comma separeted)</parameter>
     <parameter name="orClauseCategoryFilter" />
-	<parameter name="maxElemForItem">Contents for each page</parameter>
 	<parameter name="filters" />
 	<parameter name="title_{lang}">Showlet Title in lang {lang}</parameter>
 	<parameter name="pageLink">The code of the Page to link</parameter>
 	<parameter name="linkDescr_{lang}">Link description in lang {lang}</parameter>
-	<action name="listViewerConfig"/>
+	<action name="jpgeorefListViewerConfig"/>
 </config>', 'jpgeoref', NULL, NULL, 1);
 
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpgeoref_GoogleRoute', '<?xml version="1.0" encoding="UTF-8"?>
