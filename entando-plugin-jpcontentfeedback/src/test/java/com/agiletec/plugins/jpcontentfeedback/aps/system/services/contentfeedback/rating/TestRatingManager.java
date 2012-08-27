@@ -27,12 +27,10 @@ import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.JpcontentfeedbackSystemConstants;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.ICommentManager;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.model.Comment;
-import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.IRatingManager;
-import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.RatingDAO;
-import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.RatingManager;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.model.IRating;
 
 public class TestRatingManager extends JpcontentfeedbackBaseTestCase{
+	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -60,7 +58,6 @@ public class TestRatingManager extends JpcontentfeedbackBaseTestCase{
 			assertEquals(4, rating.getVoters());
 			assertEquals(8, rating.getSumvote());
 		} catch (Throwable t) {
-			t.printStackTrace();
 			throw t;
 		} finally {
 			if(rating != null) {

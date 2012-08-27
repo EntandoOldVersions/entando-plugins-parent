@@ -96,7 +96,10 @@
 		<test.database.port.url>jdbc:mysql://${test.database.hostname}:${test.database.port}/EntandoCoreEnginetestPort</test.database.port.url>
 		<test.database.serv.url>jdbc:mysql://${test.database.hostname}:${test.database.port}/EntandoCoreEnginetestServ</test.database.serv.url>
 		-->
-	</properties>	
+		<spring.version>3.0.6.RELEASE</spring.version>
+		<struts2.version>2.3.4.1</struts2.version>
+	</properties>
+	
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<extensions>
@@ -628,7 +631,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
