@@ -29,8 +29,6 @@ import java.util.regex.Pattern;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.collections.BidiMap;
-import org.apache.commons.collections.bidimap.TreeBidiMap;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.agiletec.aps.system.ApsSystemUtils;
