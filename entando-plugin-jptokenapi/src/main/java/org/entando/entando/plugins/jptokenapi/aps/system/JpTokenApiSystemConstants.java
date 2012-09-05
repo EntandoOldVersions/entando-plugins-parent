@@ -15,11 +15,13 @@
 * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package org.entando.entando.plugins.aps.system.token;
+package org.entando.entando.plugins.jptokenapi.aps.system;
 
 /**
  * @author E.Santoboni
  */
-public interface IApiTokenizerManager {
+public interface JpTokenApiSystemConstants {
+	
+	public static final String TOKENIZER_MANAGER = "jptokenapiApiTokenizerManager";
 	
 }

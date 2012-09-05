@@ -15,12 +15,12 @@
 * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package org.entando.entando.plugins.aps.system.token;
+package org.entando.entando.plugins.jptokenapi.aps.system.token;
 
 /**
  * @author E.Santoboni
  */
-public interface ITokenDAO {
+public interface IApiTokenDAO {
 	
 	public String updateToken(String username);
 	

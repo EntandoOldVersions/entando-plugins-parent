@@ -15,7 +15,7 @@
 * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package org.entando.entando.plugins.aps.system.token;
+package org.entando.entando.plugins.jptokenapi.aps.system.token;
 
 import com.agiletec.aps.system.common.AbstractDAO;
 
@@ -28,7 +28,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 /**
  * @author E.Santoboni
  */
-public class TokenDAO extends AbstractDAO implements ITokenDAO {
+public class ApiTokenDAO extends AbstractDAO implements IApiTokenDAO {
 	
 	@Override
 	public String updateToken(String username) {
@@ -85,7 +85,11 @@ public class TokenDAO extends AbstractDAO implements ITokenDAO {
 	
 	@Override
 	public String getToken(String username) {
-		return this.get(username, SELECT_TOKEN);
+		String token = this.get(username, SELECT_TOKEN);
+		if (null == token) {
+			token = this.updateToken(username);
+		}
+		return token;
 	}
 	
 	@Override

@@ -15,13 +15,17 @@
 * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package org.entando.entando.plugins.aps.system;
+package org.entando.entando.plugins.jptokenapi.aps.system.token;
+
+import com.agiletec.aps.system.exception.ApsSystemException;
 
 /**
  * @author E.Santoboni
  */
-public interface JpTokenApiSystemConstants {
+public interface IApiTokenizerManager {
 	
-	public static final String TOKENIZER_MANAGER = "jptokenapiApiTokenizerManager";
+	public String getUser(String token) throws ApsSystemException;
+	
+	public String getToken(String username) throws ApsSystemException;
 	
 }
