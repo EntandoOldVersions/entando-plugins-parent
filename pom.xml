@@ -56,7 +56,8 @@
 		<module>entando-plugin-jpcmstagcloud</module>
 		<module>entando-plugin-jpcontentrefs</module>
 		<module>entando-plugin-jpmyportalplus</module>
-	</modules>
+		<module>entando-plugin-jptokenapi</module>
+  </modules>
 	<!--
 	<distributionManagement>
 		<snapshotRepository>
@@ -424,7 +425,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile />
+							<outputFile/>
 							<srcFiles>
 								<srcFile>${project.parent.build.directory}/test/sql/entando-core-enginetestPort_data.sql</srcFile>
 							</srcFiles>
@@ -441,7 +442,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile />
+							<outputFile/>
 							<srcFiles>
 								<srcFile>${project.parent.build.directory}/test/sql/entando-core-enginetestServ_data.sql</srcFile>
 							</srcFiles>
@@ -458,7 +459,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile />
+							<outputFile/>
 							<onError>continue</onError>
 							<fileset>
 								<basedir>${project.build.directory}</basedir>
@@ -479,7 +480,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile />
+							<outputFile/>
 							<onError>continue</onError>
 							<fileset>
 								<basedir>${project.build.directory}</basedir>
@@ -500,7 +501,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile />
+							<outputFile/>
 							<srcFiles>
 								<srcFile>src/test/sql/postgresql/port.sql</srcFile>
 							</srcFiles>
@@ -517,7 +518,7 @@
 							<escapeProcessing>false</escapeProcessing>
 							<enableBlockMode>true</enableBlockMode>
 							<printResultSet>true</printResultSet>
-							<outputFile />
+							<outputFile/>
 							<srcFiles>
 								<srcFile>src/test/sql/postgresql/serv.sql</srcFile>
 							</srcFiles>
@@ -553,7 +554,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore />
+										<ignore/>
 									</action>
 								</pluginExecution>
 								<pluginExecution>
@@ -574,7 +575,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<execute />
+										<execute/>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
