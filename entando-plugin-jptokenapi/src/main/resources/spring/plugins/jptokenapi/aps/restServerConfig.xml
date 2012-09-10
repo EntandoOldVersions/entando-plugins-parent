@@ -23,30 +23,5 @@
             <ref bean="jsonProvider"/>
         </jaxrs:providers>
     </jaxrs:server>
-    <!--
-    <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
-        <property name="marshallerProperties">
-            <map>
-                <entry>
-                    <key>
-                        <value>com.sun.xml.bind.marshaller.CharacterEscapeHandler</value>
-                    </key>
-                    <ref bean="ApiCDataCharacterEscapeHandler" />
-                </entry>
-            </map>
-        </property>
-    </bean>
     
-    <bean id="ApiCDataCharacterEscapeHandler" class="org.entando.entando.aps.system.services.api.model.CDataCharacterEscapeHandler"/>
-    
-    <util:list id="ApiJsonTypes">
-        <value>application/json</value>
-        <value>application/jettison</value>
-    </util:list>
-    
-    <bean id="jsonProvider" class="org.entando.entando.aps.system.services.api.provider.json.JSONProvider">
-        <property name="produceMediaTypes" ref="ApiJsonTypes"/>
-        <property name="consumeMediaTypes" ref="ApiJsonTypes"/>
-    </bean>
-    -->
 </beans>
