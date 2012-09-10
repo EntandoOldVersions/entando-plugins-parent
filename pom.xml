@@ -57,7 +57,7 @@
 		<module>entando-plugin-jpcontentrefs</module>
 		<module>entando-plugin-jpmyportalplus</module>
 		<module>entando-plugin-jptokenapi</module>
-  </modules>
+	</modules>
 	<!--
 	<distributionManagement>
 		<snapshotRepository>

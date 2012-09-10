@@ -120,46 +120,6 @@ public class ApiRestServer extends org.entando.entando.aps.system.services.api.s
         return this.createResponse(responseObject);
     }
     
-    protected StringApiResponse buildErrorResponse(ApiMethod.HttpMethod httpMethod, String namespace, String resourceName, Throwable t) {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("Method '").append(httpMethod).append("' Resource '").append(resourceName).append("'");
-		if (null != namespace) {
-			buffer.append(" Namespace '").append(namespace).append("'");
-		}
-        ApsSystemUtils.logThrowable(t, this, "buildErrorResponse", "Error building api response  - " + buffer.toString());
-        StringApiResponse response = new StringApiResponse();
-        if (t instanceof ApiException) {
-            response.addErrors(((ApiException) t).getErrors());
-        } else {
-            ApiError error = new ApiError(IApiErrorCodes.SERVER_ERROR, "Error building response - " + buffer.toString(), Response.Status.INTERNAL_SERVER_ERROR);
-            response.addError(error);
-        }
-        response.setResult(IResponseBuilder.FAILURE, null);
-        return response;
-    }
-    
-	protected Response createResponse(Object responseObject) {
-		ResponseBuilderImpl responsex = new ResponseBuilderImpl();
-		responsex.entity(responseObject);
-		if (responseObject instanceof AbstractApiResponse) {
-			Response.Status status = Response.Status.OK;
-			AbstractApiResponse mainResponse = (AbstractApiResponse) responseObject;
-			if (null != mainResponse.getErrors()) {
-				for (int i = 0; i < mainResponse.getErrors().size(); i++) {
-					ApiError error = mainResponse.getErrors().get(i);
-					Response.Status errorStatus = error.getStatus();
-					if (null != errorStatus && status.getStatusCode() < errorStatus.getStatusCode()) {
-						status = errorStatus;
-					}
-				}
-			}
-			responsex.status(status);
-		} else {
-			responsex.status(Response.Status.OK);
-		}
-		return responsex.build();
-	}
-	
 	private String extractApiToken(HttpServletRequest request, UriInfo ui) {
 		String token = request.getHeader(API_TOKEN_PARAM_NAME);
 		if (null != token && token.trim().length() > 0) {
