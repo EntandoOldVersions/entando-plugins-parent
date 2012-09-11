@@ -28,42 +28,153 @@ import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.PartialResultException;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
-import javax.naming.directory.SearchControls;
-import javax.naming.directory.SearchResult;
+import javax.naming.directory.*;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
-import com.agiletec.aps.system.services.user.IUserDAO;
 import com.agiletec.aps.system.services.user.UserDetails;
+
 import com.agiletec.plugins.jpldap.aps.system.LdapSystemConstants;
 
 /**
  * The Data Access Object for LdapUser.
  * @author E.Santoboni
  */
-public class LdapUserDAO implements IUserDAO {
+public class LdapUserDAO implements ILdapUserDAO {
     
     @Override
-    public void addUser(UserDetails user) {
-        ApsSystemUtils.getLogger().severe("Method not supported");
+	public void addUser(UserDetails user) {
+		this.checkDn();
+		DirContext dirCtx = null;
+		try {
+			dirCtx = this.getDirContext();
+			Attributes attrs = this.createNewEntry(user);
+			dirCtx.createSubcontext(this.getEntryName(user), attrs);
+		} catch (ConnectException e) {
+            ApsSystemUtils.logThrowable(e, this, "addUser", "Error while adding user '" + user.getUsername() + "' : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (CommunicationException e) {
+            ApsSystemUtils.logThrowable(e, this, "addUser", "Error while adding user '" + user.getUsername() + "' : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (PartialResultException e) {
+            ApsSystemUtils.logThrowable(e, this, "addUser", "Error while adding user '" + user.getUsername() + "' : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (Throwable t) {
+            throw new RuntimeException("Error while adding user '" + user.getUsername() + "'", t);
+        } finally {
+			this.closeDirContext(dirCtx);
+		}
+	}
+	
+	private void checkDn() {
+        DirContext dirCtx = null;
+		Context result = null;
+		try {
+			String filterExpr = "(&(" + this.getBaseDn() + "))";
+            SearchResult sr = this.search(filterExpr);
+            if (sr != null) {
+                return;
+            }
+            dirCtx = this.getDirContext();
+			Attributes attrs = new BasicAttributes(true); // case-ignore
+			Attribute objclass = new BasicAttribute("objectClass");
+			String[] classes = this.getOuObjectClasses();
+			//if (null == classes) {
+			//	classes = new String[]{"organizationalUnit", "top"};
+			//}
+			for (int i = 0; i < classes.length; i++) {
+				objclass.add(classes[i]);
+			}
+			attrs.put(objclass);
+			result = dirCtx.createSubcontext(this.getBaseDn(), attrs);
+		} catch (ConnectException e) {
+            ApsSystemUtils.logThrowable(e, this, "checkDn", "Error while adding new OU : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (CommunicationException e) {
+            ApsSystemUtils.logThrowable(e, this, "checkDn", "Error while adding new OU : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (PartialResultException e) {
+            ApsSystemUtils.logThrowable(e, this, "checkDn", "Error while adding new OU : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (Throwable t) {
+            throw new RuntimeException("Error while adding new OU ", t);
+        } finally {
+			if (null != result) {
+				try {
+					result.close();
+				} catch (NamingException ex) {}
+			}
+			this.closeDirContext(dirCtx);
+		}
     }
+	
+	private Attributes createNewEntry(UserDetails user) {
+		Attributes attrs = new BasicAttributes(true);
+		Attribute oc = new BasicAttribute("objectClass");
+		String[] classes = this.getUserObjectClasses();
+		//if (null == classes) {
+		//	classes = new String[]{this.getUserObjectClass(), "top"};
+		//}
+		for (int i = 0; i < classes.length; i++) {
+			oc.add(classes[i]);
+		}
+        attrs.put(oc);
+		Attribute cn = new BasicAttribute(this.getUserRealAttributeName(), user.getUsername());
+        Attribute sn = new BasicAttribute(this.getUserPasswordAttributeName(), user.getPassword());
+        Attribute uid = new BasicAttribute(this.getUserIdAttributeName(), user.getUsername());
+        attrs.put(cn);
+        attrs.put(sn);
+        attrs.put(uid);
+        return attrs;
+	}
+	
+	private String getEntryName(UserDetails user) {
+		StringBuilder entryName = new StringBuilder();
+		entryName.append(this.getUserIdAttributeName()).append("=").append(user.getUsername());
+		String baseDN = this.getBaseDn();
+		if (null != baseDN && baseDN.trim().length() > 0) {
+			entryName.append(",").append(baseDN);
+		}
+		return entryName.toString();
+	}
     
     @Override
     public void deleteUser(String username) {
-        ApsSystemUtils.getLogger().severe("Method not supported");
+		SearchResult res = this.searchUserByFilterExpr(username);
+		if (res != null) {
+			this.removeEntry(res.getName());
+		}
     }
     
     @Override
     public void deleteUser(UserDetails user) {
-        ApsSystemUtils.getLogger().severe("Method not supported");
+        this.deleteUser(user.getUsername());
     }
+	
+	private void removeEntry(String uid) {
+		DirContext dirCtx = null;
+		try {
+			dirCtx = this.getDirContext();
+			dirCtx.destroySubcontext(uid);
+		} catch (ConnectException e) {
+            ApsSystemUtils.logThrowable(e, this, "removeEntry", "Error while deleting user '" + uid + "' : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (CommunicationException e) {
+            ApsSystemUtils.logThrowable(e, this, "removeEntry", "Error while deleting user '" + uid + "' : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (PartialResultException e) {
+            ApsSystemUtils.logThrowable(e, this, "removeEntry", "Error while deleting user '" + uid + "' : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (Throwable t) {
+            throw new RuntimeException("Error while deleting user '" + uid + "'", t);
+        } finally {
+            closeDirContext(dirCtx);
+        }
+	}
     
     @Override
     public void updateUser(UserDetails user) {
-        ApsSystemUtils.getLogger().severe("Method not supported");
+        this.updateUser(user.getUsername(), user.getPassword());
     }
     
     @Override
@@ -74,8 +185,39 @@ public class LdapUserDAO implements IUserDAO {
     
     @Override
     public void changePassword(String username, String password) {
-        ApsSystemUtils.getLogger().severe("Method not supported");
+        this.updateUser(username, password);
     }
+	
+	protected void updateUser(String username, String password) {
+		SearchResult res = this.searchUserByFilterExpr(username);
+		if (res != null) {
+			ModificationItem[] mods = new ModificationItem[1];
+			mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE,
+			    new BasicAttribute(this.getUserPasswordAttributeName(), password));
+			this.editEntry(res.getName(), mods);
+		}
+	}
+	
+	protected void editEntry(String uid, ModificationItem[] mods) {
+		DirContext dirCtx = null;
+		try {
+			dirCtx = this.getDirContext();
+			dirCtx.modifyAttributes(uid, mods);
+		} catch (ConnectException e) {
+            ApsSystemUtils.logThrowable(e, this, "editEntry", "Error while editing user '" + uid + "' : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (CommunicationException e) {
+            ApsSystemUtils.logThrowable(e, this, "editEntry", "Error while editing user '" + uid + "' : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (PartialResultException e) {
+            ApsSystemUtils.logThrowable(e, this, "editEntry", "Error while editing user '" + uid + "' : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (Throwable t) {
+            throw new RuntimeException("Error while editing user '" + uid + "'", t);
+        } finally {
+            closeDirContext(dirCtx);
+        }
+	}
     
     @Override
     public List<String> loadUsernamesForGroup(String groupName) {
@@ -117,9 +259,13 @@ public class LdapUserDAO implements IUserDAO {
     }
     
     protected SearchResult searchUserByFilterExpr(String uid) {
+        String filterExpr = "(&(objectClass=" + this.getUserObjectClass() + ")(" + this.getUserIdAttributeName() + "=" + uid + ")" + this.getFilterGroupBlock() + ")";
+        return search(filterExpr);
+    }
+    
+    private SearchResult search(String filterExpr) {
         SearchResult res = null;
         DirContext dirCtx = null;
-        String filterExpr = "(&(objectClass=" + this.getUserObjectClass() + ")(" + this.getUserIdAttributeName() + "=" + uid + ")" + this.getFilterGroupBlock() + ")";
         try {
             dirCtx = getDirContext();
             SearchControls ctls = new SearchControls();
@@ -129,16 +275,16 @@ public class LdapUserDAO implements IUserDAO {
                 res = answer.next();
             }
         } catch (ConnectException e) {
-            ApsSystemUtils.logThrowable(e, this, "searchUserByFilterExpr", "Extracting user '" + uid + "' : Directory not available");
+            ApsSystemUtils.logThrowable(e, this, "searchr", "Extracting SearchResult : Directory not available");
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (CommunicationException e) {
-            ApsSystemUtils.logThrowable(e, this, "searchUserByFilterExpr", "Extracting user '" + uid + "' : Directory not available");
+            ApsSystemUtils.logThrowable(e, this, "search", "Extracting SearchResult : Directory not available");
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (PartialResultException e) {
-            ApsSystemUtils.logThrowable(e, this, "searchUserByFilterExpr", "Extracting user '" + uid + "' : Directory not available");
+            ApsSystemUtils.logThrowable(e, this, "search", "Extracting SearchResult : Directory not available");
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (Throwable t) {
-            throw new RuntimeException("Errore in caricamento utente " + uid, t);
+            throw new RuntimeException("Error extracting serach result ", t);
         } finally {
             closeDirContext(dirCtx);
         }
@@ -204,10 +350,10 @@ public class LdapUserDAO implements IUserDAO {
     
     protected LdapUser createUserFromAttributes(Attributes attrs) throws NamingException {
         LdapUser user = new LdapUser();
-        String userName = (String) attrs.get(this.getUserIdAttributeName()).get(0);
-        user.setUsername(userName);
-        if (null != attrs.get("userPassword")) {
-            byte[] bytesPwd = (byte[]) attrs.get("userPassword").get(0);
+        String username = (String) attrs.get(this.getUserIdAttributeName()).get(0);
+        user.setUsername(username);
+        if (null != attrs.get(this.getUserPasswordAttributeName())) {
+            byte[] bytesPwd = (byte[]) attrs.get(this.getUserPasswordAttributeName()).get(0);
             String userPassword = new String(bytesPwd);
             user.setPassword(userPassword);
         }
@@ -236,7 +382,7 @@ public class LdapUserDAO implements IUserDAO {
         try {
             dirCtx = this.getDirContext();
             SearchControls ctls = new SearchControls();
-            String[] attrIDs = {this.getUserIdAttributeName(), "userPassword", "cn", "sn"};
+            String[] attrIDs = {this.getUserIdAttributeName(), this.getUserPasswordAttributeName(), "cn", "sn"};
             ctls.setReturningAttributes(attrIDs);
             ctls.setSearchScope(SearchControls.SUBTREE_SCOPE);
             if (this.getSearchResultMaxSize() > 0) {
@@ -314,13 +460,17 @@ public class LdapUserDAO implements IUserDAO {
     protected String getUserObjectClass() {
         String objectClass = this.getConfigParam(LdapSystemConstants.USER_OBJECT_CLASS_PARAM_NAME);
         if (null == objectClass) {
-            return "posixAccount";
+            objectClass = "posixAccount";
         }
         return objectClass;
     }
     
     protected String getUserIdAttributeName() {
-        return this.getConfigParam(LdapSystemConstants.USER_ID_ATTRIBUTE_NAME_PARAM_NAME);
+        String attributeName = this.getConfigParam(LdapSystemConstants.USER_ID_ATTRIBUTE_NAME_PARAM_NAME);
+		if (null == attributeName) {
+            attributeName = "uid";
+        }
+        return attributeName;
     }
     
     protected String getFilterGroup() {
@@ -341,7 +491,50 @@ public class LdapUserDAO implements IUserDAO {
         }
         return maxSize;
     }
-    
+	
+	@Override
+	public boolean isWriteUserEnable() {
+		String activeString = this.getConfigManager().getParam(LdapSystemConstants.USER_EDITING_ACTIVE_PARAM_NAME);
+        Boolean active = Boolean.parseBoolean(activeString);
+        return active.booleanValue();
+	}
+	
+	protected String getBaseDn() {
+        return this.getConfigParam(LdapSystemConstants.USER_BASE_DN_PARAM_NAME);
+    }
+	
+	protected String getUserRealAttributeName() {
+        String attributeName = this.getConfigParam(LdapSystemConstants.USER_REAL_ATTRIBUTE_NAME_PARAM_NAME);
+		if (null == attributeName) {
+            attributeName = "cn";
+        }
+        return attributeName;
+    }
+	
+	protected String getUserPasswordAttributeName() {
+        String attributeName = this.getConfigParam(LdapSystemConstants.USER_PASSWORD_ATTRIBUTE_NAME_PARAM_NAME);
+		if (null == attributeName) {
+            attributeName = "userPassword";
+        }
+        return attributeName;
+    }
+	
+	protected String[] getUserObjectClasses() {
+		String csv = this.getConfigParam(LdapSystemConstants.USER_OBJECT_CLASSES_CSV_PARAM_NAME);
+		if (null == csv || csv.trim().length() == 0) {
+			csv = this.getUserObjectClass() + ",top";
+		}
+		return csv.split(",");
+    }
+	
+	protected String[] getOuObjectClasses() {
+		String csv = this.getConfigParam(LdapSystemConstants.OU_OBJECT_CLASSES_CSV_PARAM_NAME);
+		if (null == csv || csv.trim().length() == 0) {
+			csv = "top,organizationalUnit";
+		}
+		return csv.split(",");
+    }
+	
     private String getConfigParam(String paramName) {
         String paramValue = this.getConfigManager().getParam(paramName);
         if (null == paramValue || paramValue.trim().length() == 0) return null;

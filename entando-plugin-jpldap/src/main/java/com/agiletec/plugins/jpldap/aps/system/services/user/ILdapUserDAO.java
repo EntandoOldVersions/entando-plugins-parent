@@ -17,27 +17,13 @@
 */
 package com.agiletec.plugins.jpldap.aps.system.services.user;
 
-import java.util.List;
-
-import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.user.IUserManager;
-import com.agiletec.aps.system.services.user.UserDetails;
+import com.agiletec.aps.system.services.user.IUserDAO;
 
 /**
  * The interface for the LdapUserManager.
  * @author E.Santoboni
  */
-public interface ILdapUserManager extends IUserManager {
-	
-	/**
-	 * Returns the list of users drawn from the research.
-	 * @param text The text to search on the username.
-	 * @param japsUser true if you want to search on local users, 
-	 * false if you want to search on non-local users, otherwise null.
-	 * @return The users extracted.
-	 * @throws ApsSystemException In case of error.
-	 */
-	public List<UserDetails> searchUsers(String text, Boolean japsUser) throws ApsSystemException;
+public interface ILdapUserDAO extends IUserDAO {
 	
 	public boolean isWriteUserEnable();
 	

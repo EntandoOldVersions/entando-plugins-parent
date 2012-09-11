@@ -43,7 +43,7 @@ public class UserFinderAction extends com.agiletec.apsadmin.user.UserFinderActio
 			return users;
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getUsers");
-			throw new RuntimeException("Errore in ricerca utenti", t);
+			throw new RuntimeException("Error while searching users", t);
 		}
 	}
 	

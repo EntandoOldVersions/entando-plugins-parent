@@ -22,7 +22,6 @@ import java.util.List;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.user.IUserDAO;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.system.services.user.UserManager;
@@ -124,20 +123,95 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
             throw new ApsSystemException("Error loading users", t);
         }
     }
-    
+	
+	@Override
+	public void addUser(UserDetails user) throws ApsSystemException {
+		if (!isActive() || !isWriteUserEnable()) {
+			super.addUser(user);
+			return;
+		}
+		try {
+			this.getLdapUserDAO().addUser(user);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "addUser");
+			throw new ApsSystemException("Error adding LDAP User" + user.getUsername(), t);
+		}
+	}
+	
+	@Override
+	public void changePassword(String username, String password) throws ApsSystemException {
+		if (!isActive() || !isWriteUserEnable()) {
+			super.changePassword(username, password);
+			return;
+		}
+		try {
+			this.getLdapUserDAO().changePassword(username, password);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "changePassword");
+			throw new ApsSystemException("Error updating the password of the LDAP User" + username, t);
+		}
+	}
+	
+	@Override
+	public void removeUser(UserDetails user) throws ApsSystemException {
+		if (!isActive() || !isWriteUserEnable()) {
+			super.removeUser(user);
+			return;
+		}
+		try {
+			this.getLdapUserDAO().deleteUser(user);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "removeUser");
+			throw new ApsSystemException("Error deleting a ldap user", t);
+		}
+	}
+	
+	@Override
+	public void removeUser(String username) throws ApsSystemException {
+		if (!isActive() || !isWriteUserEnable()) {
+			super.removeUser(username);
+			return;
+		}
+		try {
+			this.getLdapUserDAO().deleteUser(username);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "removeUser");
+			throw new ApsSystemException("Error deleting a ldap user", t);
+		}
+	}
+	
+	@Override
+	public void updateUser(UserDetails user) throws ApsSystemException {
+		if (!isActive() || !isWriteUserEnable()) {
+			super.updateUser(user);
+			return;
+		}
+		try {
+			this.getLdapUserDAO().updateUser(user);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "updateUser");
+			throw new ApsSystemException("Error updating a ldap user", t);
+		}
+	}
+	
     private boolean isActive() {
         String activeString = this.getConfigManager().getParam(LdapSystemConstants.ACTIVE_PARAM_NAME);
         Boolean active = Boolean.parseBoolean(activeString);
         return active.booleanValue();
     }
+	
+	@Override
+	public boolean isWriteUserEnable() {
+		return this.getLdapUserDAO().isWriteUserEnable();
+	}
     
-    protected IUserDAO getLdapUserDAO() {
+    protected ILdapUserDAO getLdapUserDAO() {
         return _ldapUserDAO;
     }
-    public void setLdapUserDAO(IUserDAO userLdapDAO) {
+    public void setLdapUserDAO(ILdapUserDAO userLdapDAO) {
         this._ldapUserDAO = userLdapDAO;
     }
     
-    public IUserDAO _ldapUserDAO;
+    public ILdapUserDAO _ldapUserDAO;
     
 }

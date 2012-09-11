@@ -37,4 +37,18 @@ public interface LdapSystemConstants {
     
     public static final String SEARCH_RESULT_MAX_SIZE_PARAM_NAME ="jpldap_searchResultMaxSize";
     
+	//-----------------
+	
+	public static final String USER_EDITING_ACTIVE_PARAM_NAME ="jpldap_userEditingActive";
+	
+	public static final String USER_BASE_DN_PARAM_NAME ="jpldap_userBaseDN";
+	
+	public static final String USER_REAL_ATTRIBUTE_NAME_PARAM_NAME ="jpldap_userRealAttributeName";
+	
+	public static final String USER_PASSWORD_ATTRIBUTE_NAME_PARAM_NAME ="jpldap_userPasswordAttributeName";
+	
+	public static final String USER_OBJECT_CLASSES_CSV_PARAM_NAME ="jpldap_userObjectClassesCSV";
+	
+	public static final String OU_OBJECT_CLASSES_CSV_PARAM_NAME ="jpldap_ouObjectClassesCSV";
+	
 }
