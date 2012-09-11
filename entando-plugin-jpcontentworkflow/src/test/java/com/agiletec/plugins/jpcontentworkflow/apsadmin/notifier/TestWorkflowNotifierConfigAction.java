@@ -60,10 +60,10 @@ public class TestWorkflowNotifierConfigAction extends ApsAdminPluginBaseTestCase
 		assertEquals(8, action.getMinute());
 		
 		assertFalse(config.isHtml());
-		assertEquals("[Portale]: Notifica stato contenuti", config.getSubject());
-		assertEquals("Elenco contenuti: Ciao {user},<br />di seguito l'elenco dei contenuti per cui è richiesto il tuo intervento<br /><br />", config.getHeader());
-		assertEquals("<br />Contenuto {type} - {descr} - Stato {status}<br />", config.getTemplate());
-		assertEquals("<br />Fine Mail (footer)", config.getFooter());
+                assertEquals("[My Own Portal]: A content changed", config.getSubject());
+                assertEquals("Hi {user},<br />these contents require your attention<br /><br />", config.getHeader());
+                assertEquals("<br />Content {type} - {descr} - Status {status}<br />", config.getTemplate());
+                assertEquals("<br />End (footer)", config.getFooter());
 	}
 	
 	public void testSaveFailure() throws Throwable {
