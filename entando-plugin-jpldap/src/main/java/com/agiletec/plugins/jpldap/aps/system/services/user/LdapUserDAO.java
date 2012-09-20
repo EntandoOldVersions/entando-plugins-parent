@@ -35,6 +35,20 @@ import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.user.UserDetails;
 
 import com.agiletec.plugins.jpldap.aps.system.LdapSystemConstants;
+import com.agiletec.plugins.jpldap.aps.system.services.user.tls.MyTLSHostnameVerifier;
+import com.agiletec.plugins.jpldap.aps.system.services.user.tls.MyX509TrustManager;
+
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import javax.naming.ldap.StartTlsRequest;
+import javax.naming.ldap.StartTlsResponse;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * The Data Access Object for LdapUser.
@@ -120,12 +134,32 @@ public class LdapUserDAO implements ILdapUserDAO {
 		}
         attrs.put(oc);
 		Attribute cn = new BasicAttribute(this.getUserRealAttributeName(), user.getUsername());
-        Attribute sn = new BasicAttribute(this.getUserPasswordAttributeName(), user.getPassword());
+		String sEncrypted = this.encryptLdapPassword(user.getPassword());
+        Attribute password = new BasicAttribute(this.getUserPasswordAttributeName(), sEncrypted);
         Attribute uid = new BasicAttribute(this.getUserIdAttributeName(), user.getUsername());
         attrs.put(cn);
-        attrs.put(sn);
+        attrs.put(password);
         attrs.put(uid);
         return attrs;
+	}
+	
+	private String encryptLdapPassword(String password) {
+		String sEncrypted = password;
+		if ((password != null) && (password.length() > 0)) {
+			String algorithm = this.getUserPasswordAlgorithm().toUpperCase();
+			if (algorithm.equalsIgnoreCase(LdapSystemConstants.USER_PASSWORD_ALGORITHM_MD5) 
+					|| algorithm.equalsIgnoreCase(LdapSystemConstants.USER_PASSWORD_ALGORITHM_SHA)) {
+				try {
+					MessageDigest md = MessageDigest.getInstance(algorithm);
+					md.update(password.getBytes("UTF-8"));
+					sEncrypted = "{" + algorithm + "}" + (new Base64()).encode(md.digest());
+				} catch (Exception e) {
+					sEncrypted = password;
+					ApsSystemUtils.logThrowable(e, this, "encryptLdapPassword", "Error while ncrypting Ldap Password");
+				}
+			}
+		}
+		return sEncrypted;
 	}
 	
 	private String getEntryName(UserDetails user) {
@@ -188,12 +222,13 @@ public class LdapUserDAO implements ILdapUserDAO {
         this.updateUser(username, password);
     }
 	
-	protected void updateUser(String username, String password) {
+	private void updateUser(String username, String password) {
 		SearchResult res = this.searchUserByFilterExpr(username);
 		if (res != null) {
 			ModificationItem[] mods = new ModificationItem[1];
+			String sEncrypted = this.encryptLdapPassword(password);
 			mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE,
-			    new BasicAttribute(this.getUserPasswordAttributeName(), password));
+					new BasicAttribute(this.getUserPasswordAttributeName(), sEncrypted));
 			this.editEntry(res.getName(), mods);
 		}
 	}
@@ -307,7 +342,7 @@ public class LdapUserDAO implements ILdapUserDAO {
                     String userdn = searchResult.getNameInNamespace();
                     answer.close();
                     Hashtable<String, String> clonedParams = new Hashtable<String, String>();
-                    clonedParams.putAll(this.getParams());
+                    clonedParams.putAll(this.getParams(false));
                     clonedParams.put(Context.SECURITY_PRINCIPAL, userdn);
                     clonedParams.put(Context.SECURITY_CREDENTIALS, password);
                     dirCtx = new InitialDirContext(clonedParams);
@@ -416,37 +451,94 @@ public class LdapUserDAO implements ILdapUserDAO {
     protected DirContext getDirContext() throws NamingException, CommunicationException, ConnectException {
         DirContext dirCtx = null;
         try {
-            dirCtx = new InitialDirContext(this.getParams());
-        } catch (NamingException e) {
+			if (this.isTlsSecurityConnection()) {
+				dirCtx = new InitialLdapContext(this.getParams(true), null);
+				StartTlsResponse tls = (StartTlsResponse) ((InitialLdapContext) dirCtx).extendedOperation(new StartTlsRequest());
+				// Set the (our) HostVerifier
+				tls.setHostnameVerifier(new MyTLSHostnameVerifier());
+				SSLSocketFactory sslsf = null;
+				try {
+					TrustManager[] tm = new TrustManager [] {new MyX509TrustManager()};
+					SSLContext sslC = SSLContext.getInstance("TLS");
+					sslC.init(null, tm, null);
+					sslsf = sslC.getSocketFactory();
+				} catch(NoSuchAlgorithmException nSAE) {
+					ApsSystemUtils.logThrowable(nSAE, this, "Hier: " + nSAE.getMessage());
+				} catch(KeyManagementException kME) {
+					ApsSystemUtils.logThrowable(kME, this, "Hier: " + kME.getMessage());
+				}
+				tls.negotiate(sslsf);
+				if (null != this.getSecurityPrincipal() && null != this.getSecurityCredentials()) {
+					dirCtx.addToEnvironment(Context.SECURITY_PRINCIPAL, this.getSecurityPrincipal());
+					dirCtx.addToEnvironment(Context.SECURITY_CREDENTIALS, this.getSecurityCredentials());
+					dirCtx.addToEnvironment(Context.SECURITY_AUTHENTICATION, "simple");
+				}
+			} else {
+				dirCtx = new InitialDirContext(this.getParams(false));
+			}
+			//dirCtx.extendedOperation(null);
+        } catch (IOException ex) {
+			ApsSystemUtils.logThrowable(ex, this, "IOException");
+		} catch (NamingException e) {
             throw e;
         }
         return dirCtx;
     }
     
     protected void closeDirContext(DirContext dirCtx) {
-        try {
+        if (null == dirCtx) return;
+		try {
+			if (dirCtx instanceof InitialLdapContext) {
+				((StartTlsResponse) ((InitialLdapContext) dirCtx).getExtendedResponse()).close();
+			}
             dirCtx.close();
-        } catch (NullPointerException e) {
-            ApsSystemUtils.getLogger().severe("Null DirContext");
-        } catch (NamingException e) {
+        } catch (IOException ex) {
+			ApsSystemUtils.logThrowable(ex, this, "IOException");
+		} catch (NamingException e) {
             throw new RuntimeException("Error closing DirContext", e);
         }
     }
     
-    protected Hashtable<String, String> getParams() {
+    protected Hashtable<String, String> getParams(boolean isTls) {
         Hashtable<String, String> params = new Hashtable<String, String>(11);
         params.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         params.put(Context.PROVIDER_URL, this.getProviderUrl());
         if (null != this.getSecurityPrincipal() && null != this.getSecurityCredentials()) {
-            params.put(Context.SECURITY_PRINCIPAL, this.getSecurityPrincipal());
-            params.put(Context.SECURITY_CREDENTIALS, this.getSecurityCredentials());
-            params.put(Context.REFERRAL, "ignore");
+			if (!isTls) {
+				params.put(Context.SECURITY_PRINCIPAL, this.getSecurityPrincipal());
+				params.put(Context.SECURITY_CREDENTIALS, this.getSecurityCredentials());
+				params.put(Context.SECURITY_AUTHENTICATION, "simple");
+			}
+			params.put(Context.REFERRAL, "ignore");
         }
+		if (this.isSslSecurityConnection()) {
+			params.put(Context.SECURITY_PROTOCOL, "ssl");
+		}
         return params;
     }
     
     protected String getProviderUrl() {
         return this.getConfigParam(LdapSystemConstants.PROVIDER_URL_PARAM_NAME);
+    }
+	
+	private boolean isSslSecurityConnection() {
+		return this.getSecurityConnectionType().equalsIgnoreCase(LdapSystemConstants.SECURITY_CONNECTION_TYPE_SSL);
+	}
+    
+	private boolean isTlsSecurityConnection() {
+		return this.getSecurityConnectionType().equalsIgnoreCase(LdapSystemConstants.SECURITY_CONNECTION_TYPE_TLS);
+	}
+    
+    protected String getSecurityConnectionType() {
+        String type = this.getConfigParam(LdapSystemConstants.SECURITY_CONNECTION_TYPE_PARAM_NAME);
+		if (null != type) {
+			if (type.equalsIgnoreCase(LdapSystemConstants.SECURITY_CONNECTION_TYPE_SSL)) {
+				return LdapSystemConstants.SECURITY_CONNECTION_TYPE_SSL;
+			} else if (type.equalsIgnoreCase(LdapSystemConstants.SECURITY_CONNECTION_TYPE_TLS)) {
+				return LdapSystemConstants.SECURITY_CONNECTION_TYPE_TLS;
+			}
+		}
+		return LdapSystemConstants.SECURITY_CONNECTION_TYPE_NONE;
     }
     
     protected String getSecurityPrincipal() {
@@ -517,6 +609,14 @@ public class LdapUserDAO implements ILdapUserDAO {
             attributeName = "userPassword";
         }
         return attributeName;
+    }
+	
+	protected String getUserPasswordAlgorithm() {
+        String algorithm = this.getConfigParam(LdapSystemConstants.USER_PASSWORD_ALGORITHM_PARAM_NAME);
+		if (null == algorithm) {
+            algorithm = LdapSystemConstants.USER_PASSWORD_ALGORITHM_NONE;
+        }
+        return algorithm;
     }
 	
 	protected String[] getUserObjectClasses() {
