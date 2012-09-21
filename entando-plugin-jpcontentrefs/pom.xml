@@ -9,8 +9,8 @@
 	<artifactId>entando-plugin-jpcontentrefs</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
 	<packaging>war</packaging>
-	<name>Entando Plugin: Content Types - Categories relactions</name>
-	<description>Content Types - Categories relactions</description>
+	<name>Entando Plugin: Content Types - Categories Relations</name>
+	<description>Content Types - Categories Relations</description>
 	<developers>
 		<developer>
 			<id>e.santoboni</id>

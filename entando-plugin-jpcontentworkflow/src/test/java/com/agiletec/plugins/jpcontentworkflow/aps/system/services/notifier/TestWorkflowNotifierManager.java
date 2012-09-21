@@ -64,10 +64,10 @@ public class TestWorkflowNotifierManager extends ApsPluginBaseTestCase {
 		assertEquals("CODE1", notifierConfig.getSenderCode());
 		assertEquals("email", notifierConfig.getMailAttrName());
 		assertFalse(notifierConfig.isHtml());
-		assertEquals("[Portale]: Notifica stato contenuti", notifierConfig.getSubject());
-		assertEquals("Elenco contenuti: Ciao {user},<br />di seguito l'elenco dei contenuti per cui è richiesto il tuo intervento<br /><br />", notifierConfig.getHeader());
-		assertEquals("<br />Contenuto {type} - {descr} - Stato {status}<br />", notifierConfig.getTemplate());
-		assertEquals("<br />Fine Mail (footer)", notifierConfig.getFooter());
+		assertEquals("[My Own Portal]: A content changed", notifierConfig.getSubject());
+		assertEquals("Hi {user},<br />these contents require your attention<br /><br />", notifierConfig.getHeader());
+		assertEquals("<br />Content {type} - {descr} - Status {status}<br />", notifierConfig.getTemplate());
+		assertEquals("<br />End (footer)", notifierConfig.getFooter());
 	}
 	
 	public void testSetNotifierConfig() throws Throwable {
