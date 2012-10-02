@@ -47,8 +47,7 @@ import javax.naming.ldap.StartTlsResponse;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
-
-import org.apache.commons.codec.binary.Base64;
+import sun.misc.BASE64Encoder;
 
 /**
  * The Data Access Object for LdapUser.
@@ -152,7 +151,7 @@ public class LdapUserDAO implements ILdapUserDAO {
 				try {
 					MessageDigest md = MessageDigest.getInstance(algorithm);
 					md.update(password.getBytes("UTF-8"));
-					sEncrypted = "{" + algorithm + "}" + (new Base64()).encode(md.digest());
+					sEncrypted = "{" + algorithm + "}" + (new BASE64Encoder()).encode(md.digest());
 				} catch (Exception e) {
 					sEncrypted = password;
 					ApsSystemUtils.logThrowable(e, this, "encryptLdapPassword", "Error while ncrypting Ldap Password");
