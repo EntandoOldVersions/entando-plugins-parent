@@ -52,12 +52,14 @@
 		</plugins>
 	</build>	
 	<dependencies>
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
 			<version>3.0.1-EU-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>war</type>
 		</dependency>
+		
  		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
@@ -66,13 +68,7 @@
 			<classifier>classes</classifier>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>3.0.1-EU-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc</classifier>
-		</dependency>		
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
@@ -81,19 +77,14 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>3.0.1-EU-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc-test</classifier>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
 			<version>3.0.1-EU-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>war</type>
 		</dependency>
+		
  		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
@@ -102,13 +93,7 @@
 			<classifier>classes</classifier>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.0.1-EU-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc</classifier>
-		</dependency>		
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
@@ -116,13 +101,7 @@
 			<type>jar</type>
 			<classifier>tests</classifier>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.0.1-EU-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc-test</classifier>
-		</dependency>		
+		</dependency>	
+		
 	</dependencies>
 </project>

@@ -16,38 +16,37 @@
 	</licenses>
 	<description>Plugins parent for Entando: an agile, modern and user-centric open source Portal platform.</description>
 	<modules>
+		<!--
 		<module>entando-plugin-jpfacetnav</module>
+		-->
 		<module>entando-plugin-jpmail</module>
+		<!--
 		<module>entando-plugin-jpwebdynamicform</module>
 		<module>entando-plugin-jprss</module>
 		<module>entando-plugin-jpsharewith</module>
 		<module>entando-plugin-jpcalendar</module>
 		<module>entando-plugin-jpldap</module>
+		-->
 		<module>entando-plugin-jpuserprofile</module>
 		<module>entando-plugin-jpuserreg</module>
+		<!--
 		<module>entando-plugin-jpaddressbook</module>
 		<module>entando-plugin-jpnewsletter</module>
 		<module>entando-plugin-jpsurvey</module>
 		<module>entando-plugin-jpavatar</module>
 		<module>entando-plugin-jpactionlogger</module>
-		<!--
-		<module>entando-plugin-jpcontentnotifier</module>
-		-->
+		<module>entando-plugin-jpcontentnotifier</module>NON A POSTO DA TEMPO
 		<module>entando-plugin-jpfastcontentedit</module>
 		<module>entando-plugin-jpgeoref</module>
-		<!--
-		<module>entando-plugin-jpwebmail</module>
-		-->
+		<module>entando-plugin-jpwebmail</module>NON A POSTO DA TEMPO
 		<module>entando-plugin-jpimagemap</module>
 		<module>entando-plugin-jpphotogallery</module>
 		<module>entando-plugin-jprssaggregator</module>
 		<module>entando-plugin-jpshowletreplicator</module>
-		<!--
-        <module>entando-plugin-jpwtt</module>
-		<module>entando-plugin-jpmyportal</module>
-		<module>entando-plugin-jpmassiveresourceloader</module>
-		<module>entando-plugin-jpremoteresourceloader</module>
-		-->
+		<module>entando-plugin-jpwtt</module>NON A POSTO DA TEMPO
+		<module>entando-plugin-jpmyportal</module>NON A POSTO DA TEMPO
+		<module>entando-plugin-jpmassiveresourceloader</module>NON A POSTO DA TEMPO
+		<module>entando-plugin-jpremoteresourceloader</module>NON A POSTO DA TEMPO
 		<module>entando-plugin-jpversioning</module>
 		<module>entando-plugin-jpcasclient</module>
 		<module>entando-plugin-jpstats</module>
@@ -57,6 +56,7 @@
 		<module>entando-plugin-jpcontentrefs</module>
 		<module>entando-plugin-jpmyportalplus</module>
 		<module>entando-plugin-jptokenapi</module>
+		-->
 	</modules>
 	<!--
 	<distributionManagement>
@@ -71,6 +71,7 @@
 	</distributionManagement>
 	-->
 	<properties>
+		
 		<test.database.driver>org.postgresql.Driver</test.database.driver>
 		<test.database.hostname>localhost</test.database.hostname>
 		<test.database.port>5432</test.database.port>
@@ -78,14 +79,24 @@
 		<test.database.password>agile</test.database.password>
 		<test.database.port.url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testPort</test.database.port.url>
 		<test.database.serv.url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testServ</test.database.serv.url>
+		
 		<!--
 		<test.database.driver>com.mysql.jdbc.Driver</test.database.driver>
 		<test.database.hostname>localhost</test.database.hostname>
 		<test.database.port>3306</test.database.port>
-		<test.database.username>agile</test.database.username>
+		<test.database.username>root</test.database.username>
 		<test.database.password>agile</test.database.password>
 		<test.database.port.url>jdbc:mysql://${test.database.hostname}:${test.database.port}/EntandoCoreEnginetestPort</test.database.port.url>
 		<test.database.serv.url>jdbc:mysql://${test.database.hostname}:${test.database.port}/EntandoCoreEnginetestServ</test.database.serv.url>
+		-->
+		<!--
+		<test.database.driver>org.apache.derby.jdbc.EmbeddedDriver</test.database.driver>
+		<test.database.hostname>localhost</test.database.hostname>
+		<test.database.port>1527</test.database.port>
+		<test.database.username>agile</test.database.username>
+		<test.database.password>agile</test.database.password>
+		<test.database.port.url>jdbc:derby:${project.artifactId}testPort;create=true</test.database.port.url>
+		<test.database.serv.url>jdbc:derby:${project.artifactId}testServ;create=true</test.database.serv.url>
 		-->
 		<spring.version>3.0.6.RELEASE</spring.version>
 		<struts2.version>2.3.4.1</struts2.version>
@@ -192,6 +203,7 @@
 							</descriptors>
 						</configuration>
 					</execution>
+					<!--
 					<execution>
 						<id>assembly-misc-files</id>
 						<phase>package</phase>
@@ -218,6 +230,7 @@
 							</descriptors>
 						</configuration>
 					</execution>
+					-->
 				</executions>
 			</plugin>
 			<plugin>
@@ -384,6 +397,7 @@
 							<sqlCommand>create database "${project.artifactId}testServ"</sqlCommand>
 						</configuration>
 					</execution>
+					<!--
 					<execution>
 						<id>create-schema-port</id>
 						<phase>process-test-classes</phase>
@@ -524,6 +538,7 @@
 							</srcFiles>
 						</configuration>
 					</execution>
+					-->
 				</executions>
 			</plugin>
 		</plugins>
@@ -637,6 +652,20 @@
 			<version>5.1.18</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.8.2.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>10.8.2.2</version>
+			<scope>test</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
