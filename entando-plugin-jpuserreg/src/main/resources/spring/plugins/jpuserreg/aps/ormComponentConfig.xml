@@ -24,7 +24,7 @@
 			<entry key="servDataSource"><ref bean="jpuserregServTableClasses" /></entry>
 		</map>
 		</property>
-		<property name="sqlResources">
+		<property name="defaultSqlResources">
 		<map>
 			<entry key="portDataSource"><value>classpath:sql/plugins/jpuserreg/port_data_${db.script.default.marker}.sql</value></entry>
 			<entry key="servDataSource"><value>classpath:sql/plugins/jpuserreg/serv_data_${db.script.default.marker}.sql</value></entry>

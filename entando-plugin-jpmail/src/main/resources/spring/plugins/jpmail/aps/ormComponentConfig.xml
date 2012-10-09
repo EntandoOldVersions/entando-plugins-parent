@@ -9,7 +9,7 @@
 	
 	<bean id="jpmailOrmComponentConfiguration" class="org.entando.entando.aps.system.orm.EntandoComponentConfiguration">
 		<property name="code" value="jpmail" />
-		<property name="sqlResources">
+		<property name="defaultSqlResources">
 		<map>
 			<entry key="portDataSource"><value>classpath:sql/plugins/jpmail/port_data_${db.script.default.marker}.sql</value></entry>
 			<entry key="servDataSource"><value>classpath:sql/plugins/jpmail/serv_data_${db.script.default.marker}.sql</value></entry>
