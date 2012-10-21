@@ -28,4 +28,6 @@ public interface IApiTokenizerManager {
 	
 	public String getToken(String username) throws ApsSystemException;
 	
+	public String updateToken(String username) throws ApsSystemException;
+	
 }

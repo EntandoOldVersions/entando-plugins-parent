@@ -21,9 +21,13 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
 /**
  * @author E.Santoboni
  */
+@Aspect
 public class ApiTokenizerManager extends AbstractService implements IApiTokenizerManager {
 	
 	@Override
@@ -49,10 +53,31 @@ public class ApiTokenizerManager extends AbstractService implements IApiTokenize
 		try {
 			token = this.getApiTokenDAO().getToken(username);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getUser", "Error extracting token by username '" + username + "'");
+			ApsSystemUtils.logThrowable(t, this, "getToken", "Error extracting token by username '" + username + "'");
 			throw new ApsSystemException("Error extracting token by username '" + username + "'", t);
 		}
 		return token;
+	}
+	
+	@Override
+	public String updateToken(String username) throws ApsSystemException {
+		String token = null;
+		try {
+			token = this.getApiTokenDAO().updateToken(username);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "updateToken", "Error updating token by username '" + username + "'");
+			throw new ApsSystemException("Error updating token by username '" + username + "'", t);
+		}
+		return token;
+	}
+	
+	@Before("execution(* com.agiletec.aps.system.services.user.IUserManager.changePassword(..)) && args(username, password)")
+	public void changePassword(Object username, Object password) {
+		try {
+			this.updateToken((String) username);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "changePassword", "Error updating token by username '" + username + "'");
+		}
 	}
 	
 	protected IApiTokenDAO getApiTokenDAO() {
