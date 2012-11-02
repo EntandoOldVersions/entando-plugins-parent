@@ -31,7 +31,7 @@ public class UserProfile {
 	@DatabaseField(columnName = "profilexml", 
 			dataType = DataType.LONG_STRING, 
 			canBeNull = false)
-	private String _profileCml;
+	private String _profileXml;
 	
 	@DatabaseField(columnName = "publicprofile", 
 			dataType = DataType.SHORT, 
