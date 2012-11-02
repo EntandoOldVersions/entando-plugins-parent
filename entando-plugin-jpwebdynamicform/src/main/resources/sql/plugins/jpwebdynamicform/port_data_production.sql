@@ -1,4 +1,3 @@
-
 INSERT INTO showletcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked )
 	VALUES ( 'jpwebdynamicform_message_form', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
