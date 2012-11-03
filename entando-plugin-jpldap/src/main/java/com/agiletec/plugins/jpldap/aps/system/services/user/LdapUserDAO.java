@@ -453,20 +453,24 @@ public class LdapUserDAO implements ILdapUserDAO {
 			if (this.isTlsSecurityConnection()) {
 				dirCtx = new InitialLdapContext(this.getParams(true), null);
 				StartTlsResponse tls = (StartTlsResponse) ((InitialLdapContext) dirCtx).extendedOperation(new StartTlsRequest());
-				// Set the (our) HostVerifier
-				tls.setHostnameVerifier(new MyTLSHostnameVerifier());
-				SSLSocketFactory sslsf = null;
-				try {
-					TrustManager[] tm = new TrustManager [] {new MyX509TrustManager()};
-					SSLContext sslC = SSLContext.getInstance("TLS");
-					sslC.init(null, tm, null);
-					sslsf = sslC.getSocketFactory();
-				} catch(NoSuchAlgorithmException nSAE) {
-					ApsSystemUtils.logThrowable(nSAE, this, "Hier: " + nSAE.getMessage());
-				} catch(KeyManagementException kME) {
-					ApsSystemUtils.logThrowable(kME, this, "Hier: " + kME.getMessage());
+				if (this.isTlsFreeSecurityConnection()) {
+					// Set the (our) HostVerifier
+					tls.setHostnameVerifier(new MyTLSHostnameVerifier());
+					SSLSocketFactory sslsf = null;
+					try {
+						TrustManager[] tm = new TrustManager [] {new MyX509TrustManager()};
+						SSLContext sslC = SSLContext.getInstance("TLS");
+						sslC.init(null, tm, null);
+						sslsf = sslC.getSocketFactory();
+					} catch(NoSuchAlgorithmException nSAE) {
+						ApsSystemUtils.logThrowable(nSAE, this, "Hier: " + nSAE.getMessage());
+					} catch(KeyManagementException kME) {
+						ApsSystemUtils.logThrowable(kME, this, "Hier: " + kME.getMessage());
+					}
+					tls.negotiate(sslsf);
+				} else {
+					tls.negotiate();
 				}
-				tls.negotiate(sslsf);
 				if (null != this.getSecurityPrincipal() && null != this.getSecurityCredentials()) {
 					dirCtx.addToEnvironment(Context.SECURITY_PRINCIPAL, this.getSecurityPrincipal());
 					dirCtx.addToEnvironment(Context.SECURITY_CREDENTIALS, this.getSecurityCredentials());
@@ -475,7 +479,6 @@ public class LdapUserDAO implements ILdapUserDAO {
 			} else {
 				dirCtx = new InitialDirContext(this.getParams(false));
 			}
-			//dirCtx.extendedOperation(null);
         } catch (IOException ex) {
 			ApsSystemUtils.logThrowable(ex, this, "IOException");
 		} catch (NamingException e) {
@@ -525,7 +528,12 @@ public class LdapUserDAO implements ILdapUserDAO {
 	}
     
 	private boolean isTlsSecurityConnection() {
-		return this.getSecurityConnectionType().equalsIgnoreCase(LdapSystemConstants.SECURITY_CONNECTION_TYPE_TLS);
+		return (this.isTlsFreeSecurityConnection() || 
+				this.getSecurityConnectionType().equalsIgnoreCase(LdapSystemConstants.SECURITY_CONNECTION_TYPE_TLS));
+	}
+    
+	private boolean isTlsFreeSecurityConnection() {
+		return this.getSecurityConnectionType().equalsIgnoreCase(LdapSystemConstants.SECURITY_CONNECTION_TYPE_TLS_FREE);
 	}
     
     protected String getSecurityConnectionType() {

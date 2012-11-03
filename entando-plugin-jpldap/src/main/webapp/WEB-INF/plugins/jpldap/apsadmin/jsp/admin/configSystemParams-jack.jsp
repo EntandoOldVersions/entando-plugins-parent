@@ -23,6 +23,7 @@
 	<ul class="noBullet radiocheck">
 		<li><input type="radio" id="jpldap_securityConnectionType_none" name="<s:property value="#jpldap_paramName" />" value="none" <s:if test="%{null == systemParams[#jpldap_paramName] || systemParams[#jpldap_paramName] == 'none'}">checked="checked"</s:if> /><label for="jpldap_securityConnectionType_none"><s:text name="label.none" /></label></li>
 		<li><input type="radio" id="jpldap_securityConnectionType_ssl" name="<s:property value="#jpldap_paramName" />" value="ssl" <s:if test="systemParams[#jpldap_paramName] == 'ssl'">checked="checked"</s:if> /><label for="jpldap_securityConnectionType_ssl"><s:text name="jpldap.label.securityConnectionType.ssl" /></label></li>
+		<li><input type="radio" id="jpldap_securityConnectionType_tls_free" name="<s:property value="#jpldap_paramName" />" value="tls_free" <s:if test="systemParams[#jpldap_paramName] == 'tls_free'">checked="checked"</s:if> /><label for="jpldap_securityConnectionType_tls_free"><s:text name="jpldap.label.securityConnectionType.tls_free" /></label></li>
 		<li><input type="radio" id="jpldap_securityConnectionType_tls" name="<s:property value="#jpldap_paramName" />" value="tls" <s:if test="systemParams[#jpldap_paramName] == 'tls'">checked="checked"</s:if> /><label for="jpldap_securityConnectionType_tls"><s:text name="jpldap.label.securityConnectionType.tls" /></label></li>
 	</ul>
 	<wpsf:hidden name="%{#jpldap_paramName + externalParamMarker}" value="true"/>
