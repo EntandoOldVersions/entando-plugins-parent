@@ -25,8 +25,8 @@
 		<module>entando-plugin-jprss</module>
 		<module>entando-plugin-jpsharewith</module>
 		<module>entando-plugin-jpcalendar</module>
-		<module>entando-plugin-jpldap</module>
 		-->
+		<module>entando-plugin-jpldap</module>
 		<module>entando-plugin-jpuserprofile</module>
 		<module>entando-plugin-jpuserreg</module>
 		<!--
