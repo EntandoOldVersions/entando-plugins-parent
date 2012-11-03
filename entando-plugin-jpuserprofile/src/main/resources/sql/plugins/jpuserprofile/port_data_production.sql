@@ -27,7 +27,7 @@ insert into sysconfig (version, item, descr, config) values ('production', 'jpus
 <profiletypes>
 	<profiletype typecode="PFL" typedescr="Profilo utente/cittadino tipo">
 		<attributes>
-			<attribute name="Nome" attributetype="Monotext" searcheable="true">
+			<attribute name="Name" attributetype="Monotext" searcheable="true">
 				<validations>
 					<required>true</required>
 				</validations>
@@ -35,7 +35,7 @@ insert into sysconfig (version, item, descr, config) values ('production', 'jpus
 					<role>jpuserprofile:firstname</role>
 				</roles>
 			</attribute>
-			<attribute name="Cognome" attributetype="Monotext" searcheable="true">
+			<attribute name="Surname" attributetype="Monotext" searcheable="true">
 				<validations>
 					<required>true</required>
 				</validations>
