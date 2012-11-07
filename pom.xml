@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.entando.entando.plugins</groupId>
 	<artifactId>entando-plugins-parent</artifactId>
-	<version>3.0.1-EU-SNAPSHOT</version>
+	<version>experiment-components</version>
 	<packaging>pom</packaging>
-	<name>Entando EU Evolution: Plugins parent</name>
+	<name>Entando: Plugins parent - Experiment Components</name>
 	<url>http://www.entando.com/</url>
 	<licenses>
 		<license>
@@ -618,20 +618,20 @@
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>3.0.1-EU-SNAPSHOT</version>
+			<version>experiment-components</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>3.0.1-EU-SNAPSHOT</version>
+			<version>experiment-components</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>3.0.1-EU-SNAPSHOT</version>
+			<version>experiment-components</version>
 			<type>zip</type>
 			<classifier>misc-test</classifier>
 			<scope>test</scope>
