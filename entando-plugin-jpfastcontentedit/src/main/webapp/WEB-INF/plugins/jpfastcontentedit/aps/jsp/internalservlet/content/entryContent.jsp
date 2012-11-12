@@ -100,6 +100,34 @@
 </p>
 <!-- END - EXTRA GROUP BLOCK -->
 
+<!-- START - CATEGORIES BLOCK -->
+<s:set var="contentCategories" value="content.categories" />
+<s:if test="#contentCategories != null && #contentCategories.size() > 0">
+<ul>
+<s:iterator value="#contentCategories" id="contentCategory">
+	<li>
+		<wpsa:actionParam action="removeCategory" var="actionName" >
+			<wpsa:actionSubParam name="categoryCode" value="%{#contentCategory.code}" />
+		</wpsa:actionParam>
+		<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="image" src="%{#removeIcon}" value="%{getText('label.remove')}" title="%{getText('label.remove')}" />: <s:property value="#contentCategory.getFullTitle(currentLang.code)"/>
+	</li>
+</s:iterator>
+</ul>
+</s:if>
+<p>
+	<label for="categories"><s:text name="label.join" />&#32;<s:text name="label.category" />:</label><br />
+
+<wp:categories var="categoriesVar" titleStyle="full" />
+<select name="categoryCode" id="categories" class="text">
+<c:forEach items="${categoriesVar}" var="category">
+<option value="<c:out value="${category.key}" />" ><c:out value="${category.value}" /></option>
+</c:forEach>
+</select>
+	
+	<wpsf:submit useTabindexAutoIncrement="true" action="joinCategory" value="%{getText('label.join')}" cssClass="button" />
+</p>
+<!-- END - CATEGORIES BLOCK -->
+
 </div>
 
 <!-- START CICLO LINGUA -->
