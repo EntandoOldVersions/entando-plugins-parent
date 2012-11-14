@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-		<version>experiment-components</version>
+		<version>experiment-bundles_with_bootstrap</version>
 	</parent>
 	<artifactId>entando-plugin-jpsurvey</artifactId>
 	<packaging>war</packaging>
