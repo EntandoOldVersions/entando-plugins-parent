@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.entando.entando.plugins.jpwebdynamicform.aps.system.orm.servdb;
+package org.entando.entando.plugins.jpwebdynamicform.aps.system.init.servdb;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
@@ -10,8 +10,8 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
-import org.entando.entando.aps.system.orm.IDbInstallerManager;
-import org.entando.entando.aps.system.orm.model.ExtendedColumnDefinition;
+import org.entando.entando.aps.system.init.IDatabaseManager;
+import org.entando.entando.aps.system.init.model.ExtendedColumnDefinition;
 
 /**
  * @author E.Santoboni
@@ -47,10 +47,10 @@ public class Answer implements ExtendedColumnDefinition {
 	private String _text;
 	
 	@Override
-	public String[] extensions(IDbInstallerManager.DatabaseType type) {
+	public String[] extensions(IDatabaseManager.DatabaseType type) {
 		String tableName = TABLE_NAME;
 		String messageTableName = Message.TABLE_NAME;
-		if (IDbInstallerManager.DatabaseType.MYSQL.equals(type)) {
+		if (IDatabaseManager.DatabaseType.MYSQL.equals(type)) {
 			tableName = "`" + tableName + "`";
 			messageTableName = "`" + messageTableName + "`";
 		}

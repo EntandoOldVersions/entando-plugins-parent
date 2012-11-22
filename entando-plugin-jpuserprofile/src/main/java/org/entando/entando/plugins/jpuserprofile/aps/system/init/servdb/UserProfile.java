@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.entando.entando.plugins.jpuserprofile.aps.system.orm.servdb;
+package org.entando.entando.plugins.jpuserprofile.aps.system.init.servdb;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
