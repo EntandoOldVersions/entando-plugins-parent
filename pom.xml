@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.entando.entando.plugins</groupId>
 	<artifactId>entando-plugins-parent</artifactId>
-	<version>experiment-components</version>
+	<version>experiment-components-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Entando: Plugins parent - Experiment Components</name>
 	<url>http://www.entando.com/</url>
@@ -618,20 +618,20 @@
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>experiment-components</version>
+			<version>experiment-components-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>experiment-components</version>
+			<version>experiment-components-SNAPSHOT</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>experiment-components</version>
+			<version>experiment-components-SNAPSHOT</version>
 			<type>zip</type>
 			<classifier>misc-test</classifier>
 			<scope>test</scope>
