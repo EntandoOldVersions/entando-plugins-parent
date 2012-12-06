@@ -34,10 +34,12 @@ import com.agiletec.apsadmin.system.BaseAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 import com.agiletec.plugins.jacms.aps.system.services.content.showlet.util.EntitySearchFilterDOM;
+import com.agiletec.plugins.jacms.aps.system.services.content.showlet.util.FilterUtils;
 import com.agiletec.plugins.jprss.aps.system.services.rss.Channel;
 import com.agiletec.plugins.jprss.aps.system.services.rss.IRssManager;
 import com.agiletec.plugins.jprss.aps.system.services.rss.RssContentMapping;
 import com.opensymphony.xwork2.Action;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * This action handles backend operations for the channel
@@ -49,8 +51,11 @@ public class RssAction extends BaseAction implements IRssAction {
 		super.validate();
 		if (this.getActionErrors().size()>0 || this.getFieldErrors().size()>0) {
 			String filters = this.getFilters();
-			List<Properties> properties = EntitySearchFilterDOM.getPropertiesFilters(filters);
+      if (StringUtils.isNotBlank(filters)) {
+//			List<Properties> properties = EntitySearchFilterDOM.getPropertiesFilters(filters);
+      List<Properties> properties = FilterUtils.getFiltersProperties(filters);
 			this.setFiltersProperties(properties);
+      }
 		}
 	}
 
