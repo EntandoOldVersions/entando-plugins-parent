@@ -37,7 +37,9 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
     
     @Override
     public UserDetails getUser(String username, String password) throws ApsSystemException {
-        if (!isActive()) return super.getUser(username, password);
+        if (!isActive()) {
+			return super.getUser(username, password);
+		}
         UserDetails user = null;
         try {
             user = this.getLdapUserDAO().loadUser(username, password);
@@ -54,7 +56,9 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
     
     @Override
     public UserDetails getUser(String username) throws ApsSystemException {
-        if (!isActive()) return super.getUser(username);
+        if (!isActive()) {
+			return super.getUser(username);
+		}
         UserDetails user = null;
         try {
             user = this.getLdapUserDAO().loadUser(username);
@@ -72,7 +76,9 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
     @Override
     public List<UserDetails> getUsers() throws ApsSystemException {
         List<UserDetails> users = super.getUsers();
-        if (!isActive()) return users;
+        if (!isActive()) {
+			return users;
+		}
         try {
             users.addAll(this.getLdapUserDAO().loadUsers());
         } catch (Throwable t) {
@@ -88,7 +94,9 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
     
     @Override
     public List<UserDetails> searchUsers(String text) throws ApsSystemException {
-        if (!isActive()) return super.searchUsers(text);
+        if (!isActive()) {
+			return super.searchUsers(text);
+		}
         if (text == null || text.trim().length() == 0) {
             return this.getUsers();
         }
@@ -108,7 +116,9 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
     
     @Override
     public List<UserDetails> searchUsers(String text, Boolean japsUser) throws ApsSystemException {
-        if (!isActive()) return super.searchUsers(text);
+        if (!isActive()) {
+			return super.searchUsers(text);
+		}
         try {
             if (japsUser == null) {
                 return this.searchUsers(text);
@@ -156,7 +166,6 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
 	public void removeUser(UserDetails user) throws ApsSystemException {
 		if (!isActive() || !isWriteUserEnable()) {
 			super.removeUser(user);
-			return;
 		}
 		try {
 			this.getLdapUserDAO().deleteUser(user);
@@ -170,7 +179,6 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
 	public void removeUser(String username) throws ApsSystemException {
 		if (!isActive() || !isWriteUserEnable()) {
 			super.removeUser(username);
-			return;
 		}
 		try {
 			this.getLdapUserDAO().deleteUser(username);
