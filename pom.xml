@@ -23,7 +23,9 @@
 		<module>entando-plugin-jpwebdynamicform</module>
 		<!--
 		<module>entando-plugin-jprss</module>
+		-->
 		<module>entando-plugin-jpsharewith</module>
+		<!--
 		<module>entando-plugin-jpcalendar</module>
 		-->
 		<module>entando-plugin-jpldap</module>
@@ -32,7 +34,9 @@
 		<!--
 		<module>entando-plugin-jpaddressbook</module>
 		<module>entando-plugin-jpnewsletter</module>
+		-->
 		<module>entando-plugin-jpsurvey</module>
+		<!--
 		<module>entando-plugin-jpavatar</module>
 		<module>entando-plugin-jpactionlogger</module>
 		<module>entando-plugin-jpcontentnotifier</module>NON A POSTO DA TEMPO
@@ -56,8 +60,8 @@
 		<module>entando-plugin-jpcontentfeedback</module>
 		<module>entando-plugin-jpcmstagcloud</module>
 		<module>entando-plugin-jpcontentrefs</module>
-		<module>entando-plugin-jpmyportalplus</module>
 		-->
+		<module>entando-plugin-jpmyportalplus</module>
 		<module>entando-plugin-jptokenapi</module>
 	</modules>
 	<!--
