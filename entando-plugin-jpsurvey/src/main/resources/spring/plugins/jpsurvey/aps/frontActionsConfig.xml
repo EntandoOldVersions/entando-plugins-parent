@@ -33,5 +33,4 @@
 		<property name="responseManager" ref="jpsurveyResponseManager" />
 	</bean>
 	
-	
 </beans>

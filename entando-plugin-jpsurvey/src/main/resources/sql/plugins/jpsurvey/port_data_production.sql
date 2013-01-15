@@ -2,7 +2,7 @@
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpsurvey_pollArchive', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Polls - Polls Archive</property>
-<property key="it">Sondaggi - Archivio dei Sondaggy</property>
+<property key="it">Sondaggi - Archivio dei Sondaggi</property>
 </properties>', NULL, 'jpsurvey', NULL, NULL, 1);
 
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpsurvey_pollList', '<?xml version="1.0" encoding="UTF-8"?>
@@ -194,7 +194,7 @@ INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_TITL
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_VOTED_TOT', 'en', 'All voted');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_VOTED_TOT', 'it', 'Hanno votato in tutto');
 
-INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_VOTES', 'en', 'voti');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_VOTES', 'en', 'votes');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_VOTES', 'it', 'voti');
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_HAVE_NOT_VOTED', 'en', 'You have not voted');
@@ -208,3 +208,6 @@ INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_VOTED', 'en', '(You have already voted)');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('JPSURVEY_YOU_VOTED', 'it', '(Hai già votato)');
+
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpsurvey_POLLS_ARCHIVE_LIST_TITLE', 'it', 'Archivio dei Sondaggi');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpsurvey_POLLS_ARCHIVE_LIST_TITLE', 'en', 'Polls Archive');
