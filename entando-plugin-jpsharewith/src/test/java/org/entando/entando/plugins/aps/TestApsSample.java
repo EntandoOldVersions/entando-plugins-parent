@@ -1,6 +1,6 @@
-package com.agiletec.plugins.jpsharewith.apsadmin;
+package org.entando.entando.plugins.aps;
 
-public class TestApsAdminSample extends ApsAdminPluginBaseTestCase {
+public class TestApsSample extends ApsPluginBaseTestCase {
 	
 	@Override
 	protected void setUp() throws Exception {

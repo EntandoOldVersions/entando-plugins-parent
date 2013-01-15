@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,14 +12,14 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package com.agiletec.plugins.jpsharewith.apsadmin;
+package org.entando.entando.plugins.apsadmin;
 
 import com.agiletec.ConfigTestUtils;
 import com.agiletec.apsadmin.ApsAdminBaseTestCase;
-import com.agiletec.plugins.jpsharewith.PluginConfigTestUtils;
+import org.entando.entando.plugins.PluginConfigTestUtils;
 
 /**
  * BaseTestCase Class for jpuserprofile apsadmin tests.

@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,14 +12,14 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package com.agiletec.plugins.jpsharewith.aps;
+package org.entando.entando.plugins.aps;
 
 import com.agiletec.ConfigTestUtils;
 import com.agiletec.aps.BaseTestCase;
-import com.agiletec.plugins.jpsharewith.PluginConfigTestUtils;
+import org.entando.entando.plugins.PluginConfigTestUtils;
 
 public class ApsPluginBaseTestCase extends BaseTestCase {
 	
