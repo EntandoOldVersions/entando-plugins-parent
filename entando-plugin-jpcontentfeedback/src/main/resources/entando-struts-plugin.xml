@@ -4,12 +4,12 @@
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-
+	
 	<!-- ### jpcontentfeedback ### -->
     <include file="com/agiletec/plugins/jpcontentfeedback/aps/internalservlet/feedback/feedback.xml"/>
-
+	
 	<include file="com/agiletec/plugins/jpcontentfeedback/apsadmin/feedback/feedback.xml"/>
 	<include file="com/agiletec/plugins/jpcontentfeedback/apsadmin/portal/specialshowlet/specialShowlet.xml"/>
 	<include file="com/agiletec/plugins/jpcontentfeedback/apsadmin/config/contentFeedbackConfigAction.xml"/>
-
+	
 </struts>
