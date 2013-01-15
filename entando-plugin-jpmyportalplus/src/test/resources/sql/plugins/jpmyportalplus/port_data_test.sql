@@ -1,16 +1,3 @@
-CREATE TABLE `jpmyportalplus_userpageconfig` (
-  `username` varchar(40) DEFAULT NULL,
-  `pagecode` varchar(30) NOT NULL,
-  `framepos` integer NOT NULL,
-  `showletcode` varchar(40) NOT NULL,
-  `config` longtext,
-  `closed` integer NOT NULL,
-  KEY `jpmyportalplus_userpageconfig_pkey` (`username`, `framepos`, `pagecode`),
-  CONSTRAINT `jpmyportalplus_userpageconfig_pagecode_fkey` FOREIGN KEY (`pagecode`) 
-  REFERENCES `pages` (`code`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- modello di pagina di test
 INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpmyportalplus_pagemodel', 'My Portal', '<frames>
 <frame pos="0" locked="true"><descr>Header</descr></frame>
 <frame pos="1" column="1" locked="false"><descr>Left Column I</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
@@ -22,7 +9,6 @@ INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpmyportalplus_
 <frame pos="7" locked="true"><descr>Footer</descr></frame>
 </frames>', 'jpmyportalplus');
 
--- -- showlet void
 INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_void',
 '<?xml version="1.0" encoding="UTF-8"?>
@@ -105,5 +91,3 @@ INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, showletc
 INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, showletcode, config, closed)
     VALUES ('editorCustomers', 'jpmyportalplus_testpage', 
     6, 'jpmyportalplus_test_showlet_3', null, 1);
-
-

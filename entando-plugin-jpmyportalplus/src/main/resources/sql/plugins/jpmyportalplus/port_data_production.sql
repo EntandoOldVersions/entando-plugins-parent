@@ -1,18 +1,3 @@
-CREATE TABLE jpmyportalplus_userpageconfig
-(
-  username character varying(40) NOT NULL,
-  pagecode character varying(30) NOT NULL DEFAULT ''::character varying,
-  framepos integer NOT NULL,
-  showletcode character varying(40) NOT NULL,
-  config character varying,
-  closed integer NOT NULL,
-  CONSTRAINT jpmyportalplus_userpageconfig_pkey PRIMARY KEY (username, framepos, pagecode),
-  CONSTRAINT jpmyportalplus_userpageconfig_pagecode_fkey FOREIGN KEY (pagecode)
-      REFERENCES pages (code) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-);
-
--- modello di pagina di test
 INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpmyportalplus_pagemodel', 'My Portal', '<frames>
 <frame pos="0" locked="true"><descr>Header</descr></frame>
 <frame pos="1" column="1" locked="false"><descr>Left Column I</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
@@ -24,7 +9,6 @@ INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpmyportalplus_
 <frame pos="7" locked="true"><descr>Footer</descr></frame>
 </frames>', 'jpmyportalplus');
 
--- -- showlet void
 INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_void',
 '<?xml version="1.0" encoding="UTF-8"?>
@@ -33,7 +17,6 @@ INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode,
 <property key="it">My Portal - Vuoto</property>
 </properties>',null,'jpmyportalplus',null,null,1);
 
--- -- sample showlet
 INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_sample_showlet',
 '<?xml version="1.0" encoding="UTF-8"?>
