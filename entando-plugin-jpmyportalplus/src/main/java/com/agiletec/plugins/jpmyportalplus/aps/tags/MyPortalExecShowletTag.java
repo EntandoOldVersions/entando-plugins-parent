@@ -18,7 +18,7 @@
 package com.agiletec.plugins.jpmyportalplus.aps.tags;
 
 import java.util.Set;
-
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
@@ -32,11 +32,9 @@ import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.tags.ExecShowletTag;
+import com.agiletec.aps.tags.util.IFrameDecoratorContainer;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
@@ -101,37 +99,18 @@ public class MyPortalExecShowletTag extends ExecShowletTag {
 			req.getSession().setAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG, customPageConfig);
 			Showlet[] customShowlets = customPageConfig.getConfig();
 			Showlet[] showletsToRender = pageUserConfigManager.getShowletsToRender(page, customShowlets);
+			List<IFrameDecoratorContainer> decorators = this.extractDecorators();
 			BodyContent body = this.pageContext.pushBody();
 			for (int scan = 0; scan < showletsToRender.length; scan++) {
 				reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME, new Integer(scan));
 				body.clearBody();
-				this.includeShowlet(reqCtx, showletsToRender[scan]);
+				this.includeShowlet(reqCtx, showletsToRender[scan], decorators);
 				showletOutput[scan] = body.getString();
 			}
 		} catch (Throwable t) {
-			String msg = "Errore in preelaborazione showlets";
+			String msg = "Error detected preprocessing showlet";
 			ApsSystemUtils.logThrowable(t, this, "buildShowletOutput", msg);
 			throw new JspException(msg, t);
-		}
-	}
-	
-	@Override
-	protected void includeShowlet(RequestContext reqCtx, Showlet showlet) throws Throwable {
-		IPage page = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
-		Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
-		IMyPortalConfigManager configManager = (IMyPortalConfigManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.MYPORTAL_CONFIG_MANAGER, pageContext);
-		Set<String> allowedShowlet = configManager.getConfig().getAllowedShowlets();
-		if (null != showlet && super.isUserAllowed(reqCtx, showlet)) {
-			reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET, showlet);
-			MyPortalPageModel model = (MyPortalPageModel) page.getModel();
-			Frame currentFrameObject = model.getFrameConfigs()[currentFrame];
-			if (!currentFrameObject.isLocked() && allowedShowlet.contains(showlet.getType().getCode())) {
-				this.pageContext.include("/WEB-INF/plugins/jpmyportalplus/aps/jsp/showlets/inc/widget_header.jsp");
-			}
-			super.includeShowlet(reqCtx, showlet);
-			if (!currentFrameObject.isLocked() && allowedShowlet.contains(showlet.getType().getCode())) {
-				this.pageContext.include("/WEB-INF/plugins/jpmyportalplus/aps/jsp/showlets/inc/widget_footer.jsp");
-			}
 		}
 	}
 	
