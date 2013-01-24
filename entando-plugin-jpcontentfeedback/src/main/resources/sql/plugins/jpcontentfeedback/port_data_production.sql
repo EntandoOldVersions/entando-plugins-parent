@@ -40,25 +40,14 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 <property key="en">Content Feedback - Publish a Content</property>
 <property key="it">Feedback Contenuti - Pubblica un Contenuto</property>
 </properties>', '<config>
-	<parameter name="contentId">
-		Content ID
-	</parameter>
-	<parameter name="modelId">
-		Content Model ID
-	</parameter>
-	<parameter name="usedContentRating">
-		Enable content rating (true|false)
-	</parameter>
-<parameter name="usedComment">
-		Enable user comments (true|false)
-	</parameter>
-<parameter name="usedCommentWithRating">
-		Enable rating on comments (true|false)
-	</parameter>
-<parameter name="commentValidation">
-		Enable administrator moderation of comments (true|false)
-	</parameter> 
-<action name=\"viewerContentFeedbackConfig\"/>\n</config>','jpcontentfeedback',NULL,NULL,1);
+	<parameter name="contentId">Content ID</parameter>
+	<parameter name="modelId">Content Model ID</parameter>
+	<parameter name="usedContentRating">Enable content rating (true|false)</parameter>
+	<parameter name="usedComment">Enable user comments (true|false)</parameter>
+	<parameter name="usedCommentWithRating">Enable rating on comments (true|false)</parameter>
+	<parameter name="commentValidation">Enable administrator moderation of comments (true|false)</parameter> 
+	<action name="viewerContentFeedbackConfig" />
+</config>','jpcontentfeedback',NULL,NULL,1);
 
 INSERT INTO sysconfig (version, item, descr, config) VALUES ('production', 'jpcontentfeedback_config', 'Content Feedback global configuration', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <contentFeedbackConfig>
