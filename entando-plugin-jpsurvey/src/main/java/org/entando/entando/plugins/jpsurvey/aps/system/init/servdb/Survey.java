@@ -55,29 +55,29 @@ public class Survey {
 	private Date _endDate;
 	
 	@DatabaseField(columnName = "active", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _active;
+	private short _active;
 	
 	@DatabaseField(columnName = "publicpartialresult", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _publicPartialResult;
+	private short _publicPartialResult;
 	
 	@DatabaseField(columnName = "publicresult", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _publicResult;
+	private short _publicResult;
 	
 	@DatabaseField(columnName = "questionnaire", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _questionnaire;
+	private short _questionnaire;
 	
 	@DatabaseField(columnName = "gatheruserinfo", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _gatherUserInfo;
+	private short _gatherUserInfo;
 	
 	@DatabaseField(columnName = "title", 
 			dataType = DataType.LONG_STRING, 
@@ -85,19 +85,19 @@ public class Survey {
 	private String _title;
 	
 	@DatabaseField(columnName = "restrictedaccess", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _restrictedAccess;
+	private short _restrictedAccess;
 	
 	@DatabaseField(columnName = "checkcookie", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _checkCookie;
+	private short _checkCookie;
 	
 	@DatabaseField(columnName = "checkipaddress", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _checkIpAddress;
+	private short _checkIpAddress;
 	
 	@DatabaseField(columnName = "imageid", 
 			dataType = DataType.STRING, 

@@ -46,14 +46,14 @@ public class Choice implements ExtendedColumnDefinition {
 	private String _choice;
 	
 	@DatabaseField(columnName = "pos", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _pos;
+	private short _pos;
 	
 	@DatabaseField(columnName = "freetext", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _freeText;
+	private short _freeText;
 	
 	@Override
 	public String[] extensions(IDatabaseManager.DatabaseType type) {

@@ -46,22 +46,22 @@ public class Question implements ExtendedColumnDefinition {
 	private String _question;
 	
 	@DatabaseField(columnName = "pos", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _pos;
+	private short _pos;
 	
 	@DatabaseField(columnName = "singlechoice", 
-			dataType = DataType.INTEGER, 
+			dataType = DataType.SHORT, 
 			canBeNull = false)
-	private int _singleChoice;
+	private short _singleChoice;
 	
 	@DatabaseField(columnName = "minresponsenumber", 
-			dataType = DataType.INTEGER)
-	private int _minresponsenumber;
+			dataType = DataType.SHORT)
+	private short _minresponsenumber;
 	
 	@DatabaseField(columnName = "maxresponsenumber", 
-			dataType = DataType.INTEGER)
-	private int _maxresponsenumber;
+			dataType = DataType.SHORT)
+	private short _maxresponsenumber;
 	
 	@Override
 	public String[] extensions(IDatabaseManager.DatabaseType type) {
