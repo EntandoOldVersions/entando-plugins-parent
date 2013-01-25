@@ -66,7 +66,7 @@
 
 <s:set name="removeIcon" id="removeIcon"><wp:resourceURL/>administration/common/img/icons/list-remove.png</s:set>
 
-<form action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/save.action" />" method="post" enctype="multipart/form-data" class="newContentForm">
+<form action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/save.action" />" method="post" class="newContentForm">
 
 <div class="contentAttributeBox">
 
