@@ -76,36 +76,45 @@
 	
         <!-- ######## INIZIO GESTIONE ATTRIBUTI IN LISTA ######## -->
 	
-        <action name="addListElement*" class="jacmsListAttributeAction" method="addListElement">
+        <action name="addListElement*" class="jpfastcontenteditListAttributeAction" method="addListElement">
             <result name="chooseResource" type="frontRedirectAction">
-                    <param name="actionName">chooseResource</param>
-                    <param name="attributeName">${attributeName}</param>
-                    <param name="elementIndex">${elementIndex}</param>
-                    <param name="resourceTypeCode">${resourceTypeCode}</param>
-                    <param name="resourceLangCode">${listLangCode}</param>
+				<param name="actionName">chooseResource</param>
+				<param name="attributeName">${attributeName}</param>
+				<param name="elementIndex">${elementIndex}</param>
+				<param name="resourceTypeCode">${resourceTypeCode}</param>
+				<param name="resourceLangCode">${listLangCode}</param>
             </result>
             <result name="chooseLink" type="frontRedirectAction">
-                    <param name="actionName">chooseLink</param>
-                    <param name="attributeName">${attributeName}</param>
-                    <param name="elementIndex">${elementIndex}</param>
-                    <param name="langCode">${listLangCode}</param>
+				<param name="actionName">chooseLink</param>
+				<param name="attributeName">${attributeName}</param>
+				<param name="elementIndex">${elementIndex}</param>
+				<param name="langCode">${listLangCode}</param>
             </result>
             <result type="frontRedirectAction">
-                    <param name="actionName">entryContent</param>
-                    <param name="anchorDest">${entryContentAnchorDest}</param>
+				<param name="actionName">entryContent</param>
+				<!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
+				<param name="anchorDest">${langTabAnchorDest}</param>
             </result>
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
 		
-        <action name="removeListElement*" class="jacmsListAttributeAction" method="removeListElement">
-            <result type="chain">entryContent</result>
+        <action name="removeListElement*" class="jpfastcontenteditListAttributeAction" method="removeListElement">
+            <result type="frontRedirectAction">
+				<param name="actionName">entryContent</param>
+				<!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
+				<param name="anchorDest">${langTabAnchorDest}</param>
+            </result>
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
 		
-        <action name="moveListElement*" class="jacmsListAttributeAction" method="moveListElement">
-            <result type="chain">entryContent</result>
+        <action name="moveListElement*" class="jpfastcontenteditListAttributeAction" method="moveListElement">
+            <result type="frontRedirectAction">
+				<param name="actionName">entryContent</param>
+				<!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
+				<param name="anchorDest">${langTabAnchorDest}</param>
+            </result>
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" />
         </action>

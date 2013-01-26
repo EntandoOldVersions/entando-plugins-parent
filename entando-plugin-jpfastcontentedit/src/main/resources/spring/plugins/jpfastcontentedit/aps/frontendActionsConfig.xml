@@ -25,6 +25,11 @@
 		<property name="contentActionHelper" ref="jpfastcontenteditContentActionHelper" />
 	</bean>
 	
+	<bean id="jpfastcontenteditListAttributeAction" scope="prototype" 
+			class="com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.attribute.action.list.ListAttributeAction" 
+			parent="jacmsListAttributeAction" >
+	</bean>
+	
 	<bean id="jpfastcontenteditExtendedResourceFinderAction" scope="prototype" 
 		  class="com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.attribute.action.resource.ExtendedResourceFinderAction" 
 		  parent="jacmsResourceFinderAction" >
