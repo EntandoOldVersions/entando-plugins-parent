@@ -90,6 +90,14 @@
 				</fieldset>
 				<fieldset>
 					<legend><s:text name="jprss.label.filters" /></legend>
+					<p>
+						<label for="filterKey" class="basic-mint-label"><s:text name="label.filter" />:</label>
+						<wpsf:select useTabindexAutoIncrement="true" name="filterKey" id="filterKey" list="allowedFilterTypes" listKey="key" listValue="value" cssClass="text" />
+						<wpsf:submit useTabindexAutoIncrement="true" action="setFilterType" value="%{getText('label.add')}" cssClass="button" />
+					</p>
+					<p class="noscreen">
+						<wpsf:hidden name="filters" />
+					</p>
 					<s:if test="null != filtersProperties && filtersProperties.size()>0" >
 						<table class="generic" summary="TODO">
 							<caption><span><s:text name="jprss.configured.filters" /></span></caption>
@@ -99,87 +107,101 @@
 								<th><s:text name="label.order" /></th>
 								<th class="icon" colspan="3"><abbr title="<s:text name="label.actions" />">&ndash;</abbr></th> 
 							</tr>
-							<s:iterator value="filtersProperties" id="filter" status="rowstatus">
-								<tr>
-									<td><s:property value="#rowstatus.count"/></td>
-									<td>
-										<s:text name="label.filterBy" /><strong>
-											<s:if test="#filter['key'] == 'created'">
-												<s:text name="label.creationDate" />
+							<s:iterator value="filtersProperties" id="filter" status="rowstatus">	
+							<tr>
+								<td class="rightText"><s:property value="#rowstatus.index+1"/></td>
+								<td>
+									<s:text name="label.filterBy" /><strong>
+										<s:if test="#filter['key'] == 'created'">
+											<s:text name="label.creationDate" />
+										</s:if>
+										<s:elseif test="#filter['key'] == 'modified'">
+											<s:text name="label.lastModifyDate" />			
+										</s:elseif>
+										<s:else>
+											<s:property value="#filter['key']" />
+										</s:else>
+									</strong><s:if test="(#filter['start'] != null) || (#filter['end'] != null) || (#filter['value'] != null)">,
+									<s:if test="#filter['start'] != null">
+										<s:text name="label.filterFrom" /><strong>
+											<s:if test="#filter['start'] == 'today'">
+												<s:text name="label.today" />
 											</s:if>
-											<s:elseif test="#filter['key'] == 'modified'">
-												<s:text name="label.lastModifyDate" />			
-											</s:elseif>
 											<s:else>
-												<s:property value="#filter['key']" />
+												<s:property value="#filter['start']" />
 											</s:else>
-										</strong><s:if test="(#filter['start'] != null) || (#filter['end'] != null) || (#filter['value'] != null)">,
-										<s:if test="#filter['start'] != null">
-											<s:text name="label.filterFrom" /><strong>
-												<s:if test="#filter['start'] == 'today'">
-													<s:text name="label.today" />				
-												</s:if>
-												<s:else>
-													<s:property value="#filter['start']" />
-												</s:else>
-											</strong>
+										</strong>
+										<s:if test="#filter['startDateDelay'] != null" >
+											<s:text name="label.filterValueDateDelay" />:<strong> <s:property value="#filter['startDateDelay']" /></strong>&nbsp;<s:text name="label.filterDateDelay.gg" />&nbsp;
+										</s:if>		
+									</s:if>
+									<s:if test="#filter['end'] != null">
+										<s:text name="label.filterTo" /><strong>
+											<s:if test="#filter['end'] == 'today'">
+												<s:text name="label.today" />
+											</s:if>
+											<s:else>
+												<s:property value="#filter['end']" />
+											</s:else>
+										</strong>
+										<s:if test="#filter['endDateDelay'] != null" >
+											<s:text name="label.filterValueDateDelay" />:<strong> <s:property value="#filter['endDateDelay']" /></strong>&nbsp;<s:text name="label.filterDateDelay.gg" />
 										</s:if>
-										<s:if test="#filter['end'] != null">
-											<s:text name="label.filterTo" /><strong>
-												<s:if test="#filter['end'] == 'today'">
-													<s:text name="label.today" />				
-												</s:if>
-												<s:else>
-													<s:property value="#filter['end']" />
-												</s:else>
-											</strong>
-										</s:if>
-										<s:if test="#filter['value'] != null">
-											<s:text name="label.filterValue" />:<strong> <s:property value="#filter['value']" /></strong>
-												<s:if test="#filter['likeOption'] == 'true'">
-													<em>(<s:text name="label.filterValue.isLike" />)</em>
-												</s:if>
-										</s:if>
-										</s:if>
-									</td>
-									<td>
-										<s:if test="#filter['order'] == 'ASC'"><s:text name="label.order.ascendant" /></s:if>
-										<s:if test="#filter['order'] == 'DESC'"><s:text name="label.order.descendant" /></s:if>
-									</td>
-									<td class="icon">
-										<wpsa:actionParam action="moveFilter" var="actionName" >
-											<wpsa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
-											<wpsa:actionSubParam name="movement" value="UP" />
-										</wpsa:actionParam>
-										<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/go-up.png</s:set>		
-										<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="image" src="%{#iconImagePath}" value="%{getText('label.moveUp')}" title="%{getText('label.moveUp')+': '+#rowstatus.count}" />
-									</td>
-									<td class="icon">	
-										<wpsa:actionParam action="moveFilter" var="actionName" >
-											<wpsa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
-											<wpsa:actionSubParam name="movement" value="DOWN" />
-										</wpsa:actionParam>
-										<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/go-down.png</s:set>
-										<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="image" src="%{#iconImagePath}" value="%{getText('label.moveDown')}" title="%{getText('label.moveDown')+': '+#rowstatus.count}" />
-									</td>
-									<td class="icon">	
-										<wpsa:actionParam action="removeFilter" var="actionName" >
-											<wpsa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
-										</wpsa:actionParam>
-										<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/list-remove.png</s:set>
-										<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="image" src="%{#iconImagePath}" value="%{getText('label.remove')}" title="%{getText('label.remove')+': '+#rowstatus.count}" />
-									</td>	
-								</tr>
+									</s:if>
+									<s:if test="#filter['value'] != null">
+										<s:text name="label.filterValue" />:<strong> <s:property value="#filter['value']" /></strong> 
+											<s:if test="#filter['likeOption'] == 'true'">
+												<em>(<s:text name="label.filterValue.isLike" />)</em> 
+											</s:if>
+									</s:if>
+									<s:if test="#filter['valueDateDelay'] != null" >
+										<s:text name="label.filterValueDateDelay" />:<strong> <s:property value="#filter['valueDateDelay']" /></strong>&nbsp;<s:text name="label.filterDateDelay.gg" />
+									</s:if>
+									</s:if>
+									<s:if test="#filter['nullValue'] != null" >
+										&nbsp;<s:text name="label.filterNoValue" />
+									</s:if>
+								</td>
+								<td>
+								<s:if test="#filter['order'] == 'ASC'"><s:text name="label.order.ascendant" /></s:if>
+								<s:if test="#filter['order'] == 'DESC'"><s:text name="label.order.descendant" /></s:if>
+								</td>
+								<td class="icon">
+									<wpsa:actionParam action="moveFilter" var="actionName" >
+										<wpsa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
+										<wpsa:actionSubParam name="movement" value="UP" />
+									</wpsa:actionParam>
+									<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/go-up.png</s:set>		
+									<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="image" src="%{#iconImagePath}" value="%{getText('label.moveUp')}" title="%{getText('label.moveUp')}" />
+								</td>
+								<td class="icon">	
+									<wpsa:actionParam action="moveFilter" var="actionName" >
+										<wpsa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
+										<wpsa:actionSubParam name="movement" value="DOWN" />
+									</wpsa:actionParam>
+									<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/go-down.png</s:set>
+									<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="image" src="%{#iconImagePath}" value="%{getText('label.moveDown')}" title="%{getText('label.moveDown')}" />
+								</td>
+								<td class="icon">	
+									<wpsa:actionParam action="removeFilter" var="actionName" >
+										<wpsa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
+									</wpsa:actionParam>
+									<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/delete.png</s:set>
+									<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="image"  src="%{#iconImagePath}" value="%{getText('label.remove')}" title="%{getText('label.remove')}" />
+								</td>	
+							</tr>
 							</s:iterator>
 						</table>
 					</s:if>
 					<s:else>
 						<p><s:text name="note.filters.none" /></p>		
 					</s:else>
+					<%--
 					<p>
 						<wpsf:hidden name="filters" />
 						<wpsf:submit useTabindexAutoIncrement="true" action="newFilter" value="%{getText('label.add')}" cssClass="button" />
 					</p>
+					--%>
 				</fieldset>
 		
 				<p class="centerText">
