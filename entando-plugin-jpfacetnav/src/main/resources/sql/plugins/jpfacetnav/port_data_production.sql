@@ -1,11 +1,9 @@
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpfacetnav_results', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">Results</property>
+<property key="en">Search Result</property>
 <property key="it">Risultati Ricerca</property>
 </properties>', '<config>
-	<parameter name="contentTypesFilter">
-		Tipi di contenuto dei risultati da erogare (OPZIONALE)
-	</parameter>
+	<parameter name="contentTypesFilter">Content Type (optional)</parameter>
 	<action name="facetNavResultConfig"/>
 </config>', 'jpfacetnav', NULL, NULL, 1);
 
@@ -14,12 +12,8 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 <property key="en">Facets Tree</property>
 <property key="it">Albero delle faccette</property>
 </properties>', '<config>
-	<parameter name="facetRootNodes">
-		Facet Category Root
-	</parameter>
-	<parameter name="contentTypesFilter">
-		Content Type (optional)
-	</parameter>
+	<parameter name="facetRootNodes">Facet Category Root</parameter>
+	<parameter name="contentTypesFilter">Content Type (optional)</parameter>
 	<action name="facetNavTreeConfig"/>
 </config>', 'jpfacetnav', NULL, NULL, 1);
 

@@ -16,9 +16,7 @@
 	</licenses>
 	<description>Plugins parent for Entando: an agile, modern and user-centric open source Portal platform.</description>
 	<modules>
-		<!--
 		<module>entando-plugin-jpfacetnav</module>
-		-->
 		<module>entando-plugin-jpmail</module>
 		<module>entando-plugin-jpwebdynamicform</module>
 		<!--
