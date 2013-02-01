@@ -27,7 +27,7 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
-import com.agiletec.plugins.jpcalendar.aps.CalendarConstants;
+import com.agiletec.plugins.jpcalendar.aps.system.services.CalendarConstants;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.ICalendarManager;
 import com.agiletec.plugins.jpcalendar.aps.tags.helper.CalendarTagHelper;
 import com.agiletec.plugins.jpcalendar.aps.tags.util.ApsCalendar;

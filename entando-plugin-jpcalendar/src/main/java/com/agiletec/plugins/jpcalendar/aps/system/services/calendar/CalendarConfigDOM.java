@@ -17,15 +17,14 @@
 */
 package com.agiletec.plugins.jpcalendar.aps.system.services.calendar;
 
+import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.exception.ApsSystemException;
 import java.io.StringReader;
-import java.util.logging.Logger;
-
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
-
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.exception.ApsSystemException;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 
 /**
  * Support Class for XML parsing of jpcalendar plugin
@@ -43,29 +42,68 @@ import com.agiletec.aps.system.exception.ApsSystemException;
  */
 public class CalendarConfigDOM {
 	
+	protected CalendarConfigDOM() {}
+	
 	protected CalendarConfigDOM(String xmlText) throws ApsSystemException {
-		_log = ApsSystemUtils.getLogger();
 		this.decodeDOM(xmlText);
 	}
 	
-	protected String getManageContentType() {
-		Element contenTypeElem = this._doc.getRootElement().getChild("contentType");
-		String contenType = contenTypeElem.getAttributeValue("code");
-		return contenType;
+	public String createConfigXml(CalendarConfig config) {
+		Element root = this.createConfigElement(config);
+		Document doc = new Document(root);
+		XMLOutputter out = new XMLOutputter();
+		Format format = Format.getPrettyFormat();
+		format.setIndent("\t");
+		out.setFormat(format);
+		return out.outputString(doc);
 	}
 	
-	protected String getManageStartAttribute() {
-		return this.getManageAttribute("start");
+	private Element createConfigElement(CalendarConfig config) {
+		Element configElem = new Element("calendarConfig");
+		if (null != config.getContentTypeCode()) {
+			Element contentTypeElement = new Element("contentType");
+			contentTypeElement.setAttribute("code", config.getContentTypeCode());
+			configElem.addContent(contentTypeElement);
+		}
+		Element dateAttributesElement = new Element("dateAttributes");
+		configElem.addContent(dateAttributesElement);
+		this.addDateAttributeElement(dateAttributesElement, "start", config.getStartAttributeName());
+		this.addDateAttributeElement(dateAttributesElement, "end", config.getEndAttributeName());
+		return configElem;
 	}
 	
-	protected String getManageEndAttribute() {
-		return this.getManageAttribute("end");
+	private void addDateAttributeElement(Element dateAttributesElement, String elementName, String value) {
+		if (null != value) {
+			Element startElement = new Element(elementName);
+			startElement.setAttribute("name",  value);
+			dateAttributesElement.addContent(startElement);
+		}
 	}
 	
-	private String getManageAttribute(String dateElementName) {
-		Element dateAttributeElem = this._doc.getRootElement().getChild("dateAttributes").getChild(dateElementName);
-		String dateAttributeName = dateAttributeElem.getAttributeValue("name");
-		return dateAttributeName;
+	public CalendarConfig extractConfig() throws ApsSystemException {
+		CalendarConfig config = new CalendarConfig();
+		try {
+			Element rootElement = this._doc.getRootElement();
+			Element contentTypeElem = rootElement.getChild("contentType");
+			if (null != contentTypeElem) {
+				config.setContentTypeCode(contentTypeElem.getAttributeValue("code"));
+			}
+			Element dateAttributeElem = rootElement.getChild("dateAttributes");
+			if (null != dateAttributeElem) {
+				Element startDateAttributeElem = dateAttributeElem.getChild("start");
+				if (null != startDateAttributeElem) {
+					config.setStartAttributeName(startDateAttributeElem.getAttributeValue("name"));
+				}
+				Element endDateAttributeElem = dateAttributeElem.getChild("end");
+				if (null != endDateAttributeElem) {
+					config.setEndAttributeName(endDateAttributeElem.getAttributeValue("name"));
+				}
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "extractConfig", "Error extracting config");
+			throw new ApsSystemException("Error parsing extracting", t);
+		}
+		return config;
 	}
 	
 	private void decodeDOM(String xmlText) throws ApsSystemException {
@@ -73,14 +111,13 @@ public class CalendarConfigDOM {
 		builder.setValidation(false);
 		StringReader reader = new StringReader(xmlText);
 		try {
-			_doc = builder.build(reader);
+			this._doc = builder.build(reader);
 		} catch (Throwable t) {
-			_log.severe("Errore nel parsing: " + t.getMessage());
-			throw new ApsSystemException("Errore nell'interpretazione dell'xml", t);
+			ApsSystemUtils.logThrowable(t, this, "decodeDOM", "Error parsing config: " + t.getMessage());
+			throw new ApsSystemException("Error parsing config", t);
 		}
 	}
 	
 	private Document _doc;
-	private Logger _log;
-
+	
 }

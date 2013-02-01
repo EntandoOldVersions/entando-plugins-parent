@@ -6,7 +6,7 @@ import com.agiletec.plugins.jpcalendar.aps.ApsPluginBaseTestCase;
 
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.user.IUserManager;
-import com.agiletec.plugins.jpcalendar.aps.CalendarConstants;
+import com.agiletec.plugins.jpcalendar.aps.system.services.CalendarConstants;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.ICalendarManager;
 import com.agiletec.plugins.jpcalendar.aps.tags.helper.CalendarTagHelper;
 import com.agiletec.plugins.jpcalendar.aps.tags.util.ApsCalendar;

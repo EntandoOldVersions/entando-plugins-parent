@@ -72,9 +72,7 @@ public class EventsOfDayTagDAO extends AbstractDAO implements IEventsOfDayTagDAO
 	}
 	
 	private String createQueryString(EventsOfDayDataBean bean) {
-		//creazione blocco iniziale
 		String query = this.LOAD_DATE_CONTENTS;
-		
 		if (bean.getAllowedGroups() != null 
 				&& bean.getAllowedGroups().size()>0
 				&& !bean.getAllowedGroups().contains(Group.ADMINS_GROUP_NAME)) {

@@ -41,14 +41,13 @@ import com.agiletec.aps.util.DateConverter;
 import com.agiletec.plugins.jacms.aps.system.services.content.event.PublicContentChangedEvent;
 import com.agiletec.plugins.jacms.aps.system.services.content.event.PublicContentChangedObserver;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
+import com.agiletec.plugins.jpcalendar.aps.system.services.CalendarConstants;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.util.EventsOfDayDataBean;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.util.SmallEventOfDay;
 
 /**
  * Service for calendar data.
- * Transformed to plugin jAPS2.0 by R.Bonazzo
- * 
- * @author E.Santoboni
+ * @author E.Santoboni - R.Bonazzo
  */
 @SuppressWarnings("serial")
 public class CalendarManager extends AbstractService implements PublicContentChangedObserver, ICalendarManager {
@@ -61,6 +60,12 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 	}
 	
 	@Override
+	protected void release() {
+		this._map.clear();
+		super.release();
+	}
+	
+	@Override
 	public int[] getEventsForMonth(Calendar requiredMonth, UserDetails user)
 			throws ApsSystemException {
 		Logger log = ApsSystemUtils.getLogger();
@@ -70,14 +75,13 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 							"MMMM yyyy"));
 		}
 		int[] eventsForMonth = new int[31];
-		List<Group> groups = this.getAuthorizationManager().getGroupsOfUser(user);
+		List<Group> groups = this.getAuthorizationManager().getUserGroups(user);
 		Set<String> groupForSearch = this.getGroupsForSearch(groups);
 		Iterator<String> iter = groupForSearch.iterator();
 		while (iter.hasNext()) {
 			String groupName = (String) iter.next();
 			if (log.isLoggable(Level.FINEST)) {
-				log.info("User " + user.getUsername() + " of group "
-						+ groupName);
+				log.info("User " + user.getUsername() + " of group " + groupName);
 			}
 			int[] eventsForMonthOfGroup = this.searchEventsForMonth(
 					requiredMonth, groupName);
@@ -89,19 +93,11 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 		return eventsForMonth;
 	}
 	
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.agiletec.plugins.calendar.aps.services.calendar.ICalendarManager#
-	 * updateFromPublicContentChanged
-	 * (com.agiletec.aps.cms.content.event.PublicContentChangedEvent)
-	 */
+	@Override
 	public void updateFromPublicContentChanged(PublicContentChangedEvent event) {
 		Content content = (Content) event.getContent();
-		if (content.getTypeCode().equals(_managedContentType)) {
-			this._map = new HashMap();
+		if (content.getTypeCode().equals(this.getManagedContentType())) {
+			this._map.clear();
 		}
 	}
 	
@@ -113,6 +109,7 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 	 * @return La lista di identificativi di contenuto cercata.
 	 * @throws ApsSystemException
 	 */
+	@Override
 	public List<String> loadEventsOfDayId(EventsOfDayDataBean bean) throws ApsSystemException {
 		List<SmallEventOfDay> smallContents = null;
 		try {
@@ -144,13 +141,10 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 		}
 		String eventsForMonthOfGroupKey = DateConverter.getFormattedDate(
 				requiredMonth.getTime(), MONTH_FORMAT_KEY);
-		int[] eventsForMonthOfGroup = (int[]) calendarsForGroup
-				.get(eventsForMonthOfGroupKey);
+		int[] eventsForMonthOfGroup = (int[]) calendarsForGroup.get(eventsForMonthOfGroupKey);
 		if (eventsForMonthOfGroup == null) {
-			eventsForMonthOfGroup = this.loadEventsForMonthOfGroup(
-					requiredMonth, groupName);
-			calendarsForGroup.put(eventsForMonthOfGroupKey,
-					eventsForMonthOfGroup);
+			eventsForMonthOfGroup = this.loadEventsForMonthOfGroup(requiredMonth, groupName);
+			calendarsForGroup.put(eventsForMonthOfGroupKey, eventsForMonthOfGroup);
 		}
 		return eventsForMonthOfGroup;
 	}
@@ -162,8 +156,7 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 		while (groupsIter.hasNext()) {
 			Group group = (Group) groupsIter.next();
 			if (group.getName().equals(Group.ADMINS_GROUP_NAME)) {
-				groupForSearch
-						.addAll(getGroupManager().getGroupsMap().keySet());
+				groupForSearch.addAll(getGroupManager().getGroupsMap().keySet());
 				break;
 			} else {
 				groupForSearch.add(group.getName());
@@ -175,9 +168,8 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 	private int[] loadEventsForMonthOfGroup(Calendar requiredMonth, String groupName) throws ApsSystemException {
 		int[] eventsForMonth = null;
 		try {
-			eventsForMonth = this.getCalendarDao().loadCalendar(requiredMonth,
-					groupName, _managedContentType, _managedDateStartAttribute,
-					_managedDateEndAttribute);
+			eventsForMonth = this.getCalendarDao().loadCalendar(requiredMonth, groupName, 
+					this.getManagedContentType(), this.getManagedDateStartAttribute(), this.getManagedDateEndAttribute());
 		} catch (Throwable t) {
 			throw new ApsSystemException("Error loading calendar ", t);
 		}
@@ -188,15 +180,12 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 	private void loadConfig() throws ApsSystemException {
 		try {
 			ConfigInterface configManager = this.getConfigManager();
-			String xml = configManager.getConfigItem("jpcalendar_Config");
+			String xml = configManager.getConfigItem(CalendarConstants.CALENDAR_CONFIG_ITEM);
 			if (xml == null) {
-				throw new ApsSystemException("Configuration Item not present: calendarConfig");
+				throw new ApsSystemException("Configuration Item not present: " + CalendarConstants.CALENDAR_CONFIG_ITEM);
 			}
-			ApsSystemUtils.getLogger().finest("calendarConfig: " + xml);
 			CalendarConfigDOM dom = new CalendarConfigDOM(xml);
-			this._managedContentType = dom.getManageContentType();
-			this._managedDateStartAttribute = dom.getManageStartAttribute();
-			this._managedDateEndAttribute = dom.getManageEndAttribute();
+			this.setConfig(dom.extractConfig());
 		} catch (Throwable t) {
 			ApsSystemUtils.getLogger().throwing(this.getName(), "loadConfig", t);
 			throw new ApsSystemException("Error on initialization", t);
@@ -205,7 +194,8 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 
 	private void initFirstYear() throws ApsSystemException {
 		try {
-			this._firstYear = this.getCalendarDao().getFirstYear(_managedContentType, _managedDateStartAttribute);
+			//this._firstYear = this.getCalendarDao().getFirstYear(_managedContentType, _managedDateStartAttribute);
+			this._firstYear = this.getCalendarDao().getFirstYear(this.getManagedContentType(), this.getManagedDateStartAttribute());
 		} catch (Throwable t) {
 			ApsSystemUtils.getLogger().throwing(this.getName(), "initFirstYear", t);
 			throw new ApsSystemException("Error on initialization", t);
@@ -247,49 +237,44 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 		}
 		return isRight;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.agiletec.plugins.calendar.aps.services.calendar.ICalendarManager#
-	 * getFirstYear()
-	 */
+	
+	@Override
 	public int getFirstYear() {
 		return this._firstYear;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.agiletec.plugins.calendar.aps.services.calendar.ICalendarManager#
-	 * getManagedContentType()
-	 */
-	public String getManagedContentType() {
-		return _managedContentType;
+	
+	@Override
+	public void updateConfig(CalendarConfig config) throws ApsSystemException {
+		try {
+			String xml = new CalendarConfigDOM().createConfigXml(config);
+			this.getConfigManager().updateConfigItem(CalendarConstants.CALENDAR_CONFIG_ITEM, xml);
+			this.setConfig(config);
+			this.release();
+			this.initFirstYear();
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "updateConfig");
+			throw new ApsSystemException("Error updating config", t);
+		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.agiletec.plugins.calendar.aps.services.calendar.ICalendarManager#
-	 * getManagedDateStartAttribute()
-	 */
-	public String getManagedDateStartAttribute() {
-		return _managedDateStartAttribute;
+	
+	protected String getManagedContentType() {
+		return this.getConfig().getContentTypeCode();
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.agiletec.plugins.calendar.aps.services.calendar.ICalendarManager#
-	 * getManagedDateEndAttribute()
-	 */
-	public String getManagedDateEndAttribute() {
-		return _managedDateEndAttribute;
+	
+	protected String getManagedDateStartAttribute() {
+		return this.getConfig().getStartAttributeName();
+	}
+	
+	protected String getManagedDateEndAttribute() {
+		return this.getConfig().getEndAttributeName();
+	}
+	
+	@Override
+	public CalendarConfig getConfig() {
+		return _config;
+	}
+	protected void setConfig(CalendarConfig config) {
+		this._config = config;
 	}
 	
 	protected ICalendarDAO getCalendarDao() {
@@ -327,10 +312,8 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 		this._groupManager = groupManager;
 	}
 	
+	private CalendarConfig _config;
 	private int _firstYear;
-	private String _managedContentType;
-	private String _managedDateStartAttribute;
-	private String _managedDateEndAttribute;
 	private final String MONTH_FORMAT_KEY = "yyyy-MM";
 
 	/**
@@ -346,5 +329,5 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 	private ConfigInterface _configManager;
 	private IAuthorizationManager _authorizationManager;
 	private IGroupManager _groupManager;
-
+	
 }

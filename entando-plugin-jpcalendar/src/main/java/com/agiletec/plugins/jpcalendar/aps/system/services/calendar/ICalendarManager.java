@@ -51,13 +51,11 @@ public interface ICalendarManager {
 	 * @return Il primo anno.
 	 */
 	public int getFirstYear();
-
-	public String getManagedContentType();
-
-	public String getManagedDateStartAttribute();
-
-	public String getManagedDateEndAttribute();
-
+	
+	public CalendarConfig getConfig();
+	
+	public void updateConfig(CalendarConfig config) throws ApsSystemException;
+	
 	public static final String REQUIRED_DATE_PATTERN = "yyyyMMdd";
 
 }
