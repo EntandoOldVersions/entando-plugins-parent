@@ -5,6 +5,11 @@
 
 <tiles-definitions>
 	
+    <definition extends="main.layout" name="jpavatar.admin.config.entry" >
+		<put-attribute name="title" value="jpavatar.title.config" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpavatar/apsadmin/jsp/config/jpavatar_config.jsp" />
+	</definition>
+
     <definition extends="main.layout" name="jpavatar.admin.avatar.entry" >
 		<put-attribute name="title" value="jpavatar.title.editAvatar" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpavatar/apsadmin/jsp/avatar/avatar-entry.jsp" />
@@ -19,5 +24,6 @@
 		<put-attribute name="title" value="jpavatar.title.editAvatar" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpavatar/apsadmin/jsp/avatar/avatar-delete-confirm.jsp" />
 	</definition>
+
 	
 </tiles-definitions>

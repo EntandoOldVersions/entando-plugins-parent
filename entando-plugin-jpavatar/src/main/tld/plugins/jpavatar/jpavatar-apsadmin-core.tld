@@ -31,6 +31,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<description><![CDATA[var name where the tag stores the current style (local or gravatar)]]></description>
+			<name>avatarStyleVar</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 </taglib>

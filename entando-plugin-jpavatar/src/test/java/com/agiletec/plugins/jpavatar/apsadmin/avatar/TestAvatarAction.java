@@ -22,9 +22,11 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpavatar.apsadmin.ApsAdminPluginBaseTestCase;
 
 import com.agiletec.plugins.jpavatar.aps.system.JpAvatarSystemConstants;
+import com.agiletec.plugins.jpavatar.aps.system.services.avatar.AvatarConfig;
 import com.agiletec.plugins.jpavatar.aps.system.services.avatar.IAvatarManager;
 import com.agiletec.plugins.jpavatar.apsadmin.avatar.AvatarAction;
 import com.opensymphony.xwork2.Action;
@@ -38,6 +40,8 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 	}
 
 	public void testEdit() throws Throwable {
+		this.setAvatarStyle(AvatarConfig.STYLE_LOCAL);
+		
 		String result = this.executeEdit();
 		assertEquals(Action.SUCCESS, result);
 		AvatarAction action = (AvatarAction) this.getAction();
@@ -54,6 +58,8 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 	}
 
 	public void testBin() throws Throwable {
+		this.setAvatarStyle(AvatarConfig.STYLE_LOCAL);
+		
 		String result = this.executeBin();
 		assertEquals(Action.SUCCESS, result);
 		AvatarAction action = (AvatarAction) this.getAction();
@@ -62,15 +68,18 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(action.getText("jpavatar.message.confirmDelete"), actionMessages.get(0));
 	}
 	
-	public void _testDelete() throws Throwable {
+	public void testDelete() throws Throwable {
+		this.setAvatarStyle(AvatarConfig.STYLE_LOCAL);
+		
 		File file = new File("target/test/jAPS_logo.jpg");
 		this._avatarManager.saveAvatar("admin", file, "jAPS_logo.jpg");
 		String filename = this._avatarManager.getAvatar("admin");
-		assertEquals("admin.jpg", filename);
+		assertEquals("/Entando/resources/plugins/jpavatar/avatar/admin.jpg", filename);
 		String result = this.executeDelete();
 		assertEquals(Action.SUCCESS, result);
 		filename = this._avatarManager.getAvatar("admin");
-		assertNull(filename);	
+		assertEquals("/Entando/resources/plugins/jpavatar/default.png", filename);
+		assertNull(this._avatarManager.getAvatarResource("admin"));		
 	}
 	
 	public void testSave_1() throws Throwable {
@@ -102,13 +111,19 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 		return this.executeAction();
 	}
 	
+	protected void setAvatarStyle(String style) throws ApsSystemException {
+		AvatarConfig config = _avatarManager.getConfig();
+		config.setStyle(style);
+		this._avatarManager.updateConfig(config);
+	}
+	
 	private void init() {
 		_avatarManager = (IAvatarManager) this.getService(JpAvatarSystemConstants.AVATAR_MANAGER);
-		new File(this._avatarManager.getAvatarDiskFolder() + "avatar").mkdir();
 	}
 	
 	@Override
 	protected void tearDown() throws Exception {
+		
 		FileUtils.cleanDirectory(new File(this._avatarManager.getAvatarDiskFolder() + "avatar"));
 		super.tearDown();
 	}
