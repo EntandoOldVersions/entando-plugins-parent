@@ -21,8 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpavatar.aps.system.JpAvatarSystemConstants;
@@ -37,17 +40,20 @@ public class AvatarTag extends TagSupport {
 			UserDetails currentUser = (UserDetails) request.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
 
 			boolean isCurrentUserGuest = null == currentUser || currentUser.getUsername().trim().length() == 0 || currentUser.getUsername().equalsIgnoreCase(SystemConstants.GUEST_USER_NAME);
-			if (null == this.getUsername() && isCurrentUserGuest) {
-				//calling tag without username
+			if (StringUtils.isBlank(this.getUsername()) && isCurrentUserGuest) {
 				this.doOut(this.getNullAvatar(avatarManager));
 			} else {
-				String avatarName = avatarManager.getAvatarURL(this.getUsername());
+				String username = this.getUsername();
+				if (StringUtils.isBlank(username)) username = currentUser.getUsername();
+				String avatarName = avatarManager.getAvatar(username);
 				if (null != avatarName) {
 					this.doOut(avatarName);
 				} else {
 					this.doOut(this.getNullAvatar(avatarManager));
 				}
-
+			}
+			if (StringUtils.isNotBlank(this.getAvatarStyleVar())) {
+				this.pageContext.getRequest().setAttribute(this.getAvatarStyleVar(), avatarManager.getConfig().getStyle());
 			}
 		} catch (Throwable e) {
 			ApsSystemUtils.logThrowable(e, this, "doEndTag");
@@ -56,15 +62,25 @@ public class AvatarTag extends TagSupport {
 		return EVAL_PAGE;
 	}
 
+	@Override
+	public void release() {
+		super.release();
+		this.setReturnDefaultAvatar(null);
+		this.setVar(null);
+		this.setUsername(null);
+		this.setAvatarStyleVar(null);
+	}
+
 	/**
 	 * String returned when no avatar is found
 	 * @param avatarManager
 	 * @return
+	 * @throws ApsSystemException 
 	 */
-	private String getNullAvatar(IAvatarManager avatarManager) {
+	private String getNullAvatar(IAvatarManager avatarManager) throws ApsSystemException {
 		String nullAvatar = null;
 		if (null != this.getReturnDefaultAvatar() && this.getReturnDefaultAvatar().equalsIgnoreCase("true")) {
-			nullAvatar = avatarManager.getAvatarURL() + JpAvatarSystemConstants.DEFAULT_AVATAR_NAME;
+			nullAvatar = avatarManager.getAvatar(null);// + JpAvatarSystemConstants.DEFAULT_AVATAR_NAME;
 		}
 		return nullAvatar;
 	}
@@ -98,7 +114,15 @@ public class AvatarTag extends TagSupport {
 		return _username;
 	}
 
+	public String getAvatarStyleVar() {
+		return _avatarStyleVar;
+	}
+	public void setAvatarStyleVar(String avatarStyleVar) {
+		this._avatarStyleVar = avatarStyleVar;
+	}
+
 	private String _returnDefaultAvatar;
 	private String _var;
 	private String _username;
+	private String _avatarStyleVar;
 }

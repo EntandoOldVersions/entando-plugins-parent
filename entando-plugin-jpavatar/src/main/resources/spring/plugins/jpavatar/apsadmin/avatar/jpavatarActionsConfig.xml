@@ -11,6 +11,11 @@
 		<property name="subMenuFilePath"><value>/WEB-INF/plugins/jpavatar/apsadmin/jsp/common/template/subMenu.jsp</value></property>
 	</bean>
 	
+	<bean id="jpavatarAvatarConfigAction" scope="prototype" 
+			class="com.agiletec.plugins.jpavatar.apsadmin.avatar.config.AvatarConfigAction" parent="abstractBaseAction" >
+		<property name="avatarManager" ref="jpavatarAvatarManager" />
+	</bean>
+
 	<bean id="jpavatarAvatarAction" scope="prototype" 
 			class="com.agiletec.plugins.jpavatar.apsadmin.avatar.AvatarAction" parent="abstractBaseAction" >
 		<property name="avatarManager" ref="jpavatarAvatarManager" />

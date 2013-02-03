@@ -16,7 +16,6 @@
 		<property name="configManager" ref="BaseConfigManager" />
 		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
 		<property name="gravatarUrl" value="http://www.gravatar.com/avatar/" />
-		<property name="useGravatar"><value>true</value></property>
 	</bean>
 	
 </beans>

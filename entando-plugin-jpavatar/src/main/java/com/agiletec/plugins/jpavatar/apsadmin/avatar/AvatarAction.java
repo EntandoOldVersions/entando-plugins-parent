@@ -24,6 +24,7 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.apsadmin.system.BaseAction;
 import com.agiletec.plugins.jpavatar.aps.system.services.avatar.IAvatarManager;
 import com.agiletec.plugins.jpavatar.aps.system.utils.ImageInfo;
+import com.agiletec.plugins.jpavatar.apsadmin.avatar.IAvatarAction;
 
 public class AvatarAction extends BaseAction implements IAvatarAction {
 
@@ -89,15 +90,18 @@ public class AvatarAction extends BaseAction implements IAvatarAction {
 		return isValid;
 	}
 
-	public String getAvatarName() {
-		String avatarName = null;
+	public String getAvatarResource() {
+		String avatarRes = null;
 		try {
-			avatarName = this.getAvatarManager().getAvatar(this.getCurrentUser().getUsername());
+			File aFile = this.getAvatarManager().getAvatarResource(this.getCurrentUser().getUsername());
+			if (null != aFile) {
+				avatarRes = aFile.getName();
+			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAvatarName");
-			throw new RuntimeException("error in getAvatar for " + this.getCurrentUser().getUsername(), t);
+			ApsSystemUtils.logThrowable(t, this, "getAvatarResource");
+			throw new RuntimeException("error in getAvatarRecource for " + this.getCurrentUser().getUsername(), t);
 		}
-		return avatarName;
+		return avatarRes;
 	}
 	
 	public String edit() {
