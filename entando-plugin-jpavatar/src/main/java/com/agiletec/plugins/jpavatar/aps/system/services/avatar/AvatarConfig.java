@@ -15,20 +15,21 @@
 * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package com.agiletec.plugins.jpavatar;
+package com.agiletec.plugins.jpavatar.aps.system.services.avatar;
 
-import com.agiletec.plugins.jpavatar.aps.system.services.avatar.TestAvatarManager;
-import com.agiletec.plugins.jpavatar.apsadmin.avatar.TestAvatarAction;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+public class AvatarConfig {
 
-public class AllTests {
-	
-	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for jpavatar");
-		suite.addTestSuite(TestAvatarManager.class);
-		suite.addTestSuite(TestAvatarAction.class);
-		return suite;
+	public String getStyle() {
+		return _style;
 	}
-	
+	public void setStyle(String style) {
+		this._style = style;
+	}
+
+	private String _style = STYLE_LOCAL;
+
+	public static final String STYLE_GRAVATAR = "gravatar";
+	public static final String STYLE_LOCAL = "local";
+
+	public static final String[] STYLES = {STYLE_LOCAL, STYLE_GRAVATAR};
 }

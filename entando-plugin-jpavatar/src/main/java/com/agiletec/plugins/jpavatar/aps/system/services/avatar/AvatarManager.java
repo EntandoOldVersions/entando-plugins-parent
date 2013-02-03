@@ -1,26 +1,28 @@
 /*
-*
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
-*
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
-* and limitations under the License
-* 
-* 
-* 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
-*
-*/
+ *
+ * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ *
+ * This file is part of Entando software.
+ * Entando is a free software; 
+ * you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+ * 
+ * See the file License for the specific language governing permissions   
+ * and limitations under the License
+ * 
+ * 
+ * 
+ * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ *
+ */
+
 package com.agiletec.plugins.jpavatar.aps.system.services.avatar;
 
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
+import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 
@@ -31,6 +33,7 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpavatar.aps.system.JpAvatarSystemConstants;
+import com.agiletec.plugins.jpavatar.aps.system.services.avatar.parse.AvatarConfigDOM;
 import com.agiletec.plugins.jpavatar.aps.system.utils.MD5Util;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.UserProfile;
@@ -43,12 +46,97 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 
 	@Override
 	public void init() throws Exception {
+		this.loadConfig();
 		ApsSystemUtils.getLogger().info(this.getClass().getName() + " : inizialized");
+	}
+
+	/**
+	 * Load the XML configuration containing service configuration.
+	 * @throws ApsSystemException
+	 */
+	private void loadConfig() throws ApsSystemException {
+		try {
+			ConfigInterface configManager = this.getConfigManager();
+			String xml = configManager.getConfigItem(JpAvatarSystemConstants.CONFIG_ITEM);
+			if (xml == null) {
+				throw new ApsSystemException("Configuration item not present: " + JpAvatarSystemConstants.CONFIG_ITEM);
+			}
+			AvatarConfigDOM configDOM = new AvatarConfigDOM();
+			this.setConfig(configDOM.extractConfig(xml));
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
+			throw new ApsSystemException("Error on AvatarManager startup", t);
+		}
+	}
+
+	@Override
+	public void updateConfig(AvatarConfig config) throws ApsSystemException {
+		try {
+			String xml = new AvatarConfigDOM().createConfigXml(config);
+			this.getConfigManager().updateConfigItem(JpAvatarSystemConstants.CONFIG_ITEM, xml);
+			this.setConfig(config);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "updateConfig");
+			throw new ApsSystemException("Error updating jpavatar config", t);
+		}
+	}
+
+	@Override
+	public String getAvatar(String username) throws ApsSystemException {
+		String url = null;
+		try {
+			if (this.getConfig().getStyle().equalsIgnoreCase(AvatarConfig.STYLE_LOCAL)) {
+				String avatarFileName = null;
+
+				StringBuffer urlBuffer = new StringBuffer();
+				String sep = System.getProperty("file.separator");
+				urlBuffer.append(this.getConfigManager().getParam(SystemConstants.PAR_RESOURCES_ROOT_URL));
+				if (!urlBuffer.toString().endsWith(sep)) {
+					urlBuffer.append(sep);
+				}
+				urlBuffer.append("plugins").append(sep).append("jpavatar").append(sep);
+
+				File avatarResource = this.getAvatarResource(username);					
+				if (null != avatarResource) avatarFileName = avatarResource.getName();
+				
+				if (StringUtils.isNotBlank(avatarFileName)) {
+					url = urlBuffer.toString() + "avatar" + sep + avatarFileName;
+				} else {
+					url = urlBuffer.toString() + JpAvatarSystemConstants.DEFAULT_AVATAR_NAME;
+				}
+
+			} else if (this.getConfig().getStyle().equalsIgnoreCase(AvatarConfig.STYLE_GRAVATAR)) {
+				url = this.getGravatarUrl() + this.getGravatarHash(username);
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "getAvatar");
+			throw new ApsSystemException("Error getting avatar for user " + username, t);
+		}
+		return url;
+	}
+
+	@Override
+	public File getAvatarResource(String username) {
+		File avatarFileName = null;
+		if (StringUtils.isNotBlank(username)) {
+			String basePath = this.getAvatarDiskFolder() + AVATAR_SUBFOLDER;
+			File dir = new File(basePath);
+
+			String[] files = dir.list(new PrefixFileFilter(username.toLowerCase() + "."));
+			if (null != files && files.length > 0) {
+				File resFile = new File (basePath + System.getProperty("file.separator") + files[0]);
+				if (resFile.exists()) {
+					avatarFileName = new File (basePath + System.getProperty("file.separator") + files[0]);
+				}
+			}			
+		}
+		return avatarFileName;
 	}
 
 	public String getGravatarHash(String username) throws ApsSystemException {
 		String hash = null;
 		try {
+			if (null == username) return null;
 			UserProfile profile = (UserProfile) this.getUserProfileManager().getProfile(username);
 			if (null != profile) {
 				String emailAttr = profile.getMailAttributeName();
@@ -63,50 +151,6 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 			throw new ApsSystemException("Error getting gravatar hash for user " + username, t);
 		}
 		return hash;
-	}
-
-	public String getAvatarURL(String username) throws ApsSystemException {
-		String url = null;
-		try {
-			if (this.isGravatarActive()) {
-				url = this.getGravatarUrl() + this.getGravatarHash(username);
-			} else {
-				StringBuffer buffer = new StringBuffer();
-				String sep = System.getProperty("file.separator");
-				buffer.append(this.getConfigManager().getParam(SystemConstants.PAR_RESOURCES_ROOT_URL));
-				if (!buffer.toString().endsWith(sep)) {
-					buffer.append(sep);
-				}
-				buffer.append("plugins").append(sep).append("jpavatar").append(sep);
-				
-				String avatarFileName = this.getAvatar(username);
-				if (null != avatarFileName) {
-					url = buffer.toString()+ "avatar" + sep + avatarFileName;
-				} else {
-					url = buffer.toString() + JpAvatarSystemConstants.DEFAULT_AVATAR_NAME;
-				}
-			}
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAvatarURL");
-			throw new ApsSystemException("Error getting gravatar hash for user " + username, t);
-		}
-		return url;
-	}
-
-	@Override
-	public String getAvatar(String username) throws ApsSystemException {
-		String path = null;
-		try {
-			File dir = new File(this.getAvatarDiskFolder() + AVATAR_SUBFOLDER);
-			String[] files = dir.list(new PrefixFileFilter(username.toLowerCase() + "."));
-			if (null != files && files.length > 0) {
-				path = files[0];
-			}
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAvatar");
-			throw new ApsSystemException("Error getting avatar for user " + username, t);
-		}
-		return path;
 	}
 
 	@Override
@@ -149,9 +193,9 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 				username = userDetails.getUsername();
 			}
 			username = username.toLowerCase();
-			String filename = this.getAvatar(username);
-			if (null != filename) {
-				File fileToDelete = new File(this.createFullDiskPath(username, filename));
+			
+			File fileToDelete = this.getAvatarResource(username);
+			if (null != fileToDelete) {
 				FileUtils.forceDelete(fileToDelete);
 			}
 		} catch (Throwable t) {
@@ -164,11 +208,10 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 		this._avatarDiskFolder = avatarDiskFolder;
 	}
 
-	@Override
 	public String getAvatarDiskFolder() {
 		try {
 			if (null == this._avatarDiskFolder) {
-				this._avatarDiskFolder = 	this.getAvatarProperty(SystemConstants.PAR_RESOURCES_DISK_ROOT, File.separator);
+				this._avatarDiskFolder = this.createAvatarDiskFolderPath(SystemConstants.PAR_RESOURCES_DISK_ROOT, File.separator);
 				File dir = new File(this._avatarDiskFolder);
 				if (!dir.exists()) {
 					FileUtils.forceMkdir(dir);
@@ -181,20 +224,7 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 		return _avatarDiskFolder;
 	}
 
-	public void setAvatarURL(String avatarURL) {
-		this._avatarURL = avatarURL;
-	}
-
-	@Override
-	public String getAvatarURL() {
-		if (null == this._avatarURL) {
-			this._avatarURL = this.getAvatarProperty(SystemConstants.PAR_RESOURCES_ROOT_URL, "/");
-		}
-		return _avatarURL;
-	}
-
-
-	private String getAvatarProperty(String baseParamName, String separator) {
+	private String createAvatarDiskFolderPath(String baseParamName, String separator) {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(this.getConfigManager().getParam(baseParamName));
 		if (!buffer.toString().endsWith(separator)) {
@@ -204,23 +234,11 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 		return buffer.toString();
 	}
 
-	@Override
-	public boolean isGravatarActive() {
-		return null != this.getUseGravatar() && this.getUseGravatar().equalsIgnoreCase("true");
-	}
-	
 	protected ConfigInterface getConfigManager() {
 		return _configManager;
 	}
 	public void setConfigManager(ConfigInterface configManager) {
 		this._configManager = configManager;
-	}
-
-	public String getUseGravatar() {
-		return _useGravatar;
-	}
-	public void setUseGravatar(String useGravatar) {
-		this._useGravatar = useGravatar;
 	}
 
 	protected IUserProfileManager getUserProfileManager() {
@@ -237,12 +255,18 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 		this._gravatarUrl = gravatarUrl;
 	}
 
+	public AvatarConfig getConfig() {
+		return _config;
+	}
+	public void setConfig(AvatarConfig config) {
+		this._config = config;
+	}
+
 	private String _avatarDiskFolder;
-	private String _avatarURL;
 	private ConfigInterface _configManager;
 	private IUserProfileManager _userProfileManager;
-	public static final String AVATAR_SUBFOLDER = "avatar";
-	private String _useGravatar;
 	private String _gravatarUrl;
-	
+	private AvatarConfig _config;
+	public static final String AVATAR_SUBFOLDER = "avatar";
+
 }

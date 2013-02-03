@@ -49,11 +49,6 @@ public interface IAvatarManager {
 	 */
 	public String getAvatarDiskFolder();
 
-	/**
-	 * Gets the avatar url (without /avatar)
-	 * @return the avatar url
-	 */
-	public String getAvatarURL();
 	
 	/**
 	 * Returns the name of the file associated with the username passed as parameter (es: admin.png)
@@ -62,10 +57,25 @@ public interface IAvatarManager {
 	 * @throws ApsSystemException if an error occurs
 	 */
 	public String getAvatar(String username) throws ApsSystemException;
+	/**
+	 * Returns the avatar File
+	 * @param username
+	 * @return
+	 * @throws ApsSystemException
+	 */
+	public File getAvatarResource(String username) throws ApsSystemException;
 	
-	public boolean isGravatarActive();
-	
-	public String getAvatarURL(String username) throws ApsSystemException;
-	
+	/**
+	 * Return the service configuration bean
+	 * @return
+	 */
+	public AvatarConfig getConfig();
+
+	/**
+	 * Update the service configuration
+	 * @param config
+	 * @throws ApsSystemException
+	 */
+	public void updateConfig(AvatarConfig config) throws ApsSystemException;
 
 }
