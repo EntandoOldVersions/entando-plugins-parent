@@ -42,40 +42,54 @@
 				</ul>
 				</div>
 			</s:if>
-			
-			<s:if test="null == avatarName">
-				<form action="<wp:action path="/ExtStr2/do/jpavatar/Front/Avatar/save.action" />" method="post" enctype="multipart/form-data">
-					<p>
-						<wp:i18n key="jpavatar_YOU_HAVE_NO_AVATAR" /><br />
-						<jpavatar:avatar var="currentAvatar" returnDefaultAvatar="true" />
-						<s:if test="null != #request.currentAvatar">
-							<img src="<s:property value="#request.currentAvatar"/>" alt=""/>
-						</s:if>
-					</p>
-					
-					<p>
-						<label for="jpavatar_upload"><wp:i18n key="jpavatar_UPLOAD" /></label>:<br />
-						<s:file name="avatar" id="jpavatar_upload" /> 
-					</p>
-					<p>
-						<s:set var="upload"><wp:i18n key="jpavatar_GO_UPLOAD" /></s:set>
-						<s:submit value="%{#upload}" />
-					</p>
-				</form>
-			</s:if>
-			
-			<s:else>
-				<form action="<wp:action path="/ExtStr2/do/jpavatar/Front/Avatar/bin.action" />" method="post">
+
+			<jpavatar:avatar var="currentAvatar" returnDefaultAvatar="true" avatarStyleVar="style" />
+	
+			<c:choose>
+				<c:when test="${style == 'gravatar'}">
 					<p>
 						<wp:i18n key="jpavatar_CURRENT_AVATAR" />:<br />
-						<img src="<jpavatar:avatar />" alt="" />
-					</p>
-					<p>
-						<s:set var="delete"><wp:i18n key="jpavatar_DELETE" /></s:set>
-						<s:submit value="%{#delete}"/> 
-					</p>
-				</form>
-			</s:else>
+					</p> 		
+					<img src="<c:out value="${currentAvatar}" />"/>
+				</c:when>
+				<c:when test="${style == 'local'}">
+					<s:if test="null == avatarResource">
+						<p>
+							<wp:i18n key="jpavatar_YOU_HAVE_NO_AVATAR" /><br />
+						</p> 		
+						<img src="<c:out value="${currentAvatar}" />"/>
+					
+					
+						<form action="<wp:action path="/ExtStr2/do/jpavatar/Front/Avatar/save.action" />" method="post" enctype="multipart/form-data">
+							<p>
+								<label for="jpavatar_upload"><wp:i18n key="jpavatar_UPLOAD" /></label>:<br />
+								<s:file name="avatar" id="jpavatar_upload" /> 
+							</p>
+							<p>
+								<s:set var="upload"><wp:i18n key="jpavatar_GO_UPLOAD" /></s:set>
+								<s:submit value="%{#upload}" />
+							</p>
+						</form>
+					</s:if>
+					<s:else>
+						<p>
+							<wp:i18n key="jpavatar_CURRENT_AVATAR" />:<br />
+						</p> 
+						<img src="<c:out value="${currentAvatar}" />"/>
+						<form action="<wp:action path="/ExtStr2/do/jpavatar/Front/Avatar/bin.action" />" method="post">
+							<p>
+								<s:set var="delete"><wp:i18n key="jpavatar_DELETE" /></s:set>
+								<s:submit value="%{#delete}"/> 
+							</p>
+		
+						</form>
+					</s:else>
+				</c:when>
+				<c:otherwise>
+					style <c:out value="${style}" />
+				</c:otherwise>
+			</c:choose>
+
 		</c:when>
 	</c:choose>
 </div>

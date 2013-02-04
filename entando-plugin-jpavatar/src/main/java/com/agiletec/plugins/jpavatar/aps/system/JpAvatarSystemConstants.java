@@ -28,4 +28,10 @@ public interface JpAvatarSystemConstants {
 	 * Filename that must be returned when no avatar is found. This file must exists and placed in the "avatarDiskFolder" directory
 	 */
 	public static final String DEFAULT_AVATAR_NAME = "default.png";
+	
+	/**
+	 * Config item stored into sysconfig table, *port db
+	 */
+	public static final String CONFIG_ITEM = "jpavatar_config";
+
 }
