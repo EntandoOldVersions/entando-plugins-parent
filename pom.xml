@@ -25,8 +25,8 @@
 		<module>entando-plugin-jpldap</module>
 		<module>entando-plugin-jpuserprofile</module>
 		<module>entando-plugin-jpuserreg</module>
-		<!--
 		<module>entando-plugin-jpaddressbook</module>
+		<!--
 		<module>entando-plugin-jpnewsletter</module>
 		-->
 		<module>entando-plugin-jpsurvey</module>
