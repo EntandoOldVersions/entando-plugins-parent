@@ -39,5 +39,3 @@ INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ('jpavatar_GO
 
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ('jpavatar_OK_THANKYOU', 'it', 'Ok');
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ('jpavatar_OK_THANKYOU', 'en', 'Ok');
-
-
