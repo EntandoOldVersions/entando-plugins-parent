@@ -11,7 +11,7 @@ INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, p
 	</attributes>
 </profile>', 0);
 INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) VALUES ('mainEditor', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
-<profile id="editorCustomers" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
+<profile id="mainEditor" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
 	<attributes>
 		<attribute name="Name" attributetype="Monotext"><monotext>Amanda</monotext></attribute>
 		<attribute name="Surname" attributetype="Monotext"><monotext>Chedwase</monotext></attribute>
@@ -23,7 +23,7 @@ INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, p
 	</attributes>
 </profile>', 0);
 INSERT INTO jpuserprofile_authuserprofiles (username, profiletype, profilexml, publicprofile) VALUES ('pageManagerCoach', 'PFL', '<?xml version="1.0" encoding="UTF-8"?>
-<profile id="editorCustomers" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
+<profile id="pageManagerCoach" typecode="PFL" typedescr="Profilo utente/cittadino tipo"><descr /><groups /><categories />
 	<attributes>
 		<attribute name="Name" attributetype="Monotext"><monotext>Raimond</monotext></attribute>
 		<attribute name="Surname" attributetype="Monotext"><monotext>Stevenson</monotext></attribute>
