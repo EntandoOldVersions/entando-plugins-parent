@@ -23,8 +23,6 @@
 			<email>e.mezzano@agiletec.it</email>
 		</developer>
 	</developers>
-	<url>http://www.entando.com/</url>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -65,7 +63,7 @@
 			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>war</type>
 		</dependency>
-                
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
@@ -74,15 +72,7 @@
 			<classifier>classes</classifier>
 			<scope>provided</scope>
 		</dependency>
-                
-                <dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc</classifier>
-		</dependency>
-                
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
@@ -91,23 +81,14 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-                
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc-test</classifier>
-			<scope>test</scope>
-		</dependency>
-                
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
 			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>war</type>
 		</dependency>
-                
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
@@ -116,15 +97,7 @@
 			<classifier>classes</classifier>
 			<scope>provided</scope>
 		</dependency>
-                
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc</classifier>
-		</dependency>
-                
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
@@ -133,15 +106,6 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-                
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc-test</classifier>
-			<scope>test</scope>
-		</dependency>
-                
+		
 	</dependencies>
 </project>
