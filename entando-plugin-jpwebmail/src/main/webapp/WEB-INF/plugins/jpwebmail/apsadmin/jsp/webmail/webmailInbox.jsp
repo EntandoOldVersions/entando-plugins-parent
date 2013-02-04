@@ -23,7 +23,7 @@
 <wpsa:subset source="messages" count="10" objectName="groupMessages" advanced="true" offset="5">
 <s:set name="group" value="#groupMessages" />
 
-<h1>POBA MESSAGGI</h1>
+<h1>MESSAGGI</h1>
 <div class="paginazione">
 	<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pagerInfo.jsp" />
 	<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pager_formBlock.jsp" />
