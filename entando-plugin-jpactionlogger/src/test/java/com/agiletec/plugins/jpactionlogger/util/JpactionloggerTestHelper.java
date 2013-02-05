@@ -88,7 +88,7 @@ public class JpactionloggerTestHelper extends AbstractDAO {
 	}
 	
 	private static final String CLEAN_RECORDS = 
-		"TRUNCATE TABLE jpactionlogger_records";
+		"DELETE FROM jpactionlogger_records";
 	
 	private IActionLoggerDAO _actionLoggerDAO;
 	
