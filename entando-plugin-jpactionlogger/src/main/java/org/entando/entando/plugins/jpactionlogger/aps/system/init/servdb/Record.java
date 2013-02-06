@@ -33,7 +33,7 @@ public class Record {
 	@DatabaseField(columnName = "id", 
 			dataType = DataType.INTEGER, 
 			canBeNull = false, id = true)
-	private String _id;
+	private int _id;
 	
 	@DatabaseField(columnName = "username", 
 			dataType = DataType.STRING, 
