@@ -12,7 +12,7 @@
             <result name="failure" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/errors.jsp</result>
         </global-results>
     	
-        <action name="chooseLink*" class="jacmsLinkAttributeAction" method="chooseLinkType">
+        <action name="chooseLink*" class="jpfastcontenteditLinkAttributeAction" method="chooseLinkType">
             <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/chooseLink.jsp</result>
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" >
@@ -20,7 +20,7 @@
             </interceptor-ref>
         </action>
 	
-        <action name="configLink" class="jacmsLinkAttributeAction" method="configLink">
+        <action name="configLink" class="jpfastcontenteditLinkAttributeAction" method="configLink">
             <result name="input" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/chooseLink.jsp</result>
             <result name="configUrlLink" type="chain">configUrlLink</result>
             <result name="configPageLink" type="chain">configPageLink</result>
@@ -180,7 +180,7 @@
         
         <!-- ######## FINE GESTIONE NUOVO ATTRIBUTO RISORSA ######## -->
         
-		<action name="backToEntryContent" class="jacmsResourceAttributeAction" method="backToEntryContent">
+		<action name="backToEntryContent" class="jpfastcontenteditResourceAttributeAction" method="backToEntryContent">
 			<result type="frontRedirectAction">
 				<param name="namespace">/do/jpfastcontentedit/Content</param>
 				<param name="actionName">entryContent</param>

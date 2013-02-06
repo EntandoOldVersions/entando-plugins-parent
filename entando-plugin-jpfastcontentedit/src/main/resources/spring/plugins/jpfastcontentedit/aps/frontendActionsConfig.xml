@@ -29,7 +29,12 @@
 			class="com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.attribute.action.list.ListAttributeAction" 
 			parent="jacmsListAttributeAction" >
 	</bean>
-	
+
+	<bean id="jpfastcontenteditResourceAttributeAction" scope="prototype" 
+			class="com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.attribute.action.resource.ResourceAttributeAction" 
+			parent="jacmsResourceAttributeAction" >
+	</bean>
+
 	<bean id="jpfastcontenteditExtendedResourceFinderAction" scope="prototype" 
 		  class="com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.attribute.action.resource.ExtendedResourceFinderAction" 
 		  parent="jacmsResourceFinderAction" >
@@ -38,6 +43,11 @@
 	<bean id="jpfastcontenteditExtendedResourceAction" scope="prototype" 
 		  class="com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.attribute.action.resource.ExtendedResourceAction" 
 		  parent="jacmsResourceAction" >
+	</bean>
+	
+	<bean id="jpfastcontenteditLinkAttributeAction" scope="prototype" 
+			class="com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.attribute.action.link.LinkAttributeAction" 
+			parent="jacmsLinkAttributeAction" >
 	</bean>
 	
 	<bean id="jpfastcontenteditUrlLinkAttributeAction" scope="prototype" 

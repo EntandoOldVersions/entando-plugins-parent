@@ -122,7 +122,7 @@
 		<!-- ######## FINE GESTIONE ATTRIBUTI IN LISTA ######## -->
 		
 		<!-- ########  INIZIO GESTIONE ATTRIBUTI LINK  ######## -->
-        <action name="chooseLink*" class="jacmsLinkAttributeAction" method="chooseLink">
+        <action name="chooseLink*" class="jpfastcontenteditLinkAttributeAction" method="chooseLink">
             <result type="chain">
                 <param name="namespace">/do/jpfastcontentedit/Content/Link</param>
                 <param name="actionName">chooseLink</param>
@@ -131,8 +131,12 @@
             <interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
 		
-        <action name="removeLink*" class="jacmsLinkAttributeAction" method="removeLink">
-            <result type="chain">entryContent</result>
+        <action name="removeLink*" class="jpfastcontenteditLinkAttributeAction" method="removeLink">
+            <result type="frontRedirectAction">
+				<param name="actionName">entryContent</param>
+				<param name="anchorDest">${langTabAnchorDest}</param>
+            </result>
+			<!-- <result type="chain">entryContent</result> -->
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
@@ -140,7 +144,7 @@
 		
         <!-- ######## INIZIO GESTIONE ATTRIBUTI RISORSA ######## -->
         
-        <action name="chooseResource*" class="jacmsResourceAttributeAction" method="chooseResource">
+        <action name="chooseResource*" class="jpfastcontenteditResourceAttributeAction" method="chooseResource">
             <result type="chain">
                 <param name="namespace">/do/jpfastcontentedit/Content/Resource</param>
                 <param name="actionName">findResource</param>
@@ -149,8 +153,12 @@
             <interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
 		
-        <action name="removeResource*" class="jacmsResourceAttributeAction" method="removeResource">
-            <result type="chain">entryContent</result>
+        <action name="removeResource*" class="jpfastcontenteditResourceAttributeAction" method="removeResource">
+            <result type="frontRedirectAction">
+				<param name="actionName">entryContent</param>
+				<param name="anchorDest">${langTabAnchorDest}</param>
+            </result>
+			<!-- <result type="chain">entryContent</result> -->
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
