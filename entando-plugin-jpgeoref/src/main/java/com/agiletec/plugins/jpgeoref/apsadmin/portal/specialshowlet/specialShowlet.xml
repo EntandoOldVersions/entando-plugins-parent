@@ -93,6 +93,7 @@
 
 		<action name="setFilterOption" class="jacmsContentListFilterAction" method="setFilterOption">
         	<result type="tiles">admin.jpgeoref.page.showlet.contentListViewer.entryFilter</result>
+            <result name="addFilter" type="chain">addFilter</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 

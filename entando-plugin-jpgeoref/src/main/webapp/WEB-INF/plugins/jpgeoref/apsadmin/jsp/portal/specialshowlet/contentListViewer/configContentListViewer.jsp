@@ -18,7 +18,7 @@
 
 <h3 class="margin-more-top margin-more-bottom"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h3>
 
-<s:form action="saveListViewerConfig" namespace="/do/jpgeoref/Page/SpecialShowlet/ListViewer">
+<s:form action="saveListViewerConfig" namespace="/do/jacms/Page/SpecialShowlet/ListViewer">
 <p class="noscreen">
 	<wpsf:hidden name="pageCode" />
 	<wpsf:hidden name="frame" />
@@ -38,7 +38,7 @@
 </div>
 	</s:if>
 
-<s:set var="contentTypesVar" value="contentTypes" />
+<s:set var="contentTypes" value="contentTypes" />
 <s:if test="#contentTypesVar.isEmpty()">
 <p>
 	<s:text name="jpgeoref.error.noContentTypeAvailable" />
@@ -49,7 +49,7 @@
 <fieldset><legend><s:text name="title.contentInfo" /></legend>
 <p>
 	<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
-	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="#contentTypesVar" listKey="code" listValue="descr" cssClass="text" />
+	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" cssClass="text" />
 	<wpsf:submit useTabindexAutoIncrement="true" action="configListViewer" value="%{getText('label.continue')}" cssClass="button" />	
 </p>
 </fieldset>
@@ -59,7 +59,7 @@
 <fieldset class="margin-bit-bottom"><legend><s:text name="title.contentInfo" /></legend>
 <p>
 	<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
-	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="#contentTypesVar" listKey="code" listValue="descr" disabled="true" value="%{getShowlet().getConfig().get('contentType')}" cssClass="text" />
+	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" disabled="true" value="%{getShowlet().getConfig().get('contentType')}" cssClass="text" />
 	<wpsf:submit useTabindexAutoIncrement="true" action="changeContentType" value="%{getText('label.change')}" cssClass="button" />	
 </p>
 <p class="noscreen">
@@ -231,17 +231,20 @@
 			<wpsf:textfield useTabindexAutoIncrement="true" name="title_%{#lang.code}" id="title_%{#lang.code}" value="%{showlet.config.get('title_' + #lang.code)}" cssClass="text" />
 		</p>
 	</s:iterator>
+
 	<p>
 		<label for="pageLink"  class="basic-mint-label"><s:text name="label.link.page" />:</label>
 		<wpsf:select useTabindexAutoIncrement="true" list="pages" name="pageLink" id="pageLink" listKey="code" listValue="getShortFullTitle(currentLang.code)" 
 				value="%{showlet.config.get('pageLink')}" headerKey="" headerValue="- %{getText('label.select')} -" />
 	</p>
+	
 	<s:iterator var="lang" value="langs">
 		<p>
 			<label for="linkDescr_<s:property value="#lang.code" />"  class="basic-mint-label"><span class="monospace">(<s:property value="#lang.code" />)</span><s:text name="label.link.descr"/>:</label>
 			<wpsf:textfield useTabindexAutoIncrement="true" name="linkDescr_%{#lang.code}" id="linkDescr_%{#lang.code}" value="%{showlet.config.get('linkDescr_' + #lang.code)}" cssClass="text" />
 		</p>
 	</s:iterator>
+
 </div>
 </fieldset>
 
@@ -252,7 +255,7 @@
 		<wpsf:select useTabindexAutoIncrement="true" name="userFilterKey" id="userFilterKey" list="allowedUserFilterTypes" listKey="key" listValue="value" cssClass="text" />
 		<wpsf:submit useTabindexAutoIncrement="true" action="addUserFilter" value="%{getText('label.add')}" cssClass="button" />
 	</p>
-	
+
 	<p class="noscreen">
 		<wpsf:hidden name="userFilters" value="%{getShowlet().getConfig().get('userFilters')}" />
 	</p>
@@ -328,6 +331,13 @@
 	<wpsf:select useTabindexAutoIncrement="true" name="modelId" id="modelId" value="%{getShowlet().getConfig().get('modelId')}" 
 		list="%{getModelsForContentType(showlet.config['contentType'])}" headerKey="" headerValue="%{getText('label.default')}" listKey="id" listValue="description" cssClass="text" />
 </p>
+
+<p>
+	<label for="maxElements" class="basic-mint-label"><s:text name="label.maxElements" />:</label>
+	<wpsf:select name="maxElements" id="maxElements" value="%{getShowlet().getConfig().get('maxElements')}" 
+		headerKey="" headerValue="%{getText('label.all')}" list="#{1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,15:15,20:20}" cssClass="text" />
+</p>
+
 </fieldset>
 
 <p class="centerText"><wpsf:submit useTabindexAutoIncrement="true" action="saveListViewerConfig" value="%{getText('label.save')}" cssClass="button" /></p>

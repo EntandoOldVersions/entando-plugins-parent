@@ -138,7 +138,7 @@ public class CoordsAttribute extends AbstractAttribute {
 	
 	@Override
 	protected Object getJAXBValue(String langCode) {
-		StringBuffer coords = new StringBuffer();
+		StringBuilder coords = new StringBuilder();
 		coords.append("(");
 		coords.append(this.getX());
 		coords.append(",");
@@ -163,20 +163,27 @@ public class CoordsAttribute extends AbstractAttribute {
 	
 	@Override
 	public void valueFrom(DefaultJAXBAttribute jaxbAttribute) {
-		if (null == jaxbAttribute) return;
+		if (null == jaxbAttribute) {
+			return;
+		}
 		String coords = (String) jaxbAttribute.getValue();
-		if (null == coords) return;
-		String[] coordinates = coords.trim().substring(1, coords.trim().length() - 1).split(",");
-		if (coordinates.length < 2) return;
+		if (null == coords) {
+			return;
+		}
+		String section = coords.trim().substring(1, coords.trim().length() - 1);
+		String[] coordinates = section.split(",");
+		if (coordinates.length < 2) {
+			return;
+		}
 		try {
-			this.setX(Long.parseLong(coordinates[0]));
+			this.setX(Double.parseDouble(coordinates[0]));
 		} catch (Exception e) {}
 		try {
-			this.setY(Long.parseLong(coordinates[1]));
+			this.setY(Double.parseDouble(coordinates[1]));
 		} catch (Exception e) {}
 		if (coordinates.length > 2) {
 			try {
-				this.setZ(Long.parseLong(coordinates[2]));
+				this.setZ(Double.parseDouble(coordinates[2]));
 			} catch (Exception e) {}
 		}
 	}

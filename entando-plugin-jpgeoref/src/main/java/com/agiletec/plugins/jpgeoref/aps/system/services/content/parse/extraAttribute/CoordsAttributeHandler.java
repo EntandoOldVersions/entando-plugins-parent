@@ -33,6 +33,7 @@ public class CoordsAttributeHandler extends AbstractAttributeHandler {
 	/**
 	 * Start attribute analysis.
 	 */
+	@Override
 	public void startAttribute(Attributes attributes, String qName) throws SAXException {
 		if (qName.equals(GeoRefSystemConstants.COORDS_ATTRIBUTE_X)) {
 			//nothing to do
@@ -46,6 +47,7 @@ public class CoordsAttributeHandler extends AbstractAttributeHandler {
 	/**
 	 * End attribute analysis.
 	 */
+	@Override
 	public void endAttribute(String qName, StringBuffer textBuffer) {
 		if (qName.equals(GeoRefSystemConstants.COORDS_ATTRIBUTE_X)) {
 			this.endCoords(textBuffer, GeoRefSystemConstants.COORDS_ATTRIBUTE_X);
@@ -55,7 +57,7 @@ public class CoordsAttributeHandler extends AbstractAttributeHandler {
 			this.endCoords(textBuffer, GeoRefSystemConstants.COORDS_ATTRIBUTE_Z);
 		}
 	}
-
+	
 	/**
 	 * Sets coordinate property
 	 * @param textBuffer property value
@@ -69,7 +71,7 @@ public class CoordsAttributeHandler extends AbstractAttributeHandler {
 			try {
 				BeanUtils.setProperty(attribute, property, new Double(coord));
 			} catch (Throwable t) {
-				new RuntimeException("Error setting '" + property + "' property", t);
+				throw new RuntimeException("Error setting '" + property + "' property", t);
 			}
 		}
 	}

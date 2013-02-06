@@ -36,6 +36,7 @@ public class CoordsAttributeManager extends AbstractMonoLangAttributeManager {
 	 * @param tracer Attribute tracer
 	 * @param request Request 
 	 */
+	@Override
 	protected void updateAttribute(AttributeInterface attribute, AttributeTracer tracer, HttpServletRequest request) {
 		CoordsAttribute coordsAttribute = (CoordsAttribute) attribute;
 		String x = this.getValueFromForm(attribute, tracer, GeoRefSystemConstants.COORDS_ATTRIBUTE_X, request);
@@ -92,6 +93,7 @@ public class CoordsAttributeManager extends AbstractMonoLangAttributeManager {
 	/**
      * @deprecated As of version 2.4.1 of Entando, moved validation within single attribute.
      */
+	@Override
     protected Object getValue(AttributeInterface attribute) {
 		return null;
 	}
