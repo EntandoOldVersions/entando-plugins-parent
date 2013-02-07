@@ -9,12 +9,14 @@
 			class="com.agiletec.plugins.jpwebdynamicform.aps.internalservlet.message.MessageTypesAction"
 			parent="abstractBaseAction" >
 		<property name="messageManager" ref="jpwebdynamicformMessageManager" />
+		<property name="i18nManager" ref="I18nManager" />
 	</bean>
 
 	<bean id="jpwebdynamicformUserNewMessageAction" scope="prototype"
 			class="com.agiletec.plugins.jpwebdynamicform.aps.internalservlet.message.UserNewMessageAction"
 			parent="abstractEntityAction" >
 		<property name="messageManager" ref="jpwebdynamicformMessageManager" />
+		<property name="i18nManager" ref="I18nManager" />
 	</bean>
 
 	<bean id="jpwebdynamicformListAttributeAction" scope="prototype"
