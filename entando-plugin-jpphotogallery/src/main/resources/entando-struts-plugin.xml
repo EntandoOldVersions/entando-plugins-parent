@@ -6,6 +6,6 @@
 <struts>
 	
 	<!-- ### jpphotogallery ### -->
-	<include file="com/agiletec/plugins/jpphotogallery/apsadmin/page/specialshowlet/specialShowlet.xml"/>
+	<include file="com/agiletec/plugins/jpphotogallery/apsadmin/portal/specialshowlet/specialShowlet.xml"/>
     
 </struts>

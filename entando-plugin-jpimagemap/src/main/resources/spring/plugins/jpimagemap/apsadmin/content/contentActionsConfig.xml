@@ -6,22 +6,6 @@
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
-	<!--
-	<bean id="jacmsContentActionHelper" parent="entityActionHelper" 
-			class="com.agiletec.plugins.jacms.apsadmin.content.helper.ContentActionHelper" >
-		<property name="extraAttributeManagers">
-			<map>
-				<entry key="Link"><ref bean="jacmsLinkAttributeManager" /></entry>
-				<entry key="Hypertext"><ref bean="jacmsHypertextAttributeManager" /></entry>
-				<entry key="Image"><ref bean="jacmsResourceAttributeManager" /></entry>
-				<entry key="Attach"><ref bean="jacmsResourceAttributeManager" /></entry>
-				<entry key="ImageMap"><ref bean="JpimagemapImageMapAttributeManager" /></entry>
-			</map>
-		</property>
-		<property name="contentManager" ref="jacmsContentManager" />
-		<property name="pageManager" ref="PageManager" />
-	</bean>
-	-->
 	
 	<bean id="jpimagemapEntryContentHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
 		<property name="filePath"><value>/WEB-INF/plugins/jpimagemap/apsadmin/jsp/content/entryContent-attribute-jack.jsp</value></property>
