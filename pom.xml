@@ -37,7 +37,9 @@
 		<module>entando-plugin-jpgeoref</module>
 		<!--
 		<module>entando-plugin-jpwebmail</module>NON A POSTO DA TEMPO
+		-->
 		<module>entando-plugin-jpimagemap</module>
+		<!--
 		<module>entando-plugin-jpphotogallery</module>
 		<module>entando-plugin-jprssaggregator</module>
 		<module>entando-plugin-jpshowletreplicator</module>

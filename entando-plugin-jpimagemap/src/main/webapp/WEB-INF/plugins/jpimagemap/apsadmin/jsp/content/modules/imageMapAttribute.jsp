@@ -75,7 +75,7 @@
 											&#32;
 											<%-- define area button --%>
 											<wpsa:actionParam action="defineImageMapArea" var="defineAreaActionName" ><wpsa:actionSubParam name="attributeName" value="%{#attribute.name}" /><wpsa:actionSubParam name="elementIndex" value="%{#elementStatus.index}" /><wpsa:actionSubParam name="langCode" value="%{#lang.code}" /></wpsa:actionParam>
-											<wpsa:set name="iconImagePath" ><wp:resourceURL/>plugins/jpimagemap/administration/common/img/tablet.png</wpsa:set>
+											<wpsa:set name="iconImagePath" ><wp:resourceURL/>plugins/jpimagemap/administration/img/tablet.png</wpsa:set>
 											<wpsf:submit type="image" useTabindexAutoIncrement="true" action="%{#defineAreaActionName}" value="%{getText('label.defineArea')}" title="%{getText('label.defineArea')}" src="%{#iconImagePath}" />
 										</div>
 										<div class="jpimagemap-compositeAttribute-element">
