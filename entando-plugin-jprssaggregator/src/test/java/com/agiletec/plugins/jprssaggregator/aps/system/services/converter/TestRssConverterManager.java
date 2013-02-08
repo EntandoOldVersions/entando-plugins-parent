@@ -87,18 +87,18 @@ public class TestRssConverterManager extends ApsPluginBaseTestCase {
 		assertEquals(entries.size(), contents.size());
 		Content content = contents.get(0);
 		assertEquals("Burnout", content.getDescr());
-		TextAttribute titleAttr = (TextAttribute) content.getAttribute("Titolo");
+		TextAttribute titleAttr = (TextAttribute) content.getAttribute("Title");
 		LinkAttribute  linkAttr = (LinkAttribute) content.getAttribute("Link");
-		HypertextAttribute corpoAttr = (HypertextAttribute) content.getAttribute("Corpo");
+		HypertextAttribute corpoAttr = (HypertextAttribute) content.getAttribute("TextBody");
 		assertEquals("Burnout", titleAttr.getText());
 		assertEquals("http://www.alistapart.com/articles/burnout/", linkAttr.getSymbolicLink().getUrlDest());
 		assertTrue(corpoAttr.getText().startsWith("Does every day feel like a bad day"));
 
 		Content content1 = contents.get(2);
 		assertEquals("Descrizione non disponibile", content1.getDescr());
-		TextAttribute titleAttr1 = (TextAttribute) content1.getAttribute("Titolo");
+		TextAttribute titleAttr1 = (TextAttribute) content1.getAttribute("Title");
 		LinkAttribute  linkAttr1 = (LinkAttribute) content1.getAttribute("Link");
-		HypertextAttribute corpoAttr1 = (HypertextAttribute) content1.getAttribute("Corpo");
+		HypertextAttribute corpoAttr1 = (HypertextAttribute) content1.getAttribute("TextBody");
 		assertEquals("Titolo non disponibile", titleAttr1.getText());
 		assertEquals("http://www.alistapart.com/articles/taking-the-guesswork-out-of-design/", linkAttr1.getSymbolicLink().getUrlDest());
 		assertEquals("Corpo testo non disponibile", corpoAttr1.getText());
