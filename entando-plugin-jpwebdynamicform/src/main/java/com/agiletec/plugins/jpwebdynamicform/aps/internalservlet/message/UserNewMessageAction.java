@@ -87,8 +87,7 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 		}
 		try {
 			String typeLabelKey = "jpwebdynamicform_TITLE_" + messageType.getTypeCode();
-			ApsProperties labelGroup = this.getI18nManager().getLabelGroup(typeLabelKey);
-			if (null == labelGroup) {
+			if (null == this.getI18nManager().getLabelGroup(typeLabelKey)) {
 				this.addLabelGroups(typeLabelKey, messageType.getTypeDescr());
 			}
 			List<AttributeInterface> attributes = messageType.getAttributeList();
@@ -96,7 +95,9 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 				AttributeInterface attribute = attributes.get(i);
 				//jpwebdynamicform_${typeCodeKey}_${attributeNameI18nKey}
 				String attributeLabelKey = "jpwebdynamicform_" + messageType.getTypeCode() + "_" + attribute.getName();
-				this.addLabelGroups(attributeLabelKey, attribute.getName());
+				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
+					this.addLabelGroups(attributeLabelKey, attribute.getName());
+				}
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "checkTypeLables");
