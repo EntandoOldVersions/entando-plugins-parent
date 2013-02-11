@@ -1,4 +1,4 @@
-package org.entando.plugin.jpcontentrefs.aps;
+package org.entando.entando.plugins.jpcontentrefs.aps;
 
 public class TestApsSample extends ApsPluginBaseTestCase {
 	

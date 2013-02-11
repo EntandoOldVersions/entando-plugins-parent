@@ -15,17 +15,23 @@
 * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package org.entando.plugin.jpcontentrefs.aps;
+package org.entando.entando.plugins.jpcontentrefs;
 
-import com.agiletec.ConfigTestUtils;
-import com.agiletec.aps.BaseTestCase;
-import org.entando.plugin.jpcontentrefs.PluginConfigTestUtils;
+import org.entando.entando.plugins.jpcontentrefs.aps.TestApsSample;
+import org.entando.entando.plugins.jpcontentrefs.apsadmin.TestApsAdminSample;
 
-public class ApsPluginBaseTestCase extends BaseTestCase {
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+public class AllTests {
 	
-	@Override
-	protected ConfigTestUtils getConfigUtils() {
-		return new PluginConfigTestUtils();
+	public static Test suite() {
+		TestSuite suite = new TestSuite("Change me with a suitable description");
+
+		suite.addTestSuite(TestApsSample.class);
+		suite.addTestSuite(TestApsAdminSample.class);
+		
+		return suite;
 	}
 	
 }

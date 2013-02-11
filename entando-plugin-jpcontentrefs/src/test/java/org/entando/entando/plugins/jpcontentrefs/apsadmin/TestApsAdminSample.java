@@ -1,4 +1,4 @@
-package org.entando.plugin.jpcontentrefs.apsadmin;
+package org.entando.entando.plugins.jpcontentrefs.apsadmin;
 
 public class TestApsAdminSample extends ApsAdminPluginBaseTestCase {
 	

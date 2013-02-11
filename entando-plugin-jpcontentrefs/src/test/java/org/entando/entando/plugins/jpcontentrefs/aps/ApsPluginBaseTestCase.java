@@ -15,24 +15,17 @@
 * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package org.entando.plugin.jpcontentrefs;
+package org.entando.entando.plugins.jpcontentrefs.aps;
 
 import com.agiletec.ConfigTestUtils;
+import com.agiletec.aps.BaseTestCase;
+import org.entando.entando.plugins.jpcontentrefs.PluginConfigTestUtils;
 
-/**
- * @author E.Santoboni
- */
-public class PluginConfigTestUtils extends ConfigTestUtils {
+public class ApsPluginBaseTestCase extends BaseTestCase {
 	
 	@Override
-	protected String[] getSpringConfigFilePaths() {
-    	String[] filePaths = new String[5];
-		filePaths[0] = "classpath:spring/systemConfig.xml";
-		filePaths[1] = "classpath:spring/aps/managers/**/**.xml";
-		filePaths[2] = "classpath:spring/apsadmin/**/**.xml";
-		filePaths[3] = "classpath*:spring/plugins/**/aps/managers/**/**.xml";
-		filePaths[4] = "classpath*:spring/plugins/**/apsadmin/**/**.xml";  	
-		return filePaths;
-    }
+	protected ConfigTestUtils getConfigUtils() {
+		return new PluginConfigTestUtils();
+	}
 	
 }

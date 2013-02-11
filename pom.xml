@@ -54,9 +54,7 @@
 		-->
 		<module>entando-plugin-jpcontentfeedback</module>
 		<module>entando-plugin-jpcmstagcloud</module>
-		<!--
 		<module>entando-plugin-jpcontentrefs</module>
-		-->
 		<module>entando-plugin-jpmyportalplus</module>
 		<module>entando-plugin-jptokenapi</module>
 	</modules>
