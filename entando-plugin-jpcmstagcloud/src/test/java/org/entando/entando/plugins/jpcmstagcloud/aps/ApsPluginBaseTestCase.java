@@ -15,16 +15,13 @@
 * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package com.agiletec.plugins.jpcmstagcloud.aps;
+package org.entando.entando.plugins.jpcmstagcloud.aps;
 
 import com.agiletec.ConfigTestUtils;
 import com.agiletec.aps.BaseTestCase;
-import com.agiletec.plugins.jpcmstagcloud.PluginConfigTestUtils;
+import org.entando.entando.plugins.jpcmstagcloud.PluginConfigTestUtils;
 
-/**
- * BaseTestCase Class for jpcmstagcloud aps tests.
- */
-public class JpcmstagcloudBaseTestCase extends BaseTestCase {
+public class ApsPluginBaseTestCase extends BaseTestCase {
 	
 	@Override
 	protected ConfigTestUtils getConfigUtils() {

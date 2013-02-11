@@ -10,7 +10,6 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 <property key="it">Pubblica Lista Contenuti Taggati</property>
 </properties>', NULL, 'jpcmstagcloud', NULL, NULL, 1);
 
-
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpcmstagcloud_TITLE', 'it', 'Tag Cloud');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpcmstagcloud_TITLE', 'en', 'Tag Cloud');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpcmstagcloud_GOTO', 'it', 'Vai ai contenuti:');
@@ -23,5 +22,3 @@ INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpcmstagcloud
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpcmstagcloud_INTRO', 'en', 'There are');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpcmstagcloud_OUTRO', 'it', 'contenuti');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpcmstagcloud_OUTRO', 'en', 'contents');
-
-
