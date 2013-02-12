@@ -47,7 +47,9 @@
 		<module>entando-plugin-jpmyportal</module>**
 		<module>entando-plugin-jpmassiveresourceloader</module>**
 		<module>entando-plugin-jpremoteresourceloader</module>**
+		-->
 		<module>entando-plugin-jpversioning</module>
+		<!--
 		<module>entando-plugin-jpcasclient</module>
 		<module>entando-plugin-jpstats</module>
 		-->

@@ -1,28 +1,3 @@
-CREATE TABLE `jpversioning_versionedcontents` (
-  `id` int(11) NOT NULL,
-  `contentid` varchar(16) NOT NULL,
-  `contenttype` varchar(30) NOT NULL,
-  `descr` varchar(100) NOT NULL,
-  `status` varchar(12) NOT NULL,
-  `contentxml` longtext NOT NULL,
-  `versiondate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `versioncode` varchar(7) NOT NULL,
-  `onlineversion` int(11) NOT NULL,
-  `approved` smallint(6) NOT NULL,
-  `username` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `contentid` (`contentid`,`versioncode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `jpversioning_trashedresources` (
-  `resid` varchar(16) NOT NULL,
-  `restype` varchar(30) NOT NULL,
-  `descr` varchar(100) NOT NULL,
-  `maingroup` varchar(20) NOT NULL,
-  `resxml` longtext NOT NULL,
-  PRIMARY KEY (`resid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 INSERT INTO jpversioning_trashedresources (resid, restype, descr, maingroup, resxml) VALUES ('66', 'Attach', 'configurazione', 'free', '<?xml version="1.0" encoding="UTF-8"?>
 <resource typecode="Attach" id="66">
 <descr>configurazione</descr>
@@ -41,7 +16,3 @@ INSERT INTO jpversioning_trashedresources (resid, restype, descr, maingroup, res
 INSERT INTO jpversioning_trashedresources (resid, restype, descr, maingroup, resxml) VALUES ('71', 'Image', 'Logo jAPS', 'free', '<?xml version="1.0" encoding="UTF-8"?>
 <resource typecode="Image" id="398"><descr>Logo jAPS</descr><groups mainGroup="free" /><categories><category id="resCat1" /></categories><instance><size>3</size><filename>jAPS_logo_d3.jpg</filename><mimetype>image/jpeg</mimetype><weight>2 Kb</weight></instance><instance><size>2</size><filename>jAPS_logo_d2.jpg</filename><mimetype>image/jpeg</mimetype><weight>2 Kb</weight></instance><instance><size>1</size><filename>jAPS_logo_d1.jpg</filename><mimetype>image/jpeg</mimetype><weight>1 Kb</weight></instance><instance><size>0</size><filename>jAPS_logo_d0.jpg</filename><mimetype>image/jpeg</mimetype><weight>0 Kb</weight></instance></resource>
 ');
-
-
-
-
