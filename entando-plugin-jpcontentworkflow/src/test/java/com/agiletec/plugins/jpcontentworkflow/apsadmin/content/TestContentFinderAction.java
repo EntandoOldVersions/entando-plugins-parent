@@ -48,18 +48,14 @@ public class TestContentFinderAction extends ApsAdminPluginBaseTestCase {
 		try {
 			this._helper.setWorkflowConfig();
 			Map<String, String> params = new HashMap<String, String>();
-			
 			this.executeSearch("admin", params);
 			IContentFinderAction action = (IContentFinderAction) this.getAction();
-			action = (IContentFinderAction) this.getAction();
+			//action = (IContentFinderAction) this.getAction();
 			List<String> contents = action.getContents();
 			assertEquals(24, contents.size());
-			
 			this.executeSearch("editorCoach", params);
 			action = (IContentFinderAction) this.getAction();
-			System.out.println("***********************");
 			contents = action.getContents();
-			System.out.println(contents);
 			String[] contentsId = { "ART112", "ART102", "ART104", "RAH101" };
 			assertEquals(contentsId.length, contents.size());
 			for (int i = 0; i < contentsId.length; i++) {

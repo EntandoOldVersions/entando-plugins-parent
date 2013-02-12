@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-        <artifactId>entando-plugins-parent</artifactId>
-		<groupId>org.entando.entando.plugins</groupId>
-		<version>experiment-components-SNAPSHOT</version>
-    </parent>
+    <artifactId>entando-plugins-parent</artifactId>
+    <groupId>org.entando.entando.plugins</groupId>
+    <version>experiment-components-SNAPSHOT</version>
+  </parent>
 	<artifactId>entando-plugin-jpcontentworkflow</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
 	<packaging>war</packaging>
@@ -19,7 +19,6 @@
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -53,6 +52,7 @@
 		</plugins>
 	</build>
 	<dependencies>
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
@@ -71,24 +71,11 @@
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
 			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc</classifier>
-		</dependency>		
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc-test</classifier>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
@@ -107,23 +94,17 @@
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
 			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc</classifier>
-		</dependency>		
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- AOP dependency -->
 		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>experiment-components-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc-test</classifier>
-		</dependency>		
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+		
 	</dependencies>	
 </project>

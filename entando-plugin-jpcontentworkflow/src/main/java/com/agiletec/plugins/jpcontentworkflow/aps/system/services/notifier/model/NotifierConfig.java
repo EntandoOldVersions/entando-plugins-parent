@@ -31,13 +31,12 @@ public class NotifierConfig implements Cloneable {
 		config.setStartScheduler(this.getStartScheduler());
 		config.setHoursDelay(this.getHoursDelay());
 		config.setSenderCode(this.getSenderCode());
-		config.setMailAttrName(this.getMailAttrName());
+		//config.setMailAttrName(this.getMailAttrName());
 		config.setHtml(this.isHtml());
 		config.setSubject(this.getSubject());
 		config.setHeader(this.getHeader());
 		config.setTemplate(this.getTemplate());
 		config.setFooter(this.getFooter());
-		
 		return config;
 	}
 	
@@ -68,14 +67,14 @@ public class NotifierConfig implements Cloneable {
 	public void setSenderCode(String senderCode) {
 		this._senderCode = senderCode;
 	}
-	
+	/*
 	public String getMailAttrName() {
 		return _mailAttrName;
 	}
 	public void setMailAttrName(String mailAttrName) {
 		this._mailAttrName = mailAttrName;
 	}
-	
+	*/
 	public boolean isHtml() {
 		return _html;
 	}
@@ -116,7 +115,7 @@ public class NotifierConfig implements Cloneable {
 	private int _hoursDelay;
 	
 	private String _senderCode;
-	private String _mailAttrName;
+	//private String _mailAttrName;
 	private boolean _html;
 	private String _subject = "";
 	private String _header = "";

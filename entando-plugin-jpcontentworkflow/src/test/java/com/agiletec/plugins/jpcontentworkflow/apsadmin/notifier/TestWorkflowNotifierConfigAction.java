@@ -54,7 +54,7 @@ public class TestWorkflowNotifierConfigAction extends ApsAdminPluginBaseTestCase
 		assertFalse(config.isActive());
 		assertEquals(24, config.getHoursDelay());
 		assertEquals("CODE1", config.getSenderCode());
-		assertEquals("email", config.getMailAttrName());
+		//assertEquals("email", config.getMailAttrName());
 		assertEquals("04/12/2008", action.getStartDate());
 		assertEquals(16, action.getHour());
 		assertEquals(8, action.getMinute());
@@ -143,7 +143,7 @@ public class TestWorkflowNotifierConfigAction extends ApsAdminPluginBaseTestCase
 			String startDate = DateFormatter.format(updatedNotifierConfig.getStartScheduler());
 			assertEquals("19/11/2009 20:40", startDate);
 			assertEquals("CODE1", updatedNotifierConfig.getSenderCode());
-			assertEquals("email", updatedNotifierConfig.getMailAttrName());
+			//assertEquals("email", updatedNotifierConfig.getMailAttrName());
 			assertTrue(updatedNotifierConfig.isHtml());
 			assertEquals("subject", updatedNotifierConfig.getSubject());
 			assertEquals("header", updatedNotifierConfig.getHeader());

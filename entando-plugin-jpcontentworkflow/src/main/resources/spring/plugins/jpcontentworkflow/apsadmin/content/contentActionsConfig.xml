@@ -21,10 +21,18 @@
 	</bean>
 	
 	<bean id="jpcontentworkflowIntroNewContentAction" scope="prototype" 
-			class="com.agiletec.plugins.jpcontentworkflow.apsadmin.content.IntroNewContentAction" parent="jacmsAbstractContentAction">
+			class="com.agiletec.plugins.jpcontentworkflow.apsadmin.content.JpCwIntroNewContentAction" parent="jacmsAbstractContentAction">
 		<property name="contentActionHelper" ref="jpcontentworkflowContentActionHelper"/>
 	</bean>
   	
+	<!--
+	<bean id="jpcontentworkflowIntroNewContentActionAspect" scope="prototype" 
+			class="com.agiletec.plugins.jpcontentworkflow.apsadmin.content.IntroNewContentActionAspect" >
+		<property name="contentManager" ref="jacmsContentManager"/>
+		<property name="contentActionHelper" ref="jpcontentworkflowContentActionHelper"/>
+	</bean>
+	-->
+	
 	<bean id="jpcontentworkflowContentAction" scope="prototype" 
 			class="com.agiletec.plugins.jpcontentworkflow.apsadmin.content.ContentAction" 
 			parent="jacmsAbstractContentAction">

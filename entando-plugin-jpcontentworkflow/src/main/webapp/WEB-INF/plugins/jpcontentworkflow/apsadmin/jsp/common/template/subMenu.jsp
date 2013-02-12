@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
-
+<wp:contentNegotiation mimeType="application/xhtml+xml" charset="utf-8"/>
 <wp:ifauthorized permission="superuser">
 <li class="openmenu"><a href="#" rel="fagiano_jpcontentworkflow" id="menu_jpcontentworkflow" class="subMenuToggler" ><s:text name="jpcontentworkflow.menu.workflowAdmin" /></a>
 	<div class="menuToggler" id="fagiano_jpcontentworkflow"><div class="menuToggler-1"><div class="menuToggler-2">

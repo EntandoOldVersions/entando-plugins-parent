@@ -3,6 +3,7 @@
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <h1><s:text name="title.workflowManagement" /></h1>
 <div id="main">
 	<h2><s:text name="title.workflowNotifierManagement.config" /></h2> 
@@ -54,9 +55,6 @@
 				<wpsf:textfield useTabindexAutoIncrement="true" name="startDate" id="jpcontentworkflownotifier_date_cal" cssClass="text" />&nbsp;<span class="monospace"><s:text name="label.startDatePattern" /></span>
 			</p>
 			<p>
-				<%--
-				<label for="hour"><s:text name="label.hour" />:</label>
-				 --%>
 				<span class="bold"><s:text name="notifier.time"/></span>&nbsp;
 				<wpsf:select useTabindexAutoIncrement="true" list="%{getCounterArray(0, 24)}" name="hour" id="hour"/>:
 				<wpsf:select useTabindexAutoIncrement="true" list="%{getCounterArray(0, 60)}" name="minute" id="minute"/>
@@ -68,10 +66,6 @@
 			<p>
 				<label for="senderCode" class="basic-mint-label"><s:text name="label.senderCode"/>:</label>
 				<wpsf:select useTabindexAutoIncrement="true" name="config.senderCode" id="senderCode" list="senderCodes" />
-			</p>
-			<p>
-				<label for="mailAttrName" class="basic-mint-label"><s:text name="label.mailAttrName"/>:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="config.mailAttrName" id="mailAttrName" cssClass="text" />
 			</p>
 			<p>
 				<wpsf:checkbox useTabindexAutoIncrement="true" name="config.html" id="html" cssClass="radiocheck" />&nbsp; 

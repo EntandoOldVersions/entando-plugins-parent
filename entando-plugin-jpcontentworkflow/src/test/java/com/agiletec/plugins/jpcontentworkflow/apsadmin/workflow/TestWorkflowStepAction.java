@@ -31,8 +31,6 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.JpcontentworkflowSystem
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.ContentWorkflowManager;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.IContentWorkflowManager;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model.Step;
-import com.agiletec.plugins.jpcontentworkflow.apsadmin.workflow.IWorkflowStepAction;
-import com.agiletec.plugins.jpcontentworkflow.apsadmin.workflow.WorkflowStepAction;
 import com.opensymphony.xwork2.Action;
 
 /**

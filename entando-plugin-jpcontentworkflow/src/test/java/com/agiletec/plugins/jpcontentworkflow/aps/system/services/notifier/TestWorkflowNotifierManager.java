@@ -62,7 +62,7 @@ public class TestWorkflowNotifierManager extends ApsPluginBaseTestCase {
 		assertFalse(notifierConfig.isActive());
 		assertEquals(24, notifierConfig.getHoursDelay());
 		assertEquals("CODE1", notifierConfig.getSenderCode());
-		assertEquals("email", notifierConfig.getMailAttrName());
+		//assertEquals("email", notifierConfig.getMailAttrName());
 		assertFalse(notifierConfig.isHtml());
 		assertEquals("[My Own Portal]: A content changed", notifierConfig.getSubject());
 		assertEquals("Hi {user},<br />these contents require your attention<br /><br />", notifierConfig.getHeader());
@@ -129,7 +129,7 @@ public class TestWorkflowNotifierManager extends ApsPluginBaseTestCase {
 		notifierConfig.setStartScheduler(new Date());
 		
 		notifierConfig.setSenderCode("CODE2");
-		notifierConfig.setMailAttrName("eMail");
+		//notifierConfig.setMailAttrName("eMail");
 		notifierConfig.setHtml(true);
 		notifierConfig.setSubject("Oggetto");
 		notifierConfig.setHeader("header");
@@ -146,7 +146,7 @@ public class TestWorkflowNotifierManager extends ApsPluginBaseTestCase {
 		long time2 = nc2.getStartScheduler().getTime()/60000;
 		assertEquals(time1, time2);
 		assertEquals(nc1.getSenderCode(), nc2.getSenderCode());
-		assertEquals(nc1.getMailAttrName(), nc2.getMailAttrName());
+		//assertEquals(nc1.getMailAttrName(), nc2.getMailAttrName());
 		assertEquals(nc1.isHtml(), nc2.isHtml());
 		assertEquals(nc1.getSubject(), nc2.getSubject());
 		assertEquals(nc1.getHeader(), nc2.getHeader());
