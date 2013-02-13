@@ -49,8 +49,8 @@
 		<module>entando-plugin-jpremoteresourceloader</module>**
 		-->
 		<module>entando-plugin-jpversioning</module>
-		<!--
 		<module>entando-plugin-jpcasclient</module>
+		<!--
 		<module>entando-plugin-jpstats</module>
 		-->
 		<module>entando-plugin-jpcontentworkflow</module>
