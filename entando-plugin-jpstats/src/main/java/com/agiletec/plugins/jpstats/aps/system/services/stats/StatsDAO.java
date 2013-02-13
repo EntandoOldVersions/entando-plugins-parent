@@ -487,7 +487,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 			conn = this.getConnection();
 			stat = conn.prepareStatement(GET_FIRST_DATE);
 			res = stat.executeQuery();
-			while(res.next()) {
+			while (res.next()) {
 				int year = Integer.parseInt(res.getString(1));
 				int month = Integer.parseInt(res.getString(2));
 				int day = Integer.parseInt(res.getString(3));
@@ -622,66 +622,64 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	
 	private final String SEARCH_DAILY_VISITS =
 		"SELECT count(*) as hits, year_value, month_value, day_value FROM jpstats_statistics " +
-		"WHERE (timestamp BETWEEN ? AND ? ) GROUP BY year_value, month_value, day_value ORDER BY hits DESC";
+		"WHERE timestamp >= ? AND timestamp <= ? GROUP BY year_value, month_value, day_value ORDER BY hits DESC";
 	
 	private final String SEARCH_PAGE_VISITS = 
-		"SELECT pagecode, COUNT(*) AS hits FROM jpstats_statistics WHERE (timestamp BETWEEN ? AND ?) " +
+		"SELECT pagecode, COUNT(*) AS hits FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? " +
 		"GROUP BY pagecode ORDER BY hits DESC";
 	
 	private final String SEARCH_CONTENT_VISITS = 
-		"SELECT content, COUNT(*) AS hits FROM jpstats_statistics WHERE (timestamp BETWEEN ? AND ?) " +
+		"SELECT content, COUNT(*) AS hits FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? " +
 		"AND content IS NOT NULL GROUP BY content ORDER BY hits DESC";
 	
 	private final String SEARCH_AVERAGE_TIME_SITE = 
 		"SELECT avg(x) AS media FROM( SELECT session_id as s, (MAX(timestamp)::TIMESTAMP - MIN(timestamp)::TIMESTAMP) AS x " +
-		" FROM jpstats_statistics WHERE (timestamp BETWEEN ? and ?) GROUP BY s HAVING count(session_id)>1 )AS SUBQUERY";
+		" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY s HAVING count(session_id)>1 )AS SUBQUERY";
 	
 	private final String HITS_BY_INTERVAL =
 		"SELECT count(*) as hits, day_value, month_value, year_value FROM jpstats_statistics  " +
-		" WHERE (timestamp BETWEEN ? and ? )" +
+		" WHERE timestamp >= ? AND timestamp <= ? " +
 		" GROUP BY year_value, month_value, day_value ORDER BY year_value, month_value, day_value ASC";
 	
 	private final String AVERAGE_TIME_SITE = 
 		"SELECT avg(x) AS media " +
 		" FROM( SELECT session_id,(MAX(timestamp)::TIMESTAMP - MIN(timestamp)::TIMESTAMP) AS x " +
 		" FROM jpstats_statistics  " +
-		" WHERE (timestamp BETWEEN ? and ?)" +
+		" WHERE timestamp >= ? AND timestamp <= ?" +
 		" GROUP BY session_id " +
 		" HAVING count(session_id)>1 )AS SUBQUERY";
 	
 	private final String AVERAGE_TIME_PAGE=
 		"SELECT AVG(x) AS media" +
 		" FROM( SELECT session_id as s, pagecode as p, (MAX(timestamp)::TIMESTAMP - MIN(timestamp)::TIMESTAMP) AS x " +
-		" FROM jpstats_statistics  " +
-		" WHERE (timestamp BETWEEN ? and ?)" +
-		" GROUP BY p, s )AS SUBQUERY ";	
+		" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY p, s )AS SUBQUERY ";	
 	
 	private final String AVERAGE_PAGE=
 		"SELECT AVG(x)::INT AS media " +
 		" FROM(SELECT session_id, COUNT(pagecode) AS x " +
 		" FROM jpstats_statistics  " +
-		" WHERE (timestamp BETWEEN ? and ?)" +
+		" WHERE timestamp >= ? AND timestamp <= ? " +
 		" GROUP BY session_id )AS SUBQUERY";
 	
 	private final String GET_TOP_PAGES = 
 		"SELECT pagecode,COUNT(*) AS hits FROM jpstats_statistics  " +
-		" WHERE (timestamp BETWEEN ? and ?)" +
+		" WHERE timestamp >= ? AND timestamp <= ? " +
 		" GROUP BY pagecode " +
 		" ORDER BY hits DESC" +
 		" LIMIT 10;";
 	
 	private final String GET_TOP_CONTENTS = 
 		"SELECT content, COUNT(content) AS hits FROM jpstats_statistics " +
-		"WHERE (timestamp BETWEEN ? and ?) and content IS NOT NULL " +
+		"WHERE timestamp >= ? AND timestamp <= ? and content IS NOT NULL " +
 		"GROUP BY content " +
 		"ORDER BY hits " +
 		"DESC LIMIT 10";
 
-	private final String GET_FIRST_DATE=
+	private final String GET_FIRST_DATE = 
 		"SELECT year_value, month_value, day_value FROM jpstats_statistics ORDER BY timestamp ASC LIMIT 1";
 
 	private final String GET_IP = 
 		"SELECT DISTINCT ip, count(*) as count " +
-		"FROM jpstats_statistics WHERE (timestamp BETWEEN ? and ?) GROUP BY ip";
+		"FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY ip";
 	
 }

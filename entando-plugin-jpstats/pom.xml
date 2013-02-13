@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-        <artifactId>entando-plugins-parent</artifactId>
+		<artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
 		<version>experiment-components-SNAPSHOT</version>
-    </parent>
+	</parent>
 	<artifactId>entando-plugin-jpstats</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
 	<packaging>war</packaging>
@@ -29,7 +29,6 @@
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -62,14 +61,11 @@
 			</plugin>			
 		</plugins>
 	</build>
-
 	<dependencies>
-
 		<dependency>
 			<groupId>cewolf</groupId>
 			<artifactId>cewolf</artifactId>
 			<version>1.0</version>
-
 			<exclusions>
 				<exclusion>
 					<artifactId>gnujaxp</artifactId>
@@ -80,9 +76,7 @@
 					<groupId>crimson</groupId>
 				</exclusion>
 			</exclusions>
-
 		</dependency>
-
 		<dependency>
 			<groupId>jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
@@ -106,5 +100,4 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-	
 </project>
