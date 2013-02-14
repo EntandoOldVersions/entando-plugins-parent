@@ -110,7 +110,8 @@
             <result name="input" type="chain">forwardIntroNewMail</result>
         	<result type="chain">forwardIntroNewMail</result>
         	<interceptor-ref name="jpwebmailStoreFactoryInterceptor"></interceptor-ref>
-			<interceptor-ref name="fileUpload"><param name="maximumSize">10485760</param></interceptor-ref><!-- maximun Size = 10 Mb -->
+			<!-- <interceptor-ref name="fileUpload"><param name="maximumSize">10485760</param></interceptor-ref> --><!-- maximun Size = 10 Mb -->
+			<interceptor-ref name="apsFileUpload" />
 			<interceptor-ref name="entandoValidationStack"></interceptor-ref>
         </action>
     	

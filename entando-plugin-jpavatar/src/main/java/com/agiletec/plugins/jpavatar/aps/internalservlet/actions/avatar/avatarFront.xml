@@ -15,7 +15,7 @@
     	<action name="save" class="jpavatarAvatarAction" method="save">
             <result name="input" type="dispatcher">/WEB-INF/plugins/jpavatar/aps/jsp/internalservlet/avatar/entryAvatar.jsp</result>
             <result name="success" type="dispatcher">/WEB-INF/plugins/jpavatar/aps/jsp/internalservlet/avatar/entryAvatar.jsp</result>
-        	<interceptor-ref name="fileUpload"/>  
+        	<interceptor-ref name="apsFileUpload" />
         	<interceptor-ref name="entandoFrontEndFreeValidationStack" />
         </action>
         

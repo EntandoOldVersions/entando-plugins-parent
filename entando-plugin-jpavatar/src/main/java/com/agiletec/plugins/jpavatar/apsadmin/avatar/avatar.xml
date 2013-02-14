@@ -14,7 +14,7 @@
     	<action name="save" class="jpavatarAvatarAction" method="save">
             <result name="input" type="tiles">jpavatar.admin.avatar.entry</result>
             <result name="success" type="tiles">jpavatar.admin.avatar.saveOk</result>
-        	<interceptor-ref name="fileUpload"/>  
+        	<interceptor-ref name="apsFileUpload" />
         	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">enterBackend</param></interceptor-ref>
         </action>
     	<action name="bin" class="jpavatarAvatarAction" method="bin">
