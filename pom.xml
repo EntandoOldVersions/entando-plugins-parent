@@ -5,7 +5,7 @@
 	<artifactId>entando-plugins-parent</artifactId>
 	<version>3.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Entando: Plugins parent - Experiment Components</name>
+	<name>Entando: Plugins parent</name>
 	<url>http://www.entando.com/</url>
 	<licenses>
 		<license>
