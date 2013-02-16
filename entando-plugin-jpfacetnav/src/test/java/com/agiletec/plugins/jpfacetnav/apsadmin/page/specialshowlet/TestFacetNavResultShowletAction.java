@@ -19,7 +19,7 @@ public class TestFacetNavResultShowletAction extends ApsAdminPluginBaseTestCase 
 		assertEquals(0, showlet.getConfig().size());
 		List<SmallContentType> contentTypes = action.getContentTypes();
 		assertNotNull(contentTypes);
-		assertEquals(3, contentTypes.size());
+		assertEquals(4, contentTypes.size());
 	}
 
 	private String executeConfigFacetNavResult(String username, String pageCode, String frame, String showletTypeCode) throws Throwable {
