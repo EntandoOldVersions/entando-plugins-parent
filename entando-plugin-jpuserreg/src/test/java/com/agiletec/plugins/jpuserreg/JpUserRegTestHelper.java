@@ -49,7 +49,7 @@ public class JpUserRegTestHelper extends UserRegDAO {
 		return token;
 	}
 	
-	private static final String GET_TOKEN_FROM_USERNAME = "SELECT token FROM jpuserreg_activationtokens WHERE username = ?;";
+	private static final String GET_TOKEN_FROM_USERNAME = "SELECT token FROM jpuserreg_activationtokens WHERE username = ?";
 	
 	//	Config with a valid email address
 	public static final String EMAIL = "agiletectest@gmail.com";

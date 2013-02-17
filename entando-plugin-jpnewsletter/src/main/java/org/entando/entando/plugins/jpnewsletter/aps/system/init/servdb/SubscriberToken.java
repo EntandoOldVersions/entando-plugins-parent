@@ -38,7 +38,8 @@ public class SubscriberToken {
 	private String _attributeName;
 	
 	@DatabaseField(columnName = "token", 
-			dataType = DataType.LONG_STRING, 
+			dataType = DataType.STRING, 
+			width = 250, 
 			canBeNull = false)
 	private String _token;
 	

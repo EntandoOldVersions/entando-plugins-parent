@@ -24,7 +24,8 @@ public class ActivationToken {
 	private String _username;
 	
 	@DatabaseField(columnName = "token", 
-			dataType = DataType.LONG_STRING, 
+			dataType = DataType.STRING, 
+			width = 250, 
 			canBeNull = false)
 	private String _token;
 	
