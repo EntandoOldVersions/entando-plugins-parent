@@ -57,7 +57,7 @@ public class TestIntroNewContentAction extends ApsAdminPluginBaseTestCase {
 		assertNull(this.getRequest().getSession().getAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT));
 		JpCwIntroNewContentAction action = (JpCwIntroNewContentAction) this.getAction();
 		List<SmallContentType> contentTypes = action.getContentTypes();
-		assertEquals(2, contentTypes.size());
+		assertEquals(3, contentTypes.size());
 		for (int i=0; i<contentTypes.size(); i++) {
 			assertFalse("EVN".equals(contentTypes.get(i).getCode()));
 		}
