@@ -61,13 +61,13 @@ public class Response implements ExtendedColumnDefinition {
 			choiceTableName = "`" + choiceTableName + "`";
 		}
 		return new String[]{"ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_choices_fkey FOREIGN KEY (choiceid) "
+				+ "ADD CONSTRAINT " + TABLE_NAME + "_chid_fkey FOREIGN KEY (choiceid) "
 				+ "REFERENCES " + choiceTableName + " (id)", 
 			"ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_voters_fkey FOREIGN KEY (voterid) "
+				+ "ADD CONSTRAINT " + TABLE_NAME + "_vtid_fkey FOREIGN KEY (voterid) "
 				+ "REFERENCES " + voterTableName + " (id)", 
 			"ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_questions_fkey FOREIGN KEY (questionid) "
+				+ "ADD CONSTRAINT " + TABLE_NAME + "_qid_fkey FOREIGN KEY (questionid) "
 				+ "REFERENCES " + questionTableName + " (id)"};
 	}
 	

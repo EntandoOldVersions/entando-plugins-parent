@@ -73,10 +73,10 @@ public class UserPageConfig implements ExtendedColumnDefinition {
 			pageTableName = "`" + pageTableName + "`";
 		}
 		String[] queries = new String[2];
-		queries[0] = "ALTER TABLE " + TABLE_NAME + " "
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_pkey PRIMARY KEY(username, framepos, pagecode)";
+		queries[0] = "ALTER TABLE " + tableName + " "
+				+ "ADD CONSTRAINT jpmyportalplus_conf_pkey PRIMARY KEY(username, framepos, pagecode)";
 		queries[1] = "ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_pagecode_fkey FOREIGN KEY (pagecode) "
+				+ "ADD CONSTRAINT jpmyportalplus_conf_page_fkey FOREIGN KEY (pagecode) "
 				+ "REFERENCES " + pageTableName + " (code)";
 		return queries;
 	}

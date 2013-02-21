@@ -64,7 +64,7 @@ public class ContentReport implements ExtendedColumnDefinition {
 			reportTableName = "`" + reportTableName + "`";
 		}
 		return new String[]{"ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_fkey FOREIGN KEY (newsletterid) "
+				+ "ADD CONSTRAINT jpnewsletter_contrep_fkey FOREIGN KEY (newsletterid) "
 				+ "REFERENCES " + reportTableName + " (id)"};
 	}
 	

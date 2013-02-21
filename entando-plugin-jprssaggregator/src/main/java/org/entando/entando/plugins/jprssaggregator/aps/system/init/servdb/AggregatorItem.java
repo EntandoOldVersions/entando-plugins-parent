@@ -55,9 +55,9 @@ public class AggregatorItem {
 	private String _link;
 	
 	@DatabaseField(columnName = "delay", 
-			dataType = DataType.BIG_INTEGER, 
+			dataType = DataType.DOUBLE, 
 			canBeNull = false)
-	private BigInteger _delay;
+	private double _delay;
 	
 	@DatabaseField(columnName = "lastupdate", 
 			dataType = DataType.DATE, 

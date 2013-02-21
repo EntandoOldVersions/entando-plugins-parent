@@ -70,7 +70,7 @@ public class ContactSearch implements ExtendedColumnDefinition {
 			contactTableName = "`" + contactTableName + "`";
 		}
 		return new String[]{"ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_fkey FOREIGN KEY (contactkey) "
+				+ "ADD CONSTRAINT jpaddressbook_search_fkey FOREIGN KEY (contactkey) "
 				+ "REFERENCES " + contactTableName + " (contactkey)"};
 	}
 	

@@ -64,7 +64,7 @@ public class Choice implements ExtendedColumnDefinition {
 			questionTableName = "`" + questionTableName + "`";
 		}
 		return new String[]{"ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_questionid_fkey FOREIGN KEY (questionid) "
+				+ "ADD CONSTRAINT " + TABLE_NAME + "_questid_fkey FOREIGN KEY (questionid) "
 				+ "REFERENCES " + questionTableName + " (id)"};
 	}
 	

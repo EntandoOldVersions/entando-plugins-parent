@@ -24,8 +24,6 @@ import java.util.Date;
 
 import org.entando.entando.aps.system.init.model.ExtendedColumnDefinition;
 import org.entando.entando.aps.system.init.IDatabaseManager;
-import org.entando.entando.aps.system.init.model.portdb.Page;
-import org.entando.entando.aps.system.init.model.portdb.ShowletCatalog;
 
 /**
  * @author E.Santoboni

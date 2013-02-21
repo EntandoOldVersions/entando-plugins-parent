@@ -80,7 +80,7 @@ public class Voter implements ExtendedColumnDefinition {
 			surveyTableName = "`" + surveyTableName + "`";
 		}
 		return new String[]{"ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_surveyid_fkey FOREIGN KEY (surveyid) "
+				+ "ADD CONSTRAINT " + TABLE_NAME + "_sid_fkey FOREIGN KEY (surveyid) "
 				+ "REFERENCES " + surveyTableName + " (id)"};
 	}
 	

@@ -98,10 +98,10 @@ public class MessageSearcherDAO extends AbstractEntitySearcherDAO implements IMe
 		hasAppendWhereClause = this.verifyWhereClauseAppend(query, hasAppendWhereClause);
 		if (answered) {
 			query.append(masterTableName).append(".").append(masterTableIdFieldName).append(
-					" IN ( SELECT messageid FROM jpwebdynamicform_messageanswers )");
+					" IN ( SELECT messageid FROM jpwebdynamicform_answers )");
 		} else {
 			query.append(masterTableName).append(".").append(masterTableIdFieldName).append(
-			" NOT IN ( SELECT messageid FROM jpwebdynamicform_messageanswers )");
+			" NOT IN ( SELECT messageid FROM jpwebdynamicform_answers )");
 		}
 		return hasAppendWhereClause;
 	}
@@ -123,7 +123,7 @@ public class MessageSearcherDAO extends AbstractEntitySearcherDAO implements IMe
 
 	@Override
 	protected String getEntitySearchTableName() {
-		return "jpwebdynamicform_messagesearch";
+		return "jpwebdynamicform_search";
 	}
 
 	@Override

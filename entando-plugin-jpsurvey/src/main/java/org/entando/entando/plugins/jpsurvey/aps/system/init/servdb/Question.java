@@ -72,7 +72,7 @@ public class Question implements ExtendedColumnDefinition {
 			surveyTableName = "`" + surveyTableName + "`";
 		}
 		return new String[]{"ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_surveyid_fkey FOREIGN KEY (surveyid) "
+				+ "ADD CONSTRAINT " + TABLE_NAME + "_id_fkey FOREIGN KEY (surveyid) "
 				+ "REFERENCES " + surveyTableName + " (id)"};
 	}
 	

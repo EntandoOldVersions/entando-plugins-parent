@@ -129,10 +129,10 @@ public class JpwebdynamicformTestHelper extends AbstractDAO {
 		"DELETE FROM jpwebdynamicform_messages";
 
 	private static final String DELETE_MESSAGE_SEARCH_RECORDS =
-		"DELETE FROM jpwebdynamicform_messagesearch";
+		"DELETE FROM jpwebdynamicform_search";
 
 	private static final String DELETE_MESSAGE_ANSWERS =
-		"DELETE FROM jpwebdynamicform_messageanswers";
+		"DELETE FROM jpwebdynamicform_answers";
 
 	public static final String EMAIL = "indirizzo@email.inesistente";
 

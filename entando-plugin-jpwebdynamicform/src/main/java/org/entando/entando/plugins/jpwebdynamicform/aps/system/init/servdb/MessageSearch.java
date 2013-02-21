@@ -1,7 +1,20 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+*
+* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando software.
+* Entando is a free software; 
+* you can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package org.entando.entando.plugins.jpwebdynamicform.aps.system.init.servdb;
 
 import com.j256.ormlite.field.DataType;
@@ -62,7 +75,7 @@ public class MessageSearch implements ExtendedColumnDefinition {
 				+ "REFERENCES " + messageTableName + " (messageid)"};
 	}
 	
-	public static final String TABLE_NAME = "jpwebdynamicform_messagesearch";
+	public static final String TABLE_NAME = "jpwebdynamicform_search";
 	
 }
 /*
@@ -78,4 +91,5 @@ CREATE TABLE jpwebdynamicform_messagesearch
       REFERENCES jpwebdynamicform_messages (messageid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
+ALTER TABLE jpwebdynamicform_messagesearch RENAME TO jpwebdynamicform_search;
  */

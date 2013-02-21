@@ -62,7 +62,7 @@ public class Rating implements ExtendedColumnDefinition {
 			commentTableName = "`" + commentTableName + "`";
 		}
 		return new String[]{"ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_refcommentid_fkey FOREIGN KEY (commentid) "
+				+ "ADD CONSTRAINT jpcontentfeedback_rat_id_fkey FOREIGN KEY (commentid) "
 				+ "REFERENCES " + commentTableName + " (id)"};
 	}
 	
