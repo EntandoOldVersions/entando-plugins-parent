@@ -34,12 +34,14 @@ import java.util.List;
  */
 public class CurrentUserProfileAction extends AbstractApsEntityAction implements ICurrentUserProfileAction {
     
+	@Override
     public void validate() {
         if (this.getUserProfile() != null) {
             super.validate();
         }
     }
     
+    @Override
     public IApsEntity getApsEntity() {
         return this.getUserProfile();
     }
@@ -48,6 +50,7 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
         return (IUserProfile) this.getRequest().getSession().getAttribute(SESSION_PARAM_NAME_CURRENT_PROFILE);
     }
     
+    @Override
     public String createNew() {
         String profileTypeCode = this.getProfileTypeCode();
         try {
@@ -77,11 +80,13 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
         return SUCCESS;
     }
     
+    @Override
     public String view() {
         // Operation Not Allowed
         return null;
     }
     
+    @Override
     public String edit() {
         try {
             IUserProfile userProfile = null;
@@ -91,9 +96,10 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
                 String username = currentUser.getUsername();
                 userProfile = this.getUserProfileManager().getProfile(username);
             } else {
+				/*
             	List<IApsEntity> userProfileTypes = new ArrayList<IApsEntity>();
                 userProfileTypes.addAll(this.getUserProfileManager().getEntityPrototypes().values());
-                if (userProfileTypes.size() == 0) {
+                if (userProfileTypes.isEmpty()) {
                     throw new RuntimeException("Unexpected error - no one user profile types");
                 } else if (userProfileTypes.size() == 1) {
                     userProfile = (IUserProfile) userProfileTypes.get(0);
@@ -101,6 +107,8 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
                 } else {
                     return "chooseType";
                 }
+				*/
+				return "currentUserWithoutProfile";
             }
             userProfile.disableAttributes(ProfileSystemConstants.ATTRIBUTE_DISABLING_CODE_ON_EDIT);
             this.getRequest().getSession().setAttribute(SESSION_PARAM_NAME_CURRENT_PROFILE, userProfile);
@@ -111,6 +119,7 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
         return SUCCESS;
     }
     
+    @Override
     public String save() {
         try {
             IUserProfile profile = this.getUserProfile();

@@ -71,7 +71,7 @@ public class UserProfileSearch implements ExtendedColumnDefinition {
 			profileTableName = "`" + profileTableName + "`";
 		}
 		return new String[]{"ALTER TABLE " + tableName + " " 
-				+ "ADD CONSTRAINT " + TABLE_NAME + "_fkey FOREIGN KEY (username) "
+				+ "ADD CONSTRAINT jpuserprofile_search_fkey FOREIGN KEY (username) "
 				+ "REFERENCES " + profileTableName + " (username)"};
 	}
 	

@@ -9,7 +9,10 @@
     	
         <action name="edit" class="jpuserprofileCurrentUserProfileAction" method="edit">
             <result type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
-            <result name="chooseType" type="tiles">admin.jpuserprofile.CurrentUser.Profile.chooseType</result>
+			<!--
+			<result name="chooseType" type="tiles">admin.jpuserprofile.CurrentUser.Profile.chooseType</result>
+            -->
+			<result name="currentUserWithoutProfile" type="tiles">admin.jpuserprofile.CurrentUser.Profile.noProfile</result>
             <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
         
