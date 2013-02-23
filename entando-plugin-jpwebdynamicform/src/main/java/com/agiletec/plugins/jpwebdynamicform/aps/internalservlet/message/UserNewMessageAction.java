@@ -34,7 +34,6 @@ import com.agiletec.apsadmin.system.entity.AbstractApsEntityAction;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.JpwebdynamicformSystemConstants;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageManager;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.model.Message;
-import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.model.SmallMessageType;
 import com.agiletec.plugins.jpwebdynamicform.apsadmin.message.common.INewMessageAction;
 
 /**
@@ -72,7 +71,7 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 			if (message == null) {
 				return "voidTypeCode";
 			}
-			this.checkTypeLables(message);
+			this.checkTypeLabels(message);
 			this.setMessageOnSession(message);
 		} catch(Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "createNew");
@@ -81,7 +80,7 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 		return SUCCESS;
 	}
 	
-	protected void checkTypeLables(Message messageType) {
+	protected void checkTypeLabels(Message messageType) {
 		if (null == messageType) {
 			return;
 		}
@@ -96,7 +95,11 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 				//jpwebdynamicform_${typeCodeKey}_${attributeNameI18nKey}
 				String attributeLabelKey = "jpwebdynamicform_" + messageType.getTypeCode() + "_" + attribute.getName();
 				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
-					this.addLabelGroups(attributeLabelKey, attribute.getName());
+					String attributeDescription = attribute.getDescription();
+					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ? 
+							attributeDescription :
+							attribute.getName();
+					this.addLabelGroups(attributeLabelKey, value);
 				}
 			}
 		} catch (Throwable t) {
