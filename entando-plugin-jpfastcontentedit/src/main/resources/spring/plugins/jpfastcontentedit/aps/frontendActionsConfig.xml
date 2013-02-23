@@ -8,6 +8,7 @@
 	<bean id="jpfastcontenteditContentActionHelper" parent="jacmsContentActionHelper" 
 			class="com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.helper.ContentActionHelper" >
 		<!-- <property name="defaultAuthor" value="Autore" /> -->
+		<property name="i18nManager" ref="I18nManager" />
 	</bean>
 	
 	<bean id="jpfastcontenteditIntroNewContentAction" scope="prototype" 

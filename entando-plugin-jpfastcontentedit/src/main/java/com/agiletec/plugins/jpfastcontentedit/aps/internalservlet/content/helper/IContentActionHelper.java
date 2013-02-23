@@ -48,4 +48,6 @@ public interface IContentActionHelper extends com.agiletec.plugins.jacms.apsadmi
 	 */
 	public String getAuthor(Content content, HttpServletRequest request);
 	
+	public void checkTypeLabels(Content content);
+	
 }

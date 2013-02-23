@@ -23,14 +23,18 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
+import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.common.entity.model.attribute.ITextAttribute;
+import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.group.Group;
+import com.agiletec.aps.system.services.i18n.II18nManager;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
+import java.util.List;
 
 /**
  * @author E.Santoboni
@@ -108,6 +112,43 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 			|| super.getAuthorizationManager().isAuthOnGroup(currentUser, Group.ADMINS_GROUP_NAME);
 	}
 	
+	@Override
+	public void checkTypeLabels(Content content) {
+		if (null == content) {
+			return;
+		}
+		try {
+			List<AttributeInterface> attributes = content.getAttributeList();
+			for (int i = 0; i < attributes.size(); i++) {
+				AttributeInterface attribute = attributes.get(i);
+				//jpfastcontentedit_${contentType}_${attributeName}
+				String attributeLabelKey = "jpfastcontentedit_" + content.getTypeCode() + "_" + attribute.getName();
+				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
+					String attributeDescription = attribute.getDescription();
+					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ? 
+							attributeDescription :
+							attribute.getName();
+					this.addLabelGroups(attributeLabelKey, value);
+				}
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "checkTypeLables");
+			throw new RuntimeException("Error checking label types", t);
+		}
+	}
+	
+	protected void addLabelGroups(String key, String defaultValue) throws ApsSystemException {
+		try {
+			ApsProperties properties = new ApsProperties();
+			Lang defaultLang = super.getLangManager().getDefaultLang();
+			properties.put(defaultLang.getCode(), defaultValue);
+			this.getI18nManager().addLabelGroup(key, properties);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "addLabelGroups");
+			throw new RuntimeException("Error adding label groups - key '" + key + "'", t);
+		}
+	}
+	
 	protected String getDefaultAuthor() {
 		return _defaultAuthor;
 	}
@@ -115,6 +156,15 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 		this._defaultAuthor = defaultAuthor;
 	}
 	
+	protected II18nManager getI18nManager() {
+		return _i18nManager;
+	}
+	public void setI18nManager(II18nManager i18nManager) {
+		this._i18nManager = i18nManager;
+	}
+	
 	private String _defaultAuthor;
+	
+	private II18nManager _i18nManager;
 	
 }

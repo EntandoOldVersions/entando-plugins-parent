@@ -48,6 +48,8 @@ public class IntroNewContentAction extends com.agiletec.plugins.jacms.apsadmin.c
 	public String createNewVoid() {
 		String result = super.createNewVoid();
 		Content content = this.getContent();
+		IContentActionHelper helper = (IContentActionHelper) this.getContentActionHelper();
+		helper.checkTypeLabels(content);
 		this.disableAttributes(content);
 		String mainGroup = this.getMainGroup();
 		if (null != mainGroup 
