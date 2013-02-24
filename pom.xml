@@ -233,10 +233,12 @@
 					-->
 				</executions>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.3</version><!--$NO-MVN-MAN-VER$ -->
+				<version>2.3</version>--><!--$NO-MVN-MAN-VER$ -->
+				<!--
 				<executions>
 					<execution>
 						<id>unpack-misc-dependencies</id>
@@ -292,6 +294,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -312,6 +315,7 @@
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.5</version>
 				<executions>
+					<!--
 					<execution>
 						<id>prepare-config-test</id>
 						<phase>process-test-classes</phase>
@@ -324,6 +328,25 @@
 							<resources>
 								<resource>
 									<directory>${project.parent.build.directory}/test/config</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					-->
+					<execution>
+						<id>copy-resources-test</id>
+						<!-- here the phase you need -->
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/test</outputDirectory>
+							<encoding>UTF-8</encoding>
+							<resources>
+								<resource>
+									<directory>${project.parent.basedir}/src/test/config</directory>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -626,6 +649,7 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
+		<!--
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
@@ -634,6 +658,7 @@
 			<classifier>misc-test</classifier>
 			<scope>test</scope>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
