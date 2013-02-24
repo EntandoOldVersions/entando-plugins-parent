@@ -19,8 +19,13 @@ package com.agiletec.plugins.jpuserprofile.apsadmin.common;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
+import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
+import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.i18n.II18nManager;
+import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.user.AbstractUser;
 import com.agiletec.aps.system.services.user.UserDetails;
+import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.system.entity.AbstractApsEntityAction;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
@@ -58,6 +63,7 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
             UserDetails user = this.getCurrentUser();
             IUserProfile userProfile = (IUserProfile) this.getUserProfileManager().getProfile(user.getUsername());
             if (null != userProfile) {
+				this.checkTypeLabels(userProfile);
                 this.getRequest().getSession().setAttribute(SESSION_PARAM_NAME_CURRENT_PROFILE, userProfile);
                 return "edit";
             }
@@ -73,6 +79,7 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
                 return INPUT;
             }
             userProfile.setId(user.getUsername());
+			this.checkTypeLabels(userProfile);
             this.getRequest().getSession().setAttribute(SESSION_PARAM_NAME_CURRENT_PROFILE, userProfile);
         } catch (Throwable t) {
             ApsSystemUtils.logThrowable(t, this, "createNew");
@@ -99,6 +106,7 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
             if (null != object && object instanceof IUserProfile) {
                 String username = currentUser.getUsername();
                 userProfile = this.getUserProfileManager().getProfile(username);
+				this.checkTypeLabels(userProfile);
             } else {
 				/*
             	List<IApsEntity> userProfileTypes = new ArrayList<IApsEntity>();
@@ -123,6 +131,42 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
         return SUCCESS;
     }
     
+	protected void checkTypeLabels(IUserProfile userProfile) {
+		if (null == userProfile) {
+			return;
+		}
+		try {
+			List<AttributeInterface> attributes = userProfile.getAttributeList();
+			for (int i = 0; i < attributes.size(); i++) {
+				AttributeInterface attribute = attributes.get(i);
+				//jpuserprofile_${typeCodeKey}_${attributeNameI18nKey}
+				String attributeLabelKey = "jpuserprofile_" + userProfile.getTypeCode() + "_" + attribute.getName();
+				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
+					String attributeDescription = attribute.getDescription();
+					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ? 
+							attributeDescription :
+							attribute.getName();
+					this.addLabelGroups(attributeLabelKey, value);
+				}
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "checkTypeLables");
+			throw new RuntimeException("Error checking label types", t);
+		}
+	}
+	
+	protected void addLabelGroups(String key, String defaultValue) throws ApsSystemException {
+		try {
+			ApsProperties properties = new ApsProperties();
+			Lang defaultLang = super.getLangManager().getDefaultLang();
+			properties.put(defaultLang.getCode(), defaultValue);
+			this.getI18nManager().addLabelGroup(key, properties);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "addLabelGroups");
+			throw new RuntimeException("Error adding label groups - key '" + key + "'", t);
+		}
+	}
+	
     @Override
     public String save() {
         try {
@@ -163,6 +207,13 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
         this._profileTypeCode = profileTypeCode;
     }
     
+	protected II18nManager getI18nManager() {
+		return _i18nManager;
+	}
+	public void setI18nManager(II18nManager i18nManager) {
+		this._i18nManager = i18nManager;
+	}
+	
     protected IUserProfileManager getUserProfileManager() {
         return _userProfileManager;
     }
@@ -171,6 +222,7 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
     }
     
     private String _profileTypeCode;
+	private II18nManager _i18nManager;
     private IUserProfileManager _userProfileManager;
     
 }
