@@ -15,14 +15,14 @@
 			<result name="currentUserWithoutProfile" type="tiles">admin.jpuserprofile.CurrentUser.Profile.noProfile</result>
             <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
-        
+        <!--
         <action name="new" class="jpuserprofileCurrentUserProfileAction" method="createNew" >
             <result type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
             <result name="edit" type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
             <result name="input" type="tiles">admin.jpuserprofile.CurrentUser.Profile.chooseType</result>
             <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
-        
+        -->
         <action name="save" class="jpuserprofileCurrentUserProfileAction" method="save">
             <result name="input" type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
             <result type="redirectAction">

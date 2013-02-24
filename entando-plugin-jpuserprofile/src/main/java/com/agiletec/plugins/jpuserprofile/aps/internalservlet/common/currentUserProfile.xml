@@ -9,17 +9,20 @@
     	
         <action name="edit" class="jpuserprofileCurrentUserProfileAction" method="edit">
             <result type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/entryCurrentProfile.jsp</result>
-            <result name="chooseType" type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/chooseProfileType.jsp</result>
-            <interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
+            <!--
+			<result name="chooseType" type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/chooseProfileType.jsp</result>
+            -->
+			<result name="currentUserWithoutProfile" type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/currentWithoutProfile.jsp</result>
+			<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
-        
+        <!--
         <action name="new" class="jpuserprofileCurrentUserProfileAction" method="createNew" >
             <result type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/entryCurrentProfile.jsp</result>
             <result name="edit" type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/entryCurrentProfile.jsp</result>
             <result name="input" type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/chooseProfileType.jsp</result>
             <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
-        
+        -->
         <action name="save" class="jpuserprofileCurrentUserProfileAction" method="save">
             <result name="input" type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/entryCurrentProfile.jsp</result>
             <result type="dispatcher">/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/profileChangingConfirm.jsp</result>

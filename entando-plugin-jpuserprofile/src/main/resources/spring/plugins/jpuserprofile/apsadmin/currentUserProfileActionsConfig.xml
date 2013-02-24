@@ -12,7 +12,6 @@
 	
 	<bean id="jpuserprofileCurrentUserProfileAction" class="com.agiletec.plugins.jpuserprofile.apsadmin.common.CurrentUserProfileAction" 
 			scope="prototype" parent="abstractEntityAction" >
-		<property name="i18nManager" ref="I18nManager" />
 		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
 		<property name="entityActionHelper" ref="jpuserprofileCurrentUserProfileActionHelper"/>
 	</bean>

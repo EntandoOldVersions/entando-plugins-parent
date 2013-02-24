@@ -136,3 +136,6 @@ INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpuserprofile_
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpuserprofile_ENTITY_ATTRIBUTE_MAXLENGTH_SHORT', 'en', 'Max');
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpuserprofile_ENTITY_ATTRIBUTE_MAXLENGTH_FULL', 'it', 'Lunghezza Massima');
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpuserprofile_ENTITY_ATTRIBUTE_MAXLENGTH_FULL', 'en', 'Maximum length');
+
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpuserprofile_CURRENT_USER_WITHOUT_PROFILE', 'it', 'Utente corrente senza profilo');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpuserprofile_CURRENT_USER_WITHOUT_PROFILE', 'en', 'Current user without profile');
