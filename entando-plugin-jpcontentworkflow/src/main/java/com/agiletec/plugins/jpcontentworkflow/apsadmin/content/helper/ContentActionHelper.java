@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
-import com.agiletec.aps.system.services.role.IRoleManager;
 import com.agiletec.aps.system.services.role.Permission;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.SelectItem;
@@ -83,11 +82,12 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 			List<Step> steps = this.getWorkflowManager().getSteps(typeCode);
 			previousStep = Content.STATUS_DRAFT;
 			if (Content.STATUS_READY.equals(currentStep)) {
-				if (steps.size()>0) {
+				if (steps.size() > 0) {
 					previousStep = steps.get(steps.size()-1).getCode();
 				}
 			} else {
-				for (Step step : steps) {
+				for (int i = 0; i < steps.size(); i++) {
+					Step step = steps.get(i);
 					if (step.getCode().equals(currentStep)) {
 						break;
 					}
@@ -118,6 +118,55 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 			}
 		}
 		return nextStep;
+	}
+	
+	@Override
+	public boolean isUserAllowed(Content content, UserDetails currentUser) {
+		try {
+			if (!super.isUserAllowed(content, currentUser)) {
+				return false;
+			}
+			boolean allowedType = false;
+			List<SmallContentType> allowedContentTypes = this.getAllowedContentTypes(currentUser);
+			for (int i = 0; i < allowedContentTypes.size(); i++) {
+				SmallContentType smallContentType = allowedContentTypes.get(i);
+				if (smallContentType.getCode().equals(content.getTypeCode())) {
+					allowedType = true;
+					break;
+				}
+			}
+			if (!allowedType) {
+				return false;
+			}
+			String status = content.getStatus();
+			if (status != null && !status.equals(Content.STATUS_NEW) && !status.equals(Content.STATUS_DRAFT)) {
+				if (status.equals(Content.STATUS_READY) || status.equals(Content.STATUS_PUBLIC)) {
+					boolean isSupervisor = this.getAuthorizationManager().isAuthOnPermission(currentUser, Permission.SUPERVISOR);
+					if (!isSupervisor) {
+						return false;
+					}
+				} else {
+					List<Step> steps = this.getWorkflowManager().getSteps(content.getTypeCode());
+					boolean auth = false;
+					for (int i = 0; i < steps.size(); i++) {
+						Step step = steps.get(i);
+						if (step.getCode().equals(status)) {
+							if (step.getRole() != null || this.checkRole(step.getRole(), currentUser)) {
+								auth = true;
+								break;
+							}
+						}
+					}
+					if (!auth) {
+						return false;
+					}
+				}
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "isUserAllowed");
+			throw new RuntimeException("Error checking user authority", t);
+		}
+		return true;
 	}
 	
 	@Override
@@ -173,6 +222,5 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 	}
 	
 	public IContentWorkflowManager _workflowManager;
-	private IRoleManager _roleManager;
 	
 }

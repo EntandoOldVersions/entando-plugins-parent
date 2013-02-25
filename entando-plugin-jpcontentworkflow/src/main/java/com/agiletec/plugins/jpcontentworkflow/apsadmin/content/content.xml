@@ -86,6 +86,7 @@
         	<result type="chain">createNewVoidJpCw</result>
         	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
+		
         <action name="createNewVoidJpCw" class="jpcontentworkflowIntroNewContentAction">
             <result name="input" type="tiles">admin.jacms.content.new</result>
         	<result type="redirectAction">entryContent</result>
