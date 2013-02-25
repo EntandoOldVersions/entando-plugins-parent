@@ -41,9 +41,8 @@ import org.aspectj.lang.annotation.Aspect;
 public class IntroNewContentActionAspect {
 	
 	@After("execution(* com.agiletec.plugins.jacms.apsadmin.content.IntroNewContentAction.createNewVoid())")
-	public void presetBlogAttributes(JoinPoint joinPoint) {
+	public void checkCreateNewContent(JoinPoint joinPoint) {
 		try {
-			System.out.println("AAAAAAAAAAAAA " + this);
 			IntroNewContentAction action = (IntroNewContentAction) joinPoint.getTarget();
 			List<SmallContentType> allowedContentTypes = this.getAllowedContentTypes();
 			boolean check = false;
@@ -64,12 +63,12 @@ public class IntroNewContentActionAspect {
         	throw new RuntimeException("Error extracting allowed content types", t);
 		}
 	}
-	
+	/*
 	//@Override
 	public String getContentStatus() {
 		return Content.STATUS_DRAFT;
 	}
-	
+	*/
 	@AfterReturning(pointcut = "execution(* com.agiletec.plugins.jacms.apsadmin.content.IntroNewContentAction.getContentTypes())", returning = "contentTypes")
 	public void getAllowedContentTypes(Object contentTypes) {
 		List<SmallContentType> allowed = this.getAllowedContentTypes();
