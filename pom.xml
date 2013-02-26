@@ -58,20 +58,8 @@
 		<module>entando-plugin-jpmyportalplus</module>
 		<module>entando-plugin-jptokenapi</module>
 	</modules>
-	<!--
-	<distributionManagement>
-		<snapshotRepository>
-			<id>entando-snapshots</id>
-			<url>dav:http://localhost/nexus/content/repositories/entando-snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>entando-releases</id>
-			<url>dav:http://localhost/nexus/content/repositories/entando-releases</url>
-		</repository>
-	</distributionManagement>
-	-->
 	<properties>
-		
+
 		<test.database.driver>org.postgresql.Driver</test.database.driver>
 		<test.database.hostname>localhost</test.database.hostname>
 		<test.database.port>5432</test.database.port>
@@ -79,7 +67,7 @@
 		<test.database.password>agile</test.database.password>
 		<test.database.port.url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testPort</test.database.port.url>
 		<test.database.serv.url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testServ</test.database.serv.url>
-		
+
 		<!--
 		<test.database.driver>com.mysql.jdbc.Driver</test.database.driver>
 		<test.database.hostname>localhost</test.database.hostname>
@@ -101,7 +89,7 @@
 		<spring.version>3.0.6.RELEASE</spring.version>
 		<struts2.version>2.3.4.1</struts2.version>
 	</properties>
-	
+
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<extensions>
@@ -129,7 +117,7 @@
 				<includes>
 					<include>**/*.tld</include>
 				</includes>
-			</resource>		
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>
@@ -154,7 +142,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -305,7 +293,7 @@
 					<excludes>
 						<exclude>**/*BaseTestCase*</exclude>
 					</excludes>
-					<includes> 
+					<includes>
 						<include>**/AllTests.java</include>
 					</includes>
 				</configuration>
@@ -677,7 +665,7 @@
 			<version>5.1.18</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
@@ -690,7 +678,7 @@
 			<version>10.8.2.2</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
