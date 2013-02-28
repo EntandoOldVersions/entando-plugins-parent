@@ -21,8 +21,8 @@ INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode,
 'jpmyportalplus_sample_showlet',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">My Portal - Sample Showlet</property>
-<property key="it">My Portal - Showlet di Esempio</property>
+<property key="en">My Portal - Sample Widget</property>
+<property key="it">My Portal - Widget di Esempio</property>
 </properties>',null,'jpmyportalplus',null,null,1);
 
 INSERT INTO sysconfig (version, item, descr, config) VALUES ( 'production', 'jpmyportalplus_config', 'Definizione degli oggetti configurabili di My Portal', '<?xml version="1.0" encoding="UTF-8"?>

@@ -21,32 +21,32 @@ INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode,
 'jpmyportalplus_sample_showlet',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">My Portal - Sample Showlet</property>
-<property key="it">My Portal - Showlet di Esempio</property>
+<property key="en">My Portal - Sample Widget</property>
+<property key="it">My Portal - Widget di Esempio</property>
 </properties>',null,'jpmyportalplus',null,null,1);
 
 INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_test_showlet_1',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">My Portal - Test Showlet 1</property>
-<property key="it">My Portal - Showlet di Test 1</property>
+<property key="en">My Portal - Test Widget 1</property>
+<property key="it">My Portal - Widget di Test 1</property>
 </properties>',null,'jpmyportalplus',null,null,1);
 
 INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_test_showlet_2',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">My Portal - Test Showlet 2</property>
-<property key="it">My Portal - Showlet di Test 2</property>
+<property key="en">My Portal - Test Widget 2</property>
+<property key="it">My Portal - Widget di Test 2</property>
 </properties>',null,'jpmyportalplus',null,null,1);
 
 INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_test_showlet_3',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">My Portal - Test Showlet 3</property>
-<property key="it">My Portal - Showlet di Test 3</property>
+<property key="en">My Portal - Test Widget 3</property>
+<property key="it">My Portal - Widget di Test 3</property>
 </properties>',null,'jpmyportalplus',null,null,1);
 
 INSERT INTO sysconfig (version, item, descr, config) VALUES ( 'test', 'jpmyportalplus_config', 'Definizione degli oggetti configurabili di My Portal', '<?xml version="1.0" encoding="UTF-8"?>
@@ -77,17 +77,17 @@ INSERT INTO showletconfig (pagecode, framepos, showletcode, config, publishedcon
 
 
 INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, showletcode, config, closed)
-    VALUES ('editorCustomers', 'jpmyportalplus_testpage', 
+    VALUES ('editorCustomers', 'jpmyportalplus_testpage',
     1, 'jpmyportalplus_void', null, 0);
 
 INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, showletcode, config, closed)
-    VALUES ('editorCustomers', 'jpmyportalplus_testpage', 
+    VALUES ('editorCustomers', 'jpmyportalplus_testpage',
     2, 'jpmyportalplus_test_showlet_1', null, 1);
 
 INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, showletcode, config, closed)
-    VALUES ('editorCustomers', 'jpmyportalplus_testpage', 
+    VALUES ('editorCustomers', 'jpmyportalplus_testpage',
     3, 'jpmyportalplus_sample_showlet', null, 0);
 
 INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, showletcode, config, closed)
-    VALUES ('editorCustomers', 'jpmyportalplus_testpage', 
+    VALUES ('editorCustomers', 'jpmyportalplus_testpage',
     6, 'jpmyportalplus_test_showlet_3', null, 1);

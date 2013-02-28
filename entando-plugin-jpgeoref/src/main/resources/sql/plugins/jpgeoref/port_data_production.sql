@@ -1,4 +1,4 @@
-INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpgeoref_home', 
+INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpgeoref_home',
 'Home Page for test georef Content', '<frames>
 	<frame pos="0">
 		<descr>Test frame</descr>
@@ -16,7 +16,7 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 	<parameter name="categories">Content Category codes (comma separeted)</parameter>
     <parameter name="orClauseCategoryFilter" />
 	<parameter name="filters" />
-	<parameter name="title_{lang}">Showlet Title in lang {lang}</parameter>
+	<parameter name="title_{lang}">Widget Title in lang {lang}</parameter>
 	<parameter name="pageLink">The code of the Page to link</parameter>
 	<parameter name="linkDescr_{lang}">Link description in lang {lang}</parameter>
 	<parameter name="maxElements">Max number of contents</parameter>

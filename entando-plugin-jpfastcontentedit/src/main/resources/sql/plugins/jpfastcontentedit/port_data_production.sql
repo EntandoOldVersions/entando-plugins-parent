@@ -12,13 +12,13 @@ INSERT INTO showletcatalog ( code, titles, parameters, plugincode, locked )
 	<parameter name="orClauseCategoryFilter" />
 	<parameter name="maxElemForItem">Contents for each page</parameter>
 	<parameter name="filters" />
-	<parameter name="title_{lang}">Showlet Title in lang {lang}</parameter>
+	<parameter name="title_{lang}">Widget Title in lang {lang}</parameter>
 	<parameter name="pageLink">The code of the Page to link</parameter>
 	<parameter name="linkDescr_{lang}">Link description in lang {lang}</parameter>
 	<action name="listViewerConfig"/>
 </config>', 'jpfastcontentedit', 1 );
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
+INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked)
 	VALUES ('jpfastcontentedit_formAction', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Content Editing Form</property>

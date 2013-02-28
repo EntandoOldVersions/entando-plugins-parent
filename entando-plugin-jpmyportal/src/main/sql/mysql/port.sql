@@ -36,8 +36,8 @@ INSERT INTO showletcatalog ( code, titles, plugincode, parenttypecode, defaultco
 </properties>', 1 );
 
 
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_ADD_SHOWLET', 'it', 'Scegli una showlet da posizionare nel box' );
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_ADD_SHOWLET', 'en', 'Select the Showlet that will be placed in this box' );
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_ADD_SHOWLET', 'it', 'Scegli un widget da posizionare nel box' );
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_ADD_SHOWLET', 'en', 'Select the Widget that will be placed in this box' );
 
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_BACK', 'it', 'Annulla' );
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_BACK', 'en', 'Cancel' );
@@ -54,8 +54,8 @@ INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_CHOOSE', 'it', 'Seleziona' );
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_CHOOSE', 'en', 'Select' );
 
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_DELETE_SHOWLET', 'it', 'Elimina la showlet posizionata nel box' );
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_DELETE_SHOWLET', 'en', 'Remove the Showlet placed in this box' );
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_DELETE_SHOWLET', 'it', 'Elimina il widget posizionato nel box' );
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_DELETE_SHOWLET', 'en', 'Remove the Widget placed in this box' );
 
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_EMPTY', 'it', 'Svuota' );
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_EMPTY', 'en', 'Empty' );
@@ -75,8 +75,8 @@ INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_PAGEMODEL', 'it', 'Modello di Pagina' );
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_PAGEMODEL', 'en', 'Page Model' );
 
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_RESET_TO_DEFAULT', 'it', 'Ripristina showlet di default' );
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_RESET_TO_DEFAULT', 'en', 'Restore Default Showlet' );
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_RESET_TO_DEFAULT', 'it', 'Ripristina widget di default' );
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_RESET_TO_DEFAULT', 'en', 'Restore Default Widgets' );
 
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_SELECTED_SHOWLET', 'it', 'Stai configurando' );
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpmyportal_SELECTED_SHOWLET', 'en', 'You are configuring' );
