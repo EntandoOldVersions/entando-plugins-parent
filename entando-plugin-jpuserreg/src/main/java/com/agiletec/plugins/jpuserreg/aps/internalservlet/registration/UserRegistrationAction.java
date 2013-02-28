@@ -25,6 +25,8 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.i18n.II18nManager;
+import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.IUserManager;
 import com.agiletec.aps.util.ApsProperties;
@@ -34,6 +36,7 @@ import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfi
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegManager;
+import java.util.List;
 
 /**
  * Action to manage User Account Registration Requests
@@ -68,14 +71,15 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		String profileTypeCode = this.getProfileTypeCode();
 		try {
 			boolean allowed = false;
-			if (profileTypeCode!=null) {
+			if (profileTypeCode != null) {
 				IUserProfile userProfile = (IUserProfile) this.getUserProfileManager().getProfileType(profileTypeCode);
-				if (userProfile!=null) {
+				if (userProfile != null) {
 					if (userProfile.getAttributeByRole(ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL)==null) {// Verifica che contenga l'attributo della mail
 						ApsSystemUtils.getLogger().warning("Registration attempt with profile " + profileTypeCode + " missing email address");
 					} else {
 						userProfile.disableAttributes(JpUserRegSystemConstants.ATTRIBUTE_DISABLING_CODE_ON_REGISTRATION);
 						this.setUserProfile(userProfile);
+						this.checkTypeLabels(userProfile);
 						allowed = true;
 					}
 				}
@@ -89,6 +93,41 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 			return FAILURE;
 		}
 		return SUCCESS;
+	}
+	
+	protected void checkTypeLabels(IUserProfile userProfile) {
+		if (null == userProfile) {
+			return;
+		}
+		try {
+			List<AttributeInterface> attributes = userProfile.getAttributeList();
+			for (int i = 0; i < attributes.size(); i++) {
+				AttributeInterface attribute = attributes.get(i);
+				String attributeLabelKey = "jpuserprofile_" + userProfile.getTypeCode() + "_" + attribute.getName();
+				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
+					String attributeDescription = attribute.getDescription();
+					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ? 
+							attributeDescription :
+							attribute.getName();
+					this.addLabelGroups(attributeLabelKey, value);
+				}
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "checkTypeLables");
+			throw new RuntimeException("Error checking label types", t);
+		}
+	}
+	
+	protected void addLabelGroups(String key, String defaultValue) throws ApsSystemException {
+		try {
+			ApsProperties properties = new ApsProperties();
+			Lang defaultLang = super.getLangManager().getDefaultLang();
+			properties.put(defaultLang.getCode(), defaultValue);
+			this.getI18nManager().addLabelGroup(key, properties);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "addLabelGroups");
+			throw new RuntimeException("Error adding label groups - key '" + key + "'", t);
+		}
 	}
 	
 	@Override
@@ -194,9 +233,11 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 	public IApsEntity getApsEntity() {
 		return (IApsEntity) this.getRequest().getSession().getAttribute(SESSION_PARAM_NAME_REQ_PROFILE);
 	}
+	
 	public IUserProfile getUserProfile() {
 		return (IUserProfile) this.getRequest().getSession().getAttribute(UserRegistrationAction.SESSION_PARAM_NAME_REQ_PROFILE);
 	}
+	
 	protected void setUserProfile(IUserProfile userProfile) {
 		if (userProfile!=null) {
 			this.getRequest().getSession().setAttribute(UserRegistrationAction.SESSION_PARAM_NAME_REQ_PROFILE, userProfile);
@@ -224,6 +265,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return _profileTypeCode;
 	}
+	
 	public void setProfileTypeCode(String profileTypeCode) {
 		String showletTypeCode = this.extractTypeCode();
 		this._profileTypeCode = (null==showletTypeCode) ? profileTypeCode : showletTypeCode;
@@ -271,6 +313,13 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		this._userManager = userManager;
 	}
 	
+	protected II18nManager getI18nManager() {
+		return _i18nManager;
+	}
+	public void setI18nManager(II18nManager i18nManager) {
+		this._i18nManager = i18nManager;
+	}
+	
 	private String _emailAttrName;
 	private String _profileTypeCode;
 	private String _username;
@@ -280,5 +329,6 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 	private IUserRegManager _userRegManager;
 	private IUserManager _userManager;
 	private IUserProfileManager _userProfileManager;
+	private II18nManager _i18nManager;
 	
 }

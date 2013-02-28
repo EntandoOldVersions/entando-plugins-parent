@@ -20,6 +20,7 @@
 		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
 		<property name="userRegManager" ref="jpuserregUserRegManager" />
 		<property name="entityActionHelper" ref="jpuserprofileCurrentUserProfileActionHelper"/>
+		<property name="i18nManager" ref="I18nManager" />
 	</bean>
 	
 	<bean id="jpuserregListAttributeAction" scope="prototype" 
