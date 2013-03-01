@@ -57,7 +57,8 @@
 		<module>entando-plugin-jpcontentrefs</module>
 		<module>entando-plugin-jpmyportalplus</module>
 		<module>entando-plugin-jptokenapi</module>
-	</modules>
+    <module>entando-plugin-jpfrontshortcut</module>
+  </modules>
 	<properties>
 
 		<test.database.driver>org.postgresql.Driver</test.database.driver>
