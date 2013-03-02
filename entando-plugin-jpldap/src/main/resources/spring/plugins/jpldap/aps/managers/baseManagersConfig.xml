@@ -11,14 +11,7 @@
 	
     <bean id="UserManager" class="com.agiletec.plugins.jpldap.aps.system.services.user.LdapUserManager" 
             parent="abstractService" >
-        <property name="userDAO" >
-            <bean class="com.agiletec.aps.system.services.user.UserDAO">
-                <property name="dataSource" ref="servDataSource" />
-                <property name="encrypter">
-                    <bean class="com.agiletec.aps.util.DefaultApsEncrypter"></bean>
-                </property>
-            </bean>
-        </property>
+        <property name="userDAO" ref="UserDAO" />
         <property name="ldapUserDAO" >
             <bean class="com.agiletec.plugins.jpldap.aps.system.services.user.LdapUserDAO">
                 <property name="configManager" ref="BaseConfigManager"/>
