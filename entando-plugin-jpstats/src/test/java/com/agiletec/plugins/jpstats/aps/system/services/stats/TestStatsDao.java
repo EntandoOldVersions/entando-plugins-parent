@@ -179,9 +179,7 @@ public class TestStatsDao extends ApsPluginBaseTestCase {
 	@Override
 	protected void init() throws Exception {
 		super.init();
-		_statsDAO = new StatsDAO();
-		DataSource dataSource = (DataSource) this.getApplicationContext().getBean("portDataSource");
-		_statsDAO.setDataSource(dataSource);
+		_statsDAO = (StatsDAO) this.getApplicationContext().getBean("jpstatsStatsDAO");
 	}
 	
 	private StatsDAO _statsDAO;
