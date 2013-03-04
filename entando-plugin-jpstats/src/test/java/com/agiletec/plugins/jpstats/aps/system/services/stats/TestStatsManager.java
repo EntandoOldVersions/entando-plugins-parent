@@ -76,14 +76,14 @@ public class TestStatsManager extends ApsPluginBaseTestCase {
 		Calendar start = CalendarConverter.getCalendarDay("10/03/2007", 0, 0, 0, 0);
 		Calendar end = CalendarConverter.getCalendarDay("10/03/2007", 23, 59, 59, 999);
 		String averageTimeSite = _statsManager.getAverageTimeSite(start, end);
-		assertEquals("00:00:07", averageTimeSite);
+		assertEquals("0 days 00:00:07", averageTimeSite);
 	}
 	
 	public void testGetAverageTimePage() throws ApsSystemException, SQLException {
 		Calendar start = CalendarConverter.getCalendarDay("10/03/2007", 0, 0, 0, 0);
 		Calendar end = CalendarConverter.getCalendarDay("10/03/2007", 23, 59, 59, 999);
 		String averageTimeSite = _statsManager.getAverageTimePage(start, end);
-		assertEquals("00:00:06", averageTimeSite);
+		assertEquals("0 days 00:00:06", averageTimeSite);
 	}
 	
 	public void testGetNumPageSession() throws ApsSystemException, SQLException {

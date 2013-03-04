@@ -40,8 +40,6 @@ public interface IStatsDAO {
 	
 	public void deleteStatsRecord(Date from, Date to);
 	
-	public String getAverageTimeSite(Date start, Date end);
-	
 	/**
 	 * Gets the average time spent on the site by session
 	 * @param start Calendar 
