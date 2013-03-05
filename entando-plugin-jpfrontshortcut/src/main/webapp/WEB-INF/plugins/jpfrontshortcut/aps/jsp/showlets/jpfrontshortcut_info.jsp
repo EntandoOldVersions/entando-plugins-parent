@@ -28,7 +28,7 @@
 
 <h2>Contents Front Shortcut</h2>
 <p>
-	Publish a content in this page and start the frontend editing
+	Publish a content in this page and start the front-end editing
 </p>
 <ol>
 	<li><p><a href="<wp:info key="systemParam" paramName="applicationBaseURL" />do/Page/viewTree.action?selectedNode=<wp:currentPage param="code" />&amp;action%3Aconfigure=Configure">Publish a content in this page from the Page Tree</a></p></li>
