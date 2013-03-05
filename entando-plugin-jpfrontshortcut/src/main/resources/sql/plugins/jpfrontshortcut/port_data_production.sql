@@ -88,3 +88,6 @@ INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcu
 
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_DELETEPAGE','en','Delete page:');
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_DELETEPAGE','it','Elimina pagina:');
+
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EDIT_THIS_CONTENT','en','Edit this content (Front Shortcut)');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EDIT_THIS_CONTENT','it','Modifica questo contenuto (Front Shortcut)');

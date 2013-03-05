@@ -15,7 +15,7 @@
 			<wpcs:requestContextParam param="currentFrame" var="framePosVar" />
 			
 			<%-- NEW PAGE --%>
-				<a id="<c:out value="options_anchor_NEW_PAGE_${targetPageCode}_${framePosVar}_${random}" />" href="javascript:void(0)" title="<wp:i18n key="jpfrontshortcut_NEWPAGE_FROM" escapeXml="true" />&#32;<c:out value="${currentTarget.title}" />"><img width="12" height="12" src="<wp:resourceURL />plugins/jpfrontshortcut/static/img/icons/16x16/new.png" alt="<wp:i18n key="jpfrontshortcut_NEWPAGE_FROM" escapeXml="true" />&#32;<c:out value="${currentTarget.title}" />" /></a>
+				<a id="<c:out value="options_anchor_NEW_PAGE_${targetPageCode}_${framePosVar}_${random}" />" href="javascript:void(0)" title="<wp:i18n key="jpfrontshortcut_NEWPAGE" escapeXml="true" />&#32;<c:out value="${currentTarget.title}" />"><img width="12" height="12" src="<wp:resourceURL />plugins/jpfrontshortcut/static/img/icons/16x16/new.png" alt="<wp:i18n key="jpfrontshortcut_NEWPAGE" escapeXml="true" />&#32;<c:out value="${currentTarget.title}" />" /></a>
 				<script type='text/javascript'>
 					<!--//--><![CDATA[//><!--
 					jQuery(document).ready(function () { 

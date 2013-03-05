@@ -18,7 +18,7 @@
 			<c:if test="${null != activeContentEditingVar && activeContentEditingVar  == 'true'}">
 				<% pageContext.setAttribute("random", (int) (Math.random() * 999999)); %>
 				<%-- modal popup //start--%>
-						<a id="<c:out value="options_anchor_${contentIdVar}_${random}" />" href="javascript:void(0)"><wp:i18n key="EDIT_THIS_CONTENT" /> - Front Shortcut</a>
+						<a id="<c:out value="options_anchor_${contentIdVar}_${random}" />" href="javascript:void(0)"><wp:i18n key="jpfrontshortcut_EDIT_THIS_CONTENT" escapeXml="true" /></a>
 						<script type='text/javascript'>
 							<!--//--><![CDATA[//><!--
 							jQuery(document).ready(function () { 
