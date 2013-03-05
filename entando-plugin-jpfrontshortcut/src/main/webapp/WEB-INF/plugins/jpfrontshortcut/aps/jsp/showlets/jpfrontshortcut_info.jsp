@@ -42,11 +42,10 @@
 
 <h2>How to use these in my portal?</h2>
 <ul>
-	<li>Reproduce the pagemodel configuration: notice how <em>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/models/jpfrontshortcut_test.jsp</em> pagemodel works. You need to port the jQuery headinfo and the widget popup init. 
-	</li>
-	<li>
-		If you want to trigger the frontshort editing from the Content Models add this in you model:<br />
-		<pre style="overflow: scroll; border: 1px solid silver; width: 90%; padding: 0.5em 4%; background-color: #fafafa">
+	<li><p>Reproduce the pagemodel configuration: notice how <em>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/models/jpfrontshortcut_test.jsp</em> pagemodel works. You need to port the jQuery headinfo and the widget popup init. </p></li>
+	<li><p>If you want to trigger the frontshort editing from the Content Models add this in you model:</p>
+		<p>
+			<pre style="overflow: scroll; border: 1px solid silver; width: 90%; padding: 0.5em 4%; background-color: #fafafa">
 #if ($content.isUserAllowed("editContents"))
     &lt;a id="options_anchor_$content.getId()" href="javascript:void(0)"&gt;
         $i18n.getLabel("EDIT_THIS_CONTENT") - Front Shortcut
@@ -65,6 +64,10 @@
         //--&gt;&lt;!]]&gt;
     &lt;/script&gt;
 #end
-		</pre>
+			</pre>
+		</p>
+	</li>
+	<li>
+		<p>Important: this component at the moment will work only in pages served with MimeType <strong>text/html</strong></p>
 	</li>
 </ul>

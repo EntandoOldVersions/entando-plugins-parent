@@ -58,11 +58,12 @@ INSERT INTO pagemodels (code, descr, frames, plugincode) VALUES ('jpfrontshortcu
 
 INSERT INTO pages (code, parentcode, pos, modelcode, titles, groupcode, showinmenu, extraconfig) VALUES ('jpfrontshortcut_test', 'homepage', 7, 'jpfrontshortcut_test', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">Front shortcut Test Page</property>
-<property key="it">Front shortcut Test Page</property>
+<property key="en">Front Shortcut - Test Page</property>
+<property key="it">Front Shortcut - Pagina di Prova</property>
 </properties>', 'free', 1, '<?xml version="1.0" encoding="UTF-8"?>
 <config>
   <useextratitles>false</useextratitles>
+  <mimeType>text/html</mimeType>
 </config>');
 
 INSERT INTO showletconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES ('jpfrontshortcut_test', 1, 'jpfrontshortcut_navigation_menu', '<?xml version="1.0" encoding="UTF-8"?>
