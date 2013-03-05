@@ -9,6 +9,7 @@
 	</a>
 </p>
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 var href = "<s:property value="#url" escapeJavaScript="true" />";
 var contentId = "<s:property value="contentId" />";
 var random = 'reload='+Math.floor(Math.random()*999999);
@@ -19,4 +20,5 @@ else {
 	href = '?'+random + "&contentId=" + contentId;
 }
 window.location.href= href;
+//--><!]]>
 </script>

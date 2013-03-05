@@ -5,7 +5,9 @@
 <c:set var="jquery_libraries">
 	<sj:head debug="false" ajaxcache="false" compressed="false" />
 	<script type="text/javascript">
+		<!--//--><![CDATA[//><!--
 		jQuery.noConflict();
+		//--><!]]>
 	</script>
 </c:set> 
 <wp:headInfo type="JS_JQUERY" var="jquery_libraries" />

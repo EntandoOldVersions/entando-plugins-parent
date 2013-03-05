@@ -1,7 +1,7 @@
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked, maingroup) VALUES ('jpfrontshortcut_content_viewer', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">Contents - Publish a Content</property>
-<property key="it">Contenuti - Pubblica un Contenuto</property>
+<property key="en">Front Shortcut Contents - Publish a Content</property>
+<property key="it">Front Shortcut Contenuti - Pubblica un Contenuto</property>
 </properties>', '<config>
 	<parameter name="contentId">Content ID</parameter>
 	<parameter name="modelId">Content Model ID</parameter>
@@ -9,49 +9,49 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 </config>', 'jpfrontshortcut', NULL, NULL, 1, NULL);
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked, maingroup) VALUES ('jpfrontshortcut_navigation_menu', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">Navigation - Vertical Menu</property>
-<property key="it">Navigazione - Menù Verticale</property>
+<property key="en">Front Shortcut Navigation - Menu</property>
+<property key="it">Front Shortcut Navigazione - Menu</property>
 </properties>', '<config>
 <parameter name="navSpec">Rules for the Page List auto-generation</parameter>
 <action name="navigatorConfig" />
 </config>', 'jpfrontshortcut', NULL, NULL, 1, NULL);
 INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked, maingroup) VALUES ('jpfrontshortcut_info', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">Info</property>
-<property key="it">Info</property>
+<property key="en">Front Shortcut Info</property>
+<property key="it">Front Shortcut Info</property>
 </properties>', NULL, 'jpfrontshortcut', NULL, NULL, 1, NULL);
 
 
 INSERT INTO pagemodels (code, descr, frames, plugincode) VALUES ('jpfrontshortcut_test', 'jpfrontshortcut plugin - Test', '<frames>
-	<frame locked="true" pos="0">
-		<descr>Frame I</descr>
+	<frame pos="0">
+		<descr>Top</descr>
 	</frame>
-	<frame locked="true" pos="1">
-		<descr>Frame II</descr>
+	<frame pos="1">
+		<descr>Left I</descr>
 	</frame>
-	<frame locked="true" pos="2">
-		<descr>Frame III</descr>
+	<frame pos="2">
+		<descr>Left II</descr>
 	</frame>
-	<frame locked="true" pos="3">
-		<descr>Frame IV</descr>
+	<frame pos="3">
+		<descr>Left III</descr>
 	</frame>
-	<frame locked="true" pos="4">
-		<descr>Frame V</descr>
+	<frame pos="4">
+		<descr>Left IV</descr>
 	</frame>
-	<frame locked="true" pos="5">
-		<descr>Frame VI</descr>
+	<frame pos="5">
+		<descr>Right I</descr>
 	</frame>
-	<frame locked="true" pos="6">
-		<descr>Frame VII</descr>
+	<frame pos="6">
+		<descr>Right II</descr>
 	</frame>
-	<frame locked="true" pos="7">
-		<descr>Frame VIII</descr>
+	<frame pos="7">
+		<descr>Right III</descr>
 	</frame>
-	<frame locked="true" pos="8">
-		<descr>Frame IX</descr>
+	<frame pos="8">
+		<descr>Right IV</descr>
 	</frame>
-	<frame locked="true" pos="9">
-		<descr>Frame X</descr>
+	<frame pos="9">
+		<descr>Footer</descr>
 	</frame>
 </frames>', 'jpfrontshortcut');
 
@@ -70,3 +70,21 @@ INSERT INTO showletconfig (pagecode, framepos, showletcode, config, publishedcon
 <property key="navSpec">code(homepage).subtree(2)</property>
 </properties>', NULL);
 INSERT INTO showletconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES ('jpfrontshortcut_test', 5, 'jpfrontshortcut_info', NULL, NULL);
+
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_POPUP_TITLE','en','Edit');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_POPUP_TITLE','it','Modifica');
+
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EDIT_FRAME','en','Edit frame:');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EDIT_FRAME','it','Modifica Posizione:');
+
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EMPTY_FRAME','en','Empty frame:');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EMPTY_FRAME','it','Svuola la posizione:');
+
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_NEWPAGE','en','Create child page of:');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_NEWPAGE','it','Crea pagina figlia di:');
+
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EDITPAGE','en','Edit page:');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EDITPAGE','it','Modifica pagina:');
+
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_DELETEPAGE','en','Delete page:');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_DELETEPAGE','it','Elimina pagina:');

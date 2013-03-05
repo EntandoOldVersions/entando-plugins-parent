@@ -50,7 +50,7 @@
 			<wp:show frame="0" />
 		</div>
 		
-		<div class="sample">
+		<div class="sample"> 
 			<div>
 				<wp:show frame="1" />
 				<wp:show frame="2" />

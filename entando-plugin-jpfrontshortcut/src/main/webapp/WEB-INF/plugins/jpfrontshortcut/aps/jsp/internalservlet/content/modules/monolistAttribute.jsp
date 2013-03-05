@@ -49,6 +49,7 @@
 		<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/hypertextAttribute.jsp" />
 		<%-- hypertext javascript editor --%>
 		<script type="text/javascript">
+			<!--//--><![CDATA[//><!--
 			jQuery(document).ready(function () { 
 				var textareaOriginalWidth = jQuery("#<s:property value="%{#attributeTracer.getFormFieldName(#attribute)}" />").width()+"px";
 				try {
@@ -67,6 +68,7 @@
 					ev.editor.updateElement();
 				});
 			});
+			//--><!]]>
 		</script>
 	</s:elseif>
 	<s:elseif test="#attribute.type == 'Enumerator'">
