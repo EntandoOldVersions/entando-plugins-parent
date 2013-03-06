@@ -39,7 +39,7 @@
 	<%-- reset the homepage --%>
 		<form action="<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpmyportalplus/front/resetFrames.action" method="post">
 			<p>
-				<wp:i18n key="jpmyportalplus_RESET_INTRO" /><br />
+				<wp:i18n key="JPMYPORTALPLUS_RESET_INTRO" /><br />
 			</p>
 			<p class="submit_reset">
 				<input type="hidden" name="currentPageCode" value="<wp:currentPage param="code" />" />

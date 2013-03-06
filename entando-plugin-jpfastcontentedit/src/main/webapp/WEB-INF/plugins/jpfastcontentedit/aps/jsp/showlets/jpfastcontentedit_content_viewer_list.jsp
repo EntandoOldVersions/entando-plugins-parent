@@ -81,6 +81,6 @@
 	<p><a class="linkInEvidenza" href="<wp:url page="fastcontentedit" >
 			<wp:parameter name="contentTypeCode" ><wp:currentShowlet param="config" configParam="contentType" /></wp:parameter>
 			<wp:parameter name="finalPageDest" ><wp:currentPage param="code" /></wp:parameter>
-		</wp:url>" ><wp:i18n key="jpfastcontentedit_NEW_CONTENT" />
+		</wp:url>" ><wp:i18n key="jpfastcontentedit_LABEL_NEW_CONTENT" />
 	</a></p>
 </wp:ifauthorized>
