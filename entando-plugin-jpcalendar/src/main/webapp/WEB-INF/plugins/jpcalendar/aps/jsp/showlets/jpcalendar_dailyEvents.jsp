@@ -30,7 +30,7 @@
 
 	<wp:pager listName="contentList" objectName="groupContent" pagerIdFromFrame="true" max="1" >
 		<c:forEach var="content" items="${contentList}" begin="${groupContent.begin}" end="${groupContent.end}">
-			<jacms:content contentId="${content}" modelId="XX"/>
+			<jacms:content contentId="${content}" modelId="list"/>
 		</c:forEach>	
 
 		<c:if test="${groupContent.size > groupContent.max}">
