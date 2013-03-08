@@ -37,6 +37,7 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsException;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.authorization.IAuthorizationManager;
+import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
@@ -128,7 +129,8 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	@Override
 	public String delete() {
 		try {
-			if(!this.getCurrentUser().getUsername().equals(SystemConstants.GUEST_USER_NAME) && isAuthorizedToDelete(this.getCurrentUser().getUsername()) ){
+			if (!this.getCurrentUser().getUsername().equals(SystemConstants.GUEST_USER_NAME) 
+					&& this.isAuthorizedToDelete(this.getCurrentUser().getUsername())) {
 				if (this.isAuth(this.getContentId())){
 					this.getCommentManager().deleteComment(this.getSelectedComment());
 				}
@@ -143,11 +145,9 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	@Override
 	public String addComment() {
 		try {
-
 			if (!this.getContentFeedbackManager().allowAnonymousComment() && this.getCurrentUser().getUsername().equals(SystemConstants.GUEST_USER_NAME)) {
 				return BaseAction.USER_NOT_ALLOWED;
 			}
-
 			Comment comment = new Comment();
 			String contentId = this.extractContentId();
 			if (this.isAuth(contentId)) {
@@ -165,21 +165,24 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 				comment.setUsername(this.getCurrentUser().getUsername());
 				this.getCommentManager().addComment(comment);
 			}
-
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "addComment");
 			return FAILURE;
 		}
 		return SUCCESS;
 	}
-
+	
 	private boolean isAuth(String contentId) {
 		IContentDispenser contentDispenser = (IContentDispenser) ApsWebApplicationUtils.getBean(JacmsSystemConstants.CONTENT_DISPENSER_MANAGER, this.getRequest());
-		IAuthorizationManager authManager = (IAuthorizationManager) ApsWebApplicationUtils.getBean(SystemConstants.AUTHORIZATION_SERVICE, this.getRequest());
 		ContentAuthorizationInfo authInfo = contentDispenser.getAuthorizationInfo(contentId);
-		return (authInfo.isUserAllowed(authManager.getGroupsOfUser(this.getCurrentUser())));
+		if (null == authInfo) {
+			return false;
+		}
+		IAuthorizationManager authManager = (IAuthorizationManager) ApsWebApplicationUtils.getBean(SystemConstants.AUTHORIZATION_SERVICE, this.getRequest());
+		List<Group> userGroups = authManager.getUserGroups(this.getCurrentUser());
+		return authInfo.isUserAllowed(userGroups);
 	}
-
+	
 	@Override
 	public IComment getComment(Integer commentId) {
 		IComment comment = null;
@@ -193,7 +196,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	}
 
 	@Override
-	public IRating getContentRating(){
+	public IRating getContentRating() {
 		IRating rating = null;
 		try {
 			String contentId = this.extractContentId();
