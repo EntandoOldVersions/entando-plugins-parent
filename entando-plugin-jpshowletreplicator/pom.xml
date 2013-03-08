@@ -9,8 +9,8 @@
 	<artifactId>entando-plugin-jpshowletreplicator</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
 	<packaging>war</packaging>
-	<name>Entando Plugin: Showlet Replicator</name>
-	<description>Showlet Replicator</description>
+	<name>Entando Plugin: Widget Replicator</name>
+	<description>Widget Replicator</description>
 	<developers>
 		<developer>
 			<id>e.santoboni</id>
