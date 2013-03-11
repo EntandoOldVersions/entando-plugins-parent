@@ -1,28 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component>
 	<code>jpavatar</code>
-	<description>jpavatar - Description</description>
-	<dependencies>
-		<!--
-		<code>firstDependency</code>
-		<code>secondDependency</code>
-		-->
-	</dependencies>
+	<description>My Avatar</description>
 	<installation>
-		<tableMapping>
-			<datasource name="portDataSource">
-				<!--
-				<class>org.entando.entando.plugins.jpavatar.aps.system.init.portdb.FirstTable</class>
-				<class>org.entando.entando.plugins.jpavatar.aps.system.init.portdb.SecondTable</class>
-				-->
-			</datasource>
-			<datasource name="servDataSource">
-				<!--
-				<class>org.entando.entando.plugins.jpavatar.aps.system.init.servdb.ThirdTable</class>
-				<class>org.entando.entando.plugins.jpavatar.aps.system.init.servdb.FourthTable</class>
-				-->
-			</datasource>
-		</tableMapping>
 		<environment code="production">
 			<defaultSqlResources>
 				<datasource name="portDataSource">

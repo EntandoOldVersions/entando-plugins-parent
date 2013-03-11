@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component>
 	<code>jpshowletreplicator</code>
-	<description>Showlet Replicator</description>
+	<description>Widget Replicator</description>
 	<installation>
 		<environment code="production">
 			<defaultSqlResources>

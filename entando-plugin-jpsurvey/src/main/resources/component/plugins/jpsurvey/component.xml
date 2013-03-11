@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component>
 	<code>jpsurvey</code>
-	<description>Allow to manage Survey and Questionnaire</description>
-	<dependencies>
-		<!--
-		<code>firstDependency</code>
-		<code>secondDependency</code>
-		-->
-	</dependencies>
+	<description>Survey - Questionnaire</description>
 	<installation>
 		<tableMapping>
 			<datasource name="servDataSource">
