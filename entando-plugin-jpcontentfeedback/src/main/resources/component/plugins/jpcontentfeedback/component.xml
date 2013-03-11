@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component>
 	<code>jpcontentfeedback</code>
-	<description>You can comment and vote any content of cms</description>
+	<description>Content Feedback</description>
 	<dependencies>
 		<code>jacms</code>
 	</dependencies>
