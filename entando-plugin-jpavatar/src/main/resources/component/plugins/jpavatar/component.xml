@@ -2,6 +2,9 @@
 <component>
 	<code>jpavatar</code>
 	<description>My Avatar</description>
+	<dependencies>
+		<code>jpuserprofile</code>
+	</dependencies>
 	<installation>
 		<environment code="production">
 			<defaultSqlResources>
