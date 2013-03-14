@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcontentworkflow.aps.system.services.notifier.parse;
@@ -46,12 +46,12 @@ public class TestWorkflowNotifierDOM extends ApsPluginBaseTestCase {
 		assertEquals(24, notifierConfig.getHoursDelay());
 		assertTrue(notifierConfig.getStartScheduler().getTime()<(new Date()).getTime());
 		assertEquals("CODE1", notifierConfig.getSenderCode());
-		assertEquals("email", notifierConfig.getMailAttrName());
+		//assertEquals("email", notifierConfig.getMailAttrName());
 		assertFalse(notifierConfig.isHtml());
-		assertEquals("[Portale]: Notifica stato contenuti", notifierConfig.getSubject());
-		assertEquals("Elenco contenuti: Ciao {user},<br />di seguito l'elenco dei contenuti per cui è richiesto il tuo intervento<br /><br />", notifierConfig.getHeader());
-		assertEquals("<br />Contenuto {type} - {descr} - Stato {status}<br />", notifierConfig.getTemplate());
-		assertEquals("<br />Fine Mail (footer)", notifierConfig.getFooter());
+                assertEquals("[My Own Portal]: A content changed", notifierConfig.getSubject());
+                assertEquals("Hi {user},<br />these contents require your attention<br /><br />", notifierConfig.getHeader());
+                assertEquals("<br />Content {type} - {descr} - Status {status}<br />", notifierConfig.getTemplate());
+                assertEquals("<br />End (footer)", notifierConfig.getFooter());
 	}
 	
 	public void testSetNotifierConfig() throws Throwable {
@@ -72,7 +72,7 @@ public class TestWorkflowNotifierDOM extends ApsPluginBaseTestCase {
 		notifierConfig.setStartScheduler(new Date());
 		
 		notifierConfig.setSenderCode("CODE2");
-		notifierConfig.setMailAttrName("eMail");
+		//notifierConfig.setMailAttrName("eMail");
 		notifierConfig.setHtml(true);
 		notifierConfig.setSubject("Oggetto");
 		notifierConfig.setHeader("header");
@@ -89,7 +89,7 @@ public class TestWorkflowNotifierDOM extends ApsPluginBaseTestCase {
 		long time2 = nc2.getStartScheduler().getTime()/60000;
 		assertEquals(time1, time2);
 		assertEquals(nc1.getSenderCode(), nc2.getSenderCode());
-		assertEquals(nc1.getMailAttrName(), nc2.getMailAttrName());
+		//assertEquals(nc1.getMailAttrName(), nc2.getMailAttrName());
 		assertEquals(nc1.isHtml(), nc2.isHtml());
 		assertEquals(nc1.getSubject(), nc2.getSubject());
 		assertEquals(nc1.getHeader(), nc2.getHeader());

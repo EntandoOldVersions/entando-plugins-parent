@@ -32,11 +32,10 @@
 			
 			<%-- START CICLO ATTRIBUTI --%>
 			<s:iterator value="userProfile.attributeList" id="attribute">
-				<%--  --%>
 				<s:if test="%{#attribute.active}">
 					<%-- INIZIALIZZAZIONE TRACCIATORE --%>
 					<wpsa:tracerFactory var="attributeTracer" lang="%{#lang.code}" />
-					<s:set var="i18n_attribute_name">jpuserprofile_ATTR<s:property value="#attribute.name" /></s:set>
+					<s:set var="i18n_attribute_name">jpuserprofile_<s:property value="userProfile.typeCode" />_<s:property value="#attribute.name" /></s:set>
 					<s:set var="attribute_id">jpuserprofile_<s:property value="#attribute.name" /></s:set>
 					<s:include value="/WEB-INF/plugins/jpuserprofile/aps/jsp/internalServlet/inc/iteratorAttribute.jsp" />
 				</s:if>

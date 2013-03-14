@@ -17,22 +17,35 @@ di una precisa struttura
 	color: #000;
 }
 .jpmyportalplus_page_configuration #editshowletlist {
-	/*background-color: #EFEFEF;*/
+	background-color: #fff;
+	color: #000;
 	float: left;
 	width: 100%;
-	/*border-top: 6px solid #059BD8;*/
 }
 
-/** configurazione showlet per homepage **/
+#configure-page {
+	
+	float: left;
+	width: 100%;
+	/*
+	background-color: #fff;
+	color: #000;
+	margin: 1em 0 0 0;
+	position: relative;
+	*/
+}
+
 #editshowlet_title {
+	/*
 	text-align: right;
 	margin: 2px 0 0 0;
 	padding: 0;
-	font-size: 1px;
 	bottom: -2px;
 	right:0;
 	position: absolute;
+	*/
 }
+
 
 #editshowletlist {
 }
@@ -42,8 +55,8 @@ di una precisa struttura
 }
 
 #editshowlet_title  a {
-	/*background-color: #059BD8;*/
-    color: #EFEFEF;
+	background-color: #fff;
+    color: #000;
 	padding: 0;
 }
 
@@ -100,7 +113,7 @@ di una precisa struttura
 	width: 94%;
 	padding:  8px 3% 8px 3%;
 	margin: -8px 0 8px 0;
-	background-color: #EFF7FA;
+	background-color: #fff;
 	border-bottom: 1px solid silver;
 }
 
@@ -279,4 +292,25 @@ di una precisa struttura
 .dragdrop_content  {
 	float: left;
 	width: 100%;
+}
+
+
+/** sample column configuration **/
+#widget-columns-container {
+	float: left;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: #fafafa;
+}
+
+#widget-col1, #widget-col2, #widget-col3 {
+	float: left;
+	margin: 0;
+	padding: 0;
+	width: 32%;
+	min-height: 1.5em;
+}
+#widget-col2 {
+	margin: 0 2%;
 }

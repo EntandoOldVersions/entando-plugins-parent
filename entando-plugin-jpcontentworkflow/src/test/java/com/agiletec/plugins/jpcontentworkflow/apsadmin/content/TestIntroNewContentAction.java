@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcontentworkflow.apsadmin.content;
@@ -28,7 +28,6 @@ import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 import com.agiletec.plugins.jacms.apsadmin.content.ContentActionConstants;
-import com.agiletec.plugins.jacms.apsadmin.content.IntroNewContentAction;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.JpcontentworkflowSystemConstants;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.ContentWorkflowManager;
 import com.opensymphony.xwork2.Action;
@@ -56,9 +55,9 @@ public class TestIntroNewContentAction extends ApsAdminPluginBaseTestCase {
 		String result = this.executeOpenNew("editorCoach");
 		assertEquals(Action.SUCCESS, result);
 		assertNull(this.getRequest().getSession().getAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT));
-		IntroNewContentAction action = (IntroNewContentAction) this.getAction();
+		JpCwIntroNewContentAction action = (JpCwIntroNewContentAction) this.getAction();
 		List<SmallContentType> contentTypes = action.getContentTypes();
-		assertEquals(2, contentTypes.size());
+		assertEquals(3, contentTypes.size());
 		for (int i=0; i<contentTypes.size(); i++) {
 			assertFalse("EVN".equals(contentTypes.get(i).getCode()));
 		}
@@ -79,13 +78,14 @@ public class TestIntroNewContentAction extends ApsAdminPluginBaseTestCase {
 	}
 	
 	private String executeOpenNew(String currentUserName) throws Throwable {
-		this.initAction("/do/jacms/Content", "new");
+		this.initAction("/do/jacms/Content", "newJpCw");
 		this.setUserOnSession(currentUserName);
 		return this.executeAction();
 	}
 	
 	private String executeCreateNewVoid(String username, String contentType, String descr, String status, String contentMainGroup) throws Throwable {
-		this.initAction("/do/jacms/Content", "createNewVoid");
+		//this.initAction("/do/jacms/Content", "createNewVoid");
+		this.initAction("/do/jacms/Content", "createNewVoidJpCw");
 		this.setUserOnSession(username);
 		this.addParameter("contentTypeCode", contentType);
 		this.addParameter("contentDescription", descr);

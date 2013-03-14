@@ -1,11 +1,22 @@
 <%@ taglib prefix="jacms" uri="/jacms-aps-core" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
-<%@ taglib prefix="gwp" uri="/geoAps-core" %>
+<%@ taglib prefix="gwp" uri="/jpgeoref-aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <wp:headInfo type="JS_URL" info="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBRRwPhutbWBmyj82Go_H6JlE7EvFBSKFFFHFePAwvib9UM0geoA3Pgafw" />
 
 <gwp:bodyReader var="htmlBodyTagAttribute">onunload="GUnload()"</gwp:bodyReader>
+
+<jacms:contentList listName="contentList" titleVar="titleVar" 
+	pageLinkVar="pageLinkVar" pageLinkDescriptionVar="pageLinkDescriptionVar" userFilterOptionsVar="userFilterOptionsVar" />
+
+<c:if test="${null != titleVar}">
+	<h2><span><c:out value="${titleVar}" /></span></h2>
+</c:if>
+
+<c:set var="userFilterOptionsVar" value="${userFilterOptionsVar}" scope="request" />
+<c:import url="/WEB-INF/plugins/jacms/aps/jsp/showlets/inc/js_content_viewer_list.jsp" />
+<c:import url="/WEB-INF/plugins/jacms/aps/jsp/showlets/inc/userFilter-module.jsp" />
 
 <div id="map" style="width: 550px; height: 450px"></div>
  
@@ -26,7 +37,6 @@ if (GBrowserIsCompatible()) {
     return marker;
   }
 
-<jacms:contentList listName="contentList" />
 <gwp:geoRenderList centerCoordsParamName="center" southWestCoordsParamName="southWest" northEastCoordsParamName="northEast" master="contentList" markerParamName="markers"/>
 
   // Display the map, with some controls and set the initial location 
@@ -40,8 +50,10 @@ if (GBrowserIsCompatible()) {
   
   map.setCenter(new GLatLng(<c:out value="${center[0]}"/>, <c:out value="${center[1]}"/>), zoomLevel);
   
-  <c:forEach var="contentId" items="${markers}">
-	<jacms:content contentId="${contentId}" />
+  <c:forEach var="geoInfoBean" items="${markers}">
+  	var point = new GLatLng(<c:out value="${geoInfoBean.x}" />,<c:out value="${geoInfoBean.y}" />);
+  	var marker = createMarker(point,'<jacms:content contentId="${geoInfoBean.contentId}" />');
+  	map.addOverlay(marker);
   </c:forEach>
 }
 
@@ -57,3 +69,12 @@ else {
 
 //]]>
 </script>
+
+<c:if test="${null != pageLinkVar && null != pageLinkDescriptionVar}">
+	<p><a href="<wp:url page="${pageLinkVar}"/>"><c:out value="${pageLinkDescriptionVar}" /></a></p>
+</c:if>
+
+<%-- Important: reset variables --%>
+<c:set var="userFilterOptionsVar" value="${null}" scope="request" />
+<c:set var="contentList" value="${null}"  scope="request" />
+<c:set var="group" value="${null}"  scope="request" />

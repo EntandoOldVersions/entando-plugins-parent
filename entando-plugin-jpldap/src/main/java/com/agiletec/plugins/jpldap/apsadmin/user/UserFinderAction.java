@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpldap.apsadmin.user;
@@ -43,7 +43,7 @@ public class UserFinderAction extends com.agiletec.apsadmin.user.UserFinderActio
 			return users;
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getUsers");
-			throw new RuntimeException("Errore in ricerca utenti", t);
+			throw new RuntimeException("Error while searching users", t);
 		}
 	}
 	

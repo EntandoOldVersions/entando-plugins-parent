@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcontentworkflow.apsadmin.workflow;
@@ -31,8 +31,6 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.JpcontentworkflowSystem
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.ContentWorkflowManager;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.IContentWorkflowManager;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model.Step;
-import com.agiletec.plugins.jpcontentworkflow.apsadmin.workflow.IWorkflowStepAction;
-import com.agiletec.plugins.jpcontentworkflow.apsadmin.workflow.WorkflowStepAction;
 import com.opensymphony.xwork2.Action;
 
 /**

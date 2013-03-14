@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpgeoref.aps.system;
@@ -27,5 +27,7 @@ public interface GeoRefSystemConstants {
 	public static final String COORDS_ATTRIBUTE_X = "x";
 	public static final String COORDS_ATTRIBUTE_Y = "y";
 	public static final String COORDS_ATTRIBUTE_Z = "z";
+	
+	public static final String ATTRIBUTE_ROLE_COORD = "jpgeroref:coord";
 	
 }

@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software;
@@ -12,7 +12,7 @@
 *
 *
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment;
@@ -49,7 +49,8 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 
 public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTestCase {
-
+	
+	@Override
 	protected void setUp() throws Exception {
         super.setUp();
         this.init();
@@ -111,19 +112,17 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			}
 		}
 	}
-
+	
 	private void setToken() {
 		String token = TokenHelper.generateGUID();
 		ActionContext.getContext().setSession(new HashMap<String, Object>());
-		ActionContext.getContext().getSession().put(TokenHelper.DEFAULT_TOKEN_NAME, token);
-		ActionContext.getContext().getSession().put(TokenHelper.TOKEN_NAME_FIELD,
-				TokenHelper.DEFAULT_TOKEN_NAME);
-		this.addParameter(TokenHelper.DEFAULT_TOKEN_NAME, new String[]{token});
-		this.addParameter(TokenHelper.TOKEN_NAME_FIELD, new String[]{
-		        TokenHelper.DEFAULT_TOKEN_NAME});
+		String tokenName = "test_tokenName";
+		String tokenSessionAttributeName = TokenHelper.buildTokenSessionAttributeName(tokenName);
+		ActionContext.getContext().getSession().put(tokenSessionAttributeName, token);
+		this.addParameter(TokenHelper.TOKEN_NAME_FIELD, new String[]{tokenName});
+		this.addParameter(tokenName, new String[]{token});
 	}
-
-
+	
 	public void testAddContentRatingByShowletConfig()throws Throwable {
 		String contentId = "ART1";
 		try {
@@ -233,7 +232,6 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 		}
 	}
 
-
 	public void testViewContentAndAddCommentByRequest()throws Throwable{
 		String contentId = "ART1";
 		try {
@@ -307,4 +305,5 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 	private ICommentManager _commentManager = null;
 	private IRatingManager _ratingManager = null;
 	private IContentManager _contentManager;
+	
 }

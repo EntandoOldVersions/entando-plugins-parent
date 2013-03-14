@@ -1,5 +1,5 @@
 /*
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * JAPS and its  source-code is  licensed under the  terms of the
@@ -11,7 +11,7 @@
 * When copying,  adapting,  or redistributing  this document you
 * are required to provide proper attribution  to AgileTec, using
 * the following attribution line:
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpwtt.aps.system.services.ticket.model;

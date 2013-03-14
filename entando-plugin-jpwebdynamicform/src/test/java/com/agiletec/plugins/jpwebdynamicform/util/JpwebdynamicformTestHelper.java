@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software;
@@ -12,7 +12,7 @@
 *
 *
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpwebdynamicform.util;
@@ -129,10 +129,10 @@ public class JpwebdynamicformTestHelper extends AbstractDAO {
 		"DELETE FROM jpwebdynamicform_messages";
 
 	private static final String DELETE_MESSAGE_SEARCH_RECORDS =
-		"DELETE FROM jpwebdynamicform_messagesearch";
+		"DELETE FROM jpwebdynamicform_search";
 
 	private static final String DELETE_MESSAGE_ANSWERS =
-		"DELETE FROM jpwebdynamicform_messageanswers";
+		"DELETE FROM jpwebdynamicform_answers";
 
 	public static final String EMAIL = "indirizzo@email.inesistente";
 

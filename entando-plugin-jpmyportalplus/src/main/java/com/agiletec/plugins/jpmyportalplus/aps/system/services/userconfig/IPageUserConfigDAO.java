@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig;
@@ -49,15 +49,7 @@ public interface IPageUserConfigDAO {
 	
 	public void updateUserPageConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfos);
 	
-	/**
-	 * Remove from the DB te records located through the user and the page.
-	 * @param username the user that owning the configurated records 
-	 * @param page the involved page 
-	 * @deprecated use removeUserPageConfig(String, String)
-	 */
-	public void removeUserPageConfig(String username, IPage page);
-	
-	public void removeUserPageConfig(String username, String pageCode);
+	public void removeUserPageConfig(String username, String pageCode, Integer framePosition);
 	
 	public void removeUnauthorizedShowlet(String username, String showletCode);
 	

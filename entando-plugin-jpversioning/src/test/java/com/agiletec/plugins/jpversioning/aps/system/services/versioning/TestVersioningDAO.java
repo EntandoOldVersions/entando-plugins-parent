@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpversioning.aps.system.services.versioning;
@@ -21,14 +21,11 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.agiletec.aps.util.DateConverter;
+
 import com.agiletec.plugins.jpversioning.aps.ApsPluginBaseTestCase;
 import com.agiletec.plugins.jpversioning.util.JpversioningTestHelper;
-
-import com.agiletec.aps.util.DateConverter;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
-import com.agiletec.plugins.jpversioning.aps.system.services.versioning.ContentVersion;
-import com.agiletec.plugins.jpversioning.aps.system.services.versioning.IVersioningDAO;
-import com.agiletec.plugins.jpversioning.aps.system.services.versioning.VersioningDAO;
 
 /**
  * @author G.Cocco

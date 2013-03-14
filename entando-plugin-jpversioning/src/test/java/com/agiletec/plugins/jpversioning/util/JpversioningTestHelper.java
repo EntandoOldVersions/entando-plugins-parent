@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpversioning.util;
@@ -34,7 +34,6 @@ import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecordVO;
-import com.agiletec.plugins.jacms.aps.system.services.resource.IResourceManager;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
 import com.agiletec.plugins.jpversioning.aps.system.services.versioning.ContentVersion;
 
@@ -43,7 +42,6 @@ public class JpversioningTestHelper extends AbstractDAO {
 	public JpversioningTestHelper(DataSource dataSource, ApplicationContext context) {
 		this.setDataSource(dataSource);
 		this._contentManager = (IContentManager) context.getBean(JacmsSystemConstants.CONTENT_MANAGER);
-		this._resourceManager = (IResourceManager) context.getBean(JacmsSystemConstants.RESOURCE_MANAGER);
 	}
 	
 	public void initContentVersions() throws ApsSystemException {
@@ -71,7 +69,6 @@ public class JpversioningTestHelper extends AbstractDAO {
 			stat = conn.createStatement();
 			stat.executeUpdate(DELETE_VERSIONS);
 		} catch (Throwable t) {
-			t.printStackTrace();
 			throw new ApsSystemException("Error cleaning content versions", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
@@ -86,7 +83,6 @@ public class JpversioningTestHelper extends AbstractDAO {
 			stat = conn.createStatement();
 			stat.executeUpdate(DELETE_TRASHED_RESOURCES);
 		} catch (Throwable t) {
-			t.printStackTrace();
 			throw new ApsSystemException("Error cleaning trashed resources", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
@@ -116,7 +112,7 @@ public class JpversioningTestHelper extends AbstractDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Errore in aggiunta VersionRecord", "addVersionRecord");
+			processDaoException(t, "Error adding VersionRecord", "addVersionRecord");
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -158,19 +154,18 @@ public class JpversioningTestHelper extends AbstractDAO {
 		contentVersion.setUsername(username);
 		return contentVersion;
 	}
-
+	
 	private IContentManager _contentManager;
-	private IResourceManager _resourceManager;
 	
 	private static final String DELETE_VERSIONS = 
-		"TRUNCATE jpversioning_versionedcontents";
+		"DELETE FROM jpversioning_versionedcontents";
 	
 	private static final String DELETE_TRASHED_RESOURCES = 
-		"TRUNCATE jpversioning_trashedresources";
+		"DELETE FROM jpversioning_trashedresources";
 	
 	private final String ADD_VERSION_RECORD = 
 		"INSERT INTO jpversioning_versionedcontents ( id, contentid, contenttype, descr, " +
-		"status, xml, versiondate, version, onlineversion, approved, username ) " +
+		"status, contentxml, versiondate, versioncode, onlineversion, approved, username ) " +
 		" VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ?, ?, ? )";
 	
 	private final String ADD_RESOURCE = 

@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  * This file is part of Entando software.
  * Entando is a free software; 
@@ -12,7 +12,7 @@
  * 
  * 
  * 
- * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  */
 package com.agiletec.plugins.jpgeoref.aps.tags;
@@ -26,12 +26,13 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
+import com.agiletec.plugins.jpgeoref.aps.system.GeoRefSystemConstants;
 import com.agiletec.plugins.jpgeoref.aps.system.services.content.model.extraAttribute.CoordsAttribute;
+import com.agiletec.plugins.jpgeoref.aps.tags.helper.GeorefInfoBean;
 
 /**
  * @author E.Santoboni
@@ -43,12 +44,12 @@ public class GeoRenderListTag extends TagSupport {
 	 */
 	public int doStartTag() throws JspException {
 		try {
+			List<GeorefInfoBean> geoPoints = new ArrayList<GeorefInfoBean>();
 			Collection object = (Collection) this.pageContext.getAttribute(this.getMaster());
 			if (object == null) {
 				ApsSystemUtils.getLogger().severe("There is no list in the request.");
 			} else {
 				IContentManager contentManager = (IContentManager) ApsWebApplicationUtils.getBean(JacmsSystemConstants.CONTENT_MANAGER, pageContext);
-				List<String> markers = new ArrayList<String>(object.size());
 				Iterator<String> iter = object.iterator();
 				double sumx = 0;
 				double sumy = 0;
@@ -62,6 +63,13 @@ public class GeoRenderListTag extends TagSupport {
 					if (null != content) {
 						CoordsAttribute coords = this.extractCoordAttribute(content);
 						if (coords != null && coords.getX() != 0 && coords.getY() != 0) {
+							GeorefInfoBean geoInfoBean = new GeorefInfoBean();
+							geoInfoBean.setContentId(contentId);
+							geoInfoBean.setX(coords.getX());
+							geoInfoBean.setY(coords.getY());
+							geoInfoBean.setZ(coords.getZ());
+							geoPoints.add(geoInfoBean);
+
 							double currentX = coords.getX();
 							double currentY = coords.getY();
 							westX = (westX>currentX) ? currentX : westX;
@@ -70,12 +78,12 @@ public class GeoRenderListTag extends TagSupport {
 							southY = (southY>currentY) ? currentY : southY;
 							sumx += currentX;
 							sumy += currentY;
-							markers.add(contentId);
+
 						}
 					}
 				}
-				double centerx = sumx/markers.size();
-				double centery = sumy/markers.size();
+				double centerx = sumx/geoPoints.size();
+				double centery = sumy/geoPoints.size();
 				double[] center = {centerx, centery};
 				double xMargin = this.calculateResizeMargin(westX, eastX);
 				eastX = this.addPositiveMargin(eastX, xMargin, MAX_EAST);
@@ -85,7 +93,7 @@ public class GeoRenderListTag extends TagSupport {
 				southY = this.addNegativeMargin(southY, yMargin, MIN_SOUTH);
 				double[] southWest = {westX, southY};
 				double[] northEast = {eastX, northY};
-				this.pageContext.setAttribute(this.getMarkerParamName(), markers);
+				this.pageContext.setAttribute(this.getMarkerParamName(), geoPoints);
 				this.pageContext.setAttribute(this.getCenterCoordsParamName(), center);
 				this.pageContext.setAttribute(this.getSouthWestCoordsParamName(), southWest);
 				this.pageContext.setAttribute(this.getNorthEastCoordsParamName(), northEast);
@@ -103,13 +111,9 @@ public class GeoRenderListTag extends TagSupport {
 	 * @return coordinate attribute
 	 */
 	private CoordsAttribute extractCoordAttribute(Content content) {
-		List<AttributeInterface> attrs = content.getAttributeList();
-		for (int i=0; i<attrs.size(); i++) {
-			AttributeInterface attr = attrs.get(i);
-			if (attr instanceof CoordsAttribute) return (CoordsAttribute)attr;
-		}
-		return null;
+		return (CoordsAttribute) content.getAttributeByRole(GeoRefSystemConstants.ATTRIBUTE_ROLE_COORD);
 	}
+
 
 	/**
 	 * Calculation of re-dimensioning of margins.

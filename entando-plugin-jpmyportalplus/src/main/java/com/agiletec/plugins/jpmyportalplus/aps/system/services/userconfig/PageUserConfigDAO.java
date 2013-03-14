@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  * This file is part of Entando software.
  * Entando is a free software; 
@@ -12,7 +12,7 @@
  * 
  * 
  * 
- * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  */
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig;
@@ -79,10 +79,14 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	
 	private Set<String> getAllowedShowletCodes(List<ShowletType> allowedShowlets) {
 		Set<String> codes = new HashSet<String>();
-		if (null == allowedShowlets) return codes;
+		if (null == allowedShowlets) {
+			return codes;
+		}
 		for (int i = 0; i < allowedShowlets.size(); i++) {
 			ShowletType type = allowedShowlets.get(i);
-			if (null != type) codes.add(type.getCode());
+			if (null != type) {
+				codes.add(type.getCode());
+			}
 		}
 		return codes;
 	}
@@ -162,19 +166,13 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		PreparedStatement stat = null;
 		try {
 			stat = conn.prepareStatement(ADD_USER_CONFIG);
-			//INSERT INTO jpmyportalplus_userpageconfig (username, pagecode, framepos, showletcode, config, closed) VALUES (?, ?, ?, ?, ?, ?)
 			for (int i = 0; i < updateInfos.length; i++) {
 				ShowletUpdateInfoBean infoBean = updateInfos[i];
 				stat.setString(1, username);
 				stat.setString(2, page.getCode());
 				stat.setInt(3, infoBean.getFramePos());
 				stat.setString(4, infoBean.getShowlet().getType().getCode());
-				//ApsProperties config = infoBean.getShowlet().getConfig();
-				//if (null != config) {
-					//stat.setString(5, config.toXml());
-				//} else {
 				stat.setNull(5, java.sql.Types.CHAR);
-				//}
 				stat.setInt(6, infoBean.getStatus());
 				stat.addBatch();
 				stat.clearParameters();
@@ -187,7 +185,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		}
 	}
 	
-        @Override
+	@Override
 	public PageUserConfigBean getUserConfig(String username) {
 		Connection conn = null;
 		PageUserConfigBean result = null;
@@ -228,18 +226,6 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		ShowletType inheritedType = this.getShowletTypeManager().getShowletType(showletcode);
 		newShowlet.setType(inheritedType);
 		ApsProperties properties = null;
-                /*
-		if (null != config && config.trim().length() > 0) {
-			try {
-				properties = new ApsProperties();
-				properties.loadFromXml(config);
-			} catch (Throwable t) {
-				String msg = "Error while setting showlet properties";
-				ApsSystemUtils.logThrowable(t, this, "createShowletFromRecord", msg);
-				throw new ApsSystemException(msg, t);
-			}
-		}
-                */
 		newShowlet.setConfig(properties);
 		return newShowlet;
 	}	
@@ -275,25 +261,24 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	}
 	
 	@Override
-	@Deprecated
-	public void removeUserPageConfig(String username, IPage page) {
-		this.removeUserPageConfig(username, page.getCode());
-	}
-	
-	@Override
-	public void removeUserPageConfig(String username, String pageCode) {
+	public void removeUserPageConfig(String username, String pageCode, Integer framePosition) {
 		Connection conn = null;
 		PreparedStatement stat = null;
 		try {
+			String query = (null == username) ? DELETE_PAGE_CONFIGS : DELETE_PAGE_USER_CONFIGS;
+			if (null != framePosition) {
+				query += " AND framepos = ?";
+			}
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
-			if (null == username) {
-				stat = conn.prepareStatement(DELETE_PAGE_CONFIGS);
-				stat.setString(1, pageCode);
-			} else {
-				stat = conn.prepareStatement(DELETE_PAGE_USER_CONFIGS);
-				stat.setString(1, username);
-				stat.setString(2, pageCode);
+			stat = conn.prepareStatement(query);
+			int index = 0;
+			if (null != username) {
+				stat.setString(++index, username);
+			}
+			stat.setString(++index, pageCode);
+			if (null != framePosition) {
+				stat.setInt(++index, framePosition);
 			}
 			stat.execute();
 			conn.commit();
@@ -361,7 +346,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	
 	private final String DELETE_PAGE_USER_CONFIGS = 
 		"DELETE FROM jpmyportalplus_userpageconfig WHERE username = ? AND pagecode = ? ";
-		
+	
 	private final String GET_USER_CONFIG = 
 		"SELECT pagecode, framepos, showletcode, config, closed FROM jpmyportalplus_userpageconfig WHERE username = ? ORDER BY pagecode";
 	

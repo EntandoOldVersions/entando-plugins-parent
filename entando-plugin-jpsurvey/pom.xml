@@ -2,14 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>entando-plugins-parent</artifactId>
-		<groupId>org.entando.entando.plugins</groupId>
-        <version>3.0.0</version>
-    </parent>
+    <artifactId>entando-plugins-parent</artifactId>
+    <groupId>org.entando.entando.plugins</groupId>
+    <version>3.2.0</version>
+  </parent>
 	<artifactId>entando-plugin-jpsurvey</artifactId>
+	<groupId>org.entando.entando.plugins</groupId>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Survey - Questionnaire</name>
-	<description>Allow to manage Survey and Questionnaireo</description>
+	<description>Allow to manage Survey and Questionnaire</description>
 	<developers>
 		<developer>
 			<id>e.santoboni</id>
@@ -18,7 +19,6 @@
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -50,5 +50,5 @@
 				</executions>
 			</plugin>			
 		</plugins>
-	</build>
+	</build>	
 </project>

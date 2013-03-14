@@ -14,6 +14,7 @@
 			scope="prototype" parent="abstractEntityAction" >
 		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
 		<property name="entityActionHelper" ref="jpuserprofileCurrentUserProfileActionHelper"/>
+		<property name="i18nManager" ref="I18nManager" />
 	</bean>
 	
 	<bean id="jpuserprofileListAttributeAction" scope="prototype" 

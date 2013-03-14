@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcalendar.aps.system.services.calendar;
@@ -72,9 +72,7 @@ public class EventsOfDayTagDAO extends AbstractDAO implements IEventsOfDayTagDAO
 	}
 	
 	private String createQueryString(EventsOfDayDataBean bean) {
-		//creazione blocco iniziale
 		String query = this.LOAD_DATE_CONTENTS;
-		
 		if (bean.getAllowedGroups() != null 
 				&& bean.getAllowedGroups().size()>0
 				&& !bean.getAllowedGroups().contains(Group.ADMINS_GROUP_NAME)) {

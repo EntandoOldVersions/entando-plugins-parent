@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software;
@@ -12,7 +12,7 @@
 *
 *
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpwebdynamicform.aps.system.services.message;
@@ -241,11 +241,11 @@ public class MessageDAO extends AbstractEntityDAO implements IMessageDAO {
 		"INSERT INTO jpwebdynamicform_messages ( messageid, username, langcode, messagetype, creationdate, messagexml ) values ( ?, ?, ? , ? , ?, ? ) ";
 
 	private final String ADD_MESSAGE_SEARCH_RECORD =
-		"INSERT INTO jpwebdynamicform_messagesearch ( messageid, attrname, textvalue, datevalue, numvalue, langcode ) " +
+		"INSERT INTO jpwebdynamicform_search ( messageid, attrname, textvalue, datevalue, numvalue, langcode ) " +
 		"VALUES ( ? , ? , ? , ? , ? , ? )";
 
 	private final String ADD_MESSAGE_ANSWER =
-		"INSERT INTO jpwebdynamicform_messageanswers ( answerid, messageid, operator, senddate, text ) values ( ?, ? , ? , ?, ? ) ";
+		"INSERT INTO jpwebdynamicform_answers ( answerid, messageid, operator, senddate, text ) values ( ?, ? , ? , ?, ? ) ";
 
 	private final String LOAD_ALL_MESSAGES_ID =
 		"SELECT messageid FROM jpwebdynamicform_messages";
@@ -254,24 +254,24 @@ public class MessageDAO extends AbstractEntityDAO implements IMessageDAO {
 		"SELECT messageid, username, langcode, messagetype, creationdate, messagexml FROM jpwebdynamicform_messages WHERE messageid = ? ";
 
 	private final String GET_MESSAGE_ANSWERS =
-		"SELECT answerid, messageid, operator, senddate, text FROM jpwebdynamicform_messageanswers WHERE messageid = ? ORDER BY senddate DESC ";
+		"SELECT answerid, messageid, operator, senddate, text FROM jpwebdynamicform_answers WHERE messageid = ? ORDER BY senddate DESC ";
 
 	private final String DELETE_MESSAGE =
 		"DELETE FROM jpwebdynamicform_messages WHERE messageid = ? ";
 
 	private final String DELETE_MESSAGE_SEARCH_RECORD =
-		"DELETE FROM jpwebdynamicform_messagesearch WHERE messageid = ? ";
+		"DELETE FROM jpwebdynamicform_search WHERE messageid = ? ";
 
 	private final String DELETE_MESSAGE_ANSWERS =
-		"DELETE FROM jpwebdynamicform_messageanswers WHERE messageid = ? ";
+		"DELETE FROM jpwebdynamicform_answers WHERE messageid = ? ";
 
 	private final String DELETE_USERMESSAGES =
 		"DELETE FROM jpwebdynamicform_messages WHERE username = ? ";
 
 	private final String DELETE_USERMESSAGES_SEARCH_RECORD =
-		"DELETE FROM jpwebdynamicform_messagesearch WHERE messageid IN ( SELECT messageid FROM jpwebdynamicform_messages WHERE username = ? ) ";
+		"DELETE FROM jpwebdynamicform_search WHERE messageid IN ( SELECT messageid FROM jpwebdynamicform_messages WHERE username = ? ) ";
 
 	private final String DELETE_USERMESSAGES_ANSWERS =
-		"DELETE FROM jpwebdynamicform_messageanswers WHERE messageid IN ( SELECT messageid FROM jpwebdynamicform_messages WHERE username = ? ) ";
+		"DELETE FROM jpwebdynamicform_answers WHERE messageid IN ( SELECT messageid FROM jpwebdynamicform_messages WHERE username = ? ) ";
 
 }

@@ -28,8 +28,8 @@ window.addEvent('domready', function(){
 
 	$$('.accordion_toggler').each(function(cToggler) {
 		cToggler.appendText(' ');
-		var poba = myAnchor.clone();
-		poba.injectBottom(cToggler);
+		var anchorVar = myAnchor.clone();
+		anchorVar.injectBottom(cToggler);
 	});
 	
 });

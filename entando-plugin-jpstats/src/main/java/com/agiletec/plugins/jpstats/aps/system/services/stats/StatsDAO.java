@@ -1,22 +1,23 @@
 /*
-*
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
-*
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
-* and limitations under the License
-* 
-* 
-* 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
-*
-*/
+ *
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ *
+ * This file is part of Entando software.
+ * Entando is a free software; 
+ * you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+ * 
+ * See the file License for the specific language governing permissions   
+ * and limitations under the License
+ * 
+ * 
+ * 
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ *
+ */
 package com.agiletec.plugins.jpstats.aps.system.services.stats;
 
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,10 +26,15 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang.StringUtils;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 
@@ -51,7 +57,36 @@ import com.agiletec.plugins.jpstats.aps.system.services.stats.model.VisitsStat;
  * @author M.Lisci - E.Santoboni
  */
 public class StatsDAO extends AbstractDAO implements IStatsDAO {
-	
+
+	protected String getDriverName() throws Throwable {
+		String driverName = null;
+		Method method = this.getDataSource().getClass().getDeclaredMethod("getDriverClassName");
+		String className = (String) method.invoke(this.getDataSource());
+		if (StringUtils.isNotBlank(className)) {
+			Iterator<Entry<Object, Object>> it = this.getDatabaseTypeDrivers().entrySet().iterator();
+			while (it.hasNext()) {
+				Entry<Object, Object> entry = it.next();
+				List<String> values = (List<String>) entry.getValue();
+				if (null != values && !values.isEmpty()) {
+					if (values.contains(className)) {
+						driverName = (String) entry.getKey();
+						break;
+					}
+				}
+			}
+		}
+		return driverName;
+	}
+
+	private String convertSecondsToInterval(int seconds) {
+		int day = (int)TimeUnit.SECONDS.toDays(seconds);        
+		long hours = TimeUnit.SECONDS.toHours(seconds) - (day *24);
+		long minute = TimeUnit.SECONDS.toMinutes(seconds) - (TimeUnit.SECONDS.toHours(seconds)* 60);
+		long second = TimeUnit.SECONDS.toSeconds(seconds) - (TimeUnit.SECONDS.toMinutes(seconds) *60);
+
+		return day + " days " + String.format("%02d",hours)+ ":" + String.format("%02d",minute) + ":" + String.format("%02d",second);
+	}
+
 	@Override
 	public List<StatsRecord> loadStatsRecord(Date from, Date to) {
 		List<StatsRecord> records = new ArrayList<StatsRecord>();
@@ -77,7 +112,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return records;
 	}
-	
+
 	/**
 	 * Adds a record to the statistic table
 	 * @param statsRecord 
@@ -112,7 +147,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 			closeDaoResources(null, prepStat, conn);
 		}
 	}
-	
+
 	@Override
 	public void deleteStatsRecord(Date from, Date to) {
 		Connection conn = null;
@@ -131,38 +166,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 			closeDaoResources(null, prepStat, conn);
 		}
 	}
-	
-	/**
-	 * Gets the average time spent on the site by session
-	 * @param start Calendar 
-	 * @param end Calendar
-	 * @return a string whith the format hh:mm:ss
-	 */
-	@Override
-	public String getAverageTimeSite(Date start, Date end) {
-		Connection conn = null;
-		PreparedStatement stat = null;
-		ResultSet res = null;
-		String mediaSessioni = null;
-		try {
-			conn = this.getConnection();
-			stat = conn.prepareStatement(SEARCH_AVERAGE_TIME_SITE);
-			stat.setDate(1, new java.sql.Date(start.getTime()));
-			stat.setDate(2, new java.sql.Date(end.getTime()));
-			res = stat.executeQuery();
-			String media = null;
-			while (res.next()) {
-				media = res.getString(1);   
-			}
-			mediaSessioni = media;
-		} catch (Throwable t) {
-			processDaoException(t, "Error getting  average time site", "getAverageTimeSite");
-		} finally {
-			closeDaoResources(res, stat, conn);
-		}
-		return this.roundInterval(mediaSessioni);
-	}
-	
+
 	@Override
 	public List<VisitsStat> searchVisitsForDate(Date from, Date to) {
 		List<VisitsStat> visitsStats = new ArrayList<VisitsStat>();
@@ -192,7 +196,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return visitsStats;
 	}
-	
+
 	@Override
 	public List<VisitsStat> searchVisitsForPages(Date from, Date to) {
 		List<VisitsStat> visitsStats = new ArrayList<VisitsStat>();
@@ -224,7 +228,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return visitsStats;
 	}
-	
+
 	@Override
 	public List<VisitsStat> searchVisitsForContents(Date from, Date to) {
 		List<VisitsStat> visitsStats = new ArrayList<VisitsStat>();
@@ -260,7 +264,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return visitsStats;
 	}
-	
+
 	/**
 	 * Gets the hits between two dates
 	 * @param start Calendar 
@@ -284,7 +288,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 			Day initDay = new Day(start.getTime());
 			Day endDay = new Day(end.getTime());
 			while (res.next()) {
-				Day day = new Day(res.getInt("day"),res.getInt("month"),res.getInt("year"));
+				Day day = new Day(res.getInt("day_value"),res.getInt("month_value"),res.getInt("year_value"));
 				hitsPage.add(day,res.getInt("hits"));
 			}
 			try {
@@ -300,7 +304,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return hitsPage;
 	}
-	
+
 	/**
 	 * Gets the average time spent on the site by session
 	 * @param start Calendar 
@@ -317,13 +321,16 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		String endString = new Timestamp(end.getTimeInMillis()).toString();
 		try {
 			conn = this.getConnection();
-			stat = conn.prepareStatement(AVERAGE_TIME_SITE);  
+			String queryName = this.GetAVERAGE_TIME_SITE(this.getDriverName());
+			stat = conn.prepareStatement(queryName);  
 			stat.setString(1, startString);
 			stat.setString(2, endString);
 			res = stat.executeQuery();
 			String media = null;
 			while (res.next()) {
-				media = res.getString(1);   
+				int seconds = res.getInt(1); 
+				media = this.convertSecondsToInterval(seconds);
+
 			}
 			mediaSessioni = media;
 		} catch (Throwable t) {
@@ -333,7 +340,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return this.roundInterval(mediaSessioni);
 	}
-	
+
 	/**
 	 * Gets the average time spent on a page by pagecode and by session
 	 * @param start Calendar 
@@ -350,12 +357,14 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		String endString = new Timestamp(end.getTimeInMillis()).toString();
 		try {
 			conn = this.getConnection();
-			stat = conn.prepareStatement(AVERAGE_TIME_PAGE);  
+			String queryName = this.GetAVERAGE_TIME_PAGE(this.getDriverName());
+			stat = conn.prepareStatement(queryName);  
 			stat.setString(1, startString);
 			stat.setString(2, endString);
 			res = stat.executeQuery();
 			while (res.next()) {
-				mediaTimePage = res.getString("media");		
+				int seconds = res.getInt("media");
+				mediaTimePage = this.convertSecondsToInterval(seconds);
 			}
 		} catch (Throwable t) {
 			processDaoException(t, "Error getting average time page", "getAverageTimePage");
@@ -364,7 +373,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return roundInterval(mediaTimePage);
 	}
-	
+
 	/**
 	 * Gets the average amount of pages visited in each session
 	 * @param start Calendar 
@@ -395,7 +404,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return mediaPage;
 	}
-	
+
 	/**
 	 * Gets the ten most visited pages 
 	 * @param start Calendar 
@@ -412,13 +421,14 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		String endString = new Timestamp(end.getTimeInMillis()).toString();
 		try {
 			conn = this.getConnection();
-			stat = conn.prepareStatement(GET_TOP_PAGES);
+			String queryName = this.GetGET_TOP_PAGES(this.getDriverName());
+			stat = conn.prepareStatement(queryName);
 			stat.setString(1, startString);
 			stat.setString(2, endString);
 			res = stat.executeQuery();
 			while (res.next()) {
-				int count = res.getInt(2);
-				hitsPage.put(res.getString(1), new Integer(count));
+				int count = res.getInt("hits");
+				hitsPage.put(res.getString("pagecode"), new Integer(count));
 			}
 		} catch (Throwable t) {
 			processDaoException(t, "Error getting the most visited pages ", "getPageVisitedDesc");
@@ -427,7 +437,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return hitsPage;
 	}
-	
+
 	/**
 	 * Gets the ten most visited contents 
 	 * If the content does not exists anymore the function
@@ -448,20 +458,21 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		String endString = new Timestamp(end.getTimeInMillis()).toString();
 		try {
 			conn = this.getConnection();
-			stat = conn.prepareStatement(GET_TOP_CONTENTS);
+			String queryName = this.GetGET_TOP_CONTENTS(this.getDriverName());
+			stat = conn.prepareStatement(queryName);
 			stat.setString(1,  startString);
 			stat.setString(2,  endString);
 			res = stat.executeQuery();
 			while (res.next()) {
-				String contentId = res.getString(1);
+				String contentId = res.getString("content");
 				String contentDescr = null;
 				ContentRecordVO content = contentManager.loadContentVO(contentId);
-				if (null == content ) {
+				if (null == content) {
 					contentDescr = "[DELETED]";
 				} else {
 					contentDescr = content.getDescr();
 				}
-				int count = res.getInt(2);
+				int count = res.getInt("hits");
 				topContents.put(contentDescr, new Integer(count));
 			}
 		} catch (Throwable t) {
@@ -485,9 +496,10 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		ResultSet res = null;
 		try {
 			conn = this.getConnection();
-			stat = conn.prepareStatement(GET_FIRST_DATE);
+			String queryName = this.GetGET_FIRST_DATE(this.getDriverName());
+			stat = conn.prepareStatement(queryName);
 			res = stat.executeQuery();
-			while(res.next()) {
+			while (res.next()) {
 				int year = Integer.parseInt(res.getString(1));
 				int month = Integer.parseInt(res.getString(2));
 				int day = Integer.parseInt(res.getString(3));
@@ -501,7 +513,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return firstDay;
 	}
-	
+
 	/**
 	 * Gets a map of Ip Address (ip,hits) 
 	 * @param start Calendar
@@ -534,7 +546,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return statsRecord;
 	}
-	
+
 	/**
 	 * Rounds a string cutting the milliseconds
 	 * Queries the gets average time can return null values
@@ -550,7 +562,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return interval.substring(0,length);
 	}
-	
+
 	private StatsRecord createStatsRecord(ResultSet res) throws Throwable {
 		//ip, referer, session_id, role, timestamp, year, month, day, hour, pagecode, langcode, useragent, browserlang, content
 		Calendar calendar = this.extractRecordDate(res);
@@ -566,13 +578,13 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		record.setContentId(res.getString("content"));
 		return record;
 	}
-	
+
 	private Calendar extractRecordDate(ResultSet res) throws SQLException {
 		Calendar calendar = Calendar.getInstance();
-		String year = res.getString("year");
-		String month = res.getString("month");
-		String day = res.getString("day");
-		String hour = res.getString("hour");
+		String year = res.getString("year_value");
+		String month = res.getString("month_value");
+		String day = res.getString("day_value");
+		String hour = res.getString("hour_value");
 		calendar.set(Calendar.YEAR, Integer.parseInt(year));
 		calendar.set(Calendar.MONTH, Integer.parseInt(month)-1);
 		calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
@@ -584,104 +596,202 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		}
 		return calendar;
 	}
-	
-	public IContentManager getContentManager() {
+
+	protected IContentManager getContentManager() {
 		return _contentManager;
 	}
 	public void setContentManager(IContentManager contentManager) {
 		this._contentManager = contentManager;
 	}
-	
+
 	public IPageManager getPageManager() {
 		return _pageManager;
 	}
 	public void setPageManager(IPageManager pageManager) {
 		this._pageManager = pageManager;
 	}
-	
+
 	public ILangManager getLangManager() {
 		return _langManager;
 	}
 	public void setLangManager(ILangManager langManager) {
 		this._langManager = langManager;
 	}
-	
+
 	private IContentManager _contentManager;
 	private IPageManager _pageManager;
 	private ILangManager _langManager;
-	
-	private final String ADD_RECORD = 
-		"INSERT INTO jpstats_statistics (ip, referer, session_id, role, timestamp, year, month, day, hour, pagecode, langcode, useragent, browserlang, content) "
-		+ "VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
-	
-	private final String REMOVE_RECORDS = 
-		"DELETE FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? ";
-	
-	private final String LOAD_RECORDS = 
-		"SELECT * FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? ORDER BY timestamp DESC";
-	
-	private final String SEARCH_DAILY_VISITS =
-		"SELECT count(*) as hits, year, month, day FROM jpstats_statistics " +
-		"WHERE (timestamp BETWEEN ? AND ? ) GROUP BY year, month, day ORDER BY hits DESC";
-	
-	private final String SEARCH_PAGE_VISITS = 
-		"SELECT pagecode, COUNT(*) AS hits FROM jpstats_statistics WHERE (timestamp BETWEEN ? AND ?) " +
-		"GROUP BY pagecode ORDER BY hits DESC";
-	
-	private final String SEARCH_CONTENT_VISITS = 
-		"SELECT content, COUNT(*) AS hits FROM jpstats_statistics WHERE (timestamp BETWEEN ? AND ?) " +
-		"AND content IS NOT NULL GROUP BY content ORDER BY hits DESC";
-	
-	private final String SEARCH_AVERAGE_TIME_SITE = 
-		"SELECT avg(x) AS media FROM( SELECT session_id as s, (MAX(timestamp)::TIMESTAMP - MIN(timestamp)::TIMESTAMP) AS x " +
-		" FROM jpstats_statistics WHERE (timestamp BETWEEN ? and ?) GROUP BY s HAVING count(session_id)>1 )AS SUBQUERY";
-	
-	private final String HITS_BY_INTERVAL =
-		"SELECT count(*) as hits, day, month, year FROM jpstats_statistics  " +
-		" WHERE (timestamp BETWEEN ? and ? )" +
-		" GROUP BY year, month, day ORDER BY year, month, day ASC";
-	
-	private final String AVERAGE_TIME_SITE = 
-		"SELECT avg(x) AS media " +
-		" FROM( SELECT session_id,(MAX(timestamp)::TIMESTAMP - MIN(timestamp)::TIMESTAMP) AS x " +
-		" FROM jpstats_statistics  " +
-		" WHERE (timestamp BETWEEN ? and ?)" +
-		" GROUP BY session_id " +
-		" HAVING count(session_id)>1 )AS SUBQUERY";
-	
-	private final String AVERAGE_TIME_PAGE=
-		"SELECT AVG(x) AS media" +
-		" FROM( SELECT session_id as s, pagecode as p, (MAX(timestamp)::TIMESTAMP - MIN(timestamp)::TIMESTAMP) AS x " +
-		" FROM jpstats_statistics  " +
-		" WHERE (timestamp BETWEEN ? and ?)" +
-		" GROUP BY p, s )AS SUBQUERY ";	
-	
-	private final String AVERAGE_PAGE=
-		"SELECT AVG(x)::INT AS media " +
-		" FROM(SELECT session_id, COUNT(pagecode) AS x " +
-		" FROM jpstats_statistics  " +
-		" WHERE (timestamp BETWEEN ? and ?)" +
-		" GROUP BY session_id )AS SUBQUERY";
-	
-	private final String GET_TOP_PAGES = 
-		"SELECT pagecode,COUNT(*) AS hits FROM jpstats_statistics  " +
-		" WHERE (timestamp BETWEEN ? and ?)" +
-		" GROUP BY pagecode " +
-		" ORDER BY hits DESC" +
-		" LIMIT 10;";
-	
-	private final String GET_TOP_CONTENTS = 
-		"SELECT content, COUNT(content) AS hits FROM jpstats_statistics " +
-		"WHERE (timestamp BETWEEN ? and ?) and content IS NOT NULL " +
-		"GROUP BY content " +
-		"ORDER BY hits " +
-		"DESC LIMIT 10";
 
-	private final String GET_FIRST_DATE=
-		"SELECT  year, month, day FROM jpstats_statistics ORDER BY timestamp ASC LIMIT 1";
+
+	private  String GetAVERAGE_TIME_PAGE(String driver) {
+		String q = AVERAGE_TIME_PAGE_postgres;
+		if (driver.equalsIgnoreCase("postgres")) {
+			q = AVERAGE_TIME_PAGE_postgres;
+		} else if (driver.equalsIgnoreCase("mysql")) {
+			return AVERAGE_TIME_PAGE_mysql;
+		}else if (driver.equalsIgnoreCase("derby")) {
+			return AVERAGE_TIME_PAGE_derby;
+		}
+		return q;
+	}
+
+	private  String GetAVERAGE_TIME_SITE(String driver) {
+		String q = AVERAGE_TIME_SITE_postgres;
+		if (driver.equalsIgnoreCase("postgres")) {
+			q = AVERAGE_TIME_SITE_postgres;
+		} else if (driver.equalsIgnoreCase("mysql")) {
+			return AVERAGE_TIME_SITE_mysql;
+		} else if (driver.equalsIgnoreCase("derby")) {
+			return AVERAGE_TIME_SITE_derby;
+		} 
+		return q;
+	}
+
+	private  String GetGET_FIRST_DATE(String driver) {
+		String q = GET_FIRST_DATE;
+		if (driver.equalsIgnoreCase("derby")) {
+			q = GET_FIRST_DATE_derby;
+		} 
+		return q;
+	}
+
+	private  String GetGET_TOP_CONTENTS(String driver) {
+		String q = GET_TOP_CONTENTS;
+		if (driver.equalsIgnoreCase("derby")) {
+			q = GET_TOP_CONTENTS_derby;
+		} 
+		return q;
+	}
+
+	private  String GetGET_TOP_PAGES(String driver) {
+		String q = GET_TOP_PAGES;
+		if (driver.equalsIgnoreCase("derby")) {
+			q = GET_TOP_PAGES_derby;
+		} 
+		return q;
+	}
+
+	private final String ADD_RECORD = 
+			"INSERT INTO jpstats_statistics (ip, referer, session_id, role, timestamp, year_value, month_value, day_value, hour_value, pagecode, langcode, useragent, browserlang, content) "
+					+ "VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+
+	private final String REMOVE_RECORDS = 
+			"DELETE FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? ";
+
+	private final String LOAD_RECORDS = 
+			"SELECT * FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? ORDER BY timestamp DESC";
+
+	private final String SEARCH_DAILY_VISITS =
+			"SELECT count(*) as hits, year_value, month_value, day_value FROM jpstats_statistics " +
+					"WHERE timestamp >= ? AND timestamp <= ? GROUP BY year_value, month_value, day_value ORDER BY hits DESC";
+
+	private final String SEARCH_PAGE_VISITS = 
+			"SELECT pagecode, COUNT(*) AS hits FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? " +
+					"GROUP BY pagecode ORDER BY hits DESC";
+
+	private final String SEARCH_CONTENT_VISITS = 
+			"SELECT content, COUNT(*) AS hits FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? " +
+					"AND content IS NOT NULL GROUP BY content ORDER BY hits DESC";
+
+	private final String HITS_BY_INTERVAL =
+			"SELECT count(*) as hits, day_value, month_value, year_value FROM jpstats_statistics  " +
+					" WHERE timestamp >= ? AND timestamp <= ? " +
+					" GROUP BY year_value, month_value, day_value ORDER BY year_value, month_value, day_value ASC";
+
+
+	private final String AVERAGE_TIME_SITE_postgres = 
+			"SELECT avg(x) AS media " +
+					" FROM( SELECT session_id, extract(EPOCH FROM MAX(timestamp)::TIMESTAMP - MIN(timestamp)::TIMESTAMP) as x " +
+					" FROM jpstats_statistics  " +
+					" WHERE timestamp >= ? AND timestamp <= ?" +
+					" GROUP BY session_id " +
+					" HAVING count(session_id)>1 )AS SUBQUERY";
+
+	private final String AVERAGE_TIME_SITE_mysql = 
+			"SELECT avg(x) AS media " +
+					" FROM( SELECT session_id, TIMESTAMPDIFF(second, MIN(timestamp(timestamp)), MAX(timestamp(timestamp))) AS x" +
+					" FROM jpstats_statistics  " +
+					" WHERE timestamp >= ? AND timestamp <= ?" +
+					" GROUP BY session_id " +
+					" HAVING count(session_id)>1 )AS SUBQUERY";
+
+	private final String AVERAGE_TIME_SITE_derby = 
+			"SELECT avg(x) AS media " +
+					" FROM( SELECT session_id, {fn TIMESTAMPDIFF(SQL_TSI_SECOND, MIN(timestamp(timestamp)), MAX(timestamp(timestamp)))} AS x" +
+					" FROM jpstats_statistics  " +
+					" WHERE timestamp >= ? AND timestamp <= ?" +
+					" GROUP BY session_id " +
+					" HAVING count(session_id)>1 )AS SUBQUERY";
+
+
+	private final String AVERAGE_TIME_PAGE_postgres =
+			"SELECT AVG(x) AS media" +
+					" FROM( SELECT session_id as s, pagecode as p, extract(EPOCH FROM MAX(timestamp)::TIMESTAMP - MIN(timestamp)::TIMESTAMP) as x " +
+					" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY p, s )AS SUBQUERY ";	
+
+	private final String AVERAGE_TIME_PAGE_mysql =
+			"SELECT AVG(x) AS media" +
+					" FROM( SELECT session_id as s, pagecode as p, TIMESTAMPDIFF(second, MIN(timestamp(timestamp)), MAX(timestamp(timestamp))) AS x  " +
+					" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY p, s )AS SUBQUERY ";	
+
+	private final String AVERAGE_TIME_PAGE_derby =
+			"SELECT AVG(x) AS media" +
+					" FROM( SELECT session_id as s, pagecode as p, {fn TIMESTAMPDIFF(SQL_TSI_SECOND, MIN(timestamp(timestamp)), MAX(timestamp(timestamp)))} AS x  " +
+					" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY pagecode, session_id )AS SUBQUERY ";	
+
+
+
+	private final String AVERAGE_PAGE=
+			"SELECT AVG(x) AS media " +
+					" FROM(SELECT session_id, COUNT(pagecode) AS x " +
+					" FROM jpstats_statistics  " +
+					" WHERE timestamp >= ? AND timestamp <= ? " +
+					" GROUP BY session_id )AS SUBQUERY";
+
+	private final String GET_TOP_PAGES = 
+			"SELECT pagecode,COUNT(*) AS hits FROM jpstats_statistics  " +
+					" WHERE timestamp >= ? AND timestamp <= ? " +
+					" GROUP BY pagecode " +
+					" ORDER BY hits DESC" +
+					" LIMIT 10;";
+
+	private final String GET_TOP_PAGES_derby = 
+			"SELECT * FROM ( SELECT ROW_NUMBER() OVER() AS rownum,  pagecode,COUNT(*) AS hits FROM jpstats_statistics  " +
+					" WHERE timestamp >= ? AND timestamp <= ? " +
+					" GROUP BY pagecode " +
+					" ORDER BY hits DESC) as tmp  WHERE rownum <= 10";
+
+
+	private final String GET_TOP_CONTENTS = 
+			"SELECT content, COUNT(content) AS hits FROM jpstats_statistics " +
+					"WHERE timestamp >= ? AND timestamp <= ? and content IS NOT NULL " +
+					"GROUP BY content " +
+					"ORDER BY hits " +
+					"DESC LIMIT 10";
+
+	private final String GET_TOP_CONTENTS_derby = 
+			"SELECT * FROM ( SELECT ROW_NUMBER() OVER() AS rownum,  content, COUNT(content) AS hits FROM jpstats_statistics " +
+					"WHERE timestamp >= ? AND timestamp <= ? and content IS NOT NULL " +
+					"GROUP BY content " +
+					"ORDER BY hits " +
+					"DESC) as tmp  WHERE rownum <= 10";
+
+	private final String GET_FIRST_DATE = 
+			"SELECT year_value, month_value, day_value FROM jpstats_statistics ORDER BY timestamp ASC LIMIT 1";
+
+	private final String GET_FIRST_DATE_derby = 
+			"SELECT * FROM ( SELECT ROW_NUMBER() OVER() AS rownum, year_value, month_value, day_value FROM jpstats_statistics ORDER BY timestamp ASC) as tmp WHERE rownum <= 1";
 
 	private final String GET_IP = 
-		"SELECT DISTINCT ip, count(*) as count " +
-		"FROM jpstats_statistics WHERE (timestamp BETWEEN ? and ?) GROUP BY ip";
+			"SELECT DISTINCT ip, count(*) as count " +
+					"FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY ip";
+
+	protected Properties getDatabaseTypeDrivers() {
+		return _databaseTypeDrivers;
+	}
+	public void setDatabaseTypeDrivers(Properties databaseTypeDrivers) {
+		this._databaseTypeDrivers = databaseTypeDrivers;
+	}
 	
+	private Properties _databaseTypeDrivers;
 }

@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content;
@@ -48,6 +48,8 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 	public String edit() {
 		String result = super.edit();
 		if (SUCCESS.equals(result)) {
+			IContentActionHelper helper = (IContentActionHelper) this.getContentActionHelper();
+			helper.checkTypeLabels(this.getContent());
 			this.disableAttributes(this.getContent());
 		} else {
 			ApsSystemUtils.getLogger().severe("Error on super.edit - result " + result);
@@ -64,7 +66,9 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 		try {
 			String contentId = this.getContent().getId();
 			String result = super.saveContent(approve);
-			if (!result.equals(SUCCESS)) return result;
+			if (!result.equals(SUCCESS)) {
+				return result;
+			}
 			this.waitNotifyingThread();
 			this.getResponse().sendRedirect(this.getDestForwardPath(contentId));
 		} catch (Throwable t) {

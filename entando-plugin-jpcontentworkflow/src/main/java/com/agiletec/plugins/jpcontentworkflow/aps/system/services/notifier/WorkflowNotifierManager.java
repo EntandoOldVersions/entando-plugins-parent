@@ -1,3 +1,20 @@
+/*
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando software.
+* Entando is a free software; 
+* you can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpcontentworkflow.aps.system.services.notifier;
 
 import java.util.ArrayList;
@@ -8,15 +25,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.naming.NamingException;
-
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.common.entity.model.attribute.ITextAttribute;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.AbstractService;
 import com.agiletec.aps.system.services.authorization.IApsAuthority;
 import com.agiletec.aps.system.services.authorization.IAuthorizationManager;
 import com.agiletec.aps.system.services.authorization.authorizator.IApsAuthorityManager;
@@ -26,7 +42,6 @@ import com.agiletec.aps.system.services.role.Permission;
 import com.agiletec.aps.system.services.role.Role;
 import com.agiletec.aps.system.services.user.IAuthenticationProviderManager;
 import com.agiletec.aps.system.services.user.IUserManager;
-import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.DateConverter;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
@@ -41,11 +56,13 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.ICont
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model.Step;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model.Workflow;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
+import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
+import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 
 @Aspect
 public class WorkflowNotifierManager extends AbstractService implements IWorkflowNotifierManager {
-
+	
 	@Override
 	public void init() throws Exception {
 		this.loadConfigs();
@@ -53,10 +70,16 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 		ApsSystemUtils.getLogger().config(this.getName() + ": inizializzato " +
 				"servizio notificatore cambiamento stato contenuti");
 	}
-
+	
 	@Override
 	public void release() {
 		this.closeScheduler();
+	}
+	
+	@Override
+	public void destroy() {
+		this.release();
+		super.destroy();
 	}
 
 	protected void loadConfigs() throws ApsSystemException {
@@ -175,11 +198,12 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 			Map<String, List<ContentStatusChangedEventInfo>> statusChangedInfos = this.getNotifierDAO().getEventsToNotify();
 			ApsSystemUtils.getLogger().finest("Found " + statusChangedInfos.size() + " events to notify");
 			if (statusChangedInfos.size()>0) {
-				Map<UserDetails, List<ContentStatusChangedEventInfo>> contentsForUsers = this.prepareContentsForUsers(statusChangedInfos);
-				for (Entry<UserDetails, List<ContentStatusChangedEventInfo>> entry : contentsForUsers.entrySet()) {
-					UserDetails user = entry.getKey();
-					List<ContentStatusChangedEventInfo> contentInfos = entry.getValue();
-					this.sendMail(user, contentInfos);
+				Map<String, List<ContentStatusChangedEventInfo>> contentsForUsers = this.prepareContentsForUsers(statusChangedInfos);
+				Iterator<String> iter = contentsForUsers.keySet().iterator();
+				while (iter.hasNext()) {
+					String username = iter.next();
+					List<ContentStatusChangedEventInfo> contentInfos = contentsForUsers.get(username);
+					this.sendMail(username, contentInfos);
 				}
 				List<ContentStatusChangedEventInfo> notifiedContents = new ArrayList<ContentStatusChangedEventInfo>();
 				for (List<ContentStatusChangedEventInfo> contentsForType : statusChangedInfos.values()) {
@@ -194,42 +218,44 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 		}
 	}
 
-	protected void sendMail(UserDetails user, List<ContentStatusChangedEventInfo> contentInfos) {
+	protected void sendMail(String username, List<ContentStatusChangedEventInfo> contentInfos) {
 		try {
 			NotifierConfig notifierConfig = this.getWorkflowNotifierConfig();
-			String mailAddress = this.getMailAddress(user);
-			if (null == mailAddress) return; 
+			String mailAddress = this.getMailAddress(username);
+			if (null == mailAddress) {
+				return;
+			} 
 			String[] mailAddresses = {mailAddress};
-			Map<String, String> params = this.prepareParams(user);
+			Map<String, String> params = this.prepareParams(username);
 			String subject = this.replaceParams(notifierConfig.getSubject(), params);
 			String text = this.prepareMailText(params, contentInfos);
 			String senderCode = notifierConfig.getSenderCode();
 			String contentType = (notifierConfig.isHtml()) ? IMailManager.CONTENTTYPE_TEXT_HTML : IMailManager.CONTENTTYPE_TEXT_PLAIN;
 			this.getMailManager().sendMail(text, subject, mailAddresses, null, null, senderCode, contentType);
 		} catch(Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "sendMail", "Error sending mail to user " + user.getUsername());
+			ApsSystemUtils.logThrowable(t, this, "sendMail", "Error sending mail to user " + username);
 		}
 	}
-
-	protected String getMailAddress(UserDetails user) throws NamingException {
+	
+	protected String getMailAddress(String username) throws Throwable {
 		String email = null;
-		String mailAttrName = this.getWorkflowNotifierConfig().getMailAttrName();
-		IUserProfile profile = (IUserProfile) user.getProfile();
+		IUserProfileManager profileManager = (IUserProfileManager) super.getBeanFactory().getBean(ProfileSystemConstants.USER_PROFILE_MANAGER);
+		IUserProfile profile = profileManager.getProfile(username);
 		if (null != profile) {
-			ITextAttribute mailAttribute = (ITextAttribute) profile.getAttribute(mailAttrName);
+			ITextAttribute mailAttribute = (ITextAttribute) profile.getAttributeByRole(ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL);
 			if (null != mailAttribute && mailAttribute.getText().trim().length() > 0) {
 				email = mailAttribute.getText();
 			}
 		}
 		return email;
 	}
-
-	protected Map<String, String> prepareParams(UserDetails user) {
+	
+	protected Map<String, String> prepareParams(String username) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("user", user.getUsername());
+		params.put("user", username);
 		return params;
 	}
-
+	
 	protected void addContentParams(Map<String, String> params, ContentStatusChangedEventInfo contentInfo) {
 		params.put("type", contentInfo.getContentTypeCode());
 		params.put("contentId", contentInfo.getContentId());
@@ -271,74 +297,82 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 		}
 		return body;
 	}
-
-	protected Map<UserDetails, List<ContentStatusChangedEventInfo>> prepareContentsForUsers(
+	
+	protected Map<String, List<ContentStatusChangedEventInfo>> prepareContentsForUsers (
 			Map<String, List<ContentStatusChangedEventInfo>> statusChangedInfos) throws ApsSystemException {
-		Map<UserDetails, List<ContentStatusChangedEventInfo>> contentsForUsers = new HashMap<UserDetails, List<ContentStatusChangedEventInfo>>();
-
-		List<UserDetails> editors = new ArrayList<UserDetails>();
-		List<UserDetails> supervisors = new ArrayList<UserDetails>();
+		Map<String, List<ContentStatusChangedEventInfo>> contentsForUsers = new HashMap<String, List<ContentStatusChangedEventInfo>>();
+		List<String> editors = new ArrayList<String>();
+		List<String> supervisors = new ArrayList<String>();
 		this.findContentOperators(editors, supervisors);
-		for (Entry<String, List<ContentStatusChangedEventInfo>> entry : statusChangedInfos.entrySet()) {
-			String typeCode = entry.getKey();
-			List<ContentStatusChangedEventInfo> infosForContentType = entry.getValue();
-			this.prepareUsersForContentType(contentsForUsers, typeCode, infosForContentType, editors, supervisors);
+		if (null != statusChangedInfos) {
+			Iterator<String> iter = statusChangedInfos.keySet().iterator();
+			while (iter.hasNext()) {
+				String typeCode = iter.next();
+				List<ContentStatusChangedEventInfo> infosForContentType = statusChangedInfos.get(typeCode);
+				this.prepareUsersForContentType(contentsForUsers, typeCode, infosForContentType, editors, supervisors);
+			}
 		}
 		return contentsForUsers;
 	}
-
-	protected void findContentOperators(List<UserDetails> editors, List<UserDetails> supervisors) throws ApsSystemException {
-		IUserManager userManager = this.getUserManager();
+	
+	protected void findContentOperators(List<String> editors, List<String> supervisors) throws ApsSystemException {
 		List<Role> rolesWithSupervisor = ((IRoleManager) this.getRoleManager()).getRolesWithPermission(Permission.SUPERVISOR);
 		List<String> roleNamesWithSupervisor = this.getRolesNames(rolesWithSupervisor);
 		List<Role> rolesWithEditors = ((IRoleManager) this.getRoleManager()).getRolesWithPermission("editContents");
 		List<String> roleNamesWithEditor = this.getRolesNames(rolesWithEditors);
-		List<UserDetails> systemUsers = userManager.getUsers();
-		for (int i = 0; i < systemUsers.size(); i++) {
-			UserDetails extractedUser = systemUsers.get(i);
-			UserDetails user = userManager.getUser(extractedUser.getUsername());
-			List<IApsAuthority> userRoles = this.getRoleManager().getAuthorizationsByUser(user);
-			if (null == userRoles) continue;
+		IUserProfileManager profileManager = (IUserProfileManager) super.getBeanFactory().getBean(ProfileSystemConstants.USER_PROFILE_MANAGER);
+		List<String> usernames = profileManager.searchId(null);
+		for (int i = 0; i < usernames.size(); i++) {
+			String extractedUsername = usernames.get(i);
+			List<IApsAuthority> userRoles = this.getRoleManager().getAuthorizationsByUser(extractedUsername);
+			if (null == userRoles) {
+				continue;
+			}
 			for (int j = 0; j < userRoles.size(); j++) {
 				IApsAuthority role = userRoles.get(j);
-				if (null == role) continue;
+				if (null == role) {
+					continue;
+				}
 				if (roleNamesWithSupervisor.contains(role.getAuthority())) {
-					supervisors.add(user);
+					supervisors.add(extractedUsername);
 				}
 				if (roleNamesWithEditor.contains(role.getAuthority())) {
-					editors.add(user);
+					editors.add(extractedUsername);
 				}
 			}
 		}
 	}
-
+	
 	private List<String> getRolesNames(List<Role> roles) {
 		List<String> names = new ArrayList<String>();
-		if (null == roles) return names;
+		if (null == roles) {
+			return names;
+		}
 		for (int i = 0; i < roles.size(); i++) {
 			IApsAuthority role = roles.get(i);
-			if (null == role) continue;
+			if (null == role) {
+				continue;
+			}
 			names.add(role.getAuthority());
 		}
 		return names;
 	}
-
-	protected void prepareUsersForContentType(Map<UserDetails, List<ContentStatusChangedEventInfo>> contentsForUsers, 
-			String typeCode, List<ContentStatusChangedEventInfo> infosForContentType, List<UserDetails> editors, List<UserDetails> supervisors) throws ApsSystemException {
+	
+	protected void prepareUsersForContentType(Map<String, List<ContentStatusChangedEventInfo>> contentsForUsers, 
+			String typeCode, List<ContentStatusChangedEventInfo> infosForContentType, List<String> editors, List<String> supervisors) throws ApsSystemException {
 		Workflow workflow = this.getWorkflowManager().getWorkflow(typeCode);
 		String contentTypeRole = workflow.getRole();
-		if (contentTypeRole==null || contentTypeRole.length()==0) {
+		if (contentTypeRole == null || contentTypeRole.length() == 0) {
 			editors = this.filterUsersForRole(contentTypeRole, editors);
 			supervisors = this.filterUsersForRole(contentTypeRole, supervisors);
 		}
-		List<UserDetails> usersForStep = null;
+		List<String> usersForStep = null;
 		String previousStepRole = null;
 		for (ContentStatusChangedEventInfo contentInfo : infosForContentType) {
 			String currentStep = contentInfo.getStatus();
 			Step step = workflow.getStep(currentStep);
 			String currentStepRole = step!=null ? step.getRole() : null;
 			boolean needsSupervisor = Content.STATUS_READY.equals(currentStep);
-
 			if (previousStepRole==null || !previousStepRole.equals(currentStepRole)) {
 				previousStepRole = currentStepRole;
 				if (needsSupervisor) {
@@ -348,29 +382,33 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 				}
 			}
 			String mainGroup = contentInfo.getMainGroup();
-			List<UserDetails> allowedUsers = this.filterUsersForGroup(mainGroup, usersForStep);
+			List<String> allowedUsers = this.filterUsersForGroup(mainGroup, usersForStep);
 			this.addContentForUsers(contentInfo, allowedUsers, contentsForUsers);
 		}
 	}
 
-	protected List<UserDetails> filterUsersForRole(String roleName, List<UserDetails> users) throws ApsSystemException {
-		List<UserDetails> usersForContentType = null;
+	protected List<String> filterUsersForRole(String roleName, List<String> users) throws ApsSystemException {
+		List<String> usersForContentType = null;
 		try {
-			if (users.size()==0 || roleName==null || roleName.length()==0) {
+			if (users.isEmpty() || roleName == null || roleName.length()==0) {
 				usersForContentType = users;
 			} else {
-				usersForContentType = new ArrayList<UserDetails>();
+				usersForContentType = new ArrayList<String>();
 				IApsAuthorityManager roleManager = this.getRoleManager();
 				IApsAuthority authority = roleManager.getAuthority(roleName);
-				List<UserDetails> usersWithAuth = this.getRoleManager().getUsersByAuthority(authority);
+				List<String> usernamesWithAuth = this.getRoleManager().getUsernamesByAuthority(authority);
 				for (int i = 0; i < users.size(); i++) {
-					UserDetails user = users.get(i);
-					if (null == user) continue;
-					for (int j = 0; j < usersWithAuth.size(); j++) {
-						UserDetails userWithAuth = usersWithAuth.get(j);
-						if (null == userWithAuth) continue;
-						if (user.getUsername().equals(userWithAuth.getUsername())) {
-							usersForContentType.add(user);
+					String username = users.get(i);
+					if (null == username) {
+						continue;
+					}
+					for (int j = 0; j < usernamesWithAuth.size(); j++) {
+						String userWithAuth = usernamesWithAuth.get(j);
+						if (null == userWithAuth) {
+							continue;
+						}
+						if (username.equals(userWithAuth)) {
+							usersForContentType.add(username);
 						}
 					}
 				}
@@ -381,38 +419,46 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 		}
 		return usersForContentType;
 	}
-
-	protected List<UserDetails> filterUsersForGroup(String groupName, List<UserDetails> users) throws ApsSystemException {
-		List<UserDetails> usersForContentType = null;
-		if (users.size()==0 || groupName==null || groupName.length()==0) {
-			usersForContentType = users;
+	
+	protected List<String> filterUsersForGroup(String groupName, List<String> usernames) throws ApsSystemException {
+		List<String> usersForContentType = null;
+		if (usernames.isEmpty() || groupName == null || groupName.length()==0) {
+			usersForContentType = usernames;
 		} else {
-			usersForContentType = new ArrayList<UserDetails>();
-			IApsAuthorityManager groupManager = (IApsAuthorityManager) this.getService("GroupManager");
+			usersForContentType = new ArrayList<String>();
+			IApsAuthorityManager groupManager = (IApsAuthorityManager) super.getBeanFactory().getBean(SystemConstants.GROUP_MANAGER);
 			IApsAuthority authority = groupManager.getAuthority(groupName);
-			List<UserDetails> usersWithAuth = groupManager.getUsersByAuthority(authority);
-			for (int i = 0; i < users.size(); i++) {
-				UserDetails user = users.get(i);
-				if (null == user) continue;
+			List<String> usersWithAuth = groupManager.getUsernamesByAuthority(authority);
+			for (int i = 0; i < usernames.size(); i++) {
+				String username = usernames.get(i);
+				if (null == username) {
+					continue;
+				}
 				for (int j = 0; j < usersWithAuth.size(); j++) {
-					UserDetails userWithAuth = usersWithAuth.get(j);
-					if (null == userWithAuth) continue;
-					if (user.getUsername().equals(userWithAuth.getUsername())) {
-						usersForContentType.add(user);
+					String userWithAuth = usersWithAuth.get(j);
+					if (null == userWithAuth) {
+						continue;
+					}
+					if (username.equals(userWithAuth)) {
+						usersForContentType.add(username);
 					}
 				}
 			}
 		}
 		return usersForContentType;
 	}
-
-	protected void addContentForUsers(ContentStatusChangedEventInfo contentInfo, List<UserDetails> allowedUsers, 
-			Map<UserDetails, List<ContentStatusChangedEventInfo>> contentsForUsers) {
-		for (UserDetails user : allowedUsers) {
-			List<ContentStatusChangedEventInfo> infos = contentsForUsers.get(user);
-			if (infos==null) {
+	
+	protected void addContentForUsers(ContentStatusChangedEventInfo contentInfo, List<String> allowedUsers, 
+			Map<String, List<ContentStatusChangedEventInfo>> contentsForUsers) {
+		if (null == contentsForUsers || contentsForUsers.isEmpty()) {
+			return;
+		}
+		for (int i = 0; i < allowedUsers.size(); i++) {
+			String username = allowedUsers.get(i);
+			List<ContentStatusChangedEventInfo> infos = contentsForUsers.get(username);
+			if (infos == null) {
 				infos = new ArrayList<ContentStatusChangedEventInfo>();
-				contentsForUsers.put(user, infos);
+				contentsForUsers.put(username, infos);
 			}
 			infos.add(contentInfo);
 		}

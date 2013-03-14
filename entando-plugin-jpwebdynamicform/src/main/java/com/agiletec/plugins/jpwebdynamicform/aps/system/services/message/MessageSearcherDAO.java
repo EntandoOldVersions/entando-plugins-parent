@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software;
@@ -12,7 +12,7 @@
 *
 *
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpwebdynamicform.aps.system.services.message;
@@ -98,10 +98,10 @@ public class MessageSearcherDAO extends AbstractEntitySearcherDAO implements IMe
 		hasAppendWhereClause = this.verifyWhereClauseAppend(query, hasAppendWhereClause);
 		if (answered) {
 			query.append(masterTableName).append(".").append(masterTableIdFieldName).append(
-					" IN ( SELECT messageid FROM jpwebdynamicform_messageanswers )");
+					" IN ( SELECT messageid FROM jpwebdynamicform_answers )");
 		} else {
 			query.append(masterTableName).append(".").append(masterTableIdFieldName).append(
-			" NOT IN ( SELECT messageid FROM jpwebdynamicform_messageanswers )");
+			" NOT IN ( SELECT messageid FROM jpwebdynamicform_answers )");
 		}
 		return hasAppendWhereClause;
 	}
@@ -123,7 +123,7 @@ public class MessageSearcherDAO extends AbstractEntitySearcherDAO implements IMe
 
 	@Override
 	protected String getEntitySearchTableName() {
-		return "jpwebdynamicform_messagesearch";
+		return "jpwebdynamicform_search";
 	}
 
 	@Override

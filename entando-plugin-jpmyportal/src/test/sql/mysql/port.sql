@@ -12,7 +12,7 @@ CREATE TABLE jpmyportal_userpagemodelconfig
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO sysconfig (version, item, descr, config) VALUES ('test', 'jpmyportal_config', 'MyPortal showlet configuration', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO sysconfig (version, item, descr, config) VALUES ('test', 'jpmyportal_config', 'MyPortal widget configuration', '<?xml version="1.0" encoding="UTF-8"?>
 <myportalConfig ajaxEnabled="true" >
 	<showlets testValid="true" testAllowed="true" >
 		<showlet code="jpmyportal_void" />

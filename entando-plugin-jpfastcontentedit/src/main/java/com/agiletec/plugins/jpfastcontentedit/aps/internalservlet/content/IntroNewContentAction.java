@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content;
@@ -48,6 +48,8 @@ public class IntroNewContentAction extends com.agiletec.plugins.jacms.apsadmin.c
 	public String createNewVoid() {
 		String result = super.createNewVoid();
 		Content content = this.getContent();
+		IContentActionHelper helper = (IContentActionHelper) this.getContentActionHelper();
+		helper.checkTypeLabels(content);
 		this.disableAttributes(content);
 		String mainGroup = this.getMainGroup();
 		if (null != mainGroup 

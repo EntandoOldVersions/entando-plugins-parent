@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
-    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
-    "http://struts.apache.org/dtds/struts-2.1.dtd">
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
 
@@ -48,8 +48,9 @@
     		<result name="messageNotFound" type="chain">list</result>
             <result name="input" type="tiles">admin.jpwebdynamicform.Message.entryAnswer</result>
             <result type="redirectAction">list</result>
-        	<interceptor-ref name="fileUpload"><param name="maximumSize">5242880</param></interceptor-ref><!-- maximun Size = 5 Mb -->
-        	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">jpwebdynamicform_manageForms</param></interceptor-ref>
+        	<!-- <interceptor-ref name="fileUpload"><param name="maximumSize">5242880</param></interceptor-ref> --><!-- maximun Size = 5 Mb -->
+        	<interceptor-ref name="apsFileUpload" />
+			<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">jpwebdynamicform_manageForms</param></interceptor-ref>
         </action>
 
     	<action name="trash" class="jpwebdynamicformOperatorMessageAction" method="trash" >

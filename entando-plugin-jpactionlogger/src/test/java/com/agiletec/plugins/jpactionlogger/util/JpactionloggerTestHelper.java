@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpactionlogger.util;
@@ -88,7 +88,7 @@ public class JpactionloggerTestHelper extends AbstractDAO {
 	}
 	
 	private static final String CLEAN_RECORDS = 
-		"TRUNCATE TABLE jpactionlogger_records";
+		"DELETE FROM jpactionlogger_records";
 	
 	private IActionLoggerDAO _actionLoggerDAO;
 	

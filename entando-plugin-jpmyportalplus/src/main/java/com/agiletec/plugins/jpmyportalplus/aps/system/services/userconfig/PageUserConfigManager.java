@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  * This file is part of Entando software.
  * Entando is a free software;
@@ -12,7 +12,7 @@
  *
  *
  *
- * Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  */
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig;
@@ -235,27 +235,41 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 		cookie.setPath("/");
 		response.addCookie(cookie);
 	}
-
+	
 	@Override
 	public void removeUserPageConfig(String username, IPage page) throws ApsSystemException {
 		try {
-			this.getPageUserConfigDAO().removeUserPageConfig(username, page.getCode());
+			this.getPageUserConfigDAO().removeUserPageConfig(username, page.getCode(), null);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "removeUserPageConfig");
 			throw new ApsSystemException("Error removing Page user Config", t);
 		}
 	}
-
+	
 	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.deletePage(..)) && args(pageCode)")
 	public void removeUserPageConfig(String pageCode) throws ApsSystemException {
+		this.removeConfig(pageCode, null);
+	}
+	
+	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.joinShowlet(..)) && args(pageCode, showlet, pos)")
+	public void removeUserPageConfig(String pageCode, Showlet showlet, int pos) throws ApsSystemException {
+		this.removeConfig(pageCode, pos);
+	}
+	
+	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.removeShowlet(..)) && args(pageCode, pos)")
+	public void removeUserPageConfig(String pageCode, int pos) throws ApsSystemException {
+		this.removeConfig(pageCode, pos);
+	}
+	
+	private void removeConfig(String pageCode, Integer pos) throws ApsSystemException {
 		try {
-			this.getPageUserConfigDAO().removeUserPageConfig(null, pageCode);
+			this.getPageUserConfigDAO().removeUserPageConfig(null, pageCode, pos);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "removeUserPageConfig");
+			ApsSystemUtils.logThrowable(t, this, "removeConfig");
 			throw new ApsSystemException("Error removing Page user Config", t);
 		}
 	}
-
+	
 	@Override
 	public ShowletType getVoidShowlet() {
 		return this.getShowletTypeManager().getShowletType(this.getVoidShowletCode());

@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpavatar;
@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 public class AllTests {
 	
 	public static Test suite() {
-		TestSuite suite = new TestSuite(  "Test for jpavatar");
+		TestSuite suite = new TestSuite("Test for jpavatar");
 		suite.addTestSuite(TestAvatarManager.class);
 		suite.addTestSuite(TestAvatarAction.class);
 		return suite;

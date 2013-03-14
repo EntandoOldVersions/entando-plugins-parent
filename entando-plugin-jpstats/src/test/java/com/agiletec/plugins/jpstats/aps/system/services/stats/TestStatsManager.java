@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpstats.aps.system.services.stats;
@@ -76,14 +76,14 @@ public class TestStatsManager extends ApsPluginBaseTestCase {
 		Calendar start = CalendarConverter.getCalendarDay("10/03/2007", 0, 0, 0, 0);
 		Calendar end = CalendarConverter.getCalendarDay("10/03/2007", 23, 59, 59, 999);
 		String averageTimeSite = _statsManager.getAverageTimeSite(start, end);
-		assertEquals("00:00:07", averageTimeSite);
+		assertEquals("0 days 00:00:07", averageTimeSite);
 	}
 	
 	public void testGetAverageTimePage() throws ApsSystemException, SQLException {
 		Calendar start = CalendarConverter.getCalendarDay("10/03/2007", 0, 0, 0, 0);
 		Calendar end = CalendarConverter.getCalendarDay("10/03/2007", 23, 59, 59, 999);
 		String averageTimeSite = _statsManager.getAverageTimePage(start, end);
-		assertEquals("00:00:06", averageTimeSite);
+		assertEquals("0 days 00:00:06", averageTimeSite);
 	}
 	
 	public void testGetNumPageSession() throws ApsSystemException, SQLException {

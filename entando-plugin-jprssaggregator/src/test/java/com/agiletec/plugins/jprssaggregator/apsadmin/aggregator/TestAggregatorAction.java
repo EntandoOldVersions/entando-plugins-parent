@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jprssaggregator.apsadmin.aggregator;
@@ -31,7 +31,6 @@ import com.agiletec.apsadmin.system.ApsAdminSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
-import com.agiletec.plugins.jprssaggregator.PluginConfigTestUtils;
 import com.agiletec.plugins.jprssaggregator.aps.JpRssAggregatorSystemConstants;
 import com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator.ApsAggregatorItem;
 import com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator.IAggregatorManager;
@@ -112,7 +111,7 @@ public class TestAggregatorAction extends ApsAdminPluginBaseTestCase {
 		Collection actionErrors = this.getAction().getActionErrors();
 		assertTrue(fieldErrors.containsKey("link"));
 		assertTrue(fieldErrors.size() == 1);
-		assertTrue(actionErrors.size() == 0);
+		assertTrue(actionErrors.isEmpty());
 	}
 	
 	public void testEditAction() throws Throwable {

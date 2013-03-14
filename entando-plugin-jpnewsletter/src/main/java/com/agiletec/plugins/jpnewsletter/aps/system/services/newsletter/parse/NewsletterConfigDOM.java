@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.parse;
@@ -137,20 +137,16 @@ public class NewsletterConfigDOM {
 	
 	private void extractScheduler(Element root, NewsletterConfig config) {
 		Element schedulerElement = root.getChild(SCHEDULER_ELEM);
-		
 		String active = schedulerElement.getAttributeValue(SCHEDULER_ACTIVE_ATTR);
 		config.setActive(active != null && active.equalsIgnoreCase("true"));
-		
 		String onlyOwner = schedulerElement.getAttributeValue(SCHEDULER_ONLYOWNER_ATTR);
 		config.setOnlyOwner(onlyOwner != null && onlyOwner.equalsIgnoreCase("true"));
-		
 		String delayHours = schedulerElement.getAttributeValue(SCHEDULER_DELAYHOURS_ATTR);
 		int hours = 1;
 		if (delayHours != null && delayHours.length()>0) {
 			hours = Integer.parseInt(delayHours);
 		}
 		config.setHoursDelay(hours);
-		
 		String start = schedulerElement.getAttributeValue(SCHEDULER_START_ATTR);
 		if (start!=null && start.length()>0) {
 			config.setStartScheduler(DateConverter.parseDate(start, SCHEDULER_STARTDATE_CONFIG_PATTERN));
@@ -169,13 +165,14 @@ public class NewsletterConfigDOM {
 		String allContentsAttribute = subscriptionsElem.getAttributeValue(SUBSCRIPTIONS_ALL_ATTR);
 		allContentsAttribute = (allContentsAttribute != null && allContentsAttribute.trim().length() > 0) ? allContentsAttribute.trim() : null;
 		config.setAllContentsAttributeName(allContentsAttribute);
-		
 		List<Element> subscriptionElems = subscriptionsElem.getChildren(SUBSCRIPTION_CHILD);
-		for (int i=0; i<subscriptionElems.size(); i++) {
-			Element subscriptionElem = (Element) subscriptionElems.get(i);
-			String categoryCode = subscriptionElem.getAttributeValue(SUBSCRIPTION_CATEGORYCODE_ATTR);
-			String attributeName = subscriptionElem.getAttributeValue(SUBSCRIPTION_ATTRIBUTENAME_ATTR);
-			config.addSubscription(categoryCode, attributeName);
+		if (null != subscriptionElems) {
+			for (int i=0; i<subscriptionElems.size(); i++) {
+				Element subscriptionElem = (Element) subscriptionElems.get(i);
+				String categoryCode = subscriptionElem.getAttributeValue(SUBSCRIPTION_CATEGORYCODE_ATTR);
+				String attributeName = subscriptionElem.getAttributeValue(SUBSCRIPTION_ATTRIBUTENAME_ATTR);
+				config.addSubscription(categoryCode, attributeName);
+			}
 		}
 	}
 	
@@ -186,10 +183,14 @@ public class NewsletterConfigDOM {
 	 */
 	private void extractContentTypes(Element root, NewsletterConfig config) {
 		Element contentTypesElem = root.getChild(CONTENTTYPES_ELEM);
-		List<Element> contentTypes = contentTypesElem.getChildren(CONTENTTYPE_CHILD);
-		for (int i=0; i<contentTypes.size(); i++) {
-			Element contentTypeElem = (Element) contentTypes.get(i);
-			config.addContentType(this.extractContentType(contentTypeElem));
+		if (null != contentTypesElem) {
+			List<Element> contentTypeElements = contentTypesElem.getChildren(CONTENTTYPE_CHILD);
+			if (null != contentTypeElements) {
+				for (int i=0; i<contentTypeElements.size(); i++) {
+					Element contentTypeElem = contentTypeElements.get(i);
+					config.addContentType(this.extractContentType(contentTypeElem));
+				}
+			}
 		}
 	}
 	

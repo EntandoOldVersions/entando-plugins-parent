@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcontentworkflow.aps.system.services.notifier.parse;
@@ -79,11 +79,9 @@ public class WorkflowNotifierDOM {
 	
 	protected void extractMailConfig(NotifierConfig notifierConfig, Element mailElement) {
 		notifierConfig.setSenderCode(mailElement.getAttributeValue(MAIL_SENDERCODE_ATTR));
-		notifierConfig.setMailAttrName(mailElement.getAttributeValue(MAIL_MAILATTRNAME_ATTR));
-		
+		//notifierConfig.setMailAttrName(mailElement.getAttributeValue(MAIL_MAILATTRNAME_ATTR));
 		String html = mailElement.getAttributeValue(MAIL_HTML_ATTR);
 		notifierConfig.setHtml(html!=null && "true".equalsIgnoreCase(html));
-		
 		notifierConfig.setSubject(mailElement.getChild(MAIL_SUBJECT_CHILD).getText());
 		notifierConfig.setHeader(mailElement.getChild(MAIL_HEADER_CHILD).getText());
 		notifierConfig.setTemplate(mailElement.getChild(MAIL_TEMPLATE_CHILD).getText());
@@ -111,9 +109,8 @@ public class WorkflowNotifierDOM {
 	
 	protected Element prepareMailElement(NotifierConfig notifierConfig) {
 		Element mailElement = new Element(MAIL_CHILD);
-
 		mailElement.setAttribute(MAIL_SENDERCODE_ATTR, notifierConfig.getSenderCode());
-		mailElement.setAttribute(MAIL_MAILATTRNAME_ATTR, notifierConfig.getMailAttrName());
+		//mailElement.setAttribute(MAIL_MAILATTRNAME_ATTR, notifierConfig.getMailAttrName());
 		mailElement.setAttribute(MAIL_HTML_ATTR, String.valueOf(notifierConfig.isHtml()));
 		
 		Element subjectElement = new Element(MAIL_SUBJECT_CHILD);
@@ -171,7 +168,7 @@ public class WorkflowNotifierDOM {
 	
 	private static final String MAIL_CHILD = "mail";
 	private static final String MAIL_SENDERCODE_ATTR = "senderCode";
-	private static final String MAIL_MAILATTRNAME_ATTR = "mailAttributeName";
+	//private static final String MAIL_MAILATTRNAME_ATTR = "mailAttributeName";
 	private static final String MAIL_HTML_ATTR = "html";
 	private static final String MAIL_SUBJECT_CHILD = "subject";
 	private static final String MAIL_HEADER_CHILD = "header";

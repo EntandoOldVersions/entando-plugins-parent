@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook;
@@ -42,7 +42,7 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 		ContactRecord contact = new ContactRecord();
 		contact.setId(res.getString("contactkey"));
 		contact.setTypeCode(res.getString("profiletype"));
-		contact.setXml(res.getString("xml"));
+		contact.setXml(res.getString("contactxml"));
 		contact.setOwner(res.getString("contactowner"));
 		contact.setPublicContact(res.getInt("publiccontact") == 1);
 		return contact;
@@ -161,16 +161,16 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 	}
 	
 	private final String GET_CONTACT_VO = 
-		"SELECT contactkey, profiletype, xml, contactowner, publiccontact FROM jpaddressbook_contacts WHERE contactkey = ? ";
+		"SELECT contactkey, profiletype, contactxml, contactowner, publiccontact FROM jpaddressbook_contacts WHERE contactkey = ? ";
 	
 	private static final String INSERT_CONTACT = 
-		"INSERT INTO jpaddressbook_contacts(contactkey, profiletype, xml, contactowner, publiccontact) VALUES (?, ?, ?, ?, ?) ";
+		"INSERT INTO jpaddressbook_contacts(contactkey, profiletype, contactxml, contactowner, publiccontact) VALUES (?, ?, ?, ?, ?) ";
 	
 	private final String DELETE_CONTACT_BY_KEY = 
 		"DELETE FROM jpaddressbook_contacts WHERE contactkey = ? ";
 	
 	private final String UPDATE_CONTACT = 
-		"UPDATE jpaddressbook_contacts SET profiletype = ? , xml = ? , publiccontact = ? WHERE contactkey = ? ";
+		"UPDATE jpaddressbook_contacts SET profiletype = ? , contactxml = ? , publiccontact = ? WHERE contactkey = ? ";
 	
 	private final String ADD_CONTACT_SEARCH_RECORD =
 		"INSERT INTO jpaddressbook_contactsearch(contactkey, attrname, textvalue, datevalue, numvalue, langcode) VALUES (?, ?, ?, ?, ?, ?) ";

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
-    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
-    "http://struts.apache.org/dtds/struts-2.1.dtd">
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
 	
@@ -14,7 +14,7 @@
     	<action name="save" class="jpavatarAvatarAction" method="save">
             <result name="input" type="tiles">jpavatar.admin.avatar.entry</result>
             <result name="success" type="tiles">jpavatar.admin.avatar.saveOk</result>
-        	<interceptor-ref name="fileUpload"/>  
+        	<interceptor-ref name="apsFileUpload" />
         	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">enterBackend</param></interceptor-ref>
         </action>
     	<action name="bin" class="jpavatarAvatarAction" method="bin">

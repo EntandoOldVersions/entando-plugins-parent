@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcalendar.aps.system.services.calendar;
@@ -51,13 +51,11 @@ public interface ICalendarManager {
 	 * @return Il primo anno.
 	 */
 	public int getFirstYear();
-
-	public String getManagedContentType();
-
-	public String getManagedDateStartAttribute();
-
-	public String getManagedDateEndAttribute();
-
+	
+	public CalendarConfig getConfig();
+	
+	public void updateConfig(CalendarConfig config) throws ApsSystemException;
+	
 	public static final String REQUIRED_DATE_PATTERN = "yyyyMMdd";
 
 }

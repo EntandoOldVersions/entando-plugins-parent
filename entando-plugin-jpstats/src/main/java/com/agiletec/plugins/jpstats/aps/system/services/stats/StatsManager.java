@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpstats.aps.system.services.stats;
@@ -80,9 +80,15 @@ public class StatsManager extends AbstractService implements IStatsManager {
 	@Override
 	public String getAverageTimeSite(Date from, Date to) throws ApsSystemException {
 		try {
-			return this.getStatsDao().getAverageTimeSite(from, to);
+			Calendar fromCal = Calendar.getInstance();
+			fromCal.setTime(from);
+
+			Calendar endCal = Calendar.getInstance();
+			endCal.setTime(to);
+			
+			return this.getAverageTimeSite(fromCal, endCal);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteStatsRecord");
+			ApsSystemUtils.logThrowable(t, this, "getAverageTimeSite");
 			throw new ApsSystemException("An error occurred removing stats records", t);
 		}
 	}

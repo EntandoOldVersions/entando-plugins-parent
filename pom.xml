@@ -8,9 +8,10 @@
 	</parent>
 	<groupId>org.entando.entando.plugins</groupId>
 	<artifactId>entando-plugins-parent</artifactId>
-	<version>3.0.0</version>
+	<version>3.2.0</version>
 	<packaging>pom</packaging>
 	<name>Entando: Plugins parent</name>
+	<description>Plugins parent for Entando: an agile, modern and user-centric open source Portal platform.</description>
 	<url>http://www.entando.com/</url>
 	<licenses>
 		<license>
@@ -23,8 +24,24 @@
 		<connection>scm:git:git://github.com/entando/entando-plugins-parent.git</connection>
 		<developerConnection>scm:git:git@github.com:entando/entando-plugins-parent.git</developerConnection>
 		<url>https://github.com/entando/entando-plugins-parent</url>
-	</scm>	
-	<description>Plugins parent for Entando: an agile, modern and user-centric open source Portal platform.</description>
+	  <tag>v3.2.0</tag>
+  </scm>
+	<developers>
+		<developer>
+			<id>e.santoboni</id>
+			<name>Eugenio Santoboni</name>
+			<email>e.santoboni@entando.com</email>
+		</developer>
+		<developer>
+			<id>w.ghelfi</id>
+			<name>William Ghelfi</name>
+			<email>w.ghelfi@entando.com</email>
+		</developer>
+	</developers>
+	<organization>
+		<name>Entando S.r.l.</name>
+		<url>http://www.entando.com/</url>
+	</organization>
 	<modules>
 		<module>entando-plugin-jpfacetnav</module>
 		<module>entando-plugin-jpmail</module>
@@ -41,22 +58,22 @@
 		<module>entando-plugin-jpavatar</module>
 		<module>entando-plugin-jpactionlogger</module>
 		<!--
-		<module>entando-plugin-jpcontentnotifier</module>
+		<module>entando-plugin-jpcontentnotifier</module>**
 		-->
 		<module>entando-plugin-jpfastcontentedit</module>
 		<module>entando-plugin-jpgeoref</module>
 		<!--
-		<module>entando-plugin-jpwebmail</module>
+		<module>entando-plugin-jpwebmail</module>**
 		-->
 		<module>entando-plugin-jpimagemap</module>
 		<module>entando-plugin-jpphotogallery</module>
 		<module>entando-plugin-jprssaggregator</module>
 		<module>entando-plugin-jpshowletreplicator</module>
 		<!--
-        	<module>entando-plugin-jpwtt</module>
-		<module>entando-plugin-jpmyportal</module>
-		<module>entando-plugin-jpmassiveresourceloader</module>
-		<module>entando-plugin-jpremoteresourceloader</module>
+		<module>entando-plugin-jpwtt</module>**
+		<module>entando-plugin-jpmyportal</module>**
+		<module>entando-plugin-jpmassiveresourceloader</module>**
+		<module>entando-plugin-jpremoteresourceloader</module>**
 		-->
 		<module>entando-plugin-jpversioning</module>
 		<module>entando-plugin-jpcasclient</module>
@@ -66,25 +83,41 @@
 		<module>entando-plugin-jpcmstagcloud</module>
 		<module>entando-plugin-jpcontentrefs</module>
 		<module>entando-plugin-jpmyportalplus</module>
-	</modules>
-	<!--
-	<distributionManagement>
-		<snapshotRepository>
-			<id>entando-snapshots</id>
-			<url>dav:http://localhost/nexus/content/repositories/entando-snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>entando-releases</id>
-			<url>dav:http://localhost/nexus/content/repositories/entando-releases</url>
-		</repository>
-	</distributionManagement>
-	-->
+		<module>entando-plugin-jptokenapi</module>
+    <module>entando-plugin-jpfrontshortcut</module>
+  </modules>
 	<properties>
+
+		<test.database.driver>org.postgresql.Driver</test.database.driver>
 		<test.database.hostname>localhost</test.database.hostname>
 		<test.database.port>5432</test.database.port>
 		<test.database.username>agile</test.database.username>
 		<test.database.password>agile</test.database.password>
-	</properties>	
+		<test.database.port.url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testPort</test.database.port.url>
+		<test.database.serv.url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testServ</test.database.serv.url>
+
+		<!--
+		<test.database.driver>com.mysql.jdbc.Driver</test.database.driver>
+		<test.database.hostname>localhost</test.database.hostname>
+		<test.database.port>3306</test.database.port>
+		<test.database.username>root</test.database.username>
+		<test.database.password>agile</test.database.password>
+		<test.database.port.url>jdbc:mysql://${test.database.hostname}:${test.database.port}/EntandoCoreEnginetestPort</test.database.port.url>
+		<test.database.serv.url>jdbc:mysql://${test.database.hostname}:${test.database.port}/EntandoCoreEnginetestServ</test.database.serv.url>
+		-->
+		<!--
+		<test.database.driver>org.apache.derby.jdbc.EmbeddedDriver</test.database.driver>
+		<test.database.hostname>localhost</test.database.hostname>
+		<test.database.port>1527</test.database.port>
+		<test.database.username>agile</test.database.username>
+		<test.database.password>agile</test.database.password>
+		<test.database.port.url>jdbc:derby:${project.artifactId}testPort;create=true</test.database.port.url>
+		<test.database.serv.url>jdbc:derby:${project.artifactId}testServ;create=true</test.database.serv.url>
+		-->
+		<spring.version>3.0.6.RELEASE</spring.version>
+		<struts2.version>2.3.4.1</struts2.version>
+	</properties>
+
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<extensions>
@@ -112,9 +145,19 @@
 				<includes>
 					<include>**/*.tld</include>
 				</includes>
-			</resource>		
+			</resource>
 		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<pushChanges>false</pushChanges>
+					<localCheckout>true</localCheckout>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
@@ -137,11 +180,11 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>2.4</version>
 				<configuration>
 					<target>1.6</target>
 					<source>1.6</source>
@@ -186,105 +229,21 @@
 							</descriptors>
 						</configuration>
 					</execution>
-					<execution>
-						<id>assembly-misc-files</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<ignoreMissingDescriptor>true</ignoreMissingDescriptor>
-							<descriptors>
-								<descriptor>${project.parent.basedir}/src/main/assembly/misc.xml</descriptor>
-							</descriptors>
-						</configuration>
-					</execution>
-					<execution>
-						<id>assembly-misc-files-test</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<ignoreMissingDescriptor>true</ignoreMissingDescriptor>
-							<descriptors>
-								<descriptor>${project.parent.basedir}/src/test/assembly/misc-test.xml</descriptor>
-							</descriptors>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.3</version><!--$NO-MVN-MAN-VER$ -->
-				<executions>
-					<execution>
-						<id>unpack-misc-dependencies</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>unpack-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/dependencies-unpacked/misc</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
-							<appendOutput>true</appendOutput>
-							<includeGroupIds>org.entando.entando.plugins</includeGroupIds>
-							<includeClassifiers>misc</includeClassifiers>
-							<includeTypes>zip</includeTypes>
-						</configuration>
-					</execution>
-					<execution>
-						<id>unpack-misc-dependencies-test</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>unpack-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/dependencies-unpacked/misc-test</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
-							<appendOutput>true</appendOutput>
-							<includeGroupIds>org.entando.entando.plugins</includeGroupIds>
-							<includeClassifiers>misc-test</includeClassifiers>
-							<includeTypes>zip</includeTypes>
-							<includeScope>test</includeScope>
-						</configuration>
-					</execution>
-					<execution>
-						<id>unpack-misc-core-test</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>unpack-dependencies</goal>
-						</goals>
-						<inherited>false</inherited>
-						<configuration>
-							<outputDirectory>${project.build.directory}/test</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
-							<appendOutput>true</appendOutput>
-							<includeGroupIds>org.entando.entando</includeGroupIds>
-							<includeArtifactIds>entando-core-engine</includeArtifactIds>
-							<includeClassifiers>misc-test</includeClassifiers>
-							<includeTypes>zip</includeTypes>
-							<includeScope>test</includeScope>
-						</configuration>
-					</execution>
 				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.7.1</version>
+				<version>2.12</version>
 				<configuration>
-					<forkMode>always</forkMode>
 					<argLine>-Xms512m -Xmx1024m</argLine>
 					<testFailureIgnore>false</testFailureIgnore>
 					<excludes>
 						<exclude>**/*BaseTestCase*</exclude>
 					</excludes>
-					<!-- <includes> <include>**/AllTests.java</include> </includes -->
+					<includes>
+						<include>**/AllTests.java</include>
+					</includes>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -293,17 +252,18 @@
 				<version>2.5</version>
 				<executions>
 					<execution>
-						<id>prepare-config-test</id>
-						<phase>process-test-classes</phase>
+						<id>copy-resources-test</id>
+						<!-- here the phase you need -->
+						<phase>generate-test-resources</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>target/test</outputDirectory>
+							<outputDirectory>${project.build.directory}/test</outputDirectory>
 							<encoding>UTF-8</encoding>
 							<resources>
 								<resource>
-									<directory>${project.parent.build.directory}/test/config</directory>
+									<directory>${project.parent.basedir}/src/test/config</directory>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -375,146 +335,6 @@
 						<configuration>
 							<autocommit>true</autocommit>
 							<sqlCommand>create database "${project.artifactId}testServ"</sqlCommand>
-						</configuration>
-					</execution>
-					<execution>
-						<id>create-schema-port</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testPort</url>
-							<onError>continue</onError>
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<srcFile>${project.parent.build.directory}/test/sql/entando-core-enginetestPort_schema.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-					<execution>
-						<id>create-schema-serv</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testServ</url>
-							<onError>continue</onError>
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<srcFile>${project.parent.build.directory}/test/sql/entando-core-enginetestServ_schema.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-					<execution>
-						<id>create-data-port</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testPort</url>
-							<escapeProcessing>false</escapeProcessing>
-							<enableBlockMode>true</enableBlockMode>
-							<printResultSet>true</printResultSet>
-							<outputFile />
-							<srcFiles>
-								<srcFile>${project.parent.build.directory}/test/sql/entando-core-enginetestPort_data.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-					<execution>
-						<id>create-data-serv</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testServ</url>
-							<escapeProcessing>false</escapeProcessing>
-							<enableBlockMode>true</enableBlockMode>
-							<printResultSet>true</printResultSet>
-							<outputFile />
-							<srcFiles>
-								<srcFile>${project.parent.build.directory}/test/sql/entando-core-enginetestServ_data.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-					<execution>
-						<id>execute-plugin-query-dependencies-port</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testPort</url>
-							<escapeProcessing>false</escapeProcessing>
-							<enableBlockMode>true</enableBlockMode>
-							<printResultSet>true</printResultSet>
-							<outputFile />
-							<onError>continue</onError>
-							<fileset>
-								<basedir>${project.build.directory}</basedir>
-								<includes>
-									<include>dependencies-unpacked/misc-test/**/sql/postgresql/port.sql</include>
-								</includes>
-							</fileset>
-						</configuration>
-					</execution>
-					<execution>
-						<id>execute-plugin-query-dependencies-serv</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testServ</url>
-							<escapeProcessing>false</escapeProcessing>
-							<enableBlockMode>true</enableBlockMode>
-							<printResultSet>true</printResultSet>
-							<outputFile />
-							<onError>continue</onError>
-							<fileset>
-								<basedir>${project.build.directory}</basedir>
-								<includes>
-									<include>dependencies-unpacked/misc-test/**/sql/postgresql/serv.sql</include>
-								</includes>
-							</fileset>
-						</configuration>
-					</execution>
-					<execution>
-						<id>execute-plugin-query-port</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testPort</url>
-							<escapeProcessing>false</escapeProcessing>
-							<enableBlockMode>true</enableBlockMode>
-							<printResultSet>true</printResultSet>
-							<outputFile />
-							<srcFiles>
-								<srcFile>src/test/sql/postgresql/port.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-					<execution>
-						<id>execute-plugin-query-serv</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testServ</url>
-							<escapeProcessing>false</escapeProcessing>
-							<enableBlockMode>true</enableBlockMode>
-							<printResultSet>true</printResultSet>
-							<outputFile />
-							<srcFiles>
-								<srcFile>src/test/sql/postgresql/serv.sql</srcFile>
-							</srcFiles>
 						</configuration>
 					</execution>
 				</executions>
@@ -594,34 +414,44 @@
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>3.0.0</version>
+			<version>3.2.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>3.0.0</version>
+			<version>3.2.0</version>
 			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
- 		<dependency>
-			<groupId>org.entando.entando</groupId>
-			<artifactId>entando-core-engine</artifactId>
-			<version>3.0.0</version>
-			<type>zip</type>
-			<classifier>misc-test</classifier>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901.jdbc4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.18</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.8.2.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>10.8.2.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

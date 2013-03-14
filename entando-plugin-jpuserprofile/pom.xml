@@ -4,8 +4,8 @@
 	<parent>
 		<artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-        <version>3.0.0</version>
-    </parent>
+		<version>3.2.0</version>
+	</parent>
 	<artifactId>entando-plugin-jpuserprofile</artifactId>
 	<packaging>war</packaging>
 	<name>Entando Plugin: Manage User Profile</name>

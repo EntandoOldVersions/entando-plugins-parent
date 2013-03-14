@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcalendar.aps.services.calendar;
@@ -29,7 +29,7 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.authorization.IAuthorizationManager;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.user.UserDetails;
-import com.agiletec.plugins.jpcalendar.aps.CalendarConstants;
+import com.agiletec.plugins.jpcalendar.aps.system.services.CalendarConstants;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.ICalendarManager;
 
 public class TestCalendarManager extends ApsPluginBaseTestCase {
@@ -70,16 +70,14 @@ public class TestCalendarManager extends ApsPluginBaseTestCase {
 
 	public void testLoadEventsOfDayId() throws Throwable {
 		MockEventsOfDayDataBean bean = new MockEventsOfDayDataBean();
-		bean.setAttributeNameStart(this._calendarManager
-				.getManagedDateStartAttribute());
-		bean.setAttributeNameEnd(this._calendarManager
-				.getManagedDateEndAttribute());
-		bean.setContentType(this._calendarManager.getManagedContentType());
+		bean.setAttributeNameStart(this._calendarManager.getConfig().getStartAttributeName());
+		bean.setAttributeNameEnd(this._calendarManager.getConfig().getEndAttributeName());
+		bean.setContentType(this._calendarManager.getConfig().getContentTypeCode());
 		this.setUserOnSession("guest");
 		UserDetails user = (UserDetails) this.getRequestContext().getRequest()
 				.getSession().getAttribute(
 						SystemConstants.SESSIONPARAM_CURRENT_USER);
-		List<Group> userGroups = _authorizatorManager.getGroupsOfUser(user);
+		List<Group> userGroups = _authorizatorManager.getUserGroups(user);
 		Set allowedGroup = new HashSet();
 		allowedGroup.add(Group.FREE_GROUP_NAME);
 		for (Group group : userGroups) {

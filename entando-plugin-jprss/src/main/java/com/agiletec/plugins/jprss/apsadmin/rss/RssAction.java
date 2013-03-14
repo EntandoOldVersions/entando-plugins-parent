@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jprss.apsadmin.rss;
@@ -27,13 +27,18 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
+import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
+import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.category.Category;
 import com.agiletec.aps.system.services.category.ICategoryManager;
+import com.agiletec.aps.util.SelectItem;
 import com.agiletec.apsadmin.system.ApsAdminSystemConstants;
 import com.agiletec.apsadmin.system.BaseAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
+import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
-import com.agiletec.plugins.jacms.aps.system.services.content.showlet.util.EntitySearchFilterDOM;
+import com.agiletec.plugins.jacms.aps.system.services.content.showlet.util.FilterUtils;
+import com.agiletec.plugins.jacms.apsadmin.portal.specialshowlet.listviewer.IContentListFilterAction;
 import com.agiletec.plugins.jprss.aps.system.services.rss.Channel;
 import com.agiletec.plugins.jprss.aps.system.services.rss.IRssManager;
 import com.agiletec.plugins.jprss.aps.system.services.rss.RssContentMapping;
@@ -49,7 +54,7 @@ public class RssAction extends BaseAction implements IRssAction {
 		super.validate();
 		if (this.getActionErrors().size()>0 || this.getFieldErrors().size()>0) {
 			String filters = this.getFilters();
-			List<Properties> properties = EntitySearchFilterDOM.getPropertiesFilters(filters);
+			List<Properties> properties = FilterUtils.getFiltersProperties(filters);
 			this.setFiltersProperties(properties);
 		}
 	}
@@ -180,6 +185,27 @@ public class RssAction extends BaseAction implements IRssAction {
 		return entityPrototypes;
 	}
 	
+	public List<SelectItem> getAllowedFilterTypes() throws ApsSystemException {
+		List<SelectItem> types = new ArrayList<SelectItem>();
+		try {
+			types.add(new SelectItem(IContentListFilterAction.METADATA_KEY_PREFIX + IContentManager.CONTENT_CREATION_DATE_FILTER_KEY, this.getText("label.creationDate")));
+			types.add(new SelectItem(IContentListFilterAction.METADATA_KEY_PREFIX + IContentManager.CONTENT_MODIFY_DATE_FILTER_KEY, this.getText("label.lastModifyDate")));
+			//String contentType = this.getShowlet().getConfig().getProperty(IContentListShowletHelper.SHOWLET_PARAM_CONTENT_TYPE);
+			Content prototype = this.getContentManager().createContentType(this.getContentType());
+			List<AttributeInterface> contentAttributes = prototype.getAttributeList();
+			for (int i=0; i<contentAttributes.size(); i++) {
+				AttributeInterface attribute = contentAttributes.get(i);
+				if (attribute.isSearcheable()) {
+					types.add(new SelectItem(attribute.getName(), this.getText("label.attribute", new String[]{attribute.getName()})));
+				}
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "getAllowedFilterTypes");
+			throw new ApsSystemException("Error extracting allowed filter types", t);
+		}
+		return types;
+	}
+	
 	public Map<String, String> getAvailableFeedTypes() {
 		return this.getRssManager().getAvailableFeedTypes();
 	}
@@ -237,7 +263,7 @@ public class RssAction extends BaseAction implements IRssAction {
 			if (null != newFilter) {
 				properties.add(newFilter);
 			}
-			String newShowletParam = EntitySearchFilterDOM.getShowletParam(properties);
+			String newShowletParam = FilterUtils.getShowletParam(properties);
 			this.setFilters(newShowletParam);
 			this.setFiltersProperties(properties);
 		} catch (Throwable t) {
@@ -249,8 +275,10 @@ public class RssAction extends BaseAction implements IRssAction {
 	
 	private List<Properties> buildFilterProperties() {
 		String filters = this.getFilters();
-		if (null == filters || filters.trim().length() == 0) filters = null;
-		List<Properties> properties = EntitySearchFilterDOM.getPropertiesFilters(filters);
+		if (null == filters || filters.trim().length() == 0) {
+			filters = null;
+		}
+		List<Properties> properties = FilterUtils.getFiltersProperties(filters);
 		return properties;
 	}
 
@@ -258,24 +286,18 @@ public class RssAction extends BaseAction implements IRssAction {
 		try {
 			//ESTRAI "filters" campo testo
 			String filters = this.getFilters();
-			
 			//Estrai lista properties da testo
-			List<Properties> properties = EntitySearchFilterDOM.getPropertiesFilters(filters);
-			
+			List<Properties> properties = FilterUtils.getFiltersProperties(filters);
 			//ELIMINA
 			int filterIndex = this.getFilterIndex();
 			properties.remove(filterIndex);
-			
 			//Setta Properties
 			this.setFiltersProperties(properties);
-			
 			//crea nuovo "filters" String
-			String newShowletParam = EntitySearchFilterDOM.getShowletParam(properties);
+			String newShowletParam = FilterUtils.getShowletParam(properties);
 			this.setFilters(newShowletParam);
-		
 			//SETTA property FILTERS nella showlet
 			this.setFiltersProperties(properties);
-			
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "removeFilter");
 			return FAILURE;
@@ -289,7 +311,7 @@ public class RssAction extends BaseAction implements IRssAction {
 			String filters = this.getFilters();
 			
 			//Estrai lista properties da testo
-			List<Properties> properties = EntitySearchFilterDOM.getPropertiesFilters(filters);
+			List<Properties> properties = FilterUtils.getFiltersProperties(filters);
 			
 			//FAI LO SPOSTAMENTO.
 			int filterIndex = this.getFilterIndex();
@@ -309,7 +331,7 @@ public class RssAction extends BaseAction implements IRssAction {
 			this.setFiltersProperties(properties);
 			
 			//crea nuovo "filters" String
-			String newShowletParam = EntitySearchFilterDOM.getShowletParam(properties);
+			String newShowletParam = FilterUtils.getShowletParam(properties);
 			this.setFilters(newShowletParam);
 			
 			//SETTA property FILTERS nella showlet

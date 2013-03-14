@@ -1,12 +1,6 @@
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<%--
-jpuserprofile_EDITPASSWORD_TITLE = Modifica Password
-jpuserprofile_PASSWORD_UPDATED = La password è stata aggiornata correttamente.
-jpuserprofile_PLEASE_LOGIN_AGAIN = E' necessario riloggarsi.
---%>
-
 <h2><wp:i18n key="jpuserprofile_EDITPASSWORD_TITLE" /></h2>
 
 <p><wp:i18n key="jpuserprofile_PASSWORD_UPDATED" /></p>

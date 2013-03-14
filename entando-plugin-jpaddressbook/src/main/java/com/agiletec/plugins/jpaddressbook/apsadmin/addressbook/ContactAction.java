@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,13 +12,18 @@
 * 
 * 
 * 
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpaddressbook.apsadmin.addressbook;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
+import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
+import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.i18n.II18nManager;
+import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.system.entity.AbstractApsEntityAction;
 import com.agiletec.plugins.jpaddressbook.aps.system.JpaddressbookSystemConstants;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.IAddressBookManager;
@@ -26,6 +31,7 @@ import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.IContact;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+import java.util.List;
 
 /**
  * @author E.Santoboni
@@ -89,6 +95,41 @@ public class ContactAction extends AbstractApsEntityAction implements IContactAc
 		return SUCCESS;
 	}
 	
+	protected void checkTypeLabels(IContact contact) {
+		if (null == contact) {
+			return;
+		}
+		try {
+			List<AttributeInterface> attributes = contact.getAttributes();
+			for (int i = 0; i < attributes.size(); i++) {
+				AttributeInterface attribute = attributes.get(i);
+				String attributeLabelKey = "jpaddressbook_ATTR" + attribute.getName();
+				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
+					String attributeDescription = attribute.getDescription();
+					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ? 
+							attributeDescription :
+							attribute.getName();
+					this.addLabelGroups(attributeLabelKey, value);
+				}
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "checkTypeLables");
+			throw new RuntimeException("Error checking label types", t);
+		}
+	}
+	
+	protected void addLabelGroups(String key, String defaultValue) throws ApsSystemException {
+		try {
+			ApsProperties properties = new ApsProperties();
+			Lang defaultLang = super.getLangManager().getDefaultLang();
+			properties.put(defaultLang.getCode(), defaultValue);
+			this.getI18nManager().addLabelGroup(key, properties);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "addLabelGroups");
+			throw new RuntimeException("Error adding label groups - key '" + key + "'", t);
+		}
+	}
+	
 	@Override
 	public String save() {
 		try {
@@ -109,6 +150,13 @@ public class ContactAction extends AbstractApsEntityAction implements IContactAc
 		return SUCCESS;
 	}
 	
+	protected II18nManager getI18nManager() {
+		return _i18nManager;
+	}
+	public void setI18nManager(II18nManager i18nManager) {
+		this._i18nManager = i18nManager;
+	}
+	
 	protected IAddressBookManager getAddressBookManager() {
 		return _addressBookManager;
 	}
@@ -123,6 +171,7 @@ public class ContactAction extends AbstractApsEntityAction implements IContactAc
 		this._userProfileManager = userProfileManager;
 	}
 	
+	private II18nManager _i18nManager;
 	private IAddressBookManager _addressBookManager;
 	private IUserProfileManager _userProfileManager;
 	

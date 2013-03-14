@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-        <artifactId>entando-plugins-parent</artifactId>
-        <groupId>org.entando.entando.plugins</groupId>
-        <version>3.0.0</version>
-    </parent>
+		<artifactId>entando-plugins-parent</artifactId>
+		<groupId>org.entando.entando.plugins</groupId>
+		<version>3.2.0</version>
+	</parent>
 	<artifactId>entando-plugin-jpcasclient</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
 	<packaging>war</packaging>
-	<name>Entando Plugin: Cas Client</name>
-	<description>provide the Entando CAS client for CAS server authentication</description>
+	<name>Entando Plugin: CAS Client</name>
+	<description>Provide the Entando CAS client for CAS server authentication</description>
 	<developers>
 		<developer>
 			<id>gcocco</id>
@@ -19,7 +19,6 @@
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -51,21 +50,17 @@
 				</executions>
 			</plugin>			
 		</plugins>
-	</build>	
-	
-        <dependencies>
-            
-            <dependency>
-                <groupId>commons-httpclient</groupId>
-                <artifactId>commons-httpclient</artifactId>
-                <version>3.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jasig.cas</groupId>
-                <artifactId>cas-client-core</artifactId>
-                <version>3.1.3</version>
-            </dependency>
-            
-        </dependencies>
-	
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jasig.cas</groupId>
+			<artifactId>cas-client-core</artifactId>
+			<version>3.1.3</version>
+		</dependency>
+	</dependencies>
 </project>

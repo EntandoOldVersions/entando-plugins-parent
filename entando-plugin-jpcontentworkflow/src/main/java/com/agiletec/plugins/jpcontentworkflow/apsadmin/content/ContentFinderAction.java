@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcontentworkflow.apsadmin.content;
@@ -62,7 +62,7 @@ public class ContentFinderAction extends com.agiletec.plugins.jacms.apsadmin.con
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getContents");
-			throw new RuntimeException("Errore in ricerca contenuti", t);
+			throw new RuntimeException("Error searching contents", t);
 		}
 		return result;
 	}
@@ -70,7 +70,9 @@ public class ContentFinderAction extends com.agiletec.plugins.jacms.apsadmin.con
 	@Override
 	public String insertOnLine() {
 		try {
-			if (null == this.getContentIds()) return SUCCESS;
+			if (null == this.getContentIds()) {
+				return SUCCESS;
+			}
 			Iterator<String> iter = this.getContentIds().iterator();
 			List<Content> publishedContents = new ArrayList<Content>();
 			IContentManager contentManager = (IContentManager) this.getContentManager();
@@ -85,9 +87,12 @@ public class ContentFinderAction extends com.agiletec.plugins.jacms.apsadmin.con
 				}
 				msgArg[0] = contentToPublish.getDescr();
 				if (!Content.STATUS_READY.equals(contentToPublish.getStatus())) {
-					String[] args = {contentToPublish.getId(), contentToPublish.getDescr()};
-					this.addActionError(this.getText("error.content.publish.notReadyStatus", args));
-					continue;
+					String nextStep = this.getNextStep(contentToPublish);
+					if (null != nextStep && !Content.STATUS_READY.equals(nextStep)) {
+						String[] args = {contentToPublish.getId(), contentToPublish.getDescr(), contentToPublish.getStatus()};
+						this.addActionError(this.getText("error.content.publish.statusNotAllowed", args));
+						continue;
+					}
 				}
 				if (!this.isUserAllowed(contentToPublish)) {
 					this.addActionError(this.getText("error.content.userNotAllowedToPublishContent", msgArg));
@@ -99,26 +104,32 @@ public class ContentFinderAction extends com.agiletec.plugins.jacms.apsadmin.con
 					continue;
 				}
 				contentManager.insertOnLineContent(contentToPublish);
-				ApsSystemUtils.getLogger().info("Pubblicato contenuto " + contentToPublish.getId() 
-						+ " da Utente " + this.getCurrentUser().getUsername());
+				ApsSystemUtils.getLogger().info("Content '" + contentToPublish.getId() 
+						+ "' published by user '" + this.getCurrentUser().getUsername() + "'");
 				publishedContents.add(contentToPublish);
 			}
 			//RIVISITARE LOGICA DI COSTRUZIONE LABEL
 			this.addConfirmMessage("message.content.publishedContents", publishedContents);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "insertOnLine");
-			throw new RuntimeException("Errore in inserimento contenuti online", t);
+			throw new RuntimeException("Error inserting online content", t);
 		}
 		return SUCCESS;
 	}
 	
+	protected String getNextStep(Content content) {
+		return ((IContentWorkFlowActionHelper) this.getContentActionHelper()).getNextStep(content.getStatus(), content.getTypeCode());
+	}
+	
 	// Portare a protected in Action padre di jacms
 	protected void addConfirmMessage(String key, List<Content> deletedContents) {
-		if (deletedContents.size()>0) {
+		if (deletedContents.size() > 0) {
 			String confirm = this.getText(key);
 			for (int i=0; i<deletedContents.size(); i++) {
 				Content content = deletedContents.get(i);
-				if (i>0) confirm += " - ";
+				if (i>0) {
+					confirm += " - ";
+				}
 				confirm += " '" + content.getDescr() + "'";
 			}
 			this.addActionMessage(confirm);

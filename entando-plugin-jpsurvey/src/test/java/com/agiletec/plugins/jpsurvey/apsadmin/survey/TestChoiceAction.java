@@ -3,7 +3,7 @@ package com.agiletec.plugins.jpsurvey.apsadmin.survey;
 
 /*
  *
- * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  * This file is part of Entando software.
  * Entando is a free software; 
@@ -15,7 +15,7 @@ package com.agiletec.plugins.jpsurvey.apsadmin.survey;
  * 
  * 
  * 
- * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  */
 import com.agiletec.plugins.jpsurvey.apsadmin.ApsAdminPluginBaseTestCase;

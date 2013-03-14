@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpstats.aps.system.services.stats;
@@ -39,8 +39,6 @@ public interface IStatsDAO {
 	public void addStatsRecord(StatsRecord statsRecord);
 	
 	public void deleteStatsRecord(Date from, Date to);
-	
-	public String getAverageTimeSite(Date start, Date end);
 	
 	/**
 	 * Gets the average time spent on the site by session

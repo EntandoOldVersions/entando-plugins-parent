@@ -4,8 +4,8 @@
 	<parent>
 		<artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-        <version>3.0.0</version>
-    </parent>
+		<version>3.2.0</version>
+	</parent>
 	<artifactId>entando-plugin-jpnewsletter</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
 	<packaging>war</packaging>
@@ -23,8 +23,6 @@
 			<email>e.mezzano@agiletec.it</email>
 		</developer>
 	</developers>
-	<url>http://www.entando.com/</url>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -62,86 +60,52 @@
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.0.0</version><!-- version. Don't remove this comment. -->
+			<version>3.2.0</version><!-- version. Don't remove this comment. -->
 			<type>war</type>
 		</dependency>
-                
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.0.0</version><!-- version. Don't remove this comment. -->
+			<version>3.2.0</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>classes</classifier>
 			<scope>provided</scope>
 		</dependency>
-                
-                <dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.0.0</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc</classifier>
-		</dependency>
-                
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.0.0</version><!-- version. Don't remove this comment. -->
+			<version>3.2.0</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-                
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.0.0</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc-test</classifier>
-			<scope>test</scope>
-		</dependency>
-                
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>3.0.0</version><!-- version. Don't remove this comment. -->
+			<version>3.2.0</version><!-- version. Don't remove this comment. -->
 			<type>war</type>
 		</dependency>
-                
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>3.0.0</version><!-- version. Don't remove this comment. -->
+			<version>3.2.0</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>classes</classifier>
 			<scope>provided</scope>
 		</dependency>
-                
+		
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>3.0.0</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc</classifier>
-		</dependency>
-                
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>3.0.0</version><!-- version. Don't remove this comment. -->
+			<version>3.2.0</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-                
-		<dependency>
-			<groupId>org.entando.entando.plugins</groupId>
-			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>3.0.0</version><!-- version. Don't remove this comment. -->
-			<type>zip</type>
-			<classifier>misc-test</classifier>
-			<scope>test</scope>
-		</dependency>
-                
+		
 	</dependencies>
 </project>

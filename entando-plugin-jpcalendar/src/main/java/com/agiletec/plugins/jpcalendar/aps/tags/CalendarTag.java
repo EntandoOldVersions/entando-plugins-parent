@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  * This file is part of Entando software.
  * Entando is a free software; 
@@ -12,7 +12,7 @@
  * 
  * 
  * 
- * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  */
 package com.agiletec.plugins.jpcalendar.aps.tags;
@@ -27,7 +27,7 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
-import com.agiletec.plugins.jpcalendar.aps.CalendarConstants;
+import com.agiletec.plugins.jpcalendar.aps.system.services.CalendarConstants;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.ICalendarManager;
 import com.agiletec.plugins.jpcalendar.aps.tags.helper.CalendarTagHelper;
 import com.agiletec.plugins.jpcalendar.aps.tags.util.ApsCalendar;

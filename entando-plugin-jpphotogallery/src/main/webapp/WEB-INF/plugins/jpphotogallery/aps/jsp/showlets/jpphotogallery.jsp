@@ -7,7 +7,7 @@
 <wp:currentShowlet param="config" configParam="modelIdPreview" var="modelIdPreview" />
 
 <jacms:contentList listName="contentList" titleVar="titleVar" 
-	pageLinkVar="pageLinkVar" pageLinkDescriptionVar="pageLinkDescriptionVar" /> 
+	pageLinkVar="pageLinkVar" pageLinkDescriptionVar="pageLinkDescriptionVar" userFilterOptionsVar="userFilterOptionsVar" /> 
 
 <c:if test="${contentList != null}">
 	<wp:headInfo type="CSS" info="../../plugins/jpphotogallery/jpphotogallery.css"/>
@@ -20,6 +20,8 @@
 		<h2 class="title"><wp:i18n key="jpphotogallery_TITLE" /> </h2>
 	</c:if>
 	
+	<c:set var="userFilterOptionsVar" value="${userFilterOptionsVar}" scope="request" />
+	<c:import url="/WEB-INF/plugins/jacms/aps/jsp/showlets/inc/userFilter-module.jsp" />
 		
 	<jpph:pager listName="contentList" objectName="groupContent" max="1" advanced="true" offset="5" >
 		<c:set var="group" value="${groupContent}" scope="request" />

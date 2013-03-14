@@ -45,37 +45,43 @@
 			</ul>
 		</div>
 	</s:if>
-	<s:if test="null == avatarName">
-		<p>
-			<s:text name="jpavatar.label.current.avatar" />
-		</p> 
-		<p>
-			<jpavatar:avatar var="currentAvatar" returnDefaultAvatar="true" />
-			<s:if test="null != #request.currentAvatar">
-				<img src="<s:property value="#request.currentAvatar"/>" alt="" />
-			</s:if>
-		</p>
-		<s:form action="save" method="post" enctype="multipart/form-data">
+	
+	<jpavatar:avatar var="currentAvatar" returnDefaultAvatar="true" avatarStyleVar="style" />
+	
+	<c:choose>
+		<c:when test="${style == 'gravatar'}">
 			<p>
-				<label for="jpavatar_file" class="basic-mint-label"><s:text name="label.avatarImage" />:</label> 
-				<s:set var="fileTabIndex"><wpsa:counter /></s:set>
-				<s:file name="avatar" tabindex="%{#fileTabIndex}"/>
-				&#32;
-				<wpsf:submit useTabindexAutoIncrement="true" cssClass="button" value="%{getText('label.ok')}" />
-			</p>
-		</s:form>
-	</s:if>
-	<s:else>
-		<s:form action="bin">
-			<p> 
 				<s:text name="jpavatar.label.current.avatar" />
-			</p>
+			</p> 		
+			<img src="<c:out value="${currentAvatar}" />"/>
+		</c:when>
+		<c:when test="${style == 'local'}">
 			<p>
-				<img src="<jpavatar:avatar />"/>
-			</p>
-			<p>
-				<s:submit cssClass="button" value="%{getText('label.remove')}"/>
-			</p>
-		</s:form>
-	</s:else>
+				<s:text name="jpavatar.label.current.avatar" />
+			</p> 		
+			<img src="<c:out value="${currentAvatar}" />"/>
+			<s:if test="null == avatarResource">
+				<s:form action="save" method="post" enctype="multipart/form-data">
+					<p>
+						<label for="jpavatar_file" class="basic-mint-label"><s:text name="label.avatarImage" />:</label> 
+						<s:set var="fileTabIndex"><wpsa:counter /></s:set>
+						<s:file name="avatar" tabindex="%{#fileTabIndex}"/>
+						&#32;
+						<wpsf:submit useTabindexAutoIncrement="true" cssClass="button" value="%{getText('label.ok')}" />
+					</p>
+				</s:form>
+			</s:if>
+			<s:else>
+				<s:form action="bin">
+					<p>
+						<s:submit cssClass="button" value="%{getText('label.remove')}"/>
+					</p>
+				</s:form>
+			</s:else>
+		</c:when>
+		<c:otherwise>
+			style <c:out value="${style}" />
+		</c:otherwise>
+	</c:choose>
+
 </div>

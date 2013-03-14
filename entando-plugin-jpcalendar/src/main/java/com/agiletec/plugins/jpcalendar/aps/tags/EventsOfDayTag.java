@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  * This file is part of Entando software.
  * Entando is a free software; 
@@ -12,7 +12,7 @@
  * 
  * 
  * 
- * Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  */
 package com.agiletec.plugins.jpcalendar.aps.tags;
@@ -34,7 +34,7 @@ import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.aps.util.DateConverter;
-import com.agiletec.plugins.jpcalendar.aps.CalendarConstants;
+import com.agiletec.plugins.jpcalendar.aps.system.services.CalendarConstants;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.CalendarManager;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.ICalendarManager;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.util.EventsOfDayDataBean;
@@ -49,22 +49,17 @@ public class EventsOfDayTag extends TagSupport implements EventsOfDayDataBean {
 	@Override
 	public int doStartTag() throws JspException {
 		RequestContext reqCtx = (RequestContext) this.pageContext.getRequest().getAttribute(RequestContext.REQCTX);
-		ApsSystemUtils.getLogger().finest("Invocato EventsOfDayTag");
+		ApsSystemUtils.getLogger().finest("EventsOfDayTag Invoked");
 		try {
-			_calMan = (ICalendarManager) ApsWebApplicationUtils.getBean(
-					CalendarConstants.CALENDAR_MANAGER, this.pageContext);
-			IAuthorizationManager authorizatorManager = (IAuthorizationManager) ApsWebApplicationUtils
-					.getBean(SystemConstants.AUTHORIZATION_SERVICE,
-							this.pageContext);
+			this._calMan = (ICalendarManager) ApsWebApplicationUtils.getBean(CalendarConstants.CALENDAR_MANAGER, this.pageContext);
+			IAuthorizationManager authorizatorManager = (IAuthorizationManager) 
+					ApsWebApplicationUtils.getBean(SystemConstants.AUTHORIZATION_SERVICE, this.pageContext);
 			this.extractRequiredDate();
 			UserDetails currentUser = (UserDetails) reqCtx.getRequest().getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
-			
-			if (authorizatorManager.isAuthOnGroup(currentUser,
-					Group.ADMINS_GROUP_NAME)) {
+			if (authorizatorManager.isAuthOnGroup(currentUser, Group.ADMINS_GROUP_NAME)) {
 				this.setAllowedGroups(null);
 			} else {
-				List<Group> userGroups = authorizatorManager
-						.getGroupsOfUser(currentUser);
+				List<Group> userGroups = authorizatorManager.getUserGroups(currentUser);
 				Set allowedGroup = new HashSet();
 				allowedGroup.add(Group.FREE_GROUP_NAME);
 				for (Group group : userGroups) {
@@ -126,28 +121,23 @@ public class EventsOfDayTag extends TagSupport implements EventsOfDayDataBean {
 	public void setListName(String listName) {
 		this._listName = listName;
 	}
-
-	/**
-	 * Restituisce il codice dei tipi di contenuto da cercare.
-	 * 
-	 * @return Il codice dei tipi di contenuto da cercare.
-	 */
+	
 	public String getContentType() {
-		return _calMan.getManagedContentType();
+		return _calMan.getConfig().getContentTypeCode();
 	}
-
+	
 	public Set getAllowedGroups() {
 		return _allowedGroups;
 	}
-
+	
 	public String getAttributeNameEnd() {
-		return _calMan.getManagedDateEndAttribute();
+		return _calMan.getConfig().getEndAttributeName();
 	}
-
+	
 	public String getAttributeNameStart() {
-		return _calMan.getManagedDateStartAttribute();
+		return _calMan.getConfig().getStartAttributeName();
 	}
-
+	
 	public Date getRequiredDay() {
 		return _requiredDate;
 	}

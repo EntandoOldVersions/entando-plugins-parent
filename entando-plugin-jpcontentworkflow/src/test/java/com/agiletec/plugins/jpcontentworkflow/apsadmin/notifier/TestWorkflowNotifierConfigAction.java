@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcontentworkflow.apsadmin.notifier;
@@ -54,16 +54,16 @@ public class TestWorkflowNotifierConfigAction extends ApsAdminPluginBaseTestCase
 		assertFalse(config.isActive());
 		assertEquals(24, config.getHoursDelay());
 		assertEquals("CODE1", config.getSenderCode());
-		assertEquals("email", config.getMailAttrName());
+		//assertEquals("email", config.getMailAttrName());
 		assertEquals("04/12/2008", action.getStartDate());
 		assertEquals(16, action.getHour());
 		assertEquals(8, action.getMinute());
 		
 		assertFalse(config.isHtml());
-		assertEquals("[Portale]: Notifica stato contenuti", config.getSubject());
-		assertEquals("Elenco contenuti: Ciao {user},<br />di seguito l'elenco dei contenuti per cui è richiesto il tuo intervento<br /><br />", config.getHeader());
-		assertEquals("<br />Contenuto {type} - {descr} - Stato {status}<br />", config.getTemplate());
-		assertEquals("<br />Fine Mail (footer)", config.getFooter());
+                assertEquals("[My Own Portal]: A content changed", config.getSubject());
+                assertEquals("Hi {user},<br />these contents require your attention<br /><br />", config.getHeader());
+                assertEquals("<br />Content {type} - {descr} - Status {status}<br />", config.getTemplate());
+                assertEquals("<br />End (footer)", config.getFooter());
 	}
 	
 	public void testSaveFailure() throws Throwable {
@@ -143,7 +143,7 @@ public class TestWorkflowNotifierConfigAction extends ApsAdminPluginBaseTestCase
 			String startDate = DateFormatter.format(updatedNotifierConfig.getStartScheduler());
 			assertEquals("19/11/2009 20:40", startDate);
 			assertEquals("CODE1", updatedNotifierConfig.getSenderCode());
-			assertEquals("email", updatedNotifierConfig.getMailAttrName());
+			//assertEquals("email", updatedNotifierConfig.getMailAttrName());
 			assertTrue(updatedNotifierConfig.isHtml());
 			assertEquals("subject", updatedNotifierConfig.getSubject());
 			assertEquals("header", updatedNotifierConfig.getHeader());

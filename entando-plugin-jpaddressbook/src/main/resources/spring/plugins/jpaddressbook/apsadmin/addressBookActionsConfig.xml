@@ -28,6 +28,7 @@
 		<property name="addressBookManager" ref="jpaddressbookAddressBookManager"/>
 		<property name="userProfileManager" ref="jpuserprofileUserProfileManager"/>
 		<property name="entityActionHelper" ref="jpaddressbookContactActionHelper"/>
+		<property name="i18nManager" ref="I18nManager" />
 	</bean>
 	
 	<bean id="jpaddressbookContactListAttributeAction" scope="prototype" 

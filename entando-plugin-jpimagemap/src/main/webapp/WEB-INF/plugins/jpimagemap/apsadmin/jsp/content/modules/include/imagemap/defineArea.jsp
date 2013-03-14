@@ -53,8 +53,8 @@
 		<script type="text/javascript">
 			var ImageMapAttribute_fieldError_linkedAreaElement_intersectedArea = "<s:property value="%{getText('ImageMapAttribute.fieldError.linkedAreaElement.intersectedArea')}" escapeJavaScript="true" />";
 		</script>
-		<script type="text/javascript" src="<wp:resourceURL />plugins/jpimagemap/administration/common/js/jpimagemap-areas.js"></script>
-		<link rel="stylesheet" type="text/css" href="<wp:resourceURL />plugins/jpimagemap/administration/common/css/administration-jpimagemap.css" />
+		<script type="text/javascript" src="<wp:resourceURL />plugins/jpimagemap/administration/js/jpimagemap-areas.js"></script>
+		<link rel="stylesheet" type="text/css" href="<wp:resourceURL />plugins/jpimagemap/administration/css/administration-jpimagemap.css" />
 <!-- jpimagemap -->
 	</head>
 

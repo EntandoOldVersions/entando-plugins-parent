@@ -2,7 +2,7 @@ CREATE TABLE jpaddressbook_contacts
 (
   contactkey character varying(40) NOT NULL,
   profiletype character varying(30) NOT NULL,
-  "xml" character varying NOT NULL,
+  contactxml character varying NOT NULL,
   contactowner character varying(40) NOT NULL,
   publiccontact smallint NOT NULL,
   CONSTRAINT jpaddressbook_contacts_pkey PRIMARY KEY (contactkey)

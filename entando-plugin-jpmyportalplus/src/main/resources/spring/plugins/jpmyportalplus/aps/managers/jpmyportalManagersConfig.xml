@@ -29,4 +29,10 @@
 		<property name="pageUserConfigDAO" ref="jpmyportalplusPageUserConfigDAO" />
 	</bean>
 	
+	<bean id="jpmyportalplusShowletDecorationContainer" class="com.agiletec.plugins.jpmyportalplus.aps.tags.util.MyPortalShowletDecoratorContainer" >
+		<property name="headerPath"><value>/WEB-INF/plugins/jpmyportalplus/aps/jsp/showlets/inc/widget_header.jsp</value></property>
+		<property name="footerPath"><value>/WEB-INF/plugins/jpmyportalplus/aps/jsp/showlets/inc/widget_footer.jsp</value></property>
+		<property name="order"><value>50</value></property>
+	</bean>
+	
 </beans>

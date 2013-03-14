@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando S.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpcontentworkflow.apsadmin.content;
@@ -48,19 +48,18 @@ public class TestContentFinderAction extends ApsAdminPluginBaseTestCase {
 		try {
 			this._helper.setWorkflowConfig();
 			Map<String, String> params = new HashMap<String, String>();
-			
 			this.executeSearch("admin", params);
 			IContentFinderAction action = (IContentFinderAction) this.getAction();
-			action = (IContentFinderAction) this.getAction();
+			//action = (IContentFinderAction) this.getAction();
 			List<String> contents = action.getContents();
 			assertEquals(24, contents.size());
-			
 			this.executeSearch("editorCoach", params);
 			action = (IContentFinderAction) this.getAction();
 			contents = action.getContents();
-			String[] contentsId = { "ART112", "ART111", "ART102", "ART104", "RAH101" };
+			String[] contentsId = { "ART112", "ART102", "ART104", "RAH101" };
 			assertEquals(contentsId.length, contents.size());
-			for (String contentId : contentsId) {
+			for (int i = 0; i < contentsId.length; i++) {
+				String contentId = contentsId[i];
 				assertTrue(contents.contains(contentId));
 			}
 		} catch (Throwable t) {
@@ -87,7 +86,8 @@ public class TestContentFinderAction extends ApsAdminPluginBaseTestCase {
 			contents = action.getContents();
 			String[] contentsId = { "ART102", "ART112" };
 			assertEquals(contentsId.length, contents.size());
-			for (String contentId : contentsId) {
+			for (int i = 0; i < contentsId.length; i++) {
+				String contentId = contentsId[i];
 				assertTrue(contents.contains(contentId));
 			}
 			
@@ -96,10 +96,10 @@ public class TestContentFinderAction extends ApsAdminPluginBaseTestCase {
 			contents = action.getContents();
 			contentsId = new String[]{ "ART102", "ART111", "ART112", "RAH101" };
 			assertEquals(contentsId.length, contents.size());
-			for (String contentId : contentsId) {
+			for (int i = 0; i < contentsId.length; i++) {
+				String contentId = contentsId[i];
 				assertTrue(contents.contains(contentId));
 			}
-			action = (IContentFinderAction) this.getAction();
 		} catch (Throwable t) {
 			throw t;
 		} finally {

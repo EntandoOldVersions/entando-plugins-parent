@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	
+    <package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialShowlet" namespace="/do/jpfrontshortcut/Page/SpecialShowlet" extends="jpfrontshortcut_do/jpfrontshortcut">
+    	
+    	<global-results>
+    		<result name="pageTree">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/message.jsp</result>
+			<result name="configure">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/success-reload.jsp</result>
+    	</global-results>
+    	
+    	<!-- ##### SHOWLET WITH SIMPLE PARAMETERS **** START ##### -->
+    	<action name="configSimpleParameter" class="simpleShowletAction" method="init">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/configSimpleParameter.jsp</result>
+            <interceptor-ref name="i18nInterceptor" />
+			<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+    	
+		<action name="saveConfigSimpleParameter" class="simpleShowletAction" method="save">
+    		<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+    	<!-- ##### SHOWLET WITH SIMPLE PARAMETERS **** END ##### -->
+    	
+    	<!-- ##### SHOWLET NAVIGATOR **** ENTRY POINT ##### -->
+    	<action name="navigatorConfig" class="navigatorShowletAction" method="init">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/navigatorConfig.jsp</result>
+            <interceptor-ref name="i18nInterceptor" />
+			<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+    	<!-- ##### SHOWLET CONTENT VIEWER **** ENTRY POINT ##### -->
+    	<action name="viewerConfig" class="jacmsContentViewerShowletAction" method="init">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentViewer/configContentViewer.jsp</result>
+            <interceptor-ref name="i18nInterceptor" />
+			<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+    	
+    	<!-- ##### SHOWLET CONTENT LIST VIEWER **** ENTRY POINT ##### -->
+    	<action name="listViewerConfig" class="jacmsContentListViewerShowletAction" method="init">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="i18nInterceptor" />
+			<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+    </package>
+	
+	<package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialShowlet/Navigator" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Navigator" extends="jpfrontshortcut_do/jpfrontshortcut">
+		
+    	<global-results>
+    		<result name="pageTree">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/message.jsp</result>
+			<result name="configure">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/success-reload.jsp</result>
+    	</global-results>
+    	
+		<action name="addExpression" class="navigatorShowletAction" method="addExpression">
+        	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/navigatorConfig.jsp</result>
+            <result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/navigatorConfig.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="removeExpression*" class="navigatorShowletAction" method="removeExpression">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/navigatorConfig.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="moveExpression*" class="navigatorShowletAction" method="moveExpression">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/navigatorConfig.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="saveNavigatorConfig" class="navigatorShowletAction" method="save">
+    		<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+	</package>
+	
+	<package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialShowlet/Viewer" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" extends="jpfrontshortcut_do/jpfrontshortcut">
+		
+    	<global-results>
+    		<result name="pageTree">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/message.jsp</result>
+			<result name="configure">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/success-reload.jsp</result>
+    	</global-results>
+    	
+		<action name="searchContents*" class="jacmsContentFinderViewerShowletAction">
+            <result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentViewer/contentFinding.jsp</result>
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentViewer/contentFinding.jsp</result>
+        	<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+        
+        <action name="changeContentListOrder*" class="jacmsContentFinderViewerShowletAction" method="changeOrder">
+            <result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentViewer/contentFinding.jsp</result>
+        	<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="joinContent*" class="jacmsContentFinderViewerShowletAction" method="joinContent">
+			<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentViewer/contentFinding.jsp</result>
+            <result type="chain">executeJoinContent</result>
+        	<interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="executeJoinContent*" class="jacmsContentViewerShowletAction" method="joinContent">
+        	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentViewer/contentFinding.jsp</result>
+            <result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentViewer/configContentViewer.jsp</result>
+        	<interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="saveViewerConfig*" class="jacmsContentViewerShowletAction" method="save">
+    		<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentViewer/configContentViewer.jsp</result>
+        	<interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+	</package>
+	
+	<package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" extends="jpfrontshortcut_do/jpfrontshortcut">
+		
+		<global-results>
+    		<result name="pageTree">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/message.jsp</result>
+			<result name="configure">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/success-reload.jsp</result>
+    	</global-results>
+		
+		<action name="configListViewer" class="jacmsContentListViewerShowletAction" method="configContentType">
+        	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+        
+        <action name="changeContentType" class="jacmsContentListViewerShowletAction" method="changeContentType">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="addCategory" class="jacmsContentListViewerShowletAction" method="addCategory">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="removeCategory*" class="jacmsContentListViewerShowletAction" method="removeCategory">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="removeUserFilter*" class="jacmsContentListViewerShowletAction" method="removeUserFilter">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="moveUserFilter*" class="jacmsContentListViewerShowletAction" method="moveUserFilter">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="addUserFilter" class="jacmsContentListViewerShowletAction" method="addUserFilter">
+        	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <result name="userfiltercategory">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/userFilter/entryCategory.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="removeFilter*" class="jacmsContentListViewerShowletAction" method="removeFilter">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="moveFilter*" class="jacmsContentListViewerShowletAction" method="moveFilter">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="saveListViewerConfig" class="jacmsContentListViewerShowletAction" method="save">
+        	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="newFilter" class="jacmsContentListFilterAction" method="newFilter">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/entryFilter.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="setFilterType" class="jacmsContentListFilterAction" method="setFilterType">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/entryFilter.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="setFilterOption" class="jacmsContentListFilterAction" method="setFilterOption">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/entryFilter.jsp</result>
+            <result name="addFilter" type="chain">addFilter</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="saveFilter" class="jacmsContentListFilterAction" method="saveFilter">
+        	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/entryFilter.jsp</result>
+            <result type="chain">addFilter</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="saveTextFilter" class="jacmsContentListTextFilterAction" method="saveFilter">
+        	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/entryFilter.jsp</result>
+            <result type="chain">addFilter</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="saveNumberFilter" class="jacmsContentListNumberFilterAction" method="saveFilter">
+        	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/entryFilter.jsp</result>
+            <result type="chain">addFilter</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="saveBooleanFilter" class="jacmsContentListBooleanFilterAction" method="saveFilter">
+        	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/entryFilter.jsp</result>
+            <result type="chain">addFilter</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="saveDateFilter" class="jacmsContentListDateFilterAction" method="saveFilter">
+        	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/entryFilter.jsp</result>
+            <result type="chain">addFilter</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
+        </action>
+		
+		<action name="addFilter" class="jacmsContentListViewerShowletAction" method="addFilter">
+        	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
+            <interceptor-ref name="jpfrontshortcutFrontEndStack">
+            	<param name="requestAuth.requiredPermission">managePages</param>
+            	<param name="chain.includeParameters">newFilter</param>
+            </interceptor-ref>
+        </action>
+		
+	</package>
+	
+</struts>

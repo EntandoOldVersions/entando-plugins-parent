@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
-    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
-    "http://struts.apache.org/dtds/struts-2.1.dtd">
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
 	
@@ -72,12 +72,22 @@
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
         
-        <action name="new" class="jpcontentworkflowIntroNewContentAction" method="openNew">
+        <action name="new" class="jacmsIntroNewContentAction" method="openNew">
+            <result type="chain">newJpCw</result>
+            <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        </action>
+    	<action name="newJpCw" class="jpcontentworkflowIntroNewContentAction">
             <result type="tiles">admin.jacms.content.new</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
     	
-        <action name="createNewVoid" class="jpcontentworkflowIntroNewContentAction" method="createNewVoid">
+        <action name="createNewVoid" class="jacmsIntroNewContentAction" method="createNewVoid">
+            <result name="input" type="tiles">admin.jacms.content.new</result>
+        	<result type="chain">createNewVoidJpCw</result>
+        	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        </action>
+		
+        <action name="createNewVoidJpCw" class="jpcontentworkflowIntroNewContentAction">
             <result name="input" type="tiles">admin.jacms.content.new</result>
         	<result type="redirectAction">entryContent</result>
         	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>

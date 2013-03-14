@@ -1,6 +1,6 @@
 /*
 *
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software.
 * Entando is a free software; 
@@ -12,7 +12,7 @@
 * 
 * 
 * 
-* Copyright 2012 Entando s.r.l. (http://www.entando.com) All rights reserved.
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpuserreg;
@@ -49,7 +49,7 @@ public class JpUserRegTestHelper extends UserRegDAO {
 		return token;
 	}
 	
-	private static final String GET_TOKEN_FROM_USERNAME = "SELECT token FROM jpuserreg_activationtokens WHERE username = ?;";
+	private static final String GET_TOKEN_FROM_USERNAME = "SELECT token FROM jpuserreg_activationtokens WHERE username = ?";
 	
 	//	Config with a valid email address
 	public static final String EMAIL = "agiletectest@gmail.com";

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
-    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
-    "http://struts.apache.org/dtds/struts-2.1.dtd">
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
     
@@ -9,17 +9,20 @@
     	
         <action name="edit" class="jpuserprofileCurrentUserProfileAction" method="edit">
             <result type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
-            <result name="chooseType" type="tiles">admin.jpuserprofile.CurrentUser.Profile.chooseType</result>
+			<!--
+			<result name="chooseType" type="tiles">admin.jpuserprofile.CurrentUser.Profile.chooseType</result>
+            -->
+			<result name="currentUserWithoutProfile" type="tiles">admin.jpuserprofile.CurrentUser.Profile.noProfile</result>
             <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
-        
+        <!--
         <action name="new" class="jpuserprofileCurrentUserProfileAction" method="createNew" >
             <result type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
             <result name="edit" type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
             <result name="input" type="tiles">admin.jpuserprofile.CurrentUser.Profile.chooseType</result>
             <interceptor-ref name="entandoDefaultStack"></interceptor-ref>
         </action>
-        
+        -->
         <action name="save" class="jpuserprofileCurrentUserProfileAction" method="save">
             <result name="input" type="tiles">admin.jpuserprofile.CurrentUser.Profile.entry</result>
             <result type="redirectAction">
