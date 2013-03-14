@@ -86,7 +86,8 @@ public class FrontContentAction extends ContentAction {
 		int start = text.indexOf("$content.");
 		while (start >= 0) {
 			end = text.indexOf(".", start + "$content.".length());
-			if (end >= 0) {
+			int checkId = text.indexOf("\"", start + "$content.".length());
+			if (end >= 0 && (checkId < 0 || checkId > end)) {
 				end = end + postfixLen;
 				String attributeName = text.substring(start + "$content.".length(), end - ".".length());
 				if (null == this.getAttributeName()) {
@@ -97,6 +98,8 @@ public class FrontContentAction extends ContentAction {
 					this.getAttributeName().add(attributeName);
 				}
 				start = text.indexOf("$content.", end);
+			} else if (end >= 0 && checkId < end) {
+				start = text.indexOf("$content.", checkId);
 			} else {
 				start = -1; //uscita
 			}
