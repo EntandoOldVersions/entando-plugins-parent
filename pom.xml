@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>org.entando.entando.plugins</groupId>
 	<artifactId>entando-plugins-parent</artifactId>
-	<version>3.2.0</version>
+	<version>3.2.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Entando: Plugins parent</name>
 	<description>Plugins parent for Entando: an agile, modern and user-centric open source Portal platform.</description>
@@ -24,7 +24,7 @@
 		<connection>scm:git:git://github.com/entando/entando-plugins-parent.git</connection>
 		<developerConnection>scm:git:git@github.com:entando/entando-plugins-parent.git</developerConnection>
 		<url>https://github.com/entando/entando-plugins-parent</url>
-	  <tag>v3.2.0</tag>
+	  <tag>HEAD</tag>
   </scm>
 	<developers>
 		<developer>
@@ -414,13 +414,13 @@
  		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>3.2.0</version>
+			<version>3.2.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.entando.entando</groupId>
 			<artifactId>entando-core-engine</artifactId>
-			<version>3.2.0</version>
+			<version>3.2.1-SNAPSHOT</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
