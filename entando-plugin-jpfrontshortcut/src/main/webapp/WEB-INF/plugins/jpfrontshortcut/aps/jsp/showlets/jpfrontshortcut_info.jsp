@@ -57,8 +57,7 @@
                 "opendialog": "widgetDialog",
                 "jqueryaction": "anchor",
                 "id": "anchor_config_$content.getId()",
-                "href": "$content.getConfigParameter("applicationBaseURL")do/jpfrontshortcut/Content/introView?request_locale=$content.getLangCode()&amp;langCode=$content.getLangCode()&amp;contentId=$content.getId()&amp;attributeName=Title&amp;attributeName=Abstract",
-                "button": false
+				"href": "$content.getConfigParameter("applicationBaseURL")do/jpfrontshortcut/Content/introView?modelId=<INSERT HERE THE ID OF THE MODEL>&amp;contentId=$content.getId()&amp;request_locale=$content.getLangCode()&amp;langCode=$content.getLangCode()                "button": false
             });
         });
         //--&gt;&lt;!]]&gt;
@@ -66,6 +65,9 @@
 #end
 			</pre>
 		</p>
+	</li>
+	<li>
+		<p>Remember to insert the correct id of the model in the <code>href</code></p>
 	</li>
 	<li>
 		<p>Important: this component at the moment will work only in pages served with MimeType <strong>text/html</strong></p>
