@@ -17,6 +17,13 @@
 */
 package org.entando.entando.plugins.jpfrontshortcut.aps.internalservlet.content;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import org.entando.entando.plugins.jpfrontshortcut.aps.system.JpFrontShortcutSystemConstants;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.common.notify.NotifyManager;
@@ -24,16 +31,10 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.i18n.II18nManager;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.util.ApsProperties;
-
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.contentmodel.ContentModel;
 import com.agiletec.plugins.jacms.aps.system.services.contentmodel.IContentModelManager;
 import com.agiletec.plugins.jacms.apsadmin.content.ContentAction;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.entando.entando.plugins.jpfrontshortcut.aps.system.JpFrontShortcutSystemConstants;
 
 /**
  * @author E.Santoboni
@@ -59,8 +60,9 @@ public class FrontContentAction extends ContentAction {
 				throw new ApsSystemException("Invalid model id " + model.getId() + 
 						" of type " + model.getContentType() + " for content " + this.getContentId());
 			}
+			Content content = this.getContentManager().loadContent(this.getContentId(), false);
 			//System.out.println(model.getId());
-			this.extractAttributesToEdit(model.getContentShape());
+			this.extractAttributesToEdit(model.getContentShape(), content);
 			//System.out.println(this.getAttributeName());
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "editView");
@@ -80,28 +82,26 @@ public class FrontContentAction extends ContentAction {
 		return model;
 	}
 	
-	private void extractAttributesToEdit(String text) {
-		int postfixLen = ".".length();
-		int end = 0;
-		int start = text.indexOf("$content.");
-		while (start >= 0) {
-			end = text.indexOf(".", start + "$content.".length());
-			int checkId = text.indexOf("\"", start + "$content.".length());
-			if (end >= 0 && (checkId < 0 || checkId > end)) {
-				end = end + postfixLen;
-				String attributeName = text.substring(start + "$content.".length(), end - ".".length());
+	private void extractAttributesToEdit(String text, Content content) {
+		if (null == content) {
+			ApsSystemUtils.getLogger().severe("null content in extractAttributesToEdit");
+			return;
+		}
+		if (null == content.getAttributeMap() || content.getAttributeMap().isEmpty()) {
+			ApsSystemUtils.getLogger().severe("no attributes for content " + content.getId() + " in extractAttributesToEdit");
+			return;
+		}
+		Set<String> attributes = content.getAttributeMap().keySet();
+		Iterator<String> it = attributes.iterator();
+		while (it.hasNext()) {
+			String currentAttrName = it.next();
+			if (text.contains("$content." + currentAttrName)) {
 				if (null == this.getAttributeName()) {
 					this.setAttributeName(new ArrayList<String>());
 				}
-				//System.out.println(attributeName);
-				if (!this.getAttributeName().contains(attributeName)) {
-					this.getAttributeName().add(attributeName);
+				if (!this.getAttributeName().contains(currentAttrName)) {
+					this.getAttributeName().add(currentAttrName);
 				}
-				start = text.indexOf("$content.", end);
-			} else if (end >= 0 && checkId < end) {
-				start = text.indexOf("$content.", checkId);
-			} else {
-				start = -1; //uscita
 			}
 		}
 	}
