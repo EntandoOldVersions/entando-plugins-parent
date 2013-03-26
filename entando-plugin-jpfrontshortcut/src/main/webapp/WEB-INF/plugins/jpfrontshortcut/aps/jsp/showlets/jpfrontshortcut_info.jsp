@@ -47,6 +47,9 @@
 		<p>
 			<pre style="overflow: scroll; border: 1px solid silver; width: 90%; padding: 0.5em 4%; background-color: #fafafa">
 #if ($content.isUserAllowed("editContents"))
+ #if ($content.isUserAllowed("editContents"))
+  #set ($frontEndEditingParam = $info.getConfigParameter("jpfrontshortcut_activeContentFrontEndEditing"))
+   #if ($frontEndEditingParam &amp;&amp; $frontEndEditingParam == "true") 
     &lt;a id="options_anchor_$content.getId()" href="javascript:void(0)"&gt;
         $i18n.getLabel("EDIT_THIS_CONTENT") - Front Shortcut
     &lt;/a&gt;
@@ -62,6 +65,8 @@
         });
         //--&gt;&lt;!]]&gt;
     &lt;/script&gt;
+  #end
+ #end
 #end
 			</pre>
 		</p>
