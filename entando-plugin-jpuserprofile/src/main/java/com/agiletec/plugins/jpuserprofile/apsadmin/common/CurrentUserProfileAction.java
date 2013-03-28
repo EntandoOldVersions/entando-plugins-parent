@@ -57,37 +57,7 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
     
     @Override
     public String createNew() {
-        /*
-		String profileTypeCode = this.getProfileTypeCode();
-        try {
-            UserDetails user = this.getCurrentUser();
-            IUserProfile userProfile = (IUserProfile) this.getUserProfileManager().getProfile(user.getUsername());
-            if (null != userProfile) {
-				this.checkTypeLabels(userProfile);
-                this.getRequest().getSession().setAttribute(SESSION_PARAM_NAME_CURRENT_PROFILE, userProfile);
-                return "edit";
-            }
-            if (null == profileTypeCode || profileTypeCode.trim().length() == 0) {
-                String[] args = {profileTypeCode};
-                this.addFieldError("profileTypeCode", this.getText("jpuserprofile.error.new.invalidtype", args));
-                return INPUT;
-            }
-            userProfile = (IUserProfile) this.getUserProfileManager().getEntityPrototype(profileTypeCode);
-            if (null == userProfile) {
-                String[] args = {profileTypeCode};
-                this.addFieldError("profileTypeCode", this.getText("jpuserprofile.error.new.invalidtype", args));
-                return INPUT;
-            }
-            userProfile.setId(user.getUsername());
-			this.checkTypeLabels(userProfile);
-            this.getRequest().getSession().setAttribute(SESSION_PARAM_NAME_CURRENT_PROFILE, userProfile);
-        } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "createNew");
-            return FAILURE;
-        }
-        return SUCCESS;
-		*/
-		// Operation Not Allowed
+        // Operation Not Allowed
         return null;
     }
     
@@ -108,22 +78,13 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
                 userProfile = this.getUserProfileManager().getProfile(username);
 				this.checkTypeLabels(userProfile);
             } else {
-				/*
-            	List<IApsEntity> userProfileTypes = new ArrayList<IApsEntity>();
-                userProfileTypes.addAll(this.getUserProfileManager().getEntityPrototypes().values());
-                if (userProfileTypes.isEmpty()) {
-                    throw new RuntimeException("Unexpected error - no one user profile types");
-                } else if (userProfileTypes.size() == 1) {
-                    userProfile = (IUserProfile) userProfileTypes.get(0);
-                    userProfile.setId(currentUser.getUsername());
-                } else {
-                    return "chooseType";
-                }
-				*/
 				return "currentUserWithoutProfile";
             }
-            userProfile.disableAttributes(ProfileSystemConstants.ATTRIBUTE_DISABLING_CODE_ON_EDIT);
-            this.getRequest().getSession().setAttribute(SESSION_PARAM_NAME_CURRENT_PROFILE, userProfile);
+			IUserProfile currentProfile = this.getUserProfile();
+			if (null == currentProfile || !currentProfile.getUsername().equals(currentUser.getUsername())) {
+				userProfile.disableAttributes(ProfileSystemConstants.ATTRIBUTE_DISABLING_CODE_ON_EDIT);
+				this.getRequest().getSession().setAttribute(SESSION_PARAM_NAME_CURRENT_PROFILE, userProfile);
+			}
         } catch (Throwable t) {
             ApsSystemUtils.logThrowable(t, this, "edit");
             return FAILURE;
@@ -182,8 +143,9 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
                 this.getUserProfileManager().updateProfile(user.getUsername(), profile);
             }
             this.getRequest().getSession().removeAttribute(SESSION_PARAM_NAME_CURRENT_PROFILE);
+			this.addActionMessage(this.getText("jpuserprofile.message.profileChanged"));
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "edit");
+            ApsSystemUtils.logThrowable(t, this, "save");
             return FAILURE;
         }
         return SUCCESS;

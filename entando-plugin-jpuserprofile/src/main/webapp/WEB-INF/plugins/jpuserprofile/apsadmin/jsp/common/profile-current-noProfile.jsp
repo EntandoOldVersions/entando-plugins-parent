@@ -2,6 +2,6 @@
 <h2><s:text name="message.title.ActionErrors" /></h2>
 <div id="main">
 <div class="message message_error">
-<p><s:text name="jpuserprofile.message.userWithoutProfile" /></p>
+<s:include value="/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/common/inc/profile-missing.jsp" />
 </div>
 </div>

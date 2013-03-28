@@ -39,4 +39,9 @@
         <property name="hookPointKey"><value>core.userFinding.list.table.td</value></property>
     </bean>
     
+    <bean id="jpuserprofileMyUserProfileHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
+        <property name="filePath"><value>/WEB-INF/plugins/jpuserprofile/apsadmin/jsp/common/profile-current-jack.jsp</value></property>
+        <property name="hookPointKey"><value>core.userProfile.entry</value></property>
+    </bean>
+	
 </beans>
