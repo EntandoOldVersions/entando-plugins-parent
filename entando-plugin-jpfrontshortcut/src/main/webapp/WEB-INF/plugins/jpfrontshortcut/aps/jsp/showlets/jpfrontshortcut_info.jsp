@@ -47,6 +47,8 @@
 		<p>
 			<pre style="overflow: scroll; border: 1px solid silver; width: 90%; padding: 0.5em 4%; background-color: #fafafa">
 #if ($content.isUserAllowed("editContents"))
+  #set ($frontEndEditingParam = $info.getConfigParameter("jpfrontshortcut_activeContentFrontEndEditing"))
+   #if ($frontEndEditingParam &amp;&amp; $frontEndEditingParam == "true") 
     &lt;a id="options_anchor_$content.getId()" href="javascript:void(0)"&gt;
         $i18n.getLabel("EDIT_THIS_CONTENT") - Front Shortcut
     &lt;/a&gt;
@@ -57,15 +59,18 @@
                 "opendialog": "widgetDialog",
                 "jqueryaction": "anchor",
                 "id": "anchor_config_$content.getId()",
-                "href": "$content.getConfigParameter("applicationBaseURL")do/jpfrontshortcut/Content/introView?request_locale=$content.getLangCode()&amp;langCode=$content.getLangCode()&amp;contentId=$content.getId()&amp;attributeName=Title&amp;attributeName=Abstract",
-                "button": false
+				"href": "$content.getConfigParameter("applicationBaseURL")do/jpfrontshortcut/Content/introView?modelId=&lt;INSERT HERE THE ID OF THE MODEL&gt;&amp;contentId=$content.getId()&amp;request_locale=$content.getLangCode()&amp;langCode=$content.getLangCode()                "button": false
             });
         });
         //--&gt;&lt;!]]&gt;
     &lt;/script&gt;
+  #end
 #end
 			</pre>
 		</p>
+	</li>
+	<li>
+		<p>Remember to insert the correct id of the model in the <code>href</code></p>
 	</li>
 	<li>
 		<p>Important: this component at the moment will work only in pages served with MimeType <strong>text/html</strong></p>
