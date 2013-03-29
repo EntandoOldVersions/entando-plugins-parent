@@ -74,8 +74,8 @@ public class CurrentUserProfileAction extends AbstractApsEntityAction implements
             UserDetails currentUser = this.getCurrentUser();
             Object object = currentUser.getProfile();
             if (null != object && object instanceof IUserProfile) {
-                String username = currentUser.getUsername();
-                userProfile = this.getUserProfileManager().getProfile(username);
+                //String username = currentUser.getUsername();
+                userProfile = (IUserProfile) object;//this.getUserProfileManager().getProfile(username);
 				this.checkTypeLabels(userProfile);
             } else {
 				return "currentUserWithoutProfile";
