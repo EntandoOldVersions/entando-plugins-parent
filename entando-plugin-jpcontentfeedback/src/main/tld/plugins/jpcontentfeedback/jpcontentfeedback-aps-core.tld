@@ -19,7 +19,7 @@
 		</attribute>
 		<attribute>
 			<description><![CDATA[the listViewer PagerId ]]></description>
-			<name>listViewerPager</name>
+			<name>listViewerPagerObjectName</name>
 			<required>no</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

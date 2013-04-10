@@ -227,17 +227,15 @@
 
 					<form action="<c:out value="${insertAction}" escapeXml="false" />" method="post">
 						<p>
-							<pre>
 							<%--
+							<pre>
 								groupComment.size<c:out value="${groupComment.size}"></c:out>
 								groupComment.maxItem<c:out value="${groupComment.maxItem}"></c:out>
 								groupComment.max<c:out value="${groupComment.max}"></c:out>
 								wewe<c:out value="${listViewerPagerId}"></c:out>
-							 --%>
 							</pre>
-						 
-							<input type="hidden" name="formContentId" value="<s:property value="contentId"/>">
-							
+							 --%>
+							<input type="hidden" name="formContentId" value="<s:property value="contentId"/>" />
 							<input type="hidden" name="pagName" value="<c:out value="${groupComment.paramItemName}" />">
 							<c:choose>
 								<c:when test="${groupComment.size > 0 && groupComment.size > groupComment.max}">
