@@ -184,10 +184,10 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			sb.setSort(ICommentSearchBean.SORT_ASC);
 			listaIds = this._commentManager.searchCommentIds(sb);
 			assertEquals(2, listaIds.size());
-			
+
 			// Inserimento votazione su commento 1
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "insertCommentVote");
-
+			this.setToken();
 			this.addParameter("formContentId", contentId);
 			this.addParameter("selectedComment", listaIds.get(0));
 			this.addParameter("vote", 2);
@@ -208,13 +208,14 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 		// Inserimento votazione su contenuto
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "insertVote");
+			this.setToken();
 			this.addParameter("formContentId", contentId);
 			this.addParameter("vote", 4);
 			result2 = this.executeAction();
 			assertEquals(Action.SUCCESS, result2);
 
-			action = (ContentFeedbackAction)this.getAction();
-			ratingConten_0 = action.getCommentRating(Integer.parseInt(listaIds.get(0)));
+			ContentFeedbackAction action_1 = (ContentFeedbackAction)this.getAction();
+			ratingConten_0 = action_1.getCommentRating(Integer.parseInt(listaIds.get(0)));
 			assertNotNull(ratingConten_0);
 			assertEquals(1, ratingConten_0.getVoters());
 			assertEquals(2, ratingConten_0.getSumvote());
@@ -277,6 +278,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 			this.setUserOnSession("admin");
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "intro");
+			this.setToken();
 			this.addParameter("formContentId", contentId);
 			String result = this.executeAction();
 			assertEquals(Action.SUCCESS, result);
@@ -286,6 +288,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			assertEquals(0, commentIds.size());
 
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "insert");
+			this.setToken();
 			this.addParameter("formContentId", contentId);
 			this.addParameter("title", "testTitle");
 			this.addParameter("commentText", "testComment");
@@ -295,6 +298,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 			this.setUserOnSession("admin");
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "intro");
+			this.setToken();
 			this.addParameter("formContentId", contentId);
 			result = this.executeAction();
 			assertEquals(Action.SUCCESS, result);
