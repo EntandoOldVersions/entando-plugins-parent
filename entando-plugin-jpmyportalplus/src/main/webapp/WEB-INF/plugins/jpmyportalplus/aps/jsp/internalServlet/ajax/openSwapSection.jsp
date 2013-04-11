@@ -2,12 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <c:set var="showletId"><s:property value="showletCodeOnOpeningSection" />_<s:property value="%{frameWhereOpenSection}" /></c:set>
-<form action="<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpmyportalplus/front/swapFrames.action" method="post">
-	<p>
+<form action="<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpmyportalplus/front/swapFrames.action" method="post" class="margin-medium-all">
+	<p class="noscreen">
 		<%-- il nome del parametro startFramePos è referenziato in jpmyportalplus_javascript_variables.jsp  --%>
 		<input type="hidden" name="currentPageCode" value="<s:property value="currentPageCode" />" />
 		<input type="hidden" name="startFramePos" value="<s:property value="%{frameWhereOpenSection}" />" />
-		<label for="scambia_<c:out value="${showletId}" />"><s:text name="jpmyportalplus.movethisshowlet" /></label>:<br />
+	</p>
+
+	<p>
+		<label for="scambia_<c:out value="${showletId}" />"><s:text name="jpmyportalplus.movethisshowlet" /></label>
 		<select id="scambia_<c:out value="${showletId}" />" name="targetFramePos">
 			<s:iterator value="selectItems" var="selectItem" >
 				<option value="<s:property value="#selectItem.frameId" />">
@@ -18,6 +21,6 @@
 		</select>
 	</p>
 	<p>
-		<input type="submit" class="button" value="<s:text name="jpmyportalplus.move" />" />
+		<input type="submit" class="btn btn-small btn-primary" value="<s:text name="jpmyportalplus.move" />" />
 	</p>
 </form>

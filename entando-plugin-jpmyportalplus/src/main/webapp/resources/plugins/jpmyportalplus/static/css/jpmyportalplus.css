@@ -3,90 +3,49 @@
 }
 
 #widget-columns-container {
-	float: left;
-	width: 100%;
-	background-color: #fafafa;
-	margin: 0 0 2em 0;
+
 }
 
 .widget-column {
-	float: left;
-	width: 30%;
-	margin: 0 1.5%;
-	background-color: silver;
 	min-height: 40px;
 }
 
 .widget {
-	float: left;
-	width: 100%;
-	margin: 0 0 1.5em 0;
-	background-color: #fafafa;
+	border: 1px solid rgba(0, 0, 0, 0.2);
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
-	border: 1px solid #c0c0c0;
-	padding: 4px 0;
-	-webkit-transition: -webkit-box-shadow 300ms ease-out;
-	-moz-transition: box-shadow 300ms ease-out;
-	-ms-transition: box-shadow 300ms ease-out;
-	-o-transition: box-shadow 300ms ease-out;
-	transition: box-shadow 300ms ease-out;
-	-webkit-box-shadow: 1px 2px 1px 1px rgba(0, 0, 0, 0.15);
-	box-shadow: 1px 2px 1px 1px rgba(0, 0, 0, 0.15);
 }
 
 .widget-hover {
-	-webkit-transition: -webkit-box-shadow 300ms ease-out;
-	-moz-transition: box-shadow 300ms ease-out;
-	-ms-transition: box-shadow 300ms ease-out;
-	-o-transition: box-shadow 300ms ease-out;
-	transition: box-shadow 300ms ease-out;
-	-webkit-box-shadow: 5px 5px 1px 1px rgba(0, 0, 0, 0.4);
-	box-shadow: 5px 5px 1px 1px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0 4px 1px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 4px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .widget-while-dragging {
-	-webkit-transition: -webkit-box-shadow 300ms ease-out;
-	-moz-transition: box-shadow 300ms ease-out;
-	-ms-transition: box-shadow 300ms ease-out;
-	-o-transition: box-shadow 300ms ease-out;
-	transition: box-shadow 300ms ease-out;
-	-webkit-box-shadow: 15px 10px 5px 3px rgba(0, 0, 0, 0.6);
-	box-shadow: 15px 10px 5px 3px rgba(0, 0, 0, 0.6);	
+
 }
 
 .widget-placeholder {
-	background-color: #65CC63;
-	background-color: rgba(30,60,200,0.5);
-	visibility: visible;
-	border-color: #65CC63;
-	border-color: rgba(30,60,200,0);
-	-webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-	box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+
 }
 
 .widget .widget-spacer {
-	margin: 0 4px;
+
 }
 
-.widget .widget-toolbar {
-	float: right;
-	font-size: 10px;
-	margin-top: 0px;
+.widget h1 {
+	font-size: 1em;
+	line-height: 1em;
+	padding-right: 0.25em;
 }
 
 .widget-loading,
 .widget .widget-toolbar .button {
-	cursor: pointer;
-	float: left;
-	min-height: 16px;
-	overflow: hidden;
-	margin-right: 5px;
+
 }
 
 .widget .widget-toolbar :hover {
-	background-color: #000;
-	color: #fff;
+
 }
 
 .widget-draggable {
@@ -94,32 +53,26 @@
 }
 
 
-.widget .widget-header, 
-.widget .widget-content, 
+.widget .widget-header,
+.widget .widget-content,
 .widget .widget-footer {
-	float: left;
-	width: 100%;
-} 
+
+}
 
 .widget .widget-content {
-	float: left;
-	width: 100%;
-	margin: 4px 0 0 0;
-	padding: 4px 0;
-	border-top: 1px dashed #e0e0e0;
-	border-bottom: 1px dashed #e0e0e0;
+
 }
 
 .widget .widget-header {
-	font-size: 16px;
-	font-family: Arial;
-	color: #404040;
-	position: relative;
+
+}
+
+.widget-border-bottom {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 /** configure page block **/
 
 #editshowletlist {
-	background-color: silver;
-	padding: 1em 0;
+
 }

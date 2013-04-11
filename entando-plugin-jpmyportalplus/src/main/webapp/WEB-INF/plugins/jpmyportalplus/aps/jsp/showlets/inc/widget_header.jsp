@@ -88,57 +88,37 @@ class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero 
 	</c:choose>
 	<c:set var="moveActionUrl"><wp:url paramRepeat="false" />?editFrame=<c:out value="${editFrameValue}" escapeXml="false" />&currentPageCode=<wp:currentPage param="code" escapeXml="false" /></c:set>
 
-<div class="widget" id="<c:out value="${showletId}" />"> <%-- contenitore del box | class="dragdrop_box" : classe css referenziata in jpmyportalplus.js, serve per dichiarare che è un box che può essere spostato | id="<c:out value="${showletId}" />" : identificativo della showlet o della sua attuale posizione --%>
-	<div class="boxspacer"> <%-- classe spaziatrice: serve per dare eventuale del padding (non esiste in nessun css, se non serve rimuovere) --%>
-		<div class="widget-draggable"> <%-- class="dragdrop_draggable_area": classe css referenziata in jpmyportalplus.js, serve per dichiarare qual'è l'elemento "maniglia" per il trascinamento. --%>
-				<div class="widget-toolbar">
-					<a href="<c:out value="${removeActionURL}" />" class="button button-toggler-remove" title="remove"><img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/remove.png" alt="remove" /></a>&#32;<%-- class="removeBox": referenziato in jpmyportalplus.js, rimuove il box corrente --%>
-					<a href="<c:out value="${moveActionUrl}" />" class="button button-toggler-edit" title="configure/options"><img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/configure.png" alt="move" /></a>
-					<a href="<c:out value="${opencloseActionURL}" />" class="button button-toggler-open-close" title="toggle open close"><img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/open-close.png" alt="open/close" /></a>&#32;<%-- class="openClose": referenziato in jpmyportalplus.js, apre e chiude il contenuto di "editcontentBox" e "content" --%>
-				</div>
-				<c:choose>
-					<c:when test="${!empty showletTitle}">
-						<h2><c:out value="${showletTitle}" escapeXml="false" /></h2>
-					</c:when>
-					<c:otherwise>
-						<h2><wp:currentShowlet param="title" /></h2>
-					</c:otherwise>
-				</c:choose>
-		</div>
+<div class="widget margin-medium-bottom" id="<c:out value="${showletId}" />"> <%-- contenitore del box | class="dragdrop_box" : classe css referenziata in jpmyportalplus.js, serve per dichiarare che è un box che può essere spostato | id="<c:out value="${showletId}" />" : identificativo della showlet o della sua attuale posizione --%>
+	<div class="widget-toolbar btn-group pull-left">
+		<a href="<c:out value="${removeActionURL}" />" class="btn btn-mini btn-danger button-toggler-remove" title="remove"><i class="icon-remove"></i></a>&#32;<%-- class="removeBox": referenziato in jpmyportalplus.js, rimuove il box corrente --%>
+		<a href="<c:out value="${moveActionUrl}" />" class="btn btn-mini btn-info button-toggler-edit" title="configure/options"><i class="icon-cog"></i></a>
+		<a href="<c:out value="${opencloseActionURL}" />" class="btn btn-mini btn-info button-toggler-open-close" title="toggle open close"><i class="icon-chevron-up"></i></a>&#32;<%-- class="openClose": referenziato in jpmyportalplus.js, apre e chiude il contenuto di "editcontentBox" e "content" --%>
+	</div>
+	<div class="widget-draggable"> <%-- class="dragdrop_draggable_area": classe css referenziata in jpmyportalplus.js, serve per dichiarare qual'è l'elemento "maniglia" per il trascinamento. --%>
+			<h1 class="pull-right">
+			<c:choose>
+				<c:when test="${!empty showletTitle}">
+					<c:out value="${showletTitle}" escapeXml="false" />
+				</c:when>
+				<c:otherwise>
+					<wp:currentShowlet param="title" />
+				</c:otherwise>
+			</c:choose>
+			</h1>
+	</div>
 
 		<%--
 		 --%>
 		<%-- class="editContent" : referenziato in jpmyportalplus.js, fa funzionare l'apertura del box di configurazione --%>
-		
-		
-		<div class="editContentBox <c:if test="${!isEditFormOpen}">hide</c:if>"> 
-			<form action="<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpmyportalplus/front/swapFrames.action" method="post">
-				<p>
-					<input type="hidden" name="currentPageCode" value="<wp:currentPage param="code" />" />
-					<input type="hidden" name="startFramePos" value="<mppl:requestContextParam param="currentFrame" />" />
-					<label for="scambia_<c:out value="${showletId}" />"><wp:i18n key="jpmyportalplus_MOVETHISSHOWLET" /></label>:<br />
-					<mppl:frameSelectItem var="selectItems" />
-					<select id="scambia_<c:out value="${showletId}" />" name="targetFramePos">
-						<c:forEach items="${selectItems}" var="selectItem">
-							<option value="<c:out value="${selectItem.frameId}" />">
-							<c:choose>
-								<c:when test="${selectItem.sameColumn}"><wp:i18n key="jpmyportalplus_SWAPITWITH" />&#32;<c:out value="${selectItem.title}" /></c:when>
-								<c:otherwise><wp:i18n key="jpmyportalplus_INSERTINTOCOLUMN" />&#32;<c:out value="${selectItem.columnIdDest}" /></c:otherwise>
-							</c:choose>
-							</option>
-						</c:forEach>
-					</select>
-				</p>
-				<p>
-					<input class="button" type="submit" value="<wp:i18n key="jpmyportalplus_MOVE" />" />
-				</p>
-			</form>
-			<%-- 
+		<div class="clearfix"></div>
+		<div class="editContentBox <c:if test="${!isEditFormOpen}">hide</c:if>">
+			<%--
 			<wp:internalServlet actionPath="/ExtStr2/do/jpmyportalplus/front/ajax/openConfigSection.action" />
 			--%>
 		</div>
+		<div class="clearfix widget-border-bottom"></div>
 		<%-- class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero e proprio, si apre e si chiude alla pressione di "class"openClose"" --%>
-		<div class="widget-body <c:if test="${isClosed}">hide</c:if>">
+		<div class="widget-body margin-medium-all padding-medium-bottom <c:if test="${isClosed}">hide</c:if>">
 
 <%-- reset dei parametri --%>
 <c:set var="removeActionURL" value="${null}" />

@@ -1,14 +1,3 @@
-INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpmyportalplus_pagemodel', 'My Portal', '<frames>
-<frame pos="0" locked="true"><descr>Header</descr></frame>
-<frame pos="1" column="1" locked="false"><descr>Left Column I</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="2" column="1" locked="false"><descr>Left Column II</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="3" column="2" locked="false"><descr>Middle Column I</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="4" column="2" locked="false"><descr>Middle Column II</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="5" column="3" locked="false"><descr>Right Column I</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="6" column="3" locked="false"><descr>Right Column II</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="7" locked="true"><descr>Footer</descr></frame>
-</frames>', 'jpmyportalplus');
-
 INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_void',
 '<?xml version="1.0" encoding="UTF-8"?>
@@ -38,7 +27,7 @@ INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_CONFIG_INTRO','en','Choose which content you want to add in this page');
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_CONFIG_INTRO','it','Scegli quali contenuti mostrare nella pagina');
 
-INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_CONFIGMYHOME','en','Page Content Configuration');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_CONFIGMYHOME','en','Show Settings');
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_CONFIGMYHOME','it','Configura la Pagina');
 
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_INSERTINTOCOLUMN','en','Inserting it into column');

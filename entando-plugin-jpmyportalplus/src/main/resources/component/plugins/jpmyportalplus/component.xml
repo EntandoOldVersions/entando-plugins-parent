@@ -2,6 +2,9 @@
 <component>
 	<code>jpmyportalplus</code>
 	<description>My Portal</description>
+	<dependencies>
+		<code>entando-page-myportalplus-basic</code>
+	</dependencies>
 	<installation>
 		<tableMapping>
 			<datasource name="portDataSource">
