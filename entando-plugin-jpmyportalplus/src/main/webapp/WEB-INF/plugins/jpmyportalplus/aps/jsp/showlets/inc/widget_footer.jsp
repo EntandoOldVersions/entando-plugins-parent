@@ -4,5 +4,5 @@
 		</div>
 	</div>
 </div>
-<%-- reset variabili --%>
+<%-- variable reset --%>
 <c:set var="showletTitle" scope="request" value="${null}" />

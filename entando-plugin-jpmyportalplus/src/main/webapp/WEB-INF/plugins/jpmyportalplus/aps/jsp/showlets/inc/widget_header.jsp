@@ -88,13 +88,13 @@ class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero 
 	</c:choose>
 	<c:set var="moveActionUrl"><wp:url paramRepeat="false" />?editFrame=<c:out value="${editFrameValue}" escapeXml="false" />&currentPageCode=<wp:currentPage param="code" escapeXml="false" /></c:set>
 
-<div class="dragdrop_box" id="<c:out value="${showletId}" />"> <%-- contenitore del box | class="dragdrop_box" : classe css referenziata in jpmyportalplus.js, serve per dichiarare che è un box che può essere spostato | id="<c:out value="${showletId}" />" : identificativo della showlet o della sua attuale posizione --%>
+<div class="widget" id="<c:out value="${showletId}" />"> <%-- contenitore del box | class="dragdrop_box" : classe css referenziata in jpmyportalplus.js, serve per dichiarare che è un box che può essere spostato | id="<c:out value="${showletId}" />" : identificativo della showlet o della sua attuale posizione --%>
 	<div class="boxspacer"> <%-- classe spaziatrice: serve per dare eventuale del padding (non esiste in nessun css, se non serve rimuovere) --%>
-		<div class="dragdrop_draggable_area"> <%-- class="dragdrop_draggable_area": classe css referenziata in jpmyportalplus.js, serve per dichiarare qual'è l'elemento "maniglia" per il trascinamento. --%>
-				<div class="shortcut">
-					<a href="<c:out value="${removeActionURL}" />" class="button removeBox" title="remove"><img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/remove.png" alt="remove" /></a>&#32;<%-- class="removeBox": referenziato in jpmyportalplus.js, rimuove il box corrente --%>
-					<a href="<c:out value="${moveActionUrl}" />" class="button editContent" title="configure/options"><img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/configure.png" alt="move" /></a>
-					<a href="<c:out value="${opencloseActionURL}" />" class="button openClose" title="toggle open close"><img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/open-close.png" alt="open/close" /></a>&#32;<%-- class="openClose": referenziato in jpmyportalplus.js, apre e chiude il contenuto di "editcontentBox" e "content" --%>
+		<div class="widget-draggable"> <%-- class="dragdrop_draggable_area": classe css referenziata in jpmyportalplus.js, serve per dichiarare qual'è l'elemento "maniglia" per il trascinamento. --%>
+				<div class="widget-toolbar">
+					<a href="<c:out value="${removeActionURL}" />" class="button button-toggler-remove" title="remove"><img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/remove.png" alt="remove" /></a>&#32;<%-- class="removeBox": referenziato in jpmyportalplus.js, rimuove il box corrente --%>
+					<a href="<c:out value="${moveActionUrl}" />" class="button button-toggler-edit" title="configure/options"><img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/configure.png" alt="move" /></a>
+					<a href="<c:out value="${opencloseActionURL}" />" class="button button-toggler-open-close" title="toggle open close"><img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/open-close.png" alt="open/close" /></a>&#32;<%-- class="openClose": referenziato in jpmyportalplus.js, apre e chiude il contenuto di "editcontentBox" e "content" --%>
 				</div>
 				<c:choose>
 					<c:when test="${!empty showletTitle}">
@@ -138,7 +138,7 @@ class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero 
 			--%>
 		</div>
 		<%-- class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero e proprio, si apre e si chiude alla pressione di "class"openClose"" --%>
-		<div class="dragdrop_content <c:if test="${isClosed}">hide</c:if>">
+		<div class="widget-body <c:if test="${isClosed}">hide</c:if>">
 
 <%-- reset dei parametri --%>
 <c:set var="removeActionURL" value="${null}" />
