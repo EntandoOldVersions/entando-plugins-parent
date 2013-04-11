@@ -91,21 +91,21 @@ public class MessageSearcherDAO extends AbstractEntitySearcherDAO implements IMe
 		appendOrderQueryBlocks(filters, query, false);
 		return query.toString();
 	}
-
+	
 	protected boolean appendAnsweredFilterQueryBlocks(boolean answered, StringBuffer query, boolean hasAppendWhereClause) {
 		String masterTableName = this.getEntityMasterTableName();
 		String masterTableIdFieldName = this.getEntityMasterTableIdFieldName();
 		hasAppendWhereClause = this.verifyWhereClauseAppend(query, hasAppendWhereClause);
 		if (answered) {
-			query.append(masterTableName).append(".").append(masterTableIdFieldName).append(
-					" IN ( SELECT messageid FROM jpwebdynamicform_answers )");
+			query.append(masterTableName).append(".").append(masterTableIdFieldName)
+					.append(" IN ( SELECT messageid FROM jpwebdynamicform_answers )");
 		} else {
-			query.append(masterTableName).append(".").append(masterTableIdFieldName).append(
-			" NOT IN ( SELECT messageid FROM jpwebdynamicform_answers )");
+			query.append(masterTableName).append(".").append(masterTableIdFieldName)
+					.append(" NOT IN ( SELECT messageid FROM jpwebdynamicform_answers )");
 		}
 		return hasAppendWhereClause;
 	}
-
+	
 	@Override
 	protected String getEntityMasterTableName() {
 		return "jpwebdynamicform_messages";
@@ -130,7 +130,17 @@ public class MessageSearcherDAO extends AbstractEntitySearcherDAO implements IMe
 	protected String getEntitySearchTableIdFieldName() {
 		return "messageid";
 	}
-
+	
+	@Override
+	protected String getEntityAttributeRoleTableName() {
+		return "jpwebdynamicform_attroles";
+	}
+	
+	@Override
+	protected String getEntityAttributeRoleTableIdFieldName() {
+		return "messageid";
+	}
+	
 	@Override
 	protected String getTableFieldName(String metadataFieldKey) {
 		if (metadataFieldKey.equals(IEntityManager.ENTITY_ID_FILTER_KEY)) {
@@ -143,5 +153,5 @@ public class MessageSearcherDAO extends AbstractEntitySearcherDAO implements IMe
 			return "creationdate";
 		} else throw new RuntimeException("Chiave di ricerca '" + metadataFieldKey + "' non riconosciuta");
 	}
-
+	
 }

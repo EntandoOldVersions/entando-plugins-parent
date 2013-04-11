@@ -236,7 +236,17 @@ public class MessageDAO extends AbstractEntityDAO implements IMessageDAO {
 	protected String getRemovingSearchRecordQuery() {
 		return DELETE_MESSAGE_SEARCH_RECORD;
 	}
-
+	
+	@Override
+	protected String getAddingAttributeRoleRecordQuery() {
+		return ADD_ATTRIBUTE_ROLE_RECORD;
+	}
+	
+	@Override
+	protected String getRemovingAttributeRoleRecordQuery() {
+		return DELETE_ATTRIBUTE_ROLE_RECORD;
+	}
+	
 	private final String ADD_MESSAGE =
 		"INSERT INTO jpwebdynamicform_messages ( messageid, username, langcode, messagetype, creationdate, messagexml ) values ( ?, ?, ? , ? , ?, ? ) ";
 
@@ -267,11 +277,17 @@ public class MessageDAO extends AbstractEntityDAO implements IMessageDAO {
 
 	private final String DELETE_USERMESSAGES =
 		"DELETE FROM jpwebdynamicform_messages WHERE username = ? ";
-
+	
 	private final String DELETE_USERMESSAGES_SEARCH_RECORD =
 		"DELETE FROM jpwebdynamicform_search WHERE messageid IN ( SELECT messageid FROM jpwebdynamicform_messages WHERE username = ? ) ";
-
+	
 	private final String DELETE_USERMESSAGES_ANSWERS =
 		"DELETE FROM jpwebdynamicform_answers WHERE messageid IN ( SELECT messageid FROM jpwebdynamicform_messages WHERE username = ? ) ";
-
+	
+	private final String ADD_ATTRIBUTE_ROLE_RECORD =
+		"INSERT INTO jpwebdynamicform_attroles (messageid, attrname, rolename) VALUES ( ? , ? , ? )";
+	
+	private final String DELETE_ATTRIBUTE_ROLE_RECORD =
+		"DELETE FROM jpwebdynamicform_attroles WHERE messageid = ? ";
+	
 }

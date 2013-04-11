@@ -11,6 +11,7 @@
 				<class>org.entando.entando.plugins.jpwebdynamicform.aps.system.init.servdb.Message</class>
 				<class>org.entando.entando.plugins.jpwebdynamicform.aps.system.init.servdb.MessageSearch</class>
 				<class>org.entando.entando.plugins.jpwebdynamicform.aps.system.init.servdb.Answer</class>
+				<class>org.entando.entando.plugins.jpwebdynamicform.aps.system.init.servdb.MessageAttributeRole</class>
 			</datasource>
 		</tableMapping>
 		<environment code="production">
