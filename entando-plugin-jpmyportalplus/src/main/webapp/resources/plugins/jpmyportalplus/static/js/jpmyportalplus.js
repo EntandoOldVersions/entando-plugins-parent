@@ -54,7 +54,10 @@ $(document).ready(function() {
 					finalpos.nextpos = widgetOptions.widgetReadDomData(nextEl).position;
 				}
 				if (finalpos.prevpos == null && finalpos.nextpos == null) {
-					var parentId = widget.parentsUntil(widgetOptions.ENTANDO_WIDGET_SELECTOR.column).attr("id");
+					var parentId = widget.parentsUntil(null, widgetOptions.ENTANDO_WIDGET_SELECTOR.column).attr("id");
+					if (parentId==undefined) {
+						parentId = widget.parentsUntil(widgetOptions.ENTANDO_WIDGET_SELECTOR.column).attr("id");
+					}
 					finalpos.prevpos = widgetOptions.ajaxConfig.frames[parentId];
 				}
 				return finalpos;
