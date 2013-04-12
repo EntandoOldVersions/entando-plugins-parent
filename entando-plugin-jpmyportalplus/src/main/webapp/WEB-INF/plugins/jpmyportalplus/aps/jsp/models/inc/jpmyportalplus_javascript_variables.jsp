@@ -83,6 +83,14 @@
 					}
 				});
 			}.bind(editshowletListEl));
+
+			//uncheck the checkbox when a widget is removed
+			$(ENTANDO_WIDGET_SELECTOR.widget, ENTANDO_WIDGET_SELECTOR.column).on('remove', function(ev, widget, data){
+				if (data) {
+					$('[value="'+ data.code.substring("showlet_".length) +'"]',editshowletlist).attr('checked', false);
+				}
+			});
+
 		});
 	})(jQuery);
 	//configure page //end
