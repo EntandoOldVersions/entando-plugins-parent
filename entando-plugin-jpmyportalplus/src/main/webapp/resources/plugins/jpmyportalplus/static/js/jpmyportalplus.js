@@ -280,7 +280,7 @@ $(document).ready(function() {
 				var contentStatus = (display===undefined||display===null||(display!=='none')? true: false);
 				if (!contentStatus) {
 					widgetOptions.widgetApplyLoading(widget);
-					objReq[widgetOptions.ajaxConfig.URL.paramNames.startFramePos] = data.position;
+					objReq[widgetOptions.ajaxConfig.URL.paramNames.formMove] = data.position;
 					jQuery.ajax(widgetOptions.ajaxConfig.URL.formMove, {
 						cache: false,
 						data: objReq,
