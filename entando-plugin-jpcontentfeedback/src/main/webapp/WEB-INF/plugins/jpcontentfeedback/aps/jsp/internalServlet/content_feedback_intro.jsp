@@ -215,10 +215,7 @@
 						</div>
 					</s:if>
 
-					<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insert.action" var="insertAction">
-						<wp:parameter name="listViewerPagerId" value="${listViewerPagerId}"  />
-						<wp:parameter name="listViewerPagerValue" value="${listViewerPagerValue}"/>
-					</wp:action>
+					<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insert.action" var="insertAction" />
 
 					<form action="<c:out value="${insertAction}" escapeXml="false" />" method="post">
 						<p class="noscreen">
@@ -244,7 +241,6 @@
 									</c:if>
 								</s:iterator>
 							</s:if>
-
 							<input type="hidden" name="formContentId" value="<s:property value="contentId"/>" />
 						</p>
 						<p>
