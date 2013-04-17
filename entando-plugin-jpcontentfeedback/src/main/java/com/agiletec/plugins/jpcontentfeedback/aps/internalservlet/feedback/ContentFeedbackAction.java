@@ -24,11 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
@@ -53,17 +50,15 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
 import com.agiletec.plugins.jpcontentfeedback.aps.tags.FeedbackIntroTag;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.feedback.AbstractContentFeedbackAction;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
-import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.IContentFeedbackShowletAction;
 
 /**
  * @author D.Cherchi
  */
 public class ContentFeedbackAction extends AbstractContentFeedbackAction implements IContentFeedbackAction, ServletResponseAware {
 
-	
+
 	public String getRedirectParams() {
 		StringBuffer result = new StringBuffer();
-		HttpServletRequest request = super.getRequest();
 		if (null != this.getRedirectParamNames() && ! this.getRedirectParamNames().isEmpty()) {
 			Iterator<String> it = this.getRedirectParamNames().keySet().iterator();
 			while (it.hasNext()) {
@@ -206,51 +201,11 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		return SUCCESS;
 	}
 
-
-	/**
-	 * When in frontEnd the tag is inserted inside a paginated list
-	 * this method help to build the hidden field, eg:
-	 * <pre>
-	 * 	&lt;s:if test="null != frameItem"&gt;
-	 * 		&lt;c:set var="framekey"&gt;&lt;s:property value="frameItem[0]"/&gt;&lt;/c:set&gt;
-	 * 		&lt;c:set var="frameval"&gt;&lt;s:property value="frameItem[1]"/&gt;&lt;/c:set&gt;
-	 * 		&lt;input type="hidden" name="&lt;c:out value="${framekey}" /&gt;" value="&lt;c:out value="${frameval}" /&gt;" /&gt;
-	 * 	&lt;/s:if&gt;
-	 * </pre>
-	 * @return
-	 */
-	/*
-	public String[] getFrameItem() {
-		String[] value = null;
-		Map<String, String[]> params = super.getParameters();
-		if (null != params) {
-			Iterator it = params.entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry pairs = (Map.Entry)it.next();
-				String key = (String) pairs.getKey();
-				if (key.startsWith("frame")) {
-					String regexp = "frame[0-9]+_item";
-					Pattern pattern = Pattern.compile(regexp);
-					Matcher matcher = pattern.matcher(key);
-					if (matcher.matches()) {
-						value = new String[2];
-						value[0] = key;
-						String[] paramValue = (String[]) pairs.getValue();
-						if (null != paramValue) {
-							value[1] = paramValue[0];
-						}
-					}
-				}
-			}
-		}
-		return value;
-	}
-	 */
 	@Override
 	public List<String> getContentCommentIds() {
 		List<String> commentIds = new ArrayList<String>();
 		try {
-			String contentId = this.getContentId();
+			String contentId = this.getCurrentContentId();
 			if (StringUtils.isBlank(contentId)) {
 				ApsSystemUtils.getLogger().severe("Content id null");
 				return commentIds;
@@ -278,7 +233,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		try {
 			if (!this.getCurrentUser().getUsername().equals(SystemConstants.GUEST_USER_NAME) 
 					&& this.isAuthorizedToDelete(this.getCurrentUser().getUsername())) {
-				if (this.isAuth(this.getContentId())){
+				if (this.isAuth(this.getCurrentContentId())){
 					this.getCommentManager().deleteComment(this.getSelectedComment());
 				}
 			}
@@ -322,7 +277,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	public IRating getContentRating() {
 		IRating rating = null;
 		try {
-			String contentId = this.getContentId();
+			String contentId = this.getCurrentContentId();
 			if (StringUtils.isBlank(contentId)) {
 				ApsSystemUtils.getLogger().severe("Content id null");
 				return null;
@@ -436,29 +391,20 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		this._selectedComment = selectedComment;
 	}
 
-	//	public String extractContentId() {
-	//		String contentId = this.getContentId();
-	//		if (null == contentId || contentId.trim().length() == 0) {
-	//			contentId = null;
-	//			RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
-	//			Showlet currentShowlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
-	//			if (null != currentShowlet.getConfig() &&
-	//					currentShowlet.getConfig().getProperty("contentId") != null &&
-	//					currentShowlet.getConfig().getProperty("contentId").length() > 0) {
-	//				contentId = currentShowlet.getConfig().getProperty("contentId");
-	//			} else {
-	//				contentId = this.getRequest().getParameter("contentId");
-	//			}
-	//		}
-	//		return contentId;
-	//	}
+	public String extractContentId() {
+		String contentId = null;
+		if (null == contentId || contentId.trim().length() == 0) {
+			RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
+			Showlet currentShowlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			if (null != currentShowlet.getConfig() && currentShowlet.getConfig().getProperty("contentId") != null && currentShowlet.getConfig().getProperty("contentId").length() > 0) {
+				contentId = currentShowlet.getConfig().getProperty("contentId");
+			} else {
+				contentId = (String) this.getRequest().getAttribute("currentContentId");
+			}
+		}
+		return contentId;
+	}
 
-	public void setContentId(String contentId) {
-		this._contentId = contentId;
-	}
-	public String getContentId() {
-		return _contentId;
-	}
 
 	protected ContentActionHelper getContentActionHelper() {
 		return _contentActionHelper;
@@ -505,6 +451,9 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	 * @return
 	 */
 	public String[] getExtraParamNames() {
+		if (null == _extraParamNames) {
+			_extraParamNames = (String[]) this.getRequest().getAttribute("extraParamNames");
+		}
 		return _extraParamNames;
 	}
 	public void setExtraParamNames(String[] extraParamNames) {
@@ -512,8 +461,21 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	}
 
 
+	public String getCurrentContentId() {
+		String value =  _currentContentId;
+		if (StringUtils.isBlank(value)) {
+			value = this.extractContentId();
+		}
+		return value;
+	}
+	
+	public void setCurrentContentId(String currentContentId) {
+		this._currentContentId = currentContentId;
+	}
+
+
 	private String _formContentId;
-	private String _contentId;
+	private String _currentContentId;
 	private Boolean _reverseVotes;
 
 

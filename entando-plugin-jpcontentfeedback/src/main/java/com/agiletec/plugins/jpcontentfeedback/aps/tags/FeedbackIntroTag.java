@@ -52,17 +52,13 @@ public class FeedbackIntroTag extends InternalServletTag {
 		
 		// 1) showlet 2) tag 3)request
 		String contentId = null;
-		if (showlet.getConfig().containsKey("contentId") && null != showlet.getConfig().getProperty("contentId")) {
-			contentId = showlet.getConfig().getProperty("contentId");
-		} else if (null != this.getContentId())	{
+		if (null != this.getContentId()) {
 			contentId = this.getContentId();
-		} else {
-			contentId = reqCtx.getRequest().getParameter("contentId");								
+		} 
+		if (null != contentId) {
+			reqCtx.getRequest().setAttribute("currentContentId", contentId);
 		}
-		if (params.length() > 0) params.append("&");
-		params.append("contentId").append("=").append(contentId);
 
-		
 		if (null != this.getReverseVotes() && this.getReverseVotes().equalsIgnoreCase("true")) {
 			if (params.length() > 0) params.append("&");
 			params.append("reverseVotes=true");
@@ -70,16 +66,12 @@ public class FeedbackIntroTag extends InternalServletTag {
 		
 		if (StringUtils.isNotBlank(this.getExtraParamsRedirect())) {
 			String[] redirectParams = this.getExtraParamsRedirect().split(",");
-			for (int i = 0; i < redirectParams.length; i++) {
-				if (params.length() > 0) params.append("&");
-				params.append("extraParamNames").append("=").append(redirectParams[i].trim());
-			}
+			reqCtx.getRequest().setAttribute("extraParamNames", redirectParams);
 		}
 		actionPath = actionPath + "?" + params.toString();
 
 		RequestDispatcher requestDispatcher = reqCtx.getRequest().getRequestDispatcher(actionPath);
 		requestDispatcher.include(reqCtx.getRequest(), responseWrapper);
-		
 		
 	}
 
@@ -105,14 +97,12 @@ public class FeedbackIntroTag extends InternalServletTag {
 		this._reverseVotes = reverseVotes;
 	}
 
-
 	public String getExtraParamsRedirect() {
 		return _extraParamsRedirect;
 	}
 	public void setExtraParamsRedirect(String extraParamsRedirect) {
 		this._extraParamsRedirect = extraParamsRedirect;
 	}
-
 
 	private String _contentId;
 	private String _reverseVotes;

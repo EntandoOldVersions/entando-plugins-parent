@@ -304,7 +304,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			assertEquals(Action.SUCCESS, result);
 
 			action = (ContentFeedbackAction)this.getAction();
-			action.setContentId(contentId);
+			action.setCurrentContentId(contentId);
 			commentIds = action.getContentCommentIds();
 			assertEquals(1, commentIds.size());
 

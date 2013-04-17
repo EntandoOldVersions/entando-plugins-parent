@@ -57,7 +57,7 @@
 			</wp:action>
 				<form action="<c:out value="${insertVoteAction}" escapeXml="false" />" method="post" class="form-inline">
 					<p class="noscreen">
-						<input type="hidden" name="formContentId" value="<s:property value="contentId"/>">
+						<input type="hidden" name="formContentId" value="<s:property value="currentContentId"/>">
 						<%-- non lo si può prendere dinamicamente perchè non ancora settato! --%>
 						<input type="hidden" name="redirectParamNames['commentsPagerId_item']" value="${param.commentsPagerId_item}" />
 						<s:if test="null != extraParamNames">
@@ -132,7 +132,7 @@
 									<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insertVote.action" var="insertVoteAction" />
 										<form action="<c:out value="${insertVoteAction}" escapeXml="false" />" method="post" class="form-inline">
 											<p class="noscreen">
-												<input type="hidden" name="formContentId" value="<s:property value="contentId"/>">
+												<input type="hidden" name="formContentId" value="<s:property value="currentContentId"/>">
 												<wpsf:hidden name="selectedComment" value="%{#commentIdvalue}" />
 
 												<input type="hidden" name="redirectParamNames['${groupComment.paramItemName}']" value="${groupComment.currItem}" />
@@ -241,7 +241,7 @@
 									</c:if>
 								</s:iterator>
 							</s:if>
-							<input type="hidden" name="formContentId" value="<s:property value="contentId"/>" />
+							<input type="hidden" name="formContentId" value="<s:property value="currentContentId"/>" />
 						</p>
 						<p>
 							<label for="commentText"><wp:i18n key="jpcontentfeedback_LABEL_COMMENTTEXT" /></label>
