@@ -186,7 +186,7 @@
 								<s:property value="#message.id"/>&#32;&ndash;&#32;<s:property value="#message.typeDescr"/>
 								</a>
 							</td>
-							<td class="centerText monospace"><s:date name="#message.creationDate" format="dd/MM/yyyy HH:ss"/></td>
+							<td class="centerText monospace"><s:date name="#message.creationDate" format="dd/MM/yyyy HH:mm"/></td>
 							<s:if test="%{#answers.size()>0}">
 								<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/content-isonline.png</s:set>
 								<s:set name="thereIsAnswer" value="%{getText('label.answered')}" />
