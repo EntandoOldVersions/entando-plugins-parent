@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInstance;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
+import java.io.InputStream;
 
 /**
  * Interfaccia Servizio gestore delle risorse cestinate.
@@ -72,9 +74,10 @@ public interface ITrashedResourceManager {
 	 * */
 	void addTrashedResource(ResourceInterface resource)
 			throws ApsSystemException;
-
-
-	Map<String, String> resourceInstancesTrashFilePaths(
-			ResourceInterface resource);
+	
+	public InputStream getTrashFileStream(ResourceInterface resource, ResourceInstance instance) throws ApsSystemException;
+	
+	//Map<String, String> resourceInstancesTrashFilePaths(
+	//		ResourceInterface resource) throws ApsSystemException;
 	
 }

@@ -41,7 +41,7 @@ import com.agiletec.plugins.jpversioning.aps.system.services.resource.ITrashedRe
  * @author G.Cocco
  */
 public class TrashedResourceAction extends ResourceFinderAction implements ITrashedResourceAction {
-
+	
 	public InputStream getInputStream() {
 		InputStream documentInputStream = null;
 		try {
@@ -57,23 +57,24 @@ public class TrashedResourceAction extends ResourceFinderAction implements ITras
 			}
 			int size = Integer.parseInt(this.getSize());
 			ResourceInstance instance = null;
-			String path = null;
+			//String path = null;
 			if (resource.isMultiInstance()) {
 				instance = ((AbstractMultiInstanceResource) resource).getInstance(size, getLangCode());
-				Map<String,String> trashPathsForInstances = getTrashedResourceManager().resourceInstancesTrashFilePaths(resource);
-				path = trashPathsForInstances.get(this.getSize());
+				//Map<String,String> trashPathsForInstances = getTrashedResourceManager().resourceInstancesTrashFilePaths(resource);
+				//path = trashPathsForInstances.get(this.getSize());
 			} else {
 				instance = ((AbstractMonoInstanceResource) resource).getInstance();
-				Map<String,String> trashPathsForInstances = getTrashedResourceManager().resourceInstancesTrashFilePaths(resource);
-				path = trashPathsForInstances.get("0");
+				//Map<String,String> trashPathsForInstances = getTrashedResourceManager().resourceInstancesTrashFilePaths(resource);
+				//path = trashPathsForInstances.get("0");
 			}
+			documentInputStream = this.getTrashedResourceManager().getTrashFileStream(resource, instance);
 			this.setContentType(instance.getMimeType());
 			this.setNameFile(instance.getFileName());
-			File fileTemp = new File(path);
-			ApsSystemUtils.getLogger().info(" path " + fileTemp);
-			if (fileTemp.exists()) {
-				documentInputStream = new FileInputStream(fileTemp);
-			}
+			//File fileTemp = new File(path);
+			//ApsSystemUtils.getLogger().info(" path " + fileTemp);
+			//if (fileTemp.exists()) {
+			//documentInputStream = new FileInputStream(fileTemp);
+			//}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getInputStream");
 		}

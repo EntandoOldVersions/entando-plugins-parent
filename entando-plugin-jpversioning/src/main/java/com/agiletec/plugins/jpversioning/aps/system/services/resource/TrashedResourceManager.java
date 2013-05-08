@@ -18,12 +18,7 @@
 package com.agiletec.plugins.jpversioning.aps.system.services.resource;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.StringReader;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -40,8 +35,8 @@ import org.xml.sax.InputSource;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.category.ICategoryManager;
+import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.plugins.jacms.aps.system.services.resource.IResourceDAO;
 import com.agiletec.plugins.jacms.aps.system.services.resource.IResourceManager;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.AbstractMonoInstanceResource;
@@ -51,6 +46,9 @@ import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInt
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceRecordVO;
 import com.agiletec.plugins.jacms.aps.system.services.resource.parse.ResourceHandler;
 import com.agiletec.plugins.jpversioning.aps.system.JpversioningSystemConstants;
+import java.io.InputStream;
+import java.util.ArrayList;
+import org.entando.entando.aps.system.services.storage.IStorageManager;
 
 /**
  * Manager of trashed resources.
@@ -59,10 +57,11 @@ import com.agiletec.plugins.jpversioning.aps.system.JpversioningSystemConstants;
 @Aspect
 public class TrashedResourceManager extends AbstractService implements ITrashedResourceManager {
 	
+	@Override
 	public void init() throws Exception {
-		this.checkTrashedResourceDiskFolder(this.getResourceTrashRootDiskFolder());
+		this.checkTrashedResourceDiskFolder(this.getResourceTrashRootDiskSubFolder());
 		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized ");
-		ApsSystemUtils.getLogger().config("Folder trashed resources: " + this.getResourceTrashRootDiskFolder());
+		ApsSystemUtils.getLogger().config("Folder trashed resources: " + this.getResourceTrashRootDiskSubFolder());
 	}
 	
 	@Before("execution(* com.agiletec.plugins.jacms.aps.system.services.resource.IResourceManager.deleteResource(..)) && args(resource)")
@@ -103,15 +102,42 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 		ResourceInterface resource = this.loadTrashedResource(resourceId);
 		if (null != resource) {
 			try {
-				Map<String, String> filesPathDestination = this.resourceInstancesArchiveFilePaths(resource);
-				Map<String, String> filesPathSource = this.resourceInstancesTrashFilePaths(resource);
-				String filePath = filesPathDestination.values().iterator().next();
-				String destionationDirPath = filePath.substring(0, filePath.lastIndexOf(File.separator));
-				this.checkTrashedResourceDiskFolder(destionationDirPath);		
-				this.moveResourcesIstances(filesPathSource, filesPathDestination);
+				boolean isProtected = !Group.FREE_GROUP_NAME.equals(resource.getMainGroup());
+				String folder = this.getSubfolder(resource);
+				String folderDest = resource.getFolder();
+				if (resource.isMultiInstance()) {
+					AbstractMultiInstanceResource multiResource = (AbstractMultiInstanceResource) resource;
+					Map<String, ResourceInstance> instancesMap = multiResource.getInstances();
+					Iterator<ResourceInstance> iter = instancesMap.values().iterator();
+					while (iter.hasNext()) {
+						ResourceInstance resourceInstance = iter.next();
+						String path = folder + resourceInstance.getFileName();
+						System.out.println("SORGENTE " + path);
+						InputStream is = this.getStorageManager().getStream(path, true);
+						String pathDest = folderDest + resourceInstance.getFileName();
+						System.out.println("DESTINAZIONE " + pathDest);
+						this.getStorageManager().saveFile(pathDest, isProtected, is);
+					}
+				} else {
+					AbstractMonoInstanceResource monoResource = (AbstractMonoInstanceResource) resource;
+					ResourceInstance resourceInstance = monoResource.getInstance();
+					String path = folder + resourceInstance.getFileName();
+					System.out.println("SORGENTE " + path);
+					InputStream is = this.getStorageManager().getStream(path, true);
+					String pathDest = folderDest + resourceInstance.getFileName();
+					System.out.println("DESTINAZIONE " + pathDest);
+					this.getStorageManager().saveFile(pathDest, isProtected, is);
+				}
+				//Map<String, String> filesPathDestination = this.resourceInstancesArchiveFilePaths(resource);
+				//Map<String, String> filesPathSource = this.resourceInstancesTrashFilePaths(resource);
+				//String filePath = filesPathDestination.values().iterator().next();
+				//String destionationDirPath = filePath.substring(0, filePath.lastIndexOf(File.separator));
+				//this.checkTrashedResourceDiskFolder(destionationDirPath);		
+				//this.moveResourcesIstances(filesPathSource, filesPathDestination);
 	    		this.getResourceDAO().addResource(resource);
-				this.deleteInstancesFromTrash(filesPathSource.values());
-				this.getTrashedResourceDAO().delTrashedResource(resourceId);
+				this.removeFromTrash(resource);
+				//this.deleteInstancesFromTrash(filesPathSource.values());
+				//this.getTrashedResourceDAO().delTrashedResource(resourceId);
 			} catch (Throwable t) {
 				ApsSystemUtils.logThrowable(t, this, "restoreResource", "Error on restoring trashed resource");
 				throw new ApsSystemException("Error on restoring trashed resource", t);
@@ -121,157 +147,141 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 	
 	@Override
 	public void removeFromTrash(String resourceId) throws ApsSystemException {
-		// Rimozione file fisici
-		ResourceRecordVO resourceVo = this.getTrashedResourceDAO().getTrashedResource(resourceId);
-		if (null != resourceVo) {
-			ResourceInterface resource = this.createResource(resourceVo);
-			Map<String, String> paths = this.resourceInstancesTrashFilePaths(resource);
-			this.deleteInstancesFromTrash(paths.values());
+		try {
+			ResourceRecordVO resourceVo = this.getTrashedResourceDAO().getTrashedResource(resourceId);
+			if (null != resourceVo) {
+				ResourceInterface resource = this.createResource(resourceVo);
+				this.removeFromTrash(resource);
+			}
+		} catch (Throwable t) {
+    		ApsSystemUtils.logThrowable(t, this, "removeFromTrash");
+    		throw new ApsSystemException("Error removing Trashed Resource", t);
 		}
-		// Rimozione metadati
-		this.getTrashedResourceDAO().delTrashedResource(resourceId);
+	}
+	
+	protected void removeFromTrash(ResourceInterface resource) throws ApsSystemException {
+		try {
+			//ResourceRecordVO resourceVo = this.getTrashedResourceDAO().getTrashedResource(resourceId);
+			//if (null != resourceVo) {
+				//ResourceInterface resource = this.createResource(resourceVo);
+			String folder = this.getSubfolder(resource);
+			if (resource.isMultiInstance()) {
+				AbstractMultiInstanceResource multiResource = (AbstractMultiInstanceResource) resource;
+				Map<String, ResourceInstance> instancesMap = multiResource.getInstances();
+				Iterator<ResourceInstance> iter = instancesMap.values().iterator();
+				while (iter.hasNext()) {
+					ResourceInstance resourceInstance = iter.next();
+					String path = folder + resourceInstance.getFileName();
+					this.getStorageManager().deleteFile(path, true);
+				}
+			} else {
+				AbstractMonoInstanceResource monoResource = (AbstractMonoInstanceResource) resource;
+				ResourceInstance resourceInstance = monoResource.getInstance();
+				String path = folder + resourceInstance.getFileName();
+				this.getStorageManager().deleteFile(path, true);
+			}
+			//}
+			this.getTrashedResourceDAO().delTrashedResource(resource.getId());
+		} catch (Throwable t) {
+    		ApsSystemUtils.logThrowable(t, this, "removeFromTrash");
+    		throw new ApsSystemException("Error removing Trashed Resource", t);
+		}
 	}
 	
 	@Override
 	public void addTrashedResource(ResourceInterface resource) throws ApsSystemException {
-		// Invoca cancellazione della risorsa dal Manager esteso
-		// Solo dopo aver creato la copia della risorsa con il TrashedResourceDAO
-		
-		// salvo risorsa sul cestino file
-		Map<String, String> filesPathSource = this.resourceInstancesArchiveFilePaths(resource);
-		Map<String, String> filesPathDestination = this.resourceInstancesTrashFilePaths(resource);
-		String filePath = filesPathDestination.values().iterator().next();
-		String destionationDirPath = filePath.substring(0, filePath.lastIndexOf(File.separator));
-		this.checkTrashedResourceDiskFolder(destionationDirPath);		
-		this.moveResourcesIstances(filesPathSource, filesPathDestination);
-		// salvo risorsa sul cestino - db
-		this.getTrashedResourceDAO().addTrashedResource(resource);
-	}
-	
-	/*
-	 * Cancella le istanze di una risorsa presenti nel cestino 
-	 */
-	private void deleteInstancesFromTrash(Collection<String> paths) {
-		Iterator<String> iter = paths.iterator();
-		while (iter.hasNext()) {
-			String path = iter.next();
-			File file = new File(path);
-			if (null != file) {
-				file.delete();
+		String folder = this.getSubfolder(resource);
+		List<String> paths = new ArrayList<String>();
+		try {
+			if (resource.isMultiInstance()) {
+				AbstractMultiInstanceResource multiResource = (AbstractMultiInstanceResource) resource;
+				Map<String, ResourceInstance> instancesMap = multiResource.getInstances();
+				Iterator<ResourceInstance> iter = instancesMap.values().iterator();
+				while (iter.hasNext()) {
+					ResourceInstance resourceInstance = iter.next();
+					InputStream is = resource.getResourceStream(resourceInstance);
+					String path = folder + resourceInstance.getFileName();
+					paths.add(path);
+					this.getStorageManager().saveFile(path, true, is);
+				}
 			} else {
-				ApsSystemUtils.getLogger().info("File " + path + " not found.");
+				AbstractMonoInstanceResource monoResource = (AbstractMonoInstanceResource) resource;
+				ResourceInstance resourceInstance = monoResource.getInstance();
+				InputStream is = resource.getResourceStream(resourceInstance);
+				String path = folder + resourceInstance.getFileName();
+				paths.add(path);
+				this.getStorageManager().saveFile(path, true, is);
 			}
-		}
-	}
-	
-	/*
-	 * Spostamento delle risorse di tutte le istanze di una risorsa
-	 */
-	private void moveResourcesIstances(Map<String, String> filesPath, Map<String, String> filesPathDestination) throws ApsSystemException {
-		Iterator<String> iter = filesPath.keySet().iterator();
-		while (iter.hasNext()) {
-			String key = iter.next();
-			this.save(filesPath.get(key), filesPathDestination.get(key));
-		}
-	}
-	
-	/*
-	 * Verifica l'esistenza della directory di destinazione dei file
-	 * */
-	private void checkTrashedResourceDiskFolder(String dirPath) {
-		File dir = new File(dirPath);
-		if (!dir.exists() || !dir.isDirectory()) {
-			dir.mkdirs();
-		}
-	}
-	
-	/*
-	 * Salvataggio di un file su filesystem
-	 * */
-	private void save(String filePathSource, String filePathDestination) throws ApsSystemException {
-    	try {
-			FileInputStream is = new FileInputStream(filePathSource);
-			byte[] buffer = new byte[1024];
-            int length = -1;
-            FileOutputStream outStream = new FileOutputStream(filePathDestination);
-            while ((length = is.read(buffer)) != -1) {
-                outStream.write(buffer, 0, length);
-                outStream.flush();
-            }
-            outStream.close();
-            is.close();
-    	} catch (FileNotFoundException e) {
-    		ApsSystemUtils.logThrowable(e, this, "save", "File not found : " + filePathSource);
-    	} catch (IOException e) {
-    		ApsSystemUtils.logThrowable(e, this, "save");
-    	} catch (Throwable t) {
-    		ApsSystemUtils.logThrowable(t, this, "save");
-    		throw new ApsSystemException("Generic error on saving file : " + filePathSource, t);
+			this.getTrashedResourceDAO().addTrashedResource(resource);
+		} catch (Throwable t) {
+			t.printStackTrace();
+			for (int i = 0; i < paths.size(); i++) {
+				String path = paths.get(i);
+				this.getStorageManager().deleteFile(path, true);
+			}
+    		ApsSystemUtils.logThrowable(t, this, "addTrashedResource");
+    		throw new ApsSystemException("Error adding Trashed Resource", t);
     	}
-    }
+	}
 	
-	/*
-	 * Metodo di servizio per conoscere la lista dei percorsi delle istanze della risorsa nel cestino 
+	/**
+	 * Verifica l'esistenza della directory di destinazione dei file
 	 */
-	@Override
-	public Map<String,String> resourceInstancesTrashFilePaths(ResourceInterface resource) {
-		Map<String,String> filesPath = null;
-		String type = resource.getType();
-		StringBuffer bufferStr = new StringBuffer(this.getResourceTrashRootDiskFolder());
-		bufferStr.append(File.separator);
-		bufferStr.append(type);
-		bufferStr.append(File.separator);
-		bufferStr.append(resource.getMainGroup());
-		bufferStr.append(File.separator);
-		String filename = null;
-		filesPath = new HashMap<String, String>();
+	private void checkTrashedResourceDiskFolder(String dirPath) {
+		try {
+			boolean exist = this.getStorageManager().exists(dirPath, true);
+			if (!exist) {
+				this.getStorageManager().createDirectory(dirPath, true);
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "checkTrashedResourceDiskFolder");
+    		throw new RuntimeException("Error on check Trashed disk folder", t);
+		}
+	}
+	/*
+	protected Map<String,String> resourceInstancesTrashFilePaths(ResourceInterface resource) throws ApsSystemException {
+		Map<String,String> filesPath = new HashMap<String, String>();
+		StringBuilder subfolder = new StringBuilder(this.getResourceTrashRootDiskSubFolder());
+		subfolder.append(File.separator).append(resource.getType())
+				.append(File.separator).append(resource.getMainGroup()).append(File.separator);
 		if (resource.isMultiInstance()) {
 			AbstractMultiInstanceResource multiInstanceResource = (AbstractMultiInstanceResource) resource;
 			Map<String, ResourceInstance> instances = multiInstanceResource.getInstances();
 			Set<String> keys = instances.keySet();
-			Iterator<String> it = keys.iterator();
-			StringBuffer tempBuff = null;
-			while (it.hasNext()) {
-				tempBuff = new StringBuffer(bufferStr);
-				String obj = it.next();
-				filename = ((ResourceInstance)instances.get(obj)).getFileName();
-				filesPath.put(obj, tempBuff.append(filename).toString());
+			Iterator<String> iterator = keys.iterator();
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+				ResourceInstance instance = instances.get(key);
+				InputStream is = resource.getResourceStream(instance);
+				String filename = instance.getFileName();
+				this.getStorageManager().saveFile(subfolder.toString() + filename, true, is);
 			}
 		} else {
 			AbstractMonoInstanceResource monoInstanceResource = (AbstractMonoInstanceResource) resource;
 			ResourceInstance instance = monoInstanceResource.getInstance();
-			filename = ((ResourceInstance)instance).getFileName();
-			filesPath.put("0", bufferStr.append(filename).toString());
+			InputStream is = resource.getResourceStream(instance);
+			String filename = instance.getFileName();
+			this.getStorageManager().saveFile(subfolder.toString() + filename, true, is);
 		}
 		return filesPath;
 	}
-	
-	/*
-	 * Metodo di servizio per conoscere la lista dei percorsi delle istanze di una risorsa dell'archivio
-	 * */
-	private Map<String,String> resourceInstancesArchiveFilePaths(ResourceInterface resource) {
-		StringBuffer resourceDiskFolder = new StringBuffer(resource.getDiskFolder());
-		int i = 0;
-		Map<String,String> filesPath = new HashMap<String, String>();
-		String filename = null;
-		if (resource.isMultiInstance()) {
-			AbstractMultiInstanceResource multiInstanceResource = (AbstractMultiInstanceResource) resource;
-			Map instances = multiInstanceResource.getInstances();
-			Set keys = instances.keySet();
-			Iterator it = keys.iterator();
-			while (it.hasNext()) {
-				resourceDiskFolder = new StringBuffer(resource.getDiskFolder());
-				Object obj = it.next();
-				filename = ((ResourceInstance)instances.get(obj)).getFileName();
-				filesPath.put(obj.toString(), resourceDiskFolder.append(filename).toString());
-			}
-		} else {
-			AbstractMonoInstanceResource monoInstanceResource = (AbstractMonoInstanceResource) resource;
-			ResourceInstance instance = monoInstanceResource.getInstance();
-			filename = ((ResourceInstance)instance).getFileName();
-			filesPath.put("0", resourceDiskFolder.append(filename).toString());
+	*/
+	@Override
+	public InputStream getTrashFileStream(ResourceInterface resource, ResourceInstance instance) throws ApsSystemException {
+		try {
+			String path = this.getSubfolder(resource) + instance.getFileName();
+			return this.getStorageManager().getStream(path, true);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "getTrashFileStream");
+    		throw new ApsSystemException("Error on extracting stream", t);
 		}
-		return filesPath;
+	}
+	
+	protected String getSubfolder(ResourceInterface resource) {
+		StringBuilder subfolder = new StringBuilder(this.getResourceTrashRootDiskSubFolder());
+		subfolder.append(File.separator).append(resource.getType())
+				.append(File.separator).append(resource.getId()).append(File.separator);
+		return subfolder.toString();
 	}
 	
 	/*
@@ -310,12 +320,8 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
     	}
     }
 	
-	protected String getResourceTrashRootDiskFolder() {
-		String folderName = this.getConfigManager().getParam(JpversioningSystemConstants.CONFIG_PARAM_RESOURCE_TRASH_FOLDER);
-		if (null == folderName || folderName.trim().length() == 0) {
-			folderName = JpversioningSystemConstants.DEFAULT_RESOURCE_TRASH_FOLDER_NAME;
-		}
-		return folderName;
+	protected String getResourceTrashRootDiskSubFolder() {
+		return JpversioningSystemConstants.DEFAULT_RESOURCE_TRASH_FOLDER_NAME;//folderName;
 	}
 	
 	protected IResourceManager getResourceManager() {
@@ -332,11 +338,11 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 		this._categoryManager = categoryManager;
 	}
     
-	protected ConfigInterface getConfigManager() {
-		return _configManager;
+	protected IStorageManager getStorageManager() {
+		return _storageManager;
 	}
-	public void setConfigManager(ConfigInterface configManager) {
-		this._configManager = configManager;
+	public void setStorageManager(IStorageManager storageManager) {
+		this._storageManager = storageManager;
 	}
 	
     protected ITrashedResourceDAO getTrashedResourceDAO() {
@@ -353,12 +359,10 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 		this._resourceDAO = resourceDAO;
 	}
 	
-	//private String _resourceTrashRootDiskFolder;
-	
     private IResourceManager _resourceManager;
     private ICategoryManager _categoryManager;
     
-	private ConfigInterface _configManager;
+	private IStorageManager _storageManager;
 	
     private ITrashedResourceDAO _trashedResourceDAO;
     private IResourceDAO _resourceDAO;

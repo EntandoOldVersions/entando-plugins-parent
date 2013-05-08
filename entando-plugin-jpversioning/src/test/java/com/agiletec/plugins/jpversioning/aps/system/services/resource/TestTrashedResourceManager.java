@@ -35,6 +35,7 @@ import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceDat
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
 import com.agiletec.plugins.jpversioning.aps.system.JpversioningSystemConstants;
 import com.agiletec.plugins.jpversioning.aps.system.services.resource.TrashedResourceManager;
+import java.io.InputStream;
 
 /**
  * @author G.Cocco
@@ -67,73 +68,95 @@ public class TestTrashedResourceManager extends ApsPluginBaseTestCase {
 		assertEquals("69", resourceIds.get(0));
 	}
 	
-	public void testAdd_Trash_LoadFromTrash_RemoveFromTrash() throws ApsSystemException{
+	public void testAdd_Trash_LoadFromTrash_RemoveFromTrash() throws Throwable {
 		String mainGroup = Group.FREE_GROUP_NAME;
-		String resDescrToAdd = "Logo Test jAPS";
+		String resDescrToAdd = "Versioning test 1";
 		String resourceType = "Image";
 		String categoryCodeToAdd = "resCat1";
-		ResourceDataBean bean = this.getMockResource(resourceType, mainGroup, resDescrToAdd, categoryCodeToAdd);
-		
-		// add the resource
-		this._resourceManager.addResource(bean);
-		
 		List<String> groups = new ArrayList<String>();
 		groups.add(Group.FREE_GROUP_NAME);
-		List<String> resources = _resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
-		assertEquals(1, resources.size());
-		
-		ResourceInterface resource = _resourceManager.loadResource(resources.get(0));
-		assertNotNull(resource);
-		
-		// move into the trash
-		_resourceManager.deleteResource(resource);
-		
-		// load from Trash
-		ResourceInterface resourceLoadedFromTrash = this._trashedResourceManager.loadTrashedResource(resource.getId());
-		assertNotNull(resourceLoadedFromTrash);
-		assertEquals(resDescrToAdd, resourceLoadedFromTrash.getDescr());
-		assertEquals(mainGroup, resourceLoadedFromTrash.getMainGroup());
-		assertEquals(resourceType, resourceLoadedFromTrash.getType());
-		
-		// del from trash
-		this._trashedResourceManager.removeFromTrash(resource.getId());
+		try {
+			ResourceDataBean bean = this.getMockResource(resourceType, mainGroup, resDescrToAdd, categoryCodeToAdd);
+
+			// add the resource
+			this._resourceManager.addResource(bean);
+			List<String> resources = this._resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
+			assertEquals(1, resources.size());
+			
+			ResourceInterface resource = _resourceManager.loadResource(resources.get(0));
+			assertNotNull(resource);
+
+			// move into the trash
+			_resourceManager.deleteResource(resource);
+
+			// load from Trash
+			ResourceInterface resourceLoadedFromTrash = this._trashedResourceManager.loadTrashedResource(resource.getId());
+			assertNotNull(resourceLoadedFromTrash);
+			assertEquals(resDescrToAdd, resourceLoadedFromTrash.getDescr());
+			assertEquals(mainGroup, resourceLoadedFromTrash.getMainGroup());
+			assertEquals(resourceType, resourceLoadedFromTrash.getType());
+			
+			// del from trash
+			this._trashedResourceManager.removeFromTrash(resource.getId());
+		} catch (Throwable t) {
+			List<String> resources = this._resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
+			if (null != resources && resources.size() > 0) {
+				for (int i = 0; i < resources.size(); i++) {
+					String id = resources.get(i);
+					this._trashedResourceManager.removeFromTrash(id);
+					ResourceInterface resource = this._resourceManager.loadResource(id);
+					this._resourceManager.deleteResource(resource);
+				}
+			}
+			throw t;
+		}
 	}
 	
-	public void testAdd_Trash_RestoreResource_DeleteFromArchive() throws ApsSystemException{
+	public void testAdd_Trash_RestoreResource_DeleteFromArchive() throws Throwable {
 		String mainGroup = Group.FREE_GROUP_NAME;
-		String resDescrToAdd = "Logo Test jAPS";
+		String resDescrToAdd = "Versioning test 2";
 		String resourceType = "Image";
 		String categoryCodeToAdd = "resCat1";
 		ResourceDataBean bean = this.getMockResource(resourceType, mainGroup, resDescrToAdd, categoryCodeToAdd);
-		
-		// add the resource
-		this._resourceManager.addResource(bean);
-		
 		List<String> groups = new ArrayList<String>();
 		groups.add(Group.FREE_GROUP_NAME);
-		List<String> resources = this._resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
-		assertEquals(1, resources.size());
-		
-		ResourceInterface resource = this._resourceManager.loadResource(resources.get(0));
-		assertNotNull(resource);
-		
-		// move into the trash
-		this._resourceManager.deleteResource(resource);
-		resources = _resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
-		assertEquals(0, resources.size());
-		
-		// restore from Trash
-		this._trashedResourceManager.restoreResource(resource.getId());
-		resources = this._resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
-		assertEquals(1, resources.size());
-		
-		resource = this._resourceManager.loadResource(resources.get(0));
-		
-		// delete from archive and from trash
-		_resourceManager.deleteResource(resource);
-		resources = _resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
-		assertEquals(0, resources.size());
-		this._trashedResourceManager.removeFromTrash(resource.getId());
+		try {
+			// add the resource
+			this._resourceManager.addResource(bean);
+			List<String> resources = this._resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
+			assertEquals(1, resources.size());
+			
+			String resourceId = resources.get(0);
+			ResourceInterface resource = this._resourceManager.loadResource(resourceId);
+			assertNotNull(resource);
+			
+			// move into the trash
+			this._resourceManager.deleteResource(resource);
+			resources = _resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
+			assertEquals(0, resources.size());
+			
+			// restore from Trash
+			this._trashedResourceManager.restoreResource(resourceId);
+			resources = this._resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
+			assertEquals(1, resources.size());
+			resource = this._resourceManager.loadResource(resources.get(0));
+			// delete from archive and from trash
+			_resourceManager.deleteResource(resource);
+			resources = _resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
+			assertEquals(0, resources.size());
+			this._trashedResourceManager.removeFromTrash(resource.getId());
+		} catch (Throwable t) {
+			List<String> resources = this._resourceManager.searchResourcesId(resourceType, resDescrToAdd, categoryCodeToAdd, groups);
+			if (null != resources && resources.size() > 0) {
+				for (int i = 0; i < resources.size(); i++) {
+					String id = resources.get(i);
+					this._trashedResourceManager.removeFromTrash(id);
+					ResourceInterface resource = this._resourceManager.loadResource(id);
+					this._resourceManager.deleteResource(resource);
+				}
+			}
+			throw t;
+		}
 	}
 	
 	private ResourceDataBean getMockResource(String resourceType, String mainGroup, String resDescrToAdd, String categoryCodeToAdd) {

@@ -41,7 +41,7 @@
 				<property name="dataSource" ref="portDataSource" />
 			</bean>
 		</property>
-		<property name="configManager" ref="BaseConfigManager" />
+		<property name="storageManager" ref="StorageManager" />
 	</bean>
 	
 </beans>

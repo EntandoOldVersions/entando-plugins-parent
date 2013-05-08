@@ -9,9 +9,4 @@
 		<property name="subMenuFilePath"><value>/WEB-INF/plugins/jpversioning/apsadmin/jsp/common/template/subMenu.jsp</value></property>
 	</bean>
 	
-	<bean id="jpversioningConfigSystemParamsHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
-		<property name="filePath"><value>/WEB-INF/plugins/jpversioning/apsadmin/jsp/admin/configSystemParams-jack.jsp</value></property>
-		<property name="hookPointKey"><value>core.configSystemParams</value></property>
-	</bean>
-	
 </beans>
