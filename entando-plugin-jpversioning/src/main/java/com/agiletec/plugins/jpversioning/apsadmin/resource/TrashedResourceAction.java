@@ -91,6 +91,7 @@ public class TrashedResourceAction extends ResourceFinderAction implements ITras
 			String id = this.getResourceId();
 			this.getTrashedResourceManager().restoreResource(id);
 		} catch(Throwable t) {
+			t.printStackTrace();
 			ApsSystemUtils.logThrowable(t, this, "restore");
 			return FAILURE;
 		}

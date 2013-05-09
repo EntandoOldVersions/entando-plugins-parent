@@ -112,32 +112,28 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 					while (iter.hasNext()) {
 						ResourceInstance resourceInstance = iter.next();
 						String path = folder + resourceInstance.getFileName();
-						System.out.println("SORGENTE " + path);
+						//System.out.println("source " + path);
 						InputStream is = this.getStorageManager().getStream(path, true);
-						String pathDest = folderDest + resourceInstance.getFileName();
-						System.out.println("DESTINAZIONE " + pathDest);
-						this.getStorageManager().saveFile(pathDest, isProtected, is);
+						if (is != null) {
+							String pathDest = folderDest + resourceInstance.getFileName();
+							//System.out.println("destination " + pathDest);
+							this.getStorageManager().saveFile(pathDest, isProtected, is);
+						}
 					}
 				} else {
 					AbstractMonoInstanceResource monoResource = (AbstractMonoInstanceResource) resource;
 					ResourceInstance resourceInstance = monoResource.getInstance();
 					String path = folder + resourceInstance.getFileName();
-					System.out.println("SORGENTE " + path);
+					//System.out.println("source " + path);
 					InputStream is = this.getStorageManager().getStream(path, true);
-					String pathDest = folderDest + resourceInstance.getFileName();
-					System.out.println("DESTINAZIONE " + pathDest);
-					this.getStorageManager().saveFile(pathDest, isProtected, is);
+					if (null != is) {
+						String pathDest = folderDest + resourceInstance.getFileName();
+						//System.out.println("destination " + pathDest);
+						this.getStorageManager().saveFile(pathDest, isProtected, is);
+					}
 				}
-				//Map<String, String> filesPathDestination = this.resourceInstancesArchiveFilePaths(resource);
-				//Map<String, String> filesPathSource = this.resourceInstancesTrashFilePaths(resource);
-				//String filePath = filesPathDestination.values().iterator().next();
-				//String destionationDirPath = filePath.substring(0, filePath.lastIndexOf(File.separator));
-				//this.checkTrashedResourceDiskFolder(destionationDirPath);		
-				//this.moveResourcesIstances(filesPathSource, filesPathDestination);
 	    		this.getResourceDAO().addResource(resource);
 				this.removeFromTrash(resource);
-				//this.deleteInstancesFromTrash(filesPathSource.values());
-				//this.getTrashedResourceDAO().delTrashedResource(resourceId);
 			} catch (Throwable t) {
 				ApsSystemUtils.logThrowable(t, this, "restoreResource", "Error on restoring trashed resource");
 				throw new ApsSystemException("Error on restoring trashed resource", t);
@@ -200,21 +196,24 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 				while (iter.hasNext()) {
 					ResourceInstance resourceInstance = iter.next();
 					InputStream is = resource.getResourceStream(resourceInstance);
-					String path = folder + resourceInstance.getFileName();
-					paths.add(path);
-					this.getStorageManager().saveFile(path, true, is);
+					if (null != is) {
+						String path = folder + resourceInstance.getFileName();
+						paths.add(path);
+						this.getStorageManager().saveFile(path, true, is);
+					}
 				}
 			} else {
 				AbstractMonoInstanceResource monoResource = (AbstractMonoInstanceResource) resource;
 				ResourceInstance resourceInstance = monoResource.getInstance();
 				InputStream is = resource.getResourceStream(resourceInstance);
-				String path = folder + resourceInstance.getFileName();
-				paths.add(path);
-				this.getStorageManager().saveFile(path, true, is);
+				if (null != is) {
+					String path = folder + resourceInstance.getFileName();
+					paths.add(path);
+					this.getStorageManager().saveFile(path, true, is);
+				}
 			}
 			this.getTrashedResourceDAO().addTrashedResource(resource);
 		} catch (Throwable t) {
-			t.printStackTrace();
 			for (int i = 0; i < paths.size(); i++) {
 				String path = paths.get(i);
 				this.getStorageManager().deleteFile(path, true);
