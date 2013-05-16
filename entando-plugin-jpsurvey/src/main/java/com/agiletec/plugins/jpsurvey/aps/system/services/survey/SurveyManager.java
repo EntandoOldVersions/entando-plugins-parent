@@ -223,10 +223,38 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 	@Override
 	public void swapQuestionPosition(int id, boolean isUp) throws ApsSystemException{
 		try {
-			this.getQuestionDAO().swapQuestionPosition(id, isUp);
+			Question targetQuestion = this.getQuestionDAO().loadQuestion(id);
+			if (null == targetQuestion) {
+				return;
+			}
+			Survey survey = this.getSurveyDAO().loadSurvey(targetQuestion.getSurveyId());
+			if (null == survey) {
+				return;
+			}
+			Question nearQuestion = null;
+			List<Question> questions = survey.getQuestions();
+			for (int i = 0; i < questions.size(); i++) {
+				Question question = questions.get(i);
+				if (question.getId() == id) {
+					if (isUp && i > 0) {
+						nearQuestion = questions.get(i-1);
+					} else if (!isUp && i < (questions.size()-1)) {
+						nearQuestion = questions.get(i+1);
+					}
+					break;
+				}
+			}
+			if (null != nearQuestion) {
+				if (isUp) {
+					this.getQuestionDAO().swapQuestionPosition(nearQuestion, targetQuestion);
+				} else {
+					this.getQuestionDAO().swapQuestionPosition(targetQuestion, nearQuestion);
+				}
+			}
+			this.getChoiceDAO().swapChoicePosition(id, isUp);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "swapQuestionPosition");
-			throw new ApsSystemException("Error while swapping two questions of a survey", t);
+			ApsSystemUtils.logThrowable(t, this, "swapChoicePosition");
+			throw new ApsSystemException("Error while swapping two choices in a question", t);
 		}
 	}
 	
@@ -240,6 +268,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		}
 	}
 	
+	@Override
 	public void saveQuestionInSortedPosition(Question question) throws ApsSystemException {
 		try {
 			this.getQuestionDAO().saveQuestionInSortedPosition(question);
@@ -265,15 +294,20 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		return result;
 	}
 	
+	@Override
 	public List<Integer> getActiveSurveyByUser(UserDetails userdetails, Boolean isQuestionnaire, Boolean archive) throws ApsSystemException {
-		if (null == userdetails) return null;
+		if (null == userdetails) {
+			return null;
+		}
 		Set<String> groups = new HashSet<String>();
 		groups.add(Group.FREE_GROUP_NAME);
 		List<Group> userGroups = this.getAuthorizationManager().getGroupsOfUser(userdetails);
 		for (int i = 0; i < userGroups.size(); i++) {
 			groups.add(userGroups.get(i).getName());
 		}
-		if (groups.contains(Group.ADMINS_GROUP_NAME)) groups = null;
+		if (groups.contains(Group.ADMINS_GROUP_NAME)) {
+			groups = null;
+		}
 		List<Integer> result = new ArrayList<Integer>();
 		try {
 			List<Integer> list = this.getSurveyDAO().searchSurvey(null, null, groups, true, isQuestionnaire, null, null);
@@ -325,7 +359,9 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 			Collection<String> groups = new ArrayList<String>();
 			groups.add(groupName);
 			List<Integer> surveyIds = this.getSurveyDAO().searchSurvey(null, null, groups, null, null, null, null);
-			if (null == surveyIds || surveyIds.size() == 0) return null;
+			if (null == surveyIds || surveyIds.isEmpty()) {
+				return null;
+			}
 			surveys = new ArrayList<Survey>(surveyIds.size());
 			for (int i = 0; i < surveyIds.size(); i++) {
 				Integer id = surveyIds.get(i);
@@ -343,7 +379,9 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		List<Survey> surveys = null;
 		try {
 			List<Integer> surveyIds = this.getSurveyDAO().loadResourceUtilizers(resourceId);
-			if (null == surveyIds || surveyIds.size() == 0) return null;
+			if (null == surveyIds || surveyIds.isEmpty()) {
+				return null;
+			}
 			surveys = new ArrayList<Survey>(surveyIds.size());
 			for (int i = 0; i < surveyIds.size(); i++) {
 				Integer id = surveyIds.get(i);

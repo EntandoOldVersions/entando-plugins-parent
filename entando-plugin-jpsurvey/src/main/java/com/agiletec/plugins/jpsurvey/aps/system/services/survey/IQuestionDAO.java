@@ -69,11 +69,10 @@ public interface IQuestionDAO {
 	public void saveQuestionInSortedPosition(Question question);
 	
 	/**
-	 * Swaps the position of the given question with the one closer by position. We can choose to swap the given question with
-	 * the following or preceding one
-	 * @param id the ID of the question to shift
-	 * @param isUp when true the position of the given question will be swapped with the one preceding in the list
+	 * Swaps the position of the given questions. 
+	 * @param questionDown the question to move down
+	 * @param questionUp the question to move up
 	 */
-	public void swapQuestionPosition(int id, boolean isUp);
+	public void swapQuestionPosition(Question questionDown, Question questionUp);
 	
 }

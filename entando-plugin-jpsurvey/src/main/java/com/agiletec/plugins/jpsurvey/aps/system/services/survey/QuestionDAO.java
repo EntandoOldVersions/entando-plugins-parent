@@ -32,7 +32,7 @@ import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Question;
  * This DAO class allow to select individual 'question's of the survey
  * @author M.E. Minnai
  */
-public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO{
+public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 	
 	@Override
 	public Question loadQuestion(int id) {
@@ -75,9 +75,11 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO{
 		List<Choice> list = new ArrayList<Choice>();
 		try {
 			Question question = this.loadQuestion(id);
-			if (null != question) list = question.getChoices();
+			if (null != question) {
+				list = question.getChoices();
+			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while loading the choices belonging to the question of ID "+id, "loadQuestion");
+			processDaoException(t, "Error while loading the choices belonging to the question of ID " + id, "loadQuestion");
 		}
 		return list;
 	}
@@ -149,53 +151,28 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO{
 	}
 	
 	@Override
-	public void swapQuestionPosition(int id, boolean isUp) {
+	public void swapQuestionPosition(Question questionDown, Question questionUp) {
 		Connection conn = null;
 		PreparedStatement stat = null;
-		ResultSet res = null;
-		Question targetQuestion = null; 
-		Question proxQuestion = null;
-		int tmp;
+		PreparedStatement stat2 = null;
 		try {
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
-			targetQuestion = this.loadQuestion(id);
-			if (null == targetQuestion) return;
-			if (isUp) {
-				stat = conn.prepareStatement(GET_QUESTION_LESSER_THAN);
-			} else {
-				stat = conn.prepareStatement(GET_QUESTION_GREATER_THAN);
-			}
-			stat.setInt(1, targetQuestion.getSurveyId());
-			stat.setInt(2, targetQuestion.getPos());
-			res = stat.executeQuery();
-			// we are interested only in the first result!
-			if (res.next()) {
-				ApsProperties prop = new ApsProperties();
-				proxQuestion = new Question();
-				proxQuestion.setId(res.getInt(1)); // 1
-				proxQuestion.setSurveyId(res.getInt(2)); // 2
-				prop.loadFromXml(res.getString(3)); // 2
-				proxQuestion.setQuestions(prop);
-				proxQuestion.setPos(res.getInt(4)); // 4
-				proxQuestion.setSingleChoice(res.getInt(5)==1); // 5
-				proxQuestion.setMinResponseNumber(res.getInt(6)); // 6
-				proxQuestion.setMaxResponseNumber(res.getInt(7)); // 7
-			} else {
-				return;
-			}
-			// swap positions
-			tmp = targetQuestion.getPos();
-			targetQuestion.setPos(proxQuestion.getPos());
-			proxQuestion.setPos(tmp);
-			this.updateQuestion(conn, targetQuestion);
-			this.updateQuestion(conn, proxQuestion);
+			stat = conn.prepareStatement(MOVE_QUESTION_DOWN);
+			stat.setInt(1, questionDown.getId());
+			stat.executeUpdate();
+			
+			stat2 = conn.prepareStatement(MOVE_QUESTION_UP);
+			stat2.setInt(1, questionUp.getId());
+			stat2.executeUpdate();
+			
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
 			processDaoException(t, "Error while swapping the position of two questions", "changeQuestionPosition");
 		} finally {
-			closeDaoResources(res, stat, conn);
+			closeDaoResources(null, stat);
+			closeDaoResources(null, stat2, conn);
 		}
 	}
 	
@@ -239,14 +216,14 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO{
 			" LEFT JOIN jpsurvey_choices ON jpsurvey_questions.id = jpsurvey_choices.questionid " +
 		"WHERE jpsurvey_questions.id= ? ORDER BY jpsurvey_questions.pos, jpsurvey_choices.pos ";
 	
-	private static final String GET_QUESTION_LESSER_THAN =
-		"SELECT id,surveyid,question,pos,singlechoice,minresponsenumber,maxresponsenumber " +
-		"FROM jpsurvey_questions WHERE surveyid = ? AND pos < ? ORDER BY pos DESC";
+	private static final String MOVE_QUESTION_UP = 
+		"UPDATE jpsurvey_questions SET pos = (pos - 1) WHERE id = ? ";
 	
-	private static final String GET_QUESTION_GREATER_THAN =
-		"SELECT id,surveyid,question,pos,singlechoice,minresponsenumber,maxresponsenumber " +
-		"FROM jpsurvey_questions WHERE surveyid = ? AND pos > ? ORDER BY pos ASC";
+	private static final String MOVE_QUESTION_DOWN = 
+		"UPDATE jpsurvey_questions SET pos = (pos + 1) WHERE id = ? ";
 	
 	private static final String GET_QUESTION_GREATER_POS =
 		"SELECT pos FROM jpsurvey_questions WHERE surveyid = ? ORDER BY pos DESC";
+
+	
 }
