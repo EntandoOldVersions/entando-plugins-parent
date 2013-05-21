@@ -21,13 +21,13 @@
 				<script type='text/javascript'>
 					<!--//--><![CDATA[//><!--
 					jQuery(document).ready(function () { 
-						jQuery.struts2_jquery.bind(jQuery('#<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />'),{
-							"opendialog": "widgetDialog",
-							"jqueryaction": "anchor",
-							"id": "<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />",
-							"href": "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpfrontshortcut/Page/editFrame?langCode=<c:out value="${currentLang}" />&pageCode=<c:out value="${currentPageCode}" />&frame=<c:out value="${framePosVar}" />",
-							"button": false
-						});
+						var options_editFrameLink = {};
+						options_editFrameLink.opendialog = "widgetDialog";
+						options_editFrameLink.opendialogtitle = "<wp:i18n key="jpfrontshortcut_EDIT_FRAME" /><c:out value=" " /><c:out value="${framePosVar}" />";
+						options_editFrameLink.jqueryaction = "anchor";
+						options_editFrameLink.id = "<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />";
+						options_editFrameLink.href = "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpfrontshortcut/Page/editFrame?langCode=<c:out value="${currentLang}" />&pageCode=<c:out value="${currentPageCode}" />&frame=<c:out value="${framePosVar}" />";
+						jQuery.struts2_jquery.bind(jQuery('#<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />'),options_editFrameLink);
 					});
 					//--><!]]>
 				</script>
@@ -38,14 +38,14 @@
 				<script type='text/javascript'>
 					<!--//--><![CDATA[//><!--
 					jQuery(document).ready(function () { 
-						jQuery.struts2_jquery.bind(jQuery('#<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />'),{
-							"opendialog": "widgetDialog",
-							"jqueryaction": "anchor",
-							"id": "<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />",
-							"href": "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpfrontshortcut/Page/trashShowletFromPage?langCode=<c:out value="${currentLang}" />&pageCode=<c:out value="${currentPageCode}" />&frame=<c:out value="${framePosVar}" />",
-							"button": false
-						});
-					});  
+						var options_trashFrameLink = {};
+						options_trashFrameLink.opendialog = "widgetDialog";
+						options_trashFrameLink.opendialogtitle = "<wp:i18n key="jpfrontshortcut_EMPTY_FRAME" /><c:out value=" " /><c:out value="${framePosVar}" />";
+						options_trashFrameLink.jqueryaction = "anchor";
+						options_trashFrameLink.id = "<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />";
+						options_trashFrameLink.href = "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpfrontshortcut/Page/trashShowletFromPage?langCode=<c:out value="${currentLang}" />&pageCode=<c:out value="${currentPageCode}" />&frame=<c:out value="${framePosVar}" />";
+						jQuery.struts2_jquery.bind(jQuery('#<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />'),options_trashFrameLink);
+					});
 					//--><!]]>
 				</script>
 		</c:if>

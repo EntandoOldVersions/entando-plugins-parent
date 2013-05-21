@@ -79,7 +79,7 @@ INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcu
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EDIT_FRAME','it','Modifica Posizione:');
 
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EMPTY_FRAME','en','Empty frame:');
-INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EMPTY_FRAME','it','Svuola la posizione:');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_EMPTY_FRAME','it','Svuota la posizione:');
 
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_NEWPAGE','en','Create child page of:');
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpfrontshortcut_NEWPAGE','it','Crea pagina figlia di:');

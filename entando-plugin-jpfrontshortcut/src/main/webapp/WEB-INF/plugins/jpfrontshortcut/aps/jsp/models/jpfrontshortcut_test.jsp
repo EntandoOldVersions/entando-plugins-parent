@@ -6,11 +6,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<wp:info key="currentLang" />">
 	<head>
-		<%-- JS_JQUERY: (mandatory) it's used to load the necessary coming from the plugin. It also set the flag "outputHeadInfo_JS_JQUERY_isHere"  --%>
-			<wp:outputHeadInfo type="JS_JQUERY">
-				<c:set var="outputHeadInfo_JS_JQUERY_isHere" value="${true}" />
-				<wp:printHeadInfo />
-			</wp:outputHeadInfo>
 		
 		<%-- CSS: (mandatory) it's used to place CSSs coming from other widgets --%>
 			<wp:outputHeadInfo type="CSS">
@@ -20,6 +15,12 @@
 		<%-- JS: (mandatory) it's used to place js coming from other widgets --%>
 			<wp:outputHeadInfo type="JS">
 				<script type="text/javascript" src="<wp:resourceURL />static/js/<wp:printHeadInfo />"></script>
+			</wp:outputHeadInfo>
+		
+		<%-- JS_JQUERY: (mandatory) it's used to load the necessary coming from the plugin. It also set the flag "outputHeadInfo_JS_JQUERY_isHere"  --%>
+			<wp:outputHeadInfo type="JS_JQUERY">
+				<c:set var="outputHeadInfo_JS_JQUERY_isHere" value="${true}" />
+				<wp:printHeadInfo />
 			</wp:outputHeadInfo>
 
 		<%-- <title>: it's the of the page, change it as you prefer --%>
