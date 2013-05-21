@@ -45,25 +45,18 @@ public class FrontContentAction extends ContentAction {
 		try {
 			String modelIdString = this.getRequest().getParameter("modelId");
 			ContentModel model = this.getContentModel(modelIdString);
-			//System.out.println(modelIdString);
 			if (null == model) {
 				modelIdString = this.getContentManager().getDefaultModel(this.getContentId());
 				model = this.getContentModel(modelIdString);
 			}
-			//System.out.println(model);
+			this.setContentModel(model);
 			if (null == model) {
 				return this.edit();
 			}
-			this.setContentModel(model);
-			//System.out.println(model);
 			if (!this.getContentId().startsWith(model.getContentType())) {
 				throw new ApsSystemException("Invalid model id " + model.getId() + 
 						" of type " + model.getContentType() + " for content " + this.getContentId());
 			}
-			Content content = this.getContentManager().loadContent(this.getContentId(), false);
-			//System.out.println(model.getId());
-			this.extractAttributesToEdit(model.getContentShape(), content);
-			//System.out.println(this.getAttributeName());
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "editView");
 			return FAILURE;
@@ -72,9 +65,12 @@ public class FrontContentAction extends ContentAction {
 	}
     
 	public ContentModel getContentModel(String modelIdString) {
+		if (null == modelIdString) {
+			return null;
+		}
 		ContentModel model = null;
 		try {
-			int modelId = Integer.parseInt(modelIdString);
+			long modelId = Long.parseLong(modelIdString);
 			model = this.getContentModelManager().getContentModel(modelId);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getContentModel", "Error extracting modelId");
@@ -82,6 +78,48 @@ public class FrontContentAction extends ContentAction {
 		return model;
 	}
 	
+    @Override
+    public String edit() {
+        String result = super.edit();
+		if (!result.equals(SUCCESS)) {
+			return result;
+		}
+		try {
+			Content content = this.getContent();
+			ContentModel model = this.getContentModel();
+			if (null != this.getAttributeName() && null != model) {
+				if (!content.getTypeCode().equals(model.getContentType())) {
+					ApsSystemUtils.getLogger().severe("Invalid model id " + model.getId() + 
+						" of type " + model.getContentType() + " for content " + this.getContentId());
+					//return SUCCESS;
+				}
+			}
+			if (model != null) {
+				this.extractAttributesToEdit(model.getContentShape(), content);
+			}
+			List<AttributeInterface> attributes = content.getAttributeList();
+			for (int i = 0; i < attributes.size(); i++) {
+				AttributeInterface attribute = attributes.get(i);
+				//jpfrontshortcut_${typeCodeKey}_${attributeNameI18nKey}
+				String attributeLabelKey = "jpfrontshortcut_" + content.getTypeCode() + "_" + attribute.getName();
+				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
+					this.addLabelGroups(attributeLabelKey, attribute.getName());
+				}
+				attribute.setDisablingCodes(this.createNewCodes(attribute.getDisablingCodes()));
+				if (null != this.getAttributeName() && !this.getAttributeName().contains(attribute.getName())) {
+					attribute.disable(JpFrontShortcutSystemConstants.WIDGET_DISABLING_CODE);
+				}
+			}
+			Lang currentLang = super.getCurrentLang();
+			this.getRequest().getSession()
+					.setAttribute(JpFrontShortcutSystemConstants.CONTENT_LANG_SESSION_PARAM, currentLang);
+		} catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "edit");
+            return FAILURE;
+        }
+        return result;
+    }
+    
 	private void extractAttributesToEdit(String text, Content content) {
 		if (null == content) {
 			ApsSystemUtils.getLogger().severe("null content in extractAttributesToEdit");
@@ -105,45 +143,6 @@ public class FrontContentAction extends ContentAction {
 			}
 		}
 	}
-    
-    @Override
-    public String edit() {
-        String result = super.edit();
-		if (!result.equals(SUCCESS)) {
-			return result;
-		}
-		try {
-			ContentModel model = this.getContentModel();
-			if (null != this.getAttributeName() && null != model) {
-				Content content = this.getContent();
-				if (!content.getTypeCode().equals(model.getContentType())) {
-					ApsSystemUtils.getLogger().severe("Invalid model id " + model.getId() + 
-						" of type " + model.getContentType() + " for content " + this.getContentId());
-					return SUCCESS;
-				}
-				List<AttributeInterface> attributes = content.getAttributeList();
-				for (int i = 0; i < attributes.size(); i++) {
-					AttributeInterface attribute = attributes.get(i);
-					//jpfrontshortcut_${typeCodeKey}_${attributeNameI18nKey}
-					String attributeLabelKey = "jpfrontshortcut_" + content.getTypeCode() + "_" + attribute.getName();
-					if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
-						this.addLabelGroups(attributeLabelKey, attribute.getName());
-					}
-					attribute.setDisablingCodes(this.createNewCodes(attribute.getDisablingCodes()));
-					if (!this.getAttributeName().contains(attribute.getName())) {
-						attribute.disable(JpFrontShortcutSystemConstants.WIDGET_DISABLING_CODE);
-					}
-				}
-				Lang currentLang = super.getCurrentLang();
-				this.getRequest().getSession()
-						.setAttribute(JpFrontShortcutSystemConstants.CONTENT_LANG_SESSION_PARAM, currentLang);
-			}
-		} catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "edit");
-            return FAILURE;
-        }
-        return result;
-    }
     
 	protected void addLabelGroups(String key, String defaultValue) throws ApsSystemException {
 		try {
