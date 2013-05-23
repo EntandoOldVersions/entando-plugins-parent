@@ -6,7 +6,7 @@
 	
 	<field name="descr">
         <field-validator type="regex" short-circuit="true">
-           <param name="expression"><![CDATA[([^\"])+]]></param>
+           <param name="regex"><![CDATA[([^\"])+]]></param>
            <message key="wrongCharacters" />
         </field-validator>
         <field-validator type="stringlength" short-circuit="true">
