@@ -1,6 +1,3 @@
-
-package com.agiletec.plugins.jpsurvey.apsadmin.survey;
-
 /*
  *
  * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
@@ -18,6 +15,8 @@ package com.agiletec.plugins.jpsurvey.apsadmin.survey;
  * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  */
+package com.agiletec.plugins.jpsurvey.apsadmin.survey;
+
 import com.agiletec.plugins.jpsurvey.apsadmin.ApsAdminPluginBaseTestCase;
 
 import com.agiletec.apsadmin.system.ApsAdminSystemConstants;
