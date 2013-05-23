@@ -30,19 +30,13 @@
 		
 	    <action name="insert" class="jpcontentfeedbackCommentsFrontAction" method="addComment">
     		<result name="success" type="frontRedirectAction">
-    			<param name="actionName">intro</param>
-				<param name="${pagName}">${pagValue}</param>
-				<param name="${listViewerPagerId}">${listViewerPagerValue}</param>
+				<param name="actionName">intro${redirectParams}</param>
     		</result>
-	    	<!-- <result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>  -->  
     		<result name="input" type="frontRedirectAction">
-    			<param name="actionName">intro</param>
-				<param name="${pagName}">${pagValue}</param>
-				<param name="${listViewerPagerId}">${listViewerPagerValue}</param>
+				<param name="actionName">intro${redirectParams}</param>
     		</result>
 			<result name="invalid.token" type="chain">intro</result>
-			<!-- INIBIZIONE TOKEN 
-			-->
+			<!-- INIBIZIONE TOKEN 		-->
 			<interceptor-ref name="japsToken" >
 				<param name="typeMessages">message</param>
 			</interceptor-ref>
@@ -55,11 +49,11 @@
 	    <action name="delete" class="jpcontentfeedbackCommentsFrontAction" method="delete">
 	    	<!-- <result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>  -->  
     		<result name="input" type="frontRedirectAction">
-    			<param name="actionName">intro</param>
-				<param name="${pagName}">${pagValue}</param>
-				<param name="${listViewerPagerId}">${listViewerPagerValue}</param>
+    			<param name="actionName">intro${redirectParams}</param>
     		</result>
-	    	<result type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
+    		<result type="frontRedirectAction">
+    			<param name="actionName">intro${redirectParams}</param>
+    		</result>
 	      	
 	      	<interceptor-ref name="redirectMessage" />
 	      	<interceptor-ref name="entandoFrontEndFreeStack">
@@ -68,18 +62,11 @@
 	    </action>
 		
 	    <action name="insertVote" class="jpcontentfeedbackCommentsFrontAction" method="insertVote">
-	    
-	    	<!-- <result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>  -->  
     		<result name="input" type="frontRedirectAction">
-    			<param name="actionName">intro</param>
-				<param name="${pagName}">${pagValue}</param>
-				<param name="${listViewerPagerId}">${listViewerPagerValue}</param>
+    			<param name="actionName">intro${redirectParams}</param>
     		</result>
-    		
     		<result name="success" type="frontRedirectAction">
-    			<param name="actionName">intro</param>
-				<param name="${pagName}">${pagValue}</param>
-				<param name="${listViewerPagerId}">${listViewerPagerValue}</param>
+    			<param name="actionName">intro${redirectParams}</param>
     		</result>
 
 			<interceptor-ref name="redirectMessage" />
@@ -87,19 +74,12 @@
 	    </action>
 		
 		<action name="insertCommentVote" class="jpcontentfeedbackCommentsFrontAction" method="insertCommentVote">
-	    	<!-- <result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>  -->  
     		<result name="input" type="frontRedirectAction">
-    			<param name="actionName">intro</param>
-				<param name="${pagName}">${pagValue}</param>
-				<param name="${listViewerPagerId}">${listViewerPagerValue}</param>
+    			<param name="actionName">intro${redirectParams}</param>
     		</result>
-    		
     		<result name="success" type="frontRedirectAction">
-    			<param name="actionName">intro</param>
-    			<param name="${pagName}">${pagValue}</param>
-    			<param name="${listViewerPagerId}">${listViewerPagerValue}</param>
+    			<param name="actionName">intro${redirectParams}</param>
     		</result>
-
 			<interceptor-ref name="redirectMessage" />
 	      	<interceptor-ref name="entandoFrontEndStack" />
 	    </action>

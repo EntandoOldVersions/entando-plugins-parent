@@ -18,14 +18,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[the listViewer PagerId ]]></description>
-			<name>listViewerPagerObjectName</name>
+			<description><![CDATA[when true the votes will be displayes in reverse order]]></description>
+			<name>reverseVotes</name>
 			<required>no</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[when true the votes will be displayes in reverse order]]></description>
-			<name>reverseVotes</name>
+			<description><![CDATA[Comma separated list of extra parameters used for redirect after contentfeedback operations]]></description>
+			<name>extraParamsRedirect</name>
 			<required>no</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

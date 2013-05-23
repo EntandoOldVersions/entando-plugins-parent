@@ -18,17 +18,18 @@
 package com.agiletec.plugins.jpcontentfeedback.aps.tags;
 
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.tags.InternalServletTag;
-import com.agiletec.aps.tags.util.PagerVO;
-import com.agiletec.aps.util.ApsProperties;
 
 /**
  * Tag che consente la visualisualizzazione del blocco jpcontentFeedback per la publicazione del rating del contenuto,
@@ -51,26 +52,6 @@ public class FeedbackIntroTag extends InternalServletTag {
 
 		StringBuffer params = new StringBuffer();
 		
-		/*
-		if (null != showlet) {
-			ApsProperties config = showlet.getConfig();
-			if (null != config) {
-				Iterator<Object> it = config.keySet().iterator();
-				while (it.hasNext()) {
-					String key = (String) it.next();
-					String value = (String) config.get(key);
-					if (params.length() > 0) params.append("&");
-					//se il parametro è contentId ... viene gestito dopo
-					if (key.equalsIgnoreCase("contentId")) {
-						//params.append(key).append("=").append(contentId);
-					} else {
-						params.append(key).append("=").append(value);
-					}
-				}
-			}
-		}
-		*/
-		
 		// 1) showlet 2) tag 3)request
 		String contentId = null;
 		if (showlet.getConfig().containsKey("contentId") && null != showlet.getConfig().getProperty("contentId")) {
@@ -89,17 +70,20 @@ public class FeedbackIntroTag extends InternalServletTag {
 			params.append("reverseVotes=true");
 		}
 		
-
-		if (null != this.getListViewerPagerObjectName()) {
-			PagerVO pager = (PagerVO) pageContext.getAttribute(this.getListViewerPagerObjectName());
-			pageContext.getRequest().setAttribute("listViewerPagerId", pager.getParamItemName());
-			pageContext.getRequest().setAttribute("listViewerPagerValue", pager.getCurrItem());
-		}
-
 		actionPath = actionPath + "?" + params.toString();
 
 		RequestDispatcher requestDispatcher = reqCtx.getRequest().getRequestDispatcher(actionPath);
 		requestDispatcher.include(reqCtx.getRequest(), responseWrapper);
+		
+		if (StringUtils.isNotBlank(this.getExtraParamsRedirect())) {
+			String[] redirectParams = this.getExtraParamsRedirect().split(",");
+			List<String> l = new ArrayList<String>();
+			for (int i = 0; i < redirectParams.length; i++) {
+				l.add(redirectParams[i].trim());
+			}
+			this.pageContext.setAttribute("extraParamsRedirect", l);
+		}
+		
 	}
 
 	@Override
@@ -107,7 +91,7 @@ public class FeedbackIntroTag extends InternalServletTag {
 		super.release();
 		this.setContentId(null);
 		this.setReverseVotes(null);
-		this.setListViewerPagerObjectName(null);
+		this.setExtraParamsRedirect(null);
 	}
 
 	public String getContentId() {
@@ -124,14 +108,16 @@ public class FeedbackIntroTag extends InternalServletTag {
 		this._reverseVotes = reverseVotes;
 	}
 
-	public String getListViewerPagerObjectName() {
-		return _listViewerPagerObjectName;
+
+	public String getExtraParamsRedirect() {
+		return _extraParamsRedirect;
 	}
-	public void setListViewerPagerObjectName(String listViewerPagerObjectName) {
-		this._listViewerPagerObjectName = listViewerPagerObjectName;
+	public void setExtraParamsRedirect(String extraParamsRedirect) {
+		this._extraParamsRedirect = extraParamsRedirect;
 	}
+
 
 	private String _contentId;
 	private String _reverseVotes;
-	private String _listViewerPagerObjectName;
+	private String _extraParamsRedirect;
 }
