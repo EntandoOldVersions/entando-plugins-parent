@@ -9,7 +9,7 @@
 <div class="polls">
 <p class="questionPoll_title"><wp:i18n key="JPSURVEY_QUESTION" />&#32;<s:property value="currentQuestionIndex+1" />&#32;<wp:i18n key="JPSURVEY_QUESTION_OF" />&#32;<s:property value="%{#surveyInfo.questions.size()}" /></p>
 
-<form action="<wp:action path="/ExtStr2/do/jpsurvey/Front/Survey/saveResponse.action" />" method="post" enctype="multipart/form-data" class="clear pluginsForm">
+<form action="<wp:action path="/ExtStr2/do/jpsurvey/Front/Survey/saveResponse.action" />" method="post" class="clear pluginsForm">
 
 <s:if test="hasFieldErrors()">
 	<h3><s:text name="message.title.FieldErrors" /></h3>

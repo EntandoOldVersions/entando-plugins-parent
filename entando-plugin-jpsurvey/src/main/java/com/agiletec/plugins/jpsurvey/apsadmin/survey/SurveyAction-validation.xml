@@ -43,7 +43,7 @@
     
     <field name="checkCookie">
     	<field-validator type="fieldexpression">
-			<param name="expression"><![CDATA[!(checkCookie == null && checkIpAddress == null)]]></param>
+			<param name="expression"><![CDATA[!(checkCookie == null && checkIpAddress == null && checkUsername == null)]]></param>
 			<message key="message.surveyAction.requiredCheckingVoteType"/>
         </field-validator>
     </field>

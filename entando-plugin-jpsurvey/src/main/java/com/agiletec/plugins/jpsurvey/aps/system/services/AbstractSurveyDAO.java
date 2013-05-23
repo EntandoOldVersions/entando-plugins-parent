@@ -23,17 +23,39 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.common.AbstractDAO;
+import com.agiletec.aps.system.common.AbstractSearcherDAO;
+import com.agiletec.aps.system.common.FieldSearchFilter;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Choice;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Question;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Survey;
 
-public class AbstractSurveyDAO extends AbstractDAO {
+public class AbstractSurveyDAO extends AbstractSearcherDAO {
 
+	@Override
+	protected String getTableFieldName(String metadataFieldKey) {
+		return metadataFieldKey;
+	}
+	
+	@Override
+	protected String getMasterTableName() {
+		return "jpsurvey_voters";
+	}
+	
+	@Override
+	protected String getMasterTableIdFieldName() {
+		return "id";
+	}
+	
+	@Override
+	protected boolean isForceCaseInsensitiveLikeSearch() {
+		return true;
+	}
+	
 	/**
 	 * This inspect the given table and return the id to be used as primary key for further operations
 	 * @param query the query used to inspect the datasource

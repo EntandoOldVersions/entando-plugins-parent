@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
+import com.agiletec.aps.system.common.FieldSearchFilter;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.model.Voter;
 
@@ -98,6 +99,18 @@ public class VoterManager extends AbstractService implements IVoterManager {
 			list = this.getVoterDAO().searchVotersByIds(id, age, country, sex, date, surveyId, ipAddress);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getVotersByIds");
+            throw new ApsSystemException("Error searching voters", t);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Integer> searchVoters(FieldSearchFilter[] filters) throws ApsSystemException {
+		List<Integer> list=null;
+		try {
+			list = this.getVoterDAO().searchVotersId(filters);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "searchVoters");
             throw new ApsSystemException("Error searching voters", t);
 		}
 		return list;

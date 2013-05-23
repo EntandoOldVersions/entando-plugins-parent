@@ -20,12 +20,18 @@ package com.agiletec.plugins.jpsurvey.aps.system.services.collect;
 import java.util.Date;
 import java.util.List;
 
+import com.agiletec.aps.system.common.FieldSearchFilter;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.model.Voter;
 
 public interface IVoterManager {
 	
+	public String FIELD_USERNAME = "username";
+	public String FIELD_SURVEY_ID = "surveyid";
+
 	public Voter getVoter(String username, String ipAddress, int surveyId) throws ApsSystemException;
+
+	public List<Integer> searchVoters(FieldSearchFilter[] filters) throws ApsSystemException;
 	
 	/**
 	 * Get a voter given its ID

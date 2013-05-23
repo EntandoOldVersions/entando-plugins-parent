@@ -76,13 +76,13 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 				if (null == survey) {
 					survey = this.buildSurveyRecordFromResultSet(res);
 				}
-				Question question = this.buildQuestionRecordFromResultSet(res, 17);
+				Question question = this.buildQuestionRecordFromResultSet(res, 18);
 				if (null == question) continue;
 				if (null == survey.getQuestion(question.getId())) {
 					survey.getQuestions().add(question);
 //					System.out.println("loading question ID "+question.getId()+ " for survey ID "+survey.getId());
 				}
-				Choice choice = this.buildChoiceRecordFromResultSet(res, 24);
+				Choice choice = this.buildChoiceRecordFromResultSet(res, 25);
 				if (null == choice) continue;
 				if (null == survey.getQuestion(question.getId()).getChoice(choice.getId())) {
 					survey.getQuestion(question.getId()).getChoices().add(choice);
@@ -128,9 +128,10 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 				survey.setRestricted(res.getBoolean(12));
 				survey.setCheckCookie(res.getBoolean(13));
 				survey.setCheckIpAddress(res.getBoolean(14));
-				survey.setImageId(res.getString(15));
+				survey.setCheckUsername(res.getBoolean(15));
+				survey.setImageId(res.getString(16));
 				prop = new ApsProperties();
-				prop.loadFromXml(res.getString(16));
+				prop.loadFromXml(res.getString(17));
 				survey.setImageDescriptions(prop);
 			}
 		} catch (Throwable t) {
@@ -151,66 +152,72 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 			int selfGeneratedId = this.getUniqueId( NEXT_ID, conn);
 			stat = conn.prepareStatement(SAVE_SURVEY);
 			survey.setId(selfGeneratedId);
-			stat.setInt(1, survey.getId()); //1
-			stat.setString(2, survey.getDescriptions().toXml()); //2
-			stat.setString(3, survey.getGroupName()); //3
-			stat.setDate(4, new java.sql.Date(survey.getStartDate().getTime())); //4
+			int index = 1;
+			stat.setInt(index++, survey.getId()); //1
+			stat.setString(index++, survey.getDescriptions().toXml()); //2
+			stat.setString(index++, survey.getGroupName()); //3
+			stat.setDate(index++, new java.sql.Date(survey.getStartDate().getTime())); //4
 			Date date = survey.getEndDate();
 			if (null != date) {
-				stat.setDate(5, new java.sql.Date(survey.getEndDate().getTime())); //5
+				stat.setDate(index++, new java.sql.Date(survey.getEndDate().getTime())); //5
 			} else {
-				stat.setNull(5, java.sql.Types.DATE); //5
+				stat.setNull(index++, java.sql.Types.DATE); //5
 			}
 			if (survey.isActive()) {
-				stat.setInt(6, 1); //6
+				stat.setInt(index++, 1); //6
 			} else {
-				stat.setInt(6, 0); //6
+				stat.setInt(index++, 0); //6
 			}
 			if (survey.isPublicPartialResult()) {
-				stat.setInt(7, 1); //7
+				stat.setInt(index++, 1); //7
 			} else {
-				stat.setInt(7, 0); //7
+				stat.setInt(index++, 0); //7
 			}
 			if (survey.isPublicResult()) {
-				stat.setInt(8, 1); //8
+				stat.setInt(index++, 1); //8
 			} else {
-				stat.setInt(8, 0); //8
+				stat.setInt(index++, 0); //8
 			}
 			if (survey.isQuestionnaire()) {
-				stat.setInt(9, 1); //9
+				stat.setInt(index++, 1); //9
 			} else {
-				stat.setInt(9, 0); //9
+				stat.setInt(index++, 0); //9
 			}
 			if (survey.isGatherUserInfo()) {
-				stat.setInt(10, 1); //10
+				stat.setInt(index++, 1); //10
 			} else {
-				stat.setInt(10, 0); //10
+				stat.setInt(index++, 0); //10
 			}
-			stat.setString(11, survey.getTitles().toXml()); //11
+			stat.setString(index++, survey.getTitles().toXml()); //11
 			if (survey.isRestricted()) {
-				stat.setInt(12, 1); //12
+				stat.setInt(index++, 1); //12
 			} else {
-				stat.setInt(12, 0); //12
+				stat.setInt(index++, 0); //12
 			}
 			if (survey.isCheckCookie()) {
-				stat.setInt(13, 1); //13
+				stat.setInt(index++, 1); //13
 			} else {
-				stat.setInt(13, 0); //13
+				stat.setInt(index++, 0); //13
 			}
 			if (survey.isCheckIpAddress()) {
-				stat.setInt(14, 1); //14
+				stat.setInt(index++, 1); //14
 			} else {
-				stat.setInt(14, 0); //14
+				stat.setInt(index++, 0); //14
+			}
+			if (survey.isCheckUsername()) {
+				stat.setInt(index++, 1); //14
+			} else {
+				stat.setInt(index++, 0); //14
 			}
 			if (null != survey.getImageId() && survey.getImageId().length() > 0) {
-				stat.setString(15, survey.getImageId()); // 15
+				stat.setString(index++, survey.getImageId()); // 15
 			} else {
-				stat.setNull(15, java.sql.Types.VARCHAR); // 15
+				stat.setNull(index++, java.sql.Types.VARCHAR); // 15
 			}
 			if (null != survey.getImageDescriptions() && !survey.getImageDescriptions().isEmpty()) {
-				stat.setString(16, survey.getImageDescriptions().toXml()); //16
+				stat.setString(index++, survey.getImageDescriptions().toXml()); //16
 			} else {
-				stat.setNull(16, java.sql.Types.VARCHAR); // 16
+				stat.setNull(index++, java.sql.Types.VARCHAR); // 16
 			}
 			stat.executeUpdate();
 			// SAVE QUESTIONS
@@ -265,67 +272,73 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
 			stat = conn.prepareStatement(UPDATE_SURVEY_BY_ID);
-			stat.setString(1, survey.getDescriptions().toXml()); // 1
-			stat.setString(2, survey.getGroupName()); // 2
-			stat.setDate(3, new java.sql.Date(survey.getStartDate().getTime())); // 3
+			int index = 1;
+			stat.setString(index++, survey.getDescriptions().toXml()); // 1
+			stat.setString(index++, survey.getGroupName()); // 2
+			stat.setDate(index++, new java.sql.Date(survey.getStartDate().getTime())); // 3
 			if (null == survey.getEndDate()) {
-				stat.setNull(4, java.sql.Types.DATE); // 4
+				stat.setNull(index++, java.sql.Types.DATE); // 4
 			} else {
-				stat.setDate(4, new java.sql.Date(survey.getEndDate().getTime())); // 4
+				stat.setDate(index++, new java.sql.Date(survey.getEndDate().getTime())); // 4
 			}
 			if (survey.isActive()) {
-				stat.setInt(5, 1); // 5
+				stat.setInt(index++, 1); // 5
 			} else {
-				stat.setInt(5, 0); // 5
+				stat.setInt(index++, 0); // 5
 			}
 			if (survey.isPublicPartialResult()) {
-				stat.setInt(6, 1); // 6
+				stat.setInt(index++, 1); // 6
 			} else {
-				stat.setInt(6, 0); // 6
+				stat.setInt(index++, 0); // 6
 			}
 			if (survey.isPublicResult()) {
-				stat.setInt(7, 1); // 7
+				stat.setInt(index++, 1); // 7
 			} else {
-				stat.setInt(7, 0); // 7
+				stat.setInt(index++, 0); // 7
 			}
 			if (survey.isQuestionnaire()) {
-				stat.setInt(8, 1); // 8
+				stat.setInt(index++, 1); // 8
 			} else {
-				stat.setInt(8, 0); // 8
+				stat.setInt(index++, 0); // 8
 			}
 			if (survey.isGatherUserInfo()) {
-				stat.setInt(9, 1); // 9
+				stat.setInt(index++, 1); // 9
 			} else {
-				stat.setInt(9, 0); // 9
+				stat.setInt(index++, 0); // 9
 			}
-			stat.setString(10, survey.getTitles().toXml()); // 10
+			stat.setString(index++, survey.getTitles().toXml()); // 10
 			if (survey.isRestricted())  {
-				stat.setInt(11, 1); // 11
+				stat.setInt(index++, 1); // 11
 			} else {
-				stat.setInt(11, 0); // 11
+				stat.setInt(index++, 0); // 11
 			}
 			
 			if (survey.isCheckCookie()) {
-				stat.setInt(12, 1); //12
+				stat.setInt(index++, 1); //12
 			} else {
-				stat.setInt(12, 0); //12
+				stat.setInt(index++, 0); //12
 			}
 			if (survey.isCheckIpAddress()) {
-				stat.setInt(13, 1); //13
+				stat.setInt(index++, 1); //13
 			} else {
-				stat.setInt(13, 0); //13
+				stat.setInt(index++, 0); //13
+			}
+			if (survey.isCheckUsername()) {
+				stat.setInt(index++, 1); //13
+			} else {
+				stat.setInt(index++, 0); //13
 			}
 			if (null != survey.getImageId() && survey.getImageId().length() > 0) {
-				stat.setString(14, survey.getImageId()); //14
+				stat.setString(index++, survey.getImageId()); //14
 			} else {
-				stat.setNull(14, java.sql.Types.VARCHAR); //14
+				stat.setNull(index++, java.sql.Types.VARCHAR); //14
 			}
 			if (null != survey.getImageDescriptions() && !survey.getImageDescriptions().isEmpty()) {
-				stat.setString(15, survey.getImageDescriptions().toXml()); //15
+				stat.setString(index++, survey.getImageDescriptions().toXml()); //15
 			} else {
-				stat.setNull(15, java.sql.Types.VARCHAR); // 15
+				stat.setNull(index++, java.sql.Types.VARCHAR); // 15
 			}
-			stat.setInt(16, survey.getId());
+			stat.setInt(index++, survey.getId());
 			stat.executeUpdate();
 			// UPDATE QUESTIONS
 			Set<Integer> kept = this.deleteQuestionsInExcess(conn, survey);
@@ -538,11 +551,11 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 	
 	private static final String GET_COMPLETE_SURVEY_BY_ID = 
 		"SELECT " +
-			// survey: 1 - 16
-			"jpsurvey.id,description, maingroup, startdate, enddate, active, publicpartialresult, publicresult, questionnaire, gatheruserinfo, title, restrictedaccess, checkcookie, checkipaddress, imageid, imagedescr, "+
-			// questions: 17 - 23 
+			// survey: 1 - 17
+			"jpsurvey.id,description, maingroup, startdate, enddate, active, publicpartialresult, publicresult, questionnaire, gatheruserinfo, title, restrictedaccess, checkcookie, checkipaddress, checkusername, imageid, imagedescr, "+
+			// questions: 18 - 24 
 			"jpsurvey_questions.id, surveyid, question, jpsurvey_questions.pos, singlechoice, minresponsenumber, maxresponsenumber, " +
-			// choices: 24 - 28
+			// choices: 25 - 29
 			"jpsurvey_choices.id, questionid, choice, jpsurvey_choices.pos, freetext " +
 		"FROM jpsurvey "+
 			"LEFT JOIN jpsurvey_questions ON jpsurvey.id = jpsurvey_questions.surveyid "+
@@ -554,12 +567,12 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 		"jpsurvey " +
 		"	(id, description, maingroup, startdate, enddate, active, publicpartialresult, publicresult, " +
 		"	questionnaire, gatheruserinfo, title, restrictedaccess, " +
-		"	checkcookie, checkipaddress, imageid, imagedescr) " +
-		"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		"	checkcookie, checkipaddress, checkusername, imageid, imagedescr) " +
+		"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	private static final String UPDATE_SURVEY_BY_ID = 
 		"UPDATE jpsurvey SET description = ? , maingroup = ? , startdate = ? , enddate = ? , active = ? , " +
-		"publicpartialresult = ?, publicresult = ?, questionnaire = ?, gatheruserinfo = ? , title = ? , restrictedaccess = ? , checkcookie = ? , checkipaddress = ?, imageid = ?, imagedescr = ? WHERE  id = ? ";
+		"publicpartialresult = ?, publicresult = ?, questionnaire = ?, gatheruserinfo = ? , title = ? , restrictedaccess = ? , checkcookie = ? , checkipaddress = ?, checkusername = ?, imageid = ?, imagedescr = ? WHERE  id = ? ";
 	
 	private static final String DELETE_SURVEY_BY_ID = 
 		"DELETE FROM jpsurvey WHERE id = ? ";

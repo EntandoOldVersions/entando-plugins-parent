@@ -98,6 +98,11 @@ public class Survey {
 			dataType = DataType.SHORT, 
 			canBeNull = false)
 	private short _checkIpAddress;
+
+	@DatabaseField(columnName = "checkusername", 
+			dataType = DataType.SHORT, 
+			canBeNull = false)
+	private short _checkUsername;
 	
 	@DatabaseField(columnName = "imageid", 
 			dataType = DataType.STRING, 
@@ -112,6 +117,13 @@ public class Survey {
 	
 }
 /*
+
+-------------- mercoledì, 24 aprile 2013------------------------
+ALTER TABLE jpsurvey ADD COLUMN checkusername smallint;
+update jpsurvey SET checkusername = 0;
+ALTER TABLE jpsurvey ALTER COLUMN checkusername SET NOT NULL;
+----------------------------------------------------------------
+
 CREATE TABLE jpsurvey
 (
   id integer NOT NULL,
@@ -128,6 +140,7 @@ CREATE TABLE jpsurvey
   restrictedaccess smallint NOT NULL,
   checkcookie smallint NOT NULL,
   checkipaddress smallint NOT NULL,
+  checkusername smallint NOT NULL,
   imageid character varying(16),
   imagedescr character varying,
   CONSTRAINT jpsurvey_pkey PRIMARY KEY (id)

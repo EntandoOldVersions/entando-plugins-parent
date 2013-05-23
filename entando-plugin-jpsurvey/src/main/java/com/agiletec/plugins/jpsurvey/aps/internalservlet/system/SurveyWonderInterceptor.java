@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpsurvey.aps.internalservlet.ApsAdminSurveySystemConstants;
 import com.agiletec.plugins.jpsurvey.aps.internalservlet.model.CurrentVotingInfoBean;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.VoterResponse;
@@ -49,6 +51,11 @@ public class SurveyWonderInterceptor extends AbstractSurveyWondenInterceptor {
 		boolean expired = (null != survey.getEndDate() && today.getTime() > survey.getEndDate().getTime());
 		//SE FINITO ESCI
 		if (expired) return "expiredSurvey";
+		
+		UserDetails currentUser = (UserDetails) request.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
+		if (survey.isCheckUsername() && (null == currentUser || currentUser.getUsername().equals(SystemConstants.GUEST_USER_NAME))) {
+			return "userNotAllowedToSurvey";
+		}
 		
 		String checkGroup = this.checkSurveyGroup(survey, request);
 		if (null != checkGroup) return checkGroup;

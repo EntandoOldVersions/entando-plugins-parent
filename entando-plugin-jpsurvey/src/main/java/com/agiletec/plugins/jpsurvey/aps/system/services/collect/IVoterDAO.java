@@ -21,9 +21,12 @@ import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
 
+import com.agiletec.aps.system.common.FieldSearchFilter;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.model.Voter;
 
 public interface IVoterDAO {
+	
+	public List<Integer> searchVotersId(FieldSearchFilter[] filters);
 	
 	public Voter getVoter(String username, String ipAddress, int surveyId);
 	

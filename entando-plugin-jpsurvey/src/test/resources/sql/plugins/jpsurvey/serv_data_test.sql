@@ -1,6 +1,6 @@
 INSERT INTO jpsurvey ( id, description, maingroup, startdate, enddate, active, publicpartialresult, 
 	publicresult, questionnaire, gatheruserinfo, title, restrictedaccess, checkcookie, 
-	checkipaddress, imageid, imagedescr ) VALUES ( 1, '<?xml version="1.0" encoding="UTF-8"?>
+	checkipaddress, checkusername, imageid, imagedescr ) VALUES ( 1, '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Description-1</property>
 <property key="it">Descrizione-1</property>
@@ -8,7 +8,7 @@ INSERT INTO jpsurvey ( id, description, maingroup, startdate, enddate, active, p
 <properties>
 <property key="en">Title-1</property>
 <property key="it">Titolo-1</property>
-</properties>', 0, 0, 0, 'IMG001', '<?xml version="1.0" encoding="UTF-8"?>
+</properties>', 0, 0, 0, 0, 'IMG001', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Barrali by night</property>
 <property key="it">Barrali di notte</property>
@@ -16,7 +16,7 @@ INSERT INTO jpsurvey ( id, description, maingroup, startdate, enddate, active, p
 
 INSERT INTO jpsurvey ( id, description, maingroup, startdate, enddate, active, publicpartialresult, 
 	publicresult, questionnaire, gatheruserinfo, title, restrictedaccess, checkcookie, 
-	checkipaddress, imageid, imagedescr ) VALUES ( 2, '<?xml version="1.0" encoding="UTF-8"?>
+	checkipaddress, checkusername,imageid, imagedescr ) VALUES ( 2, '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 	<property key="it">Descrizione-2</property>
 	<property key="en">Description-2</property>
@@ -24,7 +24,7 @@ INSERT INTO jpsurvey ( id, description, maingroup, startdate, enddate, active, p
 <properties>
 	<property key="it">Titolo-2</property>
 	<property key="en">Title-2</property>
-</properties>', 1, 0, 0, NULL, NULL );
+</properties>', 1, 0, 0, 0, NULL, NULL );
 
 INSERT INTO jpsurvey_questions ( id, surveyid, question, pos, singlechoice, minresponsenumber, maxresponsenumber ) VALUES 
 	( 1, 1, '<?xml version="1.0" encoding="UTF-8"?>

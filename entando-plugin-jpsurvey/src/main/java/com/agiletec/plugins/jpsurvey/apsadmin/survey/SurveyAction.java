@@ -219,6 +219,7 @@ public class SurveyAction extends AbstractSurveyAction implements ISurveyAction 
 			this.setGatherUserInfo(survey.isGatherUserInfo() ? 1 : 0);
 			this.setCheckCookie(survey.isCheckCookie());
 			this.setCheckIpAddress(survey.isCheckIpAddress());
+			this.setCheckUsername(survey.isCheckUsername());
 			this.setTitles(survey.getTitles());
 			this.setImageId(survey.getImageId());
 			this.setImageDescriptions(survey.getImageDescriptions());
@@ -270,6 +271,8 @@ public class SurveyAction extends AbstractSurveyAction implements ISurveyAction 
 			survey.setTitles(this.getTitles());
 			survey.setCheckCookie(this.getCheckCookie() == null ? false : this.getCheckCookie().booleanValue());
 			survey.setCheckIpAddress(this.getCheckIpAddress() == null ? false : this.getCheckIpAddress().booleanValue());
+			survey.setCheckUsername(this.getCheckUsername() == null ? false : this.getCheckUsername().booleanValue());
+			
 			survey.setImageId(this.getImageId());
 			// refresh the image description if and only if the _survey as an image. A new _survey has no image and description by definition
 			if (null != survey.getImageId()	&& this.getStrutsAction() == ApsAdminSystemConstants.EDIT) {
@@ -520,6 +523,13 @@ public class SurveyAction extends AbstractSurveyAction implements ISurveyAction 
 		this._checkIpAddress = checkIpAddress;
 	}
 
+	public Boolean getCheckUsername() {
+		return _checkUsername;
+	}
+	public void setCheckUsername(Boolean checkUsername) {
+		this._checkUsername = checkUsername;
+	}
+	
 	public void setResponseManager(IResponseManager responseManager) {
 		this._responseManager = responseManager;
 	}
@@ -590,6 +600,7 @@ public class SurveyAction extends AbstractSurveyAction implements ISurveyAction 
 
 	public Boolean _checkCookie;
 	public Boolean _checkIpAddress;
+	private Boolean _checkUsername;
 
 	// managers
 	private IResponseManager _responseManager;

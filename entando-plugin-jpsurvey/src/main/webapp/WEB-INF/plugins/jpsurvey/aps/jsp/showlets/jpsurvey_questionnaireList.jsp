@@ -18,7 +18,7 @@
 	<c:if test="${not empty currentSurvey.imageId}">
 		<c:choose>
 			<c:when test="${not empty currentSurvey.imageDescriptions[currentLang]}">
-				<img class="surveyImg" alt="<c:out value="${currentSurvey.imageDescriptions[currentLang]}" />" src="<c:out value="${imageURL}" />" />		
+				<img class="surveyImg" alt="<c:out value="${currentSurvey.imageDescriptions[currentLang]}" />" src="<c:out value="${imageURL}" />" />
 			</c:when>
 			<c:otherwise>
 				<img class="surveyImg" alt="<c:out value="${currentSurvey.imageDescriptions[defaultLang]}" />" src="<c:out value="${imageURL}" />"/>
@@ -28,27 +28,36 @@
 		<h2>
 			<c:choose>
 				<c:when test="${not empty currentSurvey.titles[currentLang]}">
-					<a href="<wp:url page="survey_detail"><wp:parameter name="surveyId"><c:out value="${currentSurvey.id}"/></wp:parameter></wp:url>" title="<wp:i18n key="JPSURVEY_GO_TO_QUESTIONNAIRE" />:&#32;<c:out value="${currentSurvey.titles[currentLang]}"/>"><c:out value="${currentSurvey.titles[currentLang]}"/></a>		
+					<a href="<wp:url page="survey_detail"><wp:parameter name="surveyId"><c:out value="${currentSurvey.id}"/></wp:parameter></wp:url>" title="<wp:i18n key="JPSURVEY_GO_TO_QUESTIONNAIRE" />:&#32;<c:out value="${currentSurvey.titles[currentLang]}"/>"><c:out value="${currentSurvey.titles[currentLang]}"/></a>
 				</c:when>
 				<c:otherwise>
 					<a href="<wp:url page="survey_detail"><wp:parameter name="surveyId"><c:out value="${currentSurvey.id}"/></wp:parameter></wp:url>" title="<wp:i18n key="JPSURVEY_GO_TO_QUESTIONNAIRE" />:&#32;<c:out value="${currentSurvey.titles[defaultLang]}"/>"><c:out value="${currentSurvey.titles[defaultLang]}"/></a>
 				</c:otherwise>
-			</c:choose>			
+			</c:choose>
 		</h2>
 		<p>
 		<c:choose>
 			<c:when test="${not empty currentSurvey.descriptions[currentLang]}">
-				<c:out value="${currentSurvey.descriptions[currentLang]}"/>		
+				<c:out value="${currentSurvey.descriptions[currentLang]}"/>
 			</c:when>
 			<c:otherwise>
 				<c:out value="${currentSurvey.descriptions[defaultLang]}"/>
 			</c:otherwise>
 		</c:choose>
 		</p>
-		<p class="note">(<c:choose>
-		<c:when test="${voted}"><wp:i18n key="JPSURVEY_YOU_HAVE_VOTED" /></c:when>
-		<c:otherwise><wp:i18n key="JPSURVEY_YOU_HAVE_NOT_VOTED" /></c:otherwise>
-		</c:choose>)
+		<p class="note"><c:choose>
+		<c:when test="${voted}">(<wp:i18n key="JPSURVEY_YOU_HAVE_VOTED" />)</c:when>
+		<c:otherwise>
+			<c:choose>
+				<c:when test="${currentSurvey.checkUsername && sessionScope.currentUser.username == 'guest' }">
+					(<wp:i18n key="JPSURVEY_DO_LOGIN" />)
+				</c:when>
+				<c:otherwise>
+					(<wp:i18n key="JPSURVEY_YOU_HAVE_NOT_VOTED" />)
+				</c:otherwise>
+			</c:choose>
+		</c:otherwise>
+		</c:choose>
 		</p>
 	</li>
 </c:forEach>

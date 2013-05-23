@@ -22,7 +22,7 @@
 		<dd><s:property value="%{getLabel(#surveyInfo.descriptions)}" /></dd>
 </dl>
 <s:if test="#imageURL != null && #imageURL != '' "></div></s:if>
-<div class="clear">	
+<div class="clear">
 <s:if test="#surveyInfo.questionnaire">
 	<p>
 	<wp:i18n key="JPSURVEY_SURVEY_STARTDAY" />&#32;<s:date name="#surveyInfo.startDate" format="EEEE dd/MM/yyyy" />
@@ -55,14 +55,25 @@
 		<%--<s:if test="#surveyInfo.questionnaire">VISUALIZZA LA TUA VOTAZIONE</s:if>--%>
 </s:if>
 <s:else>
-	<p><wp:i18n key="JPSURVEY_YOU_NOT_VOTED" /></p>
-	<p>
-	<s:if test="!#surveyInfo.archive" >
-	<a href="<wp:action path="/ExtStr2/do/jpsurvey/Front/Survey/startSurvey.action" ><wp:parameter name="surveyId"><s:property value="#surveyInfo.id" /></wp:parameter></wp:action>" ><wp:i18n key="JPSURVEY_BEGIN" />&#32;
-	<s:if test="#surveyInfo.questionnaire"><wp:i18n key="JPSURVEY_SURVEY" /></s:if>
-	<s:else><wp:i18n key="JPSURVEY_POLL" /></s:else></a>
+
+	<s:if test="#surveyInfo.checkUsername && #session.currentUser.username=='guest'">
+		<p><wp:i18n key="JPSURVEY_DO_LOGIN" /></p>
 	</s:if>
-	</p>
+	<s:else>
+		<p><wp:i18n key="JPSURVEY_YOU_NOT_VOTED" /></p>
+		<p>
+			<s:if test="!#surveyInfo.archive" >
+				<a href="<wp:action path="/ExtStr2/do/jpsurvey/Front/Survey/startSurvey.action" ><wp:parameter name="surveyId"><s:property value="#surveyInfo.id" /></wp:parameter></wp:action>" ><wp:i18n key="JPSURVEY_BEGIN" />&#32;
+				<s:if test="#surveyInfo.questionnaire">
+					<wp:i18n key="JPSURVEY_SURVEY" />
+				</s:if>
+				<s:else>
+					<wp:i18n key="JPSURVEY_POLL" />
+				</s:else>
+				</a>
+			</s:if>
+		</p>
+	</s:else>
 </s:else>
 
 <s:if test="!#surveyInfo.questionnaire">

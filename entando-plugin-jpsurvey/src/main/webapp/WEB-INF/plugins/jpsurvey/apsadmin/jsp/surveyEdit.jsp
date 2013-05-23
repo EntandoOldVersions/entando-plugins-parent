@@ -153,6 +153,7 @@
 				<p>
 					<wpsf:checkbox useTabindexAutoIncrement="true" name="checkCookie" id="checkCookie" cssClass="radiocheck"/><label for="checkCookie"><s:text name="jpsurvey_cookie" /></label><br />
 					<wpsf:checkbox useTabindexAutoIncrement="true" name="checkIpAddress" id="checkIpAddress" cssClass="radiocheck" /><label for="checkIpAddress"><s:text name="jpsurvey_ip_username" /></label>
+					<wpsf:checkbox useTabindexAutoIncrement="true" name="checkUsername" id="checkUsername" cssClass="radiocheck" /><label for="checkUsername"><s:text name="jpsurvey_check_username" /></label>
 				</p>
 			</fieldset>
 		</div>

@@ -24,7 +24,7 @@
 <div class="clear">
 <p><wp:i18n key="JPSURVEY_PROFILE_NEEDED" /></p>
 
-<form action="<wp:action path="/ExtStr2/do/jpsurvey/Front/Survey/saveVoterProfile.action" />" method="post" enctype="multipart/form-data" class="pluginsForm">
+<form action="<wp:action path="/ExtStr2/do/jpsurvey/Front/Survey/saveVoterProfile.action" />" method="post" class="pluginsForm">
 	
 	<s:if test="hasFieldErrors()">
 		<h3><s:text name="message.title.FieldErrors" /></h3>

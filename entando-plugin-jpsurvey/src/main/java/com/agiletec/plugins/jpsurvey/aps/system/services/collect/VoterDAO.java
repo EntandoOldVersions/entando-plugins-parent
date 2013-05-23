@@ -24,10 +24,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.agiletec.aps.system.common.FieldSearchFilter;
 import com.agiletec.plugins.jpsurvey.aps.system.services.AbstractSurveyDAO;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.model.Voter;
 
 public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
+
+	@Override
+	public List<Integer> searchVotersId(FieldSearchFilter[] filters) {
+		List recordsId = null;
+		try {
+			recordsId  = super.searchId(filters);
+		} catch (Throwable t) {
+			throw new RuntimeException("error in searchRecordsId", t);
+		}
+		return recordsId;
+	}
 	
 	public Voter getVoter(String username, String ipAddress, int surveyId) {
 		Voter voter = null;

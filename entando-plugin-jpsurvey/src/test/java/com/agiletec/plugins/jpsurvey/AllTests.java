@@ -31,7 +31,7 @@ import com.agiletec.plugins.jpsurvey.apsadmin.survey.TestSurveyImageAction;
 public class AllTests {
 	
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for jAPS Plugin Survey");
+		TestSuite suite = new TestSuite("Test for Plugin Survey");
 		
 		suite.addTestSuite(TestVoterManager.class);
 		suite.addTestSuite(TestResultManager.class);

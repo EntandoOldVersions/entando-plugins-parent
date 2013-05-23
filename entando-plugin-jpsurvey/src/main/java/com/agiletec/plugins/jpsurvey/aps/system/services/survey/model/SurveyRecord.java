@@ -169,6 +169,13 @@ public class SurveyRecord {
 		return _gatherUserInfo;
 	}
 	
+	public boolean isCheckUsername() {
+		return _checkUsername;
+	}
+	public void setCheckUsername(boolean checkUsername) {
+		this._checkUsername = checkUsername;
+	}
+
 
 	private int _id;
 	private ApsProperties _descriptions = new ApsProperties();
@@ -187,5 +194,6 @@ public class SurveyRecord {
 	private ApsProperties _imageDescriptions = new ApsProperties();
 	public boolean _checkCookie;
 	public boolean _checkIpAddress;
+	private boolean _checkUsername;
 	
 }

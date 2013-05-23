@@ -17,10 +17,13 @@
  */
 package com.agiletec.plugins.jpsurvey.aps.internalservlet.system;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.common.FieldSearchFilter;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
@@ -33,7 +36,7 @@ import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.SurveyReco
  * @author E.Santoboni
  */
 public class CheckVotingUtil {
-	
+
 	public static boolean isSurveyVoted(SurveyRecord surveyInfo, HttpServletRequest request) throws Throwable {
 		boolean checkCookie = false;
 		if (surveyInfo.isCheckCookie()) {
@@ -43,9 +46,13 @@ public class CheckVotingUtil {
 		if (surveyInfo.isCheckIpAddress()) {
 			checkIpAddress = isVotedByIpAddressAndUser(surveyInfo, request);
 		}
-		return (checkCookie || checkIpAddress);
+		boolean checkUsername = false;
+		if (surveyInfo.isCheckUsername()) {
+			checkUsername = isVotedByUser(surveyInfo, request);
+		}
+		return (checkCookie || checkIpAddress || checkUsername);
 	}
-	
+
 	private static boolean isVotedByCookie(SurveyRecord surveyInfo, HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 		if (null == cookies) return false;
@@ -60,7 +67,7 @@ public class CheckVotingUtil {
 		}
 		return false;
 	}
-	
+
 	private static boolean isVotedByIpAddressAndUser(SurveyRecord surveyInfo, HttpServletRequest request) throws ApsSystemException {
 		String remoteAddress = request.getRemoteAddr();
 		IVoterManager voterManager = (IVoterManager) ApsWebApplicationUtils.getBean(SurveySystemConstants.SURVEY_VOTER_MANAGER, request);
@@ -68,13 +75,25 @@ public class CheckVotingUtil {
 		Voter voter = voterManager.getVoter(currentUser.getUsername(), remoteAddress, surveyInfo.getId());
 		return (voter != null);
 	}
-	
+	private static boolean isVotedByUser(SurveyRecord surveyInfo, HttpServletRequest request) throws ApsSystemException {
+		//String remoteAddress = request.getRemoteAddr();
+		IVoterManager voterManager = (IVoterManager) ApsWebApplicationUtils.getBean(SurveySystemConstants.SURVEY_VOTER_MANAGER, request);
+		UserDetails currentUser = (UserDetails) request.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
+
+		FieldSearchFilter usernameFilter = new FieldSearchFilter((IVoterManager.FIELD_USERNAME), currentUser.getUsername(), false);
+		FieldSearchFilter surveyIdFilter = new FieldSearchFilter((IVoterManager.FIELD_SURVEY_ID), new Integer(surveyInfo.getId()), false);
+		FieldSearchFilter[] filters = new FieldSearchFilter[]{usernameFilter, surveyIdFilter};
+
+		List<Integer> voters = voterManager.searchVoters(filters);
+		return (null != voters && !voters.isEmpty());
+	}
+
 	public static String getCookieName(String username, int surveyId) {
 		return "jpsurvey_" + username + "_" + surveyId + "_NAME";
 	}
-	
+
 	public static String getCookieValue(String username, int surveyId) {
 		return "jpsurvey_" + username + "_" + surveyId + "_VALUE";
 	}
-	
+
 }
