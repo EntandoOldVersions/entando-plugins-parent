@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-		<version>3.2.1-SNAPSHOT</version>
+		<version>3.2.1-EEE-SNAPSHOT</version>
 	</parent>
 	<artifactId>entando-plugin-jpfrontshortcut</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
@@ -18,6 +18,13 @@
 			<email>e.santoboni@entando.com</email>
 		</developer>
 	</developers>
+	<repositories>
+		<repository>
+			<id>sonatype.oss.snapshots</id>
+			<name>Sonatype OSS Snapshot Repository</name>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
 	<url>http://www.entando.com/</url>
 	<build>
 		<plugins>
@@ -56,105 +63,36 @@
 			<groupId>com.jgeppert.struts2.jquery</groupId>
 			<artifactId>struts2-jquery-plugin</artifactId>
 			<version>3.6.0-SNAPSHOT</version>
-			<!--
-			<exclusions>
-				<exclusion>
-					<artifactId>struts2-core</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
-			-->
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-convention-plugin</artifactId>
 			<version>${struts2.version}</version>
-			<!--
-			<exclusions>
-				<exclusion>
-					<artifactId>struts2-core</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
-			-->
 		</dependency>
 		<dependency>
 			<groupId>com.jgeppert.struts2.jquery</groupId>
 			<artifactId>struts2-jquery-chart-plugin</artifactId>
 			<version>3.6.0-SNAPSHOT</version>
-			<!--
-			<exclusions>
-				<exclusion>
-					<artifactId>struts2-core</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
-			-->
 		</dependency>
 		<dependency>
 			<groupId>com.jgeppert.struts2.jquery</groupId>
 			<artifactId>struts2-jquery-grid-plugin</artifactId>
 			<version>3.6.0-SNAPSHOT</version>
-			<!--
-			<exclusions>
-				<exclusion>
-					<artifactId>struts2-core</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
-			-->
 		</dependency>
 		<dependency>
 			<groupId>com.jgeppert.struts2.jquery</groupId>
 			<artifactId>struts2-jquery-richtext-plugin</artifactId>
 			<version>3.6.0-SNAPSHOT</version>
-			<!--
-			<exclusions>
-				<exclusion>
-					<artifactId>struts2-core</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
-			-->
-		</dependency>
-		<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-richtext-plugin</artifactId>
-			<version>3.6.0-SNAPSHOT</version>
-			<!--
-			<exclusions>
-				<exclusion>
-					<artifactId>struts2-core</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
-			-->
 		</dependency>
 		<dependency>
 			<groupId>com.jgeppert.struts2.jquery</groupId>
 			<artifactId>struts2-jquery-tree-plugin</artifactId>
 			<version>3.6.0-SNAPSHOT</version>
-			<!--
-			<exclusions>
-				<exclusion>
-					<artifactId>struts2-core</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
-			-->
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-json-plugin</artifactId>
 			<version>${struts2.version}</version>
-			<!--
-			<exclusions>
-				<exclusion>
-					<artifactId>struts2-core</artifactId>
-					<groupId>org.apache.struts</groupId>
-				</exclusion>
-			</exclusions>
-			-->
 		</dependency>
 	</dependencies>
 </project>
