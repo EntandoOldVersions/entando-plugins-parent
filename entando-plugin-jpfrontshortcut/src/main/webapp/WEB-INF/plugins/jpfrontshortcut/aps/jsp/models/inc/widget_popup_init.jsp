@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%-- js escape setup //start --%>
-<% pageContext.setAttribute("carriageReturn", "\r"); %> 
-<% pageContext.setAttribute("newLine", "\n"); %> 
+<% pageContext.setAttribute("carriageReturn", "\r");%> 
+<% pageContext.setAttribute("newLine", "\n");%> 
 <c:set var="singleQuotes">'</c:set>
 <c:set var="singleQuotesReplace">\'</c:set>
 <c:set var="doubleQuotes">"</c:set>
@@ -16,17 +16,17 @@
 <div id="widgetDialog"></div>
 <script type='text/javascript'>
 	<!--//--><![CDATA[//><!--
-	jQuery(document).ready(function () { 
-		jQuery.struts2_jquery.bind(jQuery('#widgetDialog'),{
-			"title": "<c:out value="${WIDGET_EDIT_POPUP_TITLE}" escapeXml="false" />",
-			"autoOpen": false,
-			"modal": true,
-			"minWidth": 500,
-			"opentopics": "openRemoteDialog",
-			"jqueryaction": "dialog",
-			"id": "widgetDialog",
-			"href": "#"
-		});
-	 });
+	jQuery(document).ready(function() {
+		var options_widgetDialog = {};
+		options_widgetDialog.minWidth = 500;
+		options_widgetDialog.title = "<c:out value="${WIDGET_EDIT_POPUP_TITLE}" escapeXml="false" />";
+		options_widgetDialog.autoOpen = false;
+		options_widgetDialog.modal = true;
+		options_widgetDialog.closetopics = "<wp:info key="systemParam" paramName="applicationBaseURL" />dialog/close";
+		options_widgetDialog.jqueryaction = "dialog";
+		options_widgetDialog.id = "widgetDialog";
+		options_widgetDialog.href = "#";
+		jQuery.struts2_jquery_ui.bind(jQuery('#widgetDialog'), options_widgetDialog);
+	});
 	//--><!]]>
 </script>
