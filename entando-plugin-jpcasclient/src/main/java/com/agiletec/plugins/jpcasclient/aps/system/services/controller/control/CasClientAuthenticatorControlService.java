@@ -9,9 +9,9 @@
 * 
 * See the file License for the specific language governing permissions   
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -33,36 +33,38 @@ import com.agiletec.aps.system.services.controller.ControllerManager;
 import com.agiletec.aps.system.services.controller.control.AbstractControlService;
 import com.agiletec.aps.system.services.user.AbstractUser;
 import com.agiletec.aps.system.services.user.IUserManager;
+import com.agiletec.aps.system.services.user.User;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.system.common.AuthCommon;
 import com.agiletec.plugins.jpcasclient.aps.system.services.user.CasAuthProviderManager;
+import java.util.Date;
 
 /**
  * Extension of authentication service for managing CAS protocol
- * 
+ *
  * @author G.Cocco
  * */
 public class CasClientAuthenticatorControlService extends AbstractControlService {
-    
+
     public void afterPropertiesSet() throws Exception {
     	this._log.config(this.getClass().getName() + ": initialized");
 	}
-    
+
     /**
      * Execution.
-     * 
+     *
      * The service method execute the following operations (int the order indicated):
-     * 
+     *
      * 1) if in session there's the SAML assertion of CAS it is used for extract
      * principal information and load matching user in the session.
-     * 
+     *
      * 2) if in the request there are parameters user and password the are used
      *  to try to load the matching user; if user is not null it is loaded into the session
-     * 
-     * 3) if there is not a user into the session the guest user is loaded into 
+     *
+     * 3) if there is not a user into the session the guest user is loaded into
      * the session.
-     * 
+     *
      * @param reqCtx the request context
      * @param status the status  returned by the preceding service
      * @return the resulting status
@@ -78,7 +80,7 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
         }
         try {
             HttpServletRequest req = reqCtx.getRequest();
-            
+
             //Punto 1
             Assertion assertion =
             	(Assertion) req.getSession().getAttribute(CasClientPluginSystemCostants.JPCASCLIENT_CONST_CAS_ASSERTION);
@@ -93,7 +95,7 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
             		this._log.finest(" Princ - Name " + attributePrincipal.getName());
             	}
             }
-            this._log.finest("Request From User with Principal [CAS tiket validation]: " + name + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
+            this._log.finest("jpcasclient: request From User with Principal [CAS tiket validation]: " + name + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
             HttpSession session = req.getSession();
             if (null != name) {
             	String username = name;
@@ -102,7 +104,7 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
             	}
             	this._log.finest("Request From User with Username: " + username + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
             	if (username != null) {
-            		this._log.finest("user " + username );
+            		this._log.finest("jpcasclient: user is " + username );
             		UserDetails userOnSession = (UserDetails) session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
             		if (userOnSession == null || (userOnSession != null && !username.equals(userOnSession.getUsername()))) {
             			UserDetails user = this.getAuthenticationProvider().getUser(username);
@@ -114,15 +116,23 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
                 					((AbstractUser) user).setPassword(userOnSession.getPassword());
                 				}
                 				session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
-                				this._log.finest("New User: " + user.getUsername());
+                				this._log.finest("jpcasclient: new user: " + user.getUsername());
                 			}
                 		} else {
-                			req.setAttribute("wrongAccountCredential", new Boolean(true));
+//                			req.setAttribute("wrongAccountCredential", new Boolean(true));
+                      /* create user on the fly */
+                      user = new User();
+                      ((User)user).setUsername(username);
+                      ((User)user).setPassword(CasClientPluginSystemCostants.JPCAS_RUNTIME_USER);
+                      ((User)user).setLastAccess(new Date());
+                      /* put in the session */
+                      session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
+                      this._log.finest("jpcasclient: new user created on the fly: " + user.getUsername());
                 		}
             		}
             	}
-            } 
-            
+            }
+
             //Punto 2
             String userName = req.getParameter("username");
             String password = req.getParameter("password");
@@ -140,7 +150,7 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
                 	req.setAttribute("wrongAccountCredential", new Boolean(true));
                 }
             }
-            
+
             //Punto 3
             if (session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER) == null) {
             	UserDetails guestUser = this.getUserManager().getGuestUser();
@@ -153,14 +163,14 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
         }
         return retStatus;
     }
-    
+
 	protected IUserManager getUserManager() {
 		return _userManager;
 	}
 	public void setUserManager(IUserManager userManager) {
 		this._userManager = userManager;
 	}
-	
+
 	public void setAuthenticationProvider(CasAuthProviderManager authenticationProvider) {
 		this._authenticationProvider = authenticationProvider;
 	}
@@ -178,5 +188,5 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
 	private AuthCommon _authCommon;
 	private CasAuthProviderManager _authenticationProvider;
     private IUserManager _userManager;
-    
+
 }

@@ -14,7 +14,7 @@
 		<action name="doLogin" class="dispatchAction" method="doLogin">
 			<result name="input">/WEB-INF/plugins/jpcasclient/apsadmin/jsp/common/login.jsp</result>
 			<result type="redirectAction">main</result>
-			<interceptor-ref name="japsLoginStack" />
+			<interceptor-ref name="entandoLoginStack" />
 			<interceptor-ref name="backendGuiClient" />
 		</action>
 	
