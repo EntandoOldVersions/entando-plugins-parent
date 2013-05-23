@@ -58,6 +58,17 @@
 				<form action="<c:out value="${insertVoteAction}" escapeXml="false" />" method="post" class="form-inline">
 					<p class="noscreen">
 						<input type="hidden" name="formContentId" value="<s:property value="contentId"/>">
+						<%-- non lo si può prendere dinamicamente perchè non ancora settato! --%>
+						<input type="hidden" name="redirectParamNames['commentsPagerId_item']" value="${param.commentsPagerId_item}" />
+						<s:if test="null != extraParamNames">
+							<s:iterator var="extraP" value="extraParamNames">
+								<s:set var="req_extraP" value="#extraP" scope="request" />
+								<c:if test="${!empty param[req_extraP]}">
+									<input type="hidden" name="redirectParamNames['${req_extraP}']" value="${param[req_extraP]}" />
+		
+								</c:if>
+							</s:iterator>
+						</s:if>
 					</p>
 					<s:iterator value="votes" var="voteItem">
 						<s:set var="currentId" value="%{#htmlIdPrefix+'_vote_'+#voteItem.key}" />
@@ -118,18 +129,22 @@
 									<c:set var="showRateCommentForm" value="${sessionScope.currentUser != 'guest'}" />
 									<c:if test="${showRateCommentForm}">
 
-									<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insertVote.action" var="insertVoteAction">
-										<wp:parameter name="listViewerPagerId" value="${listViewerPagerId}"  />
-										<wp:parameter name="listViewerPagerValue" value="${listViewerPagerValue}"/>
-									</wp:action>
-
+									<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insertVote.action" var="insertVoteAction" />
 										<form action="<c:out value="${insertVoteAction}" escapeXml="false" />" method="post" class="form-inline">
 											<p class="noscreen">
 												<input type="hidden" name="formContentId" value="<s:property value="contentId"/>">
 												<wpsf:hidden name="selectedComment" value="%{#commentIdvalue}" />
 
-												<input type="hidden" name="pagName" value="<c:out value="${groupComment.paramItemName}" />">
-												<input type="hidden" name="pagValue" value="<c:out value="${groupComment.currItem}" />">
+												<input type="hidden" name="redirectParamNames['${groupComment.paramItemName}']" value="${groupComment.currItem}" />
+												<s:if test="null != extraParamNames">
+													<s:iterator var="extraP" value="extraParamNames">
+														<s:set var="req_extraP" value="#extraP" scope="request" />
+														<c:if test="${!empty param[req_extraP]}">
+															<input type="hidden" name="redirectParamNames['${req_extraP}']" value="${param[req_extraP]}" />
+								
+														</c:if>
+													</s:iterator>
+												</s:if>
 											</p>
 
 												<s:set var="htmt_vode_id">votecomment_<c:out value="${comment.id}" /><c:out value="${comment.contentId}" /></s:set>
@@ -207,28 +222,30 @@
 
 					<form action="<c:out value="${insertAction}" escapeXml="false" />" method="post">
 						<p class="noscreen">
-							<%--
-							<pre>
-								groupComment.size<c:out value="${groupComment.size}"></c:out>
-								groupComment.maxItem<c:out value="${groupComment.maxItem}"></c:out>
-								groupComment.max<c:out value="${groupComment.max}"></c:out>
-								wewe<c:out value="${listViewerPagerId}"></c:out>
-							</pre>
-							 --%>
-							<input type="hidden" name="formContentId" value="<s:property value="contentId"/>" />
-							<input type="hidden" name="pagName" value="<c:out value="${groupComment.paramItemName}" />">
 							<c:choose>
-								<c:when test="${groupComment.size > 0 && groupComment.size > groupComment.max}">
+								<c:when test="${groupComment.size > 0 && groupComment.size >= groupComment.max}">
 									<c:set var="x" value="0" />
-									<c:if test="${((groupComment.size + 1) / groupComment.max) >groupComment.max }" >
+									<c:if test="${((groupComment.size + 1) / groupComment.max)  > groupComment.maxItem }" >
 										<c:set var="x" value="1" />
 									</c:if>
-									<input type="hidden" name="pagValue" value="<c:out value="${groupComment.maxItem + x}" />">
+									<c:set var="pag_value" value="${groupComment.maxItem + 1}" />
 								</c:when>
 								<c:otherwise>
-									<input type="hidden" name="pagValue" value="<c:out value="${groupComment.currItem}" />">
+									<c:set var="pag_value" value="${groupComment.currItem}" />			
 								</c:otherwise>
 							</c:choose>
+							<input type="hidden" name="redirectParamNames['${groupComment.paramItemName}']" value="${pag_value}" />		 						
+							<s:if test="null != extraParamNames">
+								<s:iterator var="extraP" value="extraParamNames">
+									<s:set var="req_extraP" value="#extraP" scope="request" />
+									<c:if test="${!empty param[req_extraP]}">
+										<input type="hidden" name="redirectParamNames['${req_extraP}']" value="${param[req_extraP]}" />
+			
+									</c:if>
+								</s:iterator>
+							</s:if>
+
+							<input type="hidden" name="formContentId" value="<s:property value="contentId"/>" />
 						</p>
 						<p>
 							<label for="commentText"><wp:i18n key="jpcontentfeedback_LABEL_COMMENTTEXT" /></label>

@@ -50,6 +50,7 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.model.IComment;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.IRatingManager;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.model.IRating;
+import com.agiletec.plugins.jpcontentfeedback.aps.tags.FeedbackIntroTag;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.feedback.AbstractContentFeedbackAction;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.IContentFeedbackShowletAction;
@@ -205,6 +206,46 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		return SUCCESS;
 	}
 
+
+	/**
+	 * When in frontEnd the tag is inserted inside a paginated list
+	 * this method help to build the hidden field, eg:
+	 * <pre>
+	 * 	&lt;s:if test="null != frameItem"&gt;
+	 * 		&lt;c:set var="framekey"&gt;&lt;s:property value="frameItem[0]"/&gt;&lt;/c:set&gt;
+	 * 		&lt;c:set var="frameval"&gt;&lt;s:property value="frameItem[1]"/&gt;&lt;/c:set&gt;
+	 * 		&lt;input type="hidden" name="&lt;c:out value="${framekey}" /&gt;" value="&lt;c:out value="${frameval}" /&gt;" /&gt;
+	 * 	&lt;/s:if&gt;
+	 * </pre>
+	 * @return
+	 */
+	/*
+	public String[] getFrameItem() {
+		String[] value = null;
+		Map<String, String[]> params = super.getParameters();
+		if (null != params) {
+			Iterator it = params.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pairs = (Map.Entry)it.next();
+				String key = (String) pairs.getKey();
+				if (key.startsWith("frame")) {
+					String regexp = "frame[0-9]+_item";
+					Pattern pattern = Pattern.compile(regexp);
+					Matcher matcher = pattern.matcher(key);
+					if (matcher.matches()) {
+						value = new String[2];
+						value[0] = key;
+						String[] paramValue = (String[]) pairs.getValue();
+						if (null != paramValue) {
+							value[1] = paramValue[0];
+						}
+					}
+				}
+			}
+		}
+		return value;
+	}
+	 */
 	@Override
 	public List<String> getContentCommentIds() {
 		List<String> commentIds = new ArrayList<String>();
@@ -447,40 +488,33 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		this._formContentId = formContentId;
 	}
 
-	public String getListViewerPagerId() {
-		return _listViewerPagerId;
-	}
-	public void setListViewerPagerId(String listViewerPagerId) {
-		this._listViewerPagerId = listViewerPagerId;
-	}
-
-	public String getListViewerPagerValue() {
-		return _listViewerPagerValue;
-	}
-	public void setListViewerPagerValue(String listViewerPagerValue) {
-		this._listViewerPagerValue = listViewerPagerValue;
-	}
-
-
-
 
 	public Map<String, String> getRedirectParamNames() {
 		return redirectParamNames;
 	}
-
 	public void setRedirectParamNames(Map<String, String> redirectParamNames) {
 		this.redirectParamNames = redirectParamNames;
 	}
 
 
+	/**
+	 * Lista di parametri, settati dall'utente in {@link FeedbackIntroTag}.
+	 * Se in request è presente uno di questi parametri, nei from verrà generato un hidden.
+	 * Al submit, i valore di questi hidden concorreranno a valorizzare la mappa redirectParamNames.
+	 * Questa mappa serve per appendere i parametri ad ogni azione (che è sempre redirectAction)
+	 * @return
+	 */
+	public String[] getExtraParamNames() {
+		return _extraParamNames;
+	}
+	public void setExtraParamNames(String[] extraParamNames) {
+		this._extraParamNames = extraParamNames;
+	}
 
 
 	private String _formContentId;
 	private String _contentId;
 	private Boolean _reverseVotes;
-
-	private String _listViewerPagerId;
-	private String _listViewerPagerValue;
 
 
 	private String _commentText;

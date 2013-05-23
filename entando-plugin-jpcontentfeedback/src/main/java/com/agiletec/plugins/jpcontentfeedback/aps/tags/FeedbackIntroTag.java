@@ -18,8 +18,6 @@
 package com.agiletec.plugins.jpcontentfeedback.aps.tags;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -70,19 +68,18 @@ public class FeedbackIntroTag extends InternalServletTag {
 			params.append("reverseVotes=true");
 		}
 		
+		if (StringUtils.isNotBlank(this.getExtraParamsRedirect())) {
+			String[] redirectParams = this.getExtraParamsRedirect().split(",");
+			for (int i = 0; i < redirectParams.length; i++) {
+				if (params.length() > 0) params.append("&");
+				params.append("extraParamNames").append("=").append(redirectParams[i].trim());
+			}
+		}
 		actionPath = actionPath + "?" + params.toString();
 
 		RequestDispatcher requestDispatcher = reqCtx.getRequest().getRequestDispatcher(actionPath);
 		requestDispatcher.include(reqCtx.getRequest(), responseWrapper);
 		
-		if (StringUtils.isNotBlank(this.getExtraParamsRedirect())) {
-			String[] redirectParams = this.getExtraParamsRedirect().split(",");
-			List<String> l = new ArrayList<String>();
-			for (int i = 0; i < redirectParams.length; i++) {
-				l.add(redirectParams[i].trim());
-			}
-			this.pageContext.setAttribute("extraParamsRedirect", l);
-		}
 		
 	}
 
