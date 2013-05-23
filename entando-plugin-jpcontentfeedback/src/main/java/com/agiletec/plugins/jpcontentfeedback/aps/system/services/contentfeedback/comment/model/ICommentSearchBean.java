@@ -60,5 +60,10 @@ public interface ICommentSearchBean {
 	 * @return L'utente autore dei commenti da ricercare
 	 */
 	public String getUsername();
+	
+	public String getSort();
+	
+	public static final String SORT_ASC = "ASC";
+	public static final String SORT_DESC = "DESC";
 
 }

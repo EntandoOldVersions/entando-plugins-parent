@@ -19,6 +19,7 @@ package com.agiletec.plugins.jpcontentfeedback.apsadmin.comment;
 
 import java.util.List;
 
+import com.agiletec.apsadmin.system.ApsAdminSystemConstants;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.JpContentFeedbackApsAdminBaseTestCase;
 
 import com.agiletec.plugins.jpcontentfeedback.aps.system.JpcontentfeedbackSystemConstants;
@@ -96,6 +97,7 @@ public class TestCommentAction extends JpContentFeedbackApsAdminBaseTestCase {
 
 			this.initAction("/do/jpcontentfeedback/Comments", "delete");
 			this.addParameter("selectedComment", comment.getId());
+			this.addParameter("strutsAction", ApsAdminSystemConstants.DELETE);
 			result = this.executeAction();
 			assertEquals(Action.SUCCESS, result);
 

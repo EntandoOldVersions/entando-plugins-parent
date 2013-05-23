@@ -21,7 +21,6 @@ public class ContentFeedbackManager extends AbstractService implements IContentF
 			if (xml == null) {
 				throw new ApsSystemException("Configuration item not present: " + JpcontentfeedbackSystemConstants.GLOBAL_CONFIG_ITEM);
 			}
-
 			this.setConfig(new ContentFeedbackConfig(xml));
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
@@ -41,22 +40,44 @@ public class ContentFeedbackManager extends AbstractService implements IContentF
 	}
 
 	@Override
-	public boolean isRateContentActive() {
-		if (null == this.getConfig()) {
-			ApsSystemUtils.getLogger().severe("ContentFeedbackConfig is null");
-			return false;
-		}
-		String value = this.getConfig().getRateContent();
-		return null != value && value.equalsIgnoreCase("true");
-	}
-
-	@Override
 	public boolean isCommentActive() {
 		if (null == this.getConfig()) {
 			ApsSystemUtils.getLogger().severe("ContentFeedbackConfig is null");
 			return false;
 		}
 		String value = this.getConfig().getComment();
+		return null != value && value.equalsIgnoreCase("true");
+	}
+
+	@Override
+	public boolean allowAnonymousComment() {
+		if (null == this.getConfig()) {
+			ApsSystemUtils.getLogger().severe("ContentFeedbackConfig is null");
+			return false;
+		}
+		if (!this.isCommentActive()) return false;
+		String value = this.getConfig().getAnonymousComment();
+		return null != value && value.equalsIgnoreCase("true");
+	}
+	
+	@Override
+	public boolean isCommentModerationActive() {
+		if (null == this.getConfig()) {
+			ApsSystemUtils.getLogger().severe("ContentFeedbackConfig is null");
+			return false;
+		}
+		String value = this.getConfig().getModeratedComment();
+		return null != value && value.equalsIgnoreCase("true");
+	}
+	
+	
+	@Override
+	public boolean isRateContentActive() {
+		if (null == this.getConfig()) {
+			ApsSystemUtils.getLogger().severe("ContentFeedbackConfig is null");
+			return false;
+		}
+		String value = this.getConfig().getRateContent();
 		return null != value && value.equalsIgnoreCase("true");
 	}
 
@@ -69,16 +90,7 @@ public class ContentFeedbackManager extends AbstractService implements IContentF
 		String value = this.getConfig().getRateComment();
 		return isCommentActive() && null != value && value.equalsIgnoreCase("true");
 	}
-
-	@Override
-	public boolean allowAnonymousComment() {
-		if (null == this.getConfig()) {
-			ApsSystemUtils.getLogger().severe("ContentFeedbackConfig is null");
-			return false;
-		}
-		String value = this.getConfig().getAnonymousComment();
-		return null != value && value.equalsIgnoreCase("true");
-	}
+	
 
 	public IContentFeedbackConfig getConfig() {
 		return _config;

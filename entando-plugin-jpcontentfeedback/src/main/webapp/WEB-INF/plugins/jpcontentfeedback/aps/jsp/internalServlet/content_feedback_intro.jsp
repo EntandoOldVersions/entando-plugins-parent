@@ -28,6 +28,7 @@
 		</div>
 	</s:if>
 
+	<%--INIZIO BLOCCO VOTO SU COMMENTO --%>
 	<jpcf:ifViewContentOption param="usedContentRating">
 		<div class="content_rating">
 			<h3 class="jpcontentfeedback_title"><span><wp:i18n key="jpcontentfeedback_CONTENT_RATING" /></span></h3>
@@ -40,14 +41,20 @@
 			<s:else>
 				<p><wp:i18n key="jpcontentfeedback_VOTERS_NULL" /></p>
 			</s:else>
-			
-		 	<wp:ifauthorized permission="jpcontentfeedback_rating_edit">
-				<form action="<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insertVote.action"/>" method="post">
+
+			<%--INIZIO FORM --%>
+			<c:set var="showRateContentForm" value="${sessionScope.currentUser != 'guest'}" />
+			<c:if test="${showRateContentForm}">
+			<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insertVote.action" var="insertVoteAction">
+				<wp:parameter name="listViewerPagerId" value="${listViewerPagerId}"  />
+				<wp:parameter name="listViewerPagerValue" value="${listViewerPagerValue}"/>
+			</wp:action>
+				<form action="<c:out value="${insertVoteAction}" escapeXml="false" />" method="post">
+				<p>
+					<input type="hidden" name="formContentId" value="<s:property value="contentId"/>">
+				</p>
 					<fieldset>
 						<legend><wp:i18n key="jpcontentfeedback_VOTE" /></legend>
-						<p class="noscreen">
-							<wpsf:hidden name="contentId" value="%{contentId}" />
-						</p>
 						<ul class="rate_values">
 							<s:iterator value="votes" var="voteItem">
 								<li class="rate_value"> 
@@ -65,9 +72,11 @@
 						</p>						
 					</fieldset>
 				</form>
-			</wp:ifauthorized>
+			</c:if>
+			<%--FINE FORM --%>
 		</div>
 	</jpcf:ifViewContentOption>
+	<%--FINE BLOCCO VOTO SU COMMENTO --%>
 	
 	<%-- Comments --%>
 	<jpcf:ifViewContentOption param="usedCommentWithRating" var="isUsedCommentWithRating" />
@@ -76,7 +85,7 @@
 			<h3 class="jpcontentfeedback_title"><span><wp:i18n key="jpcontentfeedback_COMMENTS" /></span></h3>
 			<s:set var="contentCommentIdsVar" value="%{contentCommentIds}"/>
 			<s:if test="#contentCommentIdsVar.size > 0 ">
-				<wp:pager listName="contentCommentIdsVar" objectName="groupComment" pagerIdFromFrame="true"  max="10">
+				<wp:pager pagerId="commentsPagerId" listName="contentCommentIdsVar" objectName="groupComment"  pagerIdFromFrame="true"  max="5" >
 					<ol>
 					<c:forEach var="commentId" items="${contentCommentIdsVar}" begin="${groupComment.begin}" end="${groupComment.end}" varStatus="status">
 						<li <c:if test="${status.last}">class="last_comment"</c:if>> 
@@ -100,7 +109,7 @@
 										<p class="comment_actions">
 											<a href="<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/delete.action">
 														<wp:parameter name="selectedComment"><c:out value="${commentId}" /></wp:parameter>
-														<wp:parameter name="contentId"><s:property value="extractContentId()" /></wp:parameter>
+														<wp:parameter name="${groupComment.paramItemName}" value="${groupComment.currItem}" />
 													</wp:action>" title="<wp:i18n key="jpcontentfeedback_DELETE" />">
 												<img src="<wp:resourceURL />plugins/jpcontentfeedback/static/img/delete.png" alt="<wp:i18n key="jpcontentfeedback_DELETE" />"/>
 											</a>
@@ -122,17 +131,28 @@
 									<s:else>
 										<p><abbr title="<wp:i18n key="jpcontentfeedback_COMMENT_NORATING" />">&ndash;</abbr></p> 
 									</s:else>
-									<wp:ifauthorized permission="jpcontentfeedback_rating_edit">
-										<form action="<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insertVote.action" />" method="post">
+									
+									<c:set var="showRateCommentForm" value="${sessionScope.currentUser != 'guest'}" />
+									<c:if test="${showRateCommentForm}">
+									
+									<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insertVote.action" var="insertVoteAction">
+										<wp:parameter name="listViewerPagerId" value="${listViewerPagerId}"  />
+										<wp:parameter name="listViewerPagerValue" value="${listViewerPagerValue}"/>
+									</wp:action>
+									
+										<form action="<c:out value="${insertVoteAction}" escapeXml="false" />" method="post">
 											<p>
-												<wpsf:hidden name="contentId" value="%{contentId}" />
+												<input type="hidden" name="formContentId" value="<s:property value="contentId"/>">
 												<wpsf:hidden name="selectedComment" value="%{#commentIdvalue}" />
+
+												<input type="hidden" name="pagName" value="<c:out value="${groupComment.paramItemName}" />">
+												<input type="hidden" name="pagValue" value="<c:out value="${groupComment.currItem}" />">
+
+						
+												
 												<s:set var="htmt_vode_id">votecomment_<c:out value="${comment.id}" /><c:out value="${comment.contentId}" /></s:set>
 												<s:set name="labelSubmit"><wp:i18n key="jpcontentfeedback_SEND" /></s:set>
 												<label for="<s:property value="#htmt_vode_id" />"><wp:i18n key="jpcontentfeedback_LABEL_RATING" /></label>
-												<%-- 
-												<wpsf:select useTabindexAutoIncrement="true" list="votes" name="vote" id="%{#htmt_vode_id}" value="0" />&nbsp;
-												--%>
 												<select name="vote" id="<s:property value="#htmt_vode_id" />">
 													<s:iterator value="votes" var="voteItem">
 															<s:set var="currentId" value="%{#htmlIdPrefix+'_vote_'+#voteItem.key}" />
@@ -144,9 +164,7 @@
 												<wpsf:submit useTabindexAutoIncrement="true" action="insertCommentVote" value="%{#labelSubmit}" cssClass="button" />
 											</p>
 										</form>
-									</wp:ifauthorized>								
-									
-									
+									</c:if>									
 								</div>
 							</c:if>
 						</li>
@@ -159,17 +177,17 @@
 						<p class="paginazione">
 							<c:choose>
 							<c:when test="${'1' == groupComment.currItem}">&laquo; <wp:i18n key="PREV" /></c:when>
-							<c:otherwise><a href="<wp:url paramRepeat="true" ><wp:parameter name="${groupComment.paramItemName}" ><c:out value="${groupComment.prevItem}"/></wp:parameter></wp:url>">&laquo;&#32;<wp:i18n key="PREV" /></a></c:otherwise>					
+							<c:otherwise><a href="<wp:url paramRepeat="true"><wp:parameter name="${groupComment.paramItemName}" ><c:out value="${groupComment.prevItem}"/></wp:parameter></wp:url>">&laquo;&#32;<wp:i18n key="PREV" /></a></c:otherwise>					
 							</c:choose>
 							<c:forEach var="item" items="${groupComment.items}">
 								<c:choose>
 								<c:when test="${item == groupComment.currItem}">&#32;[<c:out value="${item}"/>]&#32;</c:when>
-								<c:otherwise>&#32;<a href="<wp:url paramRepeat="true" ><wp:parameter name="${groupComment.paramItemName}" ><c:out value="${item}"/></wp:parameter></wp:url>"><c:out value="${item}"/></a>&#32;</c:otherwise>
+								<c:otherwise>&#32;<a href="<wp:url paramRepeat="true"><wp:parameter name="${groupComment.paramItemName}" ><c:out value="${item}"/></wp:parameter></wp:url>"><c:out value="${item}"/></a>&#32;</c:otherwise>
 								</c:choose>
 							</c:forEach>
 							<c:choose>
 							<c:when test="${groupComment.maxItem == groupComment.currItem}"><wp:i18n key="NEXT" />&#32;&raquo;</c:when>
-							<c:otherwise><a href="<wp:url paramRepeat="true" ><wp:parameter name="${groupComment.paramItemName}" ><c:out value="${groupComment.nextItem}"/></wp:parameter></wp:url>"><wp:i18n key="NEXT" />&#32;&raquo;</a></c:otherwise>					
+							<c:otherwise><a href="<wp:url paramRepeat="true"><wp:parameter name="${groupComment.paramItemName}" ><c:out value="${groupComment.nextItem}"/></wp:parameter></wp:url>"><wp:i18n key="NEXT" />&#32;&raquo;</a></c:otherwise>					
 							</c:choose>
 						</p>
 					</c:if>
@@ -178,8 +196,14 @@
 			<s:else>
 				<p><wp:i18n key="jpcontentfeedback_COMMENTS_NULL" /></p>
 			</s:else>
-		
-			<wp:ifauthorized permission="jpcontentfeedback_comment_edit">
+			
+			<%--INIZIO BLOCCO FORM AGGIUNTA COMMENTO --%>
+			<c:set var="showCommentForm" value="${true}" />
+			<jpcf:ifViewContentOption param="anonymousComment" var="allowAnonymousComment" />
+			<c:if test="${sessionScope.currentUser == 'guest'}">
+				<c:set var="showCommentForm" value="${allowAnonymousComment}" />
+			</c:if>
+			<c:if test="${showCommentForm}">
 				<div class="comment_form">
 					<h3 class="jpcontentfeedback_title"><span><wp:i18n key="jpcontentfeedback_COMMENT_THE_CONTENT" /></span></h3>
 					<%-- Messaggi di errore utente/validazione --%>
@@ -195,10 +219,42 @@
 							</ul>
 						</div>
 					</s:if>
-				
-					<form action="<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insert.action"/>" method="post">
+					
+					<wp:action path="/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/insert.action" var="insertAction">
+						<wp:parameter name="listViewerPagerId" value="${listViewerPagerId}"  />
+						<wp:parameter name="listViewerPagerValue" value="${listViewerPagerValue}"/>
+					</wp:action>
+
+					<form action="<c:out value="${insertAction}" escapeXml="false" />" method="post">
 						<p>
-							<wpsf:hidden name="contentId" value="%{contentId}" ></wpsf:hidden>
+							<pre>
+							<%--
+								groupComment.size<c:out value="${groupComment.size}"></c:out>
+								groupComment.maxItem<c:out value="${groupComment.maxItem}"></c:out>
+								groupComment.max<c:out value="${groupComment.max}"></c:out>
+								wewe<c:out value="${listViewerPagerId}"></c:out>
+							 --%>
+							</pre>
+						 
+							<input type="hidden" name="formContentId" value="<s:property value="contentId"/>">
+							
+							<input type="hidden" name="pagName" value="<c:out value="${groupComment.paramItemName}" />">
+							<c:choose>
+								<c:when test="${groupComment.size > 0 && groupComment.size > groupComment.max}">
+									<c:set var="x" value="0" />
+									<c:if test="${((groupComment.size + 1) / groupComment.max) >groupComment.max }" >
+										<c:set var="x" value="1" />
+									</c:if>
+									<input type="hidden" name="pagValue" value="<c:out value="${groupComment.maxItem + x}" />">
+								</c:when>
+								<c:otherwise>
+									<input type="hidden" name="pagValue" value="<c:out value="${groupComment.currItem}" />">								
+								</c:otherwise>
+							</c:choose>
+
+
+						</p>
+						<p>
 							<label for="commentText"><wp:i18n key="jpcontentfeedback_LABEL_COMMENTTEXT" />:</label><br /> 
 							<wpsf:textarea useTabindexAutoIncrement="true" name="commentText" id="commentText" value="" cssClass="text" cols="40" rows="3" />
 						</p>
@@ -209,8 +265,9 @@
 						</p>
 					</form>
 				</div>
-			</wp:ifauthorized>
+			</c:if>
+			<%--FINE BLOCCO FORM AGGIUNTA COMMENTO --%>
+		
 		</div>
 	</jpcf:ifViewContentOption>
-
 </div>

@@ -18,17 +18,25 @@
 package com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.apsadmin.portal.specialshowlet.SimpleShowletConfigAction;
+import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecordVO;
 import com.agiletec.plugins.jacms.aps.system.services.contentmodel.ContentModel;
 import com.agiletec.plugins.jacms.aps.system.services.contentmodel.IContentModelManager;
+import com.agiletec.plugins.jacms.apsadmin.portal.specialshowlet.viewer.ContentViewerShowletAction;
+import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.ContentFeedbackConfig;
+import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackConfig;
+import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackManager;
 
 /**
  * Action per la gestione della configurazione della showlet erogatore contenuto singolo,
@@ -36,7 +44,80 @@ import com.agiletec.plugins.jacms.aps.system.services.contentmodel.IContentModel
  * @author D.Cherchi
  *
  */
-public class ContentFeedbackShowletAction  extends SimpleShowletConfigAction implements IContentFeedbackShowletAction{
+public class ContentFeedbackShowletAction  extends ContentViewerShowletAction implements IContentFeedbackShowletAction {
+
+	@Override
+	public String init() {
+		this.getRequest().getSession().removeAttribute(SESSION_PARAM_STORE_CONFIG);
+		return super.init();
+	}
+
+	protected String extractInitConfig() {
+		if (null != this.getShowlet()) return SUCCESS;
+		Showlet showlet = this.getCurrentPage().getShowlets()[this.getFrame()];
+		Logger log = ApsSystemUtils.getLogger();
+		if (null == showlet) {
+			try {
+				showlet = this.createNewShowlet();
+				//for ContentFeedbackShowletAction
+				IContentFeedbackConfig systemConfig = this.getContentFeedbackManager().getConfig();
+				String value = systemConfig.getComment();
+				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_COMMENT_ACTIVE, value);
+
+				value = systemConfig.getAnonymousComment();
+				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_COMMENT_ANONYMOUS, value);
+
+				value = systemConfig.getModeratedComment();
+				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_COMMENT_MODERATED, value);
+
+				value = systemConfig.getRateContent();
+				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_RATE_CONTENT, value);
+
+				value = systemConfig.getRateComment();
+				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_RATE_COMMENT, value);
+				//---
+
+			} catch (Exception e) {
+				log.severe(e.getMessage());
+				//TODO METTI MESSAGGIO DI ERRORE NON PREVISO... Vai in pageTree con messaggio di errore Azione non prevista o cosa del genere
+				this.addActionError(this.getText("Message.userNotAllowed"));
+				return "pageTree";
+			}
+			log.info("Configurating new Showlet " + this.getShowletTypeCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
+		} else {
+			log.info("Edit Showlet config " + showlet.getType().getCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
+			showlet = this.createCloneFrom(showlet);
+		}
+		this.setShowlet(showlet);
+		return SUCCESS;
+	}
+
+	public String storeSessionParams() {
+		Map<String, String> sessionParams = new HashMap<String, String>();
+		sessionParams.put(SHOWLET_PARAM_COMMENT_ACTIVE, this.getUsedComment());
+		sessionParams.put(SHOWLET_PARAM_COMMENT_MODERATED, this.getCommentValidation());
+		sessionParams.put(SHOWLET_PARAM_RATE_CONTENT, this.getUsedContentRating());
+		sessionParams.put(SHOWLET_PARAM_RATE_COMMENT, this.getUsedCommentWithRating());
+		sessionParams.put(SHOWLET_PARAM_COMMENT_ANONYMOUS, this.getAnonymousComment());
+
+		this.getRequest().getSession().setAttribute(SESSION_PARAM_STORE_CONFIG, sessionParams);
+		return SUCCESS;
+	}
+
+	public void restoreSessionParams() {
+		Map<String, String> sessionParams = (Map<String, String>) this.getRequest().getSession().getAttribute(SESSION_PARAM_STORE_CONFIG);
+		if (null != sessionParams) {
+			Iterator<String> it = sessionParams.keySet().iterator();
+			while (it.hasNext()) {
+				String key = it.next();
+				if (null != sessionParams.get(key) && sessionParams.get(key).equalsIgnoreCase("true")) {
+					this.getShowlet().getConfig().setProperty(key, "true");
+				}
+			}
+		}
+		this.getRequest().getSession().removeAttribute(SESSION_PARAM_STORE_CONFIG);
+	}
+
 
 	@Override
 	public void validate() {
@@ -76,6 +157,7 @@ public class ContentFeedbackShowletAction  extends SimpleShowletConfigAction imp
 	public String joinContent() {
 		try {
 			this.createValuedShowlet();
+			this.restoreSessionParams();
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "joinContent");
 			throw new RuntimeException("Errore in associazione contenuto", t);
@@ -99,48 +181,64 @@ public class ContentFeedbackShowletAction  extends SimpleShowletConfigAction imp
 		return contentVo;
 	}
 
-	/**
-	 * Restituisce la lista di Modelli di Contenuto compatibili con il contenuto specificato.
-	 * @param contentId Il contenuto cui restituire i modelli compatibili.
-	 * @return La lista di Modelli di Contenuto compatibili con il contenuto specificato.
-	 */
-	public List<ContentModel> getModelsForContent(String contentId) {
-		if (null == contentId) return new ArrayList<ContentModel>();
-		String typeCode = contentId.substring(0, 3);
-		return this.getContentModelManager().getModelsForContentType(typeCode);
+	public String getUsedComment() {
+		return _usedComment;
 	}
-	
-	protected IContentModelManager getContentModelManager() {
-		return _contentModelManager;
+	public void setUsedComment(String usedComment) {
+		this._usedComment = usedComment;
 	}
-	public void setContentModelManager(IContentModelManager contentModelManager) {
-		this._contentModelManager = contentModelManager;
+
+	public String getAnonymousComment() {
+		return _anonymousComment;
 	}
-	
-	protected IContentManager getContentManager() {
-		return _contentManager;
+	public void setAnonymousComment(String anonymousComment) {
+		this._anonymousComment = anonymousComment;
 	}
-	public void setContentManager(IContentManager contentManager) {
-		this._contentManager = contentManager;
+
+	public String getCommentValidation() {
+		return _commentValidation;
 	}
-	
-	public String getContentId() {
-		return _contentId;
+	public void setCommentValidation(String commentValidation) {
+		this._commentValidation = commentValidation;
 	}
-	public void setContentId(String contentId) {
-		this._contentId = contentId;
+
+	public String getUsedContentRating() {
+		return _usedContentRating;
 	}
-	
-	public String getModelId() {
-		return _modelId;
+	public void setUsedContentRating(String usedContentRating) {
+		this._usedContentRating = usedContentRating;
 	}
-	public void setModelId(String modelId) {
-		this._modelId = modelId;
+
+	public String getUsedCommentWithRating() {
+		return _usedCommentWithRating;
 	}
-	
-	private IContentModelManager _contentModelManager;
-	private IContentManager _contentManager;
-	private String _contentId;
-	private String _modelId;
-	
+	public void setUsedCommentWithRating(String usedCommentWithRating) {
+		this._usedCommentWithRating = usedCommentWithRating;
+	}
+
+	protected IContentFeedbackManager getContentFeedbackManager() {
+		return _contentFeedbackManager;
+	}
+	public void setContentFeedbackManager(IContentFeedbackManager contentFeedbackManager) {
+		this._contentFeedbackManager = contentFeedbackManager;
+	}
+
+	private IContentFeedbackManager _contentFeedbackManager;
+
+	private String _usedComment;
+	private String _anonymousComment;
+	private String _commentValidation;
+	private String _usedContentRating;
+	private String _usedCommentWithRating;
+
+	public static final String SHOWLET_PARAM_COMMENT_ACTIVE = "usedComment";
+	public static final String SHOWLET_PARAM_COMMENT_MODERATED = "commentValidation";
+	public static final String SHOWLET_PARAM_RATE_CONTENT = "usedContentRating";
+	public static final String SHOWLET_PARAM_RATE_COMMENT = "usedCommentWithRating";
+
+	public static final String SHOWLET_PARAM_COMMENT_ANONYMOUS = "anonymousComment";
+
+	public static final String SESSION_PARAM_STORE_CONFIG = "ContentFeedbackShowletAction_params_store";
+
+
 }

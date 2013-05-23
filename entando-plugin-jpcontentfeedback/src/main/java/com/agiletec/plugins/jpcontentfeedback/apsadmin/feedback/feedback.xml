@@ -18,6 +18,12 @@
 	      	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">jpcontentfeedback_moderate</param></interceptor-ref>
 	    </action>
 	    
+	    <action name="trash" class="jpcontentfeedbackContentFeedbackAction" method="trash">
+	    	<result type="tiles">admin.jpcontentfeedback.comments.trash</result>
+	    	<result name="input" type="redirectAction">list</result>
+	      	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">jpcontentfeedback_moderate</param></interceptor-ref>
+	    </action>
+
 	    <action name="delete" class="jpcontentfeedbackContentFeedbackAction" method="delete">
 	    	<result type="redirectAction">list</result>
 	      	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">jpcontentfeedback_moderate</param></interceptor-ref>
@@ -29,7 +35,7 @@
 	    </action>
 
 	    <action name="updateStatus" class="jpcontentfeedbackContentFeedbackAction" method="updateStatus">
-	        <result type="tiles">admin.jpcontentfeedback.comments.search</result>
+	    	<result type="redirectAction">list</result>
 	      	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">jpcontentfeedback_moderate</param></interceptor-ref>
 	    </action>
 

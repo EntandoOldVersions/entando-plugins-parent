@@ -11,6 +11,7 @@
 			class="com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction" parent="simpleShowletAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="contentModelManager" ref="jacmsContentModelManager" />
+		<property name="contentFeedbackManager" ref="jpcontentfeedbackContentFeedbackManager" />
 	</bean>
 	
 </beans>

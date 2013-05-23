@@ -70,17 +70,17 @@
 			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.search')}" cssClass="button" />
 		</p>
 	
-	</s:form>
 	
 	<div class="subsection-light">
-		<p class="noscreen">
-			<wpsf:hidden name="title" />
-			<wpsf:hidden name="commentText" />
-			<wpsf:hidden name="author" />
-			<wpsf:hidden name="from" />
-			<wpsf:hidden name="to" />
-		</p>
 	
+	<wpsa:subset source="commentIds" count="10" objectName="groupComment" advanced="true" offset="5">
+	<s:set name="group" value="#groupComment" />
+	
+	<div class="pager">
+		<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pagerInfo.jsp" />
+		<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pager_formBlock.jsp" />
+	</div>
+
 		<s:set var="lista" value="commentIds" />
 		<s:if test="!#lista.empty">
 			<table class="generic" summary="<s:text name="jpcontentfeedback.note.comment.list" />">
@@ -91,7 +91,7 @@
 					<th><s:text name="jpcontentfeedback.status" /></th>
 					<th>-</th>
 				</tr>
-				<s:iterator value="#lista" var="commentoId">
+				<s:iterator var="commentoId">
 					<tr>
 					<s:set var="commento" value="%{getComment(#commentoId)}" />
 						<td><s:property value="#commento.username"/></td>
@@ -99,7 +99,7 @@
 						<td><s:text name="%{'jpcontentfeedback.label.' + #commento.status}" /></td>
 						<td class="icon_double">
 							<a href="<s:url action="view"><s:param name="selectedComment" value="#commentoId" /></s:url>" title="<s:text name="label.edit" />:&#32;<s:date name="#commento.creationDate" format="dd/MM/yyyy HH:mm" />" ><img src="<wp:resourceURL />administration/common/img/icons/edit-content.png" alt="<s:text name="label.edit" />" /></a>
-							<a href="<s:url action="delete"><s:param name="selectedComment" value="#commentoId" /></s:url>" title="<s:text name="label.remove" />:&#32;<s:date name="#commento.creationDate" format="dd/MM/yyyy HH:mm" />" ><img src="<wp:resourceURL />administration/common/img/icons/delete.png" alt="<s:text name="label.remove" />" /></a>
+							<a href="<s:url action="trash"><s:param name="selectedComment" value="#commentoId" /></s:url>" title="<s:text name="label.remove" />:&#32;<s:date name="#commento.creationDate" format="dd/MM/yyyy HH:mm" />" ><img src="<wp:resourceURL />administration/common/img/icons/delete.png" alt="<s:text name="label.remove" />" /></a>
 						</td>
 					</tr>
 				</s:iterator>
@@ -107,4 +107,11 @@
 		</s:if>
 		<s:else><p><s:text name="jpcontentfeedback.note.list.empty" /></p></s:else>
 	</div>
+	
+	<div class="pager">
+		<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pager_formBlock.jsp" />
+	</div>
+	
+	</wpsa:subset>
+</s:form>
 </div>

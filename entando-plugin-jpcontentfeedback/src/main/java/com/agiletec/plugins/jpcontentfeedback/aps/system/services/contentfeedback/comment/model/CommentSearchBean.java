@@ -74,11 +74,20 @@ public class CommentSearchBean implements ICommentSearchBean {
 		return _creationTODate;
 	}
 
+	@Override
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
 	public String _contentId;
 	public Date _creationFROMDate;
 	private Date _creationTODate;
 	public String _comment;
 	public int _status = 0;
 	private String _username;
+	private String sort;
 
 }

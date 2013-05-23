@@ -18,6 +18,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description><![CDATA[the listViewer PagerId ]]></description>
+			<name>listViewerPager</name>
+			<required>no</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description><![CDATA[when true the votes will be displayes in reverse order]]></description>
 			<name>reverseVotes</name>
 			<required>no</required>
@@ -31,7 +37,7 @@
 		<tag-class>com.agiletec.plugins.jpcontentfeedback.aps.tags.CheckOptionContentFeedbackTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description><![CDATA[can be one of the follows: allowRateContent (or usedContentRating), allowRateComment (or usedCommentWithRating), allowComment (or usedComment) or allowAnonymousComment ]]></description>
+			<description><![CDATA[can be one of the follows: allowComment (or usedComment), allowAnonymousComment (or anonymousComment),  allowRateContent (or usedContentRating), allowRateComment (or usedCommentWithRating) ]]></description>
 			<name>param</name>
 			<required>yes</required>
 			<rtexprvalue>true</rtexprvalue>

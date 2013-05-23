@@ -7,13 +7,11 @@
 
 <s:set var="commentVar" value="comment" />
 <jacmswpsa:content contentId="%{#commentVar.contentId}" var="contentVar" />
-
 <h1>
 <a href="<s:url action="list" />"><s:text name="jpcontentfeedback.title.commentsManager" /></a>
 </h1>
 <div id="main">
-
-	<h2><s:text name="jpcontentfeedback.title.comment.detail" /></h2>
+	<h2><s:text name="jpcontentfeedback.label.delete.comment.confirm" /></h2>
 	<div class="centerText">
 		<dl class="table-display">
 			<dt><s:text name="jpcontentfeedback.author" /></dt>
@@ -32,7 +30,7 @@
 				<dd><s:property value="#contentVar.typeDescr" /> (<s:property value="#contentVar.typeCode" />)</dd>
 		</dl>
 	</div>
-	<s:form action="updateStatus">
+	<s:form action="delete">
 		
 		<s:if test="hasActionMessages()">
 			<div class="message message_confirm">
@@ -67,17 +65,11 @@
 			</div>
 		</s:if>
 
-		<fieldset>
-			<legend><s:text name="label.info" /></legend>
-			<s:set var="listStatus" value="%{getAllStatus()}" />
-			<p>
-				<label for="status" class="basic-mint-label"><s:text name="jpcontentfeedback.status" />:</label>
-				<wpsf:select useTabindexAutoIncrement="true" list="listStatus"  name="status" id="status"  listKey="key" listValue="value" value="#commentVar.status" />
-			</p>
-		</fieldset>
 		<p class="centerText">
 			<wpsf:hidden name="selectedComment" />
-			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('jpcontentfeedback.label.update')}" cssClass="button"/> 
+			<wpsf:hidden name="strutsAction" />
+			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.yes')}" cssClass="button"/> 
+			<wpsf:submit useTabindexAutoIncrement="true" action="list" value="%{getText('label.no')}" cssClass="button"/> 
 		</p>
 	</s:form>
 </div>

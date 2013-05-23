@@ -5,18 +5,23 @@
 
 <tiles-definitions>
 
-  <!-- ********* INIZIO Area amministrazione jpcontentfeedback ********* -->
+	<!-- ********* INIZIO Area amministrazione jpcontentfeedback ********* -->
 
-  <definition extends="main.layout" name="admin.jpcontentfeedback.comments.search">
-	<put-attribute name="title" value="jpcontentfeedback.title.commentsManager" />
-	<put-attribute name="extraResources" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/common/template/extraresources/comment.jsp" />
-	<put-attribute name="body" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/comments/comment-list.jsp" />
-  </definition>
+	<definition extends="main.layout" name="admin.jpcontentfeedback.comments.search">
+		<put-attribute name="title" value="jpcontentfeedback.title.commentsManager" />
+		<put-attribute name="extraResources" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/common/template/extraresources/comment.jsp" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/comments/comment-list.jsp" />
+	</definition>
 
-    <definition extends="main.layout" name="admin.jpcontentfeedback.comments.view">
-	<put-attribute name="title" value="jpcontentfeedback.title.commentsManager" />
-	<put-attribute name="body" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/comments/comment-detail.jsp" />
-  </definition>
+	<definition extends="main.layout" name="admin.jpcontentfeedback.comments.view">
+		<put-attribute name="title" value="jpcontentfeedback.title.commentsManager" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/comments/comment-detail.jsp" />
+	</definition>
+
+	<definition extends="main.layout" name="admin.jpcontentfeedback.comments.trash">
+		<put-attribute name="title" value="jpcontentfeedback.title.commentsManager" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/comments/comment-trash.jsp" />
+	</definition>
 
 	<definition extends="main.layout" name="admin.jpcontentfeedback.page.showlet.contentViewer.config">
 		<put-attribute name="title" value="jpcontentfeedback.title.commentsManager" />
@@ -28,6 +33,6 @@
 		<put-attribute name="body" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/config/config_edit.jsp" />
 	</definition>
 
-  <!-- ********* FINE Area amministrazione jpcontentfeedback ********* -->
+	<!-- ********* FINE Area amministrazione jpcontentfeedback ********* -->
 
 </tiles-definitions>

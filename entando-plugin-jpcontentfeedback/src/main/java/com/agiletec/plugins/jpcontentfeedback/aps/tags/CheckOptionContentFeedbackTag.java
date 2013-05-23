@@ -27,8 +27,11 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
+import com.agiletec.plugins.jpcontentfeedback.aps.internalservlet.feedback.ContentFeedbackAction;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.JpcontentfeedbackSystemConstants;
+import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.ContentFeedbackConfig;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackManager;
+import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
 
 /**
  * Tag di utilità per la verifica dei parametri di configurazione della showlet
@@ -39,25 +42,16 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
  */
 public class CheckOptionContentFeedbackTag extends TagSupport {
 
-	//in ordine di priorità tag (feedbackIntro) > showlet > parametri_globali
 	public int doStartTag() throws JspException {
 		try {
 			HttpServletRequest request =  (HttpServletRequest) this.pageContext.getRequest();
 			boolean hasParam = false;
 
-			//TAG todo?
-			hasParam = false;
-
 			if(!hasParam) {
 				//showlet
 				hasParam = this.extractShowletParam(request);
 			}
-
-			if(!hasParam) {
-				//global
-				hasParam = this.extractGlobalParam(request);
-			}
-
+		
 			if (null != this.getVar()) {
 				this.pageContext.setAttribute(this.getVar(), new Boolean(hasParam));
 			}
@@ -77,33 +71,26 @@ public class CheckOptionContentFeedbackTag extends TagSupport {
 		RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
 		Showlet showlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 		ApsProperties config = showlet.getConfig();
+		
+		String param = this.getParam();
+		if (param.equalsIgnoreCase("allowComment")) param = ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_ACTIVE;
+		if (param.equalsIgnoreCase("allowAnonymousComment")) param = ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_ANONYMOUS;
+		if (param.equalsIgnoreCase("allowRateContent")) param = ContentFeedbackShowletAction.SHOWLET_PARAM_RATE_CONTENT;
+		if (param.equalsIgnoreCase("allowRateComment")) param = ContentFeedbackShowletAction.SHOWLET_PARAM_RATE_COMMENT;
+	
 		if (null != config && this.getParam()!=null && this.getParam().length()>0) {
 			String value = config.getProperty(this.getParam());
-			if (value!= null && value.equalsIgnoreCase("true")){
+			if (value!= null && value.equalsIgnoreCase("true")) {
 				hasParam = true;
 			}
 		}
 		return hasParam;
 	}
 
-	private Boolean extractGlobalParam(HttpServletRequest request) {
-		Boolean hasParam = false;
-		IContentFeedbackManager contentFeedbackManager = (IContentFeedbackManager) ApsWebApplicationUtils.getBean(JpcontentfeedbackSystemConstants.CONTENT_FEEDBACK_MANAGER, request);
-		if (this.getParam()!=null && this.getParam().length()>0) {
-			String param = this.getParam();
-			if (param.equalsIgnoreCase("usedContentRating") || param.equalsIgnoreCase("allowRateContent")) {
-				hasParam = contentFeedbackManager.isRateContentActive();
-			} else if (param.equalsIgnoreCase("usedCommentWithRating") || param.equalsIgnoreCase("allowRateComment")) {
-				hasParam = contentFeedbackManager.isRateCommentActive();
-			} else if (param.equalsIgnoreCase("usedComment") || param.equalsIgnoreCase("allowComment")) {
-				hasParam = contentFeedbackManager.isCommentActive();
-			} else if (param.equalsIgnoreCase("allowAnonymousComment")) {
-				hasParam = contentFeedbackManager.allowAnonymousComment();
-			} else {
-				ApsSystemUtils.getLogger().severe(this.getClass().getName() + " : param " + param + " does not exists");
-			}
-		}
-		return hasParam;
+	@Override
+	public void release() {
+		this.setVar(null);
+		this.setParam(null);
 	}
 
 	/**
@@ -114,7 +101,6 @@ public class CheckOptionContentFeedbackTag extends TagSupport {
 	public void setVar(String var) {
 		this._var = var;
 	}
-
 	/**
 	 * Restituisce il nome del parametro tramite il quale settare nella request
 	 * il buleano rappresentativo del risultato del controllo di autorizzazione.
@@ -127,7 +113,6 @@ public class CheckOptionContentFeedbackTag extends TagSupport {
 	public void setParam(String param) {
 		this._param = param;
 	}
-
 	public String getParam() {
 		return _param;
 	}

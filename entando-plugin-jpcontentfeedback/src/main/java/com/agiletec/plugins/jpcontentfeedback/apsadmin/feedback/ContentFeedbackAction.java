@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.apsadmin.system.ApsAdminSystemConstants;
 
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.ICommentManager;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.model.CommentSearchBean;
@@ -51,7 +52,8 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	public List<String> getCommentIds() {
 		List<String> comments = new ArrayList<String>();
 		try {
-			ICommentSearchBean searchBean = this.getSearchBean();
+			CommentSearchBean searchBean = (CommentSearchBean) this.getSearchBean();
+			searchBean.setSort(ICommentSearchBean.SORT_DESC);
 			comments = this.getCommentManager().searchCommentIds(searchBean);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getCommentIds");
@@ -82,10 +84,28 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		return SUCCESS;
 	}
 
+
+	public String trash() {
+		try {
+			IComment comment = this.getComment(this.getSelectedComment());
+			if (null == comment) {
+				return INPUT;
+			}
+			this.setComment(comment);
+			this.setStrutsAction(ApsAdminSystemConstants.DELETE);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "trash");
+			return FAILURE;
+		}
+		return SUCCESS;
+	}
+
 	@Override
 	public String delete(){
 		try {
-			 this.getCommentManager().deleteComment(this.getSelectedComment());
+			if (this.getStrutsAction() == ApsAdminSystemConstants.DELETE) {
+				this.getCommentManager().deleteComment(this.getSelectedComment());
+			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "delete");
 			return FAILURE;
@@ -113,7 +133,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		searchBean.setStatus(this.getStatus());
 		return searchBean;
 	}
-	
+
 	public void setCommentManager(ICommentManager commentManager) {
 		this._commentManager = commentManager;
 	}
@@ -205,6 +225,14 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		return _status;
 	}
 
+	public int getStrutsAction() {
+		return _strutsAction;
+	}
+	public void setStrutsAction(int strutsAction) {
+		this._strutsAction = strutsAction;
+	}
+
+	private int _strutsAction;
 	private String _commentText;
 	private String _author;
 	private Date _from;

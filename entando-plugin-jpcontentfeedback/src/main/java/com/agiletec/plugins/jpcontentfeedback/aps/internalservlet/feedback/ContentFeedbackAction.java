@@ -29,22 +29,16 @@ import java.util.regex.Pattern;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.exception.ApsException;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.authorization.IAuthorizationManager;
-import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.UserDetails;
-import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.apsadmin.system.BaseAction;
-import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
-import com.agiletec.plugins.jacms.aps.system.services.dispenser.ContentAuthorizationInfo;
-import com.agiletec.plugins.jacms.aps.system.services.dispenser.IContentDispenser;
 import com.agiletec.plugins.jacms.apsadmin.content.helper.ContentActionHelper;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.CheckVotingUtil;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackManager;
@@ -55,12 +49,135 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.IRatingManager;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.model.IRating;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.feedback.AbstractContentFeedbackAction;
+import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
+import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.IContentFeedbackShowletAction;
 
 /**
  * @author D.Cherchi
  */
 public class ContentFeedbackAction extends AbstractContentFeedbackAction implements IContentFeedbackAction, ServletResponseAware {
 
+	public String getShowletParam(String param) {
+		RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
+		Showlet currentShowlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+		return currentShowlet.getConfig().getProperty(param);
+	}
+	
+	@Override
+	public String addComment() {
+		try {
+			String commentsActive = this.getShowletParam(ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_ACTIVE);
+			boolean commentsAllowed = null != commentsActive && commentsActive.equalsIgnoreCase("true");
+			if (!commentsAllowed) {
+				ApsSystemUtils.getLogger().info("comments not allowed");
+				return BaseAction.USER_NOT_ALLOWED;
+			}
+
+			String anonComments = this.getShowletParam(ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_ANONYMOUS);
+			boolean anomymousCommentsAllowed = null != anonComments && anonComments.equalsIgnoreCase("true");
+			if (this.getCurrentUser().getUsername().equalsIgnoreCase(SystemConstants.GUEST_USER_NAME) && !anomymousCommentsAllowed) {
+				ApsSystemUtils.getLogger().info("anomymous comments not allowed");
+				return BaseAction.USER_NOT_ALLOWED;
+			}
+
+			Comment comment = new Comment();
+			String contentId = this.getFormContentId();
+			if (this.isAuth(contentId)) {
+				String commentsModeration = this.getShowletParam(ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_MODERATED);
+				boolean moderation = null != commentsModeration && commentsModeration.equalsIgnoreCase("true");
+				if (moderation) {
+					comment.setStatus(Comment.STATUS_TO_APPROVE);
+					this.addActionMessage(this.getText("jpcontentfeedback_MESSAGE_TO_APPROVED"));
+				} else {
+					comment.setStatus(Comment.STATUS_APPROVED);
+				}
+				comment.setComment(this.getCommentText());
+				comment.setContentId(contentId);
+				comment.setUsername(this.getCurrentUser().getUsername());
+				this.getCommentManager().addComment(comment);
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "addComment");
+			return FAILURE;
+		}
+		return SUCCESS;
+	}
+
+	@Override
+	public String insertVote() {
+		try {
+			String contentRatingActive = this.getShowletParam(ContentFeedbackShowletAction.SHOWLET_PARAM_RATE_CONTENT);
+			boolean contentRatingAllowed = null != contentRatingActive && contentRatingActive.equalsIgnoreCase("true");
+			if (!contentRatingAllowed) {
+				ApsSystemUtils.getLogger().info("ContentRating not allowed");
+				return BaseAction.USER_NOT_ALLOWED;
+			}
+			String contentId = this.getFormContentId();
+
+			if (this.isAuth(contentId)) {
+				if (!this.isValidVote()) {
+					this.addActionError(this.getText("Message.invalidVote"));
+					return INPUT;
+				}
+				boolean alreadyVoted = CheckVotingUtil.isContentVoted(contentId, this.getRequest());
+				if (alreadyVoted){
+					this.addActionError(this.getText("Message.alreadyVoted"));
+					return INPUT;
+				}
+				this.getRatingManager().addRatingToContent(contentId, this.getVote());
+				this.addCookieRating(contentId);
+
+			} else {
+				ApsSystemUtils.getLogger().info("not auth to insert vote on content " + contentId);
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "insertVote");
+			return FAILURE;
+		}
+		return SUCCESS;
+	}
+
+
+	public String insertCommentVote() {
+		try {
+			String commentRatingActive = this.getShowletParam(ContentFeedbackShowletAction.SHOWLET_PARAM_RATE_COMMENT);
+			boolean commentRatingAllowed = null != commentRatingActive && commentRatingActive.equalsIgnoreCase("true");
+			if (!commentRatingAllowed) {
+				ApsSystemUtils.getLogger().info("Comment Rating not allowed");
+				return BaseAction.USER_NOT_ALLOWED;
+			}
+
+			String contentId = this.getFormContentId();
+			IComment comment = this.getCommentManager().getComment(this.getSelectedComment());
+			if (null == comment || !comment.getContentId().equalsIgnoreCase(contentId)) {
+				this.addActionError(this.getText("Message.invalidComment"));
+				return INPUT;				
+			}
+
+			if (this.isAuth(contentId)) {
+				if (!this.isValidVote()) {
+					this.addActionError(this.getText("Message.invalidVote"));
+					return INPUT;
+				}
+				boolean alreadyVoted = CheckVotingUtil.isCommentVoted(this.getSelectedComment(), this.getRequest());
+				if (alreadyVoted){
+					this.addActionError(this.getText("Message.alreadyVoted"));
+					return INPUT;
+				}
+				this.getRatingManager().addRatingToComment(this.getSelectedComment(), this.getVote());
+				this.addCookieRating(this.getSelectedComment());
+
+			} else {
+				ApsSystemUtils.getLogger().info("not auth to insert vote on content " + contentId);
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "insertVote");
+			return FAILURE;
+		}
+		return SUCCESS;
+	}
+
+	
 	/**
 	 * When in frontEnd the tag is inserted inside a paginated list
 	 * this method help to build the hidden field, eg:
@@ -73,6 +190,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	 * </pre>
 	 * @return
 	 */
+	/*
 	public String[] getFrameItem() {
 		String[] value = null;
 		Map<String, String[]> params = super.getParameters();
@@ -98,13 +216,13 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		}
 		return value;
 	}
-
+*/
 	@Override
 	public List<String> getContentCommentIds() {
 		List<String> commentIds = new ArrayList<String>();
 		try {
-			String contentId = this.extractContentId();
-			if (null == contentId) {
+			String contentId = this.getContentId();
+			if (StringUtils.isBlank(contentId)) {
 				ApsSystemUtils.getLogger().severe("Content id null");
 				return commentIds;
 			}
@@ -142,37 +260,11 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		return SUCCESS;
 	}
 
-	@Override
-	public String addComment() {
-		try {
-			if (!this.getContentFeedbackManager().allowAnonymousComment() && this.getCurrentUser().getUsername().equals(SystemConstants.GUEST_USER_NAME)) {
-				return BaseAction.USER_NOT_ALLOWED;
-			}
-			Comment comment = new Comment();
-			String contentId = this.extractContentId();
-			if (this.isAuth(contentId)) {
-				RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
-				Showlet currentShowlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
-				String requiredValidation = (null != currentShowlet.getConfig()) ? currentShowlet.getConfig().getProperty("commentValidation") : null;
-				if (requiredValidation != null && requiredValidation.equalsIgnoreCase("true")){
-					comment.setStatus(Comment.STATUS_TO_APPROVE);
-					this.addActionMessage(this.getText("jpcontentfeedback_MESSAGE_TO_APPROVED"));
-				} else {
-					comment.setStatus(Comment.STATUS_APPROVED);
-				}
-				comment.setComment(this.getCommentText());
-				comment.setContentId(contentId);
-				comment.setUsername(this.getCurrentUser().getUsername());
-				this.getCommentManager().addComment(comment);
-			}
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addComment");
-			return FAILURE;
-		}
-		return SUCCESS;
-	}
-	
+
+
 	private boolean isAuth(String contentId) {
+
+		/* se anche guest puo aggiungere commenti....
 		IContentDispenser contentDispenser = (IContentDispenser) ApsWebApplicationUtils.getBean(JacmsSystemConstants.CONTENT_DISPENSER_MANAGER, this.getRequest());
 		ContentAuthorizationInfo authInfo = contentDispenser.getAuthorizationInfo(contentId);
 		if (null == authInfo) {
@@ -181,8 +273,10 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		IAuthorizationManager authManager = (IAuthorizationManager) ApsWebApplicationUtils.getBean(SystemConstants.AUTHORIZATION_SERVICE, this.getRequest());
 		List<Group> userGroups = authManager.getUserGroups(this.getCurrentUser());
 		return authInfo.isUserAllowed(userGroups);
+		 */
+		return true;
 	}
-	
+
 	@Override
 	public IComment getComment(Integer commentId) {
 		IComment comment = null;
@@ -199,8 +293,8 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	public IRating getContentRating() {
 		IRating rating = null;
 		try {
-			String contentId = this.extractContentId();
-			if (null == contentId) {
+			String contentId = this.getContentId();
+			if (StringUtils.isBlank(contentId)) {
 				ApsSystemUtils.getLogger().severe("Content id null");
 				return null;
 			}
@@ -226,49 +320,6 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 			throw new RuntimeException("Error", t);
 		}
 		return rating;
-	}
-
-	@Override
-	public String insertVote() {
-		try {
-			String contentId = this.extractContentId();
-
-			if (!this.getContentFeedbackManager().allowAnonymousComment() && this.getCurrentUser().getUsername().equals(SystemConstants.GUEST_USER_NAME)) {
-				return BaseAction.USER_NOT_ALLOWED;
-			}
-
-			if (this.isAuth(contentId)) {
-				if (!this.isValidVote()) {
-					this.addActionError(this.getText("Message.invalidVote"));
-					return INPUT;
-				}
-				if (this.getSelectedComment() != 0) {
-					boolean alreadyVoted = CheckVotingUtil.isCommentVoted(this.getSelectedComment(), this.getRequest());
-					if (alreadyVoted){
-						this.addActionError(this.getText("Message.alreadyVoted"));
-						return INPUT;
-					}
-					this.getRatingManager().addRatingToComment(this.getSelectedComment(), this.getVote());
-					this.addCookieRating(this.getSelectedComment());
-				} else if (contentId != null && contentId.length() > 0) {
-					boolean alreadyVoted = CheckVotingUtil.isContentVoted(contentId, this.getRequest());
-					if (alreadyVoted){
-						this.addActionError(this.getText("Message.alreadyVoted"));
-						return INPUT;
-					}
-					this.getRatingManager().addRatingToContent(contentId, this.getVote());
-					this.addCookieRating(contentId);
-				} else {
-					throw new ApsException("Error information vote");
-				}
-			} else {
-				ApsSystemUtils.getLogger().info("not auth to insert vote on content " + contentId);
-			}
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "insertVote");
-			return FAILURE;
-		}
-		return SUCCESS;
 	}
 
 	protected boolean isValidVote() {
@@ -356,22 +407,22 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		this._selectedComment = selectedComment;
 	}
 
-	public String extractContentId() {
-		String contentId = this.getContentId();
-		if (null == contentId || contentId.trim().length() == 0) {
-			contentId = null;
-			RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
-			Showlet currentShowlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
-			if (null != currentShowlet.getConfig() &&
-					currentShowlet.getConfig().getProperty("contentId") != null &&
-					currentShowlet.getConfig().getProperty("contentId").length() > 0) {
-				contentId = currentShowlet.getConfig().getProperty("contentId");
-			} else {
-				contentId = this.getRequest().getParameter("contentId");
-			}
-		}
-		return contentId;
-	}
+	//	public String extractContentId() {
+	//		String contentId = this.getContentId();
+	//		if (null == contentId || contentId.trim().length() == 0) {
+	//			contentId = null;
+	//			RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
+	//			Showlet currentShowlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+	//			if (null != currentShowlet.getConfig() &&
+	//					currentShowlet.getConfig().getProperty("contentId") != null &&
+	//					currentShowlet.getConfig().getProperty("contentId").length() > 0) {
+	//				contentId = currentShowlet.getConfig().getProperty("contentId");
+	//			} else {
+	//				contentId = this.getRequest().getParameter("contentId");
+	//			}
+	//		}
+	//		return contentId;
+	//	}
 
 	public void setContentId(String contentId) {
 		this._contentId = contentId;
@@ -401,6 +452,35 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		this._reverseVotes = reverseVotes;
 	}
 
+	public String getFormContentId() {
+		return _formContentId;
+	}
+	public void setFormContentId(String formContentId) {
+		this._formContentId = formContentId;
+	}
+
+	public String getListViewerPagerId() {
+		return _listViewerPagerId;
+	}
+	public void setListViewerPagerId(String listViewerPagerId) {
+		this._listViewerPagerId = listViewerPagerId;
+	}
+
+	public String getListViewerPagerValue() {
+		return _listViewerPagerValue;
+	}
+	public void setListViewerPagerValue(String listViewerPagerValue) {
+		this._listViewerPagerValue = listViewerPagerValue;
+	}
+
+	private String _formContentId;
+	private String _contentId;
+	private Boolean _reverseVotes;
+
+	private String _listViewerPagerId;
+	private String _listViewerPagerValue;
+
+
 	private String _commentText;
 	private ICommentManager _commentManager;
 	private Map<String, Integer>  _votes;
@@ -409,9 +489,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	private String _selectedContent;
 	private int _selectedComment;
 	private HttpServletResponse _response;
-	private String _contentId;
 	private ContentActionHelper _contentActionHelper;
 	private IContentFeedbackManager _contentFeedbackManager;
-	private Boolean _reverseVotes;
 
 }

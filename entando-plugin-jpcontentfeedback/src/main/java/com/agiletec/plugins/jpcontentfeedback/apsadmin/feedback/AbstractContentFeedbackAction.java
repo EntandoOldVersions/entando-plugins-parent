@@ -40,4 +40,22 @@ public abstract class AbstractContentFeedbackAction extends BaseAction {
 		return getAllStatus().get(idStatus);
 	}
 
+	public String getPagName() {
+		return _pagName;
+	}
+
+	public void setPagName(String pagName) {
+		this._pagName = pagName;
+	}
+
+	public String getPagValue() {
+		return _pagValue;
+	}
+
+	public void setPagValue(String pagValue) {
+		this._pagValue = pagValue;
+	}
+
+	private String _pagName;
+	private String _pagValue;
 }

@@ -28,6 +28,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.model.Comment;
@@ -155,6 +157,7 @@ public class CommentDAO  extends AbstractDAO implements ICommentDAO {
 			if (contentId!=null && contentId.length()>0) {
 				stat.setString(pos++, contentId);
 			}
+			
 		}
 		return pos;
 	}
@@ -260,10 +263,15 @@ public class CommentDAO  extends AbstractDAO implements ICommentDAO {
 				query.append(APPEND_CONTENT_ID_CLAUSE);
 				appendWhere = false;
 			}
-
-
+			
+			query.append(APPEND_ORDERBY_CLAUSE);
+			String sort = searchBean.getSort();
+			if (StringUtils.isBlank(sort) || !sort.equalsIgnoreCase(ICommentSearchBean.SORT_DESC)) {
+				query.append(ICommentSearchBean.SORT_ASC);
+			} else {
+				query.append(ICommentSearchBean.SORT_DESC);
+			}
 		}
-		query.append(APPEND_ORDERBY_CLAUSE);
 		return query.toString();
 	}
 
@@ -300,19 +308,19 @@ public class CommentDAO  extends AbstractDAO implements ICommentDAO {
 	}
 
 	private static final String ADD_COMMENT =
-		"INSERT INTO jpcontentfeedback_comments  (id, contentid, creationdate,  usercomment, status, username) VALUES (?, ?, ?, ?, ?, ?) ";
+			"INSERT INTO jpcontentfeedback_comments  (id, contentid, creationdate,  usercomment, status, username) VALUES (?, ?, ?, ?, ?, ?) ";
 
 	private static final String DELETE_COMMENT=
-		"DELETE FROM jpcontentfeedback_comments WHERE id = ?";
+			"DELETE FROM jpcontentfeedback_comments WHERE id = ?";
 
 	private static final String UPDATE_STATUS_COMMENT=
-		"UPDATE jpcontentfeedback_comments SET status=? WHERE id=?";
+			"UPDATE jpcontentfeedback_comments SET status=? WHERE id=?";
 
 	private final String SELECT_COMMENTS_CODES =
-		"SELECT id FROM jpcontentfeedback_comments ";
+			"SELECT id FROM jpcontentfeedback_comments ";
 
 	private final String LOAD_COMMENT =
-		"SELECT * FROM jpcontentfeedback_comments WHERE id = ?";
+			"SELECT * FROM jpcontentfeedback_comments WHERE id = ?";
 
 	private final String APPEND_WHERE = "WHERE ";
 	private final String APPEND_AND = "AND ";
@@ -322,7 +330,7 @@ public class CommentDAO  extends AbstractDAO implements ICommentDAO {
 	private final String APPEND_DATE_FROM_CLAUSE  = "creationDate >= ? ";
 	private final String APPEND_DATE_TO_CLAUSE  = "creationDate <= ? ";
 	private final String APPEND_COMMENT_CLAUSE  = "usercomment LIKE ? ";
-	private final String APPEND_ORDERBY_CLAUSE = "ORDER BY creationdate ASC ";
+	private final String APPEND_ORDERBY_CLAUSE = " ORDER BY creationdate ";
 
 	private IRatingDAO _ratingDAO;
 

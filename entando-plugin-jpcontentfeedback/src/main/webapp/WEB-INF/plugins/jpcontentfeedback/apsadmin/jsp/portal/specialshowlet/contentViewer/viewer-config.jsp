@@ -56,7 +56,7 @@
 	<wpsf:hidden name="contentId" value="%{getShowlet().getConfig().get('contentId')}" />
 </p>
 
-<p class="margin-more-bottom"><wpsf:submit useTabindexAutoIncrement="true" action="searchContents" value="%{getText('label.change')}" cssClass="button" /></p>
+<p class="margin-more-bottom"><wpsf:submit useTabindexAutoIncrement="true" action="jpcontentfeedbackSearchContents" value="%{getText('label.change')}" cssClass="button" /></p>
 
 <fieldset><legend><s:text name="title.publishingOptions" /></legend>
 <p>
@@ -71,7 +71,7 @@
 	<s:text name="note.noContentSet" />
 </p>
 <p>
-	<wpsf:submit useTabindexAutoIncrement="true" action="searchContents" value="%{getText('label.choose')}" cssClass="button" />
+	<wpsf:submit useTabindexAutoIncrement="true" action="jpcontentfeedbackSearchContents" value="%{getText('label.choose')}" cssClass="button" />
 </p>
 </s:else>
 
@@ -81,19 +81,24 @@
 	<ul class="noBullet">
 		<li>
 			<wpsf:checkbox useTabindexAutoIncrement="true" name="usedComment" id="jpcontentfeedback_usedComment"  value="%{getShowlet().getConfig().get('usedComment')}" cssClass="radiocheck"/>
-			<label for="jpcontentfeedback_usedComment"><s:text name="jpcontentfeedback.label.comment" /></label>  
+			<label for="jpcontentfeedback_usedComment"><s:text name="jpcontentfeedback.label.commentsOnContent" /></label>  
 		</li>
 		<li>
+			<wpsf:checkbox useTabindexAutoIncrement="true" name="anonymousComment" id="jpcontentfeedback_anonymousComment"  value="%{getShowlet().getConfig().get('anonymousComment')}" cssClass="radiocheck"/>
+			<label for="jpcontentfeedback_anonymousComment"><s:text name="jpcontentfeedback.label.anonymousComments" /></label>  
+		</li>
+		<li>
+			<wpsf:checkbox useTabindexAutoIncrement="true" name="commentValidation" id="jpcontentfeedback_commentsModeration" value="%{getShowlet().getConfig().get('commentValidation')}" cssClass="radiocheck" />
+			<label for="jpcontentfeedback_commentsModeration"><s:text name="jpcontentfeedback.label.commentsModeration" /></label>  
+		</li>
+
+		<li>
 			<wpsf:checkbox useTabindexAutoIncrement="true" name="usedContentRating" id="jpcontentfeedback_usedContentRating"  value="%{getShowlet().getConfig().get('usedContentRating')}" cssClass="radiocheck" />
-			<label for="jpcontentfeedback_usedContentRating"><s:text name="jpcontentfeedback.label.contentRating" /></label>
+			<label for="jpcontentfeedback_usedContentRating"><s:text name="jpcontentfeedback.label.contentsRating" /></label>
 		</li>
 		<li>
 			<wpsf:checkbox useTabindexAutoIncrement="true" name="usedCommentWithRating" id="jpcontentfeedback_usedCommentWithRating"  value="%{getShowlet().getConfig().get('usedCommentWithRating')}" cssClass="radiocheck" />
-			<label for="jpcontentfeedback_usedCommentWithRating"><s:text name="jpcontentfeedback.label.commentWithRating" /></label>  
-		</li>
-		<li>
-			<wpsf:checkbox useTabindexAutoIncrement="true" name="commentValidation" id="jpcontentfeedback_commentValidation" value="%{getShowlet().getConfig().get('commentValidation')}" cssClass="radiocheck" />
-			<label for="jpcontentfeedback_commentValidation"><s:text name="jpcontentfeedback.label.commentValidation" /></label>  
+			<label for="jpcontentfeedback_usedCommentWithRating"><s:text name="jpcontentfeedback.label.commentsRating" /></label>  
 		</li>
 	</ul>
 </fieldset>

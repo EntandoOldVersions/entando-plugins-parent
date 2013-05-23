@@ -16,10 +16,11 @@ public class ContentFeedbackConfig implements IContentFeedbackConfig {
     public ContentFeedbackConfig(String xml) throws Throwable {
         JAXBContext context = JAXBContext.newInstance(ContentFeedbackConfig.class);
         ContentFeedbackConfig config = (ContentFeedbackConfig) context.createUnmarshaller().unmarshal(new StringReader(xml));
-        this.setAnonymousComment(config.getAnonymousComment());
         this.setComment(config.getComment());
-        this.setRateComment(config.getRateComment());
+        this.setAnonymousComment(config.getAnonymousComment());
+        this.setModeratedComment(config.getModeratedComment());
         this.setRateContent(config.getRateContent());
+        this.setRateComment(config.getRateComment());
     }
     
     public String toXML() throws Throwable {
@@ -59,7 +60,6 @@ public class ContentFeedbackConfig implements IContentFeedbackConfig {
     }
     
     private String _rateContent;
-    private String _comment;
     private String _rateComment;
     private String _anonymousComment;
     

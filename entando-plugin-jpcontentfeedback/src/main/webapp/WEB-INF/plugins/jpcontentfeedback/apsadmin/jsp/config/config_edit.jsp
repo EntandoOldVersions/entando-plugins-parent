@@ -68,6 +68,18 @@
 				<input 
 					type="checkbox" 
 					class="radiocheck"
+					id="jpcontentfeedback_moderatedComment"
+					name="config.moderatedComment" 
+					value="true" <s:if test="config.moderatedComment"> checked="checked"</s:if>
+				/>
+				<label for="jpcontentfeedback_moderatedComment"><s:text name="jpcontentfeedback.label.commentsModeration"/></label>
+				<span class="inline"><s:text name="jpcontentfeedback.note.commentsModeration" /></span>
+			</p>
+			
+			<p>
+				<input 
+					type="checkbox" 
+					class="radiocheck"
 					id="jpcontentfeedback_rateComment"
 					name="config.rateComment" 
 					value="true" <s:if test="config.rateComment"> checked="checked"</s:if>
