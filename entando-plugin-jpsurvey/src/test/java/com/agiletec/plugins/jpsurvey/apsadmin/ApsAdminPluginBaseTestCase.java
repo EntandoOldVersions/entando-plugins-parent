@@ -68,8 +68,8 @@ public class ApsAdminPluginBaseTestCase extends ApsAdminBaseTestCase {
 	 */
 	protected Survey getFakeActiveSurvey() throws Throwable {
 		Survey survey = new Survey();
-		String xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?><properties><property key=\"test\">me</property><property key=\"test2\">me too</property></properties>";
-		String xmlBarrali="<?xml version=\"1.0\" encoding=\"UTF-8\"?><properties><property key=\"en\">You should NOT see THIS in the DB!</property><property key=\"it\">NON dovresti vedere QUESTO nel database!</property></properties>";
+		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><properties><property key=\"test\">me</property><property key=\"test2\">me too</property></properties>";
+		String xmlImageDescr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><properties><property key=\"en\">You should NOT see THIS in the DB!</property><property key=\"it\">NON dovresti vedere QUESTO nel database!</property></properties>";
 		Question question = this.getFakeQuestion();
 		Question question2 = this.getFakeQuestion();
 		question2.setPos(1);
@@ -92,7 +92,7 @@ public class ApsAdminPluginBaseTestCase extends ApsAdminBaseTestCase {
 		survey.setTitles(prop);
 		survey.setImageId("IMGXXX");
 		prop = new ApsProperties();
-		prop.loadFromXml(xmlBarrali);
+		prop.loadFromXml(xmlImageDescr);
 		survey.setImageDescriptions(prop);
 		survey.setQuestions(questions);
 		return survey;
@@ -110,8 +110,9 @@ public class ApsAdminPluginBaseTestCase extends ApsAdminBaseTestCase {
 		String xmlDescription="<?xml version=\"1.0\" encoding=\"UTF-8\"?><properties><property key=\"en\">"+description+"_en</property><property key=\"it\">"+description+"_it</property></properties>";
 		String xmlTitle="<?xml version=\"1.0\" encoding=\"UTF-8\"?><properties><property key=\"en\">"+title+"_en</property><property key=\"it\">"+title+"_it+</property></properties>";
 		Question question = this.getFakeQuestion();
+		question.setPos(1);
 		Question question2 = this.getFakeQuestion();
-		question2.setPos(1);
+		question2.setPos(2);
 		List<Question> questions = new ArrayList<Question>();
 		questions.add(question);
 		questions.add(question2);

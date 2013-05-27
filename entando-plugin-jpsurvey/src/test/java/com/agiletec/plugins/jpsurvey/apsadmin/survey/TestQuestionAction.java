@@ -31,6 +31,7 @@ import com.opensymphony.xwork2.Action;
 
 public class TestQuestionAction extends ApsAdminPluginBaseTestCase {
 	
+	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.init();
@@ -204,8 +205,6 @@ public class TestQuestionAction extends ApsAdminPluginBaseTestCase {
 			survey = this.getSurveyManager().loadSurvey(survey.getId());
 			assertEquals(expected.getQuestions().get(0).getId(), survey.getQuestions().get(1).getId());
 			assertEquals(expected.getQuestions().get(1).getId(), survey.getQuestions().get(0).getId());
-			assertEquals(0, survey.getQuestions().get(0).getPos()); // since only the ID swaps, the position remains unchanged
-			// moving up the first has no consequences. WARNING!!! the previous test had swapped the questions already!
 			this.initAction("/do/jpsurvey/Survey", "moveQuestionUp");
 			this.addParameter("questionId", survey.getQuestions().get(1).getId());
 			result = this.executeAction();
@@ -227,15 +226,10 @@ public class TestQuestionAction extends ApsAdminPluginBaseTestCase {
 		String result = null;
 		try {
 			this.setUserOnSession("admin");
-			survey.getQuestions().get(1).setPos(38);
 			// save the survey
 			this.getSurveyManager().saveSurvey(survey);
-			// update internal id's by reloading the object
-			survey = this.getSurveyManager().loadSurvey(survey.getId());
-			// add new question
 			survey = this.getSurveyManager().loadSurvey(survey.getId());
 			assertEquals(2, survey.getQuestions().size());
-			// load a copy 
 			expected = this.getSurveyManager().loadSurvey(survey.getId());
 			// invoke without arguments
 			this.initAction("/do/jpsurvey/Survey", "moveQuestionDown");
@@ -251,7 +245,7 @@ public class TestQuestionAction extends ApsAdminPluginBaseTestCase {
 			survey = this.getSurveyManager().loadSurvey(survey.getId());
 			assertEquals(expected.getQuestions().get(0).getId(), survey.getQuestions().get(0).getId());
 			assertEquals(expected.getQuestions().get(1).getId(), survey.getQuestions().get(1).getId());
-			// swap known id
+			expected = survey;
 			this.initAction("/do/jpsurvey/Survey", "moveQuestionDown");
 			this.addParameter("questionId", survey.getQuestions().get(0).getId());
 			result = this.executeAction();
@@ -260,8 +254,6 @@ public class TestQuestionAction extends ApsAdminPluginBaseTestCase {
 			survey = this.getSurveyManager().loadSurvey(survey.getId());
 			assertEquals(expected.getQuestions().get(0).getId(), survey.getQuestions().get(1).getId());
 			assertEquals(expected.getQuestions().get(1).getId(), survey.getQuestions().get(0).getId());
-			assertEquals(38, survey.getQuestions().get(1).getPos());
-			// moving down the last has no consequences. WARNING!!! the previous test had swapped the questions already!
 			this.initAction("/do/jpsurvey/Survey", "moveQuestionDown");
 			this.addParameter("questionId", survey.getQuestions().get(0).getId());
 			result = this.executeAction();
