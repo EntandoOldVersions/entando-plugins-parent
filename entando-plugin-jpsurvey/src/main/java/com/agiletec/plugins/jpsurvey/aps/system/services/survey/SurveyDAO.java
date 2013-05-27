@@ -49,6 +49,7 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 	 * @param id the ID of the survey to load
 	 * @return the complete survey, null otherwise 
 	 */
+	@Override
 	public Survey loadSurvey(int id) {
 		Connection conn = null;
 		Survey survey = null;
@@ -77,13 +78,17 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 					survey = this.buildSurveyRecordFromResultSet(res);
 				}
 				Question question = this.buildQuestionRecordFromResultSet(res, 18);
-				if (null == question) continue;
+				if (null == question) {
+					continue;
+				}
 				if (null == survey.getQuestion(question.getId())) {
 					survey.getQuestions().add(question);
 //					System.out.println("loading question ID "+question.getId()+ " for survey ID "+survey.getId());
 				}
 				Choice choice = this.buildChoiceRecordFromResultSet(res, 25);
-				if (null == choice) continue;
+				if (null == choice) {
+					continue;
+				}
 				if (null == survey.getQuestion(question.getId()).getChoice(choice.getId())) {
 					survey.getQuestion(question.getId()).getChoices().add(choice);
 //					System.out.println("loading choice ID "+choice.getId()+" for question ID "+question.getId());
@@ -104,7 +109,9 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 	 */
 	private Survey buildSurveyRecordFromResultSet(ResultSet res) {
 		Survey survey = null;
-		if (null == res) return null;
+		if (null == res) {
+			return null;
+		}
 		try {
 			int id = res.getInt(1);
 			if (id > 0) {
@@ -141,6 +148,7 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 		return survey;
 	}
 	
+	@Override
 	public void saveSurvey(Survey survey) {
 		Connection conn = null;
 		PreparedStatement stat = null;
@@ -239,6 +247,7 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 		}
 	}
 	
+	@Override
 	public void deleteSurvey(int id) {
 		PreparedStatement stat = null;
 		Connection conn = null;
@@ -265,6 +274,7 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 		}
 	}
 	
+	@Override
 	public void updateSurvey(Survey survey) {
 		Connection conn = null;
 		PreparedStatement stat = null;
@@ -394,15 +404,16 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 				if ((null != description && description.trim().length () > 0) || 
 						(null != title && title.trim().length () > 0)) {
 					Survey survey = this.loadSurvey(conn, currentId);
-					if ((null != description && description.trim().length() > 0)) {
+					if (null != description && description.trim().length() > 0) {
 						if (this.searchInProperties(description, survey.getDescriptions())) {
 							list.add(currentId);
 							continue;
 						}
 					}
 					if ((null != title && title.trim().length() > 0)) {
-						if (this.searchInProperties(title, survey.getTitles()))
+						if (this.searchInProperties(title, survey.getTitles())) {
 							list.add(currentId);
+						}
 					}
 				} else {
 					// always add if no description or title description are given
@@ -423,7 +434,9 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 		List<Question> list = new ArrayList<Question>();
 		try {
 			survey = this.loadSurvey(id);
-			if (null != survey) list = survey.getQuestions();
+			if (null != survey) {
+				list = survey.getQuestions();
+			}
 		} catch (Throwable t) {
 			this.processDaoException(t, "Error getting the questions of a survey", "searchSurveyByIds");
 		}
@@ -431,7 +444,7 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 	}
 	
 	private String createSearchIdsQueryString(Integer id, String description, Collection<String> groups, Boolean isActive, Boolean isQuestionnaire, String title, Boolean isRestricted) {
-		StringBuffer query = new StringBuffer("SELECT id FROM jpsurvey ");
+		StringBuilder query = new StringBuilder("SELECT id FROM jpsurvey ");
 		boolean isWherePresent = false;
 		if (null != id) {
 			if (!isWherePresent) {
