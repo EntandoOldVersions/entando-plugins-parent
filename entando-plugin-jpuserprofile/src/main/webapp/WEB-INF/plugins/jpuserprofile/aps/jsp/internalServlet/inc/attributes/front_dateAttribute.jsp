@@ -1,12 +1,63 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
+<%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
+<%@ taglib prefix="wp" uri="/aps-core" %>
 
 <s:if test="#attribute.failedDateString == null">
-	<s:set name="dateAttributeValue" value="#attribute.getFormattedDate('dd/MM/yyyy')"></s:set>
+	<s:set name="dateAttributeValue" value="#attribute.getFormattedDate('dd/MM/yyyy')" />
 </s:if>
 <s:else>
-	<s:set name="dateAttributeValue" value="#attribute.failedDateString"></s:set>
+	<s:set name="dateAttributeValue" value="#attribute.failedDateString" />
 </s:else>
-	<wpsf:textfield useTabindexAutoIncrement="true" id="%{attribute_id}" 
-			name="%{#attributeTracer.getFormFieldName(#attribute)}" value="%{#dateAttributeValue}"
-		 	maxlength="254" cssClass="text"></wpsf:textfield>&#32;<span class="inlineNote">dd/MM/yyyy</span>
+	<wpsf:textfield 
+		useTabindexAutoIncrement="true" 
+		id="%{attribute_id}" 
+		name="%{#attributeTracer.getFormFieldName(#attribute)}" 
+		value="%{#dateAttributeValue}"
+		maxlength="10" 
+		cssClass="text jpuserprofile-date" />
+		&#32;
+
+	<c:set var="js_for_datepicker">
+		/* Italian initialisation for the jQuery UI date picker plugin. */
+		/* Written by Antonello Pasella (antonello.pasella@gmail.com). */
+		jQuery(function($){
+			$.datepicker.regional['it'] = {
+				closeText: 'Chiudi',
+				prevText: '&#x3c;Prec',
+				nextText: 'Succ&#x3e;',
+				currentText: 'Oggi',
+				monthNames: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',
+					'Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+				monthNamesShort: ['Gen','Feb','Mar','Apr','Mag','Giu',
+					'Lug','Ago','Set','Ott','Nov','Dic'],
+				dayNames: ['Domenica','Luned&#236','Marted&#236','Mercoled&#236','Gioved&#236','Venerd&#236','Sabato'],
+				dayNamesShort: ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'],
+				dayNamesMin: ['Do','Lu','Ma','Me','Gi','Ve','Sa'],
+				weekHeader: 'Sm',
+				dateFormat: 'dd/mm/yy',
+				firstDay: 1,
+				isRTL: false,
+				showMonthAfterYear: false,
+				yearSuffix: ''};
+		});
+
+		jQuery(function($) {
+			if (Modernizr.touch && Modernizr.inputtypes.date) {
+				$.each(	$("input.jpuserprofile-date"), function(index, item) {
+					item.type = 'date';
+				});
+			} else {
+				$.datepicker.setDefaults( $.datepicker.regional[ "<wp:info key="currentLang" />" ] );
+				$("input.jpuserprofile-date").datepicker({
+						changeMonth: true,
+						changeYear: true,
+						dateFormat: 'dd/mm/yy'
+		    		});
+			}
+		});
+	</c:set>
+	<wp:headInfo type="JS" info="entando-misc-html5-essentials/modernizr-2.5.3-full.js" />
+	<wp:headInfo type="JS_EXT" info="http://code.jquery.com/ui/1.10.1/jquery-ui.js" />
+	<wp:headInfo type="CSS_EXT" info="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+	<wp:headInfo type="JS_RAW" info="${js_for_datepicker}" />

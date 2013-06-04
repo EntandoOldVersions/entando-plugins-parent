@@ -9,5 +9,10 @@
 	<wpsa:actionSubParam name="attributeName" value="%{#attribute.name}" />
 	<wpsa:actionSubParam name="listLangCode" value="%{#lang.code}" />
 </wpsa:actionParam>
-<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/img/icons/list-add.png</s:set> 
-<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="image" src="%{#iconImagePath}" value="%{add_label}" title="%{i18n_attribute_name}%{': '}%{add_label}" />
+<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/list-add.png</s:set> 
+<wpsf:submit 
+	cssClass="btn"
+	useTabindexAutoIncrement="true" 
+	action="%{#actionName}" 
+	value="%{add_label}" 
+	title="%{i18n_attribute_name}%{': '}%{add_label}" />

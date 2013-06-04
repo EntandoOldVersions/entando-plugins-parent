@@ -4,45 +4,67 @@
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 
-<h2><wp:i18n key="jpuserprofile_EDITPASSWORD" /></h2>
+<h1><wp:i18n key="jpuserprofile_EDITPASSWORD" /></h1>
 
 <c:choose>
 	<c:when test="${sessionScope.currentUser != 'guest'}">
 		
-		<form action="<wp:action path="/ExtStr2/do/jpuserprofile/Front/CurrentUser/changePassword.action" />" method="post" class="newContentForm">
+		<form 
+			action="<wp:action path="/ExtStr2/do/jpuserprofile/Front/CurrentUser/changePassword.action" />" 
+			method="post" 
+			class="form-horizontal">
 			
-			<s:if test="hasFieldErrors()">
-				<h3><wp:i18n key="jpuserprofile_MESSAGE_TITLE_FIELDERRORS" /></h3>
-				<ul>
-					<s:iterator value="fieldErrors">
-						<s:iterator value="value">
-							<li><s:property escape="false" /></li>
-						</s:iterator>
-					</s:iterator>
-				</ul>
-			</s:if>
+				<s:if test="hasFieldErrors()">
+					<div class="alert alert-block">
+						<p><strong><wp:i18n key="jpuserprofile_MESSAGE_TITLE_FIELDERRORS" /></strong></p>
+						<ul class="unstyled">
+							<s:iterator value="fieldErrors">
+								<s:iterator value="value">
+									<li><s:property escape="false" /></li>
+								</s:iterator>
+							</s:iterator>
+						</ul>
+					</div>
+				</s:if>
 			
-			<p class="noscreen">
-				<wpsf:hidden name="username" />
+				<p class="noscreen">
+					<wpsf:hidden name="username" />
+				</p>
+
+			<div class="control-group">
+				<label for="jpuserprofile-old-password" class="control-label"><wp:i18n key="jpuserprofile_OLDPASSWORD" /></label>
+				<div class="controls">
+					<wpsf:password 
+						useTabindexAutoIncrement="true" 
+						name="oldPassword" 
+						id="jpuserprofile-old-password" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="jpuserprofile-new-password" class="control-label"><wp:i18n key="jpuserprofile_NEWPASS" /></label>
+				<div class="controls">
+					<wpsf:password 
+						useTabindexAutoIncrement="true" 
+						name="password" 
+						id="jpuserprofile-new-password" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label for="jpuserprofile-new-password-confirm" class="control-label"><wp:i18n key="jpuserprofile_CONFIRM_NEWPASS" /></label>
+				<div class="controls">
+					<wpsf:password 
+						useTabindexAutoIncrement="true" 
+						name="passwordConfirm" 
+						id="jpuserprofile-new-password-confirm" />
+				</div>
+			</div>	
+			<p class="form-actions">
+				<wp:i18n key="jpuserprofile_SAVE_PASSWORD" var="jpuserprofile_SAVE_PASSWORD" />
+				<wpsf:submit 
+					useTabindexAutoIncrement="true" 
+					value="%{#attr.jpuserprofile_SAVE_PASSWORD}" 
+					cssClass="btn btn-primary" />
 			</p>
-			
-			<p>
-				<label for="jpuserprofile_oldPassword"><wp:i18n key="jpuserprofile_OLDPASSWORD" /></label>:<br />
-				<wpsf:password useTabindexAutoIncrement="true" name="oldPassword" id="jpuserprofile_oldPassword" cssClass="text" />
-			</p>
-			
-			<p>
-				<label for="jpuserprofile_newPassword"><wp:i18n key="jpuserprofile_NEWPASS" /></label>:<br />
-				<wpsf:password useTabindexAutoIncrement="true" name="password" id="jpuserprofile_newPassword" cssClass="text" />
-			</p>
-			
-			<p>
-				<label for="jpuserprofile_newPassword_conf"><wp:i18n key="jpuserprofile_CONFIRM_NEWPASS" /></label>:<br />
-				<wpsf:password useTabindexAutoIncrement="true" name="passwordConfirm" id="jpuserprofile_newPassword_conf" cssClass="text" />
-			</p>
-			<s:set var="savepassword_label"><wp:i18n key="jpuserprofile_SAVE_PASSWORD" /></s:set>
-			<p><wpsf:submit useTabindexAutoIncrement="true" value="%{savepassword_label}" /></p>
-			
 		</form>
 			
 	</c:when>
