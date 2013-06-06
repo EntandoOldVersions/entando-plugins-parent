@@ -1,68 +1,75 @@
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="jpsu" uri="/jpsurvey-aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<wp:headInfo type="CSS" info="../../plugins/jpsurvey/static/css/jpsurvey.css" />
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% pageContext.setAttribute("newLine", "\n"); %> 
+<jpsu:pageWithShowlet var="surveyDetailsPageCode" showletTypeCode="jpsurvey_detailsSurvey" />
+
 <wp:info key="currentLang" var="currentLang" />
 <wp:info key="defaultLang" var="defaultLang" />
 
-	<div class="polls">
-	<p><wp:i18n key="JPSURVEY_POLLS_LIST_INTRO" />&#32;<a href="<wp:url page="polls_archive"></wp:url>" title="<wp:i18n key="JPSURVEY_GO_TO_POLL_ARCHIVE" />"><wp:i18n key="JPSURVEY_POLL_ARCHIVE" /></a>.</p>
-
-	<jpsu:surveyList ctxName="pollList" category="poll" expired="false" />
-		<c:if test="${not empty pollList}">
-		<ul>
-			<c:forEach var="currentSurveyItem" items="${pollList}">
-				<jpsu:loadSurvey ctxName="currentSurvey" surveyId="${currentSurveyItem}" votedParamName="voted" ctxImageUrl="imageURL" imageDimension="1" />
-				<li class="lista clear">
-				<c:if test="${not empty currentSurvey.imageId}">
+<jpsu:surveyList ctxName="pollList" category="poll" expired="false" />
+<c:if test="${not empty pollList}">
+	<ul class="unstyled jpsurvey-list">
+		<c:forEach var="currentSurveyItem" items="${pollList}">
+			<jpsu:loadSurvey ctxName="currentSurvey" surveyId="${currentSurveyItem}" preferredLang="${currentLang}" votedParamName="voted" ctxImageUrl="imageURL" imageDimension="1" />
+			<li class="media">
+				<%/*Vote*/%>
 				<c:choose>
-					<c:when test="${not empty currentSurvey.imageDescriptions[currentLang]}">
-						<img class="surveyImg" alt="<c:out value="${currentSurvey.imageDescriptions[currentLang]}" />" src="<c:out value="${imageURL}" />" />
-					</c:when>
-					<c:otherwise>
-						<img class="surveyImg" alt="<c:out value="${currentSurvey.imageDescriptions[defaultLang]}" />" src="<c:out value="${imageURL}" />"/>
-					</c:otherwise>
+					<c:when test="${voted}"><wp:i18n key="JPSURVEY_YOU_HAVE_VOTED" var="votationVar" /></c:when>
+					<c:when test="${currentSurvey.checkUsername && sessionScope.currentUser.username == 'guest' }"><wp:i18n key="JPSURVEY_DO_LOGIN" var="votationVar" /></c:when>
+					<c:otherwise><wp:i18n key="JPSURVEY_YOU_HAVE_NOT_VOTED" var="votationVar" /></c:otherwise>
 				</c:choose>
-				</c:if>
-					<h2>
-						<c:choose>
-							<c:when test="${not empty currentSurvey.titles[currentLang]}">
-								<a href="<wp:url page="poll_detail"><wp:parameter name="surveyId"><c:out value="${currentSurvey.id}"/></wp:parameter></wp:url>" title="<wp:i18n key="JPSURVEY_GO_TO_POLL" />:&#32;<c:out value="${currentSurvey.titles[currentLang]}"/>"><c:out value="${currentSurvey.titles[currentLang]}"/></a>
-							</c:when>
-							<c:otherwise>
-								<a href="<wp:url page="poll_detail"><wp:parameter name="surveyId"><c:out value="${currentSurvey.id}"/></wp:parameter></wp:url>" title="<wp:i18n key="JPSURVEY_GO_TO_POLL" />:&#32;<c:out value="${currentSurvey.titles[defaultLang]}"/>"><c:out value="${currentSurvey.titles[defaultLang]}"/></a>
-							</c:otherwise>
-						</c:choose>
-					</h2>
-					<p>
-					<c:choose>
-						<c:when test="${not empty currentSurvey.descriptions[currentLang]}">
-							<c:out value="${currentSurvey.descriptions[currentLang]}"/>
-						</c:when>
-						<c:otherwise>
-							<c:out value="${currentSurvey.descriptions[defaultLang]}"/>
-						</c:otherwise>
-					</c:choose>
-					</p>
-					<p class="note">
-					<c:choose>
-						<c:when test="${voted}">
-							(<wp:i18n key="JPSURVEY_YOU_HAVE_VOTED" />)
-						</c:when>
-						<c:otherwise>
-							<c:choose>
-								<c:when test="${currentSurvey.checkUsername && sessionScope.currentUser.username == 'guest' }">
-									(<wp:i18n key="JPSURVEY_DO_LOGIN" />)
-								</c:when>
-								<c:otherwise>
-									(<wp:i18n key="JPSURVEY_YOU_HAVE_NOT_VOTED" />)
-								</c:otherwise>
-							</c:choose>
-						</c:otherwise>
-					</c:choose>
-					</p>
-				</li>
-			</c:forEach>
-		</ul>
-		</c:if>
-	</div>
+				<%/*Title*/%>
+				<c:choose>
+					<c:when test="${not empty currentSurvey.titles[currentLang]}"><c:set var="surveyTitle" value="${currentSurvey.titles[currentLang]}"/></c:when>
+					<c:otherwise><c:set var="surveyTitle" value="${currentSurvey.titles[defaultLang]}"/></c:otherwise>
+				</c:choose>
+				<%/*Url*/%>
+				<wp:url page="${surveyDetailsPageCode.code}" var="surveyUrlVar"><wp:parameter name="surveyId"><c:out value="${currentSurvey.id}"/></wp:parameter></wp:url>
+				<h2>
+					<a 
+						href="<c:out value="${surveyUrlVar}" />" 
+						title="<wp:i18n key="JPSURVEY_GO_TO_QUESTIONNAIRE" />:&#32;<c:out value="${currentSurvey.titles[defaultLang]}"/>"
+						>
+						<c:out value="${currentSurvey.titles[defaultLang]}"/>
+					</a>
+					&ensp;
+					<span class="label"><c:out value="${votationVar}" /></span>
+				</h2>
+			<c:if test="${not empty currentSurvey.imageId}">
+				<c:choose>
+					<c:when test="${not empty currentSurvey.imageDescriptions[currentLang]}"><c:set var="imageDescr" value="${currentSurvey.imageDescriptions[currentLang]}" /></c:when>
+					<c:otherwise><c:set var="imageDescr" value="${currentSurvey.imageDescriptions[defaultLang]}" /></c:otherwise>
+				</c:choose>
+				<a 
+					href="<c:out value="${surveyUrlVar}" />"
+					title="<wp:i18n key="JPSURVEY_GO_TO_QUESTIONNAIRE" />:&#32;<c:out value="${currentSurvey.titles[defaultLang]}"/>"
+					class=" pull-left " 
+					>
+					<img class="img-polaroid" alt="<c:out value="${imageDescr}" />" src="<c:out value="${imageURL}" />"/>
+				</a>
+			</c:if>
+				<%/* Descr */%>
+				<c:choose>
+					<c:when test="${not empty currentSurvey.descriptions[currentLang]}"><c:set var="surveyDescriptionVar"><c:out value="${currentSurvey.descriptions[currentLang]}"/></c:set></c:when>
+					<c:otherwise><c:set var="surveyDescriptionVar"><c:out value="${currentSurvey.descriptions[defaultLang]}"/></c:set></c:otherwise>
+				</c:choose>
+				<p>
+					<c:out value="${fn:replace(surveyDescriptionVar, newLine, '<br />')}" escapeXml="false"  />
+				</p>
+			</li>
+		</c:forEach>
+	</ul>
+</c:if>
+
+<jpsu:pageWithShowlet var="pollArchivePage" showletTypeCode="jpsurvey_pollArchive" />
+<p>
+	<span class="label label-info">
+	<wp:i18n key="JPSURVEY_POLLS_LIST_INTRO" />&#32;
+	<a 
+		href="<wp:url page="${pollArchivePage.code}"></wp:url>" 
+		title="<wp:i18n key="JPSURVEY_GO_TO_POLL_ARCHIVE" />">
+			<wp:i18n key="JPSURVEY_POLL_ARCHIVE" /></a>.
+	</span>
+</p>
