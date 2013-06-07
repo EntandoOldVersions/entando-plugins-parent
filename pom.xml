@@ -114,8 +114,9 @@
 		<test.database.port.url>jdbc:derby:${project.artifactId}testPort;create=true</test.database.port.url>
 		<test.database.serv.url>jdbc:derby:${project.artifactId}testServ;create=true</test.database.serv.url>
 		-->
-		<spring.version>3.0.6.RELEASE</spring.version>
+		<spring.version>3.2.3.RELEASE</spring.version>
 		<struts2.version>2.3.14</struts2.version>
+		<cxf.version>2.7.5</cxf.version>
 	</properties>
 
 	<build>
