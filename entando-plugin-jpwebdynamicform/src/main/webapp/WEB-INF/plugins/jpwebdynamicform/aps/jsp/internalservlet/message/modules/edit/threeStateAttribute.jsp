@@ -1,17 +1,32 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib uri="/aps-core" prefix="wp" %>
-<%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
-
+<%@ taglib prefix="wp" uri="/aps-core" %>
+<%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
 <s:if test="#lang.default">
-	<wpsf:radio useTabindexAutoIncrement="true" name="%{#attributeTracer.getFormFieldName(#attribute)}" id="none_%{#attributeTracer.getFormFieldName(#attribute)}"
-			value="" checked="%{#attribute.booleanValue == null}" />
-	&#32;<wp:i18n key="jpwebdynamicform_${typeCodeKey}_${attributeNameI18nKey}_NONE" />
-
-	<wpsf:radio useTabindexAutoIncrement="true" name="%{#attributeTracer.getFormFieldName(#attribute)}" id="true_%{#attributeTracer.getFormFieldName(#attribute)}"
-			value="true" checked="%{#attribute.booleanValue != null && #attribute.booleanValue == true}" />
-	&#32;<wp:i18n key="jpwebdynamicform_${typeCodeKey}_${attributeNameI18nKey}_YES" />
-
-	<wpsf:radio useTabindexAutoIncrement="true" name="%{#attributeTracer.getFormFieldName(#attribute)}" id="false_%{#attributeTracer.getFormFieldName(#attribute)}"
-			value="false" checked="%{#attribute.booleanValue != null && #attribute.booleanValue == false}" />
-	&#32;<wp:i18n key="jpwebdynamicform_${typeCodeKey}_${attributeNameI18nKey}_NO" />
+		<label class="radio inline" for="<s:property value="%{#attribute_id + '-none'}" />">
+			<wpsf:radio 
+				useTabindexAutoIncrement="true" 
+				name="%{#attributeTracer.getFormFieldName(#attribute)}" 
+				id="%{#attribute_id + '-none'}"
+				value="" 
+				checked="%{#attribute.booleanValue == null}" />
+				<wp:i18n key="${i18n_attribute_name}_NONE" />
+		</label>
+		<label class="radio inline" for="<s:property value="%{#attribute_id + '-true'}" />">
+			<wpsf:radio 
+				useTabindexAutoIncrement="true" 
+				name="%{#attributeTracer.getFormFieldName(#attribute)}" 
+				id="%{#attribute_id + '-true'}"
+				value="true" 
+				checked="%{#attribute.booleanValue != null && #attribute.booleanValue == true}" />
+				<wp:i18n key="${i18n_attribute_name}_YES" />
+		</label>
+		<label class="radio inline" for="<s:property value="%{#attribute_id + '-false'}" />">
+			<wpsf:radio 
+				useTabindexAutoIncrement="true" 
+				name="%{#attributeTracer.getFormFieldName(#attribute)}" 
+				id="%{#attribute_id + '-false'}"
+				value="false" 
+				checked="%{#attribute.booleanValue != null && #attribute.booleanValue == false}" />
+				<wp:i18n key="${i18n_attribute_name}_NO" />
+		</label>
 </s:if>

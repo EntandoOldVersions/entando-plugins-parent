@@ -1,14 +1,12 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
-
+<%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
 <s:if test="#lang.default">
-	<s:if test="#attribute.failedNumberString == null">
-		<s:set name="numberAttributeValue" value="#attribute.value"></s:set>
-	</s:if>
-	<s:else>
-		<s:set name="numberAttributeValue" value="#attribute.failedNumberString"></s:set>
-	</s:else>
-	<wpsf:textfield useTabindexAutoIncrement="true" id="%{#attributeTracer.getFormFieldName(#attribute)}" 
-			name="%{#attributeTracer.getFormFieldName(#attribute)}" value="%{#numberAttributeValue}"
-			maxlength="254" />
+	<s:if test="#attribute.failedNumberString == null"><s:set var="numberAttributeValue" value="#attribute.value" /></s:if>
+	<s:else><s:set var="numberAttributeValue" value="#attribute.failedNumberString" /></s:else>
+	<wpsf:textfield 
+		useTabindexAutoIncrement="true" 
+		id="%{#attribute_id}" 
+		name="%{#attributeTracer.getFormFieldName(#attribute)}" 
+		value="%{#numberAttributeValue}"
+		maxlength="254" />
 </s:if>

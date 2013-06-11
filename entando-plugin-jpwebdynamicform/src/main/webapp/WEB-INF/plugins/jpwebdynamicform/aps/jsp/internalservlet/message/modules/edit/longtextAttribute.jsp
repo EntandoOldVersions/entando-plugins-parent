@@ -1,7 +1,10 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
-
+<%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
 <s:if test="#lang.default">
-	<wpsf:textarea useTabindexAutoIncrement="true" cols="50" rows="3" id="%{#attributeTracer.getFormFieldName(#attribute)}" 
-		name="%{#attributeTracer.getFormFieldName(#attribute)}" value="%{#attribute.getTextForLang(#lang.code)}" />
+	<wpsf:textarea 
+		useTabindexAutoIncrement="true" 
+		cols="30" rows="5" 
+		id="%{#attribute_id}" 
+		name="%{#attributeTracer.getFormFieldName(#attribute)}" 
+		value="%{#attribute.getTextForLang(#lang.code)}" />
 </s:if>
