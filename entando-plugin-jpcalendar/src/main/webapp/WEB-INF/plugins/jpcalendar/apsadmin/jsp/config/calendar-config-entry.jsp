@@ -46,7 +46,7 @@
 <fieldset class="margin-bit-bottom"><legend><s:text name="title.contentInfo" /></legend>
 <p>
 	<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
-	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" disabled="true" value="%{getShowlet().getConfig().get('contentType')}" cssClass="text" />
+	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" disabled="true" cssClass="text" />
 	<wpsf:submit useTabindexAutoIncrement="true" action="changeContentType" value="%{getText('label.change')}" cssClass="button" />	
 </p>
 <p class="noscreen">
