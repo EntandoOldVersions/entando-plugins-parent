@@ -61,6 +61,7 @@ public class VersionAction extends AbstractContentAction implements IVersionActi
 		return SUCCESS;
 	}
 	
+	@Override
 	public String delete() {
 		try {
 			this.getVersioningManager().deleteVersion(getVersionId());
@@ -283,11 +284,10 @@ public class VersionAction extends AbstractContentAction implements IVersionActi
 	private Document loadContentDocumentDOM(String contentXml) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = fact.newDocumentBuilder();
-		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(contentXml.getBytes());
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(contentXml.getBytes("UTF-8"));
 		Document doc = builder.parse(byteArrayInputStream);
 		return doc;
 	}
-	
 	
 	public ContentVersion getContentVersion() {
 		if (this._contentVersion == null) {
@@ -301,6 +301,7 @@ public class VersionAction extends AbstractContentAction implements IVersionActi
 		return this._contentVersion;
 	}
 	
+	@Override
 	public SmallContentType getSmallContentType(String typeCode) {
 		SmallContentType contentType = this.getContentManager().getSmallContentTypesMap().get(typeCode);
 		return contentType;

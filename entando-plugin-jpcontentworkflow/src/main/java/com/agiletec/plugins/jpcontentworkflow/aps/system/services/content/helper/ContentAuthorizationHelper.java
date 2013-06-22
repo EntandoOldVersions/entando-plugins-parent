@@ -21,8 +21,8 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.role.Permission;
 import com.agiletec.aps.system.services.user.UserDetails;
+import com.agiletec.plugins.jacms.aps.system.services.content.helper.PublicContentAuthorizationInfo;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
-import com.agiletec.plugins.jacms.aps.system.services.dispenser.ContentAuthorizationInfo;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.IContentWorkflowManager;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model.Step;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model.Workflow;
@@ -70,7 +70,7 @@ public class ContentAuthorizationHelper extends com.agiletec.plugins.jacms.aps.s
 	}
 	
 	@Override
-	public boolean isAuthToEdit(UserDetails user, ContentAuthorizationInfo info) throws ApsSystemException {
+	public boolean isAuthToEdit(UserDetails user, PublicContentAuthorizationInfo info) throws ApsSystemException {
 		Content content = this.getContentManager().loadContent(info.getContentId(), true);
 		return super.isAuthToEdit(user, content);
 	}

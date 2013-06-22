@@ -36,8 +36,8 @@ import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
+import com.agiletec.plugins.jacms.aps.system.services.content.helper.PublicContentAuthorizationInfo;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
-import com.agiletec.plugins.jacms.aps.system.services.dispenser.ContentAuthorizationInfo;
 import com.agiletec.plugins.jpcontentfeedback.aps.internalservlet.feedback.ContentFeedbackAction;
 import com.agiletec.plugins.jpcontentfeedback.aps.internalservlet.system.TokenInterceptor;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.JpcontentfeedbackSystemConstants;
@@ -63,7 +63,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 		try{
 			Content content = this._contentManager.loadContent(contentId, true);
 			ICacheManager cacheManager = (ICacheManager) ApsWebApplicationUtils.getBean(SystemConstants.CACHE_MANAGER, this.getRequest());
-			ContentAuthorizationInfo authInfo = new ContentAuthorizationInfo(content);
+			PublicContentAuthorizationInfo authInfo = new PublicContentAuthorizationInfo(content);
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
 			Showlet showlet = new Showlet();
@@ -133,7 +133,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 		try {
 			Content content = this._contentManager.loadContent(contentId, true);
 			ICacheManager cacheManager = (ICacheManager) ApsWebApplicationUtils.getBean(SystemConstants.CACHE_MANAGER, this.getRequest());
-			ContentAuthorizationInfo authInfo = new ContentAuthorizationInfo(content);
+			PublicContentAuthorizationInfo authInfo = new PublicContentAuthorizationInfo(content);
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
 			Showlet showlet = new Showlet();
@@ -251,7 +251,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 		try {
 			Content content = this._contentManager.loadContent(contentId, true);
 			ICacheManager cacheManager = (ICacheManager) ApsWebApplicationUtils.getBean(SystemConstants.CACHE_MANAGER, this.getRequest());
-			ContentAuthorizationInfo authInfo = new ContentAuthorizationInfo(content);
+			PublicContentAuthorizationInfo authInfo = new PublicContentAuthorizationInfo(content);
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
 			this._contentManager.loadContent(contentId, true);
