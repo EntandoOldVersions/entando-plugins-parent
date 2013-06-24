@@ -16,19 +16,17 @@
 */
 package org.entando.entando.plugins.jpehcache;
 
-import org.entando.entando.plugins.jpehcache.aps.TestApsSample;
-import org.entando.entando.plugins.jpehcache.apsadmin.TestApsAdminSample;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.entando.entando.plugins.jpehcache.aps.system.services.TestCacheInfoManager;
 
 public class AllTests {
 	
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Change me with a suitable description");
-
-		suite.addTestSuite(TestApsSample.class);
-		suite.addTestSuite(TestApsAdminSample.class);
+		TestSuite suite = new TestSuite("Test of EhCache Connector plugin");
+		
+		suite.addTestSuite(TestCacheInfoManager.class);
 		
 		return suite;
 	}
