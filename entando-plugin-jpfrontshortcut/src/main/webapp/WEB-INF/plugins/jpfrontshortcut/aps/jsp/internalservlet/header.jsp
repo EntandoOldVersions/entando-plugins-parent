@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <c:set var="jquery_libraries">
-	<sj:head debug="false" ajaxcache="false" compressed="false" />
+	<sj:head debug="false" jqueryui="true" ajaxcache="false" compressed="false" />
 	<script type="text/javascript">
 		<!--//--><![CDATA[//><!--
 		jQuery.noConflict();
