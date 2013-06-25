@@ -92,7 +92,7 @@ class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero 
 	<div class="widget-toolbar btn-group pull-left">
 		<a href="<c:out value="${removeActionURL}" />" class="btn btn-mini btn-danger button-toggler-remove" title="remove"><i class="icon-remove"></i></a>&#32;<%-- class="removeBox": referenziato in jpmyportalplus.js, rimuove il box corrente --%>
 		<a href="<c:out value="${moveActionUrl}" />" class="btn btn-mini btn-info button-toggler-edit" title="configure/options"><i class="icon-cog"></i></a>
-		<a href="<c:out value="${opencloseActionURL}" />" class="btn btn-mini btn-info button-toggler-open-close" title="toggle open close"><i class="icon-chevron-up"></i></a>&#32;<%-- class="openClose": referenziato in jpmyportalplus.js, apre e chiude il contenuto di "editcontentBox" e "content" --%>
+		<a href="<c:out value="${opencloseActionURL}" />" class="btn btn-mini btn-info button-toggler-open-close" title="toggle open close"><i class="<c:out value="icon-chevron-${isClosed ? 'down' : 'up'}" />"></i></a>&#32;<%-- class="openClose": referenziato in jpmyportalplus.js, apre e chiude il contenuto di "editcontentBox" e "content" --%>
 	</div>
 	<div class="widget-draggable"> <%-- class="dragdrop_draggable_area": classe css referenziata in jpmyportalplus.js, serve per dichiarare qual'è l'elemento "maniglia" per il trascinamento. --%>
 			<h1 class="pull-right">
