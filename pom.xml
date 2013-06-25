@@ -84,7 +84,8 @@
 		<module>entando-plugin-jpcontentrefs</module>
 		<module>entando-plugin-jpmyportalplus</module>
 		<module>entando-plugin-jptokenapi</module>
-    <module>entando-plugin-jpfrontshortcut</module>
+		<module>entando-plugin-jpfrontshortcut</module>
+		<module>entando-plugin-jpehcache</module>
   </modules>
 	<properties>
 
