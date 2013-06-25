@@ -124,7 +124,6 @@ public class EhCacheManagerFactoryBean implements FactoryBean<CacheManager>, Ini
 		try {
 			String text = FileTextReader.getText(is1);
 			String cacheFolder = System.getProperty("java.io.tmpdir") + File.separator + this.getApplicationBaseUrl().hashCode();
-			System.out.println("cacheFolder " + cacheFolder);
 			text = text.replaceFirst(CACHE_DISK_ROOT_FOLDER_MARKER, cacheFolder);
 			byte[] bytes = text.getBytes("UTF-8");
 			is2 = new ByteArrayInputStream(bytes);
