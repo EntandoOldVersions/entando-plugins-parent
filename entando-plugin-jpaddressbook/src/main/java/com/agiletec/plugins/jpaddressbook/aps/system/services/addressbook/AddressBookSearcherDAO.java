@@ -126,6 +126,16 @@ public class AddressBookSearcherDAO extends AbstractEntitySearcherDAO implements
 	}
 	
 	@Override
+	protected String getEntityAttributeRoleTableName() {
+		return "jpaddressbook_attroles";
+	}
+	
+	@Override
+	protected String getEntityAttributeRoleTableIdFieldName() {
+		return "contactkey";
+	}
+	
+	@Override
 	protected String getTableFieldName(String metadataFieldKey) {
 		if (metadataFieldKey.equals(IEntityManager.ENTITY_ID_FILTER_KEY)) {
 			return this.getEntityMasterTableIdTypeFieldName();

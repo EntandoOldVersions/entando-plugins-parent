@@ -10,6 +10,7 @@
 			<datasource name="servDataSource">
 				<class>org.entando.entando.plugins.jpaddressbook.aps.system.init.servdb.Contact</class>
 				<class>org.entando.entando.plugins.jpaddressbook.aps.system.init.servdb.ContactSearch</class>
+				<class>org.entando.entando.plugins.jpaddressbook.aps.system.init.servdb.ContactAttributeRole</class>
 			</datasource>
 		</tableMapping>
 		<environment code="production">

@@ -56,6 +56,7 @@ public class JpaddressbookTestHelper extends AbstractDAO {
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
+			this.executeQuery(DELETE_CONTACT_ATTRIBUTE_ROLE_RECORDS, conn);
 			this.executeQuery(DELETE_CONTACT_SEARCH_RECORDS, conn);
 			this.executeQuery(DELETE_CONTACTS, conn);
 		} catch (Throwable t) {
@@ -130,6 +131,9 @@ public class JpaddressbookTestHelper extends AbstractDAO {
 	
 	private static final String DELETE_CONTACT_SEARCH_RECORDS =
 		"DELETE FROM jpaddressbook_contactsearch";
+	
+	private static final String DELETE_CONTACT_ATTRIBUTE_ROLE_RECORDS =
+		"DELETE FROM jpaddressbook_attroles";
 	
 	private AddressBookDAO _addressBookDAO;
 	protected IUserProfileManager _profileManager;

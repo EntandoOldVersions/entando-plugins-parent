@@ -2,10 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
 * 
 * See the file License for the specific language governing permissions   
 * and limitations under the License
@@ -67,6 +66,7 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 			}
 			stat.executeUpdate();
 			this.addEntitySearchRecord(contact.getId(), contact.getContactInfo(), conn);
+			this.addEntityAttributeRoleRecord(contact.getId(), contact.getContactInfo(), conn);
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
@@ -84,6 +84,7 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
 			this.deleteEntitySearchRecord(contactKey, conn);
+			this.deleteRecordsByEntityId(contactKey, this.getRemovingAttributeRoleRecordQuery(), conn);
 			stat = conn.prepareStatement(DELETE_CONTACT_BY_KEY);
 			stat.setString(1, contactKey);
 			stat.executeUpdate();
@@ -104,6 +105,7 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
 			this.deleteEntitySearchRecord(contact.getId(), conn);
+			this.deleteRecordsByEntityId(contact.getId(), this.getRemovingAttributeRoleRecordQuery(), conn);
 			stat = conn.prepareStatement(UPDATE_CONTACT);
 			stat.setString(1, contact.getContactInfo().getTypeCode());
 			stat.setString(2, contact.getContactInfo().getXML());
@@ -115,6 +117,7 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 			stat.setString(4, contact.getId());
 			stat.executeUpdate();
 			this.addEntitySearchRecord(contact.getId(), contact.getContactInfo(), conn);
+			this.addEntityAttributeRoleRecord(contact.getId(), contact.getContactInfo(), conn);
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
@@ -160,6 +163,16 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 		return DELETE_CONTACT_SEARCH_RECORD;
 	}
 	
+	@Override
+	protected String getAddingAttributeRoleRecordQuery() {
+		return ADD_ATTRIBUTE_ROLE_RECORD;
+	}
+	
+	@Override
+	protected String getRemovingAttributeRoleRecordQuery() {
+		return DELETE_ATTRIBUTE_ROLE_RECORD;
+	}
+	
 	private final String GET_CONTACT_VO = 
 		"SELECT contactkey, profiletype, contactxml, contactowner, publiccontact FROM jpaddressbook_contacts WHERE contactkey = ? ";
 	
@@ -180,5 +193,11 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 	
 	private final String GET_ALL_ENTITY_ID = 
 		"SELECT contactkey FROM jpaddressbook_contacts";
+	
+	private final String ADD_ATTRIBUTE_ROLE_RECORD =
+		"INSERT INTO jpaddressbook_attroles (contactkey, attrname, rolename) VALUES ( ? , ? , ? )";
+	
+	private final String DELETE_ATTRIBUTE_ROLE_RECORD =
+		"DELETE FROM jpaddressbook_attroles WHERE contactkey = ? ";
 	
 }
