@@ -500,9 +500,9 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 			stat = conn.prepareStatement(queryName);
 			res = stat.executeQuery();
 			while (res.next()) {
-				int year = Integer.parseInt(res.getString(1));
-				int month = Integer.parseInt(res.getString(2));
-				int day = Integer.parseInt(res.getString(3));
+				int year = Integer.parseInt(res.getString("year_value"));
+				int month = Integer.parseInt(res.getString("month_value"));
+				int day = Integer.parseInt(res.getString("day_value"));
 				firstDay.set(year,month-1, day,0,0,0);
 				firstDay.set(Calendar.MILLISECOND, 0);
 			}
