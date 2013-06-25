@@ -110,13 +110,13 @@ public class WorkflowNotifierTestHelper extends AbstractDAO {
 	
 	private final String LOAD_CONTENTS_TO_BE_NOTIFY = 
 		"SELECT id, data, contentid, contenttype, descr, maingroup, status " +
-		"FROM jpcontentworkflow_events WHERE notified = 0;";
+		"FROM jpcontentworkflow_events WHERE notified = 0";
 	
 	private final String LOAD_NOTIFIED_CONTENTS = 
 		"SELECT id, data, contentid, contenttype, descr, maingroup, status " +
 		"FROM jpcontentworkflow_events WHERE notified = 1 ";
 	
 	private final String DELETE_CONTENT_EVENTS = 
-		"DELETE FROM jpcontentworkflow_events;";
+		"DELETE FROM jpcontentworkflow_events";
 	
 }
