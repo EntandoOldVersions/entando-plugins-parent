@@ -17,7 +17,7 @@ INSERT INTO sysconfig( version, item, descr, config ) VALUES ('production', 'jpc
 <body>
 <div class="header"><h1>Comune di Villamarina</h1><h2>Workflow dei contenuti/h2></div>
 <div class="body">
-<p>Ciao ${user}, di seguito l\'elenco dei contenuti per cui è richiesto il tuo intervento
+<p>Ciao ${user}, di seguito l''elenco dei contenuti per cui è richiesto il tuo intervento
 <ul>]]></header>
 		<template><![CDATA[<li><h3><a href="{link}">{descr}</a></h3><p>{type}, {status}</p></li>]]></template>
 		<footer><![CDATA[</ul></div><div class="footer"></div></body></html>]]></footer>
