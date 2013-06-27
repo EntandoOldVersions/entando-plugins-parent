@@ -25,7 +25,7 @@
 	</div>
 </s:if>
 <fieldset><legend><s:text name="title.chooseLinkType" /></legend>
-<ul class="noBullet radiocheck">
+<ul class="unstyled noBullet radiocheck">
 <s:iterator id="typeId" value="linkDestinations">
 	<s:if test="#typeId != 4">
 		

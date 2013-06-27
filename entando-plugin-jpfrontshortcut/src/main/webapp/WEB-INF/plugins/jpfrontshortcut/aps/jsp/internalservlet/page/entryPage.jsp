@@ -93,7 +93,7 @@
 						<sj:submit targets="form-container" value="%{getText('label.join')}" button="true" href="%{joinExtraGroupUrlVar}" />
 					</p>
 					<s:if test="extraGroups.size() != 0">
-						<ul>
+						<ul class="noBullet unstyled">
 							<s:iterator value="extraGroups" var="groupName">
 								<li>
 									<wpfssa:actionParam action="removeExtraGroup" var="removeExtraGroupSubmitVar" >
@@ -113,11 +113,16 @@
 						<label for="model" class="basic-mint-label"><s:text name="name.pageModel" />:</label>
 						<wpsf:select useTabindexAutoIncrement="true" name="model" id="model" list="pageModels" listKey="code" listValue="descr" cssClass="text"></wpsf:select>
 					</p>
-					<ul class="noBullet">
-						<li><wpsf:checkbox useTabindexAutoIncrement="true" name="defaultShowlet" id="%{'defaultShowlet'+#random}" cssClass="radiocheck" /><label for="<c:out value="defaultShowlet${random}" />"><s:text name="name.hasDefaultShowlets" /></label></li>
-						<li><wpsf:checkbox useTabindexAutoIncrement="true" name="viewerPage" id="%{'viewerPage'+#random}" cssClass="radiocheck" /><label for="<c:out value="viewerPage${random}" />"><s:text name="name.isViewerPage" /></label></li>
-						<li><wpsf:checkbox useTabindexAutoIncrement="true" name="showable" id="%{'showable'+#random}" cssClass="radiocheck" /><label for="<c:out value="showable${random}" />"><s:text name="name.isShowablePage" /></label></li>
-						<li><wpsf:checkbox useTabindexAutoIncrement="true" name="useExtraTitles" id="%{'useExtraTitles'+#random}" cssClass="radiocheck" /> <label for="<c:out value="useExtraTitles${random}" />"><abbr lang="en" title="<s:text name="name.SEO.full" />"><s:text name="name.SEO.short" /></abbr>:&#32;<s:text name="name.useBetterTitles" /></label></li>
+					<ul class="noBullet unstyled">
+						<li>
+							<label class="checkbox" for="<c:out value="defaultShowlet${random}" />"><wpsf:checkbox useTabindexAutoIncrement="true" name="defaultShowlet" id="%{'defaultShowlet'+#random}" cssClass="radiocheck" /><s:text name="name.hasDefaultShowlets" /></label>
+						</li>
+						<li>
+							<label class="checkbox" for="<c:out value="viewerPage${random}" />"><wpsf:checkbox useTabindexAutoIncrement="true" name="viewerPage" id="%{'viewerPage'+#random}" cssClass="radiocheck" /><s:text name="name.isViewerPage" /></label></li>
+						<li>
+							<label class="checkbox" for="<c:out value="showable${random}" />"><wpsf:checkbox useTabindexAutoIncrement="true" name="showable" id="%{'showable'+#random}" cssClass="radiocheck" /><s:text name="name.isShowablePage" /></label></li>
+						<li>
+							<label class="checkbox" for="<c:out value="useExtraTitles${random}" />"><wpsf:checkbox useTabindexAutoIncrement="true" name="useExtraTitles" id="%{'useExtraTitles'+#random}" cssClass="radiocheck" /><abbr lang="en" title="<s:text name="name.SEO.full" />"><s:text name="name.SEO.short" /></abbr>:&#32;<s:text name="name.useBetterTitles" /></label></li>
 					</ul>
 				</fieldset>
 			</s:if>

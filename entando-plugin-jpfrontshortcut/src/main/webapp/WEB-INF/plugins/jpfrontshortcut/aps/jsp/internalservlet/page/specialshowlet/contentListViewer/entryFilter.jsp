@@ -196,7 +196,7 @@
 
 		<s:if test="filterOptionId==2">
 		<fieldset><legend><s:text name="label.filterFrom" /></legend>
-		<ul class="noBullet radiocheck">
+		<ul class="unstyled noBullet radiocheck">
 			<li><input type="radio" name="dateStartType" id="dateStartType_none" value="1" <s:if test="(1 == dateStartType)">checked="checked"</s:if> /> <label for="dateStartType_none"><s:text name="label.none" /></label></li>
 			<li><input type="radio" name="dateStartType" id="dateStartType_today" value="2" <s:if test="(2 == dateStartType)">checked="checked"</s:if> /> <label for="dateStartType_today"><s:text name="label.today" /></label>&nbsp;&nbsp;&nbsp;<label for="startDateDelay"><s:text name="label.delay" /></label> <wpsf:textfield name="startDateDelay" id="startDateDelay" cssClass="text" /></li>
 			<li><input type="radio" name="dateStartType" id="dateStartType_chosen" value="3" <s:if test="(3 == dateStartType)">checked="checked"</s:if> /> <label for="dateStartType_chosen"><s:text name="label.chosenDate" /></label>, 
@@ -204,7 +204,7 @@
 		</ul>
 		</fieldset>
 		<fieldset><legend><s:text name="label.filterTo" /></legend>
-		<ul class="noBullet radiocheck">
+		<ul class="unstyled noBullet radiocheck">
 			<li><input type="radio" name="dateEndType" id="dateEndType_none" value="1" <s:if test="(1 == dateEndType)">checked="checked"</s:if> /> <label for="dateEndType_none"><s:text name="label.none" /></label></li>
 			<li><input type="radio" name="dateEndType" id="dateEndType_today" value="2" <s:if test="(2 == dateEndType)">checked="checked"</s:if> /> <label for="dateEndType_today"><s:text name="label.today" /></label>&nbsp;&nbsp;&nbsp;<label for="endDateDelay"><s:text name="label.delay" /></label> <wpsf:textfield name="endDateDelay" id="endDateDelay" cssClass="text" /></li>
 			<li><input type="radio" name="dateEndType" id="dateEndType_chosen" value="3" <s:if test="(3 == dateEndType)">checked="checked"</s:if> /> <label for="dateEndType_chosen"><s:text name="label.chosenDate" /></label>, 
@@ -216,7 +216,7 @@
 </s:elseif>
 
 <fieldset><legend><s:text name="label.order" /></legend>
-<ul class="noBullet radiocheck">
+<ul class="unstyled noBullet radiocheck">
 	<li><input type="radio" name="order" id="order_none" checked="checked" value="" /><label for="order_none"><s:text name="label.none" /></label></li>
 	<li><input type="radio" name="order" id="order_asc" value="ASC" <s:if test="('ASC' == order)">checked="checked"</s:if> /><label for="order_asc"><s:text name="label.order.ascendant" /></label></li>
 	<li><input type="radio" name="order" id="order_desc" value="DESC" <s:if test="('DESC' == order)">checked="checked"</s:if> /><label for="order_desc"><s:text name="label.order.descendant" /></label></li>
