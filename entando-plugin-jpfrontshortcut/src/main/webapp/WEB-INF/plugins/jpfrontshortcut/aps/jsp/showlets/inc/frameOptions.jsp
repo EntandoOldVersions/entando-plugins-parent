@@ -15,10 +15,11 @@
 		<wp:info key="currentLang" var="currentLang" />
 		<wp:currentPage param="code" var="currentPageCode" />
 		<wpcs:requestContextParam param="currentFrame" var="framePosVar" />
-
+		<wpcs:requestContextParam param="currentPage" var="currentPageVar" />
+		
 		<div class="btn-group">
 			<%-- name of the frame --%>
-				<span class="btn disabled"><c:out value="${framePosVar}" /></span>
+				<span class="btn disabled"><c:out value="${framePosVar}" />&#32;&ndash;&#32;<c:out value="${currentPageVar.model.frames[framePosVar]}" /></span>
 			
 			<%-- EDIT FRAME --%>
 				<a class="btn" id="<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />" href="javascript:void(0)" title="<wp:i18n key="jpfrontshortcut_EDIT_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />"><img width="16" height="16" src="<wp:resourceURL />plugins/jpfrontshortcut/static/img/icons/16x16/edit.png" alt="<wp:i18n key="jpfrontshortcut_EDIT_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />" /></a>
