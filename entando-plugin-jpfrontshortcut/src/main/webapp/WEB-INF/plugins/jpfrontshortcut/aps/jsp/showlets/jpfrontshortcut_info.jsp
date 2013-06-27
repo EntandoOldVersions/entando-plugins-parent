@@ -59,7 +59,8 @@
                 "opendialog": "widgetDialog",
                 "jqueryaction": "anchor",
                 "id": "anchor_config_$content.getId()",
-				"href": "$content.getConfigParameter("applicationBaseURL")do/jpfrontshortcut/Content/introView?modelId=&lt;INSERT HERE THE ID OF THE MODEL&gt;&amp;contentId=$content.getId()&amp;request_locale=$content.getLangCode()&amp;langCode=$content.getLangCode()                "button": false
+				"href": "$content.getConfigParameter("applicationBaseURL")do/jpfrontshortcut/Content/introView?modelId=&lt;INSERT HERE THE ID OF THE MODEL&gt;&amp;contentId=$content.getId()&amp;request_locale=$content.getLangCode()&amp;langCode=$content.getLangCode()",
+                "button": false
             });
         });
         //--&gt;&lt;!]]&gt;

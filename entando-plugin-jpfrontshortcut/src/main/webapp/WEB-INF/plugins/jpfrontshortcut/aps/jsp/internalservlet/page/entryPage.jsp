@@ -15,8 +15,8 @@
 		<h2><s:text name="title.editPage" /></h2>
 	</s:elseif>
 	<s:elseif test="strutsAction == 3">
+		<%-- copying page... --%>
 		<h2><s:text name="title.pastePage" /> - Parent ''<s:property value="%{getPage(parentPageCode).getTitle(currentLang.getCode())}" />''</h2>
-		<%-- INDICAZIONE PAGINA DA COPIARE... --%>
 	</s:elseif>
 	<div class="subsection">
 		<s:form action="save" id="formform" theme="simple">

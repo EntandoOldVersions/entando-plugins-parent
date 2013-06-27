@@ -17,16 +17,19 @@
 <script type='text/javascript'>
 	<!--//--><![CDATA[//><!--
 	jQuery(document).ready(function() {
-		var options_widgetDialog = {};
-		options_widgetDialog.minWidth = 500;
-		options_widgetDialog.title = "<c:out value="${WIDGET_EDIT_POPUP_TITLE}" escapeXml="false" />";
-		options_widgetDialog.autoOpen = false;
-		options_widgetDialog.modal = true;
-		options_widgetDialog.closetopics = "<wp:info key="systemParam" paramName="applicationBaseURL" />dialog/close";
-		options_widgetDialog.jqueryaction = "dialog";
-		options_widgetDialog.id = "widgetDialog";
-		options_widgetDialog.href = "#";
-		jQuery.struts2_jquery_ui.bind(jQuery('#widgetDialog'), options_widgetDialog);
+		jQuery.struts2_jquery_ui.bind(jQuery('#widgetDialog'), {
+			//options
+			minWidth: 500,
+			title: "<c:out value="${WIDGET_EDIT_POPUP_TITLE}" escapeXml="false" />",
+			autoOpen: false,
+			modal: true,
+			closetopics: "<wp:info key="systemParam" paramName="applicationBaseURL" />dialog/close",
+			jqueryaction: "dialog",
+			id: "widgetDialog",
+			href: "#",
+			draggable: true,
+			resizable: true
+		});
 	});
 	//--><!]]>
 </script>

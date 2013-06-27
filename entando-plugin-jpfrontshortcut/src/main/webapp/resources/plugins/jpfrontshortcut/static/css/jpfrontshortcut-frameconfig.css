@@ -42,7 +42,8 @@
 }
 
 
-/* jpfrontshortcut-frameconfig-configSimpleParameter */
+
+
 .jpfrontshortcut-frameconfig-configSimpleParameter fieldset p {
 	line-height: 1.8;
 	margin-bottom: 1.8em;
@@ -55,13 +56,15 @@
 	display: block;
 }
 
-/* choose showlet / editFrame */
+
+
 .jpfrontshortcut-frameconfig-editFrame select {
 	padding: 4px;
 	background-color: #fff;
 }
 
-/* jpfrontshortcut-frameconfig-navigatorConfig */
+
+
 .jpfrontshortcut-frameconfig-navigatorConfig table {
 	float: left;
 	width: 100%;

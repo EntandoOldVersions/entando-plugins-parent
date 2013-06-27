@@ -12,9 +12,9 @@
 <s:form id="formform" action="joinUrlLink" namespace="/do/jpfrontshortcut/Content/Link" theme="simple">
 
 <s:if test="hasFieldErrors()">
-	<div class="message message_error">
-	<h4><s:text name="message.title.FieldErrors" /></h4>
-	<ul>
+	<div class="alert">
+	<p><strong><s:text name="message.title.FieldErrors" /></strong></p>
+	<ul class="unstyled">
 		<s:iterator value="fieldErrors">
 			<s:iterator value="value">
 	            <li><s:property escape="false" /></li>

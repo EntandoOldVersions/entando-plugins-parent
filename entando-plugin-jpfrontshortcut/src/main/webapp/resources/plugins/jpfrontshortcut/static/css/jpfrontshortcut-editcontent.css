@@ -56,7 +56,6 @@
 }
 
 
-/* image */
 .jpfrontshortcut .attribute.image .imageAttribute {
 	display: block;
 	vertical-align: bottom;
@@ -82,14 +81,12 @@
 	max-height: 72px;
 }
 
-/* link */
 .jpfrontshortcut .attribute.link img, 
 .jpfrontshortcut .attribute.link [type="image"]  {
 	vertical-align: middle;
 }
 
 
-/* error and messages */
 .jpfrontshortcut .message {
 	float: left;
 	width: 100%;
@@ -109,7 +106,6 @@
 	background-color: #FFA4A4;
 }
 
-/*attach*/
 .jpfrontshortcut .attribute.attach p,
 .jpfrontshortcut .attribute.attach img {
 	vertical-align: bottom;
@@ -121,7 +117,8 @@
 }
 
 
-/* archive */
+
+
 .jpfrontshortcut .archive-list {
 	float: left;
 	width: 100%;
@@ -154,7 +151,8 @@
 	font-size: 80%;
 }
 
-/* archive category list */
+
+
 .jpfrontshortcut  .archive-category-list {
 	margin: 0;
 	padding: 0;
@@ -166,7 +164,8 @@
 	padding: 0;
 }
 
-/* pager */
+
+
 .jpfrontshortcut .archive-pager {
 	float: left;
 	width: 100%;
@@ -193,14 +192,17 @@
 	display: none;
 }
 
-/* other actions */
+
+
 .jpfrontshortcut .lower-actions {
 	float: left;
 	width: 100%;
 	margin: 1.5em 0;
 }
 
-/* list */
+
+
+
 .jpfrontshortcut .attribute .list-container {
 	margin: 1em 0;
 	padding: 0;
@@ -243,7 +245,6 @@
 	vertical-align: middle;
 }
 
-/* hypertext */
 .jpfrontshortcut .attribute.hypertext textarea {
 	float: left;
 	width: 98%;

@@ -15,40 +15,44 @@
 		<wp:info key="currentLang" var="currentLang" />
 		<wp:currentPage param="code" var="currentPageCode" />
 		<wpcs:requestContextParam param="currentFrame" var="framePosVar" />
-		<%-- EDIT FRAME --%>
-			[<c:out value="${framePosVar}" />
-				<a id="<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />" href="javascript:void(0)" title="<wp:i18n key="jpfrontshortcut_EDIT_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />"><img width="16" height="16" src="<wp:resourceURL />plugins/jpfrontshortcut/static/img/icons/16x16/edit.png" alt="<wp:i18n key="jpfrontshortcut_EDIT_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />" /></a>
+
+		<div class="btn-group">
+			<%-- name of the frame --%>
+				<span class="btn disabled"><c:out value="${framePosVar}" /></span>
+			
+			<%-- EDIT FRAME --%>
+				<a class="btn" id="<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />" href="javascript:void(0)" title="<wp:i18n key="jpfrontshortcut_EDIT_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />"><img width="16" height="16" src="<wp:resourceURL />plugins/jpfrontshortcut/static/img/icons/16x16/edit.png" alt="<wp:i18n key="jpfrontshortcut_EDIT_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />" /></a>
 				<script type='text/javascript'>
 					<!--//--><![CDATA[//><!--
 					jQuery(document).ready(function () { 
-						var options_editFrameLink = {};
-						options_editFrameLink.opendialog = "widgetDialog";
-						options_editFrameLink.opendialogtitle = "<wp:i18n key="jpfrontshortcut_EDIT_FRAME" /><c:out value=" " /><c:out value="${framePosVar}" />";
-						options_editFrameLink.jqueryaction = "anchor";
-						options_editFrameLink.id = "<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />";
-						options_editFrameLink.href = "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpfrontshortcut/Page/editFrame?langCode=<c:out value="${currentLang}" />&pageCode=<c:out value="${currentPageCode}" />&frame=<c:out value="${framePosVar}" />";
-						jQuery.struts2_jquery.bind(jQuery('#<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />'),options_editFrameLink);
+						jQuery.struts2_jquery.bind(jQuery('#<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />'), {
+							opendialog: "widgetDialog",
+							opendialogtitle: "<wp:i18n key="jpfrontshortcut_EDIT_FRAME" /><c:out value=" " /><c:out value="${framePosVar}" />",
+							jqueryaction: "anchor",
+							id: "<c:out value="anchor_config_EDIT_FRAME_${framePosVar}_${random}" />",
+							href: "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpfrontshortcut/Page/editFrame?langCode=<c:out value="${currentLang}" />&pageCode=<c:out value="${currentPageCode}" />&frame=<c:out value="${framePosVar}" />"
+						});
 					});
 					//--><!]]>
 				</script>
-		<wp:currentShowlet param="code" var="showletCodeVar" />
-		<%-- TRASH SHOWLET --%>
-			<c:if test="${null != showletCodeVar}" >
-				<a id="<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />" href="javascript:void(0)" title="<wp:i18n key="jpfrontshortcut_EMPTY_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />"><img width="16" height="16" src="<wp:resourceURL />plugins/jpfrontshortcut/static/img/icons/16x16/clear.png" alt="<wp:i18n key="jpfrontshortcut_EMPTY_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />" /></a>
-				<script type='text/javascript'>
-					<!--//--><![CDATA[//><!--
-					jQuery(document).ready(function () { 
-						var options_trashFrameLink = {};
-						options_trashFrameLink.opendialog = "widgetDialog";
-						options_trashFrameLink.opendialogtitle = "<wp:i18n key="jpfrontshortcut_EMPTY_FRAME" /><c:out value=" " /><c:out value="${framePosVar}" />";
-						options_trashFrameLink.jqueryaction = "anchor";
-						options_trashFrameLink.id = "<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />";
-						options_trashFrameLink.href = "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpfrontshortcut/Page/trashShowletFromPage?langCode=<c:out value="${currentLang}" />&pageCode=<c:out value="${currentPageCode}" />&frame=<c:out value="${framePosVar}" />";
-						jQuery.struts2_jquery.bind(jQuery('#<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />'),options_trashFrameLink);
-					});
-					//--><!]]>
-				</script>
-		</c:if>
-		]
+			<wp:currentShowlet param="code" var="showletCodeVar" />
+			<%-- TRASH SHOWLET --%>
+				<c:if test="${null != showletCodeVar}" >
+					<a  class="btn" id="<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />" href="javascript:void(0)" title="<wp:i18n key="jpfrontshortcut_EMPTY_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />"><img width="16" height="16" src="<wp:resourceURL />plugins/jpfrontshortcut/static/img/icons/16x16/clear.png" alt="<wp:i18n key="jpfrontshortcut_EMPTY_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />" /></a>
+					<script type='text/javascript'>
+						<!--//--><![CDATA[//><!--
+						jQuery(document).ready(function () { 
+							jQuery.struts2_jquery.bind(jQuery('#<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />'), {
+								opendialog: "widgetDialog",
+								opendialogtitle: "<wp:i18n key="jpfrontshortcut_EMPTY_FRAME" /><c:out value=" " /><c:out value="${framePosVar}" />",
+								jqueryaction: "anchor",
+								id: "<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />",
+								href: "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpfrontshortcut/Page/trashShowletFromPage?langCode=<c:out value="${currentLang}" />&pageCode=<c:out value="${currentPageCode}" />&frame=<c:out value="${framePosVar}" />"
+							});
+						});
+						//--><!]]>
+					</script>
+			</c:if>
+		</div>
 	</wp:ifauthorized>
 </c:if>

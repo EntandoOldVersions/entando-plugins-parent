@@ -8,9 +8,9 @@
 
 <div id="form-container" class="widget_form jpfrontshortcut"> 
 <s:if test="hasFieldErrors()">
-	<div class="message message_error">
-		<h3><s:text name="message.title.FieldErrors" /></h3>	
-		<ul>
+	<div class="alert">
+		<p><strong><s:text name="message.title.FieldErrors" /></strong></p>
+		<ul class="unstyled">
 		<s:iterator value="fieldErrors">
 			<s:iterator value="value">
 			<li><s:property escape="false" /></li>

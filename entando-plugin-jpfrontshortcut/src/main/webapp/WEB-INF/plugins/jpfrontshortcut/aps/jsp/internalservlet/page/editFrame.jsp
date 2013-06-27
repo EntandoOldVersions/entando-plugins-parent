@@ -19,9 +19,9 @@
 		<h2><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h2>
 		<%-- Error message handling --%>
 		<s:if test="hasActionErrors()">
-			<div class="message message_error">
-				<h3><s:text name="message.title.ActionErrors" /></h3>	
-				<ul>
+			<div class="alert">
+				<p><strong><s:text name="message.title.ActionErrors" /></strong></p>
+				<ul class="unstyled">
 					<s:iterator value="actionErrors">
 						<li><s:property escape="false" /></li>
 					</s:iterator>
@@ -31,19 +31,18 @@
 		<%--
 		<p class="margin-more-bottom"><s:text name="note.editFrame.chooseAShowlet" /></p>
 		--%>
-		<s:form action="joinShowlet" id="formform" theme="simple">
+		<s:form action="joinShowlet" id="formform" theme="simple" cssClass="form-inline">
 			<p class="noscreen">
 				<wpsf:hidden name="langCode" />
 				<wpsf:hidden name="pageCode" />
 				<wpsf:hidden name="frame" />
 			</p>
-			<fieldset>
-				<legend><s:text name="title.editFrame.chooseAShowlet" /></legend>
-				<p>
-				<label for="<c:out value="showletCode${random}" />" class="basic-mint-label"><s:text name="name.showlet" />:</label>
+			<p><s:text name="title.editFrame.chooseAShowlet" /></p>
+			<p>
+				<label for="<c:out value="showletCode${random}" />" class="basic-mint-label"><s:text name="name.showlet" /></label>
 				<select name="showletTypeCode" tabindex="<wpsa:counter />" id="<c:out value="showletCode${random}" />">
 				<s:iterator var="showletFlavour" value="showletFlavours">
-					
+
 					<wpsa:set var="tmpShowletType">tmpShowletTypeValue</wpsa:set>
 					
 					<s:iterator var="showletType" value="#showletFlavour" >
@@ -76,7 +75,6 @@
 				</s:iterator>
 				</select>
 				</p>
-
 			</fieldset>
 			<p><sj:submit targets="form-container" value="%{getText('label.save')}" indicator="indicator" button="true" /></p>
 		</s:form>

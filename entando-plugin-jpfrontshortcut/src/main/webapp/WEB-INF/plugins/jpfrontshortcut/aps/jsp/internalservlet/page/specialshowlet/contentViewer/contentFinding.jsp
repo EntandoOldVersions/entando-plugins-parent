@@ -14,7 +14,7 @@
 			<s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
 			<s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" />
 		</h3>
-		<s:form namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" action="searchContents" id="formform" theme="simple">
+		<s:form cssClass="form-inline" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" action="searchContents" id="formform" theme="simple">
 			<p class="noscreen">
 				<wpsf:hidden name="pageCode" />
 				<wpsf:hidden name="frame" />
@@ -22,9 +22,9 @@
 				<wpsf:hidden name="modelId" />
 			</p>
 			<s:if test="hasFieldErrors()">
-				<div class="message message_error">
-				<h4><s:text name="message.title.FieldErrors" /></h4>	
-					<ul>
+				<div class="alert">
+				<p><strong><s:text name="message.title.FieldErrors" /></strong></p>
+					<ul class="unstyled">
 					<s:iterator value="fieldErrors">
 						<s:iterator value="value">
 						<li><s:property escape="false" /></li>
@@ -33,35 +33,43 @@
 					</ul>
 				</div>
 			</s:if>
-			<p>
-				<label for="<c:out value="text${random}" />"><s:text name="label.search.by"/>&#32;
-				<s:text name="label.description"/>:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="text" id="%{'text'+#random}" cssClass="text" />
-			</p>
-			<fieldset>
+			<fieldset class="well well-small form-horizontal">
 				<legend class="accordion_toggler"><s:text name="title.searchFilters" /></legend>
 				<div class="accordion_element">
+					<div class="control-group">
+						<label class="control-label" for="<c:out value="text${random}" />"><s:text name="label.search.by"/>&#32;
+						<s:text name="label.description"/></label>
+						<div class="controls">
+							<wpsf:textfield useTabindexAutoIncrement="true" name="text" id="%{'text'+#random}" cssClass="text" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="<c:out value="contentIdToken${random}" />"><s:text name="label.code"/></label>
+						<div class="controls">
+							<wpsf:textfield useTabindexAutoIncrement="true" name="contentIdToken" id="%{'contentIdToken'+#random}" cssClass="text" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="<c:out value="contentType${random}" />"><s:text name="label.type"/></label>
+						<div class="controls">
+							<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="%{'contentType'+#random}" 
+								list="contentTypes" listKey="code" listValue="descr" 
+								headerKey="" headerValue="%{getText('label.all')}" cssClass="text"></wpsf:select>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="<c:out value="state${random}" />"><s:text name="label.state"/></label>
+						<div class="controls">
+							<wpsf:select useTabindexAutoIncrement="true" name="state" id="%{'state'+#random}" list="avalaibleStatus" 
+								headerKey="" headerValue="%{getText('label.all')}" cssClass="text" listKey="key" listValue="%{getText(value)}" />
+						</div>
+					</div>
 					<p>
-						<label for="<c:out value="contentIdToken${random}" />"><s:text name="label.code"/>:</label><br />
-						<wpsf:textfield useTabindexAutoIncrement="true" name="contentIdToken" id="%{'contentIdToken'+#random}" cssClass="text" />
-					</p>
-					<p>
-						<label for="<c:out value="contentType${random}" />"><s:text name="label.type"/>:</label><br />
-						<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="%{'contentType'+#random}" 
-							list="contentTypes" listKey="code" listValue="descr" 
-							headerKey="" headerValue="%{getText('label.all')}" cssClass="text"></wpsf:select>
-					</p>
-					<p>
-						<label for="<c:out value="state${random}" />"><s:text name="label.state"/>:</label><br />
-						<wpsf:select useTabindexAutoIncrement="true" name="state" id="%{'state'+#random}" list="avalaibleStatus" 
-							headerKey="" headerValue="%{getText('label.all')}" cssClass="text" listKey="key" listValue="%{getText(value)}" />
+						<s:url var="searchContentsUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" action="searchContents" />
+						<sj:submit targets="form-container" href="%{#searchContentsUrlVar}" value="%{getText('label.search')}" indicator="indicator" button="true" cssClass="button" />
 					</p>
 				</div>
 			</fieldset>
-			<p>
-				<s:url var="searchContentsUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" action="searchContents" />
-				<sj:submit targets="form-container" href="%{#searchContentsUrlVar}" value="%{getText('label.search')}" indicator="indicator" button="true" cssClass="button" />
-			</p>
 			<wpfssa:subset source="contents" count="10" objectName="groupContent" advanced="true" offset="5">
 				<s:set name="group" value="#groupContent" />
 				<s:set var="pagerSubmitActionNameVar" value="'searchContents'" />
@@ -74,7 +82,7 @@
 					<wpsf:hidden name="lastOrder" />
 				</p>
 				<s:if test="%{#group.size>0}">
-				<table class="generic" summary="<s:text name="note.page.contentViewer.summary" />">
+				<table class="table table-striped table-bordered" summary="<s:text name="note.page.contentViewer.summary" />">
 					<caption><span><s:text name="title.contentList" /></span></caption>
 					<tr>
 						<th>
@@ -229,8 +237,9 @@
 						<s:set name="content" value="%{getContentVo(#contentId)}"></s:set>
 						<tr>
 							<td>
-								<input type="radio" name="contentId" id="contentId_<s:property value="#content.id+#random"/>" value="<s:property value="#content.id"/>" />
-								<label for="contentId_<s:property value="#content.id+#random"/>"><s:property value="#content.descr" /></label>
+								<label class="radio" for="contentId_<s:property value="#content.id+#random"/>">
+									<input type="radio" name="contentId" id="contentId_<s:property value="#content.id+#random"/>" value="<s:property value="#content.id"/>" />
+								<s:property value="#content.descr" /></label>
 							</td>
 							<td><span class="monospace"><s:property value="#content.id" /></span></td>
 							<td><s:property value="%{getGroup(#content.mainGroupCode).descr}" /></td>

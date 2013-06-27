@@ -54,9 +54,9 @@ window.addEvent('domready', function(){
 <form action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Resource/save.action" />"  enctype="multipart/form-data" method="post">
 
 <s:if test="hasFieldErrors()">
-<div class="message message_error">
-<h3><wp:i18n key="ERRORS" /></h3>
-<ul>
+<div class="alert">
+<p><strong><wp:i18n key="ERRORS" /></strong></p>
+<ul class="unstyled">
 <s:iterator value="fieldErrors">
 	<s:iterator value="value">
 	<li><s:property escape="false" /></li>
