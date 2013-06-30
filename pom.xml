@@ -88,7 +88,7 @@
 		<module>entando-plugin-jpehcache</module>
   </modules>
 	<properties>
-
+		<!--
 		<test.database.driver>org.postgresql.Driver</test.database.driver>
 		<test.database.hostname>localhost</test.database.hostname>
 		<test.database.port>5432</test.database.port>
@@ -96,7 +96,7 @@
 		<test.database.password>agile</test.database.password>
 		<test.database.port.url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testPort</test.database.port.url>
 		<test.database.serv.url>jdbc:postgresql://${test.database.hostname}:${test.database.port}/${project.artifactId}testServ</test.database.serv.url>
-
+		-->
 		<!--
 		<test.database.driver>com.mysql.jdbc.Driver</test.database.driver>
 		<test.database.hostname>localhost</test.database.hostname>
@@ -106,7 +106,7 @@
 		<test.database.port.url>jdbc:mysql://${test.database.hostname}:${test.database.port}/EntandoCoreEnginetestPort</test.database.port.url>
 		<test.database.serv.url>jdbc:mysql://${test.database.hostname}:${test.database.port}/EntandoCoreEnginetestServ</test.database.serv.url>
 		-->
-		<!--
+		
 		<test.database.driver>org.apache.derby.jdbc.EmbeddedDriver</test.database.driver>
 		<test.database.hostname>localhost</test.database.hostname>
 		<test.database.port>1527</test.database.port>
@@ -114,7 +114,7 @@
 		<test.database.password>agile</test.database.password>
 		<test.database.port.url>jdbc:derby:${project.build.directory}/test/db/${project.artifactId}testPort;create=true</test.database.port.url>
 		<test.database.serv.url>jdbc:derby:${project.build.directory}/test/db/${project.artifactId}testServ;create=true</test.database.serv.url>
-		-->
+		
 		<spring.version>3.2.3.RELEASE</spring.version>
 		<struts2.version>2.3.14.3</struts2.version>
 		<cxf.version>2.7.5</cxf.version>
@@ -273,6 +273,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>sql-maven-plugin</artifactId>
@@ -341,6 +342,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
 		</plugins>
 		<pluginManagement>
 			<plugins>
