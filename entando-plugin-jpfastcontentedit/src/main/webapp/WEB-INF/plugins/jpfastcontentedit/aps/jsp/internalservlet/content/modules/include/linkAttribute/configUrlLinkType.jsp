@@ -12,6 +12,7 @@
 <p><wp:i18n key="jpfastcontentedit_CONFIGURE_URL" /></p>
 
 <form action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Link/joinUrlLink.action" />" method="post" >
+<wpsf:hidden name="contentOnSessionMarker" />
 
 <s:if test="hasFieldErrors()">
 <h3><wp:i18n key="jpfastcontentedit_ERRORS" /></h3>

@@ -105,7 +105,8 @@ public class VersionAction extends AbstractContentAction implements IVersionActi
 				}
 			}
 			content = this.getVersioningManager().getContent(contentVersion);
-			this.getRequest().getSession().setAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT, content);
+			this.getRequest().getSession()
+					.setAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT_PREXIX + super.getContentOnSessionMarker(), content);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "recover");
 			return FAILURE;

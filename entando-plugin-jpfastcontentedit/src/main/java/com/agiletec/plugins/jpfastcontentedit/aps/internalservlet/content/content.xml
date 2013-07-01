@@ -40,7 +40,9 @@
         <action name="entryContent" class="jpfastcontenteditContentAction" method="forwardToEntryContent">
             <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/entryContent.jsp</result>
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeStack" />
+			<interceptor-ref name="entandoFrontEndFreeStack" >
+				<param name="chain.includeParameters">contentOnSessionMarker</param>
+			</interceptor-ref>
         </action>
 		
         <action name="joinGroup" class="jpfastcontenteditContentAction" method="joinGroup">
@@ -83,17 +85,20 @@
 				<param name="elementIndex">${elementIndex}</param>
 				<param name="resourceTypeCode">${resourceTypeCode}</param>
 				<param name="resourceLangCode">${listLangCode}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
             <result name="chooseLink" type="frontRedirectAction">
 				<param name="actionName">chooseLink</param>
 				<param name="attributeName">${attributeName}</param>
 				<param name="elementIndex">${elementIndex}</param>
 				<param name="langCode">${listLangCode}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
             <result type="frontRedirectAction">
 				<param name="actionName">entryContent</param>
 				<!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
 				<param name="anchorDest">${langTabAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" />
@@ -104,6 +109,7 @@
 				<param name="actionName">entryContent</param>
 				<!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
 				<param name="anchorDest">${langTabAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" />
@@ -114,33 +120,13 @@
 				<param name="actionName">entryContent</param>
 				<!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
 				<param name="anchorDest">${langTabAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
         
 		<!-- ######## FINE GESTIONE ATTRIBUTI IN LISTA ######## -->
-		
-		<!-- ########  INIZIO GESTIONE ATTRIBUTI LINK  ######## -->
-        <action name="chooseLink*" class="jpfastcontenteditLinkAttributeAction" method="chooseLink">
-            <result type="chain">
-                <param name="namespace">/do/jpfastcontentedit/Content/Link</param>
-                <param name="actionName">chooseLink</param>
-            </result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeStack" />
-        </action>
-		
-        <action name="removeLink*" class="jpfastcontenteditLinkAttributeAction" method="removeLink">
-            <result type="frontRedirectAction">
-				<param name="actionName">entryContent</param>
-				<param name="anchorDest">${langTabAnchorDest}</param>
-            </result>
-			<!-- <result type="chain">entryContent</result> -->
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeStack" />
-        </action>
-		<!-- ########  FINE GESTIONE ATTRIBUTI LINK  ######## -->
 		
         <!-- ######## INIZIO GESTIONE ATTRIBUTI RISORSA ######## -->
         
@@ -157,12 +143,35 @@
             <result type="frontRedirectAction">
 				<param name="actionName">entryContent</param>
 				<param name="anchorDest">${langTabAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
 			<!-- <result type="chain">entryContent</result> -->
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" />
         </action>
         <!-- ######## FINE GESTIONE ATTRIBUTI RISORSA ######## -->
+		
+		<!-- ########  INIZIO GESTIONE ATTRIBUTI LINK  ######## -->
+        <action name="chooseLink*" class="jpfastcontenteditLinkAttributeAction" method="chooseLink">
+            <result type="chain">
+                <param name="namespace">/do/jpfastcontentedit/Content/Link</param>
+                <param name="actionName">chooseLink</param>
+            </result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeStack" />
+        </action>
+		
+        <action name="removeLink*" class="jpfastcontenteditLinkAttributeAction" method="removeLink">
+            <result type="frontRedirectAction">
+				<param name="actionName">entryContent</param>
+				<param name="anchorDest">${langTabAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
+            </result>
+			<!-- <result type="chain">entryContent</result> -->
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeStack" />
+        </action>
+		<!-- ########  FINE GESTIONE ATTRIBUTI LINK  ######## -->
 		
     </package>
 	

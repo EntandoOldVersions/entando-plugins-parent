@@ -13,6 +13,7 @@
             <result type="redirectActionWithAnchor">
         		<param name="actionName">entryContent</param>
         		<param name="anchorDest">${langCode}_tab</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
         	</result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
@@ -21,6 +22,7 @@
             <result type="redirectActionWithAnchor">
         		<param name="actionName">entryContent</param>
         		<param name="anchorDest">${langCode}_tab</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
         	</result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
@@ -29,6 +31,7 @@
             <result type="redirectActionWithAnchor">
         		<param name="actionName">entryContent</param>
         		<param name="anchorDest">${langCode}_tab</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
         	</result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>

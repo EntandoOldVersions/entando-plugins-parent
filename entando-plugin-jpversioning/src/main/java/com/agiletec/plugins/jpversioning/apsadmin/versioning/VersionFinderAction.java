@@ -76,6 +76,13 @@ public class VersionFinderAction extends BaseAction implements IVersionFinderAct
 		return (SmallContentType) smallContentTypes.get(typeCode);
 	}
 	
+	public String getContentOnSessionMarker() {
+		return _contentOnSessionMarker;
+	}
+	public void setContentOnSessionMarker(String contentOnSessionMarker) {
+		this._contentOnSessionMarker = contentOnSessionMarker;
+	}
+	
 	public String getContentType() {
 		return _contentType;
 	}
@@ -125,6 +132,8 @@ public class VersionFinderAction extends BaseAction implements IVersionFinderAct
 	public void setContentManager(IContentManager contentManager) {
 		this._contentManager = contentManager;
 	}
+	
+	private String _contentOnSessionMarker;
 	
 	private String _contentType;
 	private String _descr;

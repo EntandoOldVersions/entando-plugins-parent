@@ -56,7 +56,8 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 				} else {
 					this.getContentManager().saveContent(currentContent);
 				}
-				this.getRequest().getSession().removeAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT);
+				String sessionParamName = ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT_PREXIX + this.getContentOnSessionMarker();
+				this.getRequest().getSession().removeAttribute(sessionParamName);
 				log.info("Salvato contenuto " + currentContent.getId() + 
 						" - Descrizione: '" + currentContent.getDescr() + "' - Utente: " + this.getCurrentUser().getUsername());
 			} else {
@@ -80,7 +81,8 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 				if (previousStep != null) {
 					currentContent.setStatus(previousStep);
 					this.getContentManager().saveContent(currentContent);
-					this.getRequest().getSession().removeAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT);
+					String sessionParamName = ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT_PREXIX + this.getContentOnSessionMarker();
+					this.getRequest().getSession().removeAttribute(sessionParamName);
 				} else {
 					this.addActionError(this.getText("error.content.save.statusNotAllowed"));
 					return INPUT;
@@ -106,7 +108,8 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 				if (nextStep != null) {
 					currentContent.setStatus(nextStep);
 					this.getContentManager().saveContent(currentContent);
-					this.getRequest().getSession().removeAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT);
+					String sessionParamName = ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT_PREXIX + this.getContentOnSessionMarker();
+					this.getRequest().getSession().removeAttribute(sessionParamName);
 				} else {
 					this.addActionError(this.getText("error.content.save.statusNotAllowed"));
 					return INPUT;
@@ -136,7 +139,7 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 	}
 	
 	public String getPreviousStep() {
-		if (this._previousStep==null) {
+		if (this._previousStep == null) {
 			Content content = this.getContent();
 			this._previousStep = ((IContentWorkFlowActionHelper) this.getContentActionHelper()).getPreviousStep(content.getStatus(), content.getTypeCode());
 		}

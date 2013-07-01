@@ -11,6 +11,8 @@
 </p>
 
 <s:form action="configLink">
+<wpsf:hidden name="contentOnSessionMarker" />
+
 <s:if test="hasFieldErrors()">
 <ul>
 	<s:iterator value="fieldErrors">

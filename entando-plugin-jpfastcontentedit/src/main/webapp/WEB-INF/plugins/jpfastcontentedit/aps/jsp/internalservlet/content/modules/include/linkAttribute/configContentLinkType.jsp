@@ -63,113 +63,24 @@
 <p class="noscreen">
 	<wpsf:hidden name="lastGroupBy" />
 	<wpsf:hidden name="lastOrder" />
+	<wpsf:hidden name="contentOnSessionMarker" />
 </p>
 
 <table class="generic" summary="<wp:i18n key="jpfastcontentedit_LINKATTRIBUTE_CONTENT_SUMMARY" />">
 <caption><wp:i18n key="jpfastcontentedit_LINKATTRIBUTE_CONTENT_CAPTION" /></caption>
 <tr>
-<%-- <th><s:text name="note.choice" /></th>  --%>
-<%-- <th><a href="
-	<s:url action="changeOrder">
-		<s:param name="text">
-			<s:property value="#request.text"/>
-		</s:param>
-		<s:param name="contentType">
-			<s:property value="#request.contentType"/>
-		</s:param>
-		<s:param name="state">
-			<s:property value="#request.state"/>
-		</s:param>
-		<s:param name="pagerItem">
-			<s:property value="#groupContent.currItem"/>
-		</s:param>
-		<s:param name="lastGroupBy"><s:property value="lastGroupBy"/></s:param>
-		<s:param name="lastOrder"><s:property value="lastOrder"/></s:param>
-		<s:param name="groupBy">code</s:param>
-	</s:url>
-" tabindex="<wpsa:counter />"><s:text name="label.code" /></a></th>
-  --%>
-  
-
-
 	<th>
-<c:set var="descriptionLink">/ExtStr2/do/jpfastcontentedit/Content/Link/changeOrder.action?text=<s:property value="#request.text"/>&amp;contentType=<s:property value="#request.contentType"/>&amp;state=<s:property value="#request.state"/>&amp;pagerItem=<s:property value="#groupContent.currItem"/>&amp;lastGroupBy=<s:property value="lastGroupBy"/>&amp;lastOrder=<s:property value="lastOrder"/>&amp;groupBy=descr</c:set>
+<c:set var="descriptionLink">/ExtStr2/do/jpfastcontentedit/Content/Link/changeOrder.action?text=<s:property value="#request.text"/>&amp;contentType=<s:property value="#request.contentType"/>&amp;state=<s:property value="#request.state"/>&amp;pagerItem=<s:property value="#groupContent.currItem"/>&amp;lastGroupBy=<s:property value="lastGroupBy"/>&amp;lastOrder=<s:property value="lastOrder"/>&amp;groupBy=descr&amp;contentOnSessionMarker=<s:property value="contentOnSessionMarker" /></c:set>
 <a href="<wp:action path="${descriptionLink}" />" tabindex="<wpsa:counter />"><wp:i18n key="jpfastcontentedit_DESCRIPTION" /></a>
-	<!--
-	<a href="
-	<s:url action="changeOrder">
-		<s:param name="text"> 
-			<s:property value="#request.text"/>
-		</s:param>
-		<s:param name="contentType">
-			<s:property value="#request.contentType"/>
-		</s:param>
-		<s:param name="state">
-			<s:property value="#request.state"/>
-		</s:param>
-		<s:param name="pagerItem">
-			<s:property value="#groupContent.currItem"/>
-		</s:param>
-		<s:param name="lastGroupBy"><s:property value="lastGroupBy"/></s:param>
-		<s:param name="lastOrder"><s:property value="lastOrder"/></s:param>
-		<s:param name="groupBy">descr</s:param>
-	</s:url>
-" tabindex="<wpsa:counter />"><s:text name="label.description" /></a>
--->
 </th>
 	<th><wp:i18n key="jpfastcontentedit_GROUP" /></th>
 	<th>
-<c:set var="creationDateLink">/ExtStr2/do/jpfastcontentedit/Content/Link/changeOrder.action?text=<s:property value="#request.text"/>&amp;contentType=<s:property value="#request.contentType"/>&amp;state=<s:property value="#request.state"/>&amp;pagerItem=<s:property value="#groupContent.currItem"/>&amp;lastGroupBy=<s:property value="lastGroupBy"/>&amp;lastOrder=<s:property value="lastOrder"/>&amp;groupBy=created</c:set>
+<c:set var="creationDateLink">/ExtStr2/do/jpfastcontentedit/Content/Link/changeOrder.action?text=<s:property value="#request.text"/>&amp;contentType=<s:property value="#request.contentType"/>&amp;state=<s:property value="#request.state"/>&amp;pagerItem=<s:property value="#groupContent.currItem"/>&amp;lastGroupBy=<s:property value="lastGroupBy"/>&amp;lastOrder=<s:property value="lastOrder"/>&amp;groupBy=created&amp;contentOnSessionMarker=<s:property value="contentOnSessionMarker" /></c:set>
 <a href="<wp:action path="${creationDateLink}" />" tabindex="<wpsa:counter />"><wp:i18n key="jpfastcontentedit_CREATION_DATE" /></a>	
-	<!--
-	<a href="
-	<s:url action="changeOrder">
-		<s:param name="text">
-			<s:property value="#request.text"/>
-		</s:param>
-		<s:param name="contentType">
-			<s:property value="#request.contentType"/>
-		</s:param>
-		<s:param name="state">
-			<s:property value="#request.state"/>
-		</s:param>
-		<s:param name="pagerItem">
-			<s:property value="#groupContent.currItem"/>
-		</s:param>
-		<s:param name="lastGroupBy"><s:property value="lastGroupBy"/></s:param>
-		<s:param name="lastOrder"><s:property value="lastOrder"/></s:param>
-		<s:param name="groupBy">created</s:param>
-	</s:url>
-" tabindex="<wpsa:counter />"><s:text name="label.creationDate" /></a>
-	-->
 </th>
-	
 	<th>
-
-<c:set var="lastEditLink">/ExtStr2/do/jpfastcontentedit/Content/Link/changeOrder.action?text=<s:property value="#request.text"/>&amp;contentType=<s:property value="#request.contentType"/>&amp;state=<s:property value="#request.state"/>&amp;pagerItem=<s:property value="#groupContent.currItem"/>&amp;lastGroupBy=<s:property value="lastGroupBy"/>&amp;lastOrder=<s:property value="lastOrder"/>&amp;groupBy=lastModified</c:set>
+<c:set var="lastEditLink">/ExtStr2/do/jpfastcontentedit/Content/Link/changeOrder.action?text=<s:property value="#request.text"/>&amp;contentType=<s:property value="#request.contentType"/>&amp;state=<s:property value="#request.state"/>&amp;pagerItem=<s:property value="#groupContent.currItem"/>&amp;lastGroupBy=<s:property value="lastGroupBy"/>&amp;lastOrder=<s:property value="lastOrder"/>&amp;groupBy=lastModified&amp;contentOnSessionMarker=<s:property value="contentOnSessionMarker" /></c:set>
 <a href="<wp:action path="${lastEditLink}" />" tabindex="<wpsa:counter />"><wp:i18n key="jpfastcontentedit_LAST_EDIT" /></a>
-
-	<!--
-	<a href="
-	<s:url action="changeOrder">
-		<s:param name="text">
-			<s:property value="#request.text"/>
-		</s:param>
-		<s:param name="contentType">
-			<s:property value="#request.contentType"/>
-		</s:param>
-		<s:param name="state">
-			<s:property value="#request.state"/>
-		</s:param>
-		<s:param name="pagerItem">
-			<s:property value="#groupContent.currItem"/>
-		</s:param>
-		<s:param name="lastGroupBy"><s:property value="lastGroupBy"/></s:param>
-		<s:param name="lastOrder"><s:property value="lastOrder"/></s:param>
-		<s:param name="groupBy">lastModified</s:param>
-	</s:url>
-" tabindex="<wpsa:counter />"><s:text name="label.lastEdit" /></a>
--->
 </th>
 
 </tr>

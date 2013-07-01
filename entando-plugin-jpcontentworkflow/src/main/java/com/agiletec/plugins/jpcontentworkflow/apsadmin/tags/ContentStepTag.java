@@ -23,6 +23,7 @@ import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.apsadmin.content.ContentActionConstants;
 import com.agiletec.plugins.jpcontentworkflow.apsadmin.content.helper.IContentWorkFlowActionHelper;
 import com.opensymphony.xwork2.util.ValueStack;
+import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import org.apache.struts2.views.jsp.StrutsBodyTagSupport;
 
@@ -57,7 +58,13 @@ public class ContentStepTag extends StrutsBodyTagSupport {
     }
 	
 	private Content getContent() {
-		return (Content) this.pageContext.getSession().getAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT);
+		ServletRequest request = this.pageContext.getRequest();
+		String contentOnSessionMarker = (String) request.getAttribute("contentOnSessionMarker");
+		if (null == contentOnSessionMarker || contentOnSessionMarker.trim().length() == 0) {
+			contentOnSessionMarker = request.getParameter("contentOnSessionMarker");
+		}
+		String sessionParamName = ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT_PREXIX + contentOnSessionMarker;
+		return (Content) this.pageContext.getSession().getAttribute(sessionParamName);
 	}
 	
 	public boolean isNextStep() {

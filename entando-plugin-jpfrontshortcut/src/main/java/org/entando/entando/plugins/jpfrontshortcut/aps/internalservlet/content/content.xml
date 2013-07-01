@@ -32,7 +32,10 @@
 		<action name="entryContent" class="jpfrontshortcutFrontContentAction" method="forwardToEntryContent">
 			<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/content/frontEntryContent.jsp</result>
 			<interceptor-ref name="backToEntryContent" />
-			<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+			<interceptor-ref name="jpfrontshortcutFrontEndStack">
+				<param name="requestAuth.requiredPermission">editContents</param>
+				<param name="chain.includeParameters">contentOnSessionMarker</param>
+			</interceptor-ref>
 		</action>
 		
         <!-- ######## List Attribute ######## -->
@@ -71,7 +74,7 @@
         
         <action name="removeListElement*" class="jacmsListAttributeAction" method="removeListElement">
             <result type="chain">
-			<!-- <result type="redirectActionWithAnchor"> -->
+				<!-- <result type="redirectActionWithAnchor"> -->
         		<param name="actionName">entryContent</param>
         		<!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
         	</result>

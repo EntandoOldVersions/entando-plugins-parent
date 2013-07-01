@@ -60,8 +60,9 @@
 	<div class="subsection-light">
 		<s:form action="recover" >
 			<p>
-				<s:hidden name="versionId" />
-				<s:hidden name="contentId" />
+				<wpsf:hidden name="versionId" />
+				<wpsf:hidden name="contentId" />
+				<wpsf:hidden name="contentOnSessionMarker" />
 				<s:text name="jpversioning.confirmRestore.info" />
 			</p>
 			<p>

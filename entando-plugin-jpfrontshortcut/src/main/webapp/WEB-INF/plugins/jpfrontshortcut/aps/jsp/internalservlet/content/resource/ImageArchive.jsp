@@ -13,6 +13,7 @@
 		<legend><s:text name="title.searchFilters" /></legend>
 		<p>
 			<wpsf:hidden name="resourceTypeCode" />
+			<wpsf:hidden name="contentOnSessionMarker" />
 			<label for="text_<c:out value="${random}" />"><s:text name="label.description"/>:</label><br />
 			<wpsf:textfield useTabindexAutoIncrement="true" name="text" id="%{'text_'+#random}" cssClass="text" />
 		</p>

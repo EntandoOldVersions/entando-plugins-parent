@@ -84,11 +84,12 @@
 					<input value="" size="4" name="height" type="hidden" />
 					<input value="" size="4" name="bottom" type="hidden"/>
 					<input value="" size="4" name="right" type="hidden" />
-
+					
 					<wpsf:hidden name="attributeName"/>
 					<wpsf:hidden name="elementIndex" />
 					<wpsf:hidden name="langCode"/>
-
+					<wpsf:hidden name="contentOnSessionMarker" />
+					
 					<s:text name="jpimagemap.defineArea.note.positioning" />
 				</p>
 				<p>

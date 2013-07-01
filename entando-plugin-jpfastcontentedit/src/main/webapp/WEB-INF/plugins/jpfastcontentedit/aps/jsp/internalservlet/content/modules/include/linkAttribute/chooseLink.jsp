@@ -14,6 +14,7 @@
 </p>
 
 <form action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Link/configLink.action" />" method="post">
+<wpsf:hidden name="contentOnSessionMarker" />
 
 <s:if test="hasFieldErrors()">
 <h3><wp:i18n key="jpfastcontentedit_ERRORS" /></h3>

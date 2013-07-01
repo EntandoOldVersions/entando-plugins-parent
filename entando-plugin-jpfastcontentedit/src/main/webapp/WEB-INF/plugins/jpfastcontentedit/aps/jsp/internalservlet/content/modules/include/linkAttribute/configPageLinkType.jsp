@@ -44,7 +44,8 @@ window.addEvent('domready', function(){
 	<s:if test="contentId != null">&#32;<wp:i18n key="jpfastcontentedit_FOR_THE_CONTENT" />: <s:property value="contentId"/> &ndash; <s:property value="%{getContentVo(contentId).descr}"/></s:if>.
 </p>
 <form action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Link/joinPageLink.action" />" method="post" >
-
+<wpsf:hidden name="contentOnSessionMarker" />
+		
 <s:if test="hasFieldErrors()">
 <h3><wp:i18n key="jpfastcontentedit_ERRORS" /></h3>
 <ul>
@@ -56,13 +57,17 @@ window.addEvent('domready', function(){
 </ul>
 </s:if>
 
-<p><s:if test="contentId == null">
+<p class="noscreen">
+<wpsf:hidden name="contentOnSessionMarker" />
+<s:if test="contentId == null">
 <wpsf:hidden name="linkType" value="2" />
 </s:if>
 <s:else>
 <wpsf:hidden name="contentId" />
 <wpsf:hidden name="linkType" value="4" />
-</s:else></p>
+</s:else>
+<s:iterator value="treeNodesToOpen" var="treeNodeToOpenVar"><wpsf:hidden name="treeNodesToOpen" value="%{#treeNodeToOpenVar}"/></s:iterator>
+</p>
 
 <fieldset><legend><wp:i18n key="jpfastcontentedit_PAGE_TREE" /></legend>
 <ul id="pageTree">

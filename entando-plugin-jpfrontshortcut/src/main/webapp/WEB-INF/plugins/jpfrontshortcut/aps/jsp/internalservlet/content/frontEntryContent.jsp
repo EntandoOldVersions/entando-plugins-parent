@@ -21,6 +21,7 @@
 </s:if>	
 
 <s:form action="save" id="formform" theme="simple">
+	<wpsf:hidden name="contentOnSessionMarker" />
 	<s:set var="lang" value="currentLang" scope="action" />
 	<%-- START CICLO ATTRIBUTI --%>
 	<c:set var="i18n_prefix">jpfrontshortcut_<s:property value="content.typeCode" /></c:set>

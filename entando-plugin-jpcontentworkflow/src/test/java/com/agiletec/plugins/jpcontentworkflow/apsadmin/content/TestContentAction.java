@@ -2,10 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
 * 
 * See the file License for the specific language governing permissions   
 * and limitations under the License
@@ -17,6 +16,7 @@
 */
 package com.agiletec.plugins.jpcontentworkflow.apsadmin.content;
 
+import com.agiletec.ConfigTestUtils;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,10 +29,14 @@ import com.agiletec.plugins.jpcontentworkflow.util.WorkflowTestHelper;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.user.UserDetails;
+import com.agiletec.apsadmin.system.ApsAdminSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
+import com.agiletec.plugins.jacms.apsadmin.content.AbstractContentAction;
 import com.agiletec.plugins.jacms.apsadmin.content.ContentActionConstants;
+import com.agiletec.plugins.jacms.apsadmin.content.util.AbstractBaseTestContentAction;
+import com.agiletec.plugins.jpcontentworkflow.PluginConfigTestUtils;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.JpcontentworkflowSystemConstants;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.ContentWorkflowManager;
 import com.opensymphony.xwork2.Action;
@@ -41,12 +45,17 @@ import com.opensymphony.xwork2.Action;
  * @author E.Santoboni
  * @author G.Cocco
  */
-public class TestContentAction extends ApsAdminPluginBaseTestCase {
+public class TestContentAction extends AbstractBaseTestContentAction {
 	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.init();
+	}
+	
+	@Override
+	protected ConfigTestUtils getConfigUtils() {
+		return new PluginConfigTestUtils();
 	}
 	
 	public void testPreviousStep() throws Throwable {
@@ -144,9 +153,11 @@ public class TestContentAction extends ApsAdminPluginBaseTestCase {
 	
 	private String executePreviousStep(String currentUserName, String contentId, Map<String, String> params) throws Throwable {
 		Content content = this._contentManager.loadContent(contentId, false);
-		this.getRequest().getSession().setAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT, content);
+		String contentOnSessionMarker = AbstractContentAction.buildContentOnSessionMarker(content, ApsAdminSystemConstants.EDIT);
+		String contentOnSessionParam = ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT_PREXIX + contentOnSessionMarker;
+		this.getRequest().getSession().setAttribute(contentOnSessionParam, content);
 		this.setUserOnSession(currentUserName);
-		this.initAction("/do/jacms/Content", "previousStep");
+		this.initContentAction("/do/jacms/Content", "previousStep", contentOnSessionMarker);
 		this.addParameters(params);
 		String result = this.executeAction();
 		return result;
@@ -154,9 +165,11 @@ public class TestContentAction extends ApsAdminPluginBaseTestCase {
 	
 	private String executeNextStep(String currentUserName, String contentId, Map<String, String> params) throws Throwable {
 		Content content = this._contentManager.loadContent(contentId, false);
-		this.getRequest().getSession().setAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT, content);
+		String contentOnSessionMarker = AbstractContentAction.buildContentOnSessionMarker(content, ApsAdminSystemConstants.EDIT);
+		String contentOnSessionParam = ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT_PREXIX + contentOnSessionMarker;
+		this.getRequest().getSession().setAttribute(contentOnSessionParam, content);
 		this.setUserOnSession(currentUserName);
-		this.initAction("/do/jacms/Content", "nextStep");
+		this.initContentAction("/do/jacms/Content", "nextStep", contentOnSessionMarker);
 		this.addParameters(params);
 		String result = this.executeAction();
 		return result;

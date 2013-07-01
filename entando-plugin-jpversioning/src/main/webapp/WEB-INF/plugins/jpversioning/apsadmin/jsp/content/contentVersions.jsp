@@ -10,17 +10,6 @@
 		<p><s:text name="jpversioning.message.no.previous.revisions" /></p>
 	</s:if>
 	<s:else>
-		<%-- 
-		<p>
-			<span class="important basic-mint-label"><s:text name="label.lastVersion" />:</span>&#32;
-			<s:property value="%{getContentVersion(#contentVersionsList.get(0)).version}" />
-		</p>
-		<p>
-			<span class="important basic-mint-label"><s:text name="label.lastEditor" />:</span> 
-			<s:property value="%{getContentVersion(#contentVersionsList.get(0)).username}" />
-		</p>
-		--%>
-
 		<wpsa:subset source="#contentVersionsList" count="5" objectName="groupContent" advanced="true" offset="5">
 			<p>
 				<wpsf:hidden name="contentId" value="%{content.id}" />
@@ -48,14 +37,24 @@
 				<tr>
 					<td><span class="monospace"><s:property value="#contentVersion.version" /></span></td>
 					<td>
-						<a href="<s:url action="preview" namespace="/do/jpversioning/Content/Versioning"><s:param name="versionId" value="#contentVersion.id" /><s:param name="contentId" value="%{content.id}" /><s:param name="fromEdit" value="true" /></s:url>" ><s:property value="#contentVersion.descr" /></a>
+						<a href="<s:url action="preview" namespace="/do/jpversioning/Content/Versioning">
+							   <s:param name="versionId" value="#contentVersion.id" />
+							   <s:param name="contentId" value="%{content.id}" />
+							   <s:param name="fromEdit" value="true" />
+							   <s:param name="contentOnSessionMarker" value="contentOnSessionMarker" />
+						   </s:url>" ><s:property value="#contentVersion.descr" /></a>
 				    </td>
 					<td><span class="monospace">
 						<s:date name="#contentVersion.versionDate" format="dd/MM/yyyy HH:mm" /></span> 
 					</td>
 					<td><s:property value="#contentVersion.username" /></td>
 					<td class="icon">
-						<a href="<s:url action="entryRecover" namespace="/do/jpversioning/Content/Versioning" ><s:param name="versionId" value="#contentVersion.id" /><s:param name="contentId" value="%{content.id}" /><s:param name="fromEdit" value="true" /></s:url>" title="<s:text name="jpversioning.label.restore" />:&#32;<s:property value="#contentVersion.version" />" >
+						<a href="<s:url action="entryRecover" namespace="/do/jpversioning/Content/Versioning" >
+							   <s:param name="versionId" value="#contentVersion.id" />
+							   <s:param name="contentId" value="%{content.id}" />
+							   <s:param name="fromEdit" value="true" />
+							   <s:param name="contentOnSessionMarker" value="contentOnSessionMarker" />
+						   </s:url>" title="<s:text name="jpversioning.label.restore" />:&#32;<s:property value="#contentVersion.version" />" >
 						<img src="<wp:resourceURL/>plugins/jpversioning/administration/img/icons/edit-undo.png" alt="<s:text name="jpversioning.label.restore" />" />
 						</a>
 					</td>
@@ -65,38 +64,7 @@
 			<div class="pager">
 				<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pager_formBlock.jsp" />
 			</div>
-		</wpsa:subset>		
-		<%-- 
-			<table class="generic" summary="<s:text name="note.jpversioning.contentList.summary" />">
-				<caption><s:text name="title.jpversioning.versionList" /></caption>
-				<tr>
-					<th><abbr title="<s:text name="jpversioning.version.full" />"><s:text name="jpversioning.version.short" /></abbr></th>
-					<th><s:text name="jpversioning.label.description" /></th>
-					<th><s:text name="jpversioning.label.lastVersion" /></th>
-					<th><s:text name="jpversioning.label.username" /></th>
-					<th class="icon"><abbr title="<s:text name="jpversioning.recover.full" />"><s:text name="jpversioning.recover.short" /></abbr></th>
-				</tr>
-		
-				<s:iterator value="#contentVersionsList" id="versionId">
-				<s:set name="contentVersion" value="%{getContentVersion(#versionId)}" />
-				<tr>
-					<td><span class="monospace"><s:property value="#contentVersion.version" /></span></td>
-					<td>
-						<a href="<s:url action="preview" namespace="/do/jpversioning/Content/Versioning"><s:param name="versionId" value="#contentVersion.id" /><s:param name="contentId" value="%{content.id}" /><s:param name="fromEdit" value="true" /></s:url>" ><s:property value="#contentVersion.descr" /></a>
-				    </td>
-					<td><span class="monospace">
-						--<s:date name="#contentVersion.versionDate" format="dd/MM/yyyy HH:mm" /></span>--
-					</td>
-					<td><s:property value="#contentVersion.username" /></td>
-					<td class="icon">
-						<a href="<s:url action="entryRecover" namespace="/do/jpversioning/Content/Versioning" ><s:param name="versionId" value="#contentVersion.id" /><s:param name="contentId" value="%{content.id}" /><s:param name="fromEdit" value="true" /></s:url>" title="<s:text name="jpversioning.label.restore" />:&#32;<s:property value="#contentVersion.version" />" >
-						<img src="<wp:resourceURL/>plugins/jpversioning/administration/img/icons/edit-undo.png" alt="<s:text name="jpversioning.label.restore" />" />
-						</a>
-					</td>
-				</tr>
-				</s:iterator>
-			</table>
-		--%>	
+		</wpsa:subset>
 	</s:else>
 </fieldset>
 

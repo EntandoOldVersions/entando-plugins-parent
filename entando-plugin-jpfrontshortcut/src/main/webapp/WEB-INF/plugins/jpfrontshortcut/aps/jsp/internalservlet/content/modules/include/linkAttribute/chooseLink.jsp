@@ -11,7 +11,8 @@
 <s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/modules/include/linkAttribute/linkAttributeConfigReminder.jsp"/>
 
 <s:form id="formform" action="configLink" namespace="/do/jpfrontshortcut/Content/Link" theme="simple">
-
+	<wpsf:hidden name="contentOnSessionMarker" />
+	
 <s:if test="hasFieldErrors()">
 	<div class="alert">
 	<p><strong><s:text name="message.title.FieldErrors" /></strong></p>

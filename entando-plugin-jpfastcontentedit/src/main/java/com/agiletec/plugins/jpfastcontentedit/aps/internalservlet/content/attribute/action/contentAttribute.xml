@@ -5,100 +5,6 @@
 
 <struts>
     
-    <package name="jpfastcontentedit_do/jpfastcontentedit/Content/Link" namespace="/do/jpfastcontentedit/Content/Link" extends="entando-front-default">
-		
-		<global-results>
-            <result name="userNotAllowed" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/userNotAllowed.jsp</result>
-            <result name="failure" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/errors.jsp</result>
-        </global-results>
-    	
-        <action name="chooseLink*" class="jpfastcontenteditLinkAttributeAction" method="chooseLinkType">
-            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/chooseLink.jsp</result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeStack" >
-                <param name="chain.includeParameters">attributeName,elementIndex,langCode</param>
-            </interceptor-ref>
-        </action>
-	
-        <action name="configLink" class="jpfastcontenteditLinkAttributeAction" method="configLink">
-            <result name="input" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/chooseLink.jsp</result>
-            <result name="configUrlLink" type="chain">configUrlLink</result>
-            <result name="configPageLink" type="chain">configPageLink</result>
-            <result name="configContentLink" type="chain">configContentLink</result>
-            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/chooseLink.jsp</result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeValidationStack" />
-        </action>
-		
-        <action name="configUrlLink" class="jpfastcontenteditUrlLinkAttributeAction">
-            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configUrlLinkType.jsp</result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeStack" />
-        </action>
-		
-        <action name="joinUrlLink" class="jpfastcontenteditUrlLinkAttributeAction" method="joinUrlLink">
-            <result name="input" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configUrlLinkType.jsp</result>
-            <result type="frontRedirectAction">
-                <param name="namespace">/do/jpfastcontentedit/Content</param>
-                <param name="actionName">entryContent</param>
-                <!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
-				<param name="anchorDest">${langTabAnchorDest}</param>
-            </result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeValidationStack" />
-        </action>
-		
-        <action name="configPageLink" class="jpfastcontenteditPageLinkAttributeAction">
-            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configPageLinkType.jsp</result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeStack" />
-        </action>
-		
-        <action name="joinPageLink" class="jpfastcontenteditPageLinkAttributeAction" method="joinLink">
-            <result name="input" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configPageLinkType.jsp</result>
-            <result type="frontRedirectAction">
-                <param name="namespace">/do/jpfastcontentedit/Content</param>
-                <param name="actionName">entryContent</param>
-                <!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
-				<param name="anchorDest">${langTabAnchorDest}</param>
-            </result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeValidationStack" />
-        </action>
-		
-        <action name="configContentLink" class="jpfastcontenteditContentLinkAttributeAction" >
-            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configContentLinkType.jsp</result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeStack" />
-        </action>
-        
-        <action name="search*" class="jpfastcontenteditContentLinkAttributeAction">
-            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configContentLinkType.jsp</result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeStack" />
-        </action>
-        
-        <action name="changeOrder*" class="jpfastcontenteditContentLinkAttributeAction" method="changeOrder">
-            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configContentLinkType.jsp</result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeStack" />
-        </action>
-        
-        <action name="joinContentLink*" class="jpfastcontenteditContentLinkAttributeAction" method="joinContentLink" >
-            <result name="input" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configContentLinkType.jsp</result>
-            <result name="configContentOnPageLink" type="chain">configPageLink</result>
-            <result type="frontRedirectAction">
-                <param name="namespace">/do/jpfastcontentedit/Content</param>
-                <param name="actionName">entryContent</param>
-				<!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
-				<param name="anchorDest">${langTabAnchorDest}</param>
-            </result>
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
-            <interceptor-ref name="entandoFrontEndFreeValidationStack" />
-        </action>
-		
-    </package>
-    
     <package name="jpfastcontentedit_do/jpfastcontentedit/Content/Resource" namespace="/do/jpfastcontentedit/Content/Resource" extends="entando-front-default">
     	
 		<global-results>
@@ -132,6 +38,7 @@
                 <param name="actionName">entryContent</param>
                 <!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
 				<param name="anchorDest">${langTabAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
             <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeStack" />
@@ -172,9 +79,11 @@
 				<param name="actionName">entryContent</param>
                 <!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
 				<param name="anchorDest">${langTabAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
-            <interceptor-ref name="fileUpload"><param name="maximumSize">10485760</param></interceptor-ref><!-- maximun Size = 10 Mb -->
-            <interceptor-ref name="requestAuth"><param name="requiredPermission">manageResources</param></interceptor-ref>
+            <!-- <interceptor-ref name="fileUpload"><param name="maximumSize">10485760</param></interceptor-ref> --><!-- maximun Size = 10 Mb -->
+            <interceptor-ref name="apsFileUpload" />
+			<interceptor-ref name="requestAuth"><param name="requiredPermission">manageResources</param></interceptor-ref>
             <interceptor-ref name="entandoFrontEndFreeValidationStack" />
         </action>
         
@@ -185,6 +94,121 @@
 				<param name="namespace">/do/jpfastcontentedit/Content</param>
 				<param name="actionName">entryContent</param>
 				<param name="anchorDest">${entryContentAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
+			</result>
+			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+			<interceptor-ref name="entandoFrontEndFreeStack" />
+		</action>
+        
+    </package>
+    
+    <package name="jpfastcontentedit_do/jpfastcontentedit/Content/Link" namespace="/do/jpfastcontentedit/Content/Link" extends="entando-front-default">
+		
+		<global-results>
+            <result name="userNotAllowed" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/userNotAllowed.jsp</result>
+            <result name="failure" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/errors.jsp</result>
+        </global-results>
+    	
+        <action name="chooseLink*" class="jpfastcontenteditLinkAttributeAction" method="chooseLinkType">
+            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/chooseLink.jsp</result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeStack" >
+                <param name="chain.includeParameters">attributeName,elementIndex,langCode</param>
+            </interceptor-ref>
+        </action>
+	
+        <action name="configLink" class="jpfastcontenteditLinkAttributeAction" method="configLink">
+            <result name="input" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/chooseLink.jsp</result>
+            <result name="configUrlLink" type="chain">configUrlLink</result>
+            <result name="configPageLink" type="chain">configPageLink</result>
+            <result name="configContentLink" type="chain">configContentLink</result>
+            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/chooseLink.jsp</result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeValidationStack" />
+        </action>
+		
+        <action name="configUrlLink" class="jpfastcontenteditUrlLinkAttributeAction">
+            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configUrlLinkType.jsp</result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeStack" >
+				<param name="chain.includeParameters">contentOnSessionMarker</param>
+			</interceptor-ref>
+        </action>
+		
+        <action name="joinUrlLink" class="jpfastcontenteditUrlLinkAttributeAction" method="joinUrlLink">
+            <result name="input" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configUrlLinkType.jsp</result>
+            <result type="frontRedirectAction">
+                <param name="namespace">/do/jpfastcontentedit/Content</param>
+                <param name="actionName">entryContent</param>
+                <!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
+				<param name="anchorDest">${langTabAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
+            </result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeValidationStack" />
+        </action>
+		
+        <action name="configPageLink" class="jpfastcontenteditPageLinkAttributeAction">
+            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configPageLinkType.jsp</result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeStack" >
+				<param name="chain.includeParameters">contentOnSessionMarker</param>
+			</interceptor-ref>
+        </action>
+		
+        <action name="joinPageLink" class="jpfastcontenteditPageLinkAttributeAction" method="joinLink">
+            <result name="input" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configPageLinkType.jsp</result>
+            <result type="frontRedirectAction">
+                <param name="namespace">/do/jpfastcontentedit/Content</param>
+                <param name="actionName">entryContent</param>
+                <!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
+				<param name="anchorDest">${langTabAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
+            </result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeValidationStack" />
+        </action>
+		
+        <action name="configContentLink" class="jpfastcontenteditContentLinkAttributeAction" >
+            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configContentLinkType.jsp</result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeStack" >
+				<param name="chain.includeParameters">contentOnSessionMarker</param>
+			</interceptor-ref>
+        </action>
+        
+        <action name="search*" class="jpfastcontenteditContentLinkAttributeAction">
+            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configContentLinkType.jsp</result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeStack" />
+        </action>
+        
+        <action name="changeOrder*" class="jpfastcontenteditContentLinkAttributeAction" method="changeOrder">
+            <result type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configContentLinkType.jsp</result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeStack" />
+        </action>
+        
+        <action name="joinContentLink*" class="jpfastcontenteditContentLinkAttributeAction" method="joinContentLink" >
+            <result name="input" type="dispatcher">/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/linkAttribute/configContentLinkType.jsp</result>
+            <result name="configContentOnPageLink" type="chain">configPageLink</result>
+            <result type="frontRedirectAction">
+                <param name="namespace">/do/jpfastcontentedit/Content</param>
+                <param name="actionName">entryContent</param>
+				<!-- <param name="anchorDest">${entryContentAnchorDest}</param> -->
+				<param name="anchorDest">${langTabAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
+            </result>
+            <interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
+            <interceptor-ref name="entandoFrontEndFreeValidationStack" />
+        </action>
+		
+		<action name="backToEntryContent" class="jpfastcontenteditLinkAttributeAction" method="backToEntryContent">
+			<result type="frontRedirectAction">
+				<param name="namespace">/do/jpfastcontentedit/Content</param>
+				<param name="actionName">entryContent</param>
+				<param name="anchorDest">${entryContentAnchorDest}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
 			</result>
 			<interceptor-ref name="requestAuth"><param name="requiredPermission">jpfastcontentedit_editContents</param></interceptor-ref>
 			<interceptor-ref name="entandoFrontEndFreeStack" />

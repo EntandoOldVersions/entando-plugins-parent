@@ -10,7 +10,8 @@
 <%-- <s:include value="linkAttributeConfigReminder.jsp"></s:include> --%>
 
 <s:form id="formform" action="joinUrlLink" namespace="/do/jpfrontshortcut/Content/Link" theme="simple">
-
+	<wpsf:hidden name="contentOnSessionMarker" />
+	
 <s:if test="hasFieldErrors()">
 	<div class="alert">
 	<p><strong><s:text name="message.title.FieldErrors" /></strong></p>

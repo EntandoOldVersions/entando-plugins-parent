@@ -18,7 +18,6 @@
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
         
-        
         <action name="history" class="jpversioningVersionAction" method="history" >
         	<result type="tiles" >admin.jpversioning.content.versioning.history</result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
@@ -34,6 +33,7 @@
     			<param name="actionName">history</param>
     			<param name="versionId">${backId}</param>
     			<param name="contentId">${contentId}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
@@ -52,6 +52,7 @@
         	<result type="redirectAction">
             	<param name="namespace">/do/jacms/Content</param>
     			<param name="actionName">entryContent</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>

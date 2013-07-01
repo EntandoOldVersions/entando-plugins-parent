@@ -34,7 +34,8 @@ public class ContentVersionsAction extends BaseAction implements IContentVersion
 	
 	@Override
 	public List<Long> getContentVersions() {
-		Content currentContent = (Content) this.getRequest().getSession().getAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT);
+		Content currentContent = (Content) this.getRequest().getSession()
+				.getAttribute(ContentActionConstants.SESSION_PARAM_NAME_CURRENT_CONTENT_PREXIX + this.getContentOnSessionMarker());
 		if (null == currentContent) {
 			throw new RuntimeException("Contenuto corrente nullo");
 		}
@@ -60,6 +61,13 @@ public class ContentVersionsAction extends BaseAction implements IContentVersion
 		return version;
 	}
 	
+	public String getContentOnSessionMarker() {
+		return _contentOnSessionMarker;
+	}
+	public void setContentOnSessionMarker(String contentOnSessionMarker) {
+		this._contentOnSessionMarker = contentOnSessionMarker;
+	}
+	
 	protected IVersioningManager getVersioningManager() {
 		return _versioningManager;
 	}
@@ -73,6 +81,8 @@ public class ContentVersionsAction extends BaseAction implements IContentVersion
 	public void setVersionid(long versionid) {
 		this._versionid = versionid;
 	}
+	
+	private String _contentOnSessionMarker;
 	
 	private IVersioningManager _versioningManager;
 	private long _versionid;
