@@ -5,7 +5,7 @@
 
 <h2><wp:i18n key="jpuserreg_PASSWORD_RECOVERY" /></h2>
 
-<form action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/reactivate.action"/>" method="post" enctype="multipart/form-data">
+<form action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/reactivate.action"/>" method="post" >
 
 	<s:if test="hasFieldErrors()">
 		<h3><s:text name="message.title.FieldErrors" /></h3>

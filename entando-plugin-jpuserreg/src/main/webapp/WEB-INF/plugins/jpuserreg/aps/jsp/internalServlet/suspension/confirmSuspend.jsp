@@ -27,7 +27,7 @@
 		</ul>
 	</s:if>
 
-<form method="post" action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/suspend.action" />" enctype="multipart/form-data">
+<form method="post" action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/suspend.action" />" >
 	<p>
 		<label for="password"><wp:i18n key="jpuserreg_PASSWORD"/> <abbr title="(<wp:i18n key="jpuserreg_REQUIRED"/>)">*</abbr></label><br />
 		<wpsf:password useTabindexAutoIncrement="true" name="password" required="true" id="password" />

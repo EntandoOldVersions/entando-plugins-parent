@@ -5,7 +5,7 @@
 
 <h2><wp:i18n key="jpuserreg_REACTIVATION_PASSWORD_LOST_MSG"/></h2>
 
-<form method="post" action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/recoverFromUsername.action" />" enctype="multipart/form-data">
+<form method="post" action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/recoverFromUsername.action" />" >
 <s:if test="hasFieldErrors()">
 	<h3><s:text name="message.title.FieldErrors" /></h3>
 	<ul>
@@ -41,7 +41,7 @@
 
 <h2><wp:i18n key="jpuserreg_REACTIVATION_USERNAME_LOST_MSG"/></h2>
 
-<form method="post" action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/recoverFromEmail.action" />" enctype="multipart/form-data">
+<form method="post" action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/recoverFromEmail.action" />" >
 	
 	<p>
 		<label for="email"><wp:i18n key="jpuserreg_EMAIL"/></label><br />

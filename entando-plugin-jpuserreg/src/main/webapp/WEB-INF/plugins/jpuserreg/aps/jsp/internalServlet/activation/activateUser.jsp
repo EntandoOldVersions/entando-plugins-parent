@@ -3,7 +3,7 @@
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<form action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/activate.action"/>" method="post" enctype="multipart/form-data">
+<form action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/activate.action"/>" method="post" >
 	
 	<s:if test="hasFieldErrors()">
 		<h3><s:text name="message.title.FieldErrors" /></h3>
