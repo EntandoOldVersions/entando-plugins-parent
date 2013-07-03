@@ -17,6 +17,7 @@
             	<param name="namespace">/do/jacms/Content</param>
             	<param name="actionName">entryContent</param>
             	<param name="categoryCode">${categoryCode}</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
@@ -25,6 +26,7 @@
            	<result type="redirectAction">
             	<param name="namespace">/do/jacms/Content</param>
             	<param name="actionName">entryContent</param>
+				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
             </result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
         </action>
