@@ -44,7 +44,6 @@ window.addEvent('domready', function(){
 	<s:if test="contentId != null">&#32;<wp:i18n key="jpfastcontentedit_FOR_THE_CONTENT" />: <s:property value="contentId"/> &ndash; <s:property value="%{getContentVo(contentId).descr}"/></s:if>.
 </p>
 <form action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Link/joinPageLink.action" />" method="post" >
-<wpsf:hidden name="contentOnSessionMarker" />
 		
 <s:if test="hasFieldErrors()">
 <h3><wp:i18n key="jpfastcontentedit_ERRORS" /></h3>
