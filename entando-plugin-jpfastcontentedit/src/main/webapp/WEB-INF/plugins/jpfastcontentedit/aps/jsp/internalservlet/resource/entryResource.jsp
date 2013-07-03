@@ -43,6 +43,7 @@ window.addEvent('domready', function(){
 <a href="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Resource/backToEntryContent.action" />" ><wp:i18n key="jpfastcontentedit_BACK_TO_CONTENT" /></a>
 </p>
 <form action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Resource/save.action" />"  enctype="multipart/form-data" method="post">
+<wpsf:hidden name="contentOnSessionMarker" />
 
 <s:if test="hasFieldErrors()">
 <div class="message message_error">

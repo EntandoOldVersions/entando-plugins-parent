@@ -38,6 +38,7 @@ window.addEvent('domready', function(){
 <h3><wp:i18n key="jpfastcontentedit_CHOOSE_IMAGE" /></h3>
 
 <form action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Resource/search.action" />" method="post">
+<wpsf:hidden name="contentOnSessionMarker" />
 
 <fieldset><legend><wp:i18n key="jpfastcontentedit_SEARCH_FILTERS" /></legend>
 <p class="noscreen"><wpsf:hidden name="resourceTypeCode" /></p>
@@ -77,7 +78,10 @@ window.addEvent('domready', function(){
 <dl class="gallery">
 	<dt class="image"><a href="<s:property value="%{#resource.getImagePath(0)}" />" ><img src="<s:property value="%{#resource.getImagePath(1)}"/>" alt=" " /></a></dt>
 	<dt class="options">
-		<a href="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Resource/joinResource.action" ><wp:parameter name="resourceId"><s:property value="%{#resourceid}"/></wp:parameter></wp:action>#<s:property value="currentAttributeLang" />_tab" title="<wp:i18n key="jpfastcontentedit_JOIN_TO" />: <s:property value="content.descr" />" ><wp:i18n key="jpfastcontentedit_JOIN" /></a>
+		<a href="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Resource/joinResource.action" >
+			   <wp:parameter name="resourceId"><s:property value="%{#resourceid}"/></wp:parameter>
+			   <wp:parameter name="contentOnSessionMarker"><s:property value="%{contentOnSessionMarker}"/></wp:parameter>
+		   </wp:action>#<s:property value="currentAttributeLang" />_tab" title="<wp:i18n key="jpfastcontentedit_JOIN_TO" />: <s:property value="content.descr" />" ><wp:i18n key="jpfastcontentedit_JOIN" /></a>
 	</dt>
 	<dd>
 		<p><s:property value="#resource.descr" /></p>
