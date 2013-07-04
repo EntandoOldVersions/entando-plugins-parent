@@ -100,9 +100,9 @@
 		</div>
 	</s:if>
 
-	<p class="noscreen hide">
-		<wpsf:hidden name="contentOnSessionMarker" />
-	</p>
+<p class="noscreen hide">
+	<wpsf:hidden name="contentOnSessionMarker" />
+</p>
 
 
 <ul class="nav nav-tabs">
@@ -345,6 +345,12 @@
 									<s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/entity/modules/compositeAttribute.jsp" />
 								</fieldset>
 							</div> 
+						</s:elseif>
+						<s:elseif test="#attribute.type == 'Timestamp'">
+									<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/timestampAttribute.jsp" />
+									<s:include value="/WEB-INF/plugins/jpfastcontentedit/aps/jsp/internalservlet/content/modules/include/front_attributeInfo-help-block.jsp" />
+								</div>
+							</div>
 						</s:elseif>
 						<s:else>
 									<s:include value="/WEB-INF/apsadmin/jsp/entity/modules/monotextAttribute.jsp" />
