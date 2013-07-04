@@ -3,32 +3,63 @@
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 
-<wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_SHOWLET_TITLE" />
-<br />
+<h1><wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_SHOWLET_TITLE" /></h1>
 
-<s:include value="linkAttributeConfigIntro.jsp"></s:include>
-<h3><wp:i18n key="jpfastcontentedit_CONFIGURE_LINK_ATTRIBUTE" />&#32;<wp:i18n key="jpfastcontentedit_STEP_2_OF_2" /></h3>
+<s:include value="linkAttributeConfigIntro.jsp" />
+<h2><wp:i18n key="jpfastcontentedit_CONFIGURE_LINK_ATTRIBUTE" />&#32;<wp:i18n key="jpfastcontentedit_STEP_2_OF_2" /></h2>
 <s:include value="linkAttributeConfigReminder.jsp"></s:include>
-<p><wp:i18n key="jpfastcontentedit_CONFIGURE_URL" /></p>
 
-<form action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Link/joinUrlLink.action" />" method="post" >
-<wpsf:hidden name="contentOnSessionMarker" />
 
-<s:if test="hasFieldErrors()">
-<h3><wp:i18n key="jpfastcontentedit_ERRORS" /></h3>
-<ul>
-	<s:iterator value="fieldErrors">
-		<s:iterator value="value">
-            <li><s:property escape="false" /></li>
-		</s:iterator>
-	</s:iterator>
-</ul>
-</s:if>
-<p>
-	<label for="url"><wp:i18n key="jpfastcontentedit_URL" />: </label><br />
-	<wpsf:textfield useTabindexAutoIncrement="true" name="url" id="url" cssClass="text"/>
-</p>
+<form 
+	class="form-horizontal" 
+	action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Link/joinUrlLink.action" />" 
+	method="post">
 
-<s:set name="confirm_label" ><wp:i18n key="jpfastcontentedit_CONFIRM"/></s:set>
-<p><wpsf:submit useTabindexAutoIncrement="true" value="%{#confirm_label}" title="%{#confirm_label}" cssClass="button" /></p>
+		<s:if test="hasFieldErrors()">
+			<div class="alert alert-block">
+				<p><strong><wp:i18n key="jpfastcontentedit_ERRORS" /></strong></p>
+				<ul class="unstyled">
+					<s:iterator value="fieldErrors">
+							<s:iterator value="value">
+									<li><s:property escape="false" /></li>
+							</s:iterator>
+					</s:iterator>
+				</ul>
+			</div>
+		</s:if>
+		
+	<p class="noscreen hide">
+		<wpsf:hidden name="contentOnSessionMarker" />
+	</p>	
+
+	<div class="control-group">
+		<label class="control-label" for="jpfastcontentedit-configlink-url"><wp:i18n key="jpfastcontentedit_URL" /></label>
+		<div class="controls">
+			<wpsf:textfield 
+				useTabindexAutoIncrement="true" 
+				name="url" 
+				id="jpfastcontentedit-configlink-url" 
+				/>
+			<span class="help help-block">
+				<wp:i18n key="jpfastcontentedit_CONFIGURE_URL" />
+			</span>
+		</div>
+	</div>
+	<p class="form-actions">
+		<wp:i18n key="jpfastcontentedit_CONFIRM" var="jpfastcontentedit_CONFIRM" />
+		<wpsf:submit 
+			cssClass="btn btn-primary"
+			useTabindexAutoIncrement="true" 
+			value="%{#attr.jpfastcontentedit_CONFIRM}" 
+			title="%{#attr.jpfastcontentedit_CONFIRM}" 
+			/>
+		&emsp;
+		<a class="btn btn-link"
+			href="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Resource/backToEntryContent.action">
+			<wp:parameter name="contentOnSessionMarker"><s:property value="%{contentOnSessionMarker}" /></wp:parameter>
+			</wp:action>
+			" >
+			<wp:i18n key="jpfastcontentedit_BACK_TO_CONTENT" />
+		</a>
+	</p>
 </form>

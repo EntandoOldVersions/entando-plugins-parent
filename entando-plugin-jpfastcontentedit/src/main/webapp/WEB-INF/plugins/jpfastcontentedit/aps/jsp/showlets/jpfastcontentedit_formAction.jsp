@@ -1,2 +1,2 @@
-<%@ taglib uri="/jpfastcontentedit-aps-core" prefix="fce" %>
+<%@ taglib prefix="fce" uri="/jpfastcontentedit-aps-core" %>
 <fce:fastContentEditFormAction/>
