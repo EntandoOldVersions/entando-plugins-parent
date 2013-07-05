@@ -2,10 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
 * 
 * See the file License for the specific language governing permissions   
 * and limitations under the License
@@ -40,6 +39,7 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.keygenerator.IKeyGeneratorManager;
+import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
@@ -216,7 +216,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 				title = titleAttr.getText();
 			}
 			entry.setTitle(title);
-			String link = this.createLink(content, langCode, feedLink);
+			String link = this.createLink(content, feedLink);
 			entry.setLink(link);
 			entry.setPublishedDate(contentVO.getModify());
 			ITextAttribute descrAttr = (ITextAttribute) content.getAttribute(mapping.getDescriptionAttributeName());
@@ -247,10 +247,16 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 		}
 		return entry;
 	}
-
-	private String createLink(Content content, String langCode, String feedLink) {
+	
+	private String createLink(Content content, String feedLink) {
 		SymbolicLink symbolicLink = new SymbolicLink();
-		symbolicLink.setDestinationToUrl(feedLink.concat(content.getViewPage()).concat(".wp").concat("?contentId=").concat(content.getId()));
+		StringBuilder destination = new StringBuilder(feedLink);
+		String viewPage = content.getViewPage();
+		if (null == viewPage || null == this.getPageManager().getPage(viewPage)) {
+			viewPage = this.getPageManager().getRoot().getCode();
+		}
+		destination.append(viewPage).append(".page").append("?contentId=").append(content.getId());
+		symbolicLink.setDestinationToUrl(destination.toString());
 		return symbolicLink.getUrlDest();
 	}
 	
@@ -319,7 +325,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 			throw new ApsSystemException("Error in rss contents", t);
 		}
 	}	
-
+	
 	@Override
 	public Map<String, String> getAvailableFeedTypes() {
 		return _availableFeedTypes;
@@ -327,35 +333,42 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 	public void setAvailableFeedTypes(Map<String, String> availableFeedTypes) {
 		this._availableFeedTypes = availableFeedTypes;
 	}
-
+	
 	protected Map<String, RssContentMapping> getContentMapping() {
 		return _contentMapping;
 	}
 	protected void setContentMapping(Map<String, RssContentMapping> contentMapping) {
 		this._contentMapping = contentMapping;
 	}
-
+	
 	protected ConfigInterface getConfigManager() {
 		return _configManager;
 	}
 	public void setConfigManager(ConfigInterface configManager) {
 		this._configManager = configManager;
 	}
-
+	
 	protected ILinkResolverManager getLinkResolver() {
 		return _linkResolver;
 	}
 	public void setLinkResolver(ILinkResolverManager linkResolver) {
 		this._linkResolver = linkResolver;
 	}
-
-	public void setContentManager(IContentManager contentManager) {
-		this._contentManager = contentManager;
-	}
+	
 	protected IContentManager getContentManager() {
 		return _contentManager;
 	}
-
+	public void setContentManager(IContentManager contentManager) {
+		this._contentManager = contentManager;
+	}
+	
+	protected IPageManager getPageManager() {
+		return _pageManager;
+	}
+	public void setPageManager(IPageManager pageManager) {
+		this._pageManager = pageManager;
+	}
+	
 	protected IRssDAO getRssDAO() {
 		return _rssDAO;
 	}
@@ -363,15 +376,16 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 		this._rssDAO = rssDAO;
 	}
 	
+	protected IKeyGeneratorManager getKeyGeneratorManager() {
+		return _keyGeneratorManager;
+	}
 	public void setKeyGeneratorManager(IKeyGeneratorManager keyGeneratorManager) {
 		this._keyGeneratorManager = keyGeneratorManager;
 	}
-	public IKeyGeneratorManager getKeyGeneratorManager() {
-		return _keyGeneratorManager;
-	}
-
+	
 	private Map<String, RssContentMapping> _contentMapping;
 	private IContentManager _contentManager;
+	private IPageManager _pageManager;
 	private ConfigInterface _configManager;
 	private IKeyGeneratorManager _keyGeneratorManager;
 	private Map<String, String> _availableFeedTypes;
