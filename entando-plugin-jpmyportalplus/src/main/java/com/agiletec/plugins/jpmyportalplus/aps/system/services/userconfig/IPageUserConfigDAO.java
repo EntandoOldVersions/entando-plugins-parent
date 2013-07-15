@@ -19,8 +19,9 @@ package com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig;
 
 import java.util.List;
 
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+
 import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
@@ -43,9 +44,9 @@ public interface IPageUserConfigDAO {
 	 * @param config class that maps the jpmyportal configuration
 	 * @return the list of showlets, null otherwise
 	 */
-	public List<ShowletType> buildCustomizableShowletsList(MyPortalConfig config);
+	public List<WidgetType> buildCustomizableShowletsList(MyPortalConfig config);
 	
-	public void syncCustomization(List<ShowletType> configurableShowlets, String voidShowletCode);
+	public void syncCustomization(List<WidgetType> configurableShowlets, String voidShowletCode);
 	
 	public void updateUserPageConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfos);
 	

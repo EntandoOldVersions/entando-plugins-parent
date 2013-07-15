@@ -12,7 +12,7 @@
 	<bean id="jpmyportalplusConfigAction" scope="prototype" 
 			class="com.agiletec.plugins.jpmyportalplus.apsadmin.config.ConfigAction" parent="abstractBaseAction" >
 		<property name="myPortalConfigManager" ref="jpmyportalplusMyPortalConfigManager" />
-		<property name="showletTypeManager" ref="ShowletTypeManager" />
+		<property name="widgetTypeManager" ref="WidgetTypeManager" />
 		<property name="stockShowletCodes"><value>${showlets.stock}</value></property>
 	</bean>
 	

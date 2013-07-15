@@ -17,15 +17,16 @@
  */
 package com.agiletec.plugins.jpmyportalplus.apsadmin.tags;
 
+import java.util.List;
 import java.util.Set;
 
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+import org.entando.entando.aps.system.services.widgettype.WidgetTypeParameter;
+
 import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
-import com.agiletec.aps.system.services.showlettype.ShowletTypeParameter;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
-import java.util.List;
 
 /**
  * Tag equals to {@link com.agiletec.apsadmin.tags.ShowletTypeInfoTag} tag.
@@ -41,7 +42,7 @@ public class ShowletTypeInfoTag extends com.agiletec.apsadmin.tags.ShowletTypeIn
 		Object value = super.getPropertyValue(masterObject, propertyValue);
 		try {
 			if (null == value && null != propertyValue && propertyValue.equals("swappable")) {
-				ShowletType type = (ShowletType) masterObject;
+				WidgetType type = (WidgetType) masterObject;
 				IMyPortalConfigManager myPortalConfigManager = (IMyPortalConfigManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.MYPORTAL_CONFIG_MANAGER, this.pageContext);
 				if (this.isCustomizable(myPortalConfigManager, type)) {
 					Set<String> swappables = myPortalConfigManager.getConfig().getAllowedShowlets();
@@ -57,9 +58,9 @@ public class ShowletTypeInfoTag extends com.agiletec.apsadmin.tags.ShowletTypeIn
 		return value;
 	}
 	
-	private boolean isCustomizable(IMyPortalConfigManager myPortalConfigManager, ShowletType type) {
+	private boolean isCustomizable(IMyPortalConfigManager myPortalConfigManager, WidgetType type) {
 		if (null == type) return false;
-		List<ShowletTypeParameter> typeParameters = type.getTypeParameters();
+		List<WidgetTypeParameter> typeParameters = type.getTypeParameters();
 		if (!type.isUserType() && !type.isLogic() && (null != typeParameters && typeParameters.size() > 0)) return false;
 		if (type.getCode().equals(myPortalConfigManager.getVoidShowletCode())) return false;
 		return true;

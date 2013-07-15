@@ -11,12 +11,12 @@
 		<property name="voidShowletCode"><value>jpmyportal_void</value></property>
 		<property name="configManager" ref="BaseConfigManager" />
 		<property name="pageModelManager" ref="PageModelManager" />		
-		<property name="showletTypeManager" ref="ShowletTypeManager" />		
+		<property name="showletTypeManager" ref="WidgetTypeManager" />		
 		<property name="pageModelUserConfigDAO">
 			<bean class="com.agiletec.plugins.jpmyportal.aps.system.services.userconfig.PageModelUserConfigDAO">
 				<property name="dataSource" ref="portDataSource" />
 				<property name="pageModelManager" ref="PageModelManager" />
-				<property name="showletTypeManager" ref="ShowletTypeManager" />
+				<property name="showletTypeManager" ref="WidgetTypeManager" />
 			</bean>
 		</property>
 	</bean>

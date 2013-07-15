@@ -21,6 +21,7 @@ import java.io.StringReader;
 import java.util.Iterator;
 import java.util.List;
 
+import org.entando.entando.aps.system.services.widgettype.IWidgetTypeManager;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
@@ -28,7 +29,6 @@ import org.jdom.input.SAXBuilder;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.page.Showlet;
-import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
 import com.agiletec.aps.util.ApsProperties;
 
 /**
@@ -51,12 +51,12 @@ public class MyPortalPageModelDOM {
 	/**
 	 * Class constructor
 	 * @param xmlText The XML string to parse
-	 * @param showletTypeManager The manager of the showlet type
+	 * @param widgetTypeManager The manager of the showlet type
 	 * @throws ApsSystemException In case of error
 	 */
-	public MyPortalPageModelDOM(String xmlText, IShowletTypeManager showletTypeManager) throws ApsSystemException {
+	public MyPortalPageModelDOM(String xmlText, IWidgetTypeManager widgetTypeManager) throws ApsSystemException {
 		this.decodeDOM(xmlText);
-		this.buildFrames(showletTypeManager);
+		this.buildFrames(widgetTypeManager);
 	}
 	
 	private void decodeDOM(String xmlText) throws ApsSystemException {
@@ -82,7 +82,7 @@ public class MyPortalPageModelDOM {
 		return prop;
 	}
 	
-	private void buildFrames(IShowletTypeManager showletTypeManager) throws ApsSystemException {
+	private void buildFrames(IWidgetTypeManager widgetTypeManager) throws ApsSystemException {
 		List<Element> frameElements = _doc.getRootElement().getChildren(TAB_FRAME);
 		if (null != frameElements && frameElements.size() > 0) {
 			int framesNumber = frameElements.size();
@@ -93,7 +93,7 @@ public class MyPortalPageModelDOM {
 			Iterator<Element> frameElementsIter = frameElements.iterator();
 			while (frameElementsIter.hasNext()) {
 				Element frameElement = frameElementsIter.next();
-				this.buildFrame(showletTypeManager, framesNumber, frameElement);
+				this.buildFrame(widgetTypeManager, framesNumber, frameElement);
 			}
 		} else {
 			_frames = new String[0];
@@ -101,7 +101,7 @@ public class MyPortalPageModelDOM {
 		}
 	}
 		
-	private void buildFrame(IShowletTypeManager showletTypeManager,
+	private void buildFrame(IWidgetTypeManager showletTypeManager,
 			int framesNumber, Element frameElement) throws ApsSystemException {
 		int pos = Integer.parseInt(frameElement.getAttributeValue(ATTRIBUTE_POS));
 		if(pos >= framesNumber) {
@@ -142,7 +142,7 @@ public class MyPortalPageModelDOM {
 		_frameConfigs[pos] = frame;
 	}
 	
-	private Showlet buildDefaultShowlet(Element defaultShowletElement, int pos, IShowletTypeManager showletTypeManager) {
+	private Showlet buildDefaultShowlet(Element defaultShowletElement, int pos, IWidgetTypeManager showletTypeManager) {
 		Showlet showlet = new Showlet();
 		String showletCode = defaultShowletElement.getAttributeValue(ATTRIBUTE_CODE);
 		showlet.setType(showletTypeManager.getShowletType(showletCode));

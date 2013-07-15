@@ -19,8 +19,9 @@ package com.agiletec.plugins.jpmyportalplus.aps.system.services.config;
 
 import java.util.List;
 
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
 
 /**
@@ -36,7 +37,7 @@ public interface IMyPortalConfigManager {
 	/**
 	 * Get the list of the showlet that cannot be handled by the jpmyportal plugin
 	 */
-	public List<ShowletType> getCustomizableShowlets();
+	public List<WidgetType> getCustomizableShowlets();
 	
 	public String getVoidShowletCode();
 	

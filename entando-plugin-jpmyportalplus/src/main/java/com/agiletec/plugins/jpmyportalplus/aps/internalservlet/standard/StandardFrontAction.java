@@ -23,13 +23,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Showlet;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.system.services.url.IURLManager;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.internalservlet.AbstractFrontAction;
@@ -189,7 +190,7 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 		ShowletUpdateInfoBean infoBean = null;
 		Showlet showletToInsert = null;
 		String typeCode = showletsToAdd.get(0);
-		ShowletType type = this.getShowletTypeManager().getShowletType(typeCode);
+		WidgetType type = this.getWidgetTypeManager().getShowletType(typeCode);
 		if (null != type) {
 			showletsToAdd.remove(typeCode);
 			showletToInsert = new Showlet();

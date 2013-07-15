@@ -10,7 +10,7 @@
 		<property name="pageModelDAO" >
 			<bean class="com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModelDAO">
 				<property name="dataSource" ref="portDataSource" />
-				<property name="showletTypeManager" ref="ShowletTypeManager" />
+				<property name="widgetTypeManager" ref="WidgetTypeManager" />
 			</bean>
 		</property>
 	</bean>

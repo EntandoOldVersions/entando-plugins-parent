@@ -22,11 +22,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.entando.entando.aps.system.services.widgettype.IWidgetTypeManager;
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+import org.entando.entando.aps.system.services.widgettype.WidgetTypeParameter;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
-import com.agiletec.aps.system.services.showlettype.ShowletTypeParameter;
 import com.agiletec.aps.util.SelectItem;
 import com.agiletec.apsadmin.portal.AbstractPortalAction;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
@@ -41,7 +42,7 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 	public void validate() {
 		super.validate();
 		Set<String> showletTypeCodes = this.getShowletTypeCodes();
-		IShowletTypeManager showletTypeManager = this.getShowletTypeManager();
+		IWidgetTypeManager showletTypeManager = this.getWidgetTypeManager();
 		for (String showletCode : showletTypeCodes) {
 			if (!this.isShowletAllowed(showletTypeManager.getShowletType(showletCode))) {
 				this.addFieldError("showlets", this.getText("Errors.jpmyportalConfig.showlets.notValid", new String[] { showletCode }));
@@ -65,11 +66,11 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 	public String addShowlet() {
 		try {
 			String showletCode = this.getShowletCode();
-			ShowletType type = this.getShowletTypeManager().getShowletType(showletCode);
+			WidgetType type = this.getWidgetTypeManager().getShowletType(showletCode);
 			if (this.isShowletAllowed(type)) {
 				this.getShowletTypeCodes().add(showletCode);
 			} else {
-				this.addFieldError("showletCode", this.getText("Errors.jpmyportalConfig.showletType.notValid", new String[] { showletCode }));
+				this.addFieldError("showletCode", this.getText("Errors.jpmyportalConfig.WidgetType.notValid", new String[] { showletCode }));
 				return INPUT;
 			}
 		} catch (Throwable t) {
@@ -108,7 +109,7 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 	
 	private void populateForm(MyPortalConfig config) {
 		Set<String> allowedShowlets = config.getAllowedShowlets();
-		IShowletTypeManager showletTypeManager = this.getShowletTypeManager();
+		IWidgetTypeManager showletTypeManager = this.getWidgetTypeManager();
 		Set<String> showlets = new TreeSet<String>();
 		for (String showletCode : allowedShowlets) {
 			if (this.isShowletAllowed(showletTypeManager.getShowletType(showletCode))) {
@@ -119,9 +120,9 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 	}
 	
 	@Override
-	protected void addFlavourShowletType(String mapCode, ShowletType type, Map<String, List<SelectItem>> mapping) {
+	protected void addFlavourShowletType(String mapCode, WidgetType type, Map<String, List<SelectItem>> mapping) {
 		if (null == type) return;
-		List<ShowletTypeParameter> typeParameters = type.getTypeParameters();
+		List<WidgetTypeParameter> typeParameters = type.getTypeParameters();
 		if (!type.isUserType() && !type.isLogic() && (null != typeParameters && typeParameters.size() > 0)) return;
 		if (type.getCode().equals(this.getMyPortalConfigManager().getVoidShowletCode())) return;
 		super.addFlavourShowletType(mapCode, type, mapping);
@@ -133,13 +134,13 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 		return config;
 	}
 	
-	public ShowletType getShowletType(String showletCode) {
-		return this.getShowletTypeManager().getShowletType(showletCode);
+	public WidgetType getShowletType(String showletCode) {
+		return this.getWidgetTypeManager().getShowletType(showletCode);
 	}
 	
-	private boolean isShowletAllowed(ShowletType showletType) {
-		return showletType != null && 
-				(showletType.isLogic() || showletType.isUserType() || showletType.getTypeParameters()==null || showletType.getTypeParameters().isEmpty());
+	private boolean isShowletAllowed(WidgetType WidgetType) {
+		return WidgetType != null && 
+				(WidgetType.isLogic() || WidgetType.isUserType() || WidgetType.getTypeParameters()==null || WidgetType.getTypeParameters().isEmpty());
 	}
 	
 	public Set<String> getShowletTypeCodes() {

@@ -25,6 +25,9 @@ import java.util.Set;
 
 import javax.servlet.http.Cookie;
 
+import org.entando.entando.aps.system.services.widgettype.IWidgetTypeManager;
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+import org.entando.entando.aps.system.services.widgettype.WidgetTypeParameter;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -34,9 +37,6 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Showlet;
-import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
-import com.agiletec.aps.system.services.showlettype.ShowletTypeParameter;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 
@@ -51,7 +51,7 @@ public class CustomPageConfig {
 		this.setStatus(new Integer[frames]);
 	}
 
-	public CustomPageConfig(Cookie cookie, IPage page, IShowletTypeManager showletTypeManager, Set<String> allowedShowlets, String voidShowletCode) throws ApsSystemException {
+	public CustomPageConfig(Cookie cookie, IPage page, IWidgetTypeManager showletTypeManager, Set<String> allowedShowlets, String voidShowletCode) throws ApsSystemException {
 		String value;
 		try {
 			value = URLDecoder.decode(cookie.getValue(),"UTF-8");
@@ -76,7 +76,7 @@ public class CustomPageConfig {
 				if (null == frame) continue;
 				Object showletCode = frame.get("code");
 				if (null == showletCode) continue;
-				ShowletType type = showletTypeManager.getShowletType(showletCode.toString());
+				WidgetType type = showletTypeManager.getShowletType(showletCode.toString());
 				if (null == type) continue;
 				Showlet showlet = null;
 				if (showletCode.equals(voidShowletCode) || allowedShowlets.contains(showletCode) || this.isViewerType(type)) {
@@ -121,14 +121,14 @@ public class CustomPageConfig {
 		}
 	}
 
-	protected boolean isViewerType(ShowletType type) {
+	protected boolean isViewerType(WidgetType type) {
 		String action = type.getAction();
 		if (null == action || !action.equals("viewerConfig")) return false;
-		List<ShowletTypeParameter> params = type.getTypeParameters();
+		List<WidgetTypeParameter> params = type.getTypeParameters();
 		if (null == params || params.isEmpty()) return false;
 		for (int i=0; i<params.size(); i++) {
-			ShowletTypeParameter showletTypeParameter = params.get(i);
-			if (showletTypeParameter.getName().equals(SystemConstants.K_CONTENT_ID_PARAM)) {
+			WidgetTypeParameter WidgetTypeParameter = params.get(i);
+			if (WidgetTypeParameter.getName().equals(SystemConstants.K_CONTENT_ID_PARAM)) {
 				return true;
 			}
 		}

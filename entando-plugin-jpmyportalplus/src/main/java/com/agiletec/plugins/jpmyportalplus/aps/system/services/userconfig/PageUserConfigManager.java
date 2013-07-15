@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.entando.entando.aps.system.services.widgettype.IWidgetTypeManager;
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
@@ -35,8 +37,6 @@ import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.pagemodel.IPageModelManager;
-import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
@@ -61,9 +61,9 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	public PageUserConfigBean getUserConfig(UserDetails user) throws ApsSystemException {
 		PageUserConfigBean pageUserBean = null;
 		try {
-			List<ShowletType> customizables = this.getMyPortalConfigManager().getCustomizableShowlets();
+			List<WidgetType> customizables = this.getMyPortalConfigManager().getCustomizableShowlets();
 			for (int i = 0; i < customizables.size(); i++) {
-				ShowletType type = customizables.get(i);
+				WidgetType type = customizables.get(i);
 				String mainGroup = type.getMainGroup();
 				if (null != mainGroup
 						&& !mainGroup.equals(Group.FREE_GROUP_NAME)
@@ -104,7 +104,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 				return null;
 			}
 			MyPortalConfig mPortalConfig = this.getMyPortalConfigManager().getConfig();
-			customConfig = new CustomPageConfig(cookie, page, this.getShowletTypeManager(),
+			customConfig = new CustomPageConfig(cookie, page, this.getWidgetTypeManager(),
 					mPortalConfig.getAllowedShowlets(), this.getVoidShowletCode());
 			for (int i = 0; i < customConfig.getConfig().length; i++) {
 				Showlet showlet = customConfig.getConfig()[i];
@@ -180,13 +180,13 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	}
 
 	@Override
-	public List<ShowletType> getCustomizableShowlets(UserDetails user) throws ApsSystemException {
-		List<ShowletType> customizableShowletsForUser = new ArrayList<ShowletType>();
+	public List<WidgetType> getCustomizableShowlets(UserDetails user) throws ApsSystemException {
+		List<WidgetType> customizableShowletsForUser = new ArrayList<WidgetType>();
 		if (null == user) return customizableShowletsForUser;
 		try {
-			List<ShowletType> customizableShowlets = this.getMyPortalConfigManager().getCustomizableShowlets();
+			List<WidgetType> customizableShowlets = this.getMyPortalConfigManager().getCustomizableShowlets();
 			for (int i = 0; i < customizableShowlets.size(); i++) {
-				ShowletType type = customizableShowlets.get(i);
+				WidgetType type = customizableShowlets.get(i);
 				String mainGroup = type.getMainGroup();
 				if (null == mainGroup
 						|| mainGroup.equals(Group.FREE_GROUP_NAME)
@@ -271,8 +271,8 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	}
 	
 	@Override
-	public ShowletType getVoidShowlet() {
-		return this.getShowletTypeManager().getShowletType(this.getVoidShowletCode());
+	public WidgetType getVoidShowlet() {
+		return this.getWidgetTypeManager().getShowletType(this.getVoidShowletCode());
 	}
 
 	protected String getVoidShowletCode() {
@@ -293,13 +293,6 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 		this._pageModelManager = pageModelManager;
 	}
 
-	protected IShowletTypeManager getShowletTypeManager() {
-		return _showletTypeManager;
-	}
-	public void setShowletTypeManager(IShowletTypeManager showletTypeManager) {
-		this._showletTypeManager = showletTypeManager;
-	}
-
 	protected IMyPortalConfigManager getMyPortalConfigManager() {
 		return _myPortalConfigManager;
 	}
@@ -313,11 +306,19 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	public void setAuthorizationManager(IAuthorizationManager authorizationManager) {
 		this._authorizationManager = authorizationManager;
 	}
+	
+	public IWidgetTypeManager getWidgetTypeManager() {
+		return _widgetTypeManager;
+	}
+
+	public void setWidgetTypeManager(IWidgetTypeManager widgetTypeManager) {
+		this._widgetTypeManager = widgetTypeManager;
+	}
 
 	private IPageUserConfigDAO _pageUserConfigDAO;
 	private IPageModelManager _pageModelManager;
-	private IShowletTypeManager _showletTypeManager;
 	private IMyPortalConfigManager _myPortalConfigManager;
+	private IWidgetTypeManager _widgetTypeManager;
 
 	private IAuthorizationManager _authorizationManager;
 

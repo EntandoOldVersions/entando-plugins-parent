@@ -1,3 +1,5 @@
 target
 *.log
 nb-configuration.xml
+*/.settings/*
+

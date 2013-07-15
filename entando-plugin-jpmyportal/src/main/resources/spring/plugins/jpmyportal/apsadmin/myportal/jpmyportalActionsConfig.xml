@@ -14,13 +14,13 @@
 		<property name="configManager" ref="BaseConfigManager"/>
 		<property name="pageManager" ref="PageManager" />
 		<property name="pageModelUserConfigManager" ref="jpmyportalPageModelUserConfigManager" />
-		<property name="showletTypeManager" ref="ShowletTypeManager" />	
+		<property name="showletTypeManager" ref="WidgetTypeManager" />	
 	</bean>
 	
 	<bean id="jpmyportalConfigAction" scope="prototype" 
 			class="com.agiletec.plugins.jpmyportal.apsadmin.myportal.config.ConfigAction" parent="abstractBaseAction" >
 		<property name="pageModelUserConfigManager" ref="jpmyportalPageModelUserConfigManager" />
-		<property name="showletTypeManager" ref="ShowletTypeManager" />
+		<property name="showletTypeManager" ref="WidgetTypeManager" />
 		<property name="stockShowletCodes"><value>${showlets.stock}</value></property>
 	</bean>
 	

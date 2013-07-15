@@ -20,9 +20,10 @@ package com.agiletec.plugins.jpmyportalplus.apsadmin.portal;
 import java.util.List;
 import java.util.Set;
 
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+import org.entando.entando.aps.system.services.widgettype.WidgetTypeParameter;
+
 import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
-import com.agiletec.aps.system.services.showlettype.ShowletTypeParameter;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
 
@@ -73,9 +74,9 @@ public class ShowletTypeAction extends com.agiletec.apsadmin.portal.ShowletTypeA
 	}
 	
 	private boolean isCustomizable() {
-		ShowletType type = this.getShowletTypeManager().getShowletType(this.getShowletTypeCode());
+		WidgetType type = this.getWidgetTypeManager().getShowletType(this.getShowletTypeCode());
 		if (null == type) return false;
-		List<ShowletTypeParameter> typeParameters = type.getTypeParameters();
+		List<WidgetTypeParameter> typeParameters = type.getTypeParameters();
 		if (!type.isUserType() && !type.isLogic() && (null != typeParameters && typeParameters.size() > 0)) return false;
 		if (type.getCode().equals(this.getMyPortalConfigManager().getVoidShowletCode())) return false;
 		return true;

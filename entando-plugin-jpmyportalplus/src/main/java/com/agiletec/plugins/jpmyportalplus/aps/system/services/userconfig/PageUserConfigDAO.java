@@ -25,6 +25,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.entando.entando.aps.system.services.widgettype.IWidgetTypeManager;
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -33,8 +36,6 @@ import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.pagemodel.IPageModelManager;
 import com.agiletec.aps.system.services.pagemodel.PageModel;
-import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
@@ -48,7 +49,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.
 public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO {
 	
 	@Override
-	public void syncCustomization(List<ShowletType> allowedShowlets, String voidShowletCode) {
+	public void syncCustomization(List<WidgetType> allowedShowlets, String voidShowletCode) {
 		Set<String> allowedShowletCodes = this.getAllowedShowletCodes(allowedShowlets);
 		Connection conn = null;
 		PreparedStatement stat = null;
@@ -59,7 +60,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			res = stat.executeQuery();
 			while (res.next()) {
 				String currentCode = res.getString(1);
-				ShowletType currentConfiguredShowlet = this.getShowletTypeManager().getShowletType(currentCode);
+				WidgetType currentConfiguredShowlet = this.getWidgetTypeManager().getShowletType(currentCode);
 				if (null == currentConfiguredShowlet) {
 					ApsSystemUtils.getLogger().info(JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM + ": deleting unknown showlet '"+currentCode+"' from the configuration bean");
 					this.purgeConfigurationFromInvalidShowlets(conn, currentCode);
@@ -77,13 +78,13 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		}
 	}
 	
-	private Set<String> getAllowedShowletCodes(List<ShowletType> allowedShowlets) {
+	private Set<String> getAllowedShowletCodes(List<WidgetType> allowedShowlets) {
 		Set<String> codes = new HashSet<String>();
 		if (null == allowedShowlets) {
 			return codes;
 		}
 		for (int i = 0; i < allowedShowlets.size(); i++) {
-			ShowletType type = allowedShowlets.get(i);
+			WidgetType type = allowedShowlets.get(i);
 			if (null != type) {
 				codes.add(type.getCode());
 			}
@@ -105,17 +106,17 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	}
 	
 	@Override
-	public List<ShowletType> buildCustomizableShowletsList(MyPortalConfig config) {
-		List<ShowletType> result = new ArrayList<ShowletType>();
-		List<ShowletType> allShowlets = null;
+	public List<WidgetType> buildCustomizableShowletsList(MyPortalConfig config) {
+		List<WidgetType> result = new ArrayList<WidgetType>();
+		List<WidgetType> allShowlets = null;
 		if (null == config) {
 			return result;
 		}
-		allShowlets = this.getShowletTypeManager().getShowletTypes();
+		allShowlets = this.getWidgetTypeManager().getShowletTypes();
 		if (null != allShowlets) {
 			Set<String> allowedShowletsCode = config.getAllowedShowlets();
 			if (allowedShowletsCode != null && allowedShowletsCode.size() > 0) {
-				for (ShowletType currentType : allShowlets) {
+				for (WidgetType currentType : allShowlets) {
 					if (allowedShowletsCode.contains(currentType.getCode())) {
 						result.add(currentType);
 					}
@@ -223,7 +224,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	 */
 	private Showlet createShowletFromRecord(String showletcode, String config) throws ApsSystemException {
 		Showlet newShowlet = new Showlet();
-		ShowletType inheritedType = this.getShowletTypeManager().getShowletType(showletcode);
+		WidgetType inheritedType = this.getWidgetTypeManager().getShowletType(showletcode);
 		newShowlet.setType(inheritedType);
 		ApsProperties properties = null;
 		newShowlet.setConfig(properties);
@@ -324,16 +325,18 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		this._pageModelManager = pageModelManager;
 	}
 	
-	protected IShowletTypeManager getShowletTypeManager() {
-		return _showletTypeManager;
+	public IWidgetTypeManager getWidgetTypeManager() {
+		return _widgetTypeManager;
 	}
-	public void setShowletTypeManager(IShowletTypeManager showletTypeManager) {
-		this._showletTypeManager = showletTypeManager;
+
+	public void setWidgetTypeManager(IWidgetTypeManager widgetTypeManager) {
+		this._widgetTypeManager = widgetTypeManager;
 	}
-	
+
 	private IPageManager _pageManager;
 	private IPageModelManager _pageModelManager;
-	private IShowletTypeManager _showletTypeManager;
+	
+	private IWidgetTypeManager _widgetTypeManager;
 	
 	private final String ADD_USER_CONFIG = 
 		"INSERT INTO jpmyportalplus_userpageconfig (username, pagecode, framepos, showletcode, config, closed) VALUES (?, ?, ?, ?, ?, ?)";

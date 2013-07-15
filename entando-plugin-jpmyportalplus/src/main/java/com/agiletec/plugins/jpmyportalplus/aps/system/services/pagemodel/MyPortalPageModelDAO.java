@@ -43,7 +43,7 @@ public class MyPortalPageModelDAO extends PageModelDAO {
 			pageModel.setDescr(res.getString(2));
 			String xmlFrames = res.getString(3);
 			if (null != xmlFrames && xmlFrames.length() > 0) {
-				MyPortalPageModelDOM pageModelDOM = new MyPortalPageModelDOM(xmlFrames, this.getShowletTypeManager());
+				MyPortalPageModelDOM pageModelDOM = new MyPortalPageModelDOM(xmlFrames, this.getWidgetTypeManager());
 				pageModel.setFrames(pageModelDOM.getFrames());
 				pageModel.setMainFrame(pageModelDOM.getMainFrame());
 				pageModel.setFrameConfigs(pageModelDOM.getFrameConfigs());

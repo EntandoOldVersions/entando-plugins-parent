@@ -17,22 +17,23 @@
 */
 package com.agiletec.plugins.jpmyportalplus.aps.tags.util;
 
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
 
 /**
  * @author E.Santoboni
  */
 public class WidgetCheckInfo {
 	
-	public WidgetCheckInfo(ShowletType showletType, Boolean checked, Lang lang) {
-		this._showletType = showletType;
+	public WidgetCheckInfo(WidgetType widgetType, Boolean checked, Lang lang) {
+		this._widgetType = widgetType;
 		this._checked = checked;
 		this._lang = lang;
 	}
 	
-	public ShowletType getShowletType() {
-		return _showletType;
+	public WidgetType getWidgetType() {
+		return _widgetType;
 	}
 	
 	public Boolean getChecked() {
@@ -44,18 +45,18 @@ public class WidgetCheckInfo {
 	}
 	
 	public String getCode() {
-		return this._showletType.getCode();
+		return this._widgetType.getCode();
 	}
 	
 	public String getTitle() {
-		String title = this._showletType.getTitles().getProperty(this._lang.getCode());
+		String title = this._widgetType.getTitles().getProperty(this._lang.getCode());
 		if (null != title) {
 			return title;
 		}
 		return this.getCode();
 	}
 	
-	private ShowletType _showletType;
+	private WidgetType _widgetType;
 	private Boolean _checked;
 	private Lang _lang;
 	

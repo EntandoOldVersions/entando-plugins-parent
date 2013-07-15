@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletResponseAware;
+import org.entando.entando.aps.system.services.widgettype.IWidgetTypeManager;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
@@ -30,7 +31,6 @@ import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.page.Showlet;
-import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
 import com.agiletec.aps.system.services.user.IUserManager;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsProperties;
@@ -329,13 +329,6 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		this._pageManager = pageManager;
 	}
 	
-	protected IShowletTypeManager getShowletTypeManager() {
-		return _showletTypeManager;
-	}
-	public void setShowletTypeManager(IShowletTypeManager showletTypeManager) {
-		this._showletTypeManager = showletTypeManager;
-	}
-	
 	protected IPageUserConfigManager getPageUserConfigManager() {
 		return _pageUserConfigManager;
 	}
@@ -350,6 +343,14 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		this._userManager = userManager;
 	}
 	
+	public IWidgetTypeManager getWidgetTypeManager() {
+		return _widgetTypeManager;
+	}
+
+	public void setWidgetTypeManager(IWidgetTypeManager widgetTypeManager) {
+		this._widgetTypeManager = widgetTypeManager;
+	}
+
 	private String _currentPageCode;
 	
 	private Integer _startFramePos;
@@ -362,8 +363,8 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 	private HttpServletResponse _servletResponse;
 	
 	private IPageManager _pageManager;
-	private IShowletTypeManager _showletTypeManager;
 	private IPageUserConfigManager _pageUserConfigManager;
 	private IUserManager _userManager;
+	private IWidgetTypeManager _widgetTypeManager;
 	
 }

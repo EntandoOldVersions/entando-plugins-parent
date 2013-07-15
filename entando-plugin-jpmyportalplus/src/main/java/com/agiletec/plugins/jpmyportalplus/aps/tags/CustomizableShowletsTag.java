@@ -27,6 +27,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
@@ -35,7 +36,6 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Showlet;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
@@ -61,7 +61,7 @@ public class CustomizableShowletsTag extends TagSupport {
             Showlet[] customShowletConfig = this.getCustomShowletConfig(currentPage);
             Showlet[] showletsToRender = pageUserConfigManager.getShowletsToRender(currentPage, customShowletConfig);
             List<String> allowedShowlets = new ArrayList<String>();
-            Map<String, ShowletType> customizableShowlets = this.getCustomizableShowlets(pageUserConfigManager);
+            Map<String, WidgetType> customizableShowlets = this.getCustomizableShowlets(pageUserConfigManager);
             allowedShowlets.addAll(customizableShowlets.keySet());
             Frame[] frames = ((MyPortalPageModel) currentPage.getModel()).getFrameConfigs();
             for (int i = 0; i < frames.length; i++) {
@@ -77,7 +77,7 @@ public class CustomizableShowletsTag extends TagSupport {
             }
             for (int i = 0; i < allowedShowlets.size(); i++) {
                 String code = allowedShowlets.get(i);
-                ShowletType type = customizableShowlets.get(code);
+                WidgetType type = customizableShowlets.get(code);
                 WidgetCheckInfo info = new WidgetCheckInfo(type, false, currentLang);
                 checkInfos.add(info);
             }
@@ -111,13 +111,13 @@ public class CustomizableShowletsTag extends TagSupport {
         return customShowlets;
     }
 
-    private Map<String, ShowletType> getCustomizableShowlets(IPageUserConfigManager pageUserConfigManager) throws ApsSystemException {
-        Map<String, ShowletType> map = new HashMap<String, ShowletType>();
+    private Map<String, WidgetType> getCustomizableShowlets(IPageUserConfigManager pageUserConfigManager) throws ApsSystemException {
+        Map<String, WidgetType> map = new HashMap<String, WidgetType>();
         UserDetails currentUser = (UserDetails) this.pageContext.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
         try {
-            List<ShowletType> list = pageUserConfigManager.getCustomizableShowlets(currentUser);
+            List<WidgetType> list = pageUserConfigManager.getCustomizableShowlets(currentUser);
             for (int i = 0; i < list.size(); i++) {
-                ShowletType type = list.get(i);
+                WidgetType type = list.get(i);
                 map.put(type.getCode(), type);
             }
         } catch (Throwable t) {

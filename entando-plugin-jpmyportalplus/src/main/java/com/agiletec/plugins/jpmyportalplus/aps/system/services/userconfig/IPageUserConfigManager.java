@@ -22,10 +22,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Showlet;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
@@ -43,7 +44,7 @@ public interface IPageUserConfigManager {
 	@Deprecated
 	public PageUserConfigBean getUserConfig(String username) throws ApsSystemException;
 	
-	public List<ShowletType> getCustomizableShowlets(UserDetails user) throws ApsSystemException;
+	public List<WidgetType> getCustomizableShowlets(UserDetails user) throws ApsSystemException;
 	
 	public CustomPageConfig getGuestPageConfig(IPage page, HttpServletRequest request) throws ApsSystemException;
 	
@@ -57,7 +58,7 @@ public interface IPageUserConfigManager {
 	
 	public void removeGuestPageConfig(IPage page, HttpServletRequest request, HttpServletResponse response) throws ApsSystemException;
 	
-	public ShowletType getVoidShowlet();
+	public WidgetType getVoidShowlet();
 	
 	public static final int STATUS_OPEN = 0;//DEFAULT STATUS
 	public static final int STATUS_CLOSE = 1;

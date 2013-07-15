@@ -19,13 +19,14 @@ package com.agiletec.plugins.jpmyportalplus.aps.system.services.config;
 
 import java.util.List;
 
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+import org.entando.entando.aps.system.services.widgettype.events.WidgetTypeChangedEvent;
+import org.entando.entando.aps.system.services.widgettype.events.WidgetTypeChangedObserver;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
-import com.agiletec.aps.system.services.showlettype.events.ShowletTypeChangedEvent;
-import com.agiletec.aps.system.services.showlettype.events.ShowletTypeChangedObserver;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.parse.MyPortalPlusConfigDOM;
@@ -34,7 +35,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageU
 /**
  * @author E.Santoboni
  */
-public class MyPortalConfigManager extends AbstractService implements IMyPortalConfigManager, ShowletTypeChangedObserver {
+public class MyPortalConfigManager extends AbstractService implements IMyPortalConfigManager, WidgetTypeChangedObserver {
 	
 	@Override
 	public void init() throws Exception {
@@ -45,7 +46,7 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 	}
 	
 	@Override
-	public void updateFromShowletTypeChanged(ShowletTypeChangedEvent event) {
+	public void updateFromShowletTypeChanged(WidgetTypeChangedEvent event) {
 		try {
 			this.init();
 		} catch (Throwable t) {
@@ -71,7 +72,7 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 	 * Get from the configuration the list of the showlets that can be customized in a page model.
 	 */
 	private void buildCustomizableShowletsSet() {
-		List<ShowletType> showlets = this.getPageUserConfigDAO().buildCustomizableShowletsList(this.getConfig());
+		List<WidgetType> showlets = this.getPageUserConfigDAO().buildCustomizableShowletsList(this.getConfig());
 		this.setCustomizableShowlets(showlets);
 	}
 	private void syncPageModelUserDatabase() {
@@ -102,10 +103,10 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 	}
 	
 	@Override
-	public List<ShowletType> getCustomizableShowlets() {
+	public List<WidgetType> getCustomizableShowlets() {
 		return _customizableShowlets;
 	}
-	public void setCustomizableShowlets(List<ShowletType> customizableShowlets) {
+	public void setCustomizableShowlets(List<WidgetType> customizableShowlets) {
 		this._customizableShowlets = customizableShowlets;
 	}
 	
@@ -131,7 +132,7 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 		this._configManager = configManager;
 	}
 	
-	private List<ShowletType> _customizableShowlets;
+	private List<WidgetType> _customizableShowlets;
 	
 	private String _voidShowletCode;
 	private ConfigInterface _configManager;
