@@ -21,13 +21,14 @@ import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.page.Showlet;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 
 /**
@@ -52,17 +53,17 @@ public class ShowletReplicatorTag extends TagSupport {
 					Showlet targetShowlet = targetPage.getShowlets()[frameId];
 					if (null != targetShowlet) {
 						reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET, targetShowlet);
-						ShowletType showletType = targetShowlet.getType();
-						if (showletType.isLogic()) {
-							showletType = showletType.getParentType();
+						WidgetType WidgetType = targetShowlet.getType();
+						if (WidgetType.isLogic()) {
+							WidgetType = WidgetType.getParentType();
 						}
-						String pluginCode = showletType.getPluginCode();
+						String pluginCode = WidgetType.getPluginCode();
 						boolean isPluginShowlet = (null != pluginCode && pluginCode.trim().length()>0);
 						StringBuffer jspPath = new StringBuffer("/WEB-INF/");
 						if (isPluginShowlet) {
 							jspPath.append("plugins/").append(pluginCode.trim()).append("/");
 						}
-						jspPath.append("aps/jsp/showlets/").append(showletType.getCode()).append(".jsp");
+						jspPath.append("aps/jsp/showlets/").append(WidgetType.getCode()).append(".jsp");
 						
 						this.pageContext.include(jspPath.toString());
 					}
