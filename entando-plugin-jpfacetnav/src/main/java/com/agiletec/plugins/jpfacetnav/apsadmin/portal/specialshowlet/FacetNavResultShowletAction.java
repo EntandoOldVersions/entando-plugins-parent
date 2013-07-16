@@ -20,8 +20,9 @@ package com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialshowlet;
 import java.util.List;
 import java.util.Map;
 
+import org.entando.entando.aps.system.services.widgettype.WidgetTypeParameter;
+
 import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.services.showlettype.ShowletTypeParameter;
 import com.agiletec.apsadmin.portal.specialshowlet.SimpleShowletConfigAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
@@ -132,9 +133,9 @@ public class FacetNavResultShowletAction extends SimpleShowletConfigAction imple
 	 * @param paramName
 	 * @return Showlet type parameter
 	 */
-	public ShowletTypeParameter getShowletTypeParameter(String paramName) {
-		List<ShowletTypeParameter> parameters = this.getShowlet().getType().getTypeParameters();
-		for (ShowletTypeParameter param : parameters) {
+	public WidgetTypeParameter getShowletTypeParameter(String paramName) {
+		List<WidgetTypeParameter> parameters = this.getShowlet().getType().getTypeParameters();
+		for (WidgetTypeParameter param : parameters) {
 			if (param.getName().equals(paramName)) {
 				return param;
 			}
