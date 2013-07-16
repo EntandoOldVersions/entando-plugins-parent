@@ -21,17 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.struts2.util.TokenHelper;
-
-import com.agiletec.plugins.jpcontentfeedback.apsadmin.JpContentFeedbackApsAdminBaseTestCase;
-import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
+import org.entando.entando.aps.system.services.widgettype.IWidgetTypeManager;
+import org.entando.entando.aps.system.services.widgettype.WidgetType;
 
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.cache.ICacheManager;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.Showlet;
-import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
-import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
@@ -47,6 +44,8 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.RatingDAO;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.RatingManager;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.model.IRating;
+import com.agiletec.plugins.jpcontentfeedback.apsadmin.JpContentFeedbackApsAdminBaseTestCase;
+import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -67,10 +66,10 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
 			Showlet showlet = new Showlet();
-            IShowletTypeManager showletTypeMan =
-            	(IShowletTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
-            ShowletType showletType = showletTypeMan.getShowletType("content_feedback_viewer");
-            showlet.setType(showletType);
+            IWidgetTypeManager showletTypeMan =
+            	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
+            WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
+            showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
             prop.put("contentId", contentId);
             prop.put(ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_ACTIVE, "true");
@@ -137,10 +136,10 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
 			Showlet showlet = new Showlet();
-            IShowletTypeManager showletTypeMan =
-            	(IShowletTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
-            ShowletType showletType = showletTypeMan.getShowletType("content_feedback_viewer");
-            showlet.setType(showletType);
+            IWidgetTypeManager showletTypeMan =
+            	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
+            WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
+            showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
             prop.put("contentId", contentId);
             prop.put(ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_ACTIVE, "true");
@@ -256,10 +255,10 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			this.setUserOnSession("admin");
 			this._contentManager.loadContent(contentId, true);
 			Showlet showlet = new Showlet();
-            IShowletTypeManager showletTypeMan =
-            	(IShowletTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
-            ShowletType showletType = showletTypeMan.getShowletType("content_feedback_viewer");
-            showlet.setType(showletType);
+            IWidgetTypeManager showletTypeMan =
+            	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
+            WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
+            showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
             prop.put("contentId", contentId);
             prop.put(ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_ACTIVE, "true");
