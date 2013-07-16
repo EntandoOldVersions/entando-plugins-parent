@@ -1,5 +1,10 @@
 target
 *.log
 nb-configuration.xml
-*/.settings/*
-
+entando-plugin-*/.settings/*
+entando-plugin-*/.project
+entando-plugin-*/.classpath
+entando-plugin-*/.gitignore
+.project
+./settings/
+.classpath
