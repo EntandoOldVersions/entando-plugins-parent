@@ -66,13 +66,13 @@ INSERT INTO pages (code, parentcode, pos, modelcode, titles, groupcode, showinme
 </properties>
 ', 'free', 0, NULL);
 
-INSERT INTO showletconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
+INSERT INTO widgetconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
 'jpmyportalplus_testpage', 0, 'login_form', NULL, NULL);
-INSERT INTO showletconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
+INSERT INTO widgetconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
 'jpmyportalplus_testpage', 1, 'jpmyportalplus_sample_showlet', NULL, NULL);
-INSERT INTO showletconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
+INSERT INTO widgetconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
 'jpmyportalplus_testpage', 2, 'jpmyportalplus_void', NULL, NULL);
-INSERT INTO showletconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
+INSERT INTO widgetconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
 'jpmyportalplus_testpage', 4, 'jpmyportalplus_test_showlet_3', NULL, NULL);
 
 
