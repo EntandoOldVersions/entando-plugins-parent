@@ -27,6 +27,7 @@ import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.cache.ICacheManager;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
@@ -47,8 +48,6 @@ import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.Con
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 
-import org.entando.entando.aps.system.services.page.Widget;
-
 
 public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTestCase {
 
@@ -66,7 +65,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			PublicContentAuthorizationInfo authInfo = new PublicContentAuthorizationInfo(content);
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
-			org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
+			com.agiletec.aps.system.services.page.Widget showlet = new com.agiletec.aps.system.services.page.Widget();
             IWidgetTypeManager showletTypeMan =
             	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
             WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
@@ -136,7 +135,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			PublicContentAuthorizationInfo authInfo = new PublicContentAuthorizationInfo(content);
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
-			org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
+			com.agiletec.aps.system.services.page.Widget showlet = new com.agiletec.aps.system.services.page.Widget();
             IWidgetTypeManager showletTypeMan =
             	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
             WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
@@ -255,7 +254,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
 			this._contentManager.loadContent(contentId, true);
-			org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
+			com.agiletec.aps.system.services.page.Widget showlet = new com.agiletec.aps.system.services.page.Widget();
             IWidgetTypeManager showletTypeMan =
             	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
             WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");

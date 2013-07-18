@@ -26,15 +26,13 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.baseconfig.BaseConfigManager;
 import com.agiletec.aps.system.services.lang.ILangManager;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.IPageManager;
+import com.agiletec.aps.system.services.page.PageUtils;
 import com.agiletec.aps.system.services.url.PageURL;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
-
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.IPageManager;
-import org.entando.entando.aps.system.services.page.PageUtils;
 
 /**
  * Utility for generating URLs without ticket parameter.

@@ -26,6 +26,7 @@ import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.i18n.II18nManager;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.user.IUserManager;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.system.entity.AbstractApsEntityAction;
@@ -34,9 +35,8 @@ import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfi
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegManager;
-import java.util.List;
 
-import org.entando.entando.aps.system.services.page.Widget;
+import java.util.List;
 
 /**
  * Action to manage User Account Registration Requests
@@ -173,7 +173,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		String typeCode = null;
 		RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
 		if (reqCtx != null) {
-			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			com.agiletec.aps.system.services.page.Widget showlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			if (showlet != null) {
 				ApsProperties config = showlet.getConfig();
 				if (null != config) {

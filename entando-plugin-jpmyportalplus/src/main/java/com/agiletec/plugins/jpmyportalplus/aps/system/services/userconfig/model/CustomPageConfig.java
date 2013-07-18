@@ -34,11 +34,10 @@ import org.json.simple.parser.ParseException;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -47,7 +46,7 @@ public class CustomPageConfig {
 
 	public CustomPageConfig(String pageCode, int frames) {
 		this.setPageCode(pageCode);
-		this.setConfig(new org.entando.entando.aps.system.services.page.Widget[frames]);
+		this.setConfig(new com.agiletec.aps.system.services.page.Widget[frames]);
 		this.setStatus(new Integer[frames]);
 	}
 
@@ -68,7 +67,7 @@ public class CustomPageConfig {
 			JSONParser parser = new JSONParser();
 			JSONObject positions = (JSONObject) parser.parse(value);
 			this.setPageCode(page.getCode());
-			this.setConfig(new org.entando.entando.aps.system.services.page.Widget[frameNumber]);
+			this.setConfig(new com.agiletec.aps.system.services.page.Widget[frameNumber]);
 			this.setStatus(new Integer[frameNumber]);
 			for (int i = 0; i < frameNumber; i++) {
 				if (frames[i].isLocked()) continue;
@@ -78,9 +77,9 @@ public class CustomPageConfig {
 				if (null == showletCode) continue;
 				WidgetType type = showletTypeManager.getShowletType(showletCode.toString());
 				if (null == type) continue;
-				org.entando.entando.aps.system.services.page.Widget showlet = null;
+				com.agiletec.aps.system.services.page.Widget showlet = null;
 				if (showletCode.equals(voidShowletCode) || allowedShowlets.contains(showletCode) || this.isViewerType(type)) {
-					showlet = new org.entando.entando.aps.system.services.page.Widget();
+					showlet = new com.agiletec.aps.system.services.page.Widget();
 					showlet.setType(type);
                                         /*
 					JSONObject showletConfig = (JSONObject) frame.get("config");
@@ -148,9 +147,9 @@ public class CustomPageConfig {
 		String value = null;
 		try {
 			JSONObject frames = new JSONObject();
-			org.entando.entando.aps.system.services.page.Widget[] showlets = this.getConfig();
+			com.agiletec.aps.system.services.page.Widget[] showlets = this.getConfig();
 			for (int i = 0; i < showlets.length; i++) {
-				org.entando.entando.aps.system.services.page.Widget showlet = showlets[i];
+				com.agiletec.aps.system.services.page.Widget showlet = showlets[i];
 				if (null == showlet) continue;
 				JSONObject frame = new JSONObject();
 				frame.put("code", showlet.getType().getCode());
@@ -204,10 +203,10 @@ public class CustomPageConfig {
 		this._pageCode = pageCode;
 	}
 
-	public org.entando.entando.aps.system.services.page.Widget[] getConfig() {
+	public com.agiletec.aps.system.services.page.Widget[] getConfig() {
 		return _config;
 	}
-	protected void setConfig(org.entando.entando.aps.system.services.page.Widget[] config) {
+	protected void setConfig(com.agiletec.aps.system.services.page.Widget[] config) {
 		this._config = config;
 	}
 
@@ -220,7 +219,7 @@ public class CustomPageConfig {
 
 	private String _pageCode;
 
-	private org.entando.entando.aps.system.services.page.Widget[] _config;
+	private com.agiletec.aps.system.services.page.Widget[] _config;
 	private Integer[] _status;
 
 }

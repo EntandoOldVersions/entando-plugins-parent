@@ -28,6 +28,8 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.url.IURLManager;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.internalservlet.AbstractFrontAction;
@@ -37,9 +39,6 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -51,17 +50,17 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 		//System.out.println("Partenza " + this.getStartFramePos() +
 		//		" - ARRIVO  " + this.getTargetFramePos());
 		try {
-			org.entando.entando.aps.system.services.page.Widget[] customShowlets = super.getCustomShowletConfig();
+			com.agiletec.aps.system.services.page.Widget[] customShowlets = super.getCustomShowletConfig();
 			IPage currentPage = this.getCurrentPage();
-			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			com.agiletec.aps.system.services.page.Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
 
-			org.entando.entando.aps.system.services.page.Widget movedShowlet = showletsToRender[this.getStartFramePos()];
+			com.agiletec.aps.system.services.page.Widget movedShowlet = showletsToRender[this.getStartFramePos()];
 			Integer movedShowletStatusInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[this.getStartFramePos()] : null;
 			int movedShowletStatus = (movedShowletStatusInteger == null) ? 0 : movedShowletStatusInteger;
 			ShowletUpdateInfoBean movedShowletUpdateInfo = new ShowletUpdateInfoBean(this.getTargetFramePos(), movedShowlet, movedShowletStatus);
 			this.addUpdateInfoBean(movedShowletUpdateInfo);
 
-			org.entando.entando.aps.system.services.page.Widget showletToMove = showletsToRender[this.getTargetFramePos()];
+			com.agiletec.aps.system.services.page.Widget showletToMove = showletsToRender[this.getTargetFramePos()];
 			Integer showletToMoveStatusInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[this.getTargetFramePos()] : null;
 			int showletToMoveStatus = (showletToMoveStatusInteger == null) ? 0 : showletToMoveStatusInteger;
 			ShowletUpdateInfoBean showletToMoveUpdateInfo = new ShowletUpdateInfoBean(this.getStartFramePos(), showletToMove, showletToMoveStatus);
@@ -91,9 +90,9 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 	@Override
 	public String addWidgets() {
 		try {
-			org.entando.entando.aps.system.services.page.Widget[] customShowlets = super.getCustomShowletConfig();
+			com.agiletec.aps.system.services.page.Widget[] customShowlets = super.getCustomShowletConfig();
 			IPage currentPage = this.getCurrentPage();
-			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			com.agiletec.aps.system.services.page.Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
 
 			//for (int i = 0; i < this.getShowletToShow().size(); i++) {
 			//	System.out.println("DA MOSTRARE " + this.getShowletToShow().get(i));
@@ -117,12 +116,12 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 						if (showletsToAdd.size()>0) {
 							this.addNewWidgetUpdateInfo(showletsToAdd, i, isFrameToFlow);
 						} else {
-							org.entando.entando.aps.system.services.page.Widget showletToInsert = this.getShowletVoid();
+							com.agiletec.aps.system.services.page.Widget showletToInsert = this.getShowletVoid();
 							ShowletUpdateInfoBean infoBean = new ShowletUpdateInfoBean(i, showletToInsert, IPageUserConfigManager.STATUS_OPEN);
 							this.addUpdateInfoBean(infoBean);
 						}
 					} else {
-						org.entando.entando.aps.system.services.page.Widget showlet = showletsToRender[i];
+						com.agiletec.aps.system.services.page.Widget showlet = showletsToRender[i];
 						if ((null == showlet || (null != showlet && showlet.getType().getCode().equals(voidShowletCode))) && showletsToAdd.size()>0) {
 							this.addNewWidgetUpdateInfo(showletsToAdd, i, isFrameToFlow);
 						}
@@ -138,7 +137,7 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 		return SUCCESS;
 	}
 
-	protected List<Integer> getFramesToFlow(org.entando.entando.aps.system.services.page.Widget[] showletsToRender, IPage currentPage) throws Throwable {
+	protected List<Integer> getFramesToFlow(com.agiletec.aps.system.services.page.Widget[] showletsToRender, IPage currentPage) throws Throwable {
 		List<Integer> framesToFlow = new ArrayList<Integer>();
 		try {
 			String voidShowletCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
@@ -146,7 +145,7 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 			for (int i = 0; i < frames.length; i++) {
 				Frame frame = frames[i];
 				if (!frame.isLocked()) {
-					org.entando.entando.aps.system.services.page.Widget showlet = showletsToRender[i];
+					com.agiletec.aps.system.services.page.Widget showlet = showletsToRender[i];
 					if (null != showlet &&
 							!showlet.getType().getCode().equals(voidShowletCode) &&
 							(null == this.getShowletToShow() || !this.getShowletToShow().contains(showlet.getType().getCode()))) {
@@ -161,7 +160,7 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 		return framesToFlow;
 	}
 
-	protected List<String> getShowletsToAdd(org.entando.entando.aps.system.services.page.Widget[] showletsToRender, IPage currentPage) throws Throwable {
+	protected List<String> getShowletsToAdd(com.agiletec.aps.system.services.page.Widget[] showletsToRender, IPage currentPage) throws Throwable {
 		Set<String> showletsToAdd = new HashSet<String>();
 		try {
 			if (null != this.getShowletToShow()) {
@@ -171,7 +170,7 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 			for (int i = 0; i < frames.length; i++) {
 				Frame frame = frames[i];
 				if (!frame.isLocked()) {
-					org.entando.entando.aps.system.services.page.Widget showlet = showletsToRender[i];
+					com.agiletec.aps.system.services.page.Widget showlet = showletsToRender[i];
 					if (null != showlet) {
 						showletsToAdd.remove(showlet.getType().getCode());
 					}
@@ -188,12 +187,12 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 
 	protected void addNewWidgetUpdateInfo(List<String> showletsToAdd, int framePos, boolean frameToFlow) {
 		ShowletUpdateInfoBean infoBean = null;
-		org.entando.entando.aps.system.services.page.Widget showletToInsert = null;
+		com.agiletec.aps.system.services.page.Widget showletToInsert = null;
 		String typeCode = showletsToAdd.get(0);
 		WidgetType type = this.getWidgetTypeManager().getShowletType(typeCode);
 		if (null != type) {
 			showletsToAdd.remove(typeCode);
-			showletToInsert = new org.entando.entando.aps.system.services.page.Widget();
+			showletToInsert = new com.agiletec.aps.system.services.page.Widget();
 			showletToInsert.setType(type);
 		}
 		if (null != showletToInsert) {

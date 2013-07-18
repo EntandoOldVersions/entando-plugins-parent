@@ -29,12 +29,11 @@ import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.notify.NotifyManager;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.url.IURLManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.helper.IContentActionHelper;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
-
-import org.entando.entando.aps.system.services.page.IPage;
 
 /**
  * Classe action delegata alla redazione del contenuto in Front-End.

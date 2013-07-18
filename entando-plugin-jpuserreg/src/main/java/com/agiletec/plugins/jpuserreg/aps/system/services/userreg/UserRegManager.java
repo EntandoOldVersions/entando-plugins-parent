@@ -46,6 +46,8 @@ import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.group.IGroupManager;
 import com.agiletec.aps.system.services.lang.ILangManager;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.role.IRoleManager;
 import com.agiletec.aps.system.services.role.Role;
 import com.agiletec.aps.system.services.url.IURLManager;
@@ -62,9 +64,6 @@ import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.IUserReg
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.Template;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.parse.UserRegConfigDOM;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.util.ShaEncoder;
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.IPageManager;
 
 /**
  * Manager for operations of user account registration.

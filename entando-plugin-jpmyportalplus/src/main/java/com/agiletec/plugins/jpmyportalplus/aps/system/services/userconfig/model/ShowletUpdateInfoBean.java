@@ -16,7 +16,7 @@
 */
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model;
 
-import org.entando.entando.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.page.Widget;
 
 
 
@@ -25,7 +25,7 @@ import org.entando.entando.aps.system.services.page.Widget;
  */
 public class ShowletUpdateInfoBean {
 
-	public ShowletUpdateInfoBean(int framePos, org.entando.entando.aps.system.services.page.Widget showlet, int status) {
+	public ShowletUpdateInfoBean(int framePos, com.agiletec.aps.system.services.page.Widget showlet, int status) {
 		this.setFramePos(framePos);
 		this.setShowlet(showlet);
 		this.setStatus(status);
@@ -38,10 +38,10 @@ public class ShowletUpdateInfoBean {
 		this._framePos = framePos;
 	}
 
-	public org.entando.entando.aps.system.services.page.Widget getShowlet() {
+	public com.agiletec.aps.system.services.page.Widget getShowlet() {
 		return _showlet;
 	}
-	protected void setShowlet(org.entando.entando.aps.system.services.page.Widget showlet) {
+	protected void setShowlet(com.agiletec.aps.system.services.page.Widget showlet) {
 		this._showlet = showlet;
 	}
 
@@ -53,7 +53,7 @@ public class ShowletUpdateInfoBean {
 	}
 
 	private int _framePos;
-	private org.entando.entando.aps.system.services.page.Widget _showlet;
+	private com.agiletec.aps.system.services.page.Widget _showlet;
 	private int _status;
 
 }

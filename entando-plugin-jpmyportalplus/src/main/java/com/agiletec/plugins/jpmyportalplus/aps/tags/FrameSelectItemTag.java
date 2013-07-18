@@ -28,6 +28,8 @@ import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
@@ -35,9 +37,6 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPorta
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.tags.util.FrameSelectItem;
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * Returns the list of select items to use in the select inside the frame swap function of each widget
@@ -59,15 +58,15 @@ public class FrameSelectItemTag extends TagSupport {
 				return super.doStartTag();
 			}
 			Lang currentLang = (Lang) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_LANG);
-			org.entando.entando.aps.system.services.page.Widget[] customShowletConfig = this.getCustomShowletConfig(currentPage, pageUserConfigManager);
-			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = pageUserConfigManager.getShowletsToRender(currentPage, customShowletConfig);
+			com.agiletec.aps.system.services.page.Widget[] customShowletConfig = this.getCustomShowletConfig(currentPage, pageUserConfigManager);
+			com.agiletec.aps.system.services.page.Widget[] showletsToRender = pageUserConfigManager.getShowletsToRender(currentPage, customShowletConfig);
 
 			String voidShowletCode = pageUserConfigManager.getVoidShowlet().getCode();
 			for (int i = 0; i < showletsToRender.length; i++) {
 				Frame frame = pageModel.getFrameConfigs()[i];
 				Integer columnId = frame.getColumn();
 				if (frame.isLocked() || null == columnId || i == currentFrame.intValue()) continue;
-				org.entando.entando.aps.system.services.page.Widget showlet = showletsToRender[i];
+				com.agiletec.aps.system.services.page.Widget showlet = showletsToRender[i];
 				if (columnId.equals(currentColumnId)) {
 					if (showlet != null && !showlet.getType().getCode().equals(voidShowletCode)) {
 						FrameSelectItem item = new FrameSelectItem(currentColumnId, columnId,
@@ -103,8 +102,8 @@ public class FrameSelectItemTag extends TagSupport {
 		return false;
 	}
 
-	protected org.entando.entando.aps.system.services.page.Widget[] getCustomShowletConfig(IPage currentPage, IPageUserConfigManager pageUserConfigManager) throws Throwable {
-		org.entando.entando.aps.system.services.page.Widget[] customShowlets = null;
+	protected com.agiletec.aps.system.services.page.Widget[] getCustomShowletConfig(IPage currentPage, IPageUserConfigManager pageUserConfigManager) throws Throwable {
+		com.agiletec.aps.system.services.page.Widget[] customShowlets = null;
 		try {
 			CustomPageConfig customPageConfig =
 				(CustomPageConfig) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG);

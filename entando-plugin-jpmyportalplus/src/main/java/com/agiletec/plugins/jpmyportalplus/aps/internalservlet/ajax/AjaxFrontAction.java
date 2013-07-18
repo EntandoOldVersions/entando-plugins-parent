@@ -21,14 +21,13 @@ import java.util.List;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.plugins.jpmyportalplus.aps.internalservlet.AbstractFrontAction;
 import com.agiletec.plugins.jpmyportalplus.aps.internalservlet.util.FrameSelectItem;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -99,15 +98,15 @@ public class AjaxFrontAction extends AbstractFrontAction {
 				return SUCCESS;
 			}
 			CustomPageConfig config = this.getCustomPageConfig();
-			org.entando.entando.aps.system.services.page.Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
-			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			com.agiletec.aps.system.services.page.Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
+			com.agiletec.aps.system.services.page.Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
 			Lang currentLang = this.getCurrentLang();
 			String voidShowletCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
 			for (int i = 0; i < showletsToRender.length; i++) {
 				Frame frame = pageModel.getFrameConfigs()[i];
 				Integer columnId = frame.getColumn();
 				if (frame.isLocked() || null == columnId || i == this.getFrameWhereOpenSection().intValue()) continue;
-				org.entando.entando.aps.system.services.page.Widget showlet = showletsToRender[i];
+				com.agiletec.aps.system.services.page.Widget showlet = showletsToRender[i];
 				if (columnId.equals(currentColumnId)) {
 					if (showlet != null && !showlet.getType().getCode().equals(voidShowletCode)) {
 						FrameSelectItem item = new FrameSelectItem(currentColumnId, columnId, showlet, i, currentLang);

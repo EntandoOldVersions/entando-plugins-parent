@@ -18,9 +18,8 @@ package org.entando.entando.plugins.jpfrontshortcut.aps.internalservlet.portal;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.notify.NotifyManager;
+import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.apsadmin.portal.PageConfigAction;
-
-import org.entando.entando.aps.system.services.page.IPage;
 
 /**
  * @author E.Santoboni

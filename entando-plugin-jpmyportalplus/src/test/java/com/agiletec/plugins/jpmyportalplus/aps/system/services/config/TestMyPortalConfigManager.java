@@ -17,16 +17,15 @@
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.config;
 
 import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.IPageManager;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.ApsPluginBaseTestCase;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.IPageManager;
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -46,7 +45,7 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 		assertEquals(1, config.getConfig().size());
 		CustomPageConfig pageConfig = config.getConfig().get("jpmyportalplus_testpage");
 		assertNotNull(pageConfig);
-		org.entando.entando.aps.system.services.page.Widget[] showlets = pageConfig.getConfig();
+		com.agiletec.aps.system.services.page.Widget[] showlets = pageConfig.getConfig();
 		Integer[] status = pageConfig.getStatus();
 		assertEquals(8, status.length);
 		assertEquals(showlets.length, status.length);
@@ -75,7 +74,7 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 		PageUserConfigBean config = this._pageUserConfigManager.getUserConfig(user);
 		IPage page = this._pageManager.getPage("jpmyportalplus_testpage");
 		CustomPageConfig pageConfig = config.getConfig().get("jpmyportalplus_testpage");
-		org.entando.entando.aps.system.services.page.Widget[] showlets = this._pageUserConfigManager.getShowletsToRender(page, pageConfig.getConfig());
+		com.agiletec.aps.system.services.page.Widget[] showlets = this._pageUserConfigManager.getShowletsToRender(page, pageConfig.getConfig());
 
 		assertEquals(8, showlets.length);
 

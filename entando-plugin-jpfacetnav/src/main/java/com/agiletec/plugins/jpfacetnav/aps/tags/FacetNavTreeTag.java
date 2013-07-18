@@ -26,11 +26,10 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.tree.ITreeNode;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpfacetnav.aps.system.JpFacetNavSystemConstants;
 import com.agiletec.plugins.jpfacetnav.aps.system.services.content.showlet.IFacetNavHelper;
-
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  *
@@ -61,7 +60,7 @@ public class FacetNavTreeTag extends AbstractFacetNavTag {
 
 	protected List<ITreeNode> getFacetRootNodes(RequestContext reqCtx) {
 		List<ITreeNode> facets = null;
-		org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+		com.agiletec.aps.system.services.page.Widget currentShowlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 		String configParamName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
 		String facetParamConfig = currentShowlet.getConfig().getProperty(configParamName);
 		if (null != facetParamConfig && facetParamConfig.trim().length()>0) {

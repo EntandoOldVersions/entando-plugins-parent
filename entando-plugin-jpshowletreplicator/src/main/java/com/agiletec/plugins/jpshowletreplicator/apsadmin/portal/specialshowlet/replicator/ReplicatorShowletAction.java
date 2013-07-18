@@ -24,14 +24,13 @@ import java.util.Set;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.tree.ITreeNode;
 import com.agiletec.aps.system.services.group.Group;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.portal.helper.IPageActionHelper;
 import com.agiletec.apsadmin.portal.specialshowlet.SimpleShowletConfigAction;
 import com.agiletec.apsadmin.system.ITreeAction;
 import com.opensymphony.xwork2.Action;
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -129,11 +128,11 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 					if (selectedNode.equals(this.getPageCode()) && frame==this.getFrame()) {
 						this.addActionError(this.getText("error.target.currentFrame"));
 					} else {
-						org.entando.entando.aps.system.services.page.Widget[] showlets = targetPage.getShowlets();
+						com.agiletec.aps.system.services.page.Widget[] showlets = targetPage.getShowlets();
 						if (showlets.length <= frame) {
 							this.addActionError(this.getText("error.invalidShowletType"));
 						} else {
-							org.entando.entando.aps.system.services.page.Widget showlet = showlets[frame];
+							com.agiletec.aps.system.services.page.Widget showlet = showlets[frame];
 							if (showlet != null && this.getInvalidShowletTypes().contains(showlet.getType().getCode())) {
 								this.addActionError(this.getText("error.invalidShowletType"));
 							} else {
@@ -157,7 +156,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 			if (targetPage == null) {
 				this.addActionError(this.getText("error.noPageSelected"));
 			} else {
-				org.entando.entando.aps.system.services.page.Widget targetFrame = targetPage.getShowlets()[this.getFrameIdParam().intValue()];
+				com.agiletec.aps.system.services.page.Widget targetFrame = targetPage.getShowlets()[this.getFrameIdParam().intValue()];
 				if (targetFrame == null || this.getInvalidShowletTypes().contains(targetFrame.getType().getCode())) {
 					this.addActionError(this.getText("error.invalidShowletType"));
 				} else {

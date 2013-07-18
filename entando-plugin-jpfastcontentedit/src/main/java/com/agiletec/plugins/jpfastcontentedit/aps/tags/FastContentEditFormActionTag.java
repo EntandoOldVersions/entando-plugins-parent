@@ -23,10 +23,9 @@ import javax.servlet.ServletException;
 
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.InternalServletTag;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
-
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * Tag for showlet "jpfastcontentedit_formAction".
@@ -34,7 +33,7 @@ import org.entando.entando.aps.system.services.page.Widget;
 public class FastContentEditFormActionTag extends InternalServletTag {
 
 	@Override
-	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, org.entando.entando.aps.system.services.page.Widget showlet) throws ServletException, IOException {
+	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, com.agiletec.aps.system.services.page.Widget showlet) throws ServletException, IOException {
 		String actionPath = JpFastContentEditSystemConstants.ACTION_PATH_FOR_CONTENT_EDIT;
 		String requestActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_ACTIONPATH);
 		String currentFrameActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_FRAMEDEST);
