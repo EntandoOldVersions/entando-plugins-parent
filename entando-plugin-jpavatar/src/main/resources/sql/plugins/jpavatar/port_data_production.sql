@@ -2,7 +2,7 @@ INSERT INTO sysconfig( version, item, descr, config)  VALUES ('production', 'jpa
 	<style>local</style>
 </jpavatar>');
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpavatar_avatar', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpavatar_avatar', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Avatar - Show the current user avatar</property>
 <property key="it">Avatar - Mostra l''avatar dell''utente corrente</property>

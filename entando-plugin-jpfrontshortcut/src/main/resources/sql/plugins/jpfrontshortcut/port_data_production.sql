@@ -1,4 +1,4 @@
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked, maingroup) VALUES ('jpfrontshortcut_content_viewer', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked, maingroup) VALUES ('jpfrontshortcut_content_viewer', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Front Shortcut Contents - Publish a Content</property>
 <property key="it">Front Shortcut Contenuti - Pubblica un Contenuto</property>
@@ -7,7 +7,7 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 	<parameter name="modelId">Content Model ID</parameter>
 	<action name="viewerConfig"/>
 </config>', 'jpfrontshortcut', NULL, NULL, 1, NULL);
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked, maingroup) VALUES ('jpfrontshortcut_navigation_menu', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked, maingroup) VALUES ('jpfrontshortcut_navigation_menu', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Front Shortcut Navigation - Menu</property>
 <property key="it">Front Shortcut Navigazione - Menu</property>
@@ -15,7 +15,7 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 <parameter name="navSpec">Rules for the Page List auto-generation</parameter>
 <action name="navigatorConfig" />
 </config>', 'jpfrontshortcut', NULL, NULL, 1, NULL);
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked, maingroup) VALUES ('jpfrontshortcut_info', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked, maingroup) VALUES ('jpfrontshortcut_info', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Front Shortcut Info</property>
 <property key="it">Front Shortcut Info</property>

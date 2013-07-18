@@ -1,4 +1,4 @@
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpfacetnav_results', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpfacetnav_results', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Search Result</property>
 <property key="it">Risultati Ricerca</property>
@@ -7,7 +7,7 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 	<action name="facetNavResultConfig"/>
 </config>', 'jpfacetnav', NULL, NULL, 1);
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpfacetnav_tree', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpfacetnav_tree', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Facets Tree</property>
 <property key="it">Albero delle faccette</property>

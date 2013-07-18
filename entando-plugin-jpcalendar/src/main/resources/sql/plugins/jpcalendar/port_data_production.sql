@@ -7,7 +7,7 @@ INSERT INTO sysconfig (version, item, descr, config) VALUES ('production', 'jpca
 </calendarConfig>');
 
 
-INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked)
+INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked)
     VALUES ('jpcalendar_calendar', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Calendar</property>
@@ -15,7 +15,7 @@ INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode,
 </properties>', NULL, 'jpcalendar', NULL, NULL, 1);
 
 
-INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked)
+INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked)
     VALUES ('jpcalendar_dailyEvents', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Events of the Day</property>

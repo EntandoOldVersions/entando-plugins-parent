@@ -50,14 +50,14 @@ Best regards.
 	</reactivation>
 </userRegConfig>');
    
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
 VALUES ('jpuserreg_loginUserReg', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Login Form - With registration management</property>
 <property key="it">Form di login - Con gestione registrazione</property>
 </properties>', NULL, 'jpuserreg', NULL, NULL, 1);
     
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
 VALUES ('jpuserreg_Registration', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">User Registration</property>
@@ -67,7 +67,7 @@ VALUES ('jpuserreg_Registration', '<?xml version="1.0" encoding="UTF-8"?>
 	<action name="userRegConfig"/>
 </config>', 'jpuserreg', NULL, NULL, 1 );
 
-INSERT INTO showletcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked )
+INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked )
 	VALUES ( 'jpuserreg_profile_choice', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">User Registration - with profile choice</property>
@@ -77,7 +77,7 @@ INSERT INTO showletcatalog ( code, titles, parameters, plugincode, parenttypecod
 <property key="actionPath">/ExtStr2/do/jpuserreg/UserReg/listTypes</property>
 </properties>', 1 );
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
 VALUES ('jpuserreg_Activation', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">User Activation</property>
@@ -87,7 +87,7 @@ VALUES ('jpuserreg_Activation', '<?xml version="1.0" encoding="UTF-8"?>
 <property key="actionPath">/ExtStr2/do/jpuserreg/UserReg/initActivation.action</property>
 </properties>', 1);
    
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
 VALUES ('jpuserreg_Recover', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">User Recover</property>
@@ -97,7 +97,7 @@ VALUES ('jpuserreg_Recover', '<?xml version="1.0" encoding="UTF-8"?>
 <property key="actionPath">/ExtStr2/do/jpuserreg/UserReg/initRecover.action</property>
 </properties>', 1);
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
 VALUES ('jpuserreg_Reactivation', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">User Reactivation</property>
@@ -107,7 +107,7 @@ VALUES ('jpuserreg_Reactivation', '<?xml version="1.0" encoding="UTF-8"?>
 <property key="actionPath">/ExtStr2/do/jpuserreg/UserReg/initReactivation.action</property>
 </properties>', 1);
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) 
 VALUES ('jpuserreg_Suspension', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">User Suspension</property>

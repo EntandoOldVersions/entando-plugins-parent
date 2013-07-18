@@ -31,7 +31,7 @@ Buona lettura.]]></textFooter>
 	</mail>
 </newsletterConfig>');
 
-INSERT INTO showletcatalog ( code, plugincode, titles, parenttypecode, defaultconfig, locked ) VALUES ( 'jpnewsletter_registration', 'jpnewsletter', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog ( code, plugincode, titles, parenttypecode, defaultconfig, locked ) VALUES ( 'jpnewsletter_registration', 'jpnewsletter', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Iscrizione Newsletter</property>
 <property key="it">Iscrizione Newsletter</property>
@@ -40,7 +40,7 @@ INSERT INTO showletcatalog ( code, plugincode, titles, parenttypecode, defaultco
 <property key="actionPath">/ExtStr2/do/jpnewsletter/Front/RegSubscriber/entry.action</property>
 </properties>', 1 );
 
-INSERT INTO showletcatalog ( code, plugincode, titles, parenttypecode, defaultconfig, locked ) VALUES ( 'jpnewsletter_subscription', 'jpnewsletter', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog ( code, plugincode, titles, parenttypecode, defaultconfig, locked ) VALUES ( 'jpnewsletter_subscription', 'jpnewsletter', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Conferma Iscrizione Newsletter</property>
 <property key="it">Conferma Iscrizione Newsletter</property>
@@ -49,7 +49,7 @@ INSERT INTO showletcatalog ( code, plugincode, titles, parenttypecode, defaultco
 <property key="actionPath">/ExtStr2/do/jpnewsletter/Front/RegSubscriber/subscription.action</property>
 </properties>', 1 );
 
-INSERT INTO showletcatalog ( code, plugincode, titles, parenttypecode, defaultconfig, locked ) VALUES ( 'jpnewsletter_unsubscription', 'jpnewsletter', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog ( code, plugincode, titles, parenttypecode, defaultconfig, locked ) VALUES ( 'jpnewsletter_unsubscription', 'jpnewsletter', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Cancellazione Iscrizione Newsletter</property>
 <property key="it">Cancellazione Iscrizione Newsletter</property>

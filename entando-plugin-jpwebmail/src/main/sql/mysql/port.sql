@@ -37,14 +37,14 @@ INSERT INTO sysconfig ( version, item, descr, config ) VALUES ( 'production', 'j
 </webmailConfig>' );
 
 
-INSERT INTO showletcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked ) VALUES
+INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked ) VALUES
 	( 'jpwebmail_small', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Webmail - Service Intro</property>
 <property key="it">Webmail - Intro Servizio</property>
 </properties>', NULL, 'jpwebmail', NULL, NULL, 1 );
 
-INSERT INTO showletcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked ) VALUES
+INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked ) VALUES
 	( 'jpwebmail_navigation', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Webmail - Navigation</property>

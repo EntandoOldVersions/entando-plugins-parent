@@ -1,4 +1,4 @@
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jptokenapi_myToken', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jptokenapi_myToken', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">My API Token</property>
 <property key="it">My API Token</property>

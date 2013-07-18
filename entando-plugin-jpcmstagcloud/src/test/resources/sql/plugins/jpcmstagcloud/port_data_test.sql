@@ -1,10 +1,10 @@
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpcmstagcloud', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpcmstagcloud', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Tag Cloud</property>
 <property key="it">Tag Cloud</property>
 </properties>', NULL, 'jpcmstagcloud', NULL, NULL, 1);
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpcmstagcloud_viewer_list', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpcmstagcloud_viewer_list', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Publish a List of Tagged Contents</property>
 <property key="it">Pubblica Lista Contenuti Taggati</property>

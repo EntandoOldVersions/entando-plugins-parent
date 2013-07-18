@@ -1,4 +1,4 @@
-INSERT INTO showletcatalog ( code, titles, parameters, plugincode, locked )
+INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, locked )
 	VALUES ( 'jpfastcontentedit_content_viewer_list', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Contents - Publish a List of Contents Editables from Front-End</property>
@@ -18,7 +18,7 @@ INSERT INTO showletcatalog ( code, titles, parameters, plugincode, locked )
 	<action name="listViewerConfig"/>
 </config>', 'jpfastcontentedit', 1 );
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked)
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked)
 	VALUES ('jpfastcontentedit_formAction', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Content Editing Form</property>

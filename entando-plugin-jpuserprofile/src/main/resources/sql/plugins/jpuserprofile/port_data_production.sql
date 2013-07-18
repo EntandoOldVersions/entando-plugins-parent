@@ -1,4 +1,4 @@
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpuserprofile_editCurrentUser', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpuserprofile_editCurrentUser', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Edit Current User</property>
 <property key="it">Edita Utente Corrente</property>
@@ -6,7 +6,7 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 <properties>
 <property key="actionPath">/ExtStr2/do/jpuserprofile/Front/CurrentUser/edit.action</property>
 </properties>', 1);
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpuserprofile_editCurrentUser_password', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpuserprofile_editCurrentUser_password', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Edit Current User Password</property>
 <property key="it">Edita Password Utente Corrente</property>
@@ -14,7 +14,7 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 <properties>
 <property key="actionPath">/ExtStr2/do/jpuserprofile/Front/CurrentUser/editPassword.action</property>
 </properties>', 1);
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpuserprofile_editCurrentUser_profile', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpuserprofile_editCurrentUser_profile', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Edit Current User Profile</property>
 <property key="it">Edita Profilo Utente Corrente</property>

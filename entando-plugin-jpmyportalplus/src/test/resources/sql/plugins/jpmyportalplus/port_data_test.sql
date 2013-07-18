@@ -9,7 +9,7 @@ INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpmyportalplus_
 <frame pos="7" locked="true"><descr>Footer</descr></frame>
 </frames>', 'jpmyportalplus');
 
-INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
+INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_void',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
@@ -17,7 +17,7 @@ INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode,
 <property key="it">My Portal - Vuoto</property>
 </properties>',null,'jpmyportalplus',null,null,1);
 
-INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
+INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_sample_showlet',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
@@ -25,7 +25,7 @@ INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode,
 <property key="it">My Portal - Widget di Esempio</property>
 </properties>',null,'jpmyportalplus',null,null,1);
 
-INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
+INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_test_showlet_1',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
@@ -33,7 +33,7 @@ INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode,
 <property key="it">My Portal - Widget di Test 1</property>
 </properties>',null,'jpmyportalplus',null,null,1);
 
-INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
+INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_test_showlet_2',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
@@ -41,7 +41,7 @@ INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode,
 <property key="it">My Portal - Widget di Test 2</property>
 </properties>',null,'jpmyportalplus',null,null,1);
 
-INSERT INTO showletcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
+INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_test_showlet_3',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>

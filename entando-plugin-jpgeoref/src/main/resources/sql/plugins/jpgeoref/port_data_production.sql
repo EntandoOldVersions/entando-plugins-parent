@@ -5,7 +5,7 @@ INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpgeoref_home',
 	</frame>
 </frames>', 'jpgeoref');
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpgeoref_GoogleListViewer', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpgeoref_GoogleListViewer', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Publish contents on Map</property>
 <property key="it">Pubblicazione contenuti su Mappa</property>
@@ -23,7 +23,7 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 	<action name="jpgeorefListViewerConfig"/>
 </config>', 'jpgeoref', NULL, NULL, 1);
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpgeoref_GoogleRoute', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpgeoref_GoogleRoute', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Route</property>
 <property key="it">Tragitto su Mappa</property>

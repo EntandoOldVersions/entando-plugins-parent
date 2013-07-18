@@ -23,7 +23,7 @@ INSERT INTO sysconfig (version, item, descr, config) VALUES ('production', 'jpad
 </vcardfields>
 ');
 
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpaddressbook_search_form', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpaddressbook_search_form', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Address Book - Search Form</property>
 <property key="it">Rubrica Interna - Form Ricerca</property>
@@ -31,7 +31,7 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 <properties>
 <property key="actionPath">/ExtStr2/do/jpaddressbook/Front/AddressBook/searchIntro.action</property>
 </properties>', 1);
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpaddressbook_search_result', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpaddressbook_search_result', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Address Book - Search Risult</property>
 <property key="it">Rubrica Interna - Risultati Ricerca</property>
@@ -39,7 +39,7 @@ INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode
 <properties>
 <property key="actionPath">/ExtStr2/do/jpaddressbook/Front/AddressBook/resultIntro.action</property>
 </properties>', 1);
-INSERT INTO showletcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpaddressbook_search_form_advanced', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('jpaddressbook_search_form_advanced', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Address Book - Advanced Search Form</property>
 <property key="it">Rubrica Interna - Form Ricerca Avanzata</property>
