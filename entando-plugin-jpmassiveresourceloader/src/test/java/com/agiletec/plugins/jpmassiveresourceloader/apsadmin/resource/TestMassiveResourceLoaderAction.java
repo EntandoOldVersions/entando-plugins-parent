@@ -23,13 +23,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.agiletec.aps.system.services.group.Group;
+import com.agiletec.apsadmin.ApsAdminBaseTestCase;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.resource.IResourceManager;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
-import com.agiletec.plugins.jpmassiveresourceloader.apsadmin.ApsAdminPluginBaseTestCase;
 import com.opensymphony.xwork2.Action;
 
-public class TestMassiveResourceLoaderAction extends ApsAdminPluginBaseTestCase {
+public class TestMassiveResourceLoaderAction extends ApsAdminBaseTestCase {
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -74,7 +74,7 @@ public class TestMassiveResourceLoaderAction extends ApsAdminPluginBaseTestCase 
 			}
 		}
 	}
-
+	
 	private String executeLoadAction(String resourceTypeCode, String folder, String descr, String mainGroup) throws Throwable {
 		this.setUserOnSession("admin");
 		this.initAction("/do/jpmassiveresourceloader/Resource/Massive", "save");
@@ -84,11 +84,11 @@ public class TestMassiveResourceLoaderAction extends ApsAdminPluginBaseTestCase 
 		this.addParameter("folder", folder);
 		return this.executeAction();
 	}
-
+	
 	private void init() {
 		_resourceManager = (IResourceManager) this.getService(JacmsSystemConstants.RESOURCE_MANAGER);
 	}
-
+	
 	private IResourceManager _resourceManager;
-
+	
 }

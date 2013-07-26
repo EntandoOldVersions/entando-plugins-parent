@@ -26,10 +26,16 @@ import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.category.Category;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.group.IGroupManager;
+import com.agiletec.aps.util.ApsWebApplicationUtils;
+import com.agiletec.apsadmin.system.ApsFileUploadInterceptor;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
 import com.agiletec.plugins.jacms.apsadmin.resource.AbstractResourceAction;
 
@@ -118,7 +124,7 @@ public class MassiveResourceLoaderAction extends AbstractResourceAction implemen
 				this.addActionError(this.getText("jpmassiveresourceloader.Resource.file.wrongFileNameFormat", args));
 				success = false;
 			}
-			if (MAXIMUM_SIZE<file.length()) {
+			if (this.getMaximumSize()<file.length()) {
 				this.addActionError(this.getText("jpmassiveresourceloader.Resource.file.tooBigFileLength", args));
 				success = false;
 			}
@@ -252,6 +258,24 @@ public class MassiveResourceLoaderAction extends AbstractResourceAction implemen
 		this._categoryCode = categoryCode;
 	}
 	
+	public long getMaximumSize() {
+		if (this._maximumSize<=0) {
+			ConfigInterface configManager = (ConfigInterface) ApsWebApplicationUtils.getBean(SystemConstants.BASE_CONFIG_MANAGER, ServletActionContext.getRequest());
+			String maxSizeParam = configManager.getParam(SystemConstants.PAR_FILEUPLOAD_MAXSIZE);
+			if (null != maxSizeParam) {
+				try {
+					this._maximumSize = Long.parseLong(maxSizeParam);
+				} catch (Throwable t) {
+					ApsSystemUtils.getLogger().severe("Error parsing param 'maxSize' - value '" + maxSizeParam + "' - message " + t.getMessage());
+				}
+			}
+		}
+		if (this._maximumSize<=0) {
+			this._maximumSize = ApsFileUploadInterceptor.DEFAULT_MAX_SIZE;
+		}
+		return this._maximumSize;
+	}
+	
 	protected IGroupManager getGroupManager() {
 		return _groupManager;
 	}
@@ -266,9 +290,9 @@ public class MassiveResourceLoaderAction extends AbstractResourceAction implemen
 	private boolean _recursive;
 	
 	private String _categoryCode;
+	private long _maximumSize;
 	
 	private IGroupManager _groupManager;
 	private MimetypesFileTypeMap _mimeTypes = new MimetypesFileTypeMap();
-	private static final int MAXIMUM_SIZE = 10485760;
 	
 }

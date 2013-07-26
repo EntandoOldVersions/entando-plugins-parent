@@ -21,9 +21,6 @@ import com.agiletec.ConfigTestUtils;
 import com.agiletec.apsadmin.ApsAdminBaseTestCase;
 import com.agiletec.plugins.jpmassiveresourceloader.PluginConfigTestUtils;
 
-/**
- * BaseTestCase Class for jpmassiveresourceloader apsadmin tests.
- */
 public class ApsAdminPluginBaseTestCase extends ApsAdminBaseTestCase {
 	
 	@Override

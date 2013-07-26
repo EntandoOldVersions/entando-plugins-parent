@@ -72,7 +72,9 @@
 		<!--
 		<module>entando-plugin-jpwtt</module>**
 		<module>entando-plugin-jpmyportal</module>**
-		<module>entando-plugin-jpmassiveresourceloader</module>**
+		-->
+		<module>entando-plugin-jpmassiveresourceloader</module>
+		<!--
 		<module>entando-plugin-jpremoteresourceloader</module>**
 		-->
 		<module>entando-plugin-jpversioning</module>
