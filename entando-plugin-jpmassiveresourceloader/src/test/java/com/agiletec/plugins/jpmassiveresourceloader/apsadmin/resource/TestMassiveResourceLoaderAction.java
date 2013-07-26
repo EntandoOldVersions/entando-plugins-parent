@@ -5,12 +5,12 @@
 * This file is part of Entando Enterprise Edition software.
 * You can redistribute it and/or modify it
 * under the terms of the Entando's EULA
-*
-* See the file License for the specific language governing permissions
+* 
+* See the file License for the specific language governing permissions   
 * and limitations under the License
-*
-*
-*
+* 
+* 
+* 
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -28,14 +28,14 @@ import com.agiletec.plugins.jacms.aps.system.services.resource.IResourceManager;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
 import com.opensymphony.xwork2.Action;
 
-public class TestMassiveResourceLoaderAction extends ApsAdminPluginBaseTestCase {
-
+public class TestMassiveResourceLoaderAction extends ApsAdminBaseTestCase {
+	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.init();
 	}
-
+	
 	public void testSaveAction() throws Throwable {
 		String type = "Image";
 		String descr = "testMRL";
@@ -45,7 +45,7 @@ public class TestMassiveResourceLoaderAction extends ApsAdminPluginBaseTestCase 
 			File dir = new File("target/test/");
 			assertTrue(dir.isDirectory());
 			String folder = dir.getAbsolutePath();
-
+			
 			String result = this.executeLoadAction(type, folder, descr, "");
 			assertEquals(Action.INPUT, result);
 			Map<String, List<String>> fieldErrors = this.getAction().getFieldErrors();
@@ -56,7 +56,7 @@ public class TestMassiveResourceLoaderAction extends ApsAdminPluginBaseTestCase 
 
 			result = this.executeLoadAction(type, folder, descr, "free");
 			assertEquals(Action.SUCCESS, result);
-
+			
 			List<String> groups = new ArrayList<String>();
 			groups.add(Group.FREE_GROUP_NAME);
 			resources = _resourceManager.searchResourcesId(type, descr, null, groups);
