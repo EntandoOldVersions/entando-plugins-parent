@@ -2,10 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software;
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
 *
 * See the file License for the specific language governing permissions
 * and limitations under the License
@@ -35,10 +34,11 @@ import org.json.simple.parser.ParseException;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
+
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -47,7 +47,7 @@ public class CustomPageConfig {
 
 	public CustomPageConfig(String pageCode, int frames) {
 		this.setPageCode(pageCode);
-		this.setConfig(new Showlet[frames]);
+		this.setConfig(new org.entando.entando.aps.system.services.page.Widget[frames]);
 		this.setStatus(new Integer[frames]);
 	}
 
@@ -68,7 +68,7 @@ public class CustomPageConfig {
 			JSONParser parser = new JSONParser();
 			JSONObject positions = (JSONObject) parser.parse(value);
 			this.setPageCode(page.getCode());
-			this.setConfig(new Showlet[frameNumber]);
+			this.setConfig(new org.entando.entando.aps.system.services.page.Widget[frameNumber]);
 			this.setStatus(new Integer[frameNumber]);
 			for (int i = 0; i < frameNumber; i++) {
 				if (frames[i].isLocked()) continue;
@@ -78,9 +78,9 @@ public class CustomPageConfig {
 				if (null == showletCode) continue;
 				WidgetType type = showletTypeManager.getShowletType(showletCode.toString());
 				if (null == type) continue;
-				Showlet showlet = null;
+				org.entando.entando.aps.system.services.page.Widget showlet = null;
 				if (showletCode.equals(voidShowletCode) || allowedShowlets.contains(showletCode) || this.isViewerType(type)) {
-					showlet = new Showlet();
+					showlet = new org.entando.entando.aps.system.services.page.Widget();
 					showlet.setType(type);
                                         /*
 					JSONObject showletConfig = (JSONObject) frame.get("config");
@@ -148,9 +148,9 @@ public class CustomPageConfig {
 		String value = null;
 		try {
 			JSONObject frames = new JSONObject();
-			Showlet[] showlets = this.getConfig();
+			org.entando.entando.aps.system.services.page.Widget[] showlets = this.getConfig();
 			for (int i = 0; i < showlets.length; i++) {
-				Showlet showlet = showlets[i];
+				org.entando.entando.aps.system.services.page.Widget showlet = showlets[i];
 				if (null == showlet) continue;
 				JSONObject frame = new JSONObject();
 				frame.put("code", showlet.getType().getCode());
@@ -204,10 +204,10 @@ public class CustomPageConfig {
 		this._pageCode = pageCode;
 	}
 
-	public Showlet[] getConfig() {
+	public org.entando.entando.aps.system.services.page.Widget[] getConfig() {
 		return _config;
 	}
-	protected void setConfig(Showlet[] config) {
+	protected void setConfig(org.entando.entando.aps.system.services.page.Widget[] config) {
 		this._config = config;
 	}
 
@@ -220,7 +220,7 @@ public class CustomPageConfig {
 
 	private String _pageCode;
 
-	private Showlet[] _config;
+	private org.entando.entando.aps.system.services.page.Widget[] _config;
 	private Integer[] _status;
 
 }

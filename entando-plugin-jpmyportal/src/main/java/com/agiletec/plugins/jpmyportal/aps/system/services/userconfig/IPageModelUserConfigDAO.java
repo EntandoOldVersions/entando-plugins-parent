@@ -20,7 +20,7 @@ package com.agiletec.plugins.jpmyportal.aps.system.services.userconfig;
 import java.util.List;
 
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.page.Showlet;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.plugins.jpmyportal.aps.system.services.userconfig.model.PageModelUserConfigBean;
 
@@ -44,7 +44,7 @@ public interface IPageModelUserConfigDAO {
 	 * @param showlet la showlet personalizzata da caricare
 	 * @throws ApsSystemException se si cerca di intervenire in un frame che non esiste nel modello di pagina
 	 */
-	public void saveUserConfig(String username, String pageModelCode, int frame, Showlet showlet);
+	public void saveUserConfig(String username, String pageModelCode, int frame, org.entando.entando.aps.system.services.page.Widget showlet);
 
 	/**
 	 * Remove from the DB a single recored located through the user, the page model and the frame position.
@@ -94,7 +94,7 @@ public interface IPageModelUserConfigDAO {
 	 * @throws ApsSystemException in case of error
 	 */
 	public PageModelUserConfigBean swapShowlets(PageModelUserConfigBean customization, String pageModelCode, int firstFrame, int secondFrame, 
-			Showlet[] showlets);
+			org.entando.entando.aps.system.services.page.Widget[] showlets);
 	
 	/**
 	 * Associate the given showlet to the current frame.
@@ -105,7 +105,7 @@ public interface IPageModelUserConfigDAO {
 	 * @param showlet the showlet to assign
 	 * @return PageModelUserConfigBean the modified customization bean
 	 */
-	public PageModelUserConfigBean assignShowletToFrame(PageModelUserConfigBean customization, String pageModelCode, int targetFrame, Showlet showlet);
+	public PageModelUserConfigBean assignShowletToFrame(PageModelUserConfigBean customization, String pageModelCode, int targetFrame, org.entando.entando.aps.system.services.page.Widget showlet);
 	
 	/**
 	 * Update a record located by username, page model and frame position containing the name and
@@ -118,7 +118,7 @@ public interface IPageModelUserConfigDAO {
 	 * invalid frame.
 	 * @throws Throwable for all other errors.
 	 */
-	public void updateUserConfig(String username, String pageModelCode, int framepos, Showlet showlet);
+	public void updateUserConfig(String username, String pageModelCode, int framepos, org.entando.entando.aps.system.services.page.Widget showlet);
 	
 	/**
 	 * This method removes from the user customization all those showlets that are no longer available to myportal itself or those

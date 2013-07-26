@@ -2,57 +2,58 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model;
 
-import com.agiletec.aps.system.services.page.Showlet;
+import org.entando.entando.aps.system.services.page.Widget;
+
+
 
 /**
  * @author E.Santoboni
  */
 public class ShowletUpdateInfoBean {
-	
-	public ShowletUpdateInfoBean(int framePos, Showlet showlet, int status) {
+
+	public ShowletUpdateInfoBean(int framePos, org.entando.entando.aps.system.services.page.Widget showlet, int status) {
 		this.setFramePos(framePos);
 		this.setShowlet(showlet);
 		this.setStatus(status);
 	}
-	
+
 	public int getFramePos() {
 		return _framePos;
 	}
 	protected void setFramePos(int framePos) {
 		this._framePos = framePos;
 	}
-	
-	public Showlet getShowlet() {
+
+	public org.entando.entando.aps.system.services.page.Widget getShowlet() {
 		return _showlet;
 	}
-	protected void setShowlet(Showlet showlet) {
+	protected void setShowlet(org.entando.entando.aps.system.services.page.Widget showlet) {
 		this._showlet = showlet;
 	}
-	
+
 	public int getStatus() {
 		return _status;
 	}
 	protected void setStatus(int status) {
 		this._status = status;
 	}
-	
+
 	private int _framePos;
-	private Showlet _showlet;
+	private org.entando.entando.aps.system.services.page.Widget _showlet;
 	private int _status;
-	
+
 }

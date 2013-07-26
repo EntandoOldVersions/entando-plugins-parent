@@ -25,7 +25,7 @@ import com.agiletec.plugins.jpmyportal.util.JpmyportalTestHelper;
 
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.AbstractService;
-import com.agiletec.aps.system.services.page.Showlet;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
 import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.util.ApsProperties;
@@ -92,7 +92,7 @@ public class TestPageModelUserConfigManager extends ApsPluginBaseTestCase {
 	 */
 	public void testGetUserConfig() throws Throwable {
 		PageModelUserConfigBean userCfg = null;
-		Showlet[] showletArray = null;
+		org.entando.entando.aps.system.services.page.Widget[] showletArray = null;
 		int nullShowlet=0;
 		int nullConfig=0;
 		try {
@@ -173,11 +173,11 @@ public class TestPageModelUserConfigManager extends ApsPluginBaseTestCase {
 	}
 	
 	public void testTransactionalSwapFrames() throws Throwable {
-		Showlet zero = this.getFakeShowlet("login_form");
-		Showlet uno = this.getFakeShowlet("content_viewer");
-		Showlet due = this.getFakeShowlet("jpmyportal_void");
-		Showlet tre = this.getFakeShowlet("content_viewer_list");
-		Showlet showlets[] = {zero,uno,due,tre};
+		org.entando.entando.aps.system.services.page.Widget zero = this.getFakeShowlet("login_form");
+		org.entando.entando.aps.system.services.page.Widget uno = this.getFakeShowlet("content_viewer");
+		org.entando.entando.aps.system.services.page.Widget due = this.getFakeShowlet("jpmyportal_void");
+		org.entando.entando.aps.system.services.page.Widget tre = this.getFakeShowlet("content_viewer_list");
+		org.entando.entando.aps.system.services.page.Widget showlets[] = {zero,uno,due,tre};
 		PageModelUserConfigBean sessionUserCfg= null;
 		PageModelUserConfigBean userCfg = null;
 		try {
@@ -250,8 +250,8 @@ public class TestPageModelUserConfigManager extends ApsPluginBaseTestCase {
 	}
 	
 	public void testTransactionalAssignFrame() throws Throwable {
-		Showlet firstShowlet = this.getFakeShowlet("login_form");
-		Showlet secondShowlet = this.getFakeShowlet("content_viewer");
+		org.entando.entando.aps.system.services.page.Widget firstShowlet = this.getFakeShowlet("login_form");
+		org.entando.entando.aps.system.services.page.Widget secondShowlet = this.getFakeShowlet("content_viewer");
 		PageModelUserConfigBean sessionUserCfg= null;
 		PageModelUserConfigBean userCfg;
 		try {
@@ -290,7 +290,7 @@ public class TestPageModelUserConfigManager extends ApsPluginBaseTestCase {
 	}
 	
 	public void testTransactionalRemoveFrame() throws Throwable {
-		Showlet showlet = this.getFakeShowlet("jpmyportal_void");
+		org.entando.entando.aps.system.services.page.Widget showlet = this.getFakeShowlet("jpmyportal_void");
 		PageModelUserConfigBean sessionUserCfg= null;
 		PageModelUserConfigBean userCfg;
 		try {
@@ -364,7 +364,7 @@ public class TestPageModelUserConfigManager extends ApsPluginBaseTestCase {
 	public void testConfigurationBeanSanity() throws Throwable {
 		PageModelUserConfigBean userCfg;
 		PageModelUserConfigBean sessionUserCfg= null;
-		Showlet showlet = this.getFakeShowlet("void");
+		org.entando.entando.aps.system.services.page.Widget showlet = this.getFakeShowlet("void");
 		try {
 			assertNull(this._pageModelUserConfigManager.getUserConfig("pageManagerCoach"));
 			this._pageModelUserConfigManager.saveUserConfig("pageManagerCoach", "home", 0, getFakeShowlet("login_form"));
@@ -440,8 +440,8 @@ public class TestPageModelUserConfigManager extends ApsPluginBaseTestCase {
 	 * @param custom codice, replicato poi nella chiave e nel valore
 	 * @return
 	 */
-	private Showlet getFakeShowlet(String custom) {
-		Showlet fakeShowlet = new Showlet();
+	private org.entando.entando.aps.system.services.page.Widget getFakeShowlet(String custom) {
+		org.entando.entando.aps.system.services.page.Widget fakeShowlet = new org.entando.entando.aps.system.services.page.Widget();
 		ApsProperties fakeProperties = new ApsProperties();
 		ShowletType fakeType = new ShowletType();		
 		fakeProperties.setProperty("Key-"+custom, "Value-"+custom);
@@ -456,8 +456,8 @@ public class TestPageModelUserConfigManager extends ApsPluginBaseTestCase {
 	 * @param custom
 	 * @return
 	 */
-	private Showlet getFakeShowletWithNoConfig(String custom) {
-		Showlet fakeShowlet = new Showlet();
+	private org.entando.entando.aps.system.services.page.Widget getFakeShowletWithNoConfig(String custom) {
+		org.entando.entando.aps.system.services.page.Widget fakeShowlet = new org.entando.entando.aps.system.services.page.Widget();
 		ApsProperties fakeProperties = new ApsProperties();
 		ShowletType fakeType = new ShowletType();
 		fakeType.setCode(custom);

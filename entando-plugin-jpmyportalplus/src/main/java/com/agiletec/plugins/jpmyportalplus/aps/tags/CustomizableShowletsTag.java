@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -34,8 +33,6 @@ import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
@@ -45,12 +42,15 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageU
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.tags.util.WidgetCheckInfo;
 
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.Widget;
+
 /**
  * Returns the list of widget (in form of {@link WidgetCheckInfo}) to use into the function of page configuration.
  * @author E.Santoboni
  */
 public class CustomizableShowletsTag extends TagSupport {
-    
+
     public int doStartTag() throws JspException {
         RequestContext reqCtx = (RequestContext) this.pageContext.getRequest().getAttribute(RequestContext.REQCTX);
         List<WidgetCheckInfo> checkInfos = new ArrayList<WidgetCheckInfo>();
@@ -58,8 +58,8 @@ public class CustomizableShowletsTag extends TagSupport {
         try {
             Lang currentLang = (Lang) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_LANG);
             IPage currentPage = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
-            Showlet[] customShowletConfig = this.getCustomShowletConfig(currentPage);
-            Showlet[] showletsToRender = pageUserConfigManager.getShowletsToRender(currentPage, customShowletConfig);
+            org.entando.entando.aps.system.services.page.Widget[] customShowletConfig = this.getCustomShowletConfig(currentPage);
+            org.entando.entando.aps.system.services.page.Widget[] showletsToRender = pageUserConfigManager.getShowletsToRender(currentPage, customShowletConfig);
             List<String> allowedShowlets = new ArrayList<String>();
             Map<String, WidgetType> customizableShowlets = this.getCustomizableShowlets(pageUserConfigManager);
             allowedShowlets.addAll(customizableShowlets.keySet());
@@ -67,7 +67,7 @@ public class CustomizableShowletsTag extends TagSupport {
             for (int i = 0; i < frames.length; i++) {
                 Frame frame = frames[i];
                 if (!frame.isLocked()) {
-                    Showlet showlet = showletsToRender[i];
+                    org.entando.entando.aps.system.services.page.Widget showlet = showletsToRender[i];
                     if (null != showlet && allowedShowlets.contains(showlet.getType().getCode())) {
                         WidgetCheckInfo info = new WidgetCheckInfo(showlet.getType(), true, currentLang);
                         allowedShowlets.remove(showlet.getType().getCode());
@@ -91,8 +91,8 @@ public class CustomizableShowletsTag extends TagSupport {
         return super.doStartTag();
     }
 
-    protected Showlet[] getCustomShowletConfig(IPage currentPage) throws Throwable {
-        Showlet[] customShowlets = null;
+    protected org.entando.entando.aps.system.services.page.Widget[] getCustomShowletConfig(IPage currentPage) throws Throwable {
+        org.entando.entando.aps.system.services.page.Widget[] customShowlets = null;
         try {
             CustomPageConfig customPageConfig =
                     (CustomPageConfig) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG);
@@ -127,14 +127,14 @@ public class CustomizableShowletsTag extends TagSupport {
         }
         return map;
     }
-    
+
     public String getVar() {
         return var;
     }
     public void setVar(String var) {
         this.var = var;
     }
-    
+
     private String var;
-    
+
 }

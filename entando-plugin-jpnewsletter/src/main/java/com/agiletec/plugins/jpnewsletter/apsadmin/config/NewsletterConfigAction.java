@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -29,8 +28,6 @@ import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.common.entity.model.attribute.BooleanAttribute;
 import com.agiletec.aps.system.services.category.Category;
 import com.agiletec.aps.system.services.category.ICategoryManager;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.apsadmin.util.SelectItem;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
@@ -38,11 +35,14 @@ import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.Ne
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.IPageManager;
+
 /**
  * @author E.Santoboni
  */
 public class NewsletterConfigAction extends AbstractNewsletterConfigAction implements INewsletterConfigAction {
-	
+
 	@Override
 	public String edit() {
 		try {
@@ -55,7 +55,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String entryConfig() {
 		try {
@@ -71,7 +71,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String addCategoryMapping() {
 		this.updateConfigOnSession();
@@ -90,7 +90,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 			} else if (mappedCategories.contains(category)) {
 				this.addFieldError("categoryCode", this.getText("error.category.already.used"));
 			}
-			if (this.hasFieldErrors()) return INPUT; 
+			if (this.hasFieldErrors()) return INPUT;
 			NewsletterConfig config = this.getNewsletterConfig();
 			config.getSubscriptions().put(category, attribute);
 		} catch (Throwable t) {
@@ -99,7 +99,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String removeCategoryMapping() {
 		this.updateConfigOnSession();
@@ -113,7 +113,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String addContentType() {
 		this.updateConfigOnSession();
@@ -132,7 +132,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String removeContentType() {
 		this.updateConfigOnSession();
@@ -145,7 +145,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String save() {
 		this.updateConfigOnSession();
@@ -158,7 +158,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		}
 		return SUCCESS;
 	}
-	
+
 	protected void valueForm(NewsletterConfig config) {
 		this.setActiveService(config.isActive());
 		Calendar startScheduler = Calendar.getInstance();
@@ -167,7 +167,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		this.setStartSchedulerMinute(startScheduler.get(Calendar.MINUTE));
 		this.setAlsoHtml(config.isAlsoHtml());
 	}
-	
+
 	protected void updateConfigOnSession() {
 		NewsletterConfig config = this.getNewsletterConfig();
 		config.setActive(this.getActiveService());
@@ -178,7 +178,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		config.setStartScheduler(startScheduler.getTime());
 		config.setAlsoHtml(this.getAlsoHtml());
 	}
-	
+
 	public List<SelectItem> getMailSenders() {
 		try {
 			Map<String, String> senders = this.getMailManager().getMailConfig().getSenders();
@@ -195,7 +195,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 			throw new RuntimeException(t);
 		}
 	}
-	
+
 	/**
 	 * Restituisce la lista di categorie definite nel sistema.
 	 * @return La lista di categorie definite nel sistema.
@@ -203,11 +203,11 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 	public List<Category> getCategories() {
 		return this.getCategoryManager().getCategoriesList();
 	}
-	
+
 	public IUserProfile getDefaultProfile() {
 		return this.getProfileManager().getDefaultProfileType();
 	}
-	
+
 	public List<AttributeInterface> getBooleanProfileAttributes() {
 		List<AttributeInterface> attributes = new ArrayList<AttributeInterface>();
 		List<AttributeInterface> profileAttributes = this.getDefaultProfile().getAttributeList();
@@ -219,25 +219,25 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		}
 		return attributes;
 	}
-	
+
 	public List<SmallContentType> getContentTypes() {
 		return this.getContentManager().getSmallContentTypes();
 	}
-	
+
 	public Category getCategory(String categoryCode) {
 		return this.getCategoryManager().getCategory(categoryCode);
 	}
-	
+
 	public Boolean getActiveService() {
-		if (null == this._activeService) return new Boolean(false); 
+		if (null == this._activeService) return new Boolean(false);
 		return _activeService;
 	}
 	public void setActiveService(Boolean activeService) {
 		this._activeService = activeService;
 	}
-	
+
 	public Boolean getAlsoHtml() {
-		if (null == this._alsoHtml) return new Boolean(false); 
+		if (null == this._alsoHtml) return new Boolean(false);
 		return _alsoHtml;
 	}
 	public void setAlsoHtml(Boolean alsoHtml) {
@@ -250,14 +250,14 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 	public void setCategoryCode(String categoryCode) {
 		this._categoryCode = categoryCode;
 	}
-	
+
 	public String getAttributeName() {
 		return _attributeName;
 	}
 	public void setAttributeName(String attributeName) {
 		this._attributeName = attributeName;
 	}
-	
+
 	public Integer getStartSchedulerHour() {
 		if (null == this._startSchedulerHour || this._startSchedulerHour == 0) {
 			this._startSchedulerHour = this.getStartSchedulerField(Calendar.HOUR_OF_DAY);
@@ -267,7 +267,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 	public void setStartSchedulerHour(Integer startSchedulerHour) {
 		this._startSchedulerHour = startSchedulerHour;
 	}
-	
+
 	public Integer getStartSchedulerMinute() {
 		if (null == this._startSchedulerMinute || this._startSchedulerMinute == 0) {
 			this._startSchedulerMinute = this.getStartSchedulerField(Calendar.MINUTE);
@@ -278,14 +278,14 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 	public void setStartSchedulerMinute(Integer startSchedulerMinute) {
 		this._startSchedulerMinute = startSchedulerMinute;
 	}
-	
+
 	private Integer getStartSchedulerField(int field) {
 		NewsletterConfig config = this.getNewsletterConfig();
 		Calendar startScheduler = Calendar.getInstance();
 		startScheduler.setTime(config.getStartScheduler());
 		return startScheduler.get(field);
 	}
-	
+
 	public List<IPage> getPages() {
 		if (this._pages==null) {
 			this._pages = new ArrayList<IPage>();
@@ -294,7 +294,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 		}
 		return this._pages;
 	}
-	
+
 	protected void addPages(IPage page, List<IPage> pages) {
 		pages.add(page);
 		IPage[] children = page.getChildren();
@@ -302,60 +302,60 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 			this.addPages(children[i], pages);
 		}
 	}
-	
+
 	public String getContentTypeCode() {
 		return _contentTypeCode;
 	}
 	public void setContentTypeCode(String contentTypeCode) {
 		this._contentTypeCode = contentTypeCode;
 	}
-	
+
 	protected ICategoryManager getCategoryManager() {
 		return _categoryManager;
 	}
 	public void setCategoryManager(ICategoryManager categoryManager) {
 		this._categoryManager = categoryManager;
 	}
-	
+
 	protected IUserProfileManager getProfileManager() {
 		return _profileManager;
 	}
 	public void setProfileManager(IUserProfileManager profileManager) {
 		this._profileManager = profileManager;
 	}
-	
+
 	protected IMailManager getMailManager() {
 		return _mailManager;
 	}
 	public void setMailManager(IMailManager mailManager) {
 		this._mailManager = mailManager;
 	}
-	
+
 	protected IPageManager getPageManager() {
 		return _pageManager;
 	}
 	public void setPageManager(IPageManager pageManager) {
 		this._pageManager = pageManager;
 	}
-	
+
 	private List<IPage> _pages;
-	
+
 	private Boolean _activeService;
 	private Boolean _alsoHtml;
-	
+
 	private String _categoryCode;
 	private String _attributeName;
-	
+
 	private Integer _startSchedulerHour;
 	private Integer _startSchedulerMinute;
-	
+
 	private String _contentTypeCode;
-	
+
 	private ICategoryManager _categoryManager;
 	private IUserProfileManager _profileManager;
 	private IMailManager _mailManager;
 	private IPageManager _pageManager;
-	
+
 	public static String NEWSLETTER_CONFIG_SESSION_PARAM = "newsletterConfig_sessionParam";
-	
+
 }

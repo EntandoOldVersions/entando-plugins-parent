@@ -20,7 +20,7 @@ package com.agiletec.plugins.jpmyportal.aps.system.services.userconfig;
 import java.util.List;
 
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.page.Showlet;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.plugins.jpmyportal.aps.system.services.userconfig.model.MyPortalConfig;
 import com.agiletec.plugins.jpmyportal.aps.system.services.userconfig.model.PageModelUserConfigBean;
@@ -54,7 +54,7 @@ public interface IPageModelUserConfigManager {
 	 * @param showlet The new showlet associated to the frame.
 	 * @throws ApsSystemException when an attempt to configure an invalid frame is made
 	 */
-	public void saveUserConfig(String username, String pageModelCode, int frame, Showlet showlet) throws ApsSystemException;
+	public void saveUserConfig(String username, String pageModelCode, int frame, org.entando.entando.aps.system.services.page.Widget showlet) throws ApsSystemException;
 	
 	/**
 	 * Remove from the database a single record located by username, page model and frame position. They
@@ -74,7 +74,7 @@ public interface IPageModelUserConfigManager {
 	 * @param framepos
 	 * @param showlet
 	 */
-	public void updateUserConfig(String username, String pageModelCode, int framepos, Showlet showlet) throws ApsSystemException;
+	public void updateUserConfig(String username, String pageModelCode, int framepos, org.entando.entando.aps.system.services.page.Widget showlet) throws ApsSystemException;
 	
 	/**
 	 * Swaps the given showlets. If necessary a new customization bean is created to host the new 
@@ -89,7 +89,7 @@ public interface IPageModelUserConfigManager {
 	 * @throws ApsSystemException In case of error
 	 */
 	public PageModelUserConfigBean swapShowlets(PageModelUserConfigBean customization, String username, String pageModelCode, 
-			int firstFrame, int secondFrame, Showlet[] showlets) throws ApsSystemException;
+			int firstFrame, int secondFrame, org.entando.entando.aps.system.services.page.Widget[] showlets) throws ApsSystemException;
 	
 	/**
 	 * Assign to the current frame the default showlet as passed by the manager.<br />
@@ -113,7 +113,7 @@ public interface IPageModelUserConfigManager {
 	 * @throws ApsSystemException In case of error
 	 */
 	public PageModelUserConfigBean assignShowletToFrame(PageModelUserConfigBean customization, 
-			String username, String pageModelCode, int targetFrame, Showlet showlet) throws ApsSystemException;
+			String username, String pageModelCode, int targetFrame, org.entando.entando.aps.system.services.page.Widget showlet) throws ApsSystemException;
 	
 	/**
 	 * Get the list of the showlet that cannot be handled by the jpmyportal plugin

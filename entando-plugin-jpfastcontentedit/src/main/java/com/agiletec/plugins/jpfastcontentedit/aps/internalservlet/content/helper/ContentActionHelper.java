@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -29,18 +28,19 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.i18n.II18nManager;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
 import java.util.List;
 
+import org.entando.entando.aps.system.services.page.Widget;
+
 /**
  * @author E.Santoboni
  */
 public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.content.helper.ContentActionHelper implements IContentActionHelper {
-	
+
 	@Override
 	public void updateEntity(IApsEntity content, HttpServletRequest request) {
 		super.updateEntity(content, request);
@@ -60,13 +60,13 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
         	throw new RuntimeException("Errore on updateEntity", t);
         }
 	}
-	
+
 	@Override
 	@Deprecated
 	public String extractAuthor(HttpServletRequest request) {
 		return this.getAuthorAttributeName(request);
 	}
-	
+
 	@Override
 	public String getAuthor(Content content, HttpServletRequest request) {
 		String authorAttrName = this.getAuthorAttributeName(request);
@@ -77,7 +77,7 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 			return content.getLastEditor();
 		}
 	}
-	
+
 	@Override
 	public String getAuthorAttributeName(HttpServletRequest request) {
 		String authorAttributeName = this.extractShowletParam(request, JpFastContentEditSystemConstants.AUTHOR_ATTRIBUTE_SHOWLET_PARAM_NAME);
@@ -86,13 +86,13 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 		}
 		return authorAttributeName;
 	}
-	
+
 	@Override
 	public String extractShowletParam(HttpServletRequest request, String paramName) {
 		String paramValue = null;
 		RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
 		if (reqCtx!=null) {
-			Showlet showlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			if (showlet!=null) {
 				ApsProperties config = showlet.getConfig();
 				if (null != config) {
@@ -105,13 +105,13 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 		}
 		return paramValue;
 	}
-	
+
 	@Override
 	public boolean isUserAllowed(Content content, UserDetails currentUser) {
-		return super.getAuthorizationManager().isAuthOnGroup(currentUser, content.getMainGroup()) 
+		return super.getAuthorizationManager().isAuthOnGroup(currentUser, content.getMainGroup())
 			|| super.getAuthorizationManager().isAuthOnGroup(currentUser, Group.ADMINS_GROUP_NAME);
 	}
-	
+
 	@Override
 	public void checkTypeLabels(Content content) {
 		if (null == content) {
@@ -125,7 +125,7 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 				String attributeLabelKey = "jpfastcontentedit_" + content.getTypeCode() + "_" + attribute.getName();
 				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
 					String attributeDescription = attribute.getDescription();
-					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ? 
+					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ?
 							attributeDescription :
 							attribute.getName();
 					this.addLabelGroups(attributeLabelKey, value);
@@ -136,7 +136,7 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 			throw new RuntimeException("Error checking label types", t);
 		}
 	}
-	
+
 	protected void addLabelGroups(String key, String defaultValue) throws ApsSystemException {
 		try {
 			ApsProperties properties = new ApsProperties();
@@ -148,23 +148,23 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 			throw new RuntimeException("Error adding label groups - key '" + key + "'", t);
 		}
 	}
-	
+
 	protected String getDefaultAuthor() {
 		return _defaultAuthor;
 	}
 	public void setDefaultAuthor(String defaultAuthor) {
 		this._defaultAuthor = defaultAuthor;
 	}
-	
+
 	protected II18nManager getI18nManager() {
 		return _i18nManager;
 	}
 	public void setI18nManager(II18nManager i18nManager) {
 		this._i18nManager = i18nManager;
 	}
-	
+
 	private String _defaultAuthor;
-	
+
 	private II18nManager _i18nManager;
-	
+
 }

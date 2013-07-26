@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -25,19 +24,20 @@ import java.util.Set;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.tree.ITreeNode;
 import com.agiletec.aps.system.services.group.Group;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.portal.helper.IPageActionHelper;
 import com.agiletec.apsadmin.portal.specialshowlet.SimpleShowletConfigAction;
 import com.agiletec.apsadmin.system.ITreeAction;
 import com.opensymphony.xwork2.Action;
 
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.Widget;
+
 /**
  * @author E.Santoboni
  */
 public class ReplicatorShowletAction extends SimpleShowletConfigAction implements IReplicatorShowletAction, ITreeAction {
-	
+
 	@Override
 	public void validate() {
 		super.validate();
@@ -50,7 +50,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 			}
 		}
 	}
-	
+
 	@Override
 	public String init() {
 		try {
@@ -61,7 +61,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 			return FAILURE;
 		}
 	}
-	
+
 	@Override
 	public String resetConfig() {
 		try {
@@ -75,7 +75,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String browseFrames() {
 		try {
@@ -91,7 +91,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String selectFrame() {
 		try {
@@ -104,14 +104,14 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 		}
 		return Action.SUCCESS;
 	}
-	
+
 	public IPage getTargetPage() {
 		if (this._targetPage == null) {
 			this._targetPage = this.getPageManager().getPage(this.getPageCodeParam());
 		}
 		return this._targetPage;
 	}
-	
+
 	protected boolean validatePageFrame() {
 		boolean checked = false;
 		String selectedNode = this.getPageCodeParam();
@@ -129,11 +129,11 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 					if (selectedNode.equals(this.getPageCode()) && frame==this.getFrame()) {
 						this.addActionError(this.getText("error.target.currentFrame"));
 					} else {
-						Showlet[] showlets = targetPage.getShowlets();
+						org.entando.entando.aps.system.services.page.Widget[] showlets = targetPage.getShowlets();
 						if (showlets.length <= frame) {
 							this.addActionError(this.getText("error.invalidShowletType"));
 						} else {
-							Showlet showlet = showlets[frame];
+							org.entando.entando.aps.system.services.page.Widget showlet = showlets[frame];
 							if (showlet != null && this.getInvalidShowletTypes().contains(showlet.getType().getCode())) {
 								this.addActionError(this.getText("error.invalidShowletType"));
 							} else {
@@ -146,7 +146,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 		}
 		return checked;
 	}
-	
+
 	protected boolean validateFrame() {
 		boolean checked = false;
 		String selectedNode = this.getPageCodeParam();
@@ -157,7 +157,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 			if (targetPage == null) {
 				this.addActionError(this.getText("error.noPageSelected"));
 			} else {
-				Showlet targetFrame = targetPage.getShowlets()[this.getFrameIdParam().intValue()];
+				org.entando.entando.aps.system.services.page.Widget targetFrame = targetPage.getShowlets()[this.getFrameIdParam().intValue()];
 				if (targetFrame == null || this.getInvalidShowletTypes().contains(targetFrame.getType().getCode())) {
 					this.addActionError(this.getText("error.invalidShowletType"));
 				} else {
@@ -167,7 +167,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 		}
 		return checked;
 	}
-	
+
 	@Override
 	public String buildTree() {
 		Set<String> targets = this.getTreeNodesToOpen();
@@ -188,7 +188,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public ITreeNode getShowableTree() {
 		ITreeNode node = null;
@@ -200,7 +200,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 		}
 		return node;
 	}
-	
+
 	@Override
 	public ITreeNode getAllowedTreeRootNode() {
 		ITreeNode node = null;
@@ -211,7 +211,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 		}
 		return node;
 	}
-	
+
 	/**
 	 * Return the allowed codes of the group of the nodes to manage.
 	 * This method has to be extended if the helper manage tree nodes with authority.
@@ -224,68 +224,68 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 		groupCodes.add(page.getGroup());
 		return groupCodes;
 	}
-	
+
 	public Integer getFrameIdParam() {
 		return _frameIdParam;
 	}
 	public void setFrameIdParam(Integer frameIdParam) {
 		this._frameIdParam = frameIdParam;
 	}
-	
+
 	public String getPageCodeParam() {
 		return this._pageCodeParam;
 	}
 	public void setPageCodeParam(String pageCodeParam) {
 		this._pageCodeParam = pageCodeParam;
 	}
-	
+
 	protected List<String> getInvalidShowletTypes() {
 		return _invalidShowletTypes;
 	}
 	public void setInvalidShowletTypes(List<String> invalidShowletTypes) {
 		this._invalidShowletTypes = invalidShowletTypes;
 	}
-	
+
 	public String getTargetNode() {
 		return _targetNode;
 	}
 	public void setTargetNode(String targetNode) {
 		this._targetNode = targetNode;
 	}
-	
+
 	public Set<String> getTreeNodesToOpen() {
 		return _treeNodesToOpen;
 	}
 	public void setTreeNodesToOpen(Set<String> treeNodesToOpen) {
 		this._treeNodesToOpen = treeNodesToOpen;
 	}
-	
+
 	public String getTreeNodeActionMarkerCode() {
 		return _treeNodeActionMarkerCode;
 	}
 	public void setTreeNodeActionMarkerCode(String treeNodeActionMarkerCode) {
 		this._treeNodeActionMarkerCode = treeNodeActionMarkerCode;
 	}
-	
+
 	protected IPageActionHelper getPageActionHelper() {
 		return _pageActionHelper;
 	}
 	public void setPageActionHelper(IPageActionHelper pageActionHelper) {
 		this._pageActionHelper = pageActionHelper;
 	}
-	
+
 	private String _pageCodeParam;
 	private Integer _frameIdParam;
-	
+
 	private List<String> _invalidShowletTypes;
-	
+
 	private IPage _targetPage;
-	
+
 	private String _targetNode;
 	private Set<String> _treeNodesToOpen = new HashSet<String>();
-	
+
 	private String _treeNodeActionMarkerCode;
-	
+
 	private IPageActionHelper _pageActionHelper;
-	
+
 }

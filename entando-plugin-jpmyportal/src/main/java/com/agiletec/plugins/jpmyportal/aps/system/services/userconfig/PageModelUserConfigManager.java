@@ -28,7 +28,7 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
-import com.agiletec.aps.system.services.page.Showlet;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.pagemodel.IPageModelManager;
 import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
 import com.agiletec.aps.system.services.showlettype.ShowletType;
@@ -116,7 +116,7 @@ public class PageModelUserConfigManager extends AbstractService implements IPage
 	 * @throws ApsSystemException in case of error
 	 */
 	private PageModelUserConfigBean adjustPageModelUserConfigurationBean(PageModelUserConfigBean customization, String username, String pageModelCode) throws ApsSystemException {
-		Map<String, Showlet[]> map = null;
+		Map<String, org.entando.entando.aps.system.services.page.Widget[]> map = null;
 		if (null == username || null == pageModelCode) {
 			throw new ApsSystemException("Error creating the customization bean");
 		}
@@ -126,13 +126,13 @@ public class PageModelUserConfigManager extends AbstractService implements IPage
 			if (null == customization) {
 				customization = new PageModelUserConfigBean();
 				customization.setUsername(username);
-				map = new HashMap<String, Showlet[]>(); 
+				map = new HashMap<String, org.entando.entando.aps.system.services.page.Widget[]>(); 
 			} else {
 				map = customization.getConfig();
 			}
 		}
 		int frames = this.getPageModelManager().getPageModel(pageModelCode).getFrames().length;
-		Showlet[] showlets = new Showlet[frames];
+		org.entando.entando.aps.system.services.page.Widget[] showlets = new org.entando.entando.aps.system.services.page.Widget[frames];
 		map.put(pageModelCode, showlets);
 		customization.setConfig(map);
 		return customization;
@@ -167,7 +167,7 @@ public class PageModelUserConfigManager extends AbstractService implements IPage
 	}
 	
 	@Override
-	public void saveUserConfig(String username, String pageModelCode, int framepos, Showlet showlet) throws ApsSystemException {
+	public void saveUserConfig(String username, String pageModelCode, int framepos, org.entando.entando.aps.system.services.page.Widget showlet) throws ApsSystemException {
 		try {
 			this.getPageModelUserConfigDAO().saveUserConfig(username, pageModelCode, framepos, showlet);
 		} catch (Throwable t) {
@@ -177,7 +177,7 @@ public class PageModelUserConfigManager extends AbstractService implements IPage
 	}
 	
 	@Override
-	public void updateUserConfig(String username, String pageModelCode,	int framepos, Showlet showlet) throws ApsSystemException {
+	public void updateUserConfig(String username, String pageModelCode,	int framepos, org.entando.entando.aps.system.services.page.Widget showlet) throws ApsSystemException {
 		try {
 			this.getPageModelUserConfigDAO().updateUserConfig(username, pageModelCode, framepos, showlet);
 		} catch (Throwable t) {
@@ -188,7 +188,7 @@ public class PageModelUserConfigManager extends AbstractService implements IPage
 	
 	@Override
 	public PageModelUserConfigBean swapShowlets(PageModelUserConfigBean customization, String username, 
-			String pageModelCode, int firstFrame, int secondFrame, Showlet[] showlets) throws ApsSystemException {
+			String pageModelCode, int firstFrame, int secondFrame, org.entando.entando.aps.system.services.page.Widget[] showlets) throws ApsSystemException {
 		try {
 			customization = this.adjustPageModelUserConfigurationBean(customization, username, pageModelCode);
 			if (!customization.getUsername().equals(username)) {
@@ -218,7 +218,7 @@ public class PageModelUserConfigManager extends AbstractService implements IPage
 	
 	@Override
 	public PageModelUserConfigBean assignShowletToFrame(PageModelUserConfigBean customization, String username, 
-			String pageModelCode, int targetFrame, Showlet showlet) throws ApsSystemException {
+			String pageModelCode, int targetFrame, org.entando.entando.aps.system.services.page.Widget showlet) throws ApsSystemException {
 		try {
 			customization = this.adjustPageModelUserConfigurationBean(customization, username, pageModelCode);
 			if (!customization.getUsername().equals(username)) {

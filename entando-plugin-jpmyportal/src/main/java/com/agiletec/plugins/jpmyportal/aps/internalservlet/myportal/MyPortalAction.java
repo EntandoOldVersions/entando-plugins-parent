@@ -30,8 +30,8 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.IPageManager;
-import com.agiletec.aps.system.services.page.Showlet;
+import org.entando.entando.aps.system.services.page.IPageManager;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
 import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.system.services.user.UserDetails;
@@ -59,15 +59,15 @@ public class MyPortalAction extends BaseAction implements IMyPortalAction, Servl
 		PageModelUserConfigBean userConfiguration = (PageModelUserConfigBean) req.getSession().getAttribute(JpmyportalSystemConstants.SESSIONPARAM_CURRENT_USER_PAGE_MODEL_CONFIG);
 		IPage page =  this.getPageManager().getPage(this.getCurrentPage());
 		String currentPageCode = page.getModel().getCode();
-		Showlet[] defaultShowlets = page.getShowlets();
+		org.entando.entando.aps.system.services.page.Widget[] defaultShowlets = page.getShowlets();
 		try {
 			int firstFrame = this.getFrameSource();
 			int frameDest = this.getFrameDest();
-			Showlet[] meshUp = null;
-			Showlet[] customShowlets = null;
+			org.entando.entando.aps.system.services.page.Widget[] meshUp = null;
+			org.entando.entando.aps.system.services.page.Widget[] customShowlets = null;
 			UserDetails currentUser = (UserDetails) req.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
 			if (null != userConfiguration) {
-				meshUp = new Showlet[defaultShowlets.length];
+				meshUp = new org.entando.entando.aps.system.services.page.Widget[defaultShowlets.length];
 				customShowlets = userConfiguration.getConfig().get(currentPageCode);
 				for (int scan = 0; scan < defaultShowlets.length; scan++) {
 					if (null == customShowlets[scan]) {
@@ -129,7 +129,7 @@ public class MyPortalAction extends BaseAction implements IMyPortalAction, Servl
 			IPage page = this.getPageManager().getPage(currentPage);
 			UserDetails currentUser = (UserDetails) req.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
 			String currentPageModelCode = page.getModel().getCode();
-			Showlet targetShowlet = new Showlet();
+			org.entando.entando.aps.system.services.page.Widget targetShowlet = new org.entando.entando.aps.system.services.page.Widget();
 			ShowletType inheritedType = this.getShowletTypeManager().getShowletType(choosenShowlet);
 			if (null != inheritedType) {
 				targetShowlet.setType(inheritedType);
@@ -173,7 +173,7 @@ public class MyPortalAction extends BaseAction implements IMyPortalAction, Servl
 			UserDetails currentUser = (UserDetails) req.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
 			String currentPageModelCode = page.getModel().getCode();
 			this.getPageModelUserConfigManager().removeUserConfig(currentUser.getUsername(), currentPageModelCode, currentFrame);
-			Showlet[] config = userConfiguration.getConfig().get(currentPageModelCode);
+			org.entando.entando.aps.system.services.page.Widget[] config = userConfiguration.getConfig().get(currentPageModelCode);
 			config[currentFrame] = null;
 			req.getSession().setAttribute(JpmyportalSystemConstants.SESSIONPARAM_CURRENT_USER_PAGE_MODEL_CONFIG, userConfiguration);
 		} catch (Throwable t) {
@@ -233,7 +233,7 @@ public class MyPortalAction extends BaseAction implements IMyPortalAction, Servl
 		this._currentLangCode = currentLangCode;
 	}
 	
-	public Showlet getDefaultShowlet(String pageCode, String pos) {
+	public org.entando.entando.aps.system.services.page.Widget getDefaultShowlet(String pageCode, String pos) {
 		IPage page = this.getPageManager().getPage(pageCode);
 		int posInteger = Integer.parseInt(pos);
 		return page.getShowlets()[posInteger];

@@ -1,20 +1,19 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
+* and limitations under the License
+*
+*
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpfacetnav.aps.tags;
 
 import java.util.ArrayList;
@@ -29,15 +28,16 @@ import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.tree.ITreeNode;
 import com.agiletec.aps.system.common.tree.ITreeNodeManager;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpfacetnav.aps.system.JpFacetNavSystemConstants;
 import com.agiletec.plugins.jpfacetnav.aps.system.services.content.showlet.IFacetNavHelper;
 import com.agiletec.plugins.jpfacetnav.aps.tags.util.FacetBreadCrumbs;
 
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.Widget;
+
 /**
- * 
+ *
  * @author E.Santoboni
  */
 public abstract class AbstractFacetNavTag extends TagSupport {
@@ -226,7 +226,7 @@ public abstract class AbstractFacetNavTag extends TagSupport {
 	}
 
 	/**
-	 * Returns a list of root nodes through which grant the tree. 
+	 * Returns a list of root nodes through which grant the tree.
 	 * The root nodes allow you to create blocks of selected nodes in showlet appropriate.
 	 * @param reqCtx The context of the current request.
 	 * @return The list of root nodes.
@@ -234,12 +234,12 @@ public abstract class AbstractFacetNavTag extends TagSupport {
 	protected List<ITreeNode> getFacetRoots(RequestContext reqCtx) {
 		IPage page = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
 		Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
-		Showlet[] showlets = page.getShowlets();
+		org.entando.entando.aps.system.services.page.Widget[] showlets = page.getShowlets();
 		for (int i = 0; i < showlets.length; i++) {
-			if (i == currentFrame.intValue()) continue; 
-			Showlet showlet = showlets[i];
+			if (i == currentFrame.intValue()) continue;
+			org.entando.entando.aps.system.services.page.Widget showlet = showlets[i];
 			String configParamName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
-			if (null != showlet && null != showlet.getConfig() 
+			if (null != showlet && null != showlet.getConfig()
 					&& null != showlet.getConfig().getProperty(configParamName)) {
 				String facetParamConfig = showlet.getConfig().getProperty(configParamName);
 				return this.getFacetRoots(facetParamConfig);

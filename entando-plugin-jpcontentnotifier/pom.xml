@@ -4,7 +4,7 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-		<version>3.2.0-SNAPSHOT</version>
+		<version>3.3.1-EEE-SNAPSHOT</version>
     </parent>
 	<artifactId>entando-plugin-jpcontentnotifier</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
@@ -54,69 +54,69 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.2.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
-			<type>war</type>
+			<version>3.2.0-EEE</version><!-- version. Don't remove this comment. -->
+			<type>jar</type>
 		</dependency>
-                
+
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.2.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
+			<version>3.3.1-EEE-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>classes</classifier>
 			<scope>provided</scope>
 		</dependency>
-                
+
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.2.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
+			<version>3.3.1-EEE-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>zip</type>
 			<classifier>misc</classifier>
 		</dependency>
-                
+
                 <dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.2.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
+			<version>3.3.1-EEE-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-                
+
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpmail</artifactId>
-			<version>3.2.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
+			<version>3.3.1-EEE-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>zip</type>
 			<classifier>misc-test</classifier>
 			<scope>test</scope>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>3.2.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
+			<version>3.3.1-EEE-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>war</type>
 		</dependency>
-                
+
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
-			<version>3.2.0-SNAPSHOT</version><!-- version. Don't remove this comment. -->
+			<version>3.3.1-EEE-SNAPSHOT</version><!-- version. Don't remove this comment. -->
 			<type>jar</type>
 			<classifier>classes</classifier>
 			<scope>provided</scope>
 		</dependency>
-                
+
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
@@ -124,7 +124,7 @@
 			<type>zip</type>
 			<classifier>misc</classifier>
 		</dependency>
-                
+
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
@@ -133,7 +133,7 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-                
+
 		<dependency>
 			<groupId>org.entando.entando.plugins</groupId>
 			<artifactId>entando-plugin-jpuserprofile</artifactId>
@@ -142,6 +142,11 @@
 			<classifier>misc-test</classifier>
 			<scope>test</scope>
 		</dependency>
-                
+	 <dependency>
+	  <groupId>org.entando.entando</groupId>
+	  <artifactId>entando-core-engine</artifactId>
+	  <version>3.3.1-EEE-SNAPSHOT</version>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 </project>

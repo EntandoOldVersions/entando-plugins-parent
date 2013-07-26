@@ -1,42 +1,37 @@
 /*
-*
-* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
-*
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
-* and limitations under the License
-* 
-* 
-* 
-* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
-*
-*/
+ *
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ *
+ * This file is part of Entando Enterprise Edition software.
+ * You can redistribute it and/or modify it
+ * under the terms of the Entando's EULA
+ *
+ * See the file License for the specific language governing permissions
+ * and limitations under the License
+ *
+ *
+ *
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ *
+ */
 package com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.services.group.Group;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Showlet;
-import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecordVO;
-import com.agiletec.plugins.jacms.aps.system.services.contentmodel.ContentModel;
-import com.agiletec.plugins.jacms.aps.system.services.contentmodel.IContentModelManager;
 import com.agiletec.plugins.jacms.apsadmin.portal.specialshowlet.viewer.ContentViewerShowletAction;
-import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.ContentFeedbackConfig;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackConfig;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackManager;
+
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.Widget;
+
 
 /**
  * Action per la gestione della configurazione della showlet erogatore contenuto singolo,
@@ -54,7 +49,7 @@ public class ContentFeedbackShowletAction  extends ContentViewerShowletAction im
 
 	protected String extractInitConfig() {
 		if (null != this.getShowlet()) return SUCCESS;
-		Showlet showlet = this.getCurrentPage().getShowlets()[this.getFrame()];
+		org.entando.entando.aps.system.services.page.Widget showlet = this.getCurrentPage().getShowlets()[this.getFrame()];
 		Logger log = ApsSystemUtils.getLogger();
 		if (null == showlet) {
 			try {
@@ -83,9 +78,9 @@ public class ContentFeedbackShowletAction  extends ContentViewerShowletAction im
 				this.addActionError(this.getText("Message.userNotAllowed"));
 				return "pageTree";
 			}
-			log.info("Configurating new Showlet " + this.getShowletTypeCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
+			log.info("Configurating new org.entando.entando.aps.system.services.page.Widget " + this.getShowletTypeCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
 		} else {
-			log.info("Edit Showlet config " + showlet.getType().getCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
+			log.info("Edit org.entando.entando.aps.system.services.page.Widget config " + showlet.getType().getCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
 			showlet = this.createCloneFrom(showlet);
 		}
 		this.setShowlet(showlet);

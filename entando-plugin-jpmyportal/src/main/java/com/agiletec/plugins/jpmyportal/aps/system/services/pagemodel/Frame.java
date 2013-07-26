@@ -17,7 +17,7 @@
 */
 package com.agiletec.plugins.jpmyportal.aps.system.services.pagemodel;
 
-import com.agiletec.aps.system.services.page.Showlet;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * Representation of a page model
@@ -46,10 +46,10 @@ public class Frame {
 		this._mainFrame = mainFrame;
 	}
 	
-	public Showlet getDefaultShowlet() {
+	public org.entando.entando.aps.system.services.page.Widget getDefaultShowlet() {
 		return _defaultShowlet;
 	}
-	public void setDefaultShowlet(Showlet defaultShowlet) {
+	public void setDefaultShowlet(org.entando.entando.aps.system.services.page.Widget defaultShowlet) {
 		this._defaultShowlet = defaultShowlet;
 	}	
 	
@@ -64,6 +64,6 @@ public class Frame {
 	private String _descr;
 	private boolean _mainFrame;
 	private boolean _locked;
-	private Showlet _defaultShowlet;
+	private org.entando.entando.aps.system.services.page.Widget _defaultShowlet;
 	
 }

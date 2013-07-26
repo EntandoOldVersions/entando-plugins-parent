@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -27,7 +26,6 @@ import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.i18n.II18nManager;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.IUserManager;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.system.entity.AbstractApsEntityAction;
@@ -38,15 +36,17 @@ import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegManager;
 import java.util.List;
 
+import org.entando.entando.aps.system.services.page.Widget;
+
 /**
  * Action to manage User Account Registration Requests
- * 
+ *
  * @author S.Puddu
  * @author E.Mezzano
  * @author G.Cocco
  * */
 public class UserRegistrationAction extends AbstractApsEntityAction implements IUserRegistrationAction {
-	
+
 	@Override
 	public void validate() {
 		try {
@@ -65,7 +65,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 			throw new RuntimeException("Error validation of request for account activation" + this.getUsername(), t);
 		}
 	}
-	
+
 	@Override
 	public String createNew() {
 		String profileTypeCode = this.getProfileTypeCode();
@@ -94,7 +94,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return SUCCESS;
 	}
-	
+
 	protected void checkTypeLabels(IUserProfile userProfile) {
 		if (null == userProfile) {
 			return;
@@ -106,7 +106,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 				String attributeLabelKey = "jpuserprofile_" + userProfile.getTypeCode() + "_" + attribute.getName();
 				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
 					String attributeDescription = attribute.getDescription();
-					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ? 
+					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ?
 							attributeDescription :
 							attribute.getName();
 					this.addLabelGroups(attributeLabelKey, value);
@@ -117,7 +117,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 			throw new RuntimeException("Error checking label types", t);
 		}
 	}
-	
+
 	protected void addLabelGroups(String key, String defaultValue) throws ApsSystemException {
 		try {
 			ApsProperties properties = new ApsProperties();
@@ -129,21 +129,21 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 			throw new RuntimeException("Error adding label groups - key '" + key + "'", t);
 		}
 	}
-	
+
 	@Override
 	public String edit() {
 		this.addActionError(this.getText("jpuserreg.error.operation.unsupported"));
 		return FAILURE;
 	}
-	
+
 	@Override
 	public String view() {
 		this.addActionError(this.getText("jpuserreg.error.operation.unsupported"));
 		return FAILURE;
 	}
-	
+
 	/**
-	 * It Adds user account and profile in to the system, 
+	 * It Adds user account and profile in to the system,
 	 * keeping disabled status until the end of registration process
 	 * */
 	@Override
@@ -164,7 +164,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return SUCCESS;
 	}
-	
+
 	/**
 	 * Extract the typeCode from the current showlet.
 	 * @return The type code extracted from the showlet.
@@ -173,7 +173,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		String typeCode = null;
 		RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
 		if (reqCtx != null) {
-			Showlet showlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			if (showlet != null) {
 				ApsProperties config = showlet.getConfig();
 				if (null != config) {
@@ -186,7 +186,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return typeCode;
 	}
-	
+
 	/**
 	 * check if user exist
 	 * @param username
@@ -197,7 +197,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		boolean exists = (username!=null && username.trim().length()>=0 && this.getUserManager().getUser(username.trim())!=null);
 		return exists;
 	}
-	
+
 	private void checkEmailAddress() throws ApsSystemException {
 		String emailAttrName = this.getEmailAttrName();
 		String email = (String) this.getUserProfile().getValue(emailAttrName);
@@ -209,7 +209,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 			}
 		}
 	}
-	
+
 	/**
 	 * Verify if email already in use
 	 * @param email
@@ -228,16 +228,16 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return false;
 	}
-	
+
 	@Override
 	public IApsEntity getApsEntity() {
 		return (IApsEntity) this.getRequest().getSession().getAttribute(SESSION_PARAM_NAME_REQ_PROFILE);
 	}
-	
+
 	public IUserProfile getUserProfile() {
 		return (IUserProfile) this.getRequest().getSession().getAttribute(UserRegistrationAction.SESSION_PARAM_NAME_REQ_PROFILE);
 	}
-	
+
 	protected void setUserProfile(IUserProfile userProfile) {
 		if (userProfile!=null) {
 			this.getRequest().getSession().setAttribute(UserRegistrationAction.SESSION_PARAM_NAME_REQ_PROFILE, userProfile);
@@ -245,7 +245,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 			this.getRequest().getSession().removeAttribute(UserRegistrationAction.SESSION_PARAM_NAME_REQ_PROFILE);
 		}
 	}
-	
+
 	public String getEmailAttrName() {
 		if (this._emailAttrName==null) {
 			AttributeInterface attribute = this.getUserProfile().getAttributeByRole(ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL);
@@ -255,7 +255,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return this._emailAttrName;
 	}
-	
+
 	public String getProfileTypeCode() {
 		if (null==this._profileTypeCode) {
 			this._profileTypeCode = this.extractTypeCode();
@@ -265,70 +265,70 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return _profileTypeCode;
 	}
-	
+
 	public void setProfileTypeCode(String profileTypeCode) {
 		String showletTypeCode = this.extractTypeCode();
 		this._profileTypeCode = (null==showletTypeCode) ? profileTypeCode : showletTypeCode;
 	}
-	
+
 	public void setUsername(String username) {
 		this._username = username;
 	}
 	public String getUsername() {
 		return _username;
 	}
-	
+
 	public void setEmailConfirm(String emailConfirm) {
 		this._emailConfirm = emailConfirm;
 	}
 	public String getEmailConfirm() {
 		return _emailConfirm;
 	}
-	
+
 	public void setPrivacyPolicyAgreement(boolean privacyPolicyAgreement) {
 		this._privacyPolicyAgreement = privacyPolicyAgreement;
 	}
 	public boolean isPrivacyPolicyAgreement() {
 		return _privacyPolicyAgreement;
 	}
-	
+
 	protected IUserRegManager getUserRegManager() {
 		return _userRegManager;
 	}
 	public void setUserRegManager(IUserRegManager userRegManager) {
 		this._userRegManager = userRegManager;
 	}
-	
+
 	protected IUserProfileManager getUserProfileManager() {
 		return _userProfileManager;
 	}
 	public void setUserProfileManager(IUserProfileManager userProfileManager) {
 		this._userProfileManager = userProfileManager;
 	}
-	
+
 	protected IUserManager getUserManager() {
 		return _userManager;
 	}
 	public void setUserManager(IUserManager userManager) {
 		this._userManager = userManager;
 	}
-	
+
 	protected II18nManager getI18nManager() {
 		return _i18nManager;
 	}
 	public void setI18nManager(II18nManager i18nManager) {
 		this._i18nManager = i18nManager;
 	}
-	
+
 	private String _emailAttrName;
 	private String _profileTypeCode;
 	private String _username;
 	private String _emailConfirm;
 	private boolean _privacyPolicyAgreement = false;
-	
+
 	private IUserRegManager _userRegManager;
 	private IUserManager _userManager;
 	private IUserProfileManager _userProfileManager;
 	private II18nManager _i18nManager;
-	
+
 }

@@ -27,7 +27,7 @@ import javax.servlet.jsp.tagext.BodyContent;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Showlet;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.ExecShowletTag;
 import com.agiletec.plugins.jpmyportal.aps.system.JpmyportalSystemConstants;
 import com.agiletec.plugins.jpmyportal.aps.system.services.pagemodel.Frame;
@@ -55,7 +55,7 @@ public class MyPortalExecShowletTag extends ExecShowletTag {
 		try {
 			BodyContent body = this.pageContext.pushBody();			
 			PageModelUserConfigBean userConfigBean = (PageModelUserConfigBean) req.getSession().getAttribute(JpmyportalSystemConstants.SESSIONPARAM_CURRENT_USER_PAGE_MODEL_CONFIG);
-			Showlet[] showletsToRender = getShowletsToRender(page, userConfigBean);
+			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = getShowletsToRender(page, userConfigBean);
 			Map<Integer, Frame> swappableFrames = this.getSwappableFrames(page, showletsToRender);
 			reqCtx.addExtraParam(JpmyportalSystemConstants.EXTRAPAR_CURRENT_PAGE, page.getModel());
 			reqCtx.addExtraParam(JpmyportalSystemConstants.EXTRAPAR_CURRENT_PAGE_MODEL_SWAPPABLE_FRAMES, swappableFrames);
@@ -78,16 +78,16 @@ public class MyPortalExecShowletTag extends ExecShowletTag {
 	 * @param configuration
 	 * @return l'array con le showlet da renderizzare
 	 */
-	private Showlet[] getShowletsToRender(IPage page, PageModelUserConfigBean configuration) {
-		Showlet[] defaultShowlets = page.getShowlets();
-		Showlet[] customShowlets = null;
+	private org.entando.entando.aps.system.services.page.Widget[] getShowletsToRender(IPage page, PageModelUserConfigBean configuration) {
+		org.entando.entando.aps.system.services.page.Widget[] defaultShowlets = page.getShowlets();
+		org.entando.entando.aps.system.services.page.Widget[] customShowlets = null;
 		int showletNumber = defaultShowlets.length;
-		Showlet[] mergedShowlets = null;
+		org.entando.entando.aps.system.services.page.Widget[] mergedShowlets = null;
 		if (null == configuration) {
 			return defaultShowlets;
 		}
 		customShowlets = configuration.getConfig().get(page.getModel().getCode());
-		mergedShowlets = new Showlet[showletNumber];
+		mergedShowlets = new org.entando.entando.aps.system.services.page.Widget[showletNumber];
 		if (null != customShowlets) {
 			for (int scan = 0; scan < showletNumber; scan++) {
 				if (null == customShowlets[scan]) {
@@ -108,7 +108,7 @@ public class MyPortalExecShowletTag extends ExecShowletTag {
 	 * @param showlets la mappa delle showlets da renderizzare nella pagina corrente
 	 * @return la mappa dei frame che possono essere configurati dall'utente loggato
 	 */
-	private Map<Integer, Frame> getSwappableFrames(IPage page, Showlet[] showlets) {
+	private Map<Integer, Frame> getSwappableFrames(IPage page, org.entando.entando.aps.system.services.page.Widget[] showlets) {
 		Map<Integer, Frame> swappableFrames = new HashMap<Integer, Frame>();
 		Frame[] frames = ((MyPortalPageModel) page.getModel()).getFrameConfigs();
 		for (int scan = 0; scan < showlets.length; scan++) {

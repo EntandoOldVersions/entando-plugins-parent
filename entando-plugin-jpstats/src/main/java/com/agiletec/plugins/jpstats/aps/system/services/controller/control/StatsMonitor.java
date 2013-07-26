@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -31,15 +30,17 @@ import com.agiletec.aps.system.services.authorization.IApsAuthority;
 import com.agiletec.aps.system.services.controller.ControllerManager;
 import com.agiletec.aps.system.services.controller.control.ControlServiceInterface;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.Page;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.role.Role;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpstats.aps.system.services.stats.StatsManager;
 import com.agiletec.plugins.jpstats.aps.system.services.stats.StatsRecord;
 
+import org.entando.entando.aps.system.services.page.Page;
+import org.entando.entando.aps.system.services.page.Widget;
+
+
 /**
- * Statitistic Service. The following informations are collected:<br>
+ * Statistic Service. The following informations are collected:<br>
  *  <code>ip</code>(request IP address)<br>
  *  <code>referer</code>(request URL)<br>
  *  <code>session_id</code>(the session ID)<br>
@@ -60,13 +61,13 @@ import com.agiletec.plugins.jpstats.aps.system.services.stats.StatsRecord;
  * @author Manuela Lisci
  */
 public class StatsMonitor implements ControlServiceInterface {
-	
+
 	public void afterPropertiesSet() throws Exception {
 		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": init");
 	}
-	
+
 	/**
-	 * Execution. The operation details are described on class documentation. 
+	 * Execution. The operation details are described on class documentation.
 	 * @param reqCtx the request context
 	 * @param status the exit status of the previous service
 	 * @return the exit status
@@ -89,7 +90,7 @@ public class StatsMonitor implements ControlServiceInterface {
 		}
 		return retStatus;
 	}
-	
+
 	/**
 	 * Load the information in the HashMap
 	 * @param reqCtx the request context
@@ -117,8 +118,8 @@ public class StatsMonitor implements ControlServiceInterface {
 			}
 		}
 		statsRecord.setRole(rolesBuffer.toString());
-		NumberFormat formato = NumberFormat.getIntegerInstance(java.util.Locale.ITALIAN);  
-		formato.setMinimumIntegerDigits(2); 
+		NumberFormat formato = NumberFormat.getIntegerInstance(java.util.Locale.ITALIAN);
+		formato.setMinimumIntegerDigits(2);
 		String contentId = this.getContentId(page);
 		statsRecord.setPageCode(page.getCode());
 		statsRecord.setLangcode(lang.getCode());
@@ -127,7 +128,7 @@ public class StatsMonitor implements ControlServiceInterface {
 		statsRecord.setContentId(contentId);
 		return statsRecord;
 	}
-	
+
 	/**
 	 * If exists, returns the the code of the content
 	 * rendered in the main frame of the page
@@ -138,21 +139,21 @@ public class StatsMonitor implements ControlServiceInterface {
 		String content = null;
 		int mainFrame = page.getModel().getMainFrame();
 		if(mainFrame >= 0) {
-			Showlet showlet = page.getShowlets()[mainFrame];
+			org.entando.entando.aps.system.services.page.Widget showlet = page.getShowlets()[mainFrame];
 			if(null != showlet && null != showlet.getPublishedContent()) {
 				content = showlet.getPublishedContent();
 			}
 		}
 		return content;
 	}
-	
+
 	protected StatsManager getStatsManager() {
 		return _statsManager;
 	}
 	public void setStatsManager(StatsManager statsManager) {
 		this._statsManager = statsManager;
 	}
-	
+
 	private StatsManager _statsManager;
-	
+
 }

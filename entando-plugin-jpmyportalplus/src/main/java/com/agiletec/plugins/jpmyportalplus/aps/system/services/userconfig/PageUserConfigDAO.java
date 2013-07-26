@@ -1,20 +1,19 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
+* and limitations under the License
+*
+*
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig;
 
 import java.sql.Connection;
@@ -31,9 +30,6 @@ import org.entando.entando.aps.system.services.widgettype.WidgetType;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.IPageManager;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.pagemodel.IPageModelManager;
 import com.agiletec.aps.system.services.pagemodel.PageModel;
 import com.agiletec.aps.util.ApsProperties;
@@ -43,11 +39,15 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
 
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.IPageManager;
+import org.entando.entando.aps.system.services.page.Widget;
+
 /**
  * @author E.Santoboni
  */
 public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO {
-	
+
 	@Override
 	public void syncCustomization(List<WidgetType> allowedShowlets, String voidShowletCode) {
 		Set<String> allowedShowletCodes = this.getAllowedShowletCodes(allowedShowlets);
@@ -77,7 +77,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			this.closeDaoResources(res, stat, conn);
 		}
 	}
-	
+
 	private Set<String> getAllowedShowletCodes(List<WidgetType> allowedShowlets) {
 		Set<String> codes = new HashSet<String>();
 		if (null == allowedShowlets) {
@@ -91,7 +91,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		}
 		return codes;
 	}
-	
+
 	private void purgeConfigurationFromInvalidShowlets(Connection conn, String code) throws ApsSystemException {
 		PreparedStatement stat = null;
 		try {
@@ -104,7 +104,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			closeDaoResources(null, stat);
 		}
 	}
-	
+
 	@Override
 	public List<WidgetType> buildCustomizableShowletsList(MyPortalConfig config) {
 		List<WidgetType> result = new ArrayList<WidgetType>();
@@ -125,7 +125,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		}
 		return result;
 	}
-	
+
 	@Override
 	public void updateUserPageConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfos) {
 		Connection conn = null;
@@ -142,7 +142,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			this.closeConnection(conn);
 		}
 	}
-	
+
 	protected void deleteUserConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfos, Connection conn) {
 		PreparedStatement stat = null;
 		try {
@@ -162,7 +162,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			closeDaoResources(null, stat);
 		}
 	}
-	
+
 	protected void addUserConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfos, Connection conn) {
 		PreparedStatement stat = null;
 		try {
@@ -185,7 +185,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			closeDaoResources(null, stat);
 		}
 	}
-	
+
 	@Override
 	public PageUserConfigBean getUserConfig(String username) {
 		Connection conn = null;
@@ -205,7 +205,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		}
 		return result;
 	}
-	
+
 	private int getPageModelframe(String pageCode) throws ApsSystemException {
 		PageModel current = this.getPageManager().getPage(pageCode).getModel();
 		try {
@@ -213,24 +213,24 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		} catch (Throwable t) {
 			throw new ApsSystemException("ERROR: unknown page code '" + pageCode + "'");
 		}
-	}	
-	
+	}
+
 	/**
-	 * Create a showlet with a given code and optional configuration. 
+	 * Create a showlet with a given code and optional configuration.
 	 * @param showletcode the code of the showlet
 	 * @param config the configuration for the current showlet
 	 * @return a new object with the given code and configuration
 	 * @throws ApsSystemException if the given code is unknown or faulting XML configuration
 	 */
-	private Showlet createShowletFromRecord(String showletcode, String config) throws ApsSystemException {
-		Showlet newShowlet = new Showlet();
+	private org.entando.entando.aps.system.services.page.Widget createShowletFromRecord(String showletcode, String config) throws ApsSystemException {
+		org.entando.entando.aps.system.services.page.Widget newShowlet = new org.entando.entando.aps.system.services.page.Widget();
 		WidgetType inheritedType = this.getWidgetTypeManager().getShowletType(showletcode);
 		newShowlet.setType(inheritedType);
 		ApsProperties properties = null;
 		newShowlet.setConfig(properties);
 		return newShowlet;
-	}	
-	
+	}
+
 	private PageUserConfigBean createPageUserConfigBeanFromResultSet(String username, ResultSet res) {
 		PageUserConfigBean pageUserBean = new PageUserConfigBean(username);
 		try {
@@ -250,7 +250,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 				}
 				String currentShowletCode = res.getString(3);
 				String currentConfig = res.getString(4);
-				Showlet showlet = this.createShowletFromRecord(currentShowletCode, currentConfig);
+				org.entando.entando.aps.system.services.page.Widget showlet = this.createShowletFromRecord(currentShowletCode, currentConfig);
 				pageConfig.getConfig()[currentFramePos] = showlet;
 				int status = res.getInt(5);
 				pageConfig.getStatus()[currentFramePos] = status;
@@ -260,7 +260,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		}
 		return pageUserBean;
 	}
-	
+
 	@Override
 	public void removeUserPageConfig(String username, String pageCode, Integer framePosition) {
 		Connection conn = null;
@@ -290,7 +290,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			closeDaoResources(null, stat, conn);
 		}
 	}
-	
+
 	@Override
 	public void removeUnauthorizedShowlet(String username, String showletCode) {
 		Connection conn = null;
@@ -310,21 +310,21 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			closeDaoResources(null, stat, conn);
 		}
 	}
-	
+
 	protected IPageManager getPageManager() {
 		return _pageManager;
 	}
 	public void setPageManager(IPageManager pageManager) {
 		this._pageManager = pageManager;
 	}
-	
+
 	protected IPageModelManager getPageModelManager() {
 		return _pageModelManager;
 	}
 	public void setPageModelManager(IPageModelManager pageModelManager) {
 		this._pageModelManager = pageModelManager;
 	}
-	
+
 	public IWidgetTypeManager getWidgetTypeManager() {
 		return _widgetTypeManager;
 	}
@@ -335,31 +335,31 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 
 	private IPageManager _pageManager;
 	private IPageModelManager _pageModelManager;
-	
+
 	private IWidgetTypeManager _widgetTypeManager;
-	
-	private final String ADD_USER_CONFIG = 
+
+	private final String ADD_USER_CONFIG =
 		"INSERT INTO jpmyportalplus_userpageconfig (username, pagecode, framepos, showletcode, config, closed) VALUES (?, ?, ?, ?, ?, ?)";
-	
-	private final String DELETE_PAGE_USER_CONFIG = 
+
+	private final String DELETE_PAGE_USER_CONFIG =
 		"DELETE FROM jpmyportalplus_userpageconfig WHERE username = ? AND pagecode = ? AND framepos = ?";
-	
-	private final String DELETE_PAGE_CONFIGS = 
+
+	private final String DELETE_PAGE_CONFIGS =
 		"DELETE FROM jpmyportalplus_userpageconfig WHERE pagecode = ? ";
-	
-	private final String DELETE_PAGE_USER_CONFIGS = 
+
+	private final String DELETE_PAGE_USER_CONFIGS =
 		"DELETE FROM jpmyportalplus_userpageconfig WHERE username = ? AND pagecode = ? ";
-	
-	private final String GET_USER_CONFIG = 
+
+	private final String GET_USER_CONFIG =
 		"SELECT pagecode, framepos, showletcode, config, closed FROM jpmyportalplus_userpageconfig WHERE username = ? ORDER BY pagecode";
-	
-	private final String GET_CONFIGURED_SHOWLET_CODE = 
+
+	private final String GET_CONFIGURED_SHOWLET_CODE =
 		"SELECT showletcode FROM jpmyportalplus_userpageconfig GROUP BY showletcode";
-	
-	private final String DELETE_USER_CONFIG_BY_SHOWLET_CODE = 
+
+	private final String DELETE_USER_CONFIG_BY_SHOWLET_CODE =
 		"DELETE FROM jpmyportalplus_userpageconfig WHERE showletcode = ? ";
-	
-	private final String DELETE_UNAUTHORIZATED_SHOWLETS = 
+
+	private final String DELETE_UNAUTHORIZATED_SHOWLETS =
 			"DELETE FROM jpmyportalplus_userpageconfig WHERE username = ? AND showletcode = ? ";
-	
+
 }

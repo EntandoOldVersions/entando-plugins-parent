@@ -25,7 +25,7 @@ import com.agiletec.plugins.jpmyportal.apsadmin.ApsAdminPluginBaseTestCase;
 import com.agiletec.plugins.jpmyportal.util.JpmyportalTestHelper;
 
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.Showlet;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.pagemodel.IPageModelManager;
 import com.agiletec.aps.system.services.showlettype.ShowletType;
 import com.agiletec.aps.system.services.user.User;
@@ -124,8 +124,8 @@ public class TestMyPortalAction extends ApsAdminPluginBaseTestCase {
 		} catch (Throwable t) {
 			throw t;
 		} finally {
-			Showlet restoreVoid = this.getFakeShowlet("jpmyportal_void");
-			Showlet restoreViewer = this.getFakeShowlet("content_viewer_list");
+			org.entando.entando.aps.system.services.page.Widget restoreVoid = this.getFakeShowlet("jpmyportal_void");
+			org.entando.entando.aps.system.services.page.Widget restoreViewer = this.getFakeShowlet("content_viewer_list");
 			this._pageModelUserConfigManager.removeUserConfig(user.getUsername(), "home", 3);
 			this._pageModelUserConfigManager.removeUserConfig(user.getUsername(), "home", 4);
 			this._pageModelUserConfigManager.saveUserConfig(user.getUsername(), "home", 3, restoreVoid);
@@ -223,12 +223,12 @@ public class TestMyPortalAction extends ApsAdminPluginBaseTestCase {
 	 */
 	private PageModelUserConfigBean getFakePersonalization(String name, String firstModel, String secondModel) {
 		PageModelUserConfigBean c = new PageModelUserConfigBean();
-		Map<String, Showlet[]> map = null;
+		Map<String, org.entando.entando.aps.system.services.page.Widget[]> map = null;
 		if (null != firstModel  || null != secondModel ) {			
-			map = new HashMap<String, Showlet[]>();
+			map = new HashMap<String, org.entando.entando.aps.system.services.page.Widget[]>();
 			if (firstModel != null) {
 				int size = this._pageModelManager.getPageModel(firstModel).getFrames().length;
-				Showlet[] showlet = new Showlet[size];
+				org.entando.entando.aps.system.services.page.Widget[] showlet = new org.entando.entando.aps.system.services.page.Widget[size];
 				if (size > 2) {
 					showlet[0] = this.getFakeShowletWithNoConfig("content_viewer");
 					showlet[2] = this.getFakeShowlet("login_form");
@@ -239,7 +239,7 @@ public class TestMyPortalAction extends ApsAdminPluginBaseTestCase {
 			}			
 			if (secondModel != null) {
 				int size = this._pageModelManager.getPageModel(secondModel).getFrames().length;
-				Showlet[] showlet = new Showlet[size];
+				org.entando.entando.aps.system.services.page.Widget[] showlet = new org.entando.entando.aps.system.services.page.Widget[size];
 				if (size > 2) {
 					showlet[0] = this.getFakeShowlet("content_viewer_list");
 					showlet[2] = this.getFakeShowletWithNoConfig("settoreSelect");
@@ -259,8 +259,8 @@ public class TestMyPortalAction extends ApsAdminPluginBaseTestCase {
 	 * @param custom codice, replicato poi nella chiave e nel valore
 	 * @return
 	 */
-	private Showlet getFakeShowlet(String custom) {
-		Showlet fakeShowlet = new Showlet();
+	private org.entando.entando.aps.system.services.page.Widget getFakeShowlet(String custom) {
+		org.entando.entando.aps.system.services.page.Widget fakeShowlet = new org.entando.entando.aps.system.services.page.Widget();
 		ApsProperties fakeProperties = null;
 //		ApsProperties fakeProperties = new ApsProperties();
 //		fakeProperties.setProperty("Key-"+custom, "Value-"+custom);
@@ -276,8 +276,8 @@ public class TestMyPortalAction extends ApsAdminPluginBaseTestCase {
 	 * @param custom
 	 * @return
 	 */
-	private Showlet getFakeShowletWithNoConfig(String custom) {
-		Showlet fakeShowlet = new Showlet();
+	private org.entando.entando.aps.system.services.page.Widget getFakeShowletWithNoConfig(String custom) {
+		org.entando.entando.aps.system.services.page.Widget fakeShowlet = new org.entando.entando.aps.system.services.page.Widget();
 		ApsProperties fakeProperties = new ApsProperties();
 		ShowletType fakeType = new ShowletType();
 		fakeType.setCode(custom);
@@ -294,7 +294,7 @@ public class TestMyPortalAction extends ApsAdminPluginBaseTestCase {
 		Iterator<String> itr = customization.getConfig().keySet().iterator();
 		while (itr.hasNext()) {
 			String key = itr.next();
-			Showlet[] currentmap = customization.getConfig().get(key);
+			org.entando.entando.aps.system.services.page.Widget[] currentmap = customization.getConfig().get(key);
 			System.out.println("KEY "+key);
 			if (null == currentmap)
 				continue;

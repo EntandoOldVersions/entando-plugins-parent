@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -27,14 +26,15 @@ import javax.servlet.jsp.tagext.TagSupport;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.plugins.jpgeoref.aps.system.GeoRefSystemConstants;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
  */
 public class GeoRouteListTag extends TagSupport {
-	
+
 	/**
 	 * Start tag analysis.
 	 */
@@ -42,7 +42,7 @@ public class GeoRouteListTag extends TagSupport {
 		ServletRequest request =  this.pageContext.getRequest();
 		RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
 		try {
-			Showlet showlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			String contentsId = showlet.getConfig().getProperty(GeoRefSystemConstants.ROUTE_CONTENTS_ID_SHOWLET_PARAM);
 			this.pageContext.setAttribute(this.getListName(), this.extractContentIdList(contentsId));
 		} catch (Throwable e) {
@@ -51,7 +51,7 @@ public class GeoRouteListTag extends TagSupport {
 		}
 		return super.doStartTag();
 	}
-	
+
 	/**
 	 * Returns content id list
 	 * @param contentsId contents Id
@@ -70,14 +70,14 @@ public class GeoRouteListTag extends TagSupport {
 		}
 		return new ArrayList<String>();
 	}
-	
+
 	/**
 	 * Release the list of identifiers found in pageContext.
 	 */
 	public void release() {
 		this._listName = null;
 	}
-	
+
 	/**
 	 * Returns the name that is inserted into the list of identifiers found in pageContext.
 	 * @return Returns the listName.
@@ -85,7 +85,7 @@ public class GeoRouteListTag extends TagSupport {
 	public String getListName() {
 		return _listName;
 	}
-	
+
 	/**
 	 * Sets the name that is inserted into the list of identifiers found in pageContext.
 	 * @param listName The listName to set.
@@ -93,7 +93,7 @@ public class GeoRouteListTag extends TagSupport {
 	public void setListName(String listName) {
 		this._listName = listName;
 	}
-	
+
 	private String _listName;
-	
+
 }

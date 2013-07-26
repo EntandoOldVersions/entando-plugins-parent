@@ -19,7 +19,7 @@ package com.agiletec.plugins.jpmyportal.aps.system.services.userconfig.model;
 
 import java.util.Map;
 
-import com.agiletec.aps.system.services.page.Showlet;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 
 public class PageModelUserConfigBean {
 	
@@ -30,14 +30,14 @@ public class PageModelUserConfigBean {
 		this._username = username;
 	}
 	
-	public Map<String, Showlet[]> getConfig() {
+	public Map<String, org.entando.entando.aps.system.services.page.Widget[]> getConfig() {
 		return _config;
 	}
-	public void setConfig(Map<String, Showlet[]> config) {
+	public void setConfig(Map<String, org.entando.entando.aps.system.services.page.Widget[]> config) {
 		this._config = config;
 	}
 	
 	private String _username;
-	private Map<String, Showlet[]> _config;
+	private Map<String, org.entando.entando.aps.system.services.page.Widget[]> _config;
 	
 }

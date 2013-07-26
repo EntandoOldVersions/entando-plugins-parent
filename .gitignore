@@ -8,3 +8,4 @@ entando-plugin-*/.gitignore
 .project
 ./settings/
 .classpath
+nbactions.xml

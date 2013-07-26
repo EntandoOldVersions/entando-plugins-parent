@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -27,13 +26,15 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.baseconfig.BaseConfigManager;
 import com.agiletec.aps.system.services.lang.ILangManager;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.IPageManager;
-import com.agiletec.aps.system.services.page.PageUtils;
 import com.agiletec.aps.system.services.url.PageURL;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
+
+
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.IPageManager;
+import org.entando.entando.aps.system.services.page.PageUtils;
 
 /**
  * Utility for generating URLs without ticket parameter.
@@ -43,13 +44,13 @@ public class CasClientUtils {
 
 	public String getURLStringWithoutTicketParam(PageURL pageUrl, RequestContext reqCtx){
 		String langCode = pageUrl.getLangCode();
-		ILangManager langManager = 
+		ILangManager langManager =
 			(ILangManager) ApsWebApplicationUtils.getBean(SystemConstants.LANGUAGE_MANAGER, reqCtx.getRequest());
-		BaseConfigManager configManager = 
+		BaseConfigManager configManager =
 			(BaseConfigManager) ApsWebApplicationUtils.getBean(SystemConstants.BASE_CONFIG_MANAGER, reqCtx.getRequest());
-		ICasClientConfigManager casClientConfigManager = 
+		ICasClientConfigManager casClientConfigManager =
 				(ICasClientConfigManager) ApsWebApplicationUtils.getBean(CasClientPluginSystemCostants.JPCASCLIENT_CONFIG_MANAGER, reqCtx.getRequest());
-		IPageManager pageManager = 
+		IPageManager pageManager =
 			(IPageManager) ApsWebApplicationUtils.getBean(SystemConstants.PAGE_MANAGER, reqCtx.getRequest());
 		Lang lang = langManager.getLang(langCode);
 		if (lang == null) {
@@ -71,10 +72,10 @@ public class CasClientUtils {
 		if (serverBaseUrl.endsWith("/")) {
 			serverBaseUrl = serverBaseUrl.substring(0, serverBaseUrl.length()-1);
 		}
-		
+
 		url.append(serverBaseUrl);
 		url.append(reqCtx.getRequest().getContextPath()).append('/');
-		
+
 		if (!this.isUrlStyleBreadcrumbs(configManager)) {
 			url.append(lang.getCode()).append('/');
 			url.append(page.getCode()).append(".page");
@@ -84,11 +85,11 @@ public class CasClientUtils {
 			StringBuffer fullPath = PageUtils.getFullPath(page, "/");
 			url.append(fullPath.append("/"));
 		}
-		
+
 		String queryString = this.getQueryStringWithoutTicketParam(reqCtx.getRequest());
 		url.append(queryString);
 		HttpServletResponse resp = reqCtx.getResponse();
-		String encUrl = resp.encodeURL(url.toString());  
+		String encUrl = resp.encodeURL(url.toString());
 		return encUrl;
 	}
 
@@ -114,10 +115,10 @@ public class CasClientUtils {
 		}
 		return queryStr.toString();
 	}
-	
+
 	protected boolean isUrlStyleBreadcrumbs(BaseConfigManager configManager) {
 		String param = configManager.getParam(SystemConstants.CONFIG_PARAM_URL_STYLE);
 		return (param != null && param.trim().equalsIgnoreCase(SystemConstants.CONFIG_PARAM_URL_STYLE_BREADCRUMBS));
 	}
-	
+
 }

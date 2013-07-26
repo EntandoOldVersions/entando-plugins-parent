@@ -2,25 +2,21 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.config;
 
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.IPageManager;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.ApsPluginBaseTestCase;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
@@ -28,17 +24,21 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageU
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
 
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.IPageManager;
+import org.entando.entando.aps.system.services.page.Widget;
+
 /**
  * @author E.Santoboni
  */
 public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
-	
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.init();
 	}
-	
+
 	public void testGetUserConfig() throws Throwable {
 		UserDetails user = this.getUser("editorCustomers");
 		PageUserConfigBean config = this._pageUserConfigManager.getUserConfig(user);
@@ -46,7 +46,7 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 		assertEquals(1, config.getConfig().size());
 		CustomPageConfig pageConfig = config.getConfig().get("jpmyportalplus_testpage");
 		assertNotNull(pageConfig);
-		Showlet[] showlets = pageConfig.getConfig();
+		org.entando.entando.aps.system.services.page.Widget[] showlets = pageConfig.getConfig();
 		Integer[] status = pageConfig.getStatus();
 		assertEquals(8, status.length);
 		assertEquals(showlets.length, status.length);
@@ -69,16 +69,16 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 		assertEquals("jpmyportalplus_test_showlet_3", showlets[6].getType().getCode());
 		assertNull(showlets[7]);
 	}
-	
+
 	public void testGetShowletToRender() throws Throwable {
 		UserDetails user = this.getUser("editorCustomers");
 		PageUserConfigBean config = this._pageUserConfigManager.getUserConfig(user);
 		IPage page = this._pageManager.getPage("jpmyportalplus_testpage");
 		CustomPageConfig pageConfig = config.getConfig().get("jpmyportalplus_testpage");
-		Showlet[] showlets = this._pageUserConfigManager.getShowletsToRender(page, pageConfig.getConfig());
-		
+		org.entando.entando.aps.system.services.page.Widget[] showlets = this._pageUserConfigManager.getShowletsToRender(page, pageConfig.getConfig());
+
 		assertEquals(8, showlets.length);
-		
+
 		assertEquals("login_form", showlets[0].getType().getCode());
 		assertEquals("jpmyportalplus_void", showlets[1].getType().getCode());
 		assertEquals("jpmyportalplus_test_showlet_1", showlets[2].getType().getCode());
@@ -87,9 +87,9 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 		assertNull(showlets[5]);
 		assertEquals("jpmyportalplus_test_showlet_3", showlets[6].getType().getCode());
 		assertNull(showlets[7]);
-		
+
 	}
-	
+
 	private void init() throws Exception {
 		try {
 			this._pageUserConfigManager = (IPageUserConfigManager) this.getService(JpmyportalplusSystemConstants.PAGE_USER_CONFIG_MANAGER);
@@ -98,8 +98,8 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 			throw new Exception(e);
 		}
 	}
-	
+
 	protected IPageManager _pageManager;
 	protected IPageUserConfigManager _pageUserConfigManager;
-	
+
 }

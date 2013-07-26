@@ -27,7 +27,7 @@ import java.util.Map;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.page.Showlet;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.pagemodel.IPageModelManager;
 import com.agiletec.aps.system.services.pagemodel.PageModel;
 import com.agiletec.aps.system.services.showlettype.IShowletTypeManager;
@@ -101,12 +101,12 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 	}
 	
 	@Override
-	public PageModelUserConfigBean swapShowlets(PageModelUserConfigBean customization, String pageModelCode, int firstFrame, int secondFrame, Showlet[] showlets) {
+	public PageModelUserConfigBean swapShowlets(PageModelUserConfigBean customization, String pageModelCode, int firstFrame, int secondFrame, org.entando.entando.aps.system.services.page.Widget[] showlets) {
 		Connection conn = null;
 		try {
 			String username = customization.getUsername();
-			Showlet[] customShowlets = null;
-			Showlet tmp = null;
+			org.entando.entando.aps.system.services.page.Widget[] customShowlets = null;
+			org.entando.entando.aps.system.services.page.Widget tmp = null;
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
 			if (!customization.getConfig().containsKey(pageModelCode)) {
@@ -146,8 +146,8 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 	public PageModelUserConfigBean voidFrame(PageModelUserConfigBean customization, String pageModelCode, int targetFrame, String defaultShowletCode) {
 		Connection conn = null;
 		try {
-			Showlet[] showlets = null;
-			Showlet voidShowlet = this.createShowletFromRecord(defaultShowletCode, null);
+			org.entando.entando.aps.system.services.page.Widget[] showlets = null;
+			org.entando.entando.aps.system.services.page.Widget voidShowlet = this.createShowletFromRecord(defaultShowletCode, null);
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
 			if (!customization.getConfig().containsKey(pageModelCode)) {
@@ -172,7 +172,7 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 	}
 	
 	@Override
-	public PageModelUserConfigBean assignShowletToFrame(PageModelUserConfigBean customization, String pageModelCode, int targetFrame, Showlet showlet) {
+	public PageModelUserConfigBean assignShowletToFrame(PageModelUserConfigBean customization, String pageModelCode, int targetFrame, org.entando.entando.aps.system.services.page.Widget showlet) {
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -237,8 +237,8 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 	 * @return a new object with the given code and configuration
 	 * @throws ApsSystemException if the given code is unknown or faulting XML configuration
 	 */
-	private Showlet createShowletFromRecord(String showletcode, String config) throws ApsSystemException {
-		Showlet newShowlet = new Showlet();
+	private org.entando.entando.aps.system.services.page.Widget createShowletFromRecord(String showletcode, String config) throws ApsSystemException {
+		org.entando.entando.aps.system.services.page.Widget newShowlet = new org.entando.entando.aps.system.services.page.Widget();
 		try {
 			ShowletType inheritedType = this.getShowletTypeManager().getShowletType(showletcode);
 			newShowlet.setType(inheritedType);
@@ -257,7 +257,7 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 			newShowlet.setConfig(properties);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "createShowletFromRecord");
-			throw new ApsSystemException("Error create Showlet From Record for type '" + showletcode + "'", t);
+			throw new ApsSystemException("Error create org.entando.entando.aps.system.services.page.Widget From Record for type '" + showletcode + "'", t);
 		}
 		return newShowlet;
 	}
@@ -275,7 +275,7 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 		try {
 			// SE abbiamo una risposta dal DB allora settiamo l'username nel bean.
 			if (null != res) {
-				Map<String, Showlet[]> userAssociatedMap = new HashMap<String, Showlet[]>();
+				Map<String, org.entando.entando.aps.system.services.page.Widget[]> userAssociatedMap = new HashMap<String, org.entando.entando.aps.system.services.page.Widget[]>();
 				// assegnamo il nome utente al bean e la relativa mappa vuota
 				while (res.next()) {
 					if (pageModelUserBean == null) {
@@ -295,7 +295,7 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 						 * aggiungi la voce in mappa con chiave 'pagemodel';
 						 */
 						int showletArraySize = getPageModelframe(currentPageModel);
-						Showlet[] currentShowletArray = new Showlet[showletArraySize];
+						org.entando.entando.aps.system.services.page.Widget[] currentShowletArray = new org.entando.entando.aps.system.services.page.Widget[showletArraySize];
 						currentShowletArray[currentFramepos] = createShowletFromRecord(currentShowletCode,currentConfig);					
 						userAssociatedMap.put(currentPageModel, currentShowletArray);
 					} else {
@@ -303,7 +303,7 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 						 * ottieni l'array del pagmodel corrente;
 						 * inserisci la showlet nell'array nella giusta posizione data dal numero di frame;
 						 */
-						Showlet[] currentShowletArray = userAssociatedMap.get(currentPageModel);
+						org.entando.entando.aps.system.services.page.Widget[] currentShowletArray = userAssociatedMap.get(currentPageModel);
 						currentShowletArray[currentFramepos] = createShowletFromRecord(currentShowletCode,currentConfig);
 					}
 				}
@@ -323,7 +323,7 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 	 * @throws ApsSystemException invoked if the frame is not valid or the page model is unknown.
 	 */
 	@Override
-	public void saveUserConfig(String username, String pageModelCode, int framepos, Showlet showlet) {
+	public void saveUserConfig(String username, String pageModelCode, int framepos, org.entando.entando.aps.system.services.page.Widget showlet) {
 		Connection conn = null;
 		String showletCode = null;
 		String showletConfig = null;
@@ -360,7 +360,7 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 		}
 	}
 	
-	private void transactSaveUserConfig(Connection conn, String username, String pageModelCode, int framepos, Showlet showlet) {
+	private void transactSaveUserConfig(Connection conn, String username, String pageModelCode, int framepos, org.entando.entando.aps.system.services.page.Widget showlet) {
 		String showletCode = null;
 		String showletConfig = null;
 		PreparedStatement stat = null;
@@ -414,7 +414,7 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 	}
 	
 	@Override
-	public void updateUserConfig(String username, String pageModelCode, int framepos, Showlet showlet) {
+	public void updateUserConfig(String username, String pageModelCode, int framepos, org.entando.entando.aps.system.services.page.Widget showlet) {
 		Connection conn = null;
 		PreparedStatement stat = null;
 		try {
@@ -446,7 +446,7 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 		}
 	}
 	
-	private void transactUpdateUserConfig(Connection conn, String username, String pageModelCode, int framepos, Showlet showlet) {
+	private void transactUpdateUserConfig(Connection conn, String username, String pageModelCode, int framepos, org.entando.entando.aps.system.services.page.Widget showlet) {
 		PreparedStatement stat = null;
 		try {
 			int maxAllowedFrame = getPageModelframe(pageModelCode);

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Showlet;
+import com.agiletec.aps.system.services.page.org.entando.entando.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportal.aps.internalservlet.myportal.MyPortalAction;
 import com.agiletec.plugins.jpmyportal.aps.system.JpmyportalSystemConstants;
@@ -36,15 +36,15 @@ public class MyPortalAjaxAction extends MyPortalAction {
 		PageModelUserConfigBean userConfiguration = (PageModelUserConfigBean) req.getSession().getAttribute(JpmyportalSystemConstants.SESSIONPARAM_CURRENT_USER_PAGE_MODEL_CONFIG);
 		IPage page =  this.getPageManager().getPage(this.getCurrentPage());
 		String currentPageModelCode = page.getModel().getCode();
-		Showlet[] defaultShowlets = page.getShowlets();
+		org.entando.entando.aps.system.services.page.Widget[] defaultShowlets = page.getShowlets();
 		try {
 			int firstFrame = this.getFrameSource();
 			int frameToSwapWith = this.getFrameDest();
-			Showlet[] meshUp = null;
-			Showlet[] customShowlets = null;
+			org.entando.entando.aps.system.services.page.Widget[] meshUp = null;
+			org.entando.entando.aps.system.services.page.Widget[] customShowlets = null;
 			UserDetails currentUser = (UserDetails) req.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
 			if (null != userConfiguration) {
-				meshUp = new Showlet[defaultShowlets.length];
+				meshUp = new org.entando.entando.aps.system.services.page.Widget[defaultShowlets.length];
 				customShowlets = userConfiguration.getConfig().get(currentPageModelCode);
 				for (int scan = 0; scan < defaultShowlets.length; scan++) {
 					if (null == customShowlets[scan]) {
@@ -90,7 +90,7 @@ public class MyPortalAjaxAction extends MyPortalAction {
 		return SUCCESS;
 	}
 	
-	private PageModelUserConfigBean doFrameSwap(PageModelUserConfigBean customization, String username, String pageModelCode, int firstFrame, int secondFrame, Showlet[] showlets) {
+	private PageModelUserConfigBean doFrameSwap(PageModelUserConfigBean customization, String username, String pageModelCode, int firstFrame, int secondFrame, org.entando.entando.aps.system.services.page.Widget[] showlets) {
 		try {
 			return this.getPageModelUserConfigManager().swapShowlets(customization, username, pageModelCode, firstFrame, secondFrame, showlets);			
 		} catch (Throwable t) {

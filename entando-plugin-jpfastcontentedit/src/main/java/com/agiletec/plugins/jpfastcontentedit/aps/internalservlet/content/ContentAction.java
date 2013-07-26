@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -30,20 +29,21 @@ import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.notify.NotifyManager;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.url.IURLManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.helper.IContentActionHelper;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
 
+import org.entando.entando.aps.system.services.page.IPage;
+
 /**
  * Classe action delegata alla redazione del contenuto in Front-End.
- * La classe estende la classe action base della gestione contenuti con l'aggiunta della 
+ * La classe estende la classe action base della gestione contenuti con l'aggiunta della
  * funzione per la redirezione alla pagina di partenza.
  * @author E.Santoboni
  */
 public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.ContentAction implements IContentAction, ServletResponseAware {
-	
+
 	@Override
 	public String edit() {
 		String result = super.edit();
@@ -56,11 +56,11 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 		}
 		return result;
 	}
-	
+
 	private void disableAttributes(Content content) {
 		content.disableAttributes(JpFastContentEditSystemConstants.CONTENT_DISABLING_CODE);
 	}
-	
+
 	@Override
 	protected String saveContent(boolean approve) {
 		try {
@@ -78,7 +78,7 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 		}
 		return null;
 	}
-	
+
 	@Override
 	public String delete() {
 		Logger log = ApsSystemUtils.getLogger();
@@ -111,7 +111,7 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Attende che il thread in esecuzione riguardante la notifica di eventi terminino.
 	 * @throws InterruptedException In caso di errore.
@@ -128,20 +128,20 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 	    	}
 	    }
 	}
-	
+
 	/**
 	 * Costruisce e restituisce il path di redirezione finale.
-	 * Il path rappresenta la destinazione alla quale si deve essere redirezionati una volta 
+	 * Il path rappresenta la destinazione alla quale si deve essere redirezionati una volta
 	 * terminata la redazione del contenuto.
 	 * @return Il path di destinazione finale.
 	 */
 	protected String getDestForwardPath() {
 		return this.getDestForwardPath(null);
 	}
-	
+
 	/**
 	 * Costruisce e restituisce il path di redirezione finale.
-	 * Il path rappresenta la destinazione alla quale si deve essere redirezionati una volta 
+	 * Il path rappresenta la destinazione alla quale si deve essere redirezionati una volta
 	 * terminata la redazione del contenuto.
 	 * @param contentId The Content id.
 	 * @return Il path di destinazione finale.
@@ -168,7 +168,7 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 		String url = this.getUrlManager().createUrl(pageDestCode, currentLang, params);
 		return url;
 	}
-	
+
 	@Override
 	protected boolean isUserAllowed(Content content) {
 		boolean userAllowed = super.isUserAllowed(content);
@@ -183,7 +183,7 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 		}
 		return false;
 	}
-	
+
 	public String getContentTypeCode() {
 		String contentTypeCode = this._contentTypeCode;
 		if (null == contentTypeCode) {
@@ -193,14 +193,14 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 		}
 		return contentTypeCode;
 	}
-	
+
 	public void setContentTypeCode(String contentTypeCode) {
 		IContentActionHelper helper = (IContentActionHelper) this.getContentActionHelper();
 		String showletTypeCode = helper.extractShowletParam(this.getRequest(), JpFastContentEditSystemConstants.TYPE_CODE_SHOWLET_PARAM_NAME);
 		contentTypeCode = (null==showletTypeCode) ? contentTypeCode : showletTypeCode;
 		this._contentTypeCode = contentTypeCode;
 	}
-	
+
 	protected HttpServletResponse getResponse() {
 		return _response;
 	}
@@ -208,17 +208,17 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 	public void setServletResponse(HttpServletResponse response) {
 		this._response = response;
 	}
-	
+
 	protected IURLManager getUrlManager() {
 		return _urlManager;
 	}
 	public void setUrlManager(IURLManager urlManager) {
 		this._urlManager = urlManager;
 	}
-	
+
 	private String _contentTypeCode;
-	
+
 	private HttpServletResponse _response;
 	private IURLManager _urlManager;
-	
+
 }

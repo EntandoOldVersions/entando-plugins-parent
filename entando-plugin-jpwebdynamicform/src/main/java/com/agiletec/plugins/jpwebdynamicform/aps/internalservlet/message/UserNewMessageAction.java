@@ -2,10 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software;
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
 *
 * See the file License for the specific language governing permissions
 * and limitations under the License
@@ -28,13 +27,14 @@ import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.i18n.II18nManager;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.system.entity.AbstractApsEntityAction;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.JpwebdynamicformSystemConstants;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageManager;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.model.Message;
 import com.agiletec.plugins.jpwebdynamicform.apsadmin.message.common.INewMessageAction;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * Implementation for action managing Message entity editing operations.
@@ -53,13 +53,13 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 	public IApsEntity getApsEntity() {
 		return this.getMessage();
 	}
-	
+
 	@Override
 	public String view() {
 		//Operation not allowed
 		return null;
 	}
-	
+
 	@Override
 	public String createNew() {
 		try {
@@ -79,7 +79,7 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 		}
 		return SUCCESS;
 	}
-	
+
 	protected void checkTypeLabels(Message messageType) {
 		if (null == messageType) {
 			return;
@@ -96,7 +96,7 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 				String attributeLabelKey = "jpwebdynamicform_" + messageType.getTypeCode() + "_" + attribute.getName();
 				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
 					String attributeDescription = attribute.getDescription();
-					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ? 
+					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ?
 							attributeDescription :
 							attribute.getName();
 					this.addLabelGroups(attributeLabelKey, value);
@@ -107,7 +107,7 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 			throw new RuntimeException("Error checking label types", t);
 		}
 	}
-	
+
 	protected void addLabelGroups(String key, String defaultValue) throws ApsSystemException {
 		try {
 			ApsProperties properties = new ApsProperties();
@@ -119,7 +119,7 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 			throw new RuntimeException("Error adding label groups - key '" + key + "'", t);
 		}
 	}
-	
+
 	@Override
 	public String edit() {
 		// Operation Not Allowed
@@ -232,7 +232,7 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 		String typeCode = null;
 		RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
 		if (reqCtx != null) {
-			Showlet showlet = (Showlet) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			if (showlet != null) {
 				ApsProperties config = showlet.getConfig();
 				if (null != config) {
@@ -274,14 +274,14 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 	public List<Lang> getLangs() {
 		return this.getLangManager().getLangs();
 	}
-	
+
 	protected II18nManager getI18nManager() {
 		return _i18nManager;
 	}
 	public void setI18nManager(II18nManager i18nManager) {
 		this._i18nManager = i18nManager;
 	}
-	
+
 	protected IMessageManager getMessageManager() {
 		return _messageManager;
 	}
@@ -292,7 +292,7 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 	private String _typeCode;
 	private Lang _currentLang;
 	private Message _message;
-	
+
 	private II18nManager _i18nManager;
 	private IMessageManager _messageManager;
 

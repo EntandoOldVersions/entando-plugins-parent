@@ -1,20 +1,19 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
+* and limitations under the License
+*
+*
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpstats.aps.system.services.stats;
 
 import java.lang.reflect.Method;
@@ -40,8 +39,6 @@ import org.jfree.data.time.TimeSeries;
 
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.services.lang.ILangManager;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.util.DateConverter;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecordVO;
@@ -50,6 +47,10 @@ import com.agiletec.plugins.jpstats.aps.system.services.stats.model.ContentStati
 import com.agiletec.plugins.jpstats.aps.system.services.stats.model.DateStatistic;
 import com.agiletec.plugins.jpstats.aps.system.services.stats.model.PageStatistic;
 import com.agiletec.plugins.jpstats.aps.system.services.stats.model.VisitsStat;
+
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.IPageManager;
+
 
 /**
  * Data Access Object for the Statistics Manager
@@ -79,7 +80,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	}
 
 	private String convertSecondsToInterval(int seconds) {
-		int day = (int)TimeUnit.SECONDS.toDays(seconds);        
+		int day = (int)TimeUnit.SECONDS.toDays(seconds);
 		long hours = TimeUnit.SECONDS.toHours(seconds) - (day *24);
 		long minute = TimeUnit.SECONDS.toMinutes(seconds) - (TimeUnit.SECONDS.toHours(seconds)* 60);
 		long second = TimeUnit.SECONDS.toSeconds(seconds) - (TimeUnit.SECONDS.toMinutes(seconds) *60);
@@ -105,7 +106,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				StatsRecord record = this.createStatsRecord(res);
 				records.add(record);
 			}
-		} catch (Throwable t) {			
+		} catch (Throwable t) {
 			processDaoException(t, "Error getting Ip address ", "loadStatsRecord");
 		} finally {
 			closeDaoResources(res, stat, conn);
@@ -115,7 +116,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 
 	/**
 	 * Adds a record to the statistic table
-	 * @param statsRecord 
+	 * @param statsRecord
 	 */
 	@Override
 	public void addStatsRecord(StatsRecord statsRecord) {
@@ -267,7 +268,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 
 	/**
 	 * Gets the hits between two dates
-	 * @param start Calendar 
+	 * @param start Calendar
 	 * @param end Calendar
 	 * @return a TimeSeries object, used to render the chart
 	 */
@@ -307,7 +308,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 
 	/**
 	 * Gets the average time spent on the site by session
-	 * @param start Calendar 
+	 * @param start Calendar
 	 * @param end Calendar
 	 * @return a string whith the format hh:mm:ss
 	 */
@@ -322,13 +323,13 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		try {
 			conn = this.getConnection();
 			String queryName = this.GetAVERAGE_TIME_SITE(this.getDriverName());
-			stat = conn.prepareStatement(queryName);  
+			stat = conn.prepareStatement(queryName);
 			stat.setString(1, startString);
 			stat.setString(2, endString);
 			res = stat.executeQuery();
 			String media = null;
 			while (res.next()) {
-				int seconds = res.getInt(1); 
+				int seconds = res.getInt(1);
 				media = this.convertSecondsToInterval(seconds);
 
 			}
@@ -343,7 +344,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 
 	/**
 	 * Gets the average time spent on a page by pagecode and by session
-	 * @param start Calendar 
+	 * @param start Calendar
 	 * @param end Calendar
 	 * @return a string whith the format hh:mm:ss
 	 */
@@ -358,7 +359,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		try {
 			conn = this.getConnection();
 			String queryName = this.GetAVERAGE_TIME_PAGE(this.getDriverName());
-			stat = conn.prepareStatement(queryName);  
+			stat = conn.prepareStatement(queryName);
 			stat.setString(1, startString);
 			stat.setString(2, endString);
 			res = stat.executeQuery();
@@ -376,7 +377,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 
 	/**
 	 * Gets the average amount of pages visited in each session
-	 * @param start Calendar 
+	 * @param start Calendar
 	 * @param end Calendar
 	 * @return int the average amount of pages visited in each session
 	 */
@@ -390,12 +391,12 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		String endString = new Timestamp(end.getTimeInMillis()).toString();
 		try {
 			conn = this.getConnection();
-			stat = conn.prepareStatement(AVERAGE_PAGE);  
+			stat = conn.prepareStatement(AVERAGE_PAGE);
 			stat.setString(1, startString);
 			stat.setString(2, endString);
-			res = stat.executeQuery(); 				
+			res = stat.executeQuery();
 			while (res.next()) {
-				mediaPage = res.getInt(1);			
+				mediaPage = res.getInt(1);
 			}
 		} catch (Throwable t) {
 			processDaoException(t, "Error getting average num page session ", "getNumPageSession");
@@ -406,8 +407,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	}
 
 	/**
-	 * Gets the ten most visited pages 
-	 * @param start Calendar 
+	 * Gets the ten most visited pages
+	 * @param start Calendar
 	 * @param end Calendar
 	 * @return a map (pagecode:hits) used to render the chart
 	 */
@@ -439,12 +440,12 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	}
 
 	/**
-	 * Gets the ten most visited contents 
+	 * Gets the ten most visited contents
 	 * If the content does not exists anymore the function
 	 * prints [DELETED] instead of the description
-	 * @param start Calendar 
+	 * @param start Calendar
 	 * @param end Calendar
-	 * @param contentManager 
+	 * @param contentManager
 	 * @return a map (content_descr:hits) used to render the chart
 	 */
 	@Override
@@ -484,7 +485,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return Calendar the first date stored in the statistic table
 	 * If the table is empty returns the current date
 	 */
@@ -515,10 +516,10 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	}
 
 	/**
-	 * Gets a map of Ip Address (ip,hits) 
+	 * Gets a map of Ip Address (ip,hits)
 	 * @param start Calendar
 	 * @param end Calendar
-	 * @return a map of Ip (ip,hits) 
+	 * @return a map of Ip (ip,hits)
 	 */
 	@Override
 	public Map<String, Integer> getIPByDateInterval(Calendar start, Calendar end) {
@@ -539,7 +540,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				int count = res.getInt(2);
 				statsRecord.put(ip, new Integer(count));
 			}
-		} catch (Throwable t) {			
+		} catch (Throwable t) {
 			processDaoException(t, "Error getting Ip address ", "getIPByDateInterval");
 		} finally {
 			closeDaoResources(res, stat, conn);
@@ -551,8 +552,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	 * Rounds a string cutting the milliseconds
 	 * Queries the gets average time can return null values
 	 * This function transform null values in 00:00:00
-	 * @param interval String 
-	 * @return 
+	 * @param interval String
+	 * @return
 	 */
 	private String roundInterval(String interval) {
 		if(interval==null) interval = "00:00:00";
@@ -643,7 +644,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 			return AVERAGE_TIME_SITE_mysql;
 		} else if (driver.equalsIgnoreCase("derby")) {
 			return AVERAGE_TIME_SITE_derby;
-		} 
+		}
 		return q;
 	}
 
@@ -651,7 +652,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		String q = GET_FIRST_DATE;
 		if (driver.equalsIgnoreCase("derby")) {
 			q = GET_FIRST_DATE_derby;
-		} 
+		}
 		return q;
 	}
 
@@ -659,7 +660,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		String q = GET_TOP_CONTENTS;
 		if (driver.equalsIgnoreCase("derby")) {
 			q = GET_TOP_CONTENTS_derby;
-		} 
+		}
 		return q;
 	}
 
@@ -667,29 +668,29 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 		String q = GET_TOP_PAGES;
 		if (driver.equalsIgnoreCase("derby")) {
 			q = GET_TOP_PAGES_derby;
-		} 
+		}
 		return q;
 	}
 
-	private final String ADD_RECORD = 
+	private final String ADD_RECORD =
 			"INSERT INTO jpstats_statistics (ip, referer, session_id, role, timestamp, year_value, month_value, day_value, hour_value, pagecode, langcode, useragent, browserlang, content) "
 					+ "VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
 
-	private final String REMOVE_RECORDS = 
+	private final String REMOVE_RECORDS =
 			"DELETE FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? ";
 
-	private final String LOAD_RECORDS = 
+	private final String LOAD_RECORDS =
 			"SELECT * FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? ORDER BY timestamp DESC";
 
 	private final String SEARCH_DAILY_VISITS =
 			"SELECT count(*) as hits, year_value, month_value, day_value FROM jpstats_statistics " +
 					"WHERE timestamp >= ? AND timestamp <= ? GROUP BY year_value, month_value, day_value ORDER BY hits DESC";
 
-	private final String SEARCH_PAGE_VISITS = 
+	private final String SEARCH_PAGE_VISITS =
 			"SELECT pagecode, COUNT(*) AS hits FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? " +
 					"GROUP BY pagecode ORDER BY hits DESC";
 
-	private final String SEARCH_CONTENT_VISITS = 
+	private final String SEARCH_CONTENT_VISITS =
 			"SELECT content, COUNT(*) AS hits FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? " +
 					"AND content IS NOT NULL GROUP BY content ORDER BY hits DESC";
 
@@ -699,7 +700,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 					" GROUP BY year_value, month_value, day_value ORDER BY year_value, month_value, day_value ASC";
 
 
-	private final String AVERAGE_TIME_SITE_postgres = 
+	private final String AVERAGE_TIME_SITE_postgres =
 			"SELECT avg(x) AS media " +
 					" FROM( SELECT session_id, extract(EPOCH FROM MAX(timestamp)::TIMESTAMP - MIN(timestamp)::TIMESTAMP) as x " +
 					" FROM jpstats_statistics  " +
@@ -707,7 +708,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 					" GROUP BY session_id " +
 					" HAVING count(session_id)>1 )AS SUBQUERY";
 
-	private final String AVERAGE_TIME_SITE_mysql = 
+	private final String AVERAGE_TIME_SITE_mysql =
 			"SELECT avg(x) AS media " +
 					" FROM( SELECT session_id, TIMESTAMPDIFF(second, MIN(timestamp(timestamp)), MAX(timestamp(timestamp))) AS x" +
 					" FROM jpstats_statistics  " +
@@ -715,7 +716,7 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 					" GROUP BY session_id " +
 					" HAVING count(session_id)>1 )AS SUBQUERY";
 
-	private final String AVERAGE_TIME_SITE_derby = 
+	private final String AVERAGE_TIME_SITE_derby =
 			"SELECT avg(x) AS media " +
 					" FROM( SELECT session_id, {fn TIMESTAMPDIFF(SQL_TSI_SECOND, MIN(timestamp(timestamp)), MAX(timestamp(timestamp)))} AS x" +
 					" FROM jpstats_statistics  " +
@@ -727,17 +728,17 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	private final String AVERAGE_TIME_PAGE_postgres =
 			"SELECT AVG(x) AS media" +
 					" FROM( SELECT session_id as s, pagecode as p, extract(EPOCH FROM MAX(timestamp)::TIMESTAMP - MIN(timestamp)::TIMESTAMP) as x " +
-					" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY p, s )AS SUBQUERY ";	
+					" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY p, s )AS SUBQUERY ";
 
 	private final String AVERAGE_TIME_PAGE_mysql =
 			"SELECT AVG(x) AS media" +
 					" FROM( SELECT session_id as s, pagecode as p, TIMESTAMPDIFF(second, MIN(timestamp(timestamp)), MAX(timestamp(timestamp))) AS x  " +
-					" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY p, s )AS SUBQUERY ";	
+					" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY p, s )AS SUBQUERY ";
 
 	private final String AVERAGE_TIME_PAGE_derby =
 			"SELECT AVG(x) AS media" +
 					" FROM( SELECT session_id as s, pagecode as p, {fn TIMESTAMPDIFF(SQL_TSI_SECOND, MIN(timestamp(timestamp)), MAX(timestamp(timestamp)))} AS x  " +
-					" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY pagecode, session_id )AS SUBQUERY ";	
+					" FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY pagecode, session_id )AS SUBQUERY ";
 
 
 
@@ -748,41 +749,41 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 					" WHERE timestamp >= ? AND timestamp <= ? " +
 					" GROUP BY session_id )AS SUBQUERY";
 
-	private final String GET_TOP_PAGES = 
+	private final String GET_TOP_PAGES =
 			"SELECT pagecode,COUNT(*) AS hits FROM jpstats_statistics  " +
 					" WHERE timestamp >= ? AND timestamp <= ? " +
 					" GROUP BY pagecode " +
 					" ORDER BY hits DESC" +
 					" LIMIT 10;";
 
-	private final String GET_TOP_PAGES_derby = 
+	private final String GET_TOP_PAGES_derby =
 			"SELECT * FROM ( SELECT ROW_NUMBER() OVER() AS rownum,  pagecode,COUNT(*) AS hits FROM jpstats_statistics  " +
 					" WHERE timestamp >= ? AND timestamp <= ? " +
 					" GROUP BY pagecode " +
 					" ORDER BY hits DESC) as tmp  WHERE rownum <= 10";
 
 
-	private final String GET_TOP_CONTENTS = 
+	private final String GET_TOP_CONTENTS =
 			"SELECT content, COUNT(content) AS hits FROM jpstats_statistics " +
 					"WHERE timestamp >= ? AND timestamp <= ? and content IS NOT NULL " +
 					"GROUP BY content " +
 					"ORDER BY hits " +
 					"DESC LIMIT 10";
 
-	private final String GET_TOP_CONTENTS_derby = 
+	private final String GET_TOP_CONTENTS_derby =
 			"SELECT * FROM ( SELECT ROW_NUMBER() OVER() AS rownum,  content, COUNT(content) AS hits FROM jpstats_statistics " +
 					"WHERE timestamp >= ? AND timestamp <= ? and content IS NOT NULL " +
 					"GROUP BY content " +
 					"ORDER BY hits " +
 					"DESC) as tmp  WHERE rownum <= 10";
 
-	private final String GET_FIRST_DATE = 
+	private final String GET_FIRST_DATE =
 			"SELECT year_value, month_value, day_value FROM jpstats_statistics ORDER BY timestamp ASC LIMIT 1";
 
-	private final String GET_FIRST_DATE_derby = 
+	private final String GET_FIRST_DATE_derby =
 			"SELECT * FROM ( SELECT ROW_NUMBER() OVER() AS rownum, year_value, month_value, day_value FROM jpstats_statistics ORDER BY timestamp ASC) as tmp WHERE rownum <= 1";
 
-	private final String GET_IP = 
+	private final String GET_IP =
 			"SELECT DISTINCT ip, count(*) as count " +
 					"FROM jpstats_statistics WHERE timestamp >= ? AND timestamp <= ? GROUP BY ip";
 
@@ -792,6 +793,6 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 	public void setDatabaseTypeDrivers(Properties databaseTypeDrivers) {
 		this._databaseTypeDrivers = databaseTypeDrivers;
 	}
-	
+
 	private Properties _databaseTypeDrivers;
 }

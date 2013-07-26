@@ -1,23 +1,21 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
+* and limitations under the License
+*
+*
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpmyportalplus.aps.tags;
 
-import java.util.Set;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,8 +26,6 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.tags.ExecShowletTag;
 import com.agiletec.aps.tags.util.IFrameDecoratorContainer;
@@ -39,11 +35,14 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageU
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
 
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.Widget;
+
 /**
  * @author E.Santoboni
  */
 public class MyPortalExecShowletTag extends ExecShowletTag {
-	
+
 	@Override
 	public int doStartTag() throws JspException {
 		HttpServletRequest req =  (HttpServletRequest) this.pageContext.getRequest();
@@ -74,7 +73,7 @@ public class MyPortalExecShowletTag extends ExecShowletTag {
 		}
 		return super.doStartTag();
 	}
-	
+
 	@Override
 	protected void buildShowletOutput(IPage page, String[] showletOutput) throws JspException {
 		HttpServletRequest req =  (HttpServletRequest) this.pageContext.getRequest();
@@ -97,8 +96,8 @@ public class MyPortalExecShowletTag extends ExecShowletTag {
 				return;
 			}
 			req.getSession().setAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG, customPageConfig);
-			Showlet[] customShowlets = customPageConfig.getConfig();
-			Showlet[] showletsToRender = pageUserConfigManager.getShowletsToRender(page, customShowlets);
+			org.entando.entando.aps.system.services.page.Widget[] customShowlets = customPageConfig.getConfig();
+			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = pageUserConfigManager.getShowletsToRender(page, customShowlets);
 			List<IFrameDecoratorContainer> decorators = this.extractDecorators();
 			BodyContent body = this.pageContext.pushBody();
 			for (int scan = 0; scan < showletsToRender.length; scan++) {
@@ -113,5 +112,5 @@ public class MyPortalExecShowletTag extends ExecShowletTag {
 			throw new JspException(msg, t);
 		}
 	}
-	
+
 }

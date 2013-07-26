@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -28,7 +27,6 @@ import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.cache.ICacheManager;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
@@ -49,14 +47,17 @@ import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.Con
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 
+import org.entando.entando.aps.system.services.page.Widget;
+
+
 public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTestCase {
-	
+
 	@Override
 	protected void setUp() throws Exception {
         super.setUp();
         this.init();
     }
-	
+
 	public void testAddDeleteCommentByShowletConfig()throws Throwable{
 		String contentId = "ART1";
 		try{
@@ -65,7 +66,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			PublicContentAuthorizationInfo authInfo = new PublicContentAuthorizationInfo(content);
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
-			Showlet showlet = new Showlet();
+			org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
             IWidgetTypeManager showletTypeMan =
             	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
             WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
@@ -96,10 +97,10 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 			String result1 = this.executeAction();
 			assertEquals(Action.SUCCESS, result1);
-			
+
 			this.initAction("/do/jpcontentfeedback/FrontEnd/contentfeedback", "insert");
 			assertEquals(TokenInterceptor.INVALID_TOKEN_CODE, this.executeAction());
-			
+
 			CommentSearchBean searchBean = new CommentSearchBean();
 			searchBean.setComment("Testo ");
 			listaIds = this._commentManager.searchCommentIds(null);
@@ -116,7 +117,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			}
 		}
 	}
-	
+
 	private void setToken() {
 		String token = TokenHelper.generateGUID();
 		ActionContext.getContext().setSession(new HashMap<String, Object>());
@@ -126,7 +127,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 		this.addParameter(TokenHelper.TOKEN_NAME_FIELD, new String[]{tokenName});
 		this.addParameter(tokenName, new String[]{token});
 	}
-	
+
 	public void testAddContentRatingByShowletConfig()throws Throwable {
 		String contentId = "ART1";
 		try {
@@ -135,7 +136,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			PublicContentAuthorizationInfo authInfo = new PublicContentAuthorizationInfo(content);
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
-			Showlet showlet = new Showlet();
+			org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
             IWidgetTypeManager showletTypeMan =
             	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
             WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
@@ -178,7 +179,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 
 			CommentSearchBean searchBean = new CommentSearchBean();
 			searchBean.setComment("Testo ");
-			
+
 			CommentSearchBean sb = new CommentSearchBean();
 			sb.setSort(ICommentSearchBean.SORT_ASC);
 			listaIds = this._commentManager.searchCommentIds(sb);
@@ -254,7 +255,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
 			this._contentManager.loadContent(contentId, true);
-			Showlet showlet = new Showlet();
+			org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
             IWidgetTypeManager showletTypeMan =
             	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
             WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
@@ -330,5 +331,5 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 	private ICommentManager _commentManager = null;
 	private IRatingManager _ratingManager = null;
 	private IContentManager _contentManager;
-	
+
 }

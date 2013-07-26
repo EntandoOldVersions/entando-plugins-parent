@@ -60,7 +60,7 @@ public class TestConfigAction extends ApsAdminPluginBaseTestCase {
 	}
 	
 	public void testAddShowlet() throws Throwable {
-		String result = this.executeAddShowlet("admin", new String[] {}, "content_viewer", true, false); // Showlet non consentita
+		String result = this.executeAddShowlet("admin", new String[] {}, "content_viewer", true, false); // org.entando.entando.aps.system.services.page.Widget non consentita
 		assertEquals(Action.SUCCESS, result);
 		this.verifyAction(false, new String[] { }, true, false);
 		
@@ -68,11 +68,11 @@ public class TestConfigAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(Action.SUCCESS, result);
 		this.verifyAction(false, new String[] { "logic_type" }, true, false);
 		
-		result = this.executeAddShowlet("admin", new String[] { "content_viewer" }, "content_viewer_list", false, true); // Showlet non consentita
+		result = this.executeAddShowlet("admin", new String[] { "content_viewer" }, "content_viewer_list", false, true); // org.entando.entando.aps.system.services.page.Widget non consentita
 		assertEquals(Action.SUCCESS, result);
 		this.verifyAction(false, new String[] { "content_viewer" }, false, true);
 		
-		result = this.executeAddShowlet("admin", new String[] { "content_viewer" }, "messages_system", false, true); // Showlet non consentita
+		result = this.executeAddShowlet("admin", new String[] { "content_viewer" }, "messages_system", false, true); // org.entando.entando.aps.system.services.page.Widget non consentita
 		assertEquals(Action.SUCCESS, result);
 		this.verifyAction(false, new String[] { "content_viewer", "messages_system" }, false, true);
 		

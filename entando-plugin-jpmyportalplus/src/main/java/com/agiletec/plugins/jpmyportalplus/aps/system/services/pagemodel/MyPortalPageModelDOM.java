@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* JAPS and its  source-code is  licensed under the  terms of the
-* GNU General Public License  as published by  the Free Software
-* Foundation (http://www.fsf.org/licensing/licenses/gpl.txt).
-* 
-* You may copy, adapt, and redistribute this file for commercial
-* or non-commercial use.
-* When copying,  adapting,  or redistributing  this document you
-* are required to provide proper attribution  to AgileTec, using
-* the following attribution line:
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
+* and limitations under the License
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -28,26 +27,27 @@ import org.jdom.input.SAXBuilder;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.util.ApsProperties;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * This support class parses the XML representing the configuration of a page model
  * @author E.Santoboni
- * 
- * 
+ *
+ *
 <frames>
 	<frame pos="0" locked="false" column="3">
-		<descr>Search in this site</descr>	
+		<descr>Search in this site</descr>
 		<defaultShowlet code="searchForm"/>
 	</frame>
 	....
 	....
 </frames>
- * 
+ *
  */
 public class MyPortalPageModelDOM {
-	
+
 	/**
 	 * Class constructor
 	 * @param xmlText The XML string to parse
@@ -58,7 +58,7 @@ public class MyPortalPageModelDOM {
 		this.decodeDOM(xmlText);
 		this.buildFrames(widgetTypeManager);
 	}
-	
+
 	private void decodeDOM(String xmlText) throws ApsSystemException {
 		SAXBuilder builder = new SAXBuilder();
 		builder.setValidation(false);
@@ -70,7 +70,7 @@ public class MyPortalPageModelDOM {
 			throw new ApsSystemException("Error detected parsing the XML", t);
 		}
 	}
-	
+
 	private ApsProperties buildProperties(Element propertiesElement) {
 		ApsProperties prop = new ApsProperties();
 		List<Element> propertyElements = propertiesElement.getChildren(TAB_PROPERTY);
@@ -81,14 +81,14 @@ public class MyPortalPageModelDOM {
 		}
 		return prop;
 	}
-	
+
 	private void buildFrames(IWidgetTypeManager widgetTypeManager) throws ApsSystemException {
 		List<Element> frameElements = _doc.getRootElement().getChildren(TAB_FRAME);
 		if (null != frameElements && frameElements.size() > 0) {
 			int framesNumber = frameElements.size();
 			_frames = new String[framesNumber];
 			_frameConfigs = new Frame[framesNumber];
-			_defaultShowlet = new Showlet[framesNumber];
+			_defaultShowlet = new org.entando.entando.aps.system.services.page.Widget[framesNumber];
 			_existMainFrame = false;
 			Iterator<Element> frameElementsIter = frameElements.iterator();
 			while (frameElementsIter.hasNext()) {
@@ -97,16 +97,16 @@ public class MyPortalPageModelDOM {
 			}
 		} else {
 			_frames = new String[0];
-			_defaultShowlet = new Showlet[0];
+			_defaultShowlet = new org.entando.entando.aps.system.services.page.Widget[0];
 		}
 	}
-		
+
 	private void buildFrame(IWidgetTypeManager showletTypeManager,
 			int framesNumber, Element frameElement) throws ApsSystemException {
 		int pos = Integer.parseInt(frameElement.getAttributeValue(ATTRIBUTE_POS));
 		if(pos >= framesNumber) {
 			throw new ApsSystemException("The 'pos' attribute exceeds the available frames in the page model");
-		} 
+		}
 		Frame frame = new Frame();
 		frame.setPos(pos);
 		String main = frameElement.getAttributeValue(ATTRIBUTE_MAIN);
@@ -135,15 +135,15 @@ public class MyPortalPageModelDOM {
 		}
 		Element defaultShowletElement = frameElement.getChild(TAB_DEFAULT_SHOWLET);
 		if (null != defaultShowletElement) {
-			Showlet defaultShowlet = this.buildDefaultShowlet(defaultShowletElement, pos, showletTypeManager);
+			org.entando.entando.aps.system.services.page.Widget defaultShowlet = this.buildDefaultShowlet(defaultShowletElement, pos, showletTypeManager);
 			frame.setDefaultShowlet(defaultShowlet);
 			this.getDefaultShowlet()[pos] = defaultShowlet;
 		}
 		_frameConfigs[pos] = frame;
 	}
-	
-	private Showlet buildDefaultShowlet(Element defaultShowletElement, int pos, IWidgetTypeManager showletTypeManager) {
-		Showlet showlet = new Showlet();
+
+	private org.entando.entando.aps.system.services.page.Widget buildDefaultShowlet(Element defaultShowletElement, int pos, IWidgetTypeManager showletTypeManager) {
+		org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
 		String showletCode = defaultShowletElement.getAttributeValue(ATTRIBUTE_CODE);
 		showlet.setType(showletTypeManager.getShowletType(showletCode));
 		Element propertiesElement = defaultShowletElement.getChild(TAB_PROPERTIES);
@@ -156,7 +156,7 @@ public class MyPortalPageModelDOM {
 		_defaultShowlet[pos] = showlet;
 		return showlet;
 	}
-	
+
 	/**
 	 * Return the sorted descriptions by frames of the page models.
 	 * @return An array with the frames descriptions.
@@ -164,11 +164,11 @@ public class MyPortalPageModelDOM {
 	public String[] getFrames() {
 		return this._frames;
 	}
-	
+
 	public Frame[] getFrameConfigs() {
 		return this._frameConfigs;
 	}
-	
+
 	/**
 	 * Return the position of the main frame when available, otherwise return -1.
 	 * @return The position of the main frame or -1 when it's not available.
@@ -180,15 +180,15 @@ public class MyPortalPageModelDOM {
 			return -1;
 		}
 	}
-	
+
 	/**
 	 * Return the configuration of the default showlets
 	 * @return The default showlets
 	 */
-	public Showlet[] getDefaultShowlet() {
+	public org.entando.entando.aps.system.services.page.Widget[] getDefaultShowlet() {
 		return this._defaultShowlet;
 	}
-	
+
 	private Document _doc;
 	private final String TAB_FRAME = "frame";
 	private final String ATTRIBUTE_POS = "pos";
@@ -202,8 +202,8 @@ public class MyPortalPageModelDOM {
 	private boolean _existMainFrame;
 	private int _mainFrame;
 	private String[] _frames;
-	private Showlet[] _defaultShowlet;
-	
+	private org.entando.entando.aps.system.services.page.Widget[] _defaultShowlet;
+
 	private Frame[] _frameConfigs;
-	
+
 }

@@ -1,20 +1,19 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software;
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- *
- * See the file License for the specific language governing permissions
- * and limitations under the License
- *
- *
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
+* and limitations under the License
+*
+*
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig;
 
 import java.util.ArrayList;
@@ -34,8 +33,6 @@ import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.authorization.IAuthorizationManager;
 import com.agiletec.aps.system.services.group.Group;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Showlet;
 import com.agiletec.aps.system.services.pagemodel.IPageModelManager;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
@@ -45,6 +42,9 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPorta
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
+
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -107,7 +107,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			customConfig = new CustomPageConfig(cookie, page, this.getWidgetTypeManager(),
 					mPortalConfig.getAllowedShowlets(), this.getVoidShowletCode());
 			for (int i = 0; i < customConfig.getConfig().length; i++) {
-				Showlet showlet = customConfig.getConfig()[i];
+				org.entando.entando.aps.system.services.page.Widget showlet = customConfig.getConfig()[i];
 				if (null != showlet) {
 					if (null != showlet.getType()) {
 						String mainGroup = showlet.getType().getMainGroup();
@@ -148,10 +148,10 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	}
 
 	@Override
-	public Showlet[] getShowletsToRender(IPage page, Showlet[] customShowlets) throws ApsSystemException {
-		Showlet[] mergedShowlets = null;
+	public org.entando.entando.aps.system.services.page.Widget[] getShowletsToRender(IPage page, org.entando.entando.aps.system.services.page.Widget[] customShowlets) throws ApsSystemException {
+		org.entando.entando.aps.system.services.page.Widget[] mergedShowlets = null;
 		try {
-			Showlet[] defaultShowlets = page.getShowlets();
+			org.entando.entando.aps.system.services.page.Widget[] defaultShowlets = page.getShowlets();
 			if (null == customShowlets) {
 				return defaultShowlets;
 			}
@@ -163,9 +163,9 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			}
 			Frame[] frames = ((MyPortalPageModel) page.getModel()).getFrameConfigs();
 			int showletNumber = defaultShowlets.length;
-			mergedShowlets = new Showlet[showletNumber];
+			mergedShowlets = new org.entando.entando.aps.system.services.page.Widget[showletNumber];
 			for (int scan = 0; scan < showletNumber; scan++) {
-				Showlet customShowlet = customShowlets[scan];
+				org.entando.entando.aps.system.services.page.Widget customShowlet = customShowlets[scan];
 				if (null == customShowlet || frames[scan].isLocked()) {
 					mergedShowlets[scan] = defaultShowlets[scan];
 				} else {
@@ -235,7 +235,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 		cookie.setPath("/");
 		response.addCookie(cookie);
 	}
-	
+
 	@Override
 	public void removeUserPageConfig(String username, IPage page) throws ApsSystemException {
 		try {
@@ -245,22 +245,22 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			throw new ApsSystemException("Error removing Page user Config", t);
 		}
 	}
-	
-	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.deletePage(..)) && args(pageCode)")
+
+	@Before("execution(* org.entando.entando.aps.system.services.page.IPageManager.deletePage(..)) && args(pageCode)")
 	public void removeUserPageConfig(String pageCode) throws ApsSystemException {
 		this.removeConfig(pageCode, null);
 	}
-	
-	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.joinShowlet(..)) && args(pageCode, showlet, pos)")
-	public void removeUserPageConfig(String pageCode, Showlet showlet, int pos) throws ApsSystemException {
+
+	@Before("execution(* org.entando.entando.aps.system.services.page.IPageManager.joinShowlet(..)) && args(pageCode, showlet, pos)")
+	public void removeUserPageConfig(String pageCode, org.entando.entando.aps.system.services.page.Widget showlet, int pos) throws ApsSystemException {
 		this.removeConfig(pageCode, pos);
 	}
-	
-	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.removeShowlet(..)) && args(pageCode, pos)")
+
+	@Before("execution(* org.entando.entando.aps.system.services.page.IPageManager.removeShowlet(..)) && args(pageCode, pos)")
 	public void removeUserPageConfig(String pageCode, int pos) throws ApsSystemException {
 		this.removeConfig(pageCode, pos);
 	}
-	
+
 	private void removeConfig(String pageCode, Integer pos) throws ApsSystemException {
 		try {
 			this.getPageUserConfigDAO().removeUserPageConfig(null, pageCode, pos);
@@ -269,7 +269,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			throw new ApsSystemException("Error removing Page user Config", t);
 		}
 	}
-	
+
 	@Override
 	public WidgetType getVoidShowlet() {
 		return this.getWidgetTypeManager().getShowletType(this.getVoidShowletCode());
@@ -306,7 +306,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	public void setAuthorizationManager(IAuthorizationManager authorizationManager) {
 		this._authorizationManager = authorizationManager;
 	}
-	
+
 	public IWidgetTypeManager getWidgetTypeManager() {
 		return _widgetTypeManager;
 	}

@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
 * and limitations under the License
-* 
-* 
-* 
+*
+*
+*
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -55,29 +54,29 @@ import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfi
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 
 /**
- * Service to notify to users the content creation or update, 
- * the comunication happens by email .
+ * Service to notify to users the content creation or update,
+ * the communication happens by email .
  * @author E.Santoboni
  */
 public class ContentNotifierManager extends AbstractService implements PublicContentChangedObserver, IContentNotifierManager {
-	
+
 	@Override
 	public void init() throws ApsSystemException {
 		this.loadConfigs();
 		this.openScheduler();
 		ApsSystemUtils.getLogger().config(this.getName() + ": service for notifications on contents changes initialized");
 	}
-	
+
 	@Override
 	public void release() {
 		this.closeScheduler();
 	}
-	
+
 	@Override
 	public void destroy() {
 		this.closeScheduler();
 	}
-	
+
 	@Override
 	public void updateFromPublicContentChanged(PublicContentChangedEvent event) {
 		NotifierConfig config = this.getConfig();
@@ -93,7 +92,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			}
 		}
 	}
-	
+
 	@Override
 	public void updateNotifierConfig(NotifierConfig config) throws ApsSystemException {
 		try {
@@ -107,11 +106,11 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			throw new ApsSystemException("Errore in aggiornamento configurazione ContentNotifier", t);
 		}
 	}
-	
+
 	public List<ContentMailInfo> getContentsToNotify() throws ApsSystemException {
 		return this.getContentNotifierDao().getContentsToNotify();
 	}
-	
+
 	/**
 	 * Notifica via eMail la modifica dei contenuti.
 	 */
@@ -130,7 +129,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			throw new ApsSystemException("Error sending emails", t);
 		}
 	}
-	
+
 	public List<ContentMailInfo> getContentsToNotifyToUser(UserDetails user, List<ContentMailInfo> contentsToNotify) {
 		IAuthorizationManager authManager = this.getAuthorizationManager();
 		if (authManager.isAuthOnGroup(user, Group.ADMINS_GROUP_NAME)) {
@@ -156,7 +155,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			return contentsToNotifyToUser;
 		}
 	}
-	
+
 	protected void loadConfigs() throws ApsSystemException {
 		try {
 			ConfigInterface configManager = this.getConfigManager();
@@ -172,9 +171,9 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			throw new ApsSystemException("Error loading config", t);
 		}
 	}
-	
+
 	/**
-	 * Apre lo scheduler istanziando il task relativo 
+	 * Apre lo scheduler istanziando il task relativo
 	 * alla spedizione degli sms con i rilevamenti meteo.
 	 */
 	protected void openScheduler() {
@@ -188,14 +187,14 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			this._mailSenderScheduler = new Scheduler(task, startTime, milliSecondsDelay);
 		}
 	}
-	
+
 	protected void closeScheduler() {
 		if (this._mailSenderScheduler != null) {
 			this._mailSenderScheduler.cancel();
 			this._mailSenderScheduler = null;
 		}
 	}
-	
+
 	protected List<UserDetails> findContentOperators() throws ApsSystemException {
 		IAuthorizationManager authManager = this.getAuthorizationManager();
 		IUserManager userManager = this.getUserManager();
@@ -218,7 +217,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 		}
 		return allowedUsers;
 	}
-	
+
 	protected boolean sendEMailToUser(UserDetails user, List<ContentMailInfo> contentsToNotify, Map<String, SmallContentType> smallContentTypes) throws ApsSystemException {
 		boolean sent = false;
 		NotifierConfig config = this.getConfig();
@@ -227,20 +226,20 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			String emailAttributeName = config.getMailAttrName();
 			Object eMailValue = profile.getValue(emailAttributeName);
 			String eMail = eMailValue!=null ? eMailValue.toString() : null;
-			if (eMail != null && eMail.length() > 0) {		
+			if (eMail != null && eMail.length() > 0) {
 				List<ContentMailInfo> contentsToNotifyToUser = this.getContentsToNotifyToUser(user, contentsToNotify);
 				if (!contentsToNotifyToUser.isEmpty()) {
 					String[] eMailAddresses = {eMail};
 					String mailBody = this.createBody(user, contentsToNotifyToUser, smallContentTypes);
 					String contentType = config.isHtml() ? IMailManager.CONTENTTYPE_TEXT_HTML : IMailManager.CONTENTTYPE_TEXT_PLAIN;
-					sent = this.getMailManager().sendMail(mailBody, config.getSubject(), 
+					sent = this.getMailManager().sendMail(mailBody, config.getSubject(),
 							eMailAddresses, null, null, config.getSenderCode(), contentType);
 				}
 			}
 		}
 		return sent;
 	}
-	
+
 	protected void signNotifiedContents(List<ContentMailInfo> contentsNotified) throws ApsSystemException, SQLException {
 		try {
 			this.getContentNotifierDao().signNotifiedContents(contentsNotified);
@@ -249,11 +248,11 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			throw new ApsSystemException ("Error sign Notified Contents ", t);
 		}
 	}
-	
+
 	protected String createLink(ContentMailInfo info, String langCode) {
 		StringBuffer link = new StringBuffer();
 		String applicationBaseUrl = this.getConfigManager().getParam(SystemConstants.PAR_APPL_BASE_URL);
-		link.append(applicationBaseUrl);		
+		link.append(applicationBaseUrl);
 		link.append(langCode);
 		link.append("/");
 		link.append(this.getContentManager().getViewPage(info.getContentId()));
@@ -261,7 +260,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 		link.append(info.getContentId());
 		return link.toString();
 	}
-	
+
 	/**
 	 * @param defaultText Il testo di partenza, contenente le stringhe da rimpiazzare secondo la sintassi {chiaveStringa}.
 	 * @param params La mappa dei parametri da rimpiazzare (solo il nome, esluse le { })<br />
@@ -277,7 +276,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 		}
 		return body;
 	}
-	
+
 	protected Map<String, String> prepareContentParams(ContentMailInfo info, SmallContentType smallContentType, String link) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("link", link);
@@ -287,7 +286,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 		params.put("time", DateConverter.getFormattedDate(info.getDate(), "HH:mm"));
 		return params;
 	}
-	
+
 	private void processContents(List<ContentMailInfo> contentsToNotify) throws ApsSystemException, SQLException {
 		if (contentsToNotify.isEmpty()) return;
 		List<UserDetails> allowedUsers = this.findContentOperators();
@@ -303,7 +302,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			this.signNotifiedContents(contentsToNotify);
 		}
 	}
-	
+
 	private String createBody(UserDetails user, List<ContentMailInfo> contentsToNotifyToUser, Map<String, SmallContentType> smallContentTypes) {
 		String defaultLangCode = this.getLangManager().getDefaultLang().getCode();
 		NotifierConfig config = this.getConfig();
@@ -328,17 +327,17 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 		body.append(config.getFooter());
 		return body.toString();
 	}
-	
+
 	private Date calculateStartTime(Date startTime, long delay) {
 		Date current = new Date();
-		
+
 		long waitTime = current.getTime() - startTime.getTime();
 		if (waitTime > 0) {
 			startTime = new Date((current.getTime() + delay) - (waitTime % delay));
 		}
 		return startTime;
 	}
-	
+
 	@Override
 	public NotifierConfig getConfig() {
 		return this._schedulerConfig;
@@ -346,81 +345,81 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 	public void setSchedulerConfig(NotifierConfig schedulerConfig) {
 		this._schedulerConfig = schedulerConfig;
 	}
-	
+
 	protected ConfigInterface getConfigManager() {
 		return _configManager;
 	}
 	public void setConfigManager(ConfigInterface configManager) {
 		this._configManager = configManager;
 	}
-	
+
 	protected IContentManager getContentManager() {
 		return _contentManager;
 	}
 	public void setContentManager(IContentManager contentManager) {
 		this._contentManager = contentManager;
 	}
-	
+
 	protected ILangManager getLangManager() {
 		return _langManager;
 	}
 	public void setLangManager(ILangManager langManager) {
 		this._langManager = langManager;
 	}
-	
+
 	protected IUserManager getUserManager() {
 		return _userManager;
 	}
 	public void setUserManager(IUserManager userManager) {
 		this._userManager = userManager;
 	}
-	
+
 	protected IMailManager getMailManager() {
 		return _mailManager;
 	}
 	public void setMailManager(IMailManager mailManager) {
 		this._mailManager = mailManager;
 	}
-	
+
 	protected IAuthorizationManager getAuthorizationManager() {
 		return _authorizationManager;
 	}
 	public void setAuthorizationManager(IAuthorizationManager authorizationManager) {
 		this._authorizationManager = authorizationManager;
 	}
-	
+
 	public IUserProfileManager getProfileManager() {
 		return _profileManager;
 	}
 	public void setProfileManager(IUserProfileManager profileManager) {
 		this._profileManager = profileManager;
 	}
-	
+
 	public IApsAuthorityManager getRoleManager() {
 		return _roleManager;
 	}
 	public void setRoleManager(IApsAuthorityManager roleManager) {
 		this._roleManager = roleManager;
 	}
-	
+
 	public IApsAuthorityManager getGroupManager() {
 		return _groupManager;
 	}
 	public void setGroupManager(IApsAuthorityManager groupManager) {
 		this._groupManager = groupManager;
 	}
-	
+
 	protected IContentNotifierDAO getContentNotifierDao() {
 		return _contentNotifierDao;
 	}
 	public void setContentNotifierDao(IContentNotifierDAO contentNotifierDao) {
 		this._contentNotifierDao = contentNotifierDao;
 	}
-	
+
 	protected Scheduler _mailSenderScheduler;
-	
+
 	private NotifierConfig _schedulerConfig;
-	
+
 	private ConfigInterface _configManager;
 	private IContentManager _contentManager;
 	private ILangManager _langManager;
@@ -430,7 +429,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 	private IUserProfileManager _profileManager;
 	private IApsAuthorityManager _roleManager;
 	private IApsAuthorityManager _groupManager;
-	
+
 	private IContentNotifierDAO _contentNotifierDao;
-	
+
 }
