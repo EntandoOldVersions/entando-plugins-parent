@@ -1,22 +1,22 @@
 /*
-*
-* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
-*
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
-* and limitations under the License
-* 
-* 
-* 
-* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
-*
-*/
+ *
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ *
+ * This file is part of Entando Enterprise Edition software.
+ * You can redistribute it and/or modify it
+ * under the terms of the Entando's EULA
+ *
+ * See the file License for the specific language governing permissions
+ * and limitations under the License
+ *
+ *
+ *
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ *
+ */
 package com.agiletec.plugins.jpcontentfeedback.aps.internalservlet.feedback;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,6 +29,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.agiletec.aps.system.ApsSystemUtils;
@@ -54,31 +55,40 @@ import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.Con
 /**
  * @author D.Cherchi
  */
-public class ContentFeedbackAction extends AbstractContentFeedbackAction implements IContentFeedbackAction, ServletResponseAware {
+public class ContentFeedbackAction extends AbstractContentFeedbackAction implements IContentFeedbackAction, ServletResponseAware, ServletRequestAware {
 
 
 	public String getRedirectParams() {
-		StringBuffer result = new StringBuffer();
-		if (null != this.getRedirectParamNames() && ! this.getRedirectParamNames().isEmpty()) {
-			Iterator<String> it = this.getRedirectParamNames().keySet().iterator();
-			while (it.hasNext()) {
-				String key = it.next();
-				String value = null;
-				if (null != key && key.trim().length() > 0) {
-					value = this.getRedirectParamNames().get(key);
-					if (null != value && value.trim().length() > 0) {
-						if (result.length() == 0) {
-							result.append("&");
-						} else {
-							result.append("&");
+		String params = null;
+		try {
+			StringBuffer result = new StringBuffer();
+				Iterator<String> it = super.getRequest().getParameterMap().keySet().iterator();
+				while (it.hasNext()) {
+					String key = it.next();
+					String value = null;
+					if (null != key && key.startsWith("entaredir_")) {
+						value = super.getParameter(key);
+						if (null != value && value.trim().length() > 0) {
+							if (result.length() == 0) {
+								result.append("&");
+							} else {
+								result.append("&");
+							}
+							result.append(key.split("entaredir_")[1]).append("=").append(value);
 						}
-						result.append(key).append("=").append(value);
 					}
 				}
+
+			if (StringUtils.isNotBlank(result.toString())) {
+				//System.out.println("ENCODED: " + result.toString());
+				params = result.toString(); // = URLEncoder.encode(result.toString(), "UTF-8");
 			}
+
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "getRedirectParams");
 		}
-		//System.out.println("ACTION: " + result.toString());
-		return result.toString();
+		//return null;
+		return params;
 	}
 
 	public String getShowletParam(String param) {
@@ -105,7 +115,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 			}
 
 			Comment comment = new Comment();
-			String contentId = this.getFormContentId();
+			String contentId = this.getCurrentContentId();
 			if (this.isAuth(contentId)) {
 				String commentsModeration = this.getShowletParam(ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_MODERATED);
 				boolean moderation = null != commentsModeration && commentsModeration.equalsIgnoreCase("true");
@@ -136,8 +146,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 				ApsSystemUtils.getLogger().info("ContentRating not allowed");
 				return BaseAction.USER_NOT_ALLOWED;
 			}
-			String contentId = this.getFormContentId();
-
+			String contentId = this.getCurrentContentId();
 			if (this.isAuth(contentId)) {
 				if (!this.isValidVote()) {
 					this.addActionError(this.getText("Message.invalidVote"));
@@ -171,11 +180,11 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 				return BaseAction.USER_NOT_ALLOWED;
 			}
 
-			String contentId = this.getFormContentId();
+			String contentId = this.getCurrentContentId();
 			IComment comment = this.getCommentManager().getComment(this.getSelectedComment());
 			if (null == comment || !comment.getContentId().equalsIgnoreCase(contentId)) {
 				this.addActionError(this.getText("Message.invalidComment"));
-				return INPUT;				
+				return INPUT;
 			}
 
 			if (this.isAuth(contentId)) {
@@ -231,7 +240,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	@Override
 	public String delete() {
 		try {
-			if (!this.getCurrentUser().getUsername().equals(SystemConstants.GUEST_USER_NAME) 
+			if (!this.getCurrentUser().getUsername().equals(SystemConstants.GUEST_USER_NAME)
 					&& this.isAuthorizedToDelete(this.getCurrentUser().getUsername())) {
 				if (this.isAuth(this.getCurrentContentId())){
 					this.getCommentManager().deleteComment(this.getSelectedComment());
@@ -427,12 +436,12 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		this._reverseVotes = reverseVotes;
 	}
 
-	public String getFormContentId() {
-		return _formContentId;
-	}
-	public void setFormContentId(String formContentId) {
-		this._formContentId = formContentId;
-	}
+//	public String getFormContentId() {
+//		return _formContentId;
+//	}
+//	public void setFormContentId(String formContentId) {
+//		this._formContentId = formContentId;
+//	}
 
 
 	public Map<String, String> getRedirectParamNames() {
@@ -468,13 +477,13 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		}
 		return value;
 	}
-	
+
 	public void setCurrentContentId(String currentContentId) {
 		this._currentContentId = currentContentId;
 	}
 
 
-	private String _formContentId;
+	//private String _formContentId;
 	private String _currentContentId;
 	private Boolean _reverseVotes;
 

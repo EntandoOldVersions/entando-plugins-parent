@@ -46,7 +46,7 @@
 	      	</interceptor-ref>
 	    </action>
 		
-	    <action name="delete" class="jpcontentfeedbackCommentsFrontAction" method="delete">
+	    <action name="delete*" class="jpcontentfeedbackCommentsFrontAction" method="delete">
 	    	<!-- <result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>  -->  
     		<result name="input" type="frontRedirectAction">
     			<param name="actionName">intro${redirectParams}</param>

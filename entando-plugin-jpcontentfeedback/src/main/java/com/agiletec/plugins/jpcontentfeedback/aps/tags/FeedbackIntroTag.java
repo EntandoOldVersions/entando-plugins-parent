@@ -1,20 +1,19 @@
 /*
-*
-* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
-*
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-* 
-* See the file License for the specific language governing permissions   
-* and limitations under the License
-* 
-* 
-* 
-* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
-*
-*/
+ *
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ *
+ * This file is part of Entando Enterprise Edition software.
+ * You can redistribute it and/or modify it
+ * under the terms of the Entando's EULA
+ *
+ * See the file License for the specific language governing permissions
+ * and limitations under the License
+ *
+ *
+ *
+ * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+ *
+ */
 package com.agiletec.plugins.jpcontentfeedback.aps.tags;
 
 import java.io.IOException;
@@ -49,12 +48,14 @@ public class FeedbackIntroTag extends InternalServletTag {
 		}
 
 		StringBuffer params = new StringBuffer();
-		
+
 		// 1) showlet 2) tag 3)request
 		String contentId = null;
 		if (null != this.getContentId()) {
 			contentId = this.getContentId();
-		} 
+		}
+
+
 		if (null != contentId) {
 			reqCtx.getRequest().setAttribute("currentContentId", contentId);
 		}
@@ -63,7 +64,7 @@ public class FeedbackIntroTag extends InternalServletTag {
 			if (params.length() > 0) params.append("&");
 			params.append("reverseVotes=true");
 		}
-		
+
 		if (StringUtils.isNotBlank(this.getExtraParamsRedirect())) {
 			String[] redirectParams = this.getExtraParamsRedirect().split(",");
 			reqCtx.getRequest().setAttribute("extraParamNames", redirectParams);
@@ -72,7 +73,7 @@ public class FeedbackIntroTag extends InternalServletTag {
 
 		RequestDispatcher requestDispatcher = reqCtx.getRequest().getRequestDispatcher(actionPath);
 		requestDispatcher.include(reqCtx.getRequest(), responseWrapper);
-		
+
 	}
 
 	@Override
