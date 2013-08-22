@@ -26,7 +26,7 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecordVO;
-import com.agiletec.plugins.jacms.apsadmin.portal.specialshowlet.viewer.ContentViewerShowletAction;
+import com.agiletec.plugins.jacms.apsadmin.portal.specialshowlet.viewer.ContentViewerWidgetAction;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackConfig;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackManager;
 
@@ -40,7 +40,7 @@ import org.entando.entando.aps.system.services.page.Widget;
  * @author D.Cherchi
  *
  */
-public class ContentFeedbackShowletAction  extends ContentViewerShowletAction implements IContentFeedbackShowletAction {
+public class ContentFeedbackShowletAction  extends ContentViewerWidgetAction implements IContentFeedbackShowletAction {
 
 	@Override
 	public String init() {
