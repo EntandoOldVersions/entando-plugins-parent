@@ -30,15 +30,22 @@ public class LdapUser extends AbstractUser {
     
     public LdapUser() {}
     
+	@Override
+	public boolean isEntandoUser() {
+		return false;
+	}
+    
     @Override
+	@Deprecated
     public boolean isJapsUser() {
-        return false;
+        return this.isEntandoUser();
     }
     
     /**
      * Crea una copia dell'oggetto user e lo restituisce.
      * @return Oggetto di tipo User clonato.
      */
+	@Override
     public Object clone() {
         LdapUser cl = new LdapUser();
         cl.setUsername(this.getUsername());
@@ -65,5 +72,5 @@ public class LdapUser extends AbstractUser {
     }
     
     private Attributes _attributes;
-    
+	
 }

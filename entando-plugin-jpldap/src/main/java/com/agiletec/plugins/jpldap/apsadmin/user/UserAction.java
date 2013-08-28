@@ -31,7 +31,7 @@ import java.util.Date;
 /**
  * @author E.Santoboni
  */
-public class UserAction extends com.agiletec.apsadmin.user.UserAction {
+public class UserAction extends org.entando.entando.apsadmin.user.UserAction {
 	
 	@Override
 	public String edit() {
@@ -41,11 +41,11 @@ public class UserAction extends com.agiletec.apsadmin.user.UserAction {
 			if (null != result) return result;
 			String username = this.getUsername();
 			UserDetails user = this.getUserManager().getUser(username);
-			if (!user.isJapsUser() && !this.isWriteUserEnable()) {
+			if (!user.isEntandoUser() && !this.isWriteUserEnable()) {
 				this.addActionError(this.getText("error.user.notLocal"));
 				return "userList";
 			}
-			this.setRemoteUser(!user.isJapsUser());
+			this.setRemoteUser(!user.isEntandoUser());
 			this.setActive(!user.isDisabled());
 			this.setUser(user);
 		} catch (Throwable t) {
@@ -79,7 +79,7 @@ public class UserAction extends com.agiletec.apsadmin.user.UserAction {
 		} else if (this.isCurrentUser()) {
 			this.addActionError(this.getText("error.user.cannotDeleteCurrentUser"));
 			return "userList";
-		} else if (!this.getUserManager().isWriteUserEnable() && !this.isJapsUser(this.getUsername())) {
+		} else if (!this.getUserManager().isWriteUserEnable() && !this.isEntandoUser(this.getUsername())) {
 			this.addActionError(this.getText("error.user.cannotDeleteNotLocalUser"));
 			return "userList";
 		}

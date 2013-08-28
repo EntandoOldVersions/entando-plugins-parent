@@ -75,32 +75,15 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
     
     @Override
     public List<UserDetails> getUsers() throws ApsSystemException {
-        List<UserDetails> users = super.getUsers();
-        if (!isActive()) {
-			return users;
-		}
-        try {
-            users.addAll(this.getLdapUserDAO().loadUsers());
-        } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "getUsers");
-            //throw new ApsSystemException("Error loading users", t);
-        }
-        if (null != users) {
-            BeanComparator comparator = new BeanComparator("username");
-            Collections.sort(users, comparator);
-        }
-        return users;
+        return this.searchUsers(null);
     }
     
     @Override
     public List<UserDetails> searchUsers(String text) throws ApsSystemException {
-        if (!isActive()) {
+        List<UserDetails> users = super.searchUsers(text);
+		if (!isActive()) {
 			return super.searchUsers(text);
 		}
-        if (text == null || text.trim().length() == 0) {
-            return this.getUsers();
-        }
-        List<UserDetails> users = super.searchUsers(text);
         try {
             users.addAll(this.getLdapUserDAO().searchUsers(text));
         } catch (Throwable t) {
@@ -112,6 +95,29 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
             Collections.sort(users, comparator);
         }
         return users;
+    }
+    
+    @Override
+    public List<String> getUsernames() throws ApsSystemException {
+        return this.searchUsernames(null);
+    }
+    
+    @Override
+    public List<String> searchUsernames(String text) throws ApsSystemException {
+        List<String> usernames = super.searchUsernames(text);
+		if (!isActive()) {
+			return usernames;
+		}
+        try {
+            usernames.addAll(this.getLdapUserDAO().searchUsernames(text));
+        } catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "searchUsernames");
+            //throw new ApsSystemException("Error searching usernames", t);
+        }
+        if (null != usernames) {
+            Collections.sort(usernames);
+        }
+        return usernames;
     }
     
     @Override

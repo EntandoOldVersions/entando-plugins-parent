@@ -23,28 +23,50 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpldap.aps.system.services.user.ILdapUserManager;
+import java.util.ArrayList;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * Classe action delegate alla ricerca utenti.
  * @author E.Santoboni
  */
-public class UserFinderAction extends com.agiletec.apsadmin.user.UserFinderAction {
+public class UserFinderAction extends org.entando.entando.apsadmin.user.UserProfileFinderAction {
 	
 	@Override
-	public List<UserDetails> getUsers() {
+	public List<String> getSearchResult() {
+		List<String> mainSearchResult = super.getSearchResult();
 		try {
 			Integer userType = this.getUserType();
-			Boolean japsUser = userType == null ? null : new Boolean(userType.intValue() == 1);
-			List<UserDetails> users = ((ILdapUserManager) this.getUserManager()).searchUsers(this.getText(), japsUser);
-			BeanComparator comparator = new BeanComparator("username");
-			Collections.sort(users, comparator);
-			return users;
+			if (null == userType || userType == 0) {
+				return mainSearchResult;
+			} else {
+				Boolean entandoUser = userType.intValue() == 1;
+				List<String> ldapUsernames = this.getLdapUsernames();
+				if (entandoUser) {
+					return (List<String>) CollectionUtils.removeAll(mainSearchResult, ldapUsernames);
+				} else {
+					return (List<String>) CollectionUtils.intersection(mainSearchResult, ldapUsernames);
+				}
+			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getUsers");
+			ApsSystemUtils.logThrowable(t, this, "getSearchResult");
 			throw new RuntimeException("Error while searching users", t);
 		}
+	}
+	
+	protected List<String> getLdapUsernames() throws ApsSystemException {
+		List<UserDetails> users = ((ILdapUserManager) this.getUserManager()).searchUsers(this.getUsername(), true);
+		List<String> usernames = new ArrayList<String>();
+		if (null != users) {
+			for (int i = 0; i < users.size(); i++) {
+				UserDetails user = users.get(i);
+				usernames.add(user.getUsername());
+			}
+		}
+		return usernames;
 	}
 	
 	public Integer getUserType() {

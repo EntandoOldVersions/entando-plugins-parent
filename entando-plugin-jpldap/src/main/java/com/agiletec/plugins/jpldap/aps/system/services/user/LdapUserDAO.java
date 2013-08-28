@@ -382,6 +382,12 @@ public class LdapUserDAO implements ILdapUserDAO {
         return this.searchUsersByFilterExpr(filterExpr);
     }
     
+    @Override
+    public List<String> loadUsernames() {
+        String filterExpr = "(&(objectClass=" + this.getUserObjectClass() + ")(" + this.getUserIdAttributeName() + "=*)" + this.getFilterGroupBlock() + ")";
+        return this.searchUsernamesByFilterExpr(filterExpr);
+    }
+    
     protected LdapUser createUserFromAttributes(Attributes attrs) throws NamingException {
         LdapUser user = new LdapUser();
         String username = (String) attrs.get(this.getUserIdAttributeName()).get(0);
@@ -397,8 +403,20 @@ public class LdapUserDAO implements ILdapUserDAO {
     
     @Override
     public List<UserDetails> searchUsers(String text) {
+		if (null == text || text.trim().length() == 0) {
+			return loadUsers();
+		}
         String filterExpr = "(&(objectClass=" + this.getUserObjectClass() + ")" + this.getFilterGroupBlock() + "(|(" + this.getUserIdAttributeName() + "=*" + text + "*)(cn=*" + text + "*)))";
         return this.searchUsersByFilterExpr(filterExpr);
+    }
+    
+    @Override
+    public List<String> searchUsernames(String text) {
+        if (null == text || text.trim().length() == 0) {
+			return loadUsernames();
+		}
+        String filterExpr = "(&(objectClass=" + this.getUserObjectClass() + ")" + this.getFilterGroupBlock() + "(|(" + this.getUserIdAttributeName() + "=*" + text + "*)(cn=*" + text + "*)))";
+        return this.searchUsernamesByFilterExpr(filterExpr);
     }
     
     protected String getFilterGroupBlock() {
@@ -408,6 +426,42 @@ public class LdapUserDAO implements ILdapUserDAO {
             block = "(" + this.getFilterGroupAttributeName() + "=" + filterGroup + ")";
         }
         return block;
+    }
+    
+    protected List<String> searchUsernamesByFilterExpr(String filterExpr) {
+        List<String> usernames = new ArrayList<String>();
+        DirContext dirCtx = null;
+        try {
+            dirCtx = this.getDirContext();
+            SearchControls ctls = new SearchControls();
+            String[] attrIDs = {this.getUserIdAttributeName()};
+            ctls.setReturningAttributes(attrIDs);
+            ctls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+            if (this.getSearchResultMaxSize() > 0) {
+                ctls.setCountLimit(this.getSearchResultMaxSize());
+            }
+            NamingEnumeration<SearchResult> answer = dirCtx.search("", filterExpr, ctls);
+            while (answer.hasMore()) {
+                SearchResult res = answer.next();
+                Attributes attrs = res.getAttributes();
+				usernames.add((String) attrs.get(this.getUserIdAttributeName()).get(0));
+            }
+        } catch (ConnectException e) {
+            ApsSystemUtils.logThrowable(e, this, "searchUsernamesByFilterExpr", "Error loading users : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (CommunicationException e) {
+            ApsSystemUtils.logThrowable(e, this, "searchUsernamesByFilterExpr", "Error loading users : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (NamingException e) {
+            ApsSystemUtils.logThrowable(e, this, "searchUsernamesByFilterExpr", "Error loading users : Directory not available");
+            //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
+        } catch (Throwable t) {
+            ApsSystemUtils.logThrowable(t, this, "searchUsernamesByFilterExpr", "Error loading users");
+            throw new RuntimeException("Error loading users", t);
+        } finally {
+            this.closeDirContext(dirCtx);
+        }
+        return usernames;
     }
     
     protected List<UserDetails> searchUsersByFilterExpr(String filterExpr) {
