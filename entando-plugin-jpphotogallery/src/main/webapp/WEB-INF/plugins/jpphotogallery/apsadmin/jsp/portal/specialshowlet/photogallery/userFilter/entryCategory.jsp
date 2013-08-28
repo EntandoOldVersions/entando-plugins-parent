@@ -18,7 +18,7 @@
 <h3 class="margin-more-top"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
 <h4 class="margin-bit-bottom"><s:text name="title.userFilterCategoryConfigure" /></h4>
 
-<s:form namespace="/do/jpphotogallery/Page/SpecialShowlet/Photogallery">
+<s:form namespace="/do/jpphotogallery/Page/SpecialWidget/Photogallery">
 <p class="noscreen">
 	<wpsf:hidden name="pageCode" />
 	<wpsf:hidden name="frame" />

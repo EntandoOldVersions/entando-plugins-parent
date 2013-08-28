@@ -5,7 +5,7 @@
 
 <struts>
 	
-    <package name="jpphotogallery_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="core_do/Page/SpecialShowlet">
+    <package name="jpphotogallery_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="core_do/Page/SpecialWidget">
     	
     	<!-- ##### SHOWLET JPPHOTOGALLERY **** ENTRY POINT ##### -->
     	<action name="jpphotogalleryConfig" class="jpphotogalleryPhotogalleryShowletAction" method="init">
@@ -15,7 +15,7 @@
     	
     </package>
 	
-	<package name="jpphotogallery_do/Page/SpecialShowlet/Photogallery" namespace="/do/jpphotogallery/Page/SpecialShowlet/Photogallery" extends="entando-default">
+	<package name="jpphotogallery_do/Page/SpecialWidget/Photogallery" namespace="/do/jpphotogallery/Page/SpecialWidget/Photogallery" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">

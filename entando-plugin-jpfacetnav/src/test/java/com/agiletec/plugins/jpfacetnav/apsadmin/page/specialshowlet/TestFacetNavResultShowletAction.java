@@ -24,7 +24,7 @@ public class TestFacetNavResultShowletAction extends ApsAdminPluginBaseTestCase 
 
 	private String executeConfigFacetNavResult(String username, String pageCode, String frame, String showletTypeCode) throws Throwable {
 		this.setUserOnSession(username);
-		this.initAction("/do/Page/SpecialShowlet", "facetNavResultConfig");
+		this.initAction("/do/Page/SpecialWidget", "facetNavResultConfig");
 		this.addParameter("pageCode", pageCode);
 		this.addParameter("frame", frame);
 		if (null != showletTypeCode && showletTypeCode.trim().length()>0) {

@@ -10,7 +10,7 @@
 <div id="form-container" class="widget_form jpfrontshortcut-frameconfig-navigatorConfig"> 
 	<h2 class="margin-more-top"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h2>
 	<h3><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h3>
-	<s:form cssClass="form-inline" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Navigator" action="saveNavigatorConfig" id="formform" theme="simple">
+	<s:form cssClass="form-inline" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Navigator" action="saveNavigatorConfig" id="formform" theme="simple">
 		<s:if test="hasActionErrors()">
 			<div class="alert">
 				<p><strong><s:text name="message.title.ActionErrors" /></strong></p>
@@ -79,7 +79,7 @@
 								<wpsfcs:actionSubParam name="expressionIndex" value="%{#rowstatus.index}" />
 								<wpsfcs:actionSubParam name="movement" value="UP" />
 							</wpsfcs:actionParam>
-							<s:url var="moveExpressionUpUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Navigator" action="%{moveExpressionUpActionVar}" />
+							<s:url var="moveExpressionUpUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Navigator" action="%{moveExpressionUpActionVar}" />
 							<s:set name="iconImagePath" var="iconImagePath"><wp:resourceURL/>administration/common/img/icons/go-up.png</s:set>
 							<sj:submit cssClass="btn btn-small" targets="form-container" href="%{moveExpressionUpUrlVar}" indicator="indicator" type="image" src="%{#iconImagePath}" value="%{getText('label.moveUp')}" title="%{getText('label.moveUp')}" button="false" />
 						</td>
@@ -88,7 +88,7 @@
 								<wpsfcs:actionSubParam name="expressionIndex" value="%{#rowstatus.index}" />
 								<wpsfcs:actionSubParam name="movement" value="DOWN" />
 							</wpsfcs:actionParam>
-							<s:url var="moveExpressionDownUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Navigator" action="%{moveExpressionDownActionVar}" />
+							<s:url var="moveExpressionDownUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Navigator" action="%{moveExpressionDownActionVar}" />
 							<s:set name="iconImagePath" var="iconImagePath"><wp:resourceURL/>administration/common/img/icons/go-down.png</s:set>
 							<sj:submit cssClass="btn btn-small" targets="form-container" href="%{moveExpressionDownUrlVar}" indicator="indicator" type="image" src="%{#iconImagePath}" value="%{getText('label.moveDown')}" title="%{getText('label.moveDown')}" button="false" />
 						</td>
@@ -96,7 +96,7 @@
 							<wpsfcs:actionParam var="removeExpressionActionVar" action="removeExpression" >
 								<wpsfcs:actionSubParam name="expressionIndex" value="%{#rowstatus.index}" />
 							</wpsfcs:actionParam>
-							<s:url var="removeExpressionUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Navigator" action="%{removeExpressionActionVar}" />
+							<s:url var="removeExpressionUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Navigator" action="%{removeExpressionActionVar}" />
 							<s:set name="iconImagePath" var="iconImagePath"><wp:resourceURL/>administration/common/img/icons/delete.png</s:set>
 							<sj:submit cssClass="btn btn-small" targets="form-container" href="%{removeExpressionUrlVar}" indicator="indicator" type="image" src="%{#iconImagePath}" value="%{getText('label.remove')}" title="%{getText('label.remove')}" button="false" />
 						</td>
@@ -162,7 +162,7 @@
 			</p>
 		</fieldset>
 		<p>
-			<s:url var="addExpressionUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Navigator" action="addExpression" />
+			<s:url var="addExpressionUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Navigator" action="addExpression" />
 			<sj:submit targets="form-container" href="%{addExpressionUrlVar}" value="%{getText('label.add')}" indicator="indicator" button="true" cssClass="button" />
 		</p>
 		<p class="save-action">

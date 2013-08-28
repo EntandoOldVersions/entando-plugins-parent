@@ -35,9 +35,9 @@ public class SpecialShowletWardenInterceptor extends AbstractInterceptor {
 		FrontPageConfigAction action = (FrontPageConfigAction) invocation.getAction();
 		ActionProxyFactory proxyFactory = (ActionProxyFactory) invocation.getInvocationContext().getContainer().getInstance(ActionProxyFactory.class);
 		try {
-			proxyFactory.createActionProxy("/do/jpfrontshortcut/Page/SpecialShowlet", action.getShowletAction(), null, new HashMap());
+			proxyFactory.createActionProxy("/do/jpfrontshortcut/Page/SpecialWidget", action.getShowletAction(), null, new HashMap());
 		} catch (Throwable t) {
-			ApsSystemUtils.getLogger().severe("There is no Action mapped for namespace /do/jpfrontshortcut/Page/SpecialShowlet and action name " + action.getShowletAction() + ".");
+			ApsSystemUtils.getLogger().severe("There is no Action mapped for namespace /do/jpfrontshortcut/Page/SpecialWidget and action name " + action.getShowletAction() + ".");
 			return "configSimpleParameter";
 		}
 		return invocation.invoke();

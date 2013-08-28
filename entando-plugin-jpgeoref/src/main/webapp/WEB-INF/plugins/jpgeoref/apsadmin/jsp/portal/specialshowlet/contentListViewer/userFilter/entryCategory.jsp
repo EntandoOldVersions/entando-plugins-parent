@@ -19,7 +19,7 @@
 <h3 class="margin-more-top"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
 <h4 class="margin-bit-bottom"><s:text name="title.userFilterCategoryConfigure" /></h4>
 
-<s:form namespace="/do/jpgeoref/Page/SpecialShowlet/ListViewer">
+<s:form namespace="/do/jpgeoref/Page/SpecialWidget/ListViewer">
 
 	<s:if test="hasFieldErrors()">
 <div class="message message_error">

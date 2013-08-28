@@ -16,7 +16,7 @@
 		<h2 id="editFrame"><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h2>
 		<h3 class="margin-more-top">Showlet: <s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h3>
 
-		<s:form action="saveConfig" namespace="/do/jpfacetnav/Page/SpecialShowlet/FacetNavResult">
+		<s:form action="saveConfig" namespace="/do/jpfacetnav/Page/SpecialWidget/FacetNavResult">
 			<p class="noscreen">
 				<wpsf:hidden name="pageCode" />
 				<wpsf:hidden name="frame" />
@@ -40,7 +40,7 @@
 				<s:text name="jpfacetnav.note.facetNavResult.intro" />
 			</p>
 
-			<wpsa:include value="/WEB-INF/plugins/jpfacetnav/apsadmin/jsp/portal/specialshowlet/include/content-type-list.jsp" />
+			<wpsa:include value="/WEB-INF/plugins/jpfacetnav/apsadmin/jsp/portal/SpecialShowlet/include/content-type-list.jsp" />
 
 			<p class="centerText">
 				<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.save')}" cssClass="button" />

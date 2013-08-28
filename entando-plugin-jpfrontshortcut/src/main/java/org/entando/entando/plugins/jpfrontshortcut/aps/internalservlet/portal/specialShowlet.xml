@@ -5,7 +5,7 @@
 
 <struts>
 	
-    <package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialShowlet" namespace="/do/jpfrontshortcut/Page/SpecialShowlet" extends="jpfrontshortcut_do/jpfrontshortcut">
+    <package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialWidget" namespace="/do/jpfrontshortcut/Page/SpecialWidget" extends="jpfrontshortcut_do/jpfrontshortcut">
     	
     	<global-results>
     		<result name="pageTree">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/message.jsp</result>
@@ -46,7 +46,7 @@
         </action>
     </package>
 	
-	<package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialShowlet/Navigator" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Navigator" extends="jpfrontshortcut_do/jpfrontshortcut">
+	<package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialWidget/Navigator" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Navigator" extends="jpfrontshortcut_do/jpfrontshortcut">
 		
     	<global-results>
     		<result name="pageTree">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/message.jsp</result>
@@ -75,7 +75,7 @@
 		
 	</package>
 	
-	<package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialShowlet/Viewer" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" extends="jpfrontshortcut_do/jpfrontshortcut">
+	<package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialWidget/Viewer" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Viewer" extends="jpfrontshortcut_do/jpfrontshortcut">
 		
     	<global-results>
     		<result name="pageTree">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/message.jsp</result>
@@ -112,7 +112,7 @@
 		
 	</package>
 	
-	<package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" extends="jpfrontshortcut_do/jpfrontshortcut">
+	<package name="jpfrontshortcut_do/jpfrontshortcut/Page/SpecialWidget/ListViewer" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" extends="jpfrontshortcut_do/jpfrontshortcut">
 		
 		<global-results>
     		<result name="pageTree">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/message.jsp</result>

@@ -5,7 +5,7 @@
 
 <struts>
 	
-    <package name="jpfacetnav_do/jpfacetnav/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="core_do/Page/SpecialShowlet">
+    <package name="jpfacetnav_do/jpfacetnav/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="core_do/Page/SpecialWidget">
     	
     	<!-- ##### SHOWLET FACET NAV RESULT **** ENTRY POINT ##### -->
     	<action name="facetNavResultConfig" class="jpfacetnavFacetNavResultShowletAction" method="init">
@@ -21,7 +21,7 @@
         
     </package>
 	
-	<package name="jpfacetnav_do/jpfacetnav/Page/SpecialShowlet/FacetNavResult" namespace="/do/jpfacetnav/Page/SpecialShowlet/FacetNavResult" extends="entando-default">
+	<package name="jpfacetnav_do/jpfacetnav/Page/SpecialWidget/FacetNavResult" namespace="/do/jpfacetnav/Page/SpecialWidget/FacetNavResult" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">
@@ -51,7 +51,7 @@
 		
 	</package>
 	
-	<package name="jpfacetnav_do/jpfacetnav/Page/SpecialShowlet/FacetNavTree" namespace="/do/jpfacetnav/Page/SpecialShowlet/FacetNavTree" extends="entando-default">
+	<package name="jpfacetnav_do/jpfacetnav/Page/SpecialWidget/FacetNavTree" namespace="/do/jpfacetnav/Page/SpecialWidget/FacetNavTree" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">viewTree</result>

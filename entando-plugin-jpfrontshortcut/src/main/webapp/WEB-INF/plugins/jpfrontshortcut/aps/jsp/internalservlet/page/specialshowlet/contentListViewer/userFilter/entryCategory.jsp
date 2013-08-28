@@ -12,7 +12,7 @@
 <h3 class="margin-more-top"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
 <h4 class="margin-bit-bottom"><s:text name="title.userFilterCategoryConfigure" /></h4>
 
-<s:form namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" id="formform" theme="simple">
+<s:form namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" id="formform" theme="simple">
 <p class="noscreen">
 	<wpsf:hidden name="pageCode" />
 	<wpsf:hidden name="frame" />

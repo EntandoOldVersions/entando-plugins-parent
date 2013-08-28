@@ -14,7 +14,7 @@
 			<s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
 			<s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" />
 		</h3>
-		<s:form cssClass="form-inline" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" action="searchContents" id="formform" theme="simple">
+		<s:form cssClass="form-inline" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Viewer" action="searchContents" id="formform" theme="simple">
 			<p class="noscreen">
 				<wpsf:hidden name="pageCode" />
 				<wpsf:hidden name="frame" />
@@ -65,7 +65,7 @@
 						</div>
 					</div>
 					<p>
-						<s:url var="searchContentsUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" action="searchContents" />
+						<s:url var="searchContentsUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Viewer" action="searchContents" />
 						<sj:submit targets="form-container" href="%{#searchContentsUrlVar}" value="%{getText('label.search')}" indicator="indicator" button="true" cssClass="button" />
 					</p>
 				</div>
@@ -256,7 +256,7 @@
 				</s:if>
 			</wpfssa:subset>
 			<p class="centerText margin-more-top">
-				<s:url var="executeJoinContentUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" action="executeJoinContent" />
+				<s:url var="executeJoinContentUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Viewer" action="executeJoinContent" />
 				<sj:submit targets="form-container" href="%{#executeJoinContentUrlVar}" value="%{getText('label.confirm')}" indicator="indicator" button="true" cssClass="button" />
 			</p>
 		</s:form>

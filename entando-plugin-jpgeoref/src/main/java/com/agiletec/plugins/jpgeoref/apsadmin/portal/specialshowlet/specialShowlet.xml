@@ -5,7 +5,7 @@
 
 <struts>
 
-    <package name="jpgeoref_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="core_do/Page/SpecialShowlet">
+    <package name="jpgeoref_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="core_do/Page/SpecialWidget">
 		
     	<!-- ##### SHOWLET CONTENT LIST VIEWER **** ENTRY POINT ##### -->
     	<action name="jpgeorefListViewerConfig" class="jpgeorefContentListViewerShowletAction" method="init">
@@ -15,7 +15,7 @@
 		
     </package>
 	
-	<package name="jpgeoref_do/jpgeoref/Page/SpecialShowlet/ListViewer" namespace="/do/jpgeoref/Page/SpecialShowlet/ListViewer" extends="entando-default">
+	<package name="jpgeoref_do/jpgeoref/Page/SpecialWidget/ListViewer" namespace="/do/jpgeoref/Page/SpecialWidget/ListViewer" extends="entando-default">
 
 		<global-results>
     		<result name="pageTree" type="chain">

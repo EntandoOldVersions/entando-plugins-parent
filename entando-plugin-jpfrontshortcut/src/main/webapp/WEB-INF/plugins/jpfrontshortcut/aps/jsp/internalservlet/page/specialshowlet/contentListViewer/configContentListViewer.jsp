@@ -10,7 +10,7 @@
 
 <h3><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h3>
 
-<s:form action="saveListViewerConfig" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" id="formform" theme="simple">
+<s:form action="saveListViewerConfig" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" id="formform" theme="simple">
 <p class="noscreen">
 	<wpsf:hidden name="pageCode" />
 	<wpsf:hidden name="frame" />
@@ -37,7 +37,7 @@
 			<label class="control-label" for="contentType"><s:text name="label.type"/></label>
 			<div class="controls">
 				<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" cssClass="text" />
-				<s:url var="configListViewerUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="configListViewer" />
+				<s:url var="configListViewerUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="configListViewer" />
 				<sj:submit targets="form-container" href="%{#configListViewerUrlVar}" value="%{getText('label.continue')}" indicator="indicator" button="true" cssClass="button" />
 			</div>
 		</div>
@@ -48,7 +48,7 @@
 	<p>
 		<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
 		<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" disabled="true" value="%{getShowlet().getConfig().get('contentType')}" cssClass="text" />
-		<s:url var="changeContentTypeUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="changeContentType" />
+		<s:url var="changeContentTypeUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="changeContentType" />
 		<sj:submit targets="form-container" href="%{#changeContentTypeUrlVar}" value="%{getText('label.change')}" indicator="indicator" button="true" cssClass="button" />
 	</p>
 	<p class="noscreen">
@@ -61,7 +61,7 @@
 		<p>
 			<label for="category" class="basic-mint-label"><s:text name="label.categories" />:</label>
 			<wpsf:select useTabindexAutoIncrement="true" name="categoryCode" id="category" list="categories" listKey="code" listValue="getShortFullTitle(currentLang.code)" headerKey="" headerValue="%{getText('label.all')}" cssClass="text" />
-			<s:url var="addCategoryUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="addCategory" />
+			<s:url var="addCategoryUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="addCategory" />
 			<sj:submit targets="form-container" href="%{#addCategoryUrlVar}" value="%{getText('label.join')}" indicator="indicator" button="true" cssClass="button" />
 		</p>
 		<s:if test="null != categoryCodes && categoryCodes.size() > 0">
@@ -79,7 +79,7 @@
 					<wpfssa:actionParam action="removeCategory" var="removeCategoryActionNameVar" >
 						<wpfssa:actionSubParam name="categoryCode" value="%{#categoryCodeVar}" />
 					</wpfssa:actionParam>
-					<s:url var="removeCategoryActionVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="%{#removeCategoryActionNameVar}" />
+					<s:url var="removeCategoryActionVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="%{#removeCategoryActionNameVar}" />
 					<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/22x22/delete.png</s:set>
 					<sj:submit type="image" targets="form-container" value="%{getText('label.remove')}" button="true" 
 						href="%{#removeCategoryActionVar}" src="%{#iconImagePath}" title="%{getText('label.remove') + ': ' + #showletCategory.getFullTitle(currentLang.code)}" />
@@ -104,7 +104,7 @@
 	<p>
 		<label for="filterKey" class="basic-mint-label"><s:text name="label.filter" />:</label>
 		<wpsf:select useTabindexAutoIncrement="true" name="filterKey" id="filterKey" list="allowedFilterTypes" listKey="key" listValue="value" cssClass="text" />
-		<s:url var="setFilterTypeUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="setFilterType" />
+		<s:url var="setFilterTypeUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="setFilterType" />
 		<sj:submit targets="form-container" href="%{#setFilterTypeUrlVar}" value="%{getText('label.add')}" indicator="indicator" button="true" cssClass="button" />
 	</p>
 
@@ -185,7 +185,7 @@
 				<wpfssa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
 				<wpfssa:actionSubParam name="movement" value="UP" />
 			</wpfssa:actionParam>
-			<s:url var="moveFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="%{#moveFilterActionNameVar}" />
+			<s:url var="moveFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="%{#moveFilterActionNameVar}" />
 			<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/go-up.png</s:set>
 			<sj:submit type="image" targets="form-container" value="%{getText('label.moveUp')}" button="true" 
 				href="%{#moveFilterActionVar}" src="%{#iconImagePath}" title="%{getText('label.moveUp')}" />
@@ -195,7 +195,7 @@
 				<wpfssa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
 				<wpfssa:actionSubParam name="movement" value="DOWN" />
 			</wpfssa:actionParam>
-			<s:url var="moveFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="%{#moveFilterActionNameVar}" />
+			<s:url var="moveFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="%{#moveFilterActionNameVar}" />
 			<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/go-down.png</s:set>
 			<sj:submit type="image" targets="form-container" value="%{getText('label.moveDown')}" button="true" 
 				href="%{#moveFilterActionVar}" src="%{#iconImagePath}" title="%{getText('label.moveDown')}" />
@@ -204,7 +204,7 @@
 			<wpfssa:actionParam action="removeFilter" var="removeFilterActionNameVar" >
 				<wpfssa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
 			</wpfssa:actionParam>
-			<s:url var="removeFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="%{#removeFilterActionNameVar}" />
+			<s:url var="removeFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="%{#removeFilterActionNameVar}" />
 			<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/delete.png</s:set>
 			<sj:submit type="image" targets="form-container" value="%{getText('label.remove')}" button="true" 
 				href="%{#removeFilterActionVar}" src="%{#iconImagePath}" title="%{getText('label.remove')}" />
@@ -247,7 +247,7 @@
 	<p>
 		<label for="userFilterKey" class="basic-mint-label"><s:text name="label.filter" />:</label>
 		<wpsf:select useTabindexAutoIncrement="true" name="userFilterKey" id="userFilterKey" list="allowedUserFilterTypes" listKey="key" listValue="value" cssClass="text" />
-		<s:url var="addUserFilterUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="addUserFilter" />
+		<s:url var="addUserFilterUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="addUserFilter" />
 		<sj:submit targets="form-container" href="%{#addUserFilterUrlVar}" value="%{getText('label.add')}" indicator="indicator" button="true" cssClass="button" />
 	</p>
 	<p class="noscreen">
@@ -289,7 +289,7 @@
 				<wpfssa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
 				<wpfssa:actionSubParam name="movement" value="UP" />
 			</wpfssa:actionParam>
-			<s:url var="moveUserFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="%{#moveUserFilterActionNameVar}" />
+			<s:url var="moveUserFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="%{#moveUserFilterActionNameVar}" />
 			<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/go-up.png</s:set>
 			<sj:submit type="image" targets="form-container" value="%{getText('label.moveUp')}" button="true" 
 				href="%{#moveUserFilterActionVar}" src="%{#iconImagePath}" title="%{getText('label.moveUp')}" />
@@ -299,7 +299,7 @@
 				<wpfssa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
 				<wpfssa:actionSubParam name="movement" value="DOWN" />
 			</wpfssa:actionParam>
-			<s:url var="moveUserFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="%{#moveUserFilterActionNameVar}" />
+			<s:url var="moveUserFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="%{#moveUserFilterActionNameVar}" />
 			<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/go-down.png</s:set>
 			<sj:submit type="image" targets="form-container" value="%{getText('label.moveDown')}" button="true" 
 				href="%{#moveUserFilterActionVar}" src="%{#iconImagePath}" title="%{getText('label.moveDown')}" />
@@ -308,7 +308,7 @@
 			<wpfssa:actionParam action="removeUserFilter" var="removeUserFilterActionNameVar" >
 				<wpfssa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
 			</wpfssa:actionParam>
-			<s:url var="removeUserFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="%{#removeUserFilterActionNameVar}" />
+			<s:url var="removeUserFilterActionVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="%{#removeUserFilterActionNameVar}" />
 			<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/delete.png</s:set>
 			<sj:submit type="image" targets="form-container" value="%{getText('label.remove')}" button="true" 
 				href="%{#removeUserFilterActionVar}" src="%{#iconImagePath}" title="%{getText('label.remove')}" />
@@ -346,7 +346,7 @@
 </fieldset>
 
 <p class="centerText">
-	<s:url var="saveListViewerConfigUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="saveListViewerConfig" />
+	<s:url var="saveListViewerConfigUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="saveListViewerConfig" />
 	<sj:submit targets="form-container" href="%{#saveListViewerConfigUrlVar}" value="%{getText('label.save')}" indicator="indicator" button="true" cssClass="button" />
 </p>
 

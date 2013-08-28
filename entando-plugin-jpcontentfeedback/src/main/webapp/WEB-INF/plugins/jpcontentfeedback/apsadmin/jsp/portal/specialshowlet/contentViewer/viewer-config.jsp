@@ -16,7 +16,7 @@
 
 <h3 class="margin-more-top margin-bit-bottom">Showlet: <s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h3>
 
-<s:form action="saveViewerConfig" namespace="/do/jpcontentfeedback/Page/SpecialShowlet/Viewer">
+<s:form action="saveViewerConfig" namespace="/do/jpcontentfeedback/Page/SpecialWidget/Viewer">
 <p class="noscreen">
 	<wpsf:hidden name="pageCode" />
 	<wpsf:hidden name="frame" />

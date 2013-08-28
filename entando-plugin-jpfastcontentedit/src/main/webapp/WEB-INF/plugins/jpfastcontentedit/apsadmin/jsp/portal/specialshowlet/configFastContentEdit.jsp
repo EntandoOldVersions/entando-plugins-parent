@@ -18,7 +18,7 @@
 	<h2 id="editFrame"><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h2>
 	
 	<h3 class="margin-more-top margin-bit-bottom">Showlet: <s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h3>
-	<s:form action="saveConfigParameters" namespace="/do/jpfastcontentedit/Page/SpecialShowlet">
+	<s:form action="saveConfigParameters" namespace="/do/jpfastcontentedit/Page/SpecialWidget">
 		<p class="noscreen">
 			<wpsf:hidden name="pageCode" />
 			<wpsf:hidden name="frame" />

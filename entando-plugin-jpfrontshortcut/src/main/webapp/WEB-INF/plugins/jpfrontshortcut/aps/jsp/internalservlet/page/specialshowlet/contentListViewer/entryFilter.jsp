@@ -11,7 +11,7 @@
 <s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
 <h4 class="margin-bit-bottom"><s:text name="title.filterAdd" /></h4>
 
-<s:form namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" id="formform" theme="simple">
+<s:form namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" id="formform" theme="simple">
 <p class="noscreen">
 	<wpsf:hidden name="pageCode" />
 	<wpsf:hidden name="frame" />
@@ -51,7 +51,7 @@
 		<p>
 			<label for="filterKey" class="basic-mint-label"><s:text name="label.type"/>:</label>
 			<wpsf:select useTabindexAutoIncrement="true" name="filterKey" id="filterKey" list="filterTypes" listKey="key" listValue="value" cssClass="text" />
-			<s:url var="setFilterTypeUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="setFilterType" />
+			<s:url var="setFilterTypeUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="setFilterType" />
 			<sj:submit targets="form-container" href="%{#setFilterTypeUrlVar}" value="%{getText('label.continue')}" indicator="indicator" button="true" cssClass="button" />
 		</p>
 	</fieldset>
@@ -83,7 +83,7 @@
 		<wpsf:select useTabindexAutoIncrement="true" id="filterOptionId" name="filterOptionId" list="#{3:getText('label.presenceOptionFilter'),4:getText('label.absenceOptionFilter'),1:getText('label.valueLikeOptionFilter'),2:getText('label.rangeOptionFilter')}" disabled="filterOptionId>-1" cssClass="text" />
 		<s:if test="filterOptionId>-1"><wpsf:hidden name="filterOptionId" /></s:if>
 		<s:else>
-			<s:url var="setFilterOptionUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="setFilterOption" />
+			<s:url var="setFilterOptionUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="setFilterOption" />
 			<sj:submit targets="form-container" href="%{#setFilterOptionUrlVar}" 
 				   value="%{getText('label.continue')}" indicator="indicator" button="true" cssClass="button" />
 		</s:else>
@@ -122,7 +122,7 @@
 	<wpsf:select useTabindexAutoIncrement="true" name="filterOptionId" id="filterOptionId" list="#{3:getText('label.presenceOptionFilter'),4:getText('label.absenceOptionFilter'),1:getText('label.valueOptionFilter'),2:getText('label.rangeOptionFilter')}" disabled="filterOptionId>-1" cssClass="text" />
 	<s:if test="filterOptionId>-1"><wpsf:hidden name="filterOptionId" /></s:if>
 	<s:else>
-		<s:url var="setFilterOptionUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="setFilterOption" />
+		<s:url var="setFilterOptionUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="setFilterOption" />
 		<sj:submit targets="form-container" href="%{#setFilterOptionUrlVar}" 
 			   value="%{getText('label.continue')}" indicator="indicator" button="true" cssClass="button" />
 	</s:else>
@@ -179,7 +179,7 @@
 			<wpsf:select useTabindexAutoIncrement="true" name="filterOptionId" id="filterOptionId" list="#{3:getText('label.presenceOptionFilter'),4:getText('label.absenceOptionFilter'),1:getText('label.valueOptionFilter'),2:getText('label.rangeOptionFilter')}" disabled="filterOptionId>-1" cssClass="text" />
 			<s:if test="filterOptionId>-1"><wpsf:hidden name="filterOptionId" /></s:if>
 			<s:else>
-				<s:url var="setFilterOptionUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="setFilterOption" />
+				<s:url var="setFilterOptionUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="setFilterOption" />
 				<sj:submit targets="form-container" href="%{#setFilterOptionUrlVar}" 
 					   value="%{getText('label.continue')}" indicator="indicator" button="true" cssClass="button" />
 			</s:else>
@@ -226,7 +226,7 @@
 <s:set name="saveFilterActionName"><s:if test="filterTypeId == 0">saveFilter</s:if><s:elseif test="filterTypeId == 1">saveTextFilter</s:elseif><s:elseif test="filterTypeId == 2">saveNumberFilter</s:elseif><s:elseif test="filterTypeId == 3">saveBooleanFilter</s:elseif><s:elseif test="filterTypeId == 4">saveDateFilter</s:elseif></s:set>
 
 <p class="centerText">
-	<s:url var="saveFilterActionNameUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/ListViewer" action="%{#saveFilterActionName}" />
+	<s:url var="saveFilterActionNameUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" action="%{#saveFilterActionName}" />
 	<sj:submit targets="form-container" href="%{#saveFilterActionNameUrlVar}" 
 		value="%{getText('label.save')}" indicator="indicator" button="true" cssClass="button" />
 </p>

@@ -5,7 +5,7 @@
 
 <struts>
 
-    <package name="jpuserreg_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="entando-default">
+    <package name="jpuserreg_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="entando-default">
     	
     	<global-results>
     		<result name="pageTree" type="chain">
@@ -26,7 +26,7 @@
 		
     </package>
 	
-	<package name="jpuserreg_do/jpuserreg/Page/SpecialShowlet/UserReg" namespace="/do/jpuserreg/Page/SpecialShowlet/UserReg" extends="entando-default">
+	<package name="jpuserreg_do/jpuserreg/Page/SpecialWidget/UserReg" namespace="/do/jpuserreg/Page/SpecialWidget/UserReg" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">

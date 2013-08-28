@@ -19,7 +19,7 @@
 <s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
 <h3 class="margin-more-top margin-more-bottom"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
 
-<s:form action="saveConfig" namespace="/do/jpuserreg/Page/SpecialShowlet/UserReg" >
+<s:form action="saveConfig" namespace="/do/jpuserreg/Page/SpecialWidget/UserReg" >
 	<s:if test="hasActionErrors()">
 	<div class="message message_error">
 	<h4><s:text name="message.title.ActionErrors" /></h4>

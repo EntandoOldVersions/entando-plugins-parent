@@ -73,11 +73,11 @@
         
         <action name="initConfigureSpecialShowlet" class="jpfrontshortcutFrontPageConfigAction">
         	<result name="configSimpleParameter" type="chain">
-        		<param name="namespace">/do/jpfrontshortcut/Page/SpecialShowlet</param>
+        		<param name="namespace">/do/jpfrontshortcut/Page/SpecialWidget</param>
     			<param name="actionName">configSimpleParameter</param>
             </result>
         	<result type="chain">
-        		<param name="namespace">/do/jpfrontshortcut/Page/SpecialShowlet</param>
+        		<param name="namespace">/do/jpfrontshortcut/Page/SpecialWidget</param>
     			<param name="actionName">${showletAction}</param>
             </result>
         	<interceptor-ref name="jpfrontshortcutFrontEndStack">

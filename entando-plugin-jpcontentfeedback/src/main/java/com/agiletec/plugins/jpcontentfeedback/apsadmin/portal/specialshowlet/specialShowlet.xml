@@ -5,7 +5,7 @@
 
 <struts>
 	
-	<package name="jpcontentfeedback_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="jacms_do/Page/SpecialShowlet">
+	<package name="jpcontentfeedback_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="jacms_do/Page/SpecialWidget">
 		
 		<action name="viewerContentFeedbackConfig" class="jpcontentfeedbackViewerShowletAction" method="init">
 	        <result type="tiles">admin.jpcontentfeedback.page.showlet.contentViewer.config</result>
@@ -14,7 +14,7 @@
 		
 	</package>
 	
-	<package name="jpcontentfeedback_do/jpcontentfeedback/Page/SpecialShowlet/Viewer" namespace="/do/jpcontentfeedback/Page/SpecialShowlet/Viewer" extends="jacms_do/jacms/Page/SpecialShowlet/Viewer">
+	<package name="jpcontentfeedback_do/jpcontentfeedback/Page/SpecialWidget/Viewer" namespace="/do/jpcontentfeedback/Page/SpecialWidget/Viewer" extends="jacms_do/jacms/Page/SpecialWidget/Viewer">
 
 		<action name="jpcontentfeedbackSearchContents" class="jpcontentfeedbackViewerShowletAction" method="storeSessionParams">
             <result name="input" type="tiles">admin.jpcontentfeedback.page.showlet.contentViewer.config</result>

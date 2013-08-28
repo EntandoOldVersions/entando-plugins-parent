@@ -5,7 +5,7 @@
 
 <struts>
 
-    <package name="jpwebdynamicform_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="entando-default">
+    <package name="jpwebdynamicform_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="entando-default">
 		
     	<global-results>
     		<result name="pageTree" type="chain">
@@ -26,7 +26,7 @@
 		
     </package>
 	
-	<package name="jpwebdynamicform_do/jpwebdynamicform/Page/SpecialShowlet/Webdynamicform" namespace="/do/jpwebdynamicform/Page/SpecialShowlet/Webdynamicform" extends="entando-default">
+	<package name="jpwebdynamicform_do/jpwebdynamicform/Page/SpecialWidget/Webdynamicform" namespace="/do/jpwebdynamicform/Page/SpecialWidget/Webdynamicform" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">

@@ -10,7 +10,7 @@
 			<s:text name="name.showlet" />:&#32;
 			<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" />
 		</h3>
-		<s:form namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" action="saveViewerConfig" id="formform" theme="simple">
+		<s:form namespace="/do/jpfrontshortcut/Page/SpecialWidget/Viewer" action="saveViewerConfig" id="formform" theme="simple">
 			<p class="noscreen">
 				<wpsf:hidden name="pageCode" />
 				<wpsf:hidden name="frame" />
@@ -38,7 +38,7 @@
 				</p>
 				<p class="margin-more-bottom">
 					<wpsf:hidden name="contentId" value="%{getShowlet().getConfig().get('contentId')}" />
-					<s:url var="searchContentsUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" action="searchContents" />
+					<s:url var="searchContentsUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Viewer" action="searchContents" />
 					<sj:submit targets="form-container" href="%{searchContentsUrlVar}" value="%{getText('label.change')}" indicator="indicator" button="true" cssClass="button" />
 				</p>
 				<fieldset>
@@ -69,7 +69,7 @@
 					<s:text name="note.noContentSet" />
 				</p>
 				<p>
-					<s:url var="searchContentsUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialShowlet/Viewer" action="searchContents" />
+					<s:url var="searchContentsUrlVar" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Viewer" action="searchContents" />
 					<sj:submit targets="form-container" href="%{searchContentsUrlVar}" value="%{getText('label.choose')}" indicator="indicator" button="true" cssClass="button" />
 				</p>
 			</s:else>

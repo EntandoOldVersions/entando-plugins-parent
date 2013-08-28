@@ -5,12 +5,12 @@
 
 <struts>
 	
-    <package name="jpshowletreplicator_do/Page/SpecialShowlet" namespace="/do/Page/SpecialShowlet" extends="entando-default">
+    <package name="jpshowletreplicator_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="entando-default">
     	
     	<!-- ##### SHOWLET REPLICATOR **** ENTRY POINT ##### -->
     	<action name="replicatorConfig" class="jpshowletreplicatorReplicatorShowletAction">
         	<result type="chain">
-        		<param name="namespace">/do/jpshowletreplicator/Page/SpecialShowlet/Replicator</param>
+        		<param name="namespace">/do/jpshowletreplicator/Page/SpecialWidget/Replicator</param>
         		<param name="actionName">entryPoint</param>
         	</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
@@ -18,7 +18,7 @@
         
     </package>
 	
-	<package name="jpshowletreplicator_do/jpshowletreplicator/Page/SpecialShowlet/Replicator" namespace="/do/jpshowletreplicator/Page/SpecialShowlet/Replicator" extends="entando-default">
+	<package name="jpshowletreplicator_do/jpshowletreplicator/Page/SpecialWidget/Replicator" namespace="/do/jpshowletreplicator/Page/SpecialWidget/Replicator" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">
