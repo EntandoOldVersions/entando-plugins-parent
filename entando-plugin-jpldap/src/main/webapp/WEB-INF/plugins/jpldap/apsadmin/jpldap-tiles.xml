@@ -11,10 +11,6 @@
         <put-attribute name="title" value="title.userManagement" />
         <put-attribute name="body" value="/WEB-INF/plugins/jpldap/apsadmin/jsp/user/entryUser.jsp" />
     </definition>
-    <definition extends="main.layout" name="admin.User.list">
-		<put-attribute name="title" value="title.userManagement" />
-		<put-attribute name="body" value="/WEB-INF/plugins/jpldap/apsadmin/jsp/user/userFinding.jsp" />
-	</definition>
 	
     <!-- ********* FINE Area Gestione Utenti ********* -->
 	
