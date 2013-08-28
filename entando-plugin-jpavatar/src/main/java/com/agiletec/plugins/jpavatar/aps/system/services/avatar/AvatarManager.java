@@ -32,11 +32,13 @@ import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.user.UserDetails;
+
 import com.agiletec.plugins.jpavatar.aps.system.JpAvatarSystemConstants;
 import com.agiletec.plugins.jpavatar.aps.system.services.avatar.parse.AvatarConfigDOM;
 import com.agiletec.plugins.jpavatar.aps.system.utils.MD5Util;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.UserProfile;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * @author S.Puddu
@@ -137,7 +139,7 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 		String hash = null;
 		try {
 			if (null == username) return null;
-			UserProfile profile = (UserProfile) this.getUserProfileManager().getProfile(username);
+			IUserProfile profile = (IUserProfile) this.getUserProfileManager().getProfile(username);
 			if (null != profile) {
 				String emailAttr = profile.getMailAttributeName();
 				if (null == emailAttr) return null;
@@ -180,9 +182,9 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 		String path = diskFolder.toString();
 		return path;
 	}
-
-	@AfterReturning(
-			pointcut="execution(* com.agiletec.aps.system.services.user.IUserManager.removeUser(..)) && args(key)")
+	
+	@Override
+	@AfterReturning(pointcut="execution(* com.agiletec.aps.system.services.user.IUserManager.removeUser(..)) && args(key)")
 	public void removeAvatar(Object key) throws ApsSystemException {
 		String username = null;
 		try {
@@ -203,11 +205,12 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 			throw new ApsSystemException("Error deleting avatar for user " + username, t);
 		}
 	}
-
+	
 	public void setAvatarDiskFolder(String avatarDiskFolder) {
 		this._avatarDiskFolder = avatarDiskFolder;
 	}
-
+	
+	@Override
 	public String getAvatarDiskFolder() {
 		try {
 			if (null == this._avatarDiskFolder) {
@@ -223,9 +226,9 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 		}
 		return _avatarDiskFolder;
 	}
-
+	
 	private String createAvatarDiskFolderPath(String baseParamName, String separator) {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append(this.getConfigManager().getParam(baseParamName));
 		if (!buffer.toString().endsWith(separator)) {
 			buffer.append(separator);
@@ -254,19 +257,20 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 	public void setGravatarUrl(String gravatarUrl) {
 		this._gravatarUrl = gravatarUrl;
 	}
-
+	
+	@Override
 	public AvatarConfig getConfig() {
 		return _config;
 	}
 	public void setConfig(AvatarConfig config) {
 		this._config = config;
 	}
-
+	
 	private String _avatarDiskFolder;
 	private ConfigInterface _configManager;
 	private IUserProfileManager _userProfileManager;
 	private String _gravatarUrl;
 	private AvatarConfig _config;
 	public static final String AVATAR_SUBFOLDER = "avatar";
-
+	
 }
