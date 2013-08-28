@@ -28,11 +28,6 @@ import com.agiletec.plugins.jpwebdynamicform.aps.system.services.Jpwebdynamicfor
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageManager;
 import com.agiletec.plugins.jpwebdynamicform.util.JpwebdynamicformTestHelper;
 
-/**
- * BaseTestCase Class for jpuserprofile apsadmin tests.
- * You have to comment "getConfigUtils()" 
- * Methods for testing plugin into custom jAPS 2.0 project.
- */
 public class ApsAdminPluginBaseTestCase extends ApsAdminBaseTestCase {
 	
 	@Override

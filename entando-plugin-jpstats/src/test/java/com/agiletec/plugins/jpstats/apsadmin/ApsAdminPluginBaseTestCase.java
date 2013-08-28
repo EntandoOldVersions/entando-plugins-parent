@@ -24,11 +24,6 @@ import com.agiletec.plugins.jpstats.aps.system.services.JpStatsSystemConstants;
 import com.agiletec.plugins.jpstats.aps.system.services.stats.StatsManager;
 import com.agiletec.plugins.jpstats.util.TestStatsUtils;
 
-/**
- * BaseTestCase Class for jpuserprofile apsadmin tests.
- * You have to comment "getConfigUtils()" 
- * Methods for testing plugin into custom jAPS 2.0 project.
- */
 public class ApsAdminPluginBaseTestCase extends ApsAdminBaseTestCase {
 	
 	@Override
