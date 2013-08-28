@@ -56,9 +56,9 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.ICont
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model.Step;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model.Workflow;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 @Aspect
 public class WorkflowNotifierManager extends AbstractService implements IWorkflowNotifierManager {
@@ -103,7 +103,7 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 			boolean notify = true;
 			Content currentContent = (Content) content;
 			String contentId = currentContent.getId();
-			if (null!=contentId) {
+			if (null != contentId) {
 				Content previousContent = this.getContentManager().loadContent(contentId, false);
 				if (previousContent.getStatus().equals(currentContent.getStatus())) {
 					notify = false;
@@ -239,10 +239,10 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 	
 	protected String getMailAddress(String username) throws Throwable {
 		String email = null;
-		IUserProfileManager profileManager = (IUserProfileManager) super.getBeanFactory().getBean(ProfileSystemConstants.USER_PROFILE_MANAGER);
+		IUserProfileManager profileManager = (IUserProfileManager) super.getBeanFactory().getBean(SystemConstants.USER_PROFILE_MANAGER);
 		IUserProfile profile = profileManager.getProfile(username);
 		if (null != profile) {
-			ITextAttribute mailAttribute = (ITextAttribute) profile.getAttributeByRole(ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL);
+			ITextAttribute mailAttribute = (ITextAttribute) profile.getAttributeByRole(SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_MAIL);
 			if (null != mailAttribute && mailAttribute.getText().trim().length() > 0) {
 				email = mailAttribute.getText();
 			}
@@ -270,8 +270,7 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 		String header = this.replaceParams(notifierConfig.getHeader(), params);
 		String footer = this.replaceParams(notifierConfig.getFooter(), params);
 		String body = notifierConfig.getTemplate();
-
-		StringBuffer text = new StringBuffer(header);
+		StringBuilder text = new StringBuilder(header);
 		for (ContentStatusChangedEventInfo contentInfo : contentInfos) {
 			this.addContentParams(params, contentInfo);
 			text.append(this.replaceParams(body, params));
@@ -320,7 +319,7 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 		List<String> roleNamesWithSupervisor = this.getRolesNames(rolesWithSupervisor);
 		List<Role> rolesWithEditors = ((IRoleManager) this.getRoleManager()).getRolesWithPermission("editContents");
 		List<String> roleNamesWithEditor = this.getRolesNames(rolesWithEditors);
-		IUserProfileManager profileManager = (IUserProfileManager) super.getBeanFactory().getBean(ProfileSystemConstants.USER_PROFILE_MANAGER);
+		IUserProfileManager profileManager = (IUserProfileManager) super.getBeanFactory().getBean(SystemConstants.USER_PROFILE_MANAGER);
 		List<String> usernames = profileManager.searchId(null);
 		for (int i = 0; i < usernames.size(); i++) {
 			String extractedUsername = usernames.get(i);
@@ -470,63 +469,63 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 	public void setConfigManager(ConfigInterface configManager) {
 		this._configManager = configManager;
 	}
-
+	
 	protected IUserManager getUserManager() {
 		return _userManager;
 	}
 	public void setUserManager(IUserManager userManager) {
 		this._userManager = userManager;
 	}
-
+	
 	protected IAuthenticationProviderManager getAuthProvider() {
 		return _authProvider;
 	}
 	public void setAuthProvider(IAuthenticationProviderManager authProvider) {
 		this._authProvider = authProvider;
 	}
-
+	
 	protected IAuthorizationManager getAuthorizationManager() {
 		return _authorizationManager;
 	}
 	public void setAuthorizationManager(IAuthorizationManager authorizationManager) {
 		this._authorizationManager = authorizationManager;
 	}
-
+	
 	protected IApsAuthorityManager getRoleManager() {
 		return _roleManager;
 	}
 	public void setRoleManager(IApsAuthorityManager roleManager) {
 		this._roleManager = roleManager;
 	}
-
+	
 	protected IContentWorkflowManager getWorkflowManager() {
 		return _workflowManager;
 	}
 	public void setWorkflowManager(IContentWorkflowManager workflowManager) {
 		this._workflowManager = workflowManager;
 	}
-
+	
 	protected IMailManager getMailManager() {
 		return _mailManager;
 	}
 	public void setMailManager(IMailManager mailManager) {
 		this._mailManager = mailManager;
 	}
-
+	
 	protected IContentManager getContentManager() {
 		return _contentManager;
 	}
 	public void setContentManager(IContentManager contentManager) {
 		this._contentManager = contentManager;
 	}
-
+	
 	protected IWorkflowNotifierDAO getNotifierDAO() {
 		return _notifierDAO;
 	}
 	public void setNotifierDAO(IWorkflowNotifierDAO notifierDAO) {
 		this._notifierDAO = notifierDAO;
 	}
-
+	
 	private NotifierConfig _notifierConfig;
 	protected Scheduler _mailSenderScheduler;
 
