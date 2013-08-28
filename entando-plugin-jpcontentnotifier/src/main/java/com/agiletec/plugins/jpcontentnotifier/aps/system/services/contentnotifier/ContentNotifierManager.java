@@ -51,8 +51,9 @@ import com.agiletec.plugins.jpcontentnotifier.aps.system.services.contentnotifie
 import com.agiletec.plugins.jpcontentnotifier.aps.system.services.contentnotifier.scheduler.Scheduler;
 import com.agiletec.plugins.jpcontentnotifier.aps.system.services.contentnotifier.scheduler.Task;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * Service to notify to users the content creation or update,
@@ -251,7 +252,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 	}
 
 	protected String createLink(ContentMailInfo info, String langCode) {
-		StringBuffer link = new StringBuffer();
+		StringBuilder link = new StringBuilder();
 		String applicationBaseUrl = this.getConfigManager().getParam(SystemConstants.PAR_APPL_BASE_URL);
 		link.append(applicationBaseUrl);
 		link.append(langCode);

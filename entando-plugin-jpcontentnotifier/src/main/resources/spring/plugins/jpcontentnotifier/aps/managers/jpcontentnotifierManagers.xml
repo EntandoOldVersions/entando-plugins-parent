@@ -14,7 +14,7 @@
 		<property name="authorizationManager" ref="AuthorizationManager" />
 		<property name="roleManager" ref="RoleManager" />
 		<property name="groupManager" ref="GroupManager" />
-		<property name="profileManager" ref="jpuserprofileUserProfileManager" />
+		<property name="profileManager" ref="UserProfileManager" />
 		<property name="contentNotifierDao">
 			<bean class="com.agiletec.plugins.jpcontentnotifier.aps.system.services.contentnotifier.ContentNotifierDAO">
 				<property name="dataSource" ref="servDataSource" />
