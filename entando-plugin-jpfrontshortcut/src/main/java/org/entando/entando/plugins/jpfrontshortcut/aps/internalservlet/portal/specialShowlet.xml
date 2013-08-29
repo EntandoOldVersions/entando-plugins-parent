@@ -12,7 +12,7 @@
 			<result name="configure">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/success-reload.jsp</result>
     	</global-results>
     	
-    	<!-- ##### SHOWLET WITH SIMPLE PARAMETERS **** START ##### -->
+    	<!-- ##### WIDGET WITH SIMPLE PARAMETERS **** START ##### -->
     	<action name="configSimpleParameter" class="simpleShowletAction" method="init">
         	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/configSimpleParameter.jsp</result>
             <interceptor-ref name="i18nInterceptor" />
@@ -22,23 +22,23 @@
 		<action name="saveConfigSimpleParameter" class="simpleShowletAction" method="save">
     		<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
-    	<!-- ##### SHOWLET WITH SIMPLE PARAMETERS **** END ##### -->
+    	<!-- ##### WIDGET WITH SIMPLE PARAMETERS **** END ##### -->
     	
-    	<!-- ##### SHOWLET NAVIGATOR **** ENTRY POINT ##### -->
+    	<!-- ##### WIDGET NAVIGATOR **** ENTRY POINT ##### -->
     	<action name="navigatorConfig" class="navigatorShowletAction" method="init">
         	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/navigatorConfig.jsp</result>
             <interceptor-ref name="i18nInterceptor" />
 			<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-    	<!-- ##### SHOWLET CONTENT VIEWER **** ENTRY POINT ##### -->
+    	<!-- ##### WIDGET CONTENT VIEWER **** ENTRY POINT ##### -->
     	<action name="viewerConfig" class="jacmsContentViewerShowletAction" method="init">
         	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentViewer/configContentViewer.jsp</result>
             <interceptor-ref name="i18nInterceptor" />
 			<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
     	
-    	<!-- ##### SHOWLET CONTENT LIST VIEWER **** ENTRY POINT ##### -->
+    	<!-- ##### WIDGET CONTENT LIST VIEWER **** ENTRY POINT ##### -->
     	<action name="listViewerConfig" class="jacmsContentListViewerShowletAction" method="init">
         	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/specialshowlet/contentListViewer/configContentListViewer.jsp</result>
             <interceptor-ref name="i18nInterceptor" />

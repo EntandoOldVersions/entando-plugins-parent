@@ -7,7 +7,7 @@
 	
     <package name="jpphotogallery_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="core_do/Page/SpecialWidget">
     	
-    	<!-- ##### SHOWLET JPPHOTOGALLERY **** ENTRY POINT ##### -->
+    	<!-- ##### WIDGET JPPHOTOGALLERY **** ENTRY POINT ##### -->
     	<action name="jpphotogalleryConfig" class="jpphotogalleryPhotogalleryShowletAction" method="init">
         	<result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>

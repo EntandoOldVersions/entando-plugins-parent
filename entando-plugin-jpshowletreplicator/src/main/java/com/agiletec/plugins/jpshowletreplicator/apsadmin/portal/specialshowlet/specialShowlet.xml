@@ -7,7 +7,7 @@
 	
     <package name="jpshowletreplicator_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="entando-default">
     	
-    	<!-- ##### SHOWLET REPLICATOR **** ENTRY POINT ##### -->
+    	<!-- ##### WIDGET REPLICATOR **** ENTRY POINT ##### -->
     	<action name="replicatorConfig" class="jpshowletreplicatorReplicatorShowletAction">
         	<result type="chain">
         		<param name="namespace">/do/jpshowletreplicator/Page/SpecialWidget/Replicator</param>
