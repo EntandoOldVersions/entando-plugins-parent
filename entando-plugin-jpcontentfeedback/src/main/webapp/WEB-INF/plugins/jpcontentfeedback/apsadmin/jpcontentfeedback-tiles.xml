@@ -25,7 +25,7 @@
 
 	<definition extends="main.layout" name="admin.jpcontentfeedback.page.showlet.contentViewer.config">
 		<put-attribute name="title" value="jpcontentfeedback.title.commentsManager" />
-		<put-attribute name="body" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/portal/specialshowlet/contentViewer/viewer-config.jsp" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpcontentfeedback/apsadmin/jsp/portal/specialwidget/contentViewer/viewer-config.jsp" />
 	</definition>
 
 	<definition extends="main.layout" name="admin.jpcontentfeedback.config.edit">

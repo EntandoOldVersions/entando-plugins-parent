@@ -17,7 +17,7 @@
 	</bean>
 	
 	<bean id="showletTypeAction" scope="prototype" 
-			class="com.agiletec.plugins.jpmyportalplus.apsadmin.portal.ShowletTypeAction" parent="abstractPortalAction">
+			class="com.agiletec.plugins.jpmyportalplus.apsadmin.portal.WidgetTypeAction" parent="abstractPortalAction">
 		<property name="myPortalConfigManager" ref="jpmyportalplusMyPortalConfigManager" />
 	</bean>
 	

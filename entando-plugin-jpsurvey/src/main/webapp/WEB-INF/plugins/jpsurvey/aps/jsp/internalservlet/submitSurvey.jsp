@@ -6,12 +6,12 @@
 <s:set name="surveyInfo" value="surveyInfo" />
 <div class="jpsurvey submit-done alert alert-success">
 	<s:if test="#surveyInfo.questionnaire">
-		<jpsu:pageWithShowlet var="archivePageVar" showletTypeCode="jpsurvey_questionnaireList" />
+		<jpsu:pageWithWidget var="archivePageVar" showletTypeCode="jpsurvey_questionnaireList" />
 		<wp:i18n key="JPSURVEY_GO_TO_ACTIVE_QUESTIONNAIRE" var="titleLabelVar" />
 		<wp:i18n key="JPSURVEY_ACTIVE_QUESTIONNAIRE" var="descrLabelVar" />
 	</s:if>
 	<s:else>
-		<jpsu:pageWithShowlet var="archivePageVar" showletTypeCode="jpsurvey_pollsListPage" />
+		<jpsu:pageWithWidget var="archivePageVar" showletTypeCode="jpsurvey_pollsListPage" />
 		<wp:i18n key="JPSURVEY_GO_TO_ACTIVE_POLLS" var="titleLabelVar" />
 		<wp:i18n key="JPSURVEY_GO_ACTIVE_POLLS" var="descrLabelVar" />
 	</s:else>

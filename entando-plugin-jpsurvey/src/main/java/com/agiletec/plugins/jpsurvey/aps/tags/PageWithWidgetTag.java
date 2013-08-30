@@ -32,7 +32,7 @@ import com.agiletec.aps.util.ApsWebApplicationUtils;
  * Search and return the page (or the list of pages) with the given showlet type.
  * @author E.Santoboni
  */
-public class PageWithShowletTag extends TagSupport {
+public class PageWithWidgetTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {

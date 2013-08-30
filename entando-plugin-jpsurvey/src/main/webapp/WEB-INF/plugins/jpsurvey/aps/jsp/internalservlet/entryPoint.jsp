@@ -1,4 +1,4 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglmvn clean install -DskipTests -oib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
@@ -86,7 +86,7 @@
 				<s:if test="!#surveyInfo.questionnaire">
 					<s:if test="%{(#surveyInfo.archive && #surveyInfo.publicResult) || (!#surveyInfo.archive && #surveyInfo.publicPartialResult && #surveyInfo.open) }">
 							&#32;
-						<jpsu:pageWithShowlet var="resultsPageVar" showletTypeCode="jpsurvey_resultsSurvey" />
+						<jpsu:pageWithWidget var="resultsPageVar" showletTypeCode="jpsurvey_resultsSurvey" />
 							<a 
 								class="btn"
 								href="<wp:url page="${resultsPageVar.code}"><wp:parameter name="surveyId"><s:property value="#surveyInfo.id" /></wp:parameter></wp:url>">
