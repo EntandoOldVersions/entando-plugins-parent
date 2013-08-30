@@ -21,11 +21,11 @@
 	    <action name="intro" class="jpcontentfeedbackCommentsFrontAction" >
 	    	<result name="input" type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
 	    	<result type="dispatcher">/WEB-INF/plugins/jpcontentfeedback/aps/jsp/internalServlet/content_feedback_intro.jsp</result>
-	    	<interceptor-ref name="redirectMessage" />
 	    	<interceptor-ref name="entandoFrontEndFreeStack">
 	    		<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
 				<param name="params.excludeParams">struts.token,struts.token.name</param>
 	    	</interceptor-ref>
+	    	<interceptor-ref name="redirectMessage" />
 	    </action>
 		
 	    <action name="insert" class="jpcontentfeedbackCommentsFrontAction" method="addComment">

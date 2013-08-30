@@ -267,7 +267,7 @@
             </p>
             <p>
               <s:set name="labelSubmit"><wp:i18n key="jpcontentfeedback_SEND" /></s:set>
-              <wpsf:submit useTabindexAutoIncrement="true" action="insert" value="%{#labelSubmit}" cssClass="btn btn-primary" />
+              <wpsf:submit useTabindexAutoIncrement="true" value="%{#labelSubmit}" cssClass="btn btn-primary" />
             </p>
           </form>
         </div>
