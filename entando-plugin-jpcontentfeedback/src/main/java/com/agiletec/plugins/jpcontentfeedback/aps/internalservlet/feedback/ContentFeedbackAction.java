@@ -100,14 +100,14 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	@Override
 	public String addComment() {
 		try {
-			String commentsActive = this.getShowletParam(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ACTIVE);
+			String commentsActive = this.getShowletParam(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ACTIVE);
 			boolean commentsAllowed = null != commentsActive && commentsActive.equalsIgnoreCase("true");
 			if (!commentsAllowed) {
 				ApsSystemUtils.getLogger().info("comments not allowed");
 				return BaseAction.USER_NOT_ALLOWED;
 			}
 
-			String anonComments = this.getShowletParam(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ANONYMOUS);
+			String anonComments = this.getShowletParam(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ANONYMOUS);
 			boolean anomymousCommentsAllowed = null != anonComments && anonComments.equalsIgnoreCase("true");
 			if (this.getCurrentUser().getUsername().equalsIgnoreCase(SystemConstants.GUEST_USER_NAME) && !anomymousCommentsAllowed) {
 				ApsSystemUtils.getLogger().info("anomymous comments not allowed");
@@ -117,7 +117,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 			Comment comment = new Comment();
 			String contentId = this.getCurrentContentId();
 			if (this.isAuth(contentId)) {
-				String commentsModeration = this.getShowletParam(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_MODERATED);
+				String commentsModeration = this.getShowletParam(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_MODERATED);
 				boolean moderation = null != commentsModeration && commentsModeration.equalsIgnoreCase("true");
 				if (moderation) {
 					comment.setStatus(Comment.STATUS_TO_APPROVE);
@@ -140,7 +140,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 	@Override
 	public String insertVote() {
 		try {
-			String contentRatingActive = this.getShowletParam(ContentFeedbackWidgetAction.SHOWLET_PARAM_RATE_CONTENT);
+			String contentRatingActive = this.getShowletParam(ContentFeedbackWidgetAction.WIDGET_PARAM_RATE_CONTENT);
 			boolean contentRatingAllowed = null != contentRatingActive && contentRatingActive.equalsIgnoreCase("true");
 			if (!contentRatingAllowed) {
 				ApsSystemUtils.getLogger().info("ContentRating not allowed");
@@ -173,7 +173,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 
 	public String insertCommentVote() {
 		try {
-			String commentRatingActive = this.getShowletParam(ContentFeedbackWidgetAction.SHOWLET_PARAM_RATE_COMMENT);
+			String commentRatingActive = this.getShowletParam(ContentFeedbackWidgetAction.WIDGET_PARAM_RATE_COMMENT);
 			boolean commentRatingAllowed = null != commentRatingActive && commentRatingActive.equalsIgnoreCase("true");
 			if (!commentRatingAllowed) {
 				ApsSystemUtils.getLogger().info("Comment Rating not allowed");

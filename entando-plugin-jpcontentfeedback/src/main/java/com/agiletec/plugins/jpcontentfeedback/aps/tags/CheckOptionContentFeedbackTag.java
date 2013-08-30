@@ -68,10 +68,10 @@ public class CheckOptionContentFeedbackTag extends TagSupport {
 		ApsProperties config = showlet.getConfig();
 
 		String param = this.getParam();
-		if (param.equalsIgnoreCase("allowComment")) param = ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ACTIVE;
-		if (param.equalsIgnoreCase("allowAnonymousComment")) param = ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ANONYMOUS;
-		if (param.equalsIgnoreCase("allowRateContent")) param = ContentFeedbackWidgetAction.SHOWLET_PARAM_RATE_CONTENT;
-		if (param.equalsIgnoreCase("allowRateComment")) param = ContentFeedbackWidgetAction.SHOWLET_PARAM_RATE_COMMENT;
+		if (param.equalsIgnoreCase("allowComment")) param = ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ACTIVE;
+		if (param.equalsIgnoreCase("allowAnonymousComment")) param = ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ANONYMOUS;
+		if (param.equalsIgnoreCase("allowRateContent")) param = ContentFeedbackWidgetAction.WIDGET_PARAM_RATE_CONTENT;
+		if (param.equalsIgnoreCase("allowRateComment")) param = ContentFeedbackWidgetAction.WIDGET_PARAM_RATE_COMMENT;
 
 		if (null != config && this.getParam()!=null && this.getParam().length()>0) {
 			String value = config.getProperty(this.getParam());

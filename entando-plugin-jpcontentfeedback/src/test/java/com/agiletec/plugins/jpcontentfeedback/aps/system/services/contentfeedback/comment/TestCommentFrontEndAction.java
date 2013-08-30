@@ -73,9 +73,9 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
             showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
             prop.put("contentId", contentId);
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ACTIVE, "true");
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_MODERATED, "false");
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ANONYMOUS, "false");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ACTIVE, "true");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_MODERATED, "false");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ANONYMOUS, "false");
             showlet.setConfig(prop);
             showlet.setPublishedContent(contentId);
 
@@ -143,11 +143,11 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
             showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
             prop.put("contentId", contentId);
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ACTIVE, "true");
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_MODERATED, "false");
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ANONYMOUS, "false");
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_RATE_COMMENT, "true");
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_RATE_CONTENT, "true");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ACTIVE, "true");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_MODERATED, "false");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ANONYMOUS, "false");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_RATE_COMMENT, "true");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_RATE_CONTENT, "true");
             showlet.setConfig(prop);
             showlet.setPublishedContent(contentId);
 
@@ -262,11 +262,11 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
             showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
             prop.put("contentId", contentId);
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ACTIVE, "true");
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_MODERATED, "false");
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ANONYMOUS, "false");
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_RATE_COMMENT, "true");
-            prop.put(ContentFeedbackWidgetAction.SHOWLET_PARAM_RATE_CONTENT, "true");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ACTIVE, "true");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_MODERATED, "false");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ANONYMOUS, "false");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_RATE_COMMENT, "true");
+            prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_RATE_CONTENT, "true");
             showlet.setConfig(prop);
 
             RequestContext e = new RequestContext();

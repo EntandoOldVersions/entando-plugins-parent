@@ -57,19 +57,19 @@ public class ContentFeedbackWidgetAction  extends ContentViewerWidgetAction impl
 				//for ContentFeedbackWidgetAction
 				IContentFeedbackConfig systemConfig = this.getContentFeedbackManager().getConfig();
 				String value = systemConfig.getComment();
-				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_COMMENT_ACTIVE, value);
+				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(WIDGET_PARAM_COMMENT_ACTIVE, value);
 
 				value = systemConfig.getAnonymousComment();
-				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_COMMENT_ANONYMOUS, value);
+				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(WIDGET_PARAM_COMMENT_ANONYMOUS, value);
 
 				value = systemConfig.getModeratedComment();
-				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_COMMENT_MODERATED, value);
+				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(WIDGET_PARAM_COMMENT_MODERATED, value);
 
 				value = systemConfig.getRateContent();
-				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_RATE_CONTENT, value);
+				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(WIDGET_PARAM_RATE_CONTENT, value);
 
 				value = systemConfig.getRateComment();
-				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_RATE_COMMENT, value);
+				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(WIDGET_PARAM_RATE_COMMENT, value);
 				//---
 
 			} catch (Exception e) {
@@ -89,11 +89,11 @@ public class ContentFeedbackWidgetAction  extends ContentViewerWidgetAction impl
 
 	public String storeSessionParams() {
 		Map<String, String> sessionParams = new HashMap<String, String>();
-		sessionParams.put(SHOWLET_PARAM_COMMENT_ACTIVE, this.getUsedComment());
-		sessionParams.put(SHOWLET_PARAM_COMMENT_MODERATED, this.getCommentValidation());
-		sessionParams.put(SHOWLET_PARAM_RATE_CONTENT, this.getUsedContentRating());
-		sessionParams.put(SHOWLET_PARAM_RATE_COMMENT, this.getUsedCommentWithRating());
-		sessionParams.put(SHOWLET_PARAM_COMMENT_ANONYMOUS, this.getAnonymousComment());
+		sessionParams.put(WIDGET_PARAM_COMMENT_ACTIVE, this.getUsedComment());
+		sessionParams.put(WIDGET_PARAM_COMMENT_MODERATED, this.getCommentValidation());
+		sessionParams.put(WIDGET_PARAM_RATE_CONTENT, this.getUsedContentRating());
+		sessionParams.put(WIDGET_PARAM_RATE_COMMENT, this.getUsedCommentWithRating());
+		sessionParams.put(WIDGET_PARAM_COMMENT_ANONYMOUS, this.getAnonymousComment());
 
 		this.getRequest().getSession().setAttribute(SESSION_PARAM_STORE_CONFIG, sessionParams);
 		return SUCCESS;
@@ -226,14 +226,37 @@ public class ContentFeedbackWidgetAction  extends ContentViewerWidgetAction impl
 	private String _usedContentRating;
 	private String _usedCommentWithRating;
 
-	public static final String SHOWLET_PARAM_COMMENT_ACTIVE = "usedComment";
-	public static final String SHOWLET_PARAM_COMMENT_MODERATED = "commentValidation";
-	public static final String SHOWLET_PARAM_RATE_CONTENT = "usedContentRating";
-	public static final String SHOWLET_PARAM_RATE_COMMENT = "usedCommentWithRating";
-
-	public static final String SHOWLET_PARAM_COMMENT_ANONYMOUS = "anonymousComment";
-
+	public static final String WIDGET_PARAM_COMMENT_ACTIVE = "usedComment";
+	public static final String WIDGET_PARAM_COMMENT_MODERATED = "commentValidation";
+	public static final String WIDGET_PARAM_RATE_CONTENT = "usedContentRating";
+	public static final String WIDGET_PARAM_RATE_COMMENT = "usedCommentWithRating";
+	public static final String WIDGET_PARAM_COMMENT_ANONYMOUS = "anonymousComment";
 	public static final String SESSION_PARAM_STORE_CONFIG = "ContentFeedbackShowletAction_params_store";
 
+	/**
+	 * @deprecated Use {@link #WIDGET_PARAM_COMMENT_ACTIVE} instead
+	 */
+	public static final String SHOWLET_PARAM_COMMENT_ACTIVE = WIDGET_PARAM_COMMENT_ACTIVE;
+
+	/**
+	 * @deprecated Use {@link #WIDGET_PARAM_COMMENT_MODERATED} instead
+	 */
+	public static final String SHOWLET_PARAM_COMMENT_MODERATED = WIDGET_PARAM_COMMENT_MODERATED;
+
+	/**
+	 * @deprecated Use {@link #WIDGET_PARAM_RATE_CONTENT} instead
+	 */
+	public static final String SHOWLET_PARAM_RATE_CONTENT = WIDGET_PARAM_RATE_CONTENT;
+
+	/**
+	 * @deprecated Use {@link #WIDGET_PARAM_RATE_COMMENT} instead
+	 */
+	public static final String SHOWLET_PARAM_RATE_COMMENT = WIDGET_PARAM_RATE_COMMENT;
+
+
+	/**
+	 * @deprecated Use {@link #WIDGET_PARAM_COMMENT_ANONYMOUS} instead
+	 */
+	public static final String SHOWLET_PARAM_COMMENT_ANONYMOUS = WIDGET_PARAM_COMMENT_ANONYMOUS;
 
 }
