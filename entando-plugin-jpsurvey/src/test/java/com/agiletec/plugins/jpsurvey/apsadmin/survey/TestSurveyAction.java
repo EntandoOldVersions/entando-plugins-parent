@@ -37,6 +37,7 @@ import com.opensymphony.xwork2.Action;
 
 public class TestSurveyAction extends ApsAdminPluginBaseTestCase {
 	
+	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.init();

@@ -68,6 +68,7 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 		PreparedStatement stat = null;
 		ResultSet res = null;
 		Survey survey = null;
+		Integer currentQuestionId = null;
 		try {
 			stat = conn.prepareStatement(GET_COMPLETE_SURVEY_BY_ID);
 			stat.setInt(1, id);
@@ -77,21 +78,22 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 				if (null == survey) {
 					survey = this.buildSurveyRecordFromResultSet(res);
 				}
-				Question question = this.buildQuestionRecordFromResultSet(res, 18);
-				if (null == question) {
-					continue;
-				}
-				if (null == survey.getQuestion(question.getId())) {
+				Integer questionId = res.getInt(18);
+				Question question = null;
+				if (null == currentQuestionId || !questionId.equals(currentQuestionId)) {
+					question = this.buildQuestionRecordFromResultSet(res, 18);
+					if (null == question) continue;
 					survey.getQuestions().add(question);
-//					System.out.println("loading question ID "+question.getId()+ " for survey ID "+survey.getId());
+					currentQuestionId = questionId;
+				} else {
+					question = survey.getQuestion(currentQuestionId);
 				}
 				Choice choice = this.buildChoiceRecordFromResultSet(res, 25);
 				if (null == choice) {
 					continue;
 				}
-				if (null == survey.getQuestion(question.getId()).getChoice(choice.getId())) {
-					survey.getQuestion(question.getId()).getChoices().add(choice);
-//					System.out.println("loading choice ID "+choice.getId()+" for question ID "+question.getId());
+				if (null == question.getChoice(choice.getId())) {
+					question.getChoices().add(choice);
 				}
 			}
 		} catch (Throwable t) {

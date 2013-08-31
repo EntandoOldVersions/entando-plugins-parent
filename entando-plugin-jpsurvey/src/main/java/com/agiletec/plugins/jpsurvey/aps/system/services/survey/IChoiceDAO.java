@@ -19,6 +19,8 @@ package com.agiletec.plugins.jpsurvey.aps.system.services.survey;
 
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Choice;
 
+import java.util.List;
+
 public interface IChoiceDAO {
 
 	/**
@@ -59,13 +61,6 @@ public interface IChoiceDAO {
 	 */
 	public void deleteChoiceByQuestionId(int id);
 	
-	/**
-	 * Swaps the position of the given choice with the one closer by position. We can choose to swap the
-	 * given choice with the following or preceding one
-	 * @param choiceId the ID of the choice to move
-	 * @param isUp when true the position of the given choice will be swapped with the one preceding in the
-	 *  list, with the following otherwise
-	 */
-	public void swapChoicePosition(int id, boolean isUp);
+	public void swapChoicePosition(Choice choiceToSwap, List<Choice> choices, boolean up);
 	
 }

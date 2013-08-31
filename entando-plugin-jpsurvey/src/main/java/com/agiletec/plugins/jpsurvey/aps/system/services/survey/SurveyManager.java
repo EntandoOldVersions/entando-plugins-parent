@@ -221,7 +221,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 	}
 	
 	@Override
-	public void swapQuestionPosition(int id, boolean isUp) throws ApsSystemException{
+	public void swapQuestionPosition(int id, boolean isUp) throws ApsSystemException {
 		try {
 			Question targetQuestion = this.getQuestionDAO().loadQuestion(id);
 			if (null == targetQuestion) {
@@ -231,27 +231,8 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 			if (null == survey) {
 				return;
 			}
-			Question nearQuestion = null;
 			List<Question> questions = survey.getQuestions();
-			for (int i = 0; i < questions.size(); i++) {
-				Question question = questions.get(i);
-				if (question.getId() == id) {
-					if (isUp && i > 0) {
-						nearQuestion = questions.get(i-1);
-					} else if (!isUp && i < (questions.size()-1)) {
-						nearQuestion = questions.get(i+1);
-					}
-					break;
-				}
-			}
-			if (null != nearQuestion) {
-				if (isUp) {
-					this.getQuestionDAO().swapQuestionPosition(nearQuestion, targetQuestion);
-				} else {
-					this.getQuestionDAO().swapQuestionPosition(targetQuestion, nearQuestion);
-				}
-			}
-			this.getChoiceDAO().swapChoicePosition(id, isUp);
+			this.getQuestionDAO().swapQuestionPosition(targetQuestion, questions, isUp);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "swapChoicePosition");
 			throw new ApsSystemException("Error while swapping two choices in a question", t);
@@ -261,7 +242,13 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 	@Override
 	public void swapChoicePosition(int id, boolean isUp) throws ApsSystemException {
 		try {
-			this.getChoiceDAO().swapChoicePosition(id, isUp);
+			Choice choice = this.getChoiceDAO().loadChoice(id);
+			if (null == choice) {
+				return;
+			}
+			List<Choice> choices = this.getQuestionDAO().getQuestionChoices(choice.getQuestionId());
+			//this.getChoiceDAO().swapChoicePosition(id, isUp);
+			this.getChoiceDAO().swapChoicePosition(choice, choices, isUp);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "swapChoicePosition");
 			throw new ApsSystemException("Error while swapping two choices in a question", t);

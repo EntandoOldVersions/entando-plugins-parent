@@ -85,14 +85,16 @@ public class TestSurveyManager extends ApsPluginBaseTestCase {
 			assertFalse(question.isSingleChoice());
 			assertEquals(1, question.getMinResponseNumber());
 			assertEquals(2, question.getMaxResponseNumber());
-			assertNotNull(question.getChoices());
-			assertEquals(4, question.getChoices().size());
+			List<Choice> choices = question.getChoices();
+			assertNotNull(choices);
+			assertEquals(4, choices.size());
 			assertEquals(true, question.isQuestionnaire());
-			assertEquals(true, question.getChoices().get(0).isQuestionnaire());
+			assertEquals(true, choices.get(0).isQuestionnaire());
 			assertEquals("Titolo-1", question.getSurveyTitles().get("it"));
-			for (int i = 0; i < question.getChoices().size(); i++) {
-				assertEquals(choiceOrder[i], question.getChoices().get(i).getId());
-				assertEquals(i + 1, question.getChoices().get(i).getPos());
+			for (int i = 0; i < choices.size(); i++) {
+				Choice choice = choices.get(i);
+				assertEquals(choiceOrder[i], choice.getId());
+				assertEquals(i + 1, choice.getPos());
 			}
 			// load unknown question
 			question = this.getSurveyManager().loadQuestion(22);
@@ -183,7 +185,7 @@ public class TestSurveyManager extends ApsPluginBaseTestCase {
 			list = this.getSurveyManager().getQuestionChoices(2);
 			assertNotNull(list);
 			for (scan=0; scan < list.size() && list.get(scan).getId() != choice.getId(); scan++);
-			choice=list.get(scan);
+			choice = list.get(scan);
 			assertNotNull(choice.getChoices());
 			assertEquals(96, choice.getPos());
 			assertTrue(choice.isFreeText());
@@ -628,6 +630,7 @@ public class TestSurveyManager extends ApsPluginBaseTestCase {
 			assertEquals(false, actual.getQuestions().get(0).isSingleChoice());
 			assertEquals(6, actual.getQuestions().get(0).getMinResponseNumber());
 			assertEquals(10, actual.getQuestions().get(0).getMaxResponseNumber());
+			
 			// move the last question down does nothing
 			expected = this.getSurveyManager().loadSurvey(survey.getId());
 			this.getSurveyManager().swapQuestionPosition(actual.getQuestions().get(1).getId(), false);
@@ -641,6 +644,7 @@ public class TestSurveyManager extends ApsPluginBaseTestCase {
 			assertEquals(false, actual.getQuestions().get(0).isSingleChoice());
 			assertEquals(6, actual.getQuestions().get(0).getMinResponseNumber());
 			assertEquals(10, actual.getQuestions().get(0).getMaxResponseNumber());
+			
 			// move the first question up does nothing
 			expected = this.getSurveyManager().loadSurvey(survey.getId());
 			this.getSurveyManager().swapQuestionPosition(actual.getQuestions().get(0).getId(), true);
@@ -654,6 +658,7 @@ public class TestSurveyManager extends ApsPluginBaseTestCase {
 			assertEquals(false, actual.getQuestions().get(0).isSingleChoice());
 			assertEquals(6, actual.getQuestions().get(0).getMinResponseNumber());
 			assertEquals(10, actual.getQuestions().get(0).getMaxResponseNumber());
+			
 		} catch (Throwable t) {
 			throw t;
 		} finally {

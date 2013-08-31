@@ -68,11 +68,6 @@ public interface IQuestionDAO {
 	 */
 	public void saveQuestionInSortedPosition(Question question);
 	
-	/**
-	 * Swaps the position of the given questions. 
-	 * @param questionDown the question to move down
-	 * @param questionUp the question to move up
-	 */
-	public void swapQuestionPosition(Question questionDown, Question questionUp);
+	public void swapQuestionPosition(Question questionToSwap, List<Question> questions, boolean up);
 	
 }

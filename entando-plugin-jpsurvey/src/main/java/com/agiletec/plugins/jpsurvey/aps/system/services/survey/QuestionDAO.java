@@ -151,28 +151,54 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 	}
 	
 	@Override
-	public void swapQuestionPosition(Question questionDown, Question questionUp) {
+	public void swapQuestionPosition(Question questionToSwap, List<Question> questions, boolean up) {
 		Connection conn = null;
 		PreparedStatement stat = null;
-		PreparedStatement stat2 = null;
+		ResultSet res = null;
+		Question nearQuestionToSwap = null;
 		try {
+			for (int i = 0; i < questions.size(); i++) {
+				Question question = questions.get(i);
+				if (question.getId() == questionToSwap.getId()) {
+					if (up && i>0) {
+						nearQuestionToSwap = questions.get(i-1);
+					} else if (!up && i<(questions.size()-1)) {
+						nearQuestionToSwap = questions.get(i+1);
+					}
+					break;
+				}
+			}
+			if (null == nearQuestionToSwap) {
+				return;
+			}
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
-			stat = conn.prepareStatement(MOVE_QUESTION_DOWN);
-			stat.setInt(1, questionDown.getId());
-			stat.executeUpdate();
-			
-			stat2 = conn.prepareStatement(MOVE_QUESTION_UP);
-			stat2.setInt(1, questionUp.getId());
-			stat2.executeUpdate();
-			
+			int initPos = questionToSwap.getPos();
+			questionToSwap.setPos(nearQuestionToSwap.getPos());
+			nearQuestionToSwap.setPos(initPos);
+			this.updateQuestionPosition(conn, nearQuestionToSwap);
+			this.updateQuestionPosition(conn, questionToSwap);
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while swapping the position of two questions", "changeQuestionPosition");
+			processDaoException(t, "Errore swapping position of two 'choice' objects", "swapQuestionPosition");
+		} finally {
+			closeDaoResources(res, stat, conn);
+		}
+	}
+	
+	private void updateQuestionPosition(Connection conn, Question questionToMove) {
+		PreparedStatement stat = null;
+		try {
+			stat = conn.prepareStatement(MOVE_QUESTION);
+			stat.setInt(1, questionToMove.getPos());
+			stat.setInt(2, questionToMove.getId());
+			stat.executeUpdate();
+		} catch (Throwable t) {
+			this.executeRollback(conn);
+			processDaoException(t, "Error while updating the position of question", "updateQuestionPosition");
 		} finally {
 			closeDaoResources(null, stat);
-			closeDaoResources(null, stat2, conn);
 		}
 	}
 	
@@ -216,11 +242,8 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 			" LEFT JOIN jpsurvey_choices ON jpsurvey_questions.id = jpsurvey_choices.questionid " +
 		"WHERE jpsurvey_questions.id= ? ORDER BY jpsurvey_questions.pos, jpsurvey_choices.pos ";
 	
-	private static final String MOVE_QUESTION_UP = 
-		"UPDATE jpsurvey_questions SET pos = (pos - 1) WHERE id = ? ";
-	
-	private static final String MOVE_QUESTION_DOWN = 
-		"UPDATE jpsurvey_questions SET pos = (pos + 1) WHERE id = ? ";
+	private static final String MOVE_QUESTION = 
+		"UPDATE jpsurvey_questions SET pos = ? WHERE id = ? ";
 	
 	private static final String GET_QUESTION_GREATER_POS =
 		"SELECT pos FROM jpsurvey_questions WHERE surveyid = ? ORDER BY pos DESC";

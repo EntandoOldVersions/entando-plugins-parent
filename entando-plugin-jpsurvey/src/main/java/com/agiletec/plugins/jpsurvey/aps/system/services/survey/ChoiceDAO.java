@@ -21,6 +21,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.List;
+
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jpsurvey.aps.system.services.AbstractSurveyDAO;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Choice;
@@ -138,50 +140,53 @@ public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
 		}
 	}
 	
-	public void swapChoicePosition(int id, boolean isUp) {
+	@Override
+	public void swapChoicePosition(Choice choiceToSwap, List<Choice> choices, boolean up) {
 		Connection conn = null;
-		PreparedStatement stat = null;
-		ResultSet res = null;
-		Choice targetChoice = null; 
-		Choice proxChoice = null;
+		Choice nearChoiceToSwap = null;
 		try {
-			conn = this.getConnection();
-			conn.setAutoCommit(false);
-			targetChoice = this.loadChoice(id);
-			if (null == targetChoice) return;
-			if (isUp) {
-				stat = conn.prepareStatement(GET_CHOICE_LESSER_THAN);
-			} else {
-				stat = conn.prepareStatement(GET_CHOICE_GREATER_THAN);
+			for (int i = 0; i < choices.size(); i++) {
+				Choice choice = choices.get(i);
+				if (choice.getId() == choiceToSwap.getId()) {
+					if (up && i>0) {
+						nearChoiceToSwap = choices.get(i-1);
+					} else if (!up && i<(choices.size()-1)) {
+						nearChoiceToSwap = choices.get(i+1);
+					}
+					break;
+				}
 			}
-			stat.setInt(1, targetChoice.getQuestionId());
-			stat.setInt(2, targetChoice.getPos());
-			res = stat.executeQuery();
-			// we are interested only in the first result!
-			if (res.next()) {
-				ApsProperties prop = new ApsProperties();
-				proxChoice = new Choice();
-				proxChoice.setId(res.getInt(1)); // 1
-				proxChoice.setQuestionId(res.getInt(2)); // 2
-				prop.loadFromXml(res.getString(3)); // 2
-				proxChoice.setChoices(prop);
-				proxChoice.setPos(res.getInt(4)); // 4
-				proxChoice.setFreeText(res.getInt(5)==1); // 5
-			} else {
+			if (null == nearChoiceToSwap) {
 				return;
 			}
-			// swap positions
-			int tmp = targetChoice.getPos();
-			targetChoice.setPos(proxChoice.getPos());
-			proxChoice.setPos(tmp);
-			this.updateChoice(conn, targetChoice);
-			this.updateChoice(conn, proxChoice);
+			conn = this.getConnection();
+			conn.setAutoCommit(false);
+			int initPos = choiceToSwap.getPos();
+			choiceToSwap.setPos(nearChoiceToSwap.getPos());
+			nearChoiceToSwap.setPos(initPos);
+			this.updateChoicePosition(conn, nearChoiceToSwap);
+			this.updateChoicePosition(conn, choiceToSwap);
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
 			processDaoException(t, "Errore swapping position of two 'choice' objects", "changeQuestionPosition");
 		} finally {
-			closeDaoResources(res, stat, conn);
+			closeConnection(conn);
+		}
+	}
+	
+	private void updateChoicePosition(Connection conn, Choice choiceToMove) {
+		PreparedStatement stat = null;
+		try {
+			stat = conn.prepareStatement(MOVE_CHOICE);
+			stat.setInt(1, choiceToMove.getPos());
+			stat.setInt(2, choiceToMove.getId());
+			stat.executeUpdate();
+		} catch (Throwable t) {
+			this.executeRollback(conn);
+			processDaoException(t, "Error while updating the position of question", "updateChoicePosition");
+		} finally {
+			closeDaoResources(null, stat);
 		}
 	}
 	
@@ -204,5 +209,8 @@ public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
 
 	private static final String GET_CHOICE_GREATER_THAN =
 		"SELECT id, questionid, choice, pos, freetext FROM jpsurvey_choices WHERE questionid = ? AND pos > ? ORDER BY pos ASC";
-
+	
+	private static final String MOVE_CHOICE = 
+		"UPDATE jpsurvey_choices SET pos = ? WHERE id = ? ";
+	
 }
