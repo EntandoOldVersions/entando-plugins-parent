@@ -223,8 +223,8 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	 * @return a new object with the given code and configuration
 	 * @throws ApsSystemException if the given code is unknown or faulting XML configuration
 	 */
-	private Widget createShowletFromRecord(String widgetcode, String config) throws ApsSystemException {
-		Widget newShowlet = new Widget();
+	private com.agiletec.aps.system.services.page.Widget createShowletFromRecord(String widgetcode, String config) throws ApsSystemException {
+		com.agiletec.aps.system.services.page.Widget newShowlet = new com.agiletec.aps.system.services.page.Widget();
 		WidgetType inheritedType = this.getWidgetTypeManager().getShowletType(widgetcode);
 		newShowlet.setType(inheritedType);
 		ApsProperties properties = null;
