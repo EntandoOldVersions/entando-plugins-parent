@@ -218,14 +218,14 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 
 	/**
 	 * Create a showlet with a given code and optional configuration.
-	 * @param showletcode the code of the showlet
+	 * @param widgetcode the code of the showlet
 	 * @param config the configuration for the current showlet
 	 * @return a new object with the given code and configuration
 	 * @throws ApsSystemException if the given code is unknown or faulting XML configuration
 	 */
-	private org.entando.entando.aps.system.services.page.Widget createShowletFromRecord(String showletcode, String config) throws ApsSystemException {
-		org.entando.entando.aps.system.services.page.Widget newShowlet = new org.entando.entando.aps.system.services.page.Widget();
-		WidgetType inheritedType = this.getWidgetTypeManager().getShowletType(showletcode);
+	private com.agiletec.aps.system.services.page.Widget createShowletFromRecord(String widgetcode, String config) throws ApsSystemException {
+		com.agiletec.aps.system.services.page.Widget newShowlet = new com.agiletec.aps.system.services.page.Widget();
+		WidgetType inheritedType = this.getWidgetTypeManager().getShowletType(widgetcode);
 		newShowlet.setType(inheritedType);
 		ApsProperties properties = null;
 		newShowlet.setConfig(properties);
@@ -340,7 +340,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	private IWidgetTypeManager _widgetTypeManager;
 
 	private final String ADD_USER_CONFIG =
-		"INSERT INTO jpmyportalplus_userpageconfig (username, pagecode, framepos, showletcode, config, closed) VALUES (?, ?, ?, ?, ?, ?)";
+		"INSERT INTO jpmyportalplus_userpageconfig (username, pagecode, framepos, widgetcode, config, closed) VALUES (?, ?, ?, ?, ?, ?)";
 
 	private final String DELETE_PAGE_USER_CONFIG =
 		"DELETE FROM jpmyportalplus_userpageconfig WHERE username = ? AND pagecode = ? AND framepos = ?";
@@ -352,15 +352,15 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		"DELETE FROM jpmyportalplus_userpageconfig WHERE username = ? AND pagecode = ? ";
 
 	private final String GET_USER_CONFIG =
-		"SELECT pagecode, framepos, showletcode, config, closed FROM jpmyportalplus_userpageconfig WHERE username = ? ORDER BY pagecode";
+		"SELECT pagecode, framepos, widgetcode, config, closed FROM jpmyportalplus_userpageconfig WHERE username = ? ORDER BY pagecode";
 
 	private final String GET_CONFIGURED_SHOWLET_CODE =
-		"SELECT showletcode FROM jpmyportalplus_userpageconfig GROUP BY showletcode";
+		"SELECT widgetcode FROM jpmyportalplus_userpageconfig GROUP BY widgetcode";
 
 	private final String DELETE_USER_CONFIG_BY_SHOWLET_CODE =
-		"DELETE FROM jpmyportalplus_userpageconfig WHERE showletcode = ? ";
+		"DELETE FROM jpmyportalplus_userpageconfig WHERE widgetcode = ? ";
 
 	private final String DELETE_UNAUTHORIZATED_SHOWLETS =
-			"DELETE FROM jpmyportalplus_userpageconfig WHERE username = ? AND showletcode = ? ";
+			"DELETE FROM jpmyportalplus_userpageconfig WHERE username = ? AND widgetcode = ? ";
 
 }

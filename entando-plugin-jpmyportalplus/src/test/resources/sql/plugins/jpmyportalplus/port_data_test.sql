@@ -66,28 +66,28 @@ INSERT INTO pages (code, parentcode, pos, modelcode, titles, groupcode, showinme
 </properties>
 ', 'free', 0, NULL);
 
-INSERT INTO widgetconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
+INSERT INTO widgetconfig (pagecode, framepos, widgetcode, config, publishedcontent) VALUES (
 'jpmyportalplus_testpage', 0, 'login_form', NULL, NULL);
-INSERT INTO widgetconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
+INSERT INTO widgetconfig (pagecode, framepos, widgetcode, config, publishedcontent) VALUES (
 'jpmyportalplus_testpage', 1, 'jpmyportalplus_sample_showlet', NULL, NULL);
-INSERT INTO widgetconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
+INSERT INTO widgetconfig (pagecode, framepos, widgetcode, config, publishedcontent) VALUES (
 'jpmyportalplus_testpage', 2, 'jpmyportalplus_void', NULL, NULL);
-INSERT INTO widgetconfig (pagecode, framepos, showletcode, config, publishedcontent) VALUES (
+INSERT INTO widgetconfig (pagecode, framepos, widgetcode, config, publishedcontent) VALUES (
 'jpmyportalplus_testpage', 4, 'jpmyportalplus_test_showlet_3', NULL, NULL);
 
 
-INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, showletcode, config, closed)
+INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, widgetcode, config, closed)
     VALUES ('editorCustomers', 'jpmyportalplus_testpage',
     1, 'jpmyportalplus_void', null, 0);
 
-INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, showletcode, config, closed)
+INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, widgetcode, config, closed)
     VALUES ('editorCustomers', 'jpmyportalplus_testpage',
     2, 'jpmyportalplus_test_showlet_1', null, 1);
 
-INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, showletcode, config, closed)
+INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, widgetcode, config, closed)
     VALUES ('editorCustomers', 'jpmyportalplus_testpage',
     3, 'jpmyportalplus_sample_showlet', null, 0);
 
-INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, showletcode, config, closed)
+INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, widgetcode, config, closed)
     VALUES ('editorCustomers', 'jpmyportalplus_testpage',
     6, 'jpmyportalplus_test_showlet_3', null, 1);

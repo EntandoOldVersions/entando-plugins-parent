@@ -12,7 +12,7 @@ CREATE TABLE jpmyportal_userpagemodelconfig
   username character varying(40) NOT NULL,
   pagemodelcode character varying(40) NOT NULL,
   framepos integer NOT NULL,
-  showletcode character varying(40) NOT NULL,
+  widgetcode character varying(40) NOT NULL,
   config character varying,
   CONSTRAINT jpmyportal_userpagemodelconfig_pkey PRIMARY KEY (username, framepos, pagemodelcode),
   CONSTRAINT jpmyportal_userpagemodelconfig_pagemodelcode_fkey FOREIGN KEY (pagemodelcode)

@@ -92,7 +92,7 @@ public class JpmyportalTestHelper extends AbstractDAO {
 	}
 	
 	private static final String ADD_USER_CONFIG = 
-		"INSERT INTO jpmyportal_userpagemodelconfig (username, pagemodelcode, framepos, showletcode, config) VALUES (?, ?, ?, ?, ?) ";
+		"INSERT INTO jpmyportal_userpagemodelconfig (username, pagemodelcode, framepos, widgetcode, config) VALUES (?, ?, ?, ?, ?) ";
 	
 	private static final String CLEAN_USERS_CONFIG = 
 		"TRUNCATE jpmyportal_userpagemodelconfig ";

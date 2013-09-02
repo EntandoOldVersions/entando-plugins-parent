@@ -49,7 +49,7 @@ public class UserPageConfig implements ExtendedColumnDefinition {
 			canBeNull = false)
 	private int _framePos;
 	
-	@DatabaseField(columnName = "showletcode", 
+	@DatabaseField(columnName = "widgetcode", 
 			dataType = DataType.STRING, 
 			width = 40, 
 			canBeNull = false)
@@ -90,7 +90,7 @@ CREATE TABLE jpmyportalplus_userpageconfig
   username character varying(40) NOT NULL,
   pagecode character varying(30) NOT NULL DEFAULT ''::character varying,
   framepos integer NOT NULL,
-  showletcode character varying(40) NOT NULL,
+  widgetcode character varying(40) NOT NULL,
   config character varying,
   closed integer NOT NULL,
   CONSTRAINT jpmyportalplus_userpageconfig_pkey PRIMARY KEY (username, framepos, pagecode),

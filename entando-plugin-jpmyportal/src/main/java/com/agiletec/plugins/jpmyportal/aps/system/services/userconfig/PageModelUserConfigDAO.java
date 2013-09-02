@@ -232,22 +232,22 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 	
 	/**
 	 * Create a showlet with a given code and optional configuration. 
-	 * @param showletcode the code of the showlet
+	 * @param widgetcode the code of the showlet
 	 * @param config the configuration for the current showlet
 	 * @return a new object with the given code and configuration
 	 * @throws ApsSystemException if the given code is unknown or faulting XML configuration
 	 */
-	private org.entando.entando.aps.system.services.page.Widget createShowletFromRecord(String showletcode, String config) throws ApsSystemException {
+	private org.entando.entando.aps.system.services.page.Widget createShowletFromRecord(String widgetcode, String config) throws ApsSystemException {
 		org.entando.entando.aps.system.services.page.Widget newShowlet = new org.entando.entando.aps.system.services.page.Widget();
 		try {
-			ShowletType inheritedType = this.getShowletTypeManager().getShowletType(showletcode);
+			ShowletType inheritedType = this.getShowletTypeManager().getShowletType(widgetcode);
 			newShowlet.setType(inheritedType);
 			ApsProperties properties = new ApsProperties();
 			if (null != config && config.trim().length() > 0) {
 				try {
 					properties.loadFromXml(config);
 				} catch (Throwable t) {
-					String msg = "Error setting showlet properties for type '" + showletcode + "'";
+					String msg = "Error setting showlet properties for type '" + widgetcode + "'";
 					ApsSystemUtils.logThrowable(t, this, "createShowletFromRecord", msg);
 					throw new ApsSystemException(msg, t);
 				}
@@ -257,7 +257,7 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 			newShowlet.setConfig(properties);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "createShowletFromRecord");
-			throw new ApsSystemException("Error create org.entando.entando.aps.system.services.page.Widget From Record for type '" + showletcode + "'", t);
+			throw new ApsSystemException("Error create org.entando.entando.aps.system.services.page.Widget From Record for type '" + widgetcode + "'", t);
 		}
 		return newShowlet;
 	}
@@ -491,21 +491,21 @@ public class PageModelUserConfigDAO extends AbstractDAO implements IPageModelUse
 	private IShowletTypeManager _showletTypeManager;
 	
 	private final String ADD_USER_CONFIG = 
-		"INSERT INTO jpmyportal_userpagemodelconfig (username, pagemodelcode, framepos, showletcode, config) VALUES ( ? , ? , ? , ? , ? )";
+		"INSERT INTO jpmyportal_userpagemodelconfig (username, pagemodelcode, framepos, widgetcode, config) VALUES ( ? , ? , ? , ? , ? )";
 	
 	private final String DELETE_USER_CONFIG = 
 		"DELETE FROM jpmyportal_userpagemodelconfig WHERE username = ? AND pageModelCode = ? AND framepos = ?";
 	
 	private final String GET_USER_CONFIG = 
-		"SELECT pagemodelcode, framepos, showletcode, config FROM jpmyportal_userpagemodelconfig WHERE username = ? ORDER BY pagemodelcode";
+		"SELECT pagemodelcode, framepos, widgetcode, config FROM jpmyportal_userpagemodelconfig WHERE username = ? ORDER BY pagemodelcode";
 	
 	private final String UPDATE_USER_CONFIG = 
-		"UPDATE jpmyportal_userpagemodelconfig SET showletcode = ? , config = ? WHERE username = ? AND pagemodelcode = ? AND framepos = ?";
+		"UPDATE jpmyportal_userpagemodelconfig SET widgetcode = ? , config = ? WHERE username = ? AND pagemodelcode = ? AND framepos = ?";
 	
 	private final String GET_CONFIGURED_SHOWLET_CODE = 
-		"SELECT showletcode FROM jpmyportal_userpagemodelconfig GROUP BY showletcode";
+		"SELECT widgetcode FROM jpmyportal_userpagemodelconfig GROUP BY widgetcode";
 	
 	private final String DELETE_USER_CONFIG_BY_SHOWLET_CODE = 
-		"DELETE FROM jpmyportal_userpagemodelconfig WHERE showletcode = ? ";
+		"DELETE FROM jpmyportal_userpagemodelconfig WHERE widgetcode = ? ";
 	
 }
