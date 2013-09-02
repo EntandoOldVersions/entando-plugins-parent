@@ -3,8 +3,8 @@
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<wp:currentShowlet param="config" configParam="modelIdMaster" var="modelIdMaster" />
-<wp:currentShowlet param="config" configParam="modelIdPreview" var="modelIdPreview" />
+<wp:currentWidget param="config" configParam="modelIdMaster" var="modelIdMaster" />
+<wp:currentWidget param="config" configParam="modelIdPreview" var="modelIdPreview" />
 
 <jacms:contentList listName="contentList" titleVar="titleVar" 
 	pageLinkVar="pageLinkVar" pageLinkDescriptionVar="pageLinkDescriptionVar" userFilterOptionsVar="userFilterOptionsVar" /> 

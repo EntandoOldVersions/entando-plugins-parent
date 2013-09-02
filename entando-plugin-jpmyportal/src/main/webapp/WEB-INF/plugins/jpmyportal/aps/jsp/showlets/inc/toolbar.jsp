@@ -9,7 +9,7 @@
 <%-- APRE IL CORPO SE PRESENTE ESISTE UTENTE LOGGATO (NO GUEST O ADMIN) IL FRAME E NON é BLOCCATO --%>
 <wp:headInfo type="CSS_Plugin" info="jpmyportal/static/css/jpmyportal.css" />
 
-<wp:currentShowlet param="code" var="thisShowletCode" />
+<wp:currentWidget param="code" var="thisShowletCode" />
 <jpmp:requestContextParam param="currentFrame" var="thisShowletFrame"/>
 <jpmp:requestContextParam param="extraParamCurrentPage" var="currentPage"/>
 <wp:currentPage param="code" var="currentPageCode" />

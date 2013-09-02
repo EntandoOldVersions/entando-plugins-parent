@@ -23,12 +23,12 @@ import java.util.List;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
-import com.agiletec.apsadmin.portal.specialshowlet.SimpleShowletConfigAction;
+import com.agiletec.apsadmin.portal.specialshowlet.SimpleWidgetConfigAction;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
 import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
 
-public class UserRegShowletAction extends SimpleShowletConfigAction {
+public class UserRegShowletAction extends SimpleWidgetConfigAction {
 	
 	@Override
 	public void validate() {

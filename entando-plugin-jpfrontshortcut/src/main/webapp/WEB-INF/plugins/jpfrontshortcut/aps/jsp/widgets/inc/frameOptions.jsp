@@ -36,7 +36,7 @@
 					});
 					//--><!]]>
 				</script>
-			<wp:currentShowlet param="code" var="showletCodeVar" />
+			<wp:currentWidget param="code" var="showletCodeVar" />
 			<%-- TRASH SHOWLET --%>
 				<c:if test="${null != showletCodeVar}" >
 					<a  class="btn" id="<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />" href="javascript:void(0)" title="<wp:i18n key="jpfrontshortcut_EMPTY_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />"><img width="16" height="16" src="<wp:resourceURL />plugins/jpfrontshortcut/static/img/icons/16x16/clear.png" alt="<wp:i18n key="jpfrontshortcut_EMPTY_FRAME"  escapeXml="true" />&#32;<c:out value="${framePosVar}" />" /></a>

@@ -24,13 +24,12 @@ import java.util.logging.Logger;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
-import com.agiletec.apsadmin.portal.specialshowlet.SimpleShowletConfigAction;
+import com.agiletec.aps.system.services.page.Widget;
+import com.agiletec.apsadmin.portal.specialshowlet.SimpleWidgetConfigAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 
-import org.entando.entando.aps.system.services.page.Widget;
-
-public class FastContentEditShowletConfigAction extends SimpleShowletConfigAction {
+public class FastContentEditShowletConfigAction extends SimpleWidgetConfigAction {
 
 	@Override
 	public void validate() {

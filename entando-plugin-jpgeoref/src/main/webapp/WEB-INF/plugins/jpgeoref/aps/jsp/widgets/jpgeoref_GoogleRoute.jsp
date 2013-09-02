@@ -9,7 +9,7 @@
 
 <gwp:geoRoute listName="contentList" />
 
-<wp:currentShowlet param="config" configParam="listModelId" var="listModelId" />
+<wp:currentWidget param="config" configParam="listModelId" var="listModelId" />
 <c:if test="${listModelId != null}">
 <ol>
 	<c:forEach var="contentId" items="${contentList}">
@@ -36,7 +36,7 @@
 <gwp:geoRenderList centerCoordsParamName="center" southWestCoordsParamName="southWest" northEastCoordsParamName="northEast" 
 		master="contentList" markerParamName="markers"/>
 <c:forEach varStatus="status" var="contentId" items="${markers}">
-<wp:currentShowlet param="config" configParam="markerModelId" var="markerModelId" />
+<wp:currentWidget param="config" configParam="markerModelId" var="markerModelId" />
 <jacms:content contentId="${contentId}" modelId="${markerModelId}" />
 var point<c:out value="${status.count}"/> = <jacms:content contentId="${contentId}" modelId="${markerModelId}" />
 </c:forEach>

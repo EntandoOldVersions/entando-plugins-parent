@@ -31,7 +31,7 @@
 						<p class="btn-group">
 							<a class="btn btn-primary" href="<wp:url page="${fastcontenteditVar}" >
 									<wp:parameter name="contentId" ><c:out value="${contentId}" /></wp:parameter>
-									<wp:parameter name="contentTypeCode" ><wp:currentShowlet param="config" configParam="contentType" /></wp:parameter>
+									<wp:parameter name="contentTypeCode" ><wp:currentWidget param="config" configParam="contentType" /></wp:parameter>
 									<wp:parameter name="finalPageDest" ><wp:currentPage param="code" /></wp:parameter>
 								</wp:url>" ><span class="icon icon-edit"></span> <wp:i18n key="jpfastcontentedit_EDIT_CONTENT" />
 							</a>
@@ -39,7 +39,7 @@
 							<a class="btn btn-danger" href="<wp:url page="${fastcontenteditVar}" >
 									<wp:parameter name="delete" >true</wp:parameter>
 									<wp:parameter name="contentId" ><c:out value="${contentId}" /></wp:parameter>
-									<wp:parameter name="contentTypeCode" ><wp:currentShowlet param="config" configParam="contentType" /></wp:parameter>
+									<wp:parameter name="contentTypeCode" ><wp:currentWidget param="config" configParam="contentType" /></wp:parameter>
 									<wp:parameter name="finalPageDest" ><wp:currentPage param="code" /></wp:parameter>
 								</wp:url>" ><span class="icon icon-remove-sign"></span> <wp:i18n key="jpfastcontentedit_REMOVE_CONTENT" />
 							</a>
@@ -64,7 +64,7 @@
 			<a 
 				class="btn btn-info" 
 				href="<wp:url page="${fastcontenteditVar}">
-				<wp:parameter name="contentTypeCode" ><wp:currentShowlet param="config" configParam="contentType" /></wp:parameter>
+				<wp:parameter name="contentTypeCode" ><wp:currentWidget param="config" configParam="contentType" /></wp:parameter>
 				<wp:parameter name="finalPageDest" ><wp:currentPage param="code" /></wp:parameter>
 			</wp:url>" ><span class="icon icon-plus"></span> <wp:i18n key="jpfastcontentedit_LABEL_NEW_CONTENT" />
 		</a>

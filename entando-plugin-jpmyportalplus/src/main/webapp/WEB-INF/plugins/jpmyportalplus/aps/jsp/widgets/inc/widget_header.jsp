@@ -4,7 +4,7 @@
 <%@ page contentType="charset=UTF-8" %>
 
 <%-- variabile showletId: il prefisso showlet id "__s__" è referenziato in jpmyportalplus.js --%>
-<c:set var="showletId" scope="request">showlet_<wp:currentShowlet param="code" />__s__<mppl:requestContextParam param="currentFrame" /></c:set>
+<c:set var="showletId" scope="request">showlet_<wp:currentWidget param="code" />__s__<mppl:requestContextParam param="currentFrame" /></c:set>
 
 <%--
 Struttura del box trascinabile
@@ -101,7 +101,7 @@ class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero 
 					<c:out value="${showletTitle}" escapeXml="false" />
 				</c:when>
 				<c:otherwise>
-					<wp:currentShowlet param="title" />
+					<wp:currentWidget param="title" />
 				</c:otherwise>
 			</c:choose>
 			</h1>

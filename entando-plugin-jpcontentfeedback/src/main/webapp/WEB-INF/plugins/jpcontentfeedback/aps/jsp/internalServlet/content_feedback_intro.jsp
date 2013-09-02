@@ -7,7 +7,7 @@
 <%--
 <wp:headInfo type="CSS" info="../../plugins/jpcontentfeedback/static/css/jpcontentfeedback.css"/>
 --%>
-<s:set var="htmlIdPrefix">jpfeedback_<wp:currentPage param="code" /><wp:currentShowlet param="code"/>_</s:set>
+<s:set var="htmlIdPrefix">jpfeedback_<wp:currentPage param="code" /><wp:currentWidget param="code"/>_</s:set>
 <div class="jpcontentfeedback container">
   <s:if test="hasActionErrors()">
   <div class="row-fluid">

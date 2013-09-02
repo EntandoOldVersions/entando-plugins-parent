@@ -27,7 +27,7 @@ import com.agiletec.aps.system.common.tree.ITreeNode;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.portal.helper.IPageActionHelper;
-import com.agiletec.apsadmin.portal.specialshowlet.SimpleShowletConfigAction;
+import com.agiletec.apsadmin.portal.specialshowlet.SimpleWidgetConfigAction;
 import com.agiletec.apsadmin.system.ITreeAction;
 import com.opensymphony.xwork2.Action;
 
@@ -37,7 +37,7 @@ import org.entando.entando.aps.system.services.page.Widget;
 /**
  * @author E.Santoboni
  */
-public class ReplicatorShowletAction extends SimpleShowletConfigAction implements IReplicatorShowletAction, ITreeAction {
+public class ReplicatorShowletAction extends SimpleWidgetConfigAction implements IReplicatorShowletAction, ITreeAction {
 
 	@Override
 	public void validate() {

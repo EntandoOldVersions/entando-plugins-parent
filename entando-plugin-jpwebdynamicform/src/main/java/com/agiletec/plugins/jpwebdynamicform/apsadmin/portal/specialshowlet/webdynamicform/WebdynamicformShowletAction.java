@@ -20,12 +20,12 @@ package com.agiletec.plugins.jpwebdynamicform.apsadmin.portal.specialshowlet.web
 import java.util.List;
 
 import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.apsadmin.portal.specialshowlet.SimpleShowletConfigAction;
+import com.agiletec.apsadmin.portal.specialshowlet.SimpleWidgetConfigAction;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.JpwebdynamicformSystemConstants;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageManager;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.model.SmallMessageType;
 
-public class WebdynamicformShowletAction extends SimpleShowletConfigAction {
+public class WebdynamicformShowletAction extends SimpleWidgetConfigAction {
 	
 	@Override
 	public void validate() {

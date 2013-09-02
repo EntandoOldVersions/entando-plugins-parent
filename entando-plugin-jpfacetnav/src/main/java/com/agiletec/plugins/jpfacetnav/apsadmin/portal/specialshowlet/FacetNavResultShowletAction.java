@@ -23,7 +23,7 @@ import java.util.Map;
 import org.entando.entando.aps.system.services.widgettype.WidgetTypeParameter;
 
 import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.apsadmin.portal.specialshowlet.SimpleShowletConfigAction;
+import com.agiletec.apsadmin.portal.specialshowlet.SimpleWidgetConfigAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 import com.agiletec.plugins.jpfacetnav.aps.system.JpFacetNavSystemConstants;
@@ -32,7 +32,7 @@ import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialshowlet.util.Facet
 /**
  * @author E.Santoboni
  */
-public class FacetNavResultShowletAction extends SimpleShowletConfigAction implements IFacetNavResultShowletAction {
+public class FacetNavResultShowletAction extends SimpleWidgetConfigAction implements IFacetNavResultShowletAction {
 	
 	@Override
 	public void validate() {
