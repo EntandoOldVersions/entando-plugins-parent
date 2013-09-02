@@ -40,6 +40,8 @@ import org.jfree.data.time.TimeSeries;
 
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.services.lang.ILangManager;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.util.DateConverter;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecordVO;
@@ -48,9 +50,6 @@ import com.agiletec.plugins.jpstats.aps.system.services.stats.model.ContentStati
 import com.agiletec.plugins.jpstats.aps.system.services.stats.model.DateStatistic;
 import com.agiletec.plugins.jpstats.aps.system.services.stats.model.PageStatistic;
 import com.agiletec.plugins.jpstats.aps.system.services.stats.model.VisitsStat;
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.IPageManager;
 
 
 /**

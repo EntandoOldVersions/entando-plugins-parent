@@ -34,6 +34,8 @@ import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.authorization.IAuthorizationManager;
 import com.agiletec.aps.system.services.group.Group;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.pagemodel.IPageModelManager;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
@@ -43,9 +45,6 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPorta
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -247,7 +246,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 		}
 	}
 
-	@Before("execution(* org.entando.entando.aps.system.services.page.IPageManager.deletePage(..)) && args(pageCode)")
+	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.deletePage(..)) && args(pageCode)")
 	public void removeUserPageConfig(String pageCode) throws ApsSystemException {
 		this.removeConfig(pageCode, null);
 	}
@@ -257,7 +256,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 		this.removeConfig(pageCode, pos);
 	}
 
-	@Before("execution(* org.entando.entando.aps.system.services.page.IPageManager.removeShowlet(..)) && args(pageCode, pos)")
+	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.removeShowlet(..)) && args(pageCode, pos)")
 	public void removeUserPageConfig(String pageCode, int pos) throws ApsSystemException {
 		this.removeConfig(pageCode, pos);
 	}

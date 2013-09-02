@@ -28,6 +28,7 @@ import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.cache.ICacheManager;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
@@ -47,8 +48,6 @@ import com.agiletec.plugins.jpcontentfeedback.apsadmin.JpContentFeedbackApsAdmin
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
-
-import org.entando.entando.aps.system.services.page.Widget;
 
 
 public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTestCase {

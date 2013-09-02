@@ -27,9 +27,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.plugins.jpgeoref.aps.system.GeoRefSystemConstants;
-
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni

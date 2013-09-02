@@ -20,11 +20,10 @@ package org.entando.entando.plugins.jpfrontshortcut.aps.internalservlet.portal;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.notify.NotifyManager;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.url.IURLManager;
 import com.agiletec.apsadmin.system.ApsAdminSystemConstants;
 import com.agiletec.plugins.jacms.apsadmin.portal.PageAction;
-
-import org.entando.entando.aps.system.services.page.IPage;
 
 /**
  * @author E.Santoboni

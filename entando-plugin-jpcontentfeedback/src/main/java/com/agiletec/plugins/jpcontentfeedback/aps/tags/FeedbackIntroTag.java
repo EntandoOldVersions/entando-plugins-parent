@@ -26,9 +26,8 @@ import org.apache.commons.lang.StringUtils;
 
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.InternalServletTag;
-
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * Tag che consente la visualisualizzazione del blocco jpcontentFeedback per la publicazione del rating del contenuto,

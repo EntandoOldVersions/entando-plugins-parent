@@ -21,11 +21,10 @@ import java.util.List;
 
 import org.entando.entando.aps.system.services.widgettype.WidgetType;
 
+import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
-
-import org.entando.entando.aps.system.services.page.IPage;
 
 /**
  * @author E.Santoboni

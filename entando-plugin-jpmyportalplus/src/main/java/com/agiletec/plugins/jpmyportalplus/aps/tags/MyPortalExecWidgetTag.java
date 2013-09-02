@@ -39,9 +39,6 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
 import com.agiletec.aps.system.services.page.Widget;
 
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.Widget;
-
 /**
  * @author E.Santoboni
  */

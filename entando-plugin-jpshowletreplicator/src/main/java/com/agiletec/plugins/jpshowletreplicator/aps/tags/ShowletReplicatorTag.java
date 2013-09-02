@@ -32,10 +32,6 @@ import com.agiletec.aps.tags.ExecWidgetTag;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.aps.system.services.page.Widget;
 
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.IPageManager;
-import org.entando.entando.aps.system.services.page.Widget;
-
 /**
  * @author E.Santoboni
  */

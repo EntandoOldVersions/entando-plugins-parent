@@ -24,10 +24,9 @@ import javax.servlet.ServletException;
 
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.InternalServletTag;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
-
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * Tag for widget "jpfastcontentedit_formAction".

@@ -28,9 +28,8 @@ import org.jdom.input.SAXBuilder;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsProperties;
-
-import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * This support class parses the XML representing the configuration of a page model

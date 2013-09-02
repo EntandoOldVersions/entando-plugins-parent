@@ -29,14 +29,13 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.controller.ControllerManager;
 import com.agiletec.aps.system.services.controller.control.RequestAuthorizator;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.url.PageURL;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpcasclient.aps.system.services.auth.CasClientUtils;
 import com.agiletec.plugins.jpcasclient.aps.system.services.config.CasClientConfig;
 import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
-
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.IPageManager;
 
 /**
  * Extends RequestAuthorizator for redirection to CAS pages if

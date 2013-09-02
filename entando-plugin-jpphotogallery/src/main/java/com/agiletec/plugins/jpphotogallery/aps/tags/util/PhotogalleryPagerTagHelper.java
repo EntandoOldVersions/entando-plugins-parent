@@ -26,11 +26,10 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.util.IPagerVO;
 import com.agiletec.aps.tags.util.PagerTagHelper;
 import com.agiletec.aps.util.ApsProperties;
-
-import org.entando.entando.aps.system.services.page.Widget;
 
 
 public class PhotogalleryPagerTagHelper extends PagerTagHelper {

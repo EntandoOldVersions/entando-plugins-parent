@@ -131,7 +131,7 @@ public class FacetNavResultShowletAction extends SimpleWidgetConfigAction implem
 	/**
 	 * Returns showlet type parameter
 	 * @param paramName
-	 * @return org.entando.entando.aps.system.services.page.Widget type parameter
+	 * @return com.agiletec.aps.system.services.page.Widget type parameter
 	 */
 	public WidgetTypeParameter getShowletTypeParameter(String paramName) {
 		List<WidgetTypeParameter> parameters = this.getShowlet().getType().getTypeParameters();

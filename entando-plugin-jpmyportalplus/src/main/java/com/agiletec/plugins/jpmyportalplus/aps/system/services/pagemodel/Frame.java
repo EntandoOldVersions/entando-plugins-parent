@@ -17,7 +17,7 @@
 */
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel;
 
-import org.entando.entando.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.page.Widget;
 
 
 /**

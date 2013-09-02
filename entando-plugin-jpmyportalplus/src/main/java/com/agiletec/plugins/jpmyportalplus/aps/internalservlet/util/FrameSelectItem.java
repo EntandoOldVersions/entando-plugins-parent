@@ -18,8 +18,7 @@
 package com.agiletec.plugins.jpmyportalplus.aps.internalservlet.util;
 
 import com.agiletec.aps.system.services.lang.Lang;
-
-import org.entando.entando.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni

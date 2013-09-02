@@ -38,9 +38,6 @@ import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.Ne
 import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
 import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
-import org.entando.entando.aps.system.services.page.IPage;
-import org.entando.entando.aps.system.services.page.IPageManager;
-
 /**
  * @author E.Santoboni
  */
