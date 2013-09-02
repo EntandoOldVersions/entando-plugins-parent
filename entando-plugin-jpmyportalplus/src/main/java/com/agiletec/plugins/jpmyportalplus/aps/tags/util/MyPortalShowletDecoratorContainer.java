@@ -38,7 +38,7 @@ import org.entando.entando.aps.system.services.page.Widget;
 public class MyPortalShowletDecoratorContainer extends BaseFrameDecoratorContainer {
 
 	@Override
-	public boolean needsDecoration(org.entando.entando.aps.system.services.page.Widget showlet, RequestContext reqCtx) {
+	public boolean needsDecoration(Widget showlet, RequestContext reqCtx) {
 		try {
 			IPage page = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
 			Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);

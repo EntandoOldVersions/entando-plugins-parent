@@ -13,7 +13,7 @@
 					</wp:url>"><wpfp:facetNodeTitle escapeXml="true" facetNodeCode="${facetNode.code}" /></a>&#32;<abbr class="jpfacetnav_tree_occurences" title="<wp:i18n key="jpfacetnav_OCCURRENCES_FOR" />&#32;<wpfp:facetNodeTitle escapeXml="true" facetNodeCode="${facetNode.code}" />:&#32;<c:out value="${occurrences[facetNode.code]}" />"><c:out value="${occurrences[facetNode.code]}" /></abbr>
 				<wpfp:hasToOpenFacetNode facetNodeCode="${facetNode.code}" requiredFacets="${requiredFacets}" occurrences="${occurrences}" >
 					<c:set var="currFacetRoot" value="${facetNode}" scope="request" />
-					<c:import url="/WEB-INF/plugins/jpfacetnav/aps/jsp/showlets/inc/inc_facetNavTree.jsp" />
+					<c:import url="/WEB-INF/plugins/jpfacetnav/aps/jsp/widgets/inc/inc_facetNavTree.jsp" />
 				</wpfp:hasToOpenFacetNode>
 				</li>
 			</c:if>

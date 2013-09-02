@@ -16,9 +16,9 @@ public class TestFacetNavResultShowletAction extends ApsAdminPluginBaseTestCase 
 		String result = this.executeConfigFacetNavResult("admin", "homepage", "1", "jpfacetnav_results");
 		assertEquals(Action.SUCCESS, result);
 		FacetNavResultShowletAction action = (FacetNavResultShowletAction) this.getAction();
-		org.entando.entando.aps.system.services.page.Widget showlet = action.getShowlet();
-		assertNotNull(showlet);
-		assertEquals(0, showlet.getConfig().size());
+		Widget widget = action.getShowlet();
+		assertNotNull(widget);
+		assertEquals(0, widget.getConfig().size());
 		List<SmallContentType> contentTypes = action.getContentTypes();
 		assertNotNull(contentTypes);
 		assertEquals(4, contentTypes.size());

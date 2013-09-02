@@ -65,7 +65,7 @@ public class FacetNavHelper implements IFacetNavHelper {
 	 */
 	private List<String> getContentTypesFilter(RequestContext reqCtx) throws ApsSystemException {
 		List<String> contentTypes = new ArrayList<String>();
-		org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+		Widget currentShowlet = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
 		if (null == currentShowlet.getConfig()) return contentTypes;
 		String paramName = JpFacetNavSystemConstants.CONTENT_TYPES_FILTER_SHOWLET_PARAM_NAME;
 		String contentTypesParamValue = currentShowlet.getConfig().getProperty(paramName);

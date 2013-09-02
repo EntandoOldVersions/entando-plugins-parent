@@ -28,14 +28,16 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.lang.Lang;
+import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.user.UserDetails;
-import com.agiletec.aps.tags.ExecShowletTag;
+import com.agiletec.aps.tags.ExecWidgetTag;
 import com.agiletec.aps.tags.util.IFrameDecoratorContainer;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
+import com.agiletec.aps.system.services.page.Widget;
 
 import org.entando.entando.aps.system.services.page.IPage;
 import org.entando.entando.aps.system.services.page.Widget;
@@ -43,7 +45,7 @@ import org.entando.entando.aps.system.services.page.Widget;
 /**
  * @author E.Santoboni
  */
-public class MyPortalExecShowletTag extends ExecShowletTag {
+public class MyPortalExecWidgetTag extends ExecWidgetTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -98,8 +100,8 @@ public class MyPortalExecShowletTag extends ExecShowletTag {
 				return;
 			}
 			req.getSession().setAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG, customPageConfig);
-			org.entando.entando.aps.system.services.page.Widget[] customShowlets = customPageConfig.getConfig();
-			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = pageUserConfigManager.getShowletsToRender(page, customShowlets);
+			Widget[] customShowlets = customPageConfig.getConfig();
+			Widget[] showletsToRender = pageUserConfigManager.getShowletsToRender(page, customShowlets);
 			List<IFrameDecoratorContainer> decorators = this.extractDecorators();
 			BodyContent body = this.pageContext.pushBody();
 			for (int scan = 0; scan < showletsToRender.length; scan++) {

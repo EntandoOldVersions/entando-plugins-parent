@@ -175,7 +175,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		String typeCode = null;
 		RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
 		if (reqCtx != null) {
-			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			Widget showlet = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
 			if (showlet != null) {
 				ApsProperties config = showlet.getConfig();
 				if (null != config) {

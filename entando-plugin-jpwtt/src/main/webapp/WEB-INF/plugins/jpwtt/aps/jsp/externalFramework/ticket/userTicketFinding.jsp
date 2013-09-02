@@ -23,7 +23,7 @@
 						<wpsa:subset source="ticketIds" count="10" objectName="groupTickets" advanced="true" offset="5">
 							<s:set name="group" value="#groupTickets" />
 							<div class="pager">
-								<s:include value="/WEB-INF/aps/jsp/showlets/inc/pagerBlock.jsp" />
+								<s:include value="/WEB-INF/aps/jsp/widgets/inc/pagerBlock.jsp" />
 							</div>
 
 							<table class="generic" summary="<wp:i18n key="jpwt_LIST_SUMMARY" />">
@@ -82,7 +82,7 @@
 							</table>
 
 							<div class="pager">
-								<s:include value="/WEB-INF/aps/jsp/showlets/inc/pagerBlock.jsp" />
+								<s:include value="/WEB-INF/aps/jsp/widgets/inc/pagerBlock.jsp" />
 							</div>
 						</wpsa:subset>
 					</form>

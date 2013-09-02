@@ -100,22 +100,22 @@ public class AjaxFrontAction extends AbstractFrontAction {
 				return SUCCESS;
 			}
 			CustomPageConfig config = this.getCustomPageConfig();
-			org.entando.entando.aps.system.services.page.Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
-			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
+			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
 			Lang currentLang = this.getCurrentLang();
 			String voidShowletCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
 			for (int i = 0; i < showletsToRender.length; i++) {
 				Frame frame = pageModel.getFrameConfigs()[i];
 				Integer columnId = frame.getColumn();
 				if (frame.isLocked() || null == columnId || i == this.getFrameWhereOpenSection().intValue()) continue;
-				org.entando.entando.aps.system.services.page.Widget showlet = showletsToRender[i];
+				Widget widget = showletsToRender[i];
 				if (columnId.equals(currentColumnId)) {
-					if (showlet != null && !showlet.getType().getCode().equals(voidShowletCode)) {
-						FrameSelectItem item = new FrameSelectItem(currentColumnId, columnId, showlet, i, currentLang);
+					if (widget != null && !widget.getType().getCode().equals(voidShowletCode)) {
+						FrameSelectItem item = new FrameSelectItem(currentColumnId, columnId, widget, i, currentLang);
 						selectItems.add(item);
 					}
 				} else {
-					if (showlet == null || showlet.getType().getCode().equals(voidShowletCode)) {
+					if (widget == null || widget.getType().getCode().equals(voidShowletCode)) {
 						boolean check = this.check(columnId);
 						if (!check) {
 							FrameSelectItem item = new FrameSelectItem(currentColumnId, columnId, null, i, currentLang);
@@ -123,8 +123,8 @@ public class AjaxFrontAction extends AbstractFrontAction {
 						}
 					}
 				}
-				if (i == this.getFrameWhereOpenSection() && null != showlet) {
-					this.setShowletCodeOnOpeningSection(showlet.getType().getCode());
+				if (i == this.getFrameWhereOpenSection() && null != widget) {
+					this.setShowletCodeOnOpeningSection(widget.getType().getCode());
 				}
 			}
 		} catch (Throwable t) {

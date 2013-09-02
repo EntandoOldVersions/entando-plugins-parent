@@ -26,7 +26,11 @@ import org.entando.entando.aps.system.services.widgettype.WidgetType;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.IPageManager;
+import com.agiletec.aps.tags.ExecWidgetTag;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
+import com.agiletec.aps.system.services.page.Widget;
 
 import org.entando.entando.aps.system.services.page.IPage;
 import org.entando.entando.aps.system.services.page.IPageManager;
@@ -42,18 +46,18 @@ public class ShowletReplicatorTag extends TagSupport {
 		ServletRequest req =  this.pageContext.getRequest();
 		RequestContext reqCtx = (RequestContext) req.getAttribute(RequestContext.REQCTX);
 		try {
-			org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			Widget currentShowlet = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
 			String pageCode = currentShowlet.getConfig().getProperty("pageCodeParam");
 			IPageManager pageManager = (IPageManager) ApsWebApplicationUtils.getBean(SystemConstants.PAGE_MANAGER, this.pageContext);
 			IPage targetPage = pageManager.getPage(pageCode);
 			if (null != targetPage) {
 				String frameIdString = currentShowlet.getConfig().getProperty("frameIdParam");
 				int frameId = Integer.parseInt(frameIdString);
-				org.entando.entando.aps.system.services.page.Widget[] showlets = targetPage.getShowlets();
+				Widget[] showlets = targetPage.getShowlets();
 				if (showlets.length>=frameId) {
-					org.entando.entando.aps.system.services.page.Widget targetShowlet = targetPage.getShowlets()[frameId];
+					Widget targetShowlet = targetPage.getShowlets()[frameId];
 					if (null != targetShowlet) {
-						reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET, targetShowlet);
+						reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET, targetShowlet);
 						WidgetType WidgetType = targetShowlet.getType();
 						if (WidgetType.isLogic()) {
 							WidgetType = WidgetType.getParentType();
@@ -64,7 +68,7 @@ public class ShowletReplicatorTag extends TagSupport {
 						if (isPluginShowlet) {
 							jspPath.append("plugins/").append(pluginCode.trim()).append("/");
 						}
-						jspPath.append("aps/jsp/showlets/").append(WidgetType.getCode()).append(".jsp");
+						jspPath.append(ExecWidgetTag.WIDGET_LOCATION).append(WidgetType.getCode()).append(".jsp");
 
 						this.pageContext.include(jspPath.toString());
 					}

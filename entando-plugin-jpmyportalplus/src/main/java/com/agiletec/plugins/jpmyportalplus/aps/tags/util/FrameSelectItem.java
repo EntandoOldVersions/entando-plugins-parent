@@ -28,7 +28,7 @@ import org.entando.entando.aps.system.services.page.Widget;
 public class FrameSelectItem {
 
 	public FrameSelectItem(Integer columnId, Integer columnIdDest,
-			org.entando.entando.aps.system.services.page.Widget showlet, Integer frameId, Lang lang) {
+			Widget showlet, Integer frameId, Lang lang) {
 		super();
 		this._currentColumnId = columnId;
 		this._columnIdDest = columnIdDest;
@@ -49,7 +49,7 @@ public class FrameSelectItem {
 	public Integer getColumnIdDest() {
 		return _columnIdDest;
 	}
-	public org.entando.entando.aps.system.services.page.Widget getShowlet() {
+	public Widget getShowlet() {
 		return _showlet;
 	}
 	public Integer getFrameId() {
@@ -71,7 +71,7 @@ public class FrameSelectItem {
 	}
 
 	private Integer _currentColumnId;
-	private org.entando.entando.aps.system.services.page.Widget _showlet;
+	private Widget _showlet;
 	private Integer _frameId;
 	private Lang _lang;
 

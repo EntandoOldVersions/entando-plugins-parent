@@ -54,10 +54,10 @@ public class Frame {
 		this._column = column;
 	}
 
-	public org.entando.entando.aps.system.services.page.Widget getDefaultShowlet() {
+	public Widget getDefaultShowlet() {
 		return _defaultShowlet;
 	}
-	public void setDefaultShowlet(org.entando.entando.aps.system.services.page.Widget defaultShowlet) {
+	public void setDefaultShowlet(Widget defaultShowlet) {
 		this._defaultShowlet = defaultShowlet;
 	}
 
@@ -73,6 +73,6 @@ public class Frame {
 	private boolean _mainFrame;
 	private boolean _locked;
 	private Integer _column;
-	private org.entando.entando.aps.system.services.page.Widget _defaultShowlet;
+	private Widget _defaultShowlet;
 
 }

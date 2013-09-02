@@ -62,9 +62,9 @@ public class FacetNavTreeTag extends AbstractFacetNavTag {
 
 	protected List<ITreeNode> getFacetRootNodes(RequestContext reqCtx) {
 		List<ITreeNode> facets = null;
-		org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+		Widget currentWidget = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
 		String configParamName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
-		String facetParamConfig = currentShowlet.getConfig().getProperty(configParamName);
+		String facetParamConfig = currentWidget.getConfig().getProperty(configParamName);
 		if (null != facetParamConfig && facetParamConfig.trim().length()>0) {
 			facets = super.getFacetRoots(facetParamConfig);
 		}

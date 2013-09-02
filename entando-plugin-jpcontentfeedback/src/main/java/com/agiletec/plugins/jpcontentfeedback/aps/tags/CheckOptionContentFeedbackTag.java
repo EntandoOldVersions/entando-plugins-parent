@@ -27,7 +27,7 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
 
-import org.entando.entando.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.page.Widget;
 
 /**
  * Tag di utilità per la verifica dei parametri di configurazione della showlet
@@ -65,7 +65,7 @@ public class CheckOptionContentFeedbackTag extends TagSupport {
 	private Boolean extractShowletParam(HttpServletRequest request) {
 		Boolean hasParam = false;
 		RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
-		org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+		Widget showlet = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
 		ApsProperties config = showlet.getConfig();
 
 		String param = this.getParam();

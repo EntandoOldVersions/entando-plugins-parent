@@ -49,7 +49,7 @@ public interface IPageUserConfigManager {
 
 	public CustomPageConfig getGuestPageConfig(IPage page, HttpServletRequest request) throws ApsSystemException;
 
-	public org.entando.entando.aps.system.services.page.Widget[] getShowletsToRender(IPage page, org.entando.entando.aps.system.services.page.Widget[] customShowlets) throws ApsSystemException;
+	public Widget[] getShowletsToRender(IPage page, Widget[] customShowlets) throws ApsSystemException;
 
 	public void updateUserPageConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfo) throws ApsSystemException;
 

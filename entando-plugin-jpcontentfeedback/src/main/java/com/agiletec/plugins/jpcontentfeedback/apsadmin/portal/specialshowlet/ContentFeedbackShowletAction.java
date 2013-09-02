@@ -50,7 +50,7 @@ public class ContentFeedbackShowletAction  extends ContentViewerShowletAction im
 
 	protected String extractInitConfig() {
 		if (null != this.getShowlet()) return SUCCESS;
-		org.entando.entando.aps.system.services.page.Widget showlet = this.getCurrentPage().getShowlets()[this.getFrame()];
+		Widget showlet = this.getCurrentPage().getShowlets()[this.getFrame()];
 		Logger log = ApsSystemUtils.getLogger();
 		if (null == showlet) {
 			try {
@@ -79,9 +79,9 @@ public class ContentFeedbackShowletAction  extends ContentViewerShowletAction im
 				this.addActionError(this.getText("Message.userNotAllowed"));
 				return "pageTree";
 			}
-			log.info("Configurating new org.entando.entando.aps.system.services.page.Widget " + this.getShowletTypeCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
+			log.info("Configurating new Widget " + this.getShowletTypeCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
 		} else {
-			log.info("Edit org.entando.entando.aps.system.services.page.Widget config " + showlet.getType().getCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
+			log.info("Edit widget config " + showlet.getType().getCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
 			showlet = this.createCloneFrom(showlet);
 		}
 		this.setShowlet(showlet);

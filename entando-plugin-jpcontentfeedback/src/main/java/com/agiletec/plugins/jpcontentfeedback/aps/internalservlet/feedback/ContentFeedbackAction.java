@@ -93,7 +93,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 
 	public String getShowletParam(String param) {
 		RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
-		org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+		Widget currentShowlet = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
 		return currentShowlet.getConfig().getProperty(param);
 	}
 
@@ -404,7 +404,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		String contentId = null;
 		if (null == contentId || contentId.trim().length() == 0) {
 			RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
-			org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			Widget currentShowlet = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
 			if (null != currentShowlet.getConfig() && currentShowlet.getConfig().getProperty("contentId") != null && currentShowlet.getConfig().getProperty("contentId").length() > 0) {
 				contentId = currentShowlet.getConfig().getProperty("contentId");
 			} else {

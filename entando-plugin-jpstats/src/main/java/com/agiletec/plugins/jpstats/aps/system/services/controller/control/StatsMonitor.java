@@ -140,7 +140,7 @@ public class StatsMonitor implements ControlServiceInterface {
 		String content = null;
 		int mainFrame = page.getModel().getMainFrame();
 		if(mainFrame >= 0) {
-			org.entando.entando.aps.system.services.page.Widget showlet = page.getShowlets()[mainFrame];
+			Widget showlet = page.getShowlets()[mainFrame];
 			if(null != showlet && null != showlet.getPublishedContent()) {
 				content = showlet.getPublishedContent();
 			}

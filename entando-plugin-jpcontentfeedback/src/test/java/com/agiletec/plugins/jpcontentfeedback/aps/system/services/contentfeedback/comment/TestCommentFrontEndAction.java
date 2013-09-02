@@ -67,9 +67,9 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			PublicContentAuthorizationInfo authInfo = new PublicContentAuthorizationInfo(content);
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
-			org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
+			Widget showlet = new Widget();
             IWidgetTypeManager showletTypeMan =
-            	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
+            	(IWidgetTypeManager) this.getService(SystemConstants.WIDGET_TYPE_MANAGER);
             WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
             showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
@@ -84,7 +84,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			assertEquals(0, listaIds.size());
 
             RequestContext e = new RequestContext();
-            e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET, showlet);
+            e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET, showlet);
             Lang lang = new Lang();
     		lang.setCode("en");
             e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_LANG, lang);
@@ -137,9 +137,9 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			PublicContentAuthorizationInfo authInfo = new PublicContentAuthorizationInfo(content);
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
-			org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
+			Widget showlet = new Widget();
             IWidgetTypeManager showletTypeMan =
-            	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
+            	(IWidgetTypeManager) this.getService(SystemConstants.WIDGET_TYPE_MANAGER);
             WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
             showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
@@ -153,7 +153,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
             showlet.setPublishedContent(contentId);
 
             RequestContext e = new RequestContext();
-            e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET, showlet);
+            e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET, showlet);
             Lang lang = new Lang();
     		lang.setCode("en");
             e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_LANG, lang);
@@ -256,9 +256,9 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
 			this._contentManager.loadContent(contentId, true);
-			org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
+			Widget showlet = new Widget();
             IWidgetTypeManager showletTypeMan =
-            	(IWidgetTypeManager) this.getService(SystemConstants.SHOWLET_TYPE_MANAGER);
+            	(IWidgetTypeManager) this.getService(SystemConstants.WIDGET_TYPE_MANAGER);
             WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
             showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
@@ -271,7 +271,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
             showlet.setConfig(prop);
 
             RequestContext e = new RequestContext();
-            e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET, showlet);
+            e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET, showlet);
             Lang lang = new Lang();
     		lang.setCode("en");
             e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_LANG, lang);

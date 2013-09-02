@@ -223,8 +223,8 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	 * @return a new object with the given code and configuration
 	 * @throws ApsSystemException if the given code is unknown or faulting XML configuration
 	 */
-	private com.agiletec.aps.system.services.page.Widget createShowletFromRecord(String widgetcode, String config) throws ApsSystemException {
-		com.agiletec.aps.system.services.page.Widget newShowlet = new com.agiletec.aps.system.services.page.Widget();
+	private Widget createShowletFromRecord(String widgetcode, String config) throws ApsSystemException {
+		Widget newShowlet = new Widget();
 		WidgetType inheritedType = this.getWidgetTypeManager().getShowletType(widgetcode);
 		newShowlet.setType(inheritedType);
 		ApsProperties properties = null;
@@ -251,7 +251,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 				}
 				String currentShowletCode = res.getString(3);
 				String currentConfig = res.getString(4);
-				org.entando.entando.aps.system.services.page.Widget showlet = this.createShowletFromRecord(currentShowletCode, currentConfig);
+				Widget showlet = this.createShowletFromRecord(currentShowletCode, currentConfig);
 				pageConfig.getConfig()[currentFramePos] = showlet;
 				int status = res.getInt(5);
 				pageConfig.getStatus()[currentFramePos] = status;

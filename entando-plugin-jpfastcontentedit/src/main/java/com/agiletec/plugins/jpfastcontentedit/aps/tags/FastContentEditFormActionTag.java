@@ -30,12 +30,12 @@ import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystem
 import org.entando.entando.aps.system.services.page.Widget;
 
 /**
- * Tag for showlet "jpfastcontentedit_formAction".
+ * Tag for widget "jpfastcontentedit_formAction".
  */
 public class FastContentEditFormActionTag extends InternalServletTag {
 
 	@Override
-	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, org.entando.entando.aps.system.services.page.Widget showlet) throws ServletException, IOException {
+	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget widget) throws ServletException, IOException {
 		String actionPath = JpFastContentEditSystemConstants.ACTION_PATH_FOR_CONTENT_EDIT;
 		String requestActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_ACTIONPATH);
 		String currentFrameActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_FRAMEDEST);

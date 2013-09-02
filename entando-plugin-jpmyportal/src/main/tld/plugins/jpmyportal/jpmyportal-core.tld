@@ -12,7 +12,7 @@
 			Se l'utente è loggato e possiede una configurazione personalizzata, la pagina conterrà le showlet personalizzate per il modello della pagina corrente.
 			Da usare esclusivamente nella main.jsp.
 		</description>
-		<name>execShowlet</name>
+		<name>execWidget</name>
 		<tag-class>com.agiletec.plugins.jpmyportal.aps.tags.MyPortalExecShowletTag</tag-class>
 		<body-content>empty</body-content>
 	</tag>

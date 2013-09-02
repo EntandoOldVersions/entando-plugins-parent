@@ -21,13 +21,13 @@
 	</c:if>
 	
 	<c:set var="userFilterOptionsVar" value="${userFilterOptionsVar}" scope="request" />
-	<c:import url="/WEB-INF/plugins/jacms/aps/jsp/showlets/inc/userFilter-module.jsp" />
+	<c:import url="/WEB-INF/plugins/jacms/aps/jsp/widgets/inc/userFilter-module.jsp" />
 		
 	<jpph:pager listName="contentList" objectName="groupContent" max="1" advanced="true" offset="5" >
 		<c:set var="group" value="${groupContent}" scope="request" />
 		
 		<%--  paginatore alto --%>
-		<c:import url="/WEB-INF/plugins/jpphotogallery/aps/jsp/showlets/inc/jpphotogallery_pagerBlock.jsp" />
+		<c:import url="/WEB-INF/plugins/jpphotogallery/aps/jsp/widgets/inc/jpphotogallery_pagerBlock.jsp" />
 		<%--  paginatore alto--%>
 		
 		<%-- lista immagini precedenti start--%>
@@ -81,7 +81,7 @@
 		
 		
 		<%--  paginatore basso --%>
-		<c:import url="/WEB-INF/plugins/jpphotogallery/aps/jsp/showlets/inc/jpphotogallery_pagerBlock.jsp" />
+		<c:import url="/WEB-INF/plugins/jpphotogallery/aps/jsp/widgets/inc/jpphotogallery_pagerBlock.jsp" />
 		<%--  paginatore basso--%>
 		
 	</jpph:pager>

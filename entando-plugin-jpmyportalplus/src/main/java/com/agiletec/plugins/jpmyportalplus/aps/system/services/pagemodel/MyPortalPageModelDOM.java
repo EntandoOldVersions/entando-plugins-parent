@@ -89,7 +89,7 @@ public class MyPortalPageModelDOM {
 			int framesNumber = frameElements.size();
 			_frames = new String[framesNumber];
 			_frameConfigs = new Frame[framesNumber];
-			_defaultShowlet = new org.entando.entando.aps.system.services.page.Widget[framesNumber];
+			_defaultShowlet = new Widget[framesNumber];
 			_existMainFrame = false;
 			Iterator<Element> frameElementsIter = frameElements.iterator();
 			while (frameElementsIter.hasNext()) {
@@ -98,7 +98,7 @@ public class MyPortalPageModelDOM {
 			}
 		} else {
 			_frames = new String[0];
-			_defaultShowlet = new org.entando.entando.aps.system.services.page.Widget[0];
+			_defaultShowlet = new Widget[0];
 		}
 	}
 
@@ -136,15 +136,15 @@ public class MyPortalPageModelDOM {
 		}
 		Element defaultShowletElement = frameElement.getChild(TAB_DEFAULT_SHOWLET);
 		if (null != defaultShowletElement) {
-			org.entando.entando.aps.system.services.page.Widget defaultShowlet = this.buildDefaultShowlet(defaultShowletElement, pos, showletTypeManager);
+			Widget defaultShowlet = this.buildDefaultShowlet(defaultShowletElement, pos, showletTypeManager);
 			frame.setDefaultShowlet(defaultShowlet);
 			this.getDefaultShowlet()[pos] = defaultShowlet;
 		}
 		_frameConfigs[pos] = frame;
 	}
 
-	private org.entando.entando.aps.system.services.page.Widget buildDefaultShowlet(Element defaultShowletElement, int pos, IWidgetTypeManager showletTypeManager) {
-		org.entando.entando.aps.system.services.page.Widget showlet = new org.entando.entando.aps.system.services.page.Widget();
+	private Widget buildDefaultShowlet(Element defaultShowletElement, int pos, IWidgetTypeManager showletTypeManager) {
+		Widget showlet = new Widget();
 		String showletCode = defaultShowletElement.getAttributeValue(ATTRIBUTE_CODE);
 		showlet.setType(showletTypeManager.getShowletType(showletCode));
 		Element propertiesElement = defaultShowletElement.getChild(TAB_PROPERTIES);
@@ -186,7 +186,7 @@ public class MyPortalPageModelDOM {
 	 * Return the configuration of the default showlets
 	 * @return The default showlets
 	 */
-	public org.entando.entando.aps.system.services.page.Widget[] getDefaultShowlet() {
+	public Widget[] getDefaultShowlet() {
 		return this._defaultShowlet;
 	}
 
@@ -203,7 +203,7 @@ public class MyPortalPageModelDOM {
 	private boolean _existMainFrame;
 	private int _mainFrame;
 	private String[] _frames;
-	private org.entando.entando.aps.system.services.page.Widget[] _defaultShowlet;
+	private Widget[] _defaultShowlet;
 
 	private Frame[] _frameConfigs;
 

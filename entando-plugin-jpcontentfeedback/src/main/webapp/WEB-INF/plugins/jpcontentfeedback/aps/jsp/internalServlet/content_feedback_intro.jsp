@@ -96,7 +96,7 @@
         <wp:pager pagerId="commentsPagerId" listName="contentCommentIdsVar" objectName="groupComment" pagerIdFromFrame="true" max="5" >
 
         <c:set var="group" value="${groupComment}" scope="request" />
-        <c:import url="/WEB-INF/plugins/jacms/aps/jsp/showlets/inc/pagerBlock.jsp" />
+        <c:import url="/WEB-INF/plugins/jacms/aps/jsp/widgets/inc/pagerBlock.jsp" />
 
           <ol class="unstyled">
           <c:forEach var="commentId" items="${contentCommentIdsVar}" begin="${groupComment.begin}" end="${groupComment.end}" varStatus="status">
@@ -194,7 +194,7 @@
           </ol>
           <%--  --%>
 
-          <c:import url="/WEB-INF/plugins/jacms/aps/jsp/showlets/inc/pagerBlock.jsp" />
+          <c:import url="/WEB-INF/plugins/jacms/aps/jsp/widgets/inc/pagerBlock.jsp" />
 
         </wp:pager>
 

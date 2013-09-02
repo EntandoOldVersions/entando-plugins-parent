@@ -59,8 +59,8 @@ public class CustomizableShowletsTag extends TagSupport {
         try {
             Lang currentLang = (Lang) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_LANG);
             IPage currentPage = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
-            org.entando.entando.aps.system.services.page.Widget[] customShowletConfig = this.getCustomShowletConfig(currentPage);
-            org.entando.entando.aps.system.services.page.Widget[] showletsToRender = pageUserConfigManager.getShowletsToRender(currentPage, customShowletConfig);
+            Widget[] customShowletConfig = this.getCustomShowletConfig(currentPage);
+            Widget[] showletsToRender = pageUserConfigManager.getShowletsToRender(currentPage, customShowletConfig);
             List<String> allowedShowlets = new ArrayList<String>();
             Map<String, WidgetType> customizableShowlets = this.getCustomizableShowlets(pageUserConfigManager);
             allowedShowlets.addAll(customizableShowlets.keySet());
@@ -68,7 +68,7 @@ public class CustomizableShowletsTag extends TagSupport {
             for (int i = 0; i < frames.length; i++) {
                 Frame frame = frames[i];
                 if (!frame.isLocked()) {
-                    org.entando.entando.aps.system.services.page.Widget showlet = showletsToRender[i];
+                    Widget showlet = showletsToRender[i];
                     if (null != showlet && allowedShowlets.contains(showlet.getType().getCode())) {
                         WidgetCheckInfo info = new WidgetCheckInfo(showlet.getType(), true, currentLang);
                         allowedShowlets.remove(showlet.getType().getCode());
@@ -92,8 +92,8 @@ public class CustomizableShowletsTag extends TagSupport {
         return super.doStartTag();
     }
 
-    protected org.entando.entando.aps.system.services.page.Widget[] getCustomShowletConfig(IPage currentPage) throws Throwable {
-        org.entando.entando.aps.system.services.page.Widget[] customShowlets = null;
+    protected Widget[] getCustomShowletConfig(IPage currentPage) throws Throwable {
+        Widget[] customShowlets = null;
         try {
             CustomPageConfig customPageConfig =
                     (CustomPageConfig) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG);

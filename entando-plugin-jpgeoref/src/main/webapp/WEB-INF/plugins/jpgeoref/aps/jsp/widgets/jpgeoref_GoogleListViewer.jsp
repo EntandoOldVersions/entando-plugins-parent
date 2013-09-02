@@ -15,8 +15,8 @@
 </c:if>
 
 <c:set var="userFilterOptionsVar" value="${userFilterOptionsVar}" scope="request" />
-<c:import url="/WEB-INF/plugins/jacms/aps/jsp/showlets/inc/js_content_viewer_list.jsp" />
-<c:import url="/WEB-INF/plugins/jacms/aps/jsp/showlets/inc/userFilter-module.jsp" />
+<c:import url="/WEB-INF/plugins/jacms/aps/jsp/widgets/inc/js_content_viewer_list.jsp" />
+<c:import url="/WEB-INF/plugins/jacms/aps/jsp/widgets/inc/userFilter-module.jsp" />
 
 <div id="map" style="width: 550px; height: 450px"></div>
  

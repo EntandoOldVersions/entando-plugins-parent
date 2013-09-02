@@ -41,8 +41,8 @@ public class ContentModelTag extends TagSupport {
 		ServletRequest request = this.pageContext.getRequest();
 		try {
 			RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
-			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
-            ApsProperties showletConfig = showlet.getConfig();
+			Widget widget = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
+            ApsProperties showletConfig = widget.getConfig();
             String modelId = this.extractModelId(showletConfig, reqCtx);
 			if (null != modelId) {
 				String var = this.getVar();

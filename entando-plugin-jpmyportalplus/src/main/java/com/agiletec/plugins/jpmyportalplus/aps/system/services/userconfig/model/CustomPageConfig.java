@@ -48,7 +48,7 @@ public class CustomPageConfig {
 
 	public CustomPageConfig(String pageCode, int frames) {
 		this.setPageCode(pageCode);
-		this.setConfig(new org.entando.entando.aps.system.services.page.Widget[frames]);
+		this.setConfig(new Widget[frames]);
 		this.setStatus(new Integer[frames]);
 	}
 
@@ -69,7 +69,7 @@ public class CustomPageConfig {
 			JSONParser parser = new JSONParser();
 			JSONObject positions = (JSONObject) parser.parse(value);
 			this.setPageCode(page.getCode());
-			this.setConfig(new org.entando.entando.aps.system.services.page.Widget[frameNumber]);
+			this.setConfig(new Widget[frameNumber]);
 			this.setStatus(new Integer[frameNumber]);
 			for (int i = 0; i < frameNumber; i++) {
 				if (frames[i].isLocked()) continue;
@@ -79,9 +79,9 @@ public class CustomPageConfig {
 				if (null == showletCode) continue;
 				WidgetType type = showletTypeManager.getShowletType(showletCode.toString());
 				if (null == type) continue;
-				org.entando.entando.aps.system.services.page.Widget showlet = null;
+				Widget showlet = null;
 				if (showletCode.equals(voidShowletCode) || allowedShowlets.contains(showletCode) || this.isViewerType(type)) {
-					showlet = new org.entando.entando.aps.system.services.page.Widget();
+					showlet = new Widget();
 					showlet.setType(type);
                                         /*
 					JSONObject showletConfig = (JSONObject) frame.get("config");
@@ -149,9 +149,9 @@ public class CustomPageConfig {
 		String value = null;
 		try {
 			JSONObject frames = new JSONObject();
-			org.entando.entando.aps.system.services.page.Widget[] showlets = this.getConfig();
+			Widget[] showlets = this.getConfig();
 			for (int i = 0; i < showlets.length; i++) {
-				org.entando.entando.aps.system.services.page.Widget showlet = showlets[i];
+				Widget showlet = showlets[i];
 				if (null == showlet) continue;
 				JSONObject frame = new JSONObject();
 				frame.put("code", showlet.getType().getCode());
@@ -205,10 +205,10 @@ public class CustomPageConfig {
 		this._pageCode = pageCode;
 	}
 
-	public org.entando.entando.aps.system.services.page.Widget[] getConfig() {
+	public Widget[] getConfig() {
 		return _config;
 	}
-	protected void setConfig(org.entando.entando.aps.system.services.page.Widget[] config) {
+	protected void setConfig(Widget[] config) {
 		this._config = config;
 	}
 
@@ -221,7 +221,7 @@ public class CustomPageConfig {
 
 	private String _pageCode;
 
-	private org.entando.entando.aps.system.services.page.Widget[] _config;
+	private Widget[] _config;
 	private Integer[] _status;
 
 }

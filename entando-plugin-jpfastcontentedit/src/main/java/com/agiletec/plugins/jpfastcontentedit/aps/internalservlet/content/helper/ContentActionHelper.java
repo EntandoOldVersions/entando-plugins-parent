@@ -94,9 +94,9 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 		String paramValue = null;
 		RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
 		if (reqCtx!=null) {
-			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
-			if (showlet!=null) {
-				ApsProperties config = showlet.getConfig();
+			Widget widget = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
+			if (widget!=null) {
+				ApsProperties config = widget.getConfig();
 				if (null != config) {
 					String showletParam = config.getProperty(paramName);
 					if (showletParam!=null && showletParam.trim().length()>0) {

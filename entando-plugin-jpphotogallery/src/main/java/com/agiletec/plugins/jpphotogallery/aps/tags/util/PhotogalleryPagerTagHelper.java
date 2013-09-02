@@ -70,7 +70,7 @@ public class PhotogalleryPagerTagHelper extends PagerTagHelper {
 		if (maxItems == 0) {
 			RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
 			if (reqCtx != null) {
-				org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+				Widget showlet = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
 				ApsProperties config = showlet.getConfig();
 				String stringMax = (String) config.get("maxElemForItem");
 				if (stringMax != null && stringMax.length() > 0) {

@@ -44,7 +44,7 @@ window.addEvent('domready', function(){
 </s:if>
 
 <div class="showlet">
-<s:include value="/WEB-INF/aps/jsp/showlets/inc/protoStart.jsp" />
+<s:include value="/WEB-INF/aps/jsp/widgets/inc/protoStart.jsp" />
 
 <div class="boxFastCrowd">
 <div id="int">
@@ -160,5 +160,5 @@ window.addEvent('domready', function(){
 </div>
 </div>
 
-<s:include value="/WEB-INF/aps/jsp/showlets/inc/protoEnd.jsp" />
+<s:include value="/WEB-INF/aps/jsp/widgets/inc/protoEnd.jsp" />
 </div>

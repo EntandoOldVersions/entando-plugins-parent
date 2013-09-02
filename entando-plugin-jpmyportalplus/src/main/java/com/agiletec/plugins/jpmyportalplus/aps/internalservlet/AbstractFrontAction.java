@@ -52,16 +52,16 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		try {
 			IPage currentPage = this.getCurrentPage();
 			CustomPageConfig config = this.getCustomPageConfig();
-			org.entando.entando.aps.system.services.page.Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
-			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
+			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
 
-			org.entando.entando.aps.system.services.page.Widget showletToMove = showletsToRender[this.getStartFramePos()];
+			Widget showletToMove = showletsToRender[this.getStartFramePos()];
 			Integer statusShowletToMoveInteger = this.getCustomShowletStatus() != null ? this.getCustomShowletStatus()[this.getStartFramePos()] : null;
 			int statusShowletToMove = (statusShowletToMoveInteger == null) ? 0 : statusShowletToMoveInteger;
 			ShowletUpdateInfoBean frameTargetUpdate =
 				new ShowletUpdateInfoBean(this.getTargetFramePos(), showletToMove, statusShowletToMove);
 			this.addUpdateInfoBean(frameTargetUpdate);
-			org.entando.entando.aps.system.services.page.Widget showletOnFrameDest = showletsToRender[this.getTargetFramePos()];
+			Widget showletOnFrameDest = showletsToRender[this.getTargetFramePos()];
 			Integer statusShowletOnFrameDestInteger = this.getCustomShowletStatus() != null ? this.getCustomShowletStatus()[this.getTargetFramePos()] : null;
 			int statusShowletOnFrameDest = (statusShowletOnFrameDestInteger == null) ? 0 : statusShowletOnFrameDestInteger;
 			ShowletUpdateInfoBean frameStartUpdate =
@@ -103,9 +103,9 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		try {
 			IPage currentPage = this.getCurrentPage();
 			CustomPageConfig config = this.getCustomPageConfig();
-			org.entando.entando.aps.system.services.page.Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
-			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
-			org.entando.entando.aps.system.services.page.Widget showlet = showletsToRender[this.getFrameToResize()];
+			Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
+			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			Widget showlet = showletsToRender[this.getFrameToResize()];
 			if (null == showlet) return true;
 			ShowletUpdateInfoBean resizingFrame =
 				new ShowletUpdateInfoBean(this.getFrameToResize(), showlet, status);
@@ -170,8 +170,8 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		}
 	}
 
-	protected org.entando.entando.aps.system.services.page.Widget getShowletVoid() {
-		org.entando.entando.aps.system.services.page.Widget voidShowlet = new org.entando.entando.aps.system.services.page.Widget();
+	protected Widget getShowletVoid() {
+		Widget voidShowlet = new Widget();
 		voidShowlet.setType(this.getPageUserConfigManager().getVoidShowlet());
 		voidShowlet.setConfig(new ApsProperties());
 		return voidShowlet;
@@ -213,8 +213,8 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		return pageConfig;
 	}
 
-	protected org.entando.entando.aps.system.services.page.Widget[] getCustomShowletConfig() throws Throwable {
-		org.entando.entando.aps.system.services.page.Widget[] customShowlets = null;
+	protected Widget[] getCustomShowletConfig() throws Throwable {
+		Widget[] customShowlets = null;
 		try {
 			CustomPageConfig customPageConfig = this.getCustomPageConfig();
 			if (null != customPageConfig) {

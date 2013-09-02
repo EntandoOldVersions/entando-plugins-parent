@@ -130,11 +130,11 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 					if (selectedNode.equals(this.getPageCode()) && frame==this.getFrame()) {
 						this.addActionError(this.getText("error.target.currentFrame"));
 					} else {
-						org.entando.entando.aps.system.services.page.Widget[] showlets = targetPage.getShowlets();
+						Widget[] showlets = targetPage.getShowlets();
 						if (showlets.length <= frame) {
 							this.addActionError(this.getText("error.invalidShowletType"));
 						} else {
-							org.entando.entando.aps.system.services.page.Widget showlet = showlets[frame];
+							Widget showlet = showlets[frame];
 							if (showlet != null && this.getInvalidShowletTypes().contains(showlet.getType().getCode())) {
 								this.addActionError(this.getText("error.invalidShowletType"));
 							} else {
@@ -158,7 +158,7 @@ public class ReplicatorShowletAction extends SimpleShowletConfigAction implement
 			if (targetPage == null) {
 				this.addActionError(this.getText("error.noPageSelected"));
 			} else {
-				org.entando.entando.aps.system.services.page.Widget targetFrame = targetPage.getShowlets()[this.getFrameIdParam().intValue()];
+				Widget targetFrame = targetPage.getShowlets()[this.getFrameIdParam().intValue()];
 				if (targetFrame == null || this.getInvalidShowletTypes().contains(targetFrame.getType().getCode())) {
 					this.addActionError(this.getText("error.invalidShowletType"));
 				} else {

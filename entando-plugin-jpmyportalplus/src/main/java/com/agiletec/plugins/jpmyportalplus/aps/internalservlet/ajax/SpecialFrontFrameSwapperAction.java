@@ -64,8 +64,8 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 				ApsSystemUtils.getLogger().finer("Page '" + currentPage.getCode() + "' - No swap to do");
 				return SUCCESS;
 			}
-			org.entando.entando.aps.system.services.page.Widget[] customShowlets = super.getCustomShowletConfig();
-			org.entando.entando.aps.system.services.page.Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			Widget[] customShowlets = super.getCustomShowletConfig();
+			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
 			MyPortalPageModel pageModel = (MyPortalPageModel) currentPage.getModel();
 			Integer[] columnFrames = this.calculateColumnFrames(pageModel);
 			boolean isFrameDestBusy = this.calculateFrameDestOnSwapAjax(showletsToRender, columnFrames);
@@ -166,11 +166,11 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 		return newFrames;
 	}
 
-	private boolean calculateFrameDestOnSwapAjax(org.entando.entando.aps.system.services.page.Widget[] showletsToRender, Integer[] columnFrames) {
+	private boolean calculateFrameDestOnSwapAjax(Widget[] showletsToRender, Integer[] columnFrames) {
 		//System.out.println("Partenza " + this.getStartFramePos() +
 		//		" - POSIZIONE PREC  " + this.getTargetPrevFramePos() +
 		//		" - POSIZIONE SUCC " + this.getTargetNextFramePos());
-		org.entando.entando.aps.system.services.page.Widget showlet = null;
+		Widget showlet = null;
 		String voidShowletCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
 		try {
 			Integer targetFramePos = null;
@@ -184,7 +184,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 				Integer prevFrame = null;
 				for (int i = 0; i < columnFrames.length; i++) {
 					Integer frame = columnFrames[columnFrames.length - i - 1];
-					org.entando.entando.aps.system.services.page.Widget showletToRender = showletsToRender[frame];
+					Widget showletToRender = showletsToRender[frame];
 					if (i==0 && showletToRender != null && !showletToRender.getType().getCode().equals(voidShowletCode)) {
 						//L'ULTIMO FRAME DI COLONNA NON E' LIBERO... è quello il target
 						targetFramePos = frame;
@@ -237,8 +237,8 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 		}
 	}
 
-	private ShowletUpdateInfoBean buildShowletToMoveUpdateInfo(org.entando.entando.aps.system.services.page.Widget[] showletsToRender) throws Throwable {
-		org.entando.entando.aps.system.services.page.Widget showletToMove = showletsToRender[this.getStartFramePos()];
+	private ShowletUpdateInfoBean buildShowletToMoveUpdateInfo(Widget[] showletsToRender) throws Throwable {
+		Widget showletToMove = showletsToRender[this.getStartFramePos()];
 		Integer statusShowletToMoveInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[this.getStartFramePos()] : null;
 		int statusShowletToMove = (statusShowletToMoveInteger == null) ? 0 : statusShowletToMoveInteger;
 		ShowletUpdateInfoBean frameTargetUpdate =
@@ -247,7 +247,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 		return frameTargetUpdate;
 	}
 
-	private Integer calculateVoidFramePos(org.entando.entando.aps.system.services.page.Widget[] showletsToRender, Integer[] columnFrames, boolean next) {
+	private Integer calculateVoidFramePos(Widget[] showletsToRender, Integer[] columnFrames, boolean next) {
 		boolean check = false;
 		String voidShowletCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
 		for (int i = 0; i < columnFrames.length; i++) {
@@ -258,7 +258,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 				framePos = columnFrames[columnFrames.length - i - 1];
 			}
 			if (check) {
-				org.entando.entando.aps.system.services.page.Widget showlet = showletsToRender[framePos];
+				Widget showlet = showletsToRender[framePos];
 				if (framePos.equals(this.getStartFramePos())
 						|| (null == showlet || showlet.getType().getCode().equals(voidShowletCode))) {
 					return framePos;
@@ -287,7 +287,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 		return null;
 	}
 
-	private void buildUpdateInfosForSwitch(org.entando.entando.aps.system.services.page.Widget[] showletsToRender, Integer[] columnFrames, boolean switchAfter, Integer endFramePos) throws Throwable {
+	private void buildUpdateInfosForSwitch(Widget[] showletsToRender, Integer[] columnFrames, boolean switchAfter, Integer endFramePos) throws Throwable {
 		Integer prevFrames = null;
 		boolean check = false;
 		for (int i = 0; i < columnFrames.length; i++) {
@@ -305,7 +305,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 				continue;
 			}
 			if (check) {
-				org.entando.entando.aps.system.services.page.Widget showletToSwitch = showletsToRender[prevFrames];
+				Widget showletToSwitch = showletsToRender[prevFrames];
 				Integer statusShowletToSwitchInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[prevFrames] : null;
 				int statusShowletToSwitch = (statusShowletToSwitchInteger == null) ? 0 : statusShowletToSwitchInteger;
 				ShowletUpdateInfoBean showletToSwitchUpdateInfo = new ShowletUpdateInfoBean(framePos, showletToSwitch, statusShowletToSwitch);

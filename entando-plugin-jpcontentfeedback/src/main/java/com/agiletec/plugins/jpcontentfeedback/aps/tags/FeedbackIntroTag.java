@@ -39,7 +39,7 @@ import org.entando.entando.aps.system.services.page.Widget;
 public class FeedbackIntroTag extends InternalServletTag {
 
 	@Override
-	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, org.entando.entando.aps.system.services.page.Widget showlet) throws ServletException, IOException {
+	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget showlet) throws ServletException, IOException {
 		String actionPath = "/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/intro.action";
 		String requestActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_ACTIONPATH);
 		String currentFrameActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_FRAMEDEST);

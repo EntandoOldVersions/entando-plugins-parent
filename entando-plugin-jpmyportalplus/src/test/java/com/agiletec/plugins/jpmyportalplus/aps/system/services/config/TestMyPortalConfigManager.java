@@ -47,7 +47,7 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 		assertEquals(1, config.getConfig().size());
 		CustomPageConfig pageConfig = config.getConfig().get("jpmyportalplus_testpage");
 		assertNotNull(pageConfig);
-		org.entando.entando.aps.system.services.page.Widget[] showlets = pageConfig.getConfig();
+		Widget[] showlets = pageConfig.getConfig();
 		Integer[] status = pageConfig.getStatus();
 		assertEquals(8, status.length);
 		assertEquals(showlets.length, status.length);
@@ -76,7 +76,7 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 		PageUserConfigBean config = this._pageUserConfigManager.getUserConfig(user);
 		IPage page = this._pageManager.getPage("jpmyportalplus_testpage");
 		CustomPageConfig pageConfig = config.getConfig().get("jpmyportalplus_testpage");
-		org.entando.entando.aps.system.services.page.Widget[] showlets = this._pageUserConfigManager.getShowletsToRender(page, pageConfig.getConfig());
+		Widget[] showlets = this._pageUserConfigManager.getShowletsToRender(page, pageConfig.getConfig());
 
 		assertEquals(8, showlets.length);
 

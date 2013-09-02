@@ -43,8 +43,8 @@ public class FastContentEditShowletConfigAction extends SimpleShowletConfigActio
 		}
 		if (this.getActionErrors().size()>0 || this.getFieldErrors().size()>0) {
 			try {
-				org.entando.entando.aps.system.services.page.Widget showlet = super.createNewShowlet();
-				this.setShowlet(showlet);
+				Widget widget = super.createNewShowlet();
+				this.setShowlet(widget);
 			} catch (Throwable t) {
 				throw new RuntimeException(t);
 			}
@@ -94,9 +94,9 @@ public class FastContentEditShowletConfigAction extends SimpleShowletConfigActio
 
 	public String configContentType() {
 		try {
-			org.entando.entando.aps.system.services.page.Widget showlet = super.createNewShowlet();
-			showlet.getConfig().setProperty("typeCode", this.getContentType());
-			this.setShowlet(showlet);
+			Widget widget = super.createNewShowlet();
+			widget.getConfig().setProperty("typeCode", this.getContentType());
+			this.setShowlet(widget);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "init");
 			return FAILURE;
@@ -106,8 +106,8 @@ public class FastContentEditShowletConfigAction extends SimpleShowletConfigActio
 
 	public String changeContentType() {
 		try {
-			org.entando.entando.aps.system.services.page.Widget showlet = super.createNewShowlet();
-			this.setShowlet(showlet);
+			Widget widget = super.createNewShowlet();
+			this.setShowlet(widget);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "changeContentType");
 			return FAILURE;

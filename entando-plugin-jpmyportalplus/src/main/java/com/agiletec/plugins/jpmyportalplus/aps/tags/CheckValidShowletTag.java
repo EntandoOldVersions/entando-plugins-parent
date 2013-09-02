@@ -47,7 +47,7 @@ public class CheckValidShowletTag extends TagSupport {
 		try {
 			boolean check = false;
 			RequestContext reqCtx = (RequestContext) req.getAttribute(RequestContext.REQCTX);
-			org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			Widget currentShowlet = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
 			if (null != currentShowlet && null != currentShowlet.getType()) {
 				String typeCode = currentShowlet.getType().getCode();
 				Set<String> showletTypeCodes = myPortalConfigManager.getConfig().getAllowedShowlets();
