@@ -19,8 +19,9 @@ package com.agiletec.plugins.jpuserreg.aps.internalservlet.registration.attribut
 
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.apsadmin.system.entity.IEntityActionHelper;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 import com.agiletec.plugins.jpuserreg.aps.internalservlet.registration.UserRegistrationAction;
+
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * Action classe for the management of operations on the list type attributes in User Profile.

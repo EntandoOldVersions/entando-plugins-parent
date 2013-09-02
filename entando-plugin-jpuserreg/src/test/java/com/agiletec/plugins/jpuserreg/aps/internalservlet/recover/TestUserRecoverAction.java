@@ -33,12 +33,13 @@ import com.agiletec.aps.system.services.user.User;
 import com.agiletec.plugins.jpmail.aps.services.JpmailSystemConstants;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
 import com.agiletec.plugins.jpmail.aps.services.mail.MailManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegManager;
+
 import com.opensymphony.xwork2.Action;
+
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * @author G.Cocco
@@ -90,17 +91,15 @@ public class TestUserRecoverAction  extends ApsAdminPluginBaseTestCase {
 	private void insertTestProfile(String username) throws Exception {
 		IUserProfile profile = _userProfileManager.getDefaultProfileType();
 		profile.setId(username);
-		MonoTextAttribute nomeAttr = (MonoTextAttribute) profile.getAttribute("Name");
-		nomeAttr.setText("username_test");
-		MonoTextAttribute cognomeAttr = (MonoTextAttribute) profile.getAttribute("Surname");
-		cognomeAttr.setText("name_test");
+		MonoTextAttribute fullnameAttr = (MonoTextAttribute) profile.getAttribute("fullname");
+		fullnameAttr.setText("name surname");
 		MonoTextAttribute emailAttr = (MonoTextAttribute) profile.getAttribute("email");
 		emailAttr.setText(JpUserRegTestHelper.EMAIL);
 		DateAttribute dateAttr = (DateAttribute) profile.getAttribute("birthdate");
 		dateAttr.setDate(this.getBirthdate(1985, 11, 21));
 		MonoTextAttribute languageAttr = (MonoTextAttribute) profile.getAttribute("language");
 		languageAttr.setText("en");
-		_regAccountManager.regAccount(profile);
+		this._regAccountManager.regAccount(profile);
 	}
 	
 	private Date getBirthdate(int year, int month, int day){
@@ -114,7 +113,7 @@ public class TestUserRecoverAction  extends ApsAdminPluginBaseTestCase {
 	
 	private void init() {
 		this._regAccountManager = (IUserRegManager) this.getService(JpUserRegSystemConstants.USER_REG_MANAGER);
-		this._userProfileManager = (IUserProfileManager) this.getService(ProfileSystemConstants.USER_PROFILE_MANAGER);
+		this._userProfileManager = (IUserProfileManager) this.getService(SystemConstants.USER_PROFILE_MANAGER);
 		this._userManager = (IUserManager) this.getService(SystemConstants.USER_MANAGER);
 		DataSource dataSource = (DataSource) this.getApplicationContext().getBean("servDataSource");
 		JpUserRegTestHelper testHelper = new JpUserRegTestHelper();

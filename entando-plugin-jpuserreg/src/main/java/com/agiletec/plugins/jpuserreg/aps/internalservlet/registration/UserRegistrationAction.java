@@ -30,15 +30,13 @@ import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.user.IUserManager;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.system.entity.AbstractApsEntityAction;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegManager;
 
 import java.util.List;
 
-import org.entando.entando.aps.system.services.page.Widget;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * Action to manage User Account Registration Requests
@@ -76,7 +74,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 			if (profileTypeCode != null) {
 				IUserProfile userProfile = (IUserProfile) this.getUserProfileManager().getProfileType(profileTypeCode);
 				if (userProfile != null) {
-					if (userProfile.getAttributeByRole(ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL)==null) {// Verifica che contenga l'attributo della mail
+					if (userProfile.getAttributeByRole(SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_MAIL) == null) {// Verifica che contenga l'attributo della mail
 						ApsSystemUtils.getLogger().warning("Registration attempt with profile " + profileTypeCode + " missing email address");
 					} else {
 						userProfile.disableAttributes(JpUserRegSystemConstants.ATTRIBUTE_DISABLING_CODE_ON_REGISTRATION);
@@ -105,7 +103,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 			List<AttributeInterface> attributes = userProfile.getAttributeList();
 			for (int i = 0; i < attributes.size(); i++) {
 				AttributeInterface attribute = attributes.get(i);
-				String attributeLabelKey = "jpuserprofile_" + userProfile.getTypeCode() + "_" + attribute.getName();
+				String attributeLabelKey = "userprofile_" + userProfile.getTypeCode() + "_" + attribute.getName();
 				if (null == this.getI18nManager().getLabelGroup(attributeLabelKey)) {
 					String attributeDescription = attribute.getDescription();
 					String value = (null != attributeDescription && attributeDescription.trim().length() > 0) ?
@@ -250,7 +248,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 
 	public String getEmailAttrName() {
 		if (this._emailAttrName==null) {
-			AttributeInterface attribute = this.getUserProfile().getAttributeByRole(ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL);
+			AttributeInterface attribute = this.getUserProfile().getAttributeByRole(SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_MAIL);
 			if (attribute!=null) {
 				this._emailAttrName = attribute.getName();
 			}
@@ -262,7 +260,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		if (null==this._profileTypeCode) {
 			this._profileTypeCode = this.extractTypeCode();
 			if (this._profileTypeCode==null) {
-				this._profileTypeCode = ProfileSystemConstants.DEFAULT_PROFILE_TYPE_CODE;
+				this._profileTypeCode = SystemConstants.DEFAULT_PROFILE_TYPE_CODE;
 			}
 		}
 		return _profileTypeCode;

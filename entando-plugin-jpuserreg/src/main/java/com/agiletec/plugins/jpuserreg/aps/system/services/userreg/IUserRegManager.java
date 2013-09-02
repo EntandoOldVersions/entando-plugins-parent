@@ -21,8 +21,9 @@ import java.util.Collection;
 
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.user.UserDetails;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.IUserRegConfig;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * Basic interface that provides the Account Registration functionalities

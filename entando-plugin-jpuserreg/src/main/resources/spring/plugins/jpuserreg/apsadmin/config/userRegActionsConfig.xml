@@ -21,7 +21,7 @@
 	<bean id="jpuserregUserRegShowletAction" scope="prototype" 
 			class="com.agiletec.plugins.jpuserreg.apsadmin.portal.specialshowlet.userreg.UserRegShowletAction" 
 			parent="simpleShowletAction" >
-		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
+		<property name="userProfileManager" ref="UserProfileManager" />
 	</bean>
 	
 </beans>

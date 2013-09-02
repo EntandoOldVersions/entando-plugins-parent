@@ -39,19 +39,17 @@ import com.agiletec.aps.system.services.user.User;
 import com.agiletec.plugins.jpmail.aps.services.JpmailSystemConstants;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
 import com.agiletec.plugins.jpmail.aps.services.mail.MailManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
-import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegDAO;
-import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegManager;
-import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.UserRegDAO;
+
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * @author G.Cocco
  * */
 public class TestUserRegManager extends ApsAdminPluginBaseTestCase {
 	
+	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.init();
@@ -101,7 +99,6 @@ public class TestUserRegManager extends ApsAdminPluginBaseTestCase {
 			assertEquals(2, roles.size());
 			assertFalse(user.isDisabled());
 		} finally {
-			//		clean
 			_userManager.removeUser(username);
 		}
 	}
@@ -192,7 +189,6 @@ public class TestUserRegManager extends ApsAdminPluginBaseTestCase {
 			insertTestUserProfile(username);
 			_userRegManager.reactivationByUserName(username);
 		} finally {
-			//	clean
 			_userManager.removeUser(username);
 			_userRegDAO.clearTokenByUsername(username);
 		}
@@ -201,10 +197,8 @@ public class TestUserRegManager extends ApsAdminPluginBaseTestCase {
 	private void insertTestUserProfile(String username) throws Exception {
 		IUserProfile profile = _userProfileManager.getDefaultProfileType();
 		profile.setId(username);
-		MonoTextAttribute nomeAttr = (MonoTextAttribute) profile.getAttribute("Name");
-		nomeAttr.setText("username_test");
-		MonoTextAttribute cognomeAttr = (MonoTextAttribute) profile.getAttribute("Surname");
-		cognomeAttr.setText("name_test");
+		MonoTextAttribute fullnameAttr = (MonoTextAttribute) profile.getAttribute("fullname");
+		fullnameAttr.setText("nametest surnametest");
 		MonoTextAttribute emailAttr = (MonoTextAttribute) profile.getAttribute("email");
 		emailAttr.setText(JpUserRegTestHelper.EMAIL);
 		DateAttribute dateAttr = (DateAttribute) profile.getAttribute("birthdate");
@@ -226,7 +220,7 @@ public class TestUserRegManager extends ApsAdminPluginBaseTestCase {
 	private void init() throws Exception {
     	try {
     		this._userRegManager = (IUserRegManager) this.getService(JpUserRegSystemConstants.USER_REG_MANAGER);
-    		this._userProfileManager = (IUserProfileManager) this.getService(ProfileSystemConstants.USER_PROFILE_MANAGER);
+    		this._userProfileManager = (IUserProfileManager) this.getService(SystemConstants.USER_PROFILE_MANAGER);
     		this._userManager = (IUserManager) this.getService(SystemConstants.USER_MANAGER);
     		this._roleManager = (IRoleManager) this.getService(SystemConstants.ROLE_MANAGER);
     		this._groupManager = (IGroupManager) this.getService(SystemConstants.GROUP_MANAGER);

@@ -17,13 +17,12 @@
 */
 package com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model;
 
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * Transfer Object from Struts action to Manager
- * 
  * @author G.Cocco
- * */
+ */
 public class UserRegBean {
 	// TODO Questa classe dovrà morire quanto prima, non appena potrà essere rimosso IUserRegManager.regAccount(UserRegBean regAccountBean)
 	

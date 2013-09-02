@@ -22,11 +22,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.apsadmin.portal.specialshowlet.SimpleWidgetConfigAction;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
+
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
 
 public class UserRegShowletAction extends SimpleWidgetConfigAction {
 	
@@ -38,7 +39,7 @@ public class UserRegShowletAction extends SimpleWidgetConfigAction {
 			String typeCode = this.getTypeCode();
 			if (typeCode!=null) {
 				IApsEntity entity = this.getUserProfileManager().getProfileType(typeCode);
-				if (entity!=null && entity.getAttributeByRole(ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL)!=null) {
+				if (entity!=null && entity.getAttributeByRole(SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_MAIL)!=null) {
 					validType = true;
 				}
 			}
@@ -72,7 +73,7 @@ public class UserRegShowletAction extends SimpleWidgetConfigAction {
 			Iterator<IApsEntity> prototypesIter = this.getUserProfileManager().getEntityPrototypes().values().iterator();
 			while (prototypesIter.hasNext()) {
 				IApsEntity profile = prototypesIter.next();
-				if (profile.getAttributeByRole(ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL)!=null) {
+				if (profile.getAttributeByRole(SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_MAIL)!=null) {
 					this._profileTypes.add(profile);
 				}
 			}

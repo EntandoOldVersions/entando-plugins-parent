@@ -17,14 +17,15 @@
 */
 package com.agiletec.plugins.jpuserreg.aps.internalservlet.registration;
 
+import com.agiletec.aps.system.SystemConstants;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.apsadmin.system.BaseAction;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
+
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
 
 public class ProfileTypesAction extends BaseAction {
 	
@@ -34,7 +35,7 @@ public class ProfileTypesAction extends BaseAction {
 			Iterator<IApsEntity> prototypesIter = this.getUserProfileManager().getEntityPrototypes().values().iterator();
 			while (prototypesIter.hasNext()) {
 				IApsEntity profile = prototypesIter.next();
-				if (profile.getAttributeByRole(ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL) != null) {
+				if (profile.getAttributeByRole(SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_MAIL) != null) {
 					this._profileTypes.add(profile);
 				}
 			}

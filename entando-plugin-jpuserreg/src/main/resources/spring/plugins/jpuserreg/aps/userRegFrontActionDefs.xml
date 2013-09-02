@@ -10,23 +10,23 @@
 	<bean id="jpuserregProfileTypesAction" scope="prototype" 
 			class="com.agiletec.plugins.jpuserreg.aps.internalservlet.registration.ProfileTypesAction" 
 			parent="abstractBaseAction" >
-		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
+		<property name="userProfileManager" ref="UserProfileManager" />
 	</bean>
 	
 	<bean id="jpuserregUserRegistrationAction" 
 			class="com.agiletec.plugins.jpuserreg.aps.internalservlet.registration.UserRegistrationAction" 
 			scope="prototype" parent="abstractEntityAction" >
 		<property name="userManager" ref="UserManager" />
-		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
+		<property name="userProfileManager" ref="UserProfileManager" />
 		<property name="userRegManager" ref="jpuserregUserRegManager" />
-		<property name="entityActionHelper" ref="jpuserprofileCurrentUserProfileActionHelper"/>
+		<property name="entityActionHelper" ref="entityActionHelper"/>
 		<property name="i18nManager" ref="I18nManager" />
 	</bean>
 	
 	<bean id="jpuserregListAttributeAction" scope="prototype" 
 			class="com.agiletec.plugins.jpuserreg.aps.internalservlet.registration.attribute.action.list.ListAttributeAction" 
 			parent="abstractBaseAction" >
-		<property name="entityActionHelper" ref="jpuserprofileCurrentUserProfileActionHelper"/>
+		<property name="entityActionHelper" ref="entityActionHelper"/>
 	</bean>
 	
 	

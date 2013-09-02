@@ -33,6 +33,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.common.entity.IEntityManager;
 import com.agiletec.aps.system.common.entity.model.EntitySearchFilter;
@@ -55,14 +56,13 @@ import com.agiletec.aps.system.services.user.User;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.DateConverter;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.IUserRegConfig;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.Template;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.parse.UserRegConfigDOM;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.util.ShaEncoder;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 import org.entando.entando.aps.system.services.page.IPage;
 import org.entando.entando.aps.system.services.page.IPageManager;
@@ -139,7 +139,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			}
 		}
 	}
-
+	
 	@Override
 	public void regAccount(IUserProfile userProfile) throws ApsSystemException {
 		try {
@@ -252,7 +252,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			Iterator<IApsEntity> prototypes = profileManager.getEntityPrototypes().values().iterator();
 			while (prototypes.hasNext()) {
 				IApsEntity prototype = prototypes.next();
-				AttributeInterface eMailAttr = prototype.getAttributeByRole(ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL);
+				AttributeInterface eMailAttr = prototype.getAttributeByRole(SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_MAIL);
 				if (eMailAttr!=null) {
 					EntitySearchFilter[] filters = {
 							new EntitySearchFilter(IEntityManager.ENTITY_TYPE_CODE_FILTER_KEY, false, prototype.getTypeCode(), false),
@@ -336,17 +336,21 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 		String token = ShaEncoder.encodePassword(userName, salt.toString());
 		return token;
 	}
-
+	
 	/**
 	 * Prepares the parameters to populate email's template
-	 * */
+	 */
 	private Map<String, String> prepareMailParams(IUserProfile profile, String token, String pageCode) {
 		Map<String, String> params = new HashMap<String, String>();
-
-		String name = this.getFieldValue(profile, ProfileSystemConstants.ATTRIBUTE_ROLE_FIRST_NAME);
+		/*
+		String name = this.getFieldValue(profile, SystemConstants.ATTRIBUTE_ROLE_FIRST_NAME);
 		params.put("name", name!=null ? name : "");
 		String surname = this.getFieldValue(profile, ProfileSystemConstants.ATTRIBUTE_ROLE_SURNAME);
 		params.put("surname", surname!=null ? surname : "");
+		*/
+		String fullname = this.getFieldValue(profile, SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_FULL_NAME);
+		params.put("fullname", fullname!=null ? fullname : "");
+		
 		String username = profile.getUsername();
 		params.put("userName", username);
 
@@ -395,8 +399,8 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 
 	private void sendAlert(Map<String, Template> templates, Map<String, String> params, IUserProfile profile) throws ApsSystemException {
 		IUserRegConfig config = this.getConfig();
-
-		String[] eMail = { this.getFieldValue(profile, ProfileSystemConstants.ATTRIBUTE_ROLE_MAIL) };
+		
+		String[] eMail = { this.getFieldValue(profile, SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_MAIL) };
 		Template template = null;
 		String langCode = this.getFieldValue(profile, JpUserRegSystemConstants.ATTRIBUTE_ROLE_LANGUAGE);
 		if (langCode!=null) {

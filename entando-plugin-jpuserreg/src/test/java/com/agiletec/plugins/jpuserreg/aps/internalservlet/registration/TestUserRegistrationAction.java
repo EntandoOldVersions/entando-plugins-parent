@@ -36,6 +36,7 @@ import com.agiletec.plugins.jpmail.aps.services.mail.MailManager;
 import com.agiletec.plugins.jpuserreg.aps.internalservlet.registration.UserRegistrationAction;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegDAO;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.UserRegDAO;
+
 import com.opensymphony.xwork2.Action;
 
 /**
@@ -65,8 +66,7 @@ public class TestUserRegistrationAction extends ApsAdminPluginBaseTestCase {
 			
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("username", username);
-			params.put("Name", "admin");
-			params.put("Surname", "admin");
+			params.put("fullname", "admin admin");
 			params.put("email", JpUserRegTestHelper.EMAIL);
 			params.put("emailConfirm", JpUserRegTestHelper.EMAIL);
 			params.put("privacyPolicyAgreement", "true");
@@ -103,14 +103,12 @@ public class TestUserRegistrationAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(0, messages.size());
 		Map<String, List<String>> fieldErrors = reqAccountAction.getFieldErrors();
 		assertNotNull(fieldErrors);
-		assertEquals(7, fieldErrors.size());
+		assertEquals(6, fieldErrors.size());
 		List<String> error = fieldErrors.get("privacyPolicyAgreement");
 		assertNotNull(error);
 		error = fieldErrors.get("username");
 		assertNotNull(error);
-		error = fieldErrors.get("Name");
-		assertNotNull(error);
-		error = fieldErrors.get("Surname");
+		error = fieldErrors.get("fullname");
 		assertNotNull(error);
 		error = fieldErrors.get("language");
 		assertNotNull(error);
@@ -124,7 +122,7 @@ public class TestUserRegistrationAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(Action.INPUT, result);
 		reqAccountAction = (UserRegistrationAction) this.getAction();
 		fieldErrors = reqAccountAction.getFieldErrors();
-		assertEquals(7, fieldErrors.size());
+		assertEquals(6, fieldErrors.size());
 		assertNotNull(fieldErrors.get("username"));
 	}
 	
@@ -140,7 +138,7 @@ public class TestUserRegistrationAction extends ApsAdminPluginBaseTestCase {
 		UserRegistrationAction reqAccountAction = (UserRegistrationAction) this.getAction();
 		Map<String, List<String>> fieldErrors = reqAccountAction.getFieldErrors();
 		assertNotNull(fieldErrors);
-		assertEquals(6, fieldErrors.size());
+		assertEquals(5, fieldErrors.size());
 		List<String> errors = fieldErrors.get("username");
 		assertNotNull(errors);
 		assertEquals(1, errors.size());
@@ -156,8 +154,7 @@ public class TestUserRegistrationAction extends ApsAdminPluginBaseTestCase {
 			
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("username", username_1);
-			params.put("Name", "admin");
-			params.put("Surname", "admin");
+			params.put("fullname", "admin admin");
 			params.put("email", JpUserRegTestHelper.EMAIL);
 			params.put("emailConfirm", JpUserRegTestHelper.EMAIL);
 			params.put("privacyPolicyAgreement", "true");
