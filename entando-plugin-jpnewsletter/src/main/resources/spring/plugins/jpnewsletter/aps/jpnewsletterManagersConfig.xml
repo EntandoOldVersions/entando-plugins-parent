@@ -8,7 +8,7 @@
 	<bean id="jpnewsletterNewsletterManager" class="com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.NewsletterManager" 
 			parent="abstractService" destroy-method="release" >
 		<property name="mailManager" ref="jpmailMailManager" />
-		<property name="profileManager" ref="jpuserprofileUserProfileManager" />
+		<property name="profileManager" ref="UserProfileManager" />
 		<property name="userManager" ref="UserManager" />
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="groupManager" ref="GroupManager" />

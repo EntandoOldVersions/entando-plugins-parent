@@ -27,14 +27,13 @@ import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.user.IUserManager;
 import com.agiletec.plugins.jpnewsletter.aps.system.JpnewsletterSystemConstants;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.INewsletterManager;
-import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.NewsletterSenderThread;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterConfig;
 import com.agiletec.plugins.jpnewsletter.apsadmin.ApsAdminPluginBaseTestCase;
 import com.agiletec.plugins.jpnewsletter.apsadmin.newsletter.INewsletterQueueAction;
 import com.agiletec.plugins.jpnewsletter.util.JpnewsletterTestHelper;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
+
 import com.opensymphony.xwork2.Action;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
 
 public class TestNewsletterQueueAction extends ApsAdminPluginBaseTestCase {
 	
@@ -49,12 +48,10 @@ public class TestNewsletterQueueAction extends ApsAdminPluginBaseTestCase {
 			String result = this.executeList("admin");
 			assertEquals(Action.SUCCESS, result);
 			this.checkQueue(((INewsletterQueueAction) this.getAction()).getContentIds(), new String[] { });
-			
 			this._newsletterManager.addContentToQueue("ART180");
 			result = this.executeList("admin");
 			assertEquals(Action.SUCCESS, result);
 			this.checkQueue(((INewsletterQueueAction) this.getAction()).getContentIds(), new String[] { "ART180" });
-			
 			this._newsletterManager.addContentToQueue("ART102");
 			result = this.executeList("admin");
 			assertEquals(Action.SUCCESS, result);
@@ -147,7 +144,7 @@ public class TestNewsletterQueueAction extends ApsAdminPluginBaseTestCase {
     	try {
     		this._newsletterManager = (INewsletterManager) this.getService(JpnewsletterSystemConstants.NEWSLETTER_MANAGER);
     		IUserManager userManager = (IUserManager) this.getService(SystemConstants.USER_MANAGER);
-    		IUserProfileManager profileManager = (IUserProfileManager) this.getService(ProfileSystemConstants.USER_PROFILE_MANAGER);
+    		IUserProfileManager profileManager = (IUserProfileManager) this.getService(SystemConstants.USER_PROFILE_MANAGER);
     		ConfigInterface configManager = (ConfigInterface) this.getService(SystemConstants.BASE_CONFIG_MANAGER);
     		this._helper = new JpnewsletterTestHelper(userManager, profileManager, configManager);
     		DataSource dataSource = (DataSource) this.getApplicationContext().getBean("servDataSource");

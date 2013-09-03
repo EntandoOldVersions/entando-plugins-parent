@@ -36,8 +36,9 @@ import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.INewslet
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.ContentReport;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterConfig;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterReport;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 public class JpnewsletterTestHelper extends AbstractDAO {
 	
@@ -123,10 +124,8 @@ public class JpnewsletterTestHelper extends AbstractDAO {
 	
 	protected IUserProfile createProfile(String nome, String cognome, String email, boolean cat1, boolean cat2) {
 		IUserProfile profile = _profileManager.getDefaultProfileType();
-		ITextAttribute nomeAttr = (ITextAttribute) profile.getAttribute("Name");
-		nomeAttr.setText(nome, null);
-		ITextAttribute cognomeAttr = (ITextAttribute) profile.getAttribute("Surname");
-		cognomeAttr.setText(cognome, null);
+		ITextAttribute fullnameAttr = (ITextAttribute) profile.getAttribute("fullname");
+		fullnameAttr.setText(nome, null);
 		ITextAttribute emailAttr = (ITextAttribute) profile.getAttribute("email");
 		emailAttr.setText(email, null);
 		BooleanAttribute boolean1 = (BooleanAttribute) profile.getAttribute("boolean1");

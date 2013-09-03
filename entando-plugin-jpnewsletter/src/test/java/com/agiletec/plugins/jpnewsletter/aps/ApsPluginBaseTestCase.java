@@ -34,8 +34,7 @@ import com.agiletec.plugins.jpnewsletter.aps.system.JpnewsletterSystemConstants;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterConfig;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterContentType;
 import com.agiletec.plugins.jpnewsletter.util.JpnewsletterTestHelper;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
 
 public class ApsPluginBaseTestCase extends BaseTestCase {
 	
@@ -159,7 +158,7 @@ public class ApsPluginBaseTestCase extends BaseTestCase {
     protected void init() throws Exception {
     	try {
     		IUserManager userManager = (IUserManager) this.getService(SystemConstants.USER_MANAGER);
-    		IUserProfileManager profileManager = (IUserProfileManager) this.getService(ProfileSystemConstants.USER_PROFILE_MANAGER);
+    		IUserProfileManager profileManager = (IUserProfileManager) this.getService(SystemConstants.USER_PROFILE_MANAGER);
     		ConfigInterface configManager = (ConfigInterface) this.getService(SystemConstants.BASE_CONFIG_MANAGER);
     		this._helper = new JpnewsletterTestHelper(userManager, profileManager, configManager);
     		DataSource dataSource = (DataSource) this.getApplicationContext().getBean("servDataSource");

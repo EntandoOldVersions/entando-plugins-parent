@@ -2,10 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
 * 
 * See the file License for the specific language governing permissions   
 * and limitations under the License
@@ -17,7 +16,6 @@
 */
 package com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -68,8 +66,9 @@ import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.Ne
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.Subscriber;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.parse.NewsletterConfigDOM;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.util.ShaEncoder;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+import java.security.NoSuchAlgorithmException;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * Servizio gestore delle newsletter.
@@ -811,10 +810,10 @@ public class NewsletterManager extends AbstractService
 	
 	/**
 	 * Generated random token 
-	 * */
+	 */
 	protected String createToken(String word) throws NoSuchAlgorithmException {
 		Random random = new Random();
-		StringBuffer salt = new StringBuffer();
+		StringBuilder salt = new StringBuilder();
 		long rndLong = random.nextLong();
 		salt.append(rndLong);
 		String date = DateConverter.getFormattedDate(new Date(), "SSSmmyyyy-SSS-MM:ssddmmHHmmEEE");

@@ -38,7 +38,7 @@
 			parent="abstractBaseAction" >
 		<property name="newsletterManager" ref="jpnewsletterNewsletterManager" />
 		<property name="categoryManager" ref="CategoryManager" />
-		<property name="profileManager" ref="jpuserprofileUserProfileManager" />
+		<property name="profileManager" ref="UserProfileManager" />
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="contentModelManager" ref="jacmsContentModelManager" />
 		<property name="mailManager" ref="jpmailMailManager" />

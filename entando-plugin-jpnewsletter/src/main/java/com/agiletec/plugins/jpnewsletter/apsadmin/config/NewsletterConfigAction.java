@@ -29,12 +29,14 @@ import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.common.entity.model.attribute.BooleanAttribute;
 import com.agiletec.aps.system.services.category.Category;
 import com.agiletec.aps.system.services.category.ICategoryManager;
-import com.agiletec.apsadmin.util.SelectItem;
+import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.IPageManager;
+import com.agiletec.aps.util.SelectItem;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
 import com.agiletec.plugins.jpnewsletter.aps.system.services.newsletter.model.NewsletterConfig;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 import org.entando.entando.aps.system.services.page.IPage;
 import org.entando.entando.aps.system.services.page.IPageManager;
@@ -196,7 +198,7 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 			throw new RuntimeException(t);
 		}
 	}
-
+	
 	/**
 	 * Restituisce la lista di categorie definite nel sistema.
 	 * @return La lista di categorie definite nel sistema.
@@ -204,11 +206,11 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 	public List<Category> getCategories() {
 		return this.getCategoryManager().getCategoriesList();
 	}
-
+	
 	public IUserProfile getDefaultProfile() {
 		return this.getProfileManager().getDefaultProfileType();
 	}
-
+	
 	public List<AttributeInterface> getBooleanProfileAttributes() {
 		List<AttributeInterface> attributes = new ArrayList<AttributeInterface>();
 		List<AttributeInterface> profileAttributes = this.getDefaultProfile().getAttributeList();
@@ -303,28 +305,28 @@ public class NewsletterConfigAction extends AbstractNewsletterConfigAction imple
 			this.addPages(children[i], pages);
 		}
 	}
-
+	
 	public String getContentTypeCode() {
 		return _contentTypeCode;
 	}
 	public void setContentTypeCode(String contentTypeCode) {
 		this._contentTypeCode = contentTypeCode;
 	}
-
+	
 	protected ICategoryManager getCategoryManager() {
 		return _categoryManager;
 	}
 	public void setCategoryManager(ICategoryManager categoryManager) {
 		this._categoryManager = categoryManager;
 	}
-
+	
 	protected IUserProfileManager getProfileManager() {
 		return _profileManager;
 	}
 	public void setProfileManager(IUserProfileManager profileManager) {
 		this._profileManager = profileManager;
 	}
-
+	
 	protected IMailManager getMailManager() {
 		return _mailManager;
 	}
