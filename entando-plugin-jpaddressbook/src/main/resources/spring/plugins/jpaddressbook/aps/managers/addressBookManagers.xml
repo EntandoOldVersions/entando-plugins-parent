@@ -9,7 +9,7 @@
 			class="com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.AddressBookManager"
 			parent="abstractService">
 		<property name="keyGeneratorManager" ref="KeyGeneratorManager" />
-		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
+		<property name="userProfileManager" ref="UserProfileManager" />
 		<property name="entityHandler">
 			<bean class="com.agiletec.aps.system.common.entity.parse.EntityHandler" />
 		</property>
@@ -27,7 +27,7 @@
 	</bean>
 	
 	<bean id="jpaddressbookAttributeDisablingCodesLoader" class="com.agiletec.aps.system.common.entity.loader.ExtraAttributeDisablingCodesWrapper">
-		<property name="entityManagerNameDest"><value>jpuserprofileUserProfileManager</value></property>
+		<property name="entityManagerNameDest"><value>UserProfileManager</value></property>
 		<property name="defsFilePath"><value>/WEB-INF/plugins/jpaddressbook/attributeDisablingCodes.xml</value></property>
 	</bean>
 	

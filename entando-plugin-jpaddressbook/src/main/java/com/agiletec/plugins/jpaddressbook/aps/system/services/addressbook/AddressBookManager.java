@@ -38,10 +38,10 @@ import com.agiletec.aps.system.services.keygenerator.IKeyGeneratorManager;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.Contact;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.ContactRecord;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.IContact;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.event.ProfileChangedEvent;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.event.ProfileChangedObserver;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.event.ProfileChangedEvent;
+import org.entando.entando.aps.system.services.userprofile.event.ProfileChangedObserver;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * @author E.Santoboni
@@ -196,8 +196,8 @@ public class AddressBookManager extends AbstractService
 	
 	protected EntitySearchFilter[] addOrderFilter(EntitySearchFilter[] filters) {
 		IUserProfile prototype = this.getUserProfileManager().getDefaultProfileType();
-		if (prototype.getSurnameAttributeName() != null) {
-			EntitySearchFilter filterToAdd = new EntitySearchFilter(prototype.getSurnameAttributeName(), true);
+		if (prototype.getFullNameAttributeName() != null) {
+			EntitySearchFilter filterToAdd = new EntitySearchFilter(prototype.getFullNameAttributeName(), true);
 			filterToAdd.setOrder(EntitySearchFilter.ASC_ORDER);
 			int len = 0;
 			if (filters != null) {

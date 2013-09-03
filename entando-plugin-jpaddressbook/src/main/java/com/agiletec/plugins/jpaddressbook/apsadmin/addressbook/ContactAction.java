@@ -29,9 +29,11 @@ import com.agiletec.plugins.jpaddressbook.aps.system.JpaddressbookSystemConstant
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.IAddressBookManager;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.Contact;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.IContact;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+
 import java.util.List;
+
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * @author E.Santoboni

@@ -23,7 +23,7 @@ import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.apsadmin.system.entity.EntityActionHelper;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.IContact;
 import com.agiletec.plugins.jpaddressbook.apsadmin.addressbook.IContactAction;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * @author E.Santoboni

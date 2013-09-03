@@ -1,20 +1,19 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpaddressbook.apsadmin.vcard;
 
 import java.io.ByteArrayInputStream;
@@ -38,7 +37,7 @@ import com.agiletec.plugins.jpaddressbook.aps.system.JpaddressbookSystemConstant
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.IAddressBookManager;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.vcard.IVCardManager;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.vcard.model.VCardContactField;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
 
 /**
  * @author A.Cocco
@@ -226,34 +225,18 @@ public class VCardAction extends AbstractEntityConfigAction implements IVCardAct
 		return _entityId;
 	}
 	
-	/**
-	 * Sets vcard manager
-	 * @param vcardManager the vcardManager to set
-	 */
+	protected IVCardManager getVcardManager() {
+		return _vcardManager;
+	}
 	public void setVcardManager(IVCardManager vcardManager) {
 		this._vcardManager = vcardManager;
 	}
-	/**
-	 * Returns vcard manager
-	 * @return the vcardManager
-	 */
-	public IVCardManager getVcardManager() {
-		return _vcardManager;
-	}
 	
-	/**
-	 * Sets address book manager
-	 * @param addressBookManager the addressBookManager to set
-	 */
+	protected IAddressBookManager getAddressBookManager() {
+		return _addressBookManager;
+	}
 	public void setAddressBookManager(IAddressBookManager addressBookManager) {
 		this._addressBookManager = addressBookManager;
-	}
-	/**
-	 * Returns address book manager
-	 * @return the addressBookManager
-	 */
-	public IAddressBookManager getAddressBookManager() {
-		return _addressBookManager;
 	}
 	
 	/**
@@ -271,17 +254,11 @@ public class VCardAction extends AbstractEntityConfigAction implements IVCardAct
 		return _nameFile;
 	}
 	
-	/**
-	 * @param userProfileManager the userProfileManager to set
-	 */
+	protected IUserProfileManager getUserProfileManager() {
+		return _userProfileManager;
+	}
 	public void setUserProfileManager(IUserProfileManager userProfileManager) {
 		this._userProfileManager = userProfileManager;
-	}
-	/**
-	 * @return the userProfileManager
-	 */
-	public IUserProfileManager getUserProfileManager() {
-		return _userProfileManager;
 	}
 	
 	private Set<String> _selectedFields = new TreeSet<String>();

@@ -21,11 +21,6 @@ import com.agiletec.ConfigTestUtils;
 import com.agiletec.apsadmin.ApsAdminBaseTestCase;
 import com.agiletec.plugins.jpaddressbook.PluginConfigTestUtils;
 
-/**
- * BaseTestCase Class for jpuserprofile apsadmin tests.
- * You have to comment "getConfigUtils()" 
- * Methods for testing plugin into custom jAPS 2.0 project.
- */
 public class ApsAdminPluginBaseTestCase extends ApsAdminBaseTestCase {
 	
 	@Override

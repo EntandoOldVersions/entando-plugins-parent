@@ -53,11 +53,11 @@ public class TestAddressBookSearcherDAO extends ApsPluginBaseTestCase {
 			Date birthdate3 = this._helper.setBirthdate(1983, 10, 25);
 			Date birthdate4 = this._helper.setBirthdate(1984, 10, 25);
 			Date birthdate5 = this._helper.setBirthdate(1985, 10, 25);
-			this._helper.addContact("1", "editorCoach", false, "name1", "surname1", "email1", birthdate1, "it");
-			this._helper.addContact("2", "editorCoach", false, "name2", "surname2", "email2", birthdate2, "en");
-			this._helper.addContact("3", "editorCustomers", false, "name3", "surname3", "email3", birthdate3,  "fr");
-			this._helper.addContact("4", "editorCoach", true, "name4", "surname4", "email2bis", birthdate4, "de");
-			this._helper.addContact("5", "editorCustomers", false, "name5", "surname5", "email5", birthdate5, "it");
+			this._helper.addContact("1", "editorCoach", false, "name1 surname1", "email1", birthdate1, "it");
+			this._helper.addContact("2", "editorCoach", false, "name2 surname2", "email2", birthdate2, "en");
+			this._helper.addContact("3", "editorCustomers", false, "name3 surname3", "email3", birthdate3,  "fr");
+			this._helper.addContact("4", "editorCoach", true, "name4 surname4", "email2bis", birthdate4, "de");
+			this._helper.addContact("5", "editorCustomers", false, "name5 surname5", "email5", birthdate5, "it");
 			
 			List<String> contacts = this._addressBookSearcherDAO.searchAllowedContacts("editorCustomers", null);
 			this.compareIds(new String[] { "3", "4", "5" }, contacts);

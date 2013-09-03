@@ -28,8 +28,9 @@ import com.agiletec.plugins.jpaddressbook.aps.system.JpaddressbookSystemConstant
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.IAddressBookManager;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.Contact;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.IContact;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.UserProfile;
+
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
+import org.entando.entando.aps.system.services.userprofile.model.UserProfile;
 
 public class TestAddressBookManager extends ApsPluginBaseTestCase {
 	
@@ -48,7 +49,7 @@ public class TestAddressBookManager extends ApsPluginBaseTestCase {
 		try {
 			Date birthdate1 = this._helper.setBirthdate(1981, 10, 25);
 			IUserProfile profile1 = this._helper.createUserProfile(null, 
-					"name1", "surname1", "indirizzoemail1@inesistente.itt", birthdate1, "it");
+					"name1 surname1", "indirizzoemail1@inesistente.itt", birthdate1, "it");
 			Contact contact1 = this._helper.createContact(null, "editorCoach", true, profile1);
 			// Aggiunta contatto1
 			this._addressBookManager.addContact(contact1);
@@ -59,7 +60,7 @@ public class TestAddressBookManager extends ApsPluginBaseTestCase {
 			
 			Date birthdate2 = this._helper.setBirthdate(1982, 10, 25);
 			IUserProfile profile2 = this._helper.createUserProfile("pippo", 
-					"name2", "surname2", "indirizzoemail2@inesistente.itt", birthdate2, "it");
+					"name2 surname2", "indirizzoemail2@inesistente.itt", birthdate2, "it");
 			Contact contact2 = this._helper.createContact("pippo", "editorCoach", true, profile2);
 			// Aggiunta contatto2
 			this._addressBookManager.addContact(contact2);
@@ -79,7 +80,7 @@ public class TestAddressBookManager extends ApsPluginBaseTestCase {
 		try {
 			Date birthdate = this._helper.setBirthdate(1982, 10, 25);
 			IUserProfile profile = this._helper.createUserProfile(null, 
-					"name", "surname", "indirizzoemail@inesistente.itt", birthdate, "it");
+					"name surname", "indirizzoemail@inesistente.itt", birthdate, "it");
 			Contact contact = this._helper.createContact(null, "editorCoach", true, profile);
 			// Aggiunta contatto
 			this._addressBookManager.addContact(contact);
@@ -89,7 +90,7 @@ public class TestAddressBookManager extends ApsPluginBaseTestCase {
 			// Modifica contatto
 			Date newBirthdate = this._helper.setBirthdate(1985, 12, 02);
 			IUserProfile modifiedProfile = this._helper.createUserProfile(contact.getId(), 
-					"nameMOD", "surnameMOD", "indirizzoemailMOD@inesistente.itt", newBirthdate, "en");
+					"nameMOD surnameMOD", "indirizzoemailMOD@inesistente.itt", newBirthdate, "en");
 			Contact modifiedContact = this._helper.createContact(contact.getId(), contact.getOwner(), false, modifiedProfile);
 			this._addressBookManager.updateContact(contact.getOwner(), modifiedContact);
 			IContact updated = this._addressBookManager.getContact(contact.getId());
@@ -113,11 +114,11 @@ public class TestAddressBookManager extends ApsPluginBaseTestCase {
 			Date birthdate3 = this._helper.setBirthdate(1983, 10, 25);
 			Date birthdate4 = this._helper.setBirthdate(1984, 10, 25);
 			Date birthdate5 = this._helper.setBirthdate(1985, 10, 25);
-			this._helper.addContact("1", "editorCoach", false, "name1", "surname1", "email1", birthdate1, "it");
-			this._helper.addContact("2", "editorCoach", false, "name2", "surname2", "email2", birthdate2, "en");
-			this._helper.addContact("3", "editorCustomers", false, "name3", "surname3", "email3", birthdate3, "fr");
-			this._helper.addContact("4", "editorCoach", true, "name4", "surname4", "email2bis", birthdate4, "de");
-			this._helper.addContact("5", "editorCustomers", false, "name5", "surname5", "email5", birthdate5, "it");
+			this._helper.addContact("1", "editorCoach", false, "name1 surname1", "email1", birthdate1, "it");
+			this._helper.addContact("2", "editorCoach", false, "name2 surname2", "email2", birthdate2, "en");
+			this._helper.addContact("3", "editorCustomers", false, "name3 surname3", "email3", birthdate3, "fr");
+			this._helper.addContact("4", "editorCoach", true, "name4 surname4", "email2bis", birthdate4, "de");
+			this._helper.addContact("5", "editorCustomers", false, "name5 surname5", "email5", birthdate5, "it");
 			
 			List<String> contacts = this._addressBookManager.getAllowedContacts("editorCustomers", null);
 			this.compareIds(new String[] { "3", "4", "5" }, contacts);

@@ -53,11 +53,11 @@ public class TestContactFinderAction extends ApsAdminPluginBaseTestCase {
 			Date birthdate3 = this._helper.setBirthdate(1983, 10, 25);
 			Date birthdate4 = this._helper.setBirthdate(1984, 10, 25);
 			Date birthdate5 = this._helper.setBirthdate(1985, 10, 25);
-			this._helper.addContact("1", "editorCoach", false, "name1", "surname1", "email1", birthdate1, "it");
-			this._helper.addContact("2", "editorCoach", false, "name2", "surname2", "email2", birthdate2, "en");
-			this._helper.addContact("3", "editorCustomers", false, "name3", "surname3", "email3", birthdate3, "fr");
-			this._helper.addContact("4", "editorCoach", true, "name4", "surname4", "email2bis", birthdate4, "de");
-			this._helper.addContact("5", "editorCustomers", false, "name5", "surname5", "email5", birthdate5, "it");
+			this._helper.addContact("1", "editorCoach", false, "name1 surname1", "email1", birthdate1, "it");
+			this._helper.addContact("2", "editorCoach", false, "name2 surname2", "email2", birthdate2, "en");
+			this._helper.addContact("3", "editorCustomers", false, "name3 surname3", "email3", birthdate3, "fr");
+			this._helper.addContact("4", "editorCoach", true, "name4 surname4", "email2bis", birthdate4, "de");
+			this._helper.addContact("5", "editorCustomers", false, "name5 surname5", "email5", birthdate5, "it");
 			
 			result = this.executeList("editorCustomers");
 			assertEquals(Action.SUCCESS, result);
@@ -87,11 +87,11 @@ public class TestContactFinderAction extends ApsAdminPluginBaseTestCase {
 			Date birthdate3 = this._helper.setBirthdate(1983, 10, 25);
 			Date birthdate4 = this._helper.setBirthdate(1984, 10, 25);
 			Date birthdate5 = this._helper.setBirthdate(1985, 10, 25);
-			this._helper.addContact("1", "editorCoach", false, "name1", "surname1", "email1@company.it", birthdate1, "it");
-			this._helper.addContact("2", "editorCoach", false, "name2", "surname2", "email2@company.it", birthdate2, "en");
-			this._helper.addContact("3", "editorCustomers", false, "name3", "surname3", "email3@company.it", birthdate3, "fr");
-			this._helper.addContact("4", "editorCoach", true, "name4", "surname4", "email2bis@company.it", birthdate4, "de");
-			this._helper.addContact("5", "editorCustomers", false, "name5", "surname5", "email5@company.it", birthdate5, "it");
+			this._helper.addContact("1", "editorCoach", false, "name1 surname1", "email1@company.it", birthdate1, "it");
+			this._helper.addContact("2", "editorCoach", false, "name2 surname2", "email2@company.it", birthdate2, "en");
+			this._helper.addContact("3", "editorCustomers", false, "name3 surname3", "email3@company.it", birthdate3, "fr");
+			this._helper.addContact("4", "editorCoach", true, "name4 surname4", "email2bis@company.it", birthdate4, "de");
+			this._helper.addContact("5", "editorCustomers", false, "name5 surname5", "email5@company.it", birthdate5, "it");
 			
 			result = this.executeSearch("editorCustomers", "");
 			assertEquals(Action.SUCCESS, result);
@@ -126,11 +126,11 @@ public class TestContactFinderAction extends ApsAdminPluginBaseTestCase {
 			Date birthdate3 = this._helper.setBirthdate(1983, 10, 25);
 			Date birthdate4 = this._helper.setBirthdate(1984, 10, 25);
 			Date birthdate5 = this._helper.setBirthdate(1985, 10, 25);
-			this._helper.addContact("1", "editorCoach", false, "name1", "surname1", "email1", birthdate1, "it");
-			this._helper.addContact("2", "editorCoach", false, "name2", "surname2", "email2", birthdate2, "en");
-			this._helper.addContact("3", "editorCustomers", false, "name3", "surname3", "email3", birthdate3, "fr");
-			this._helper.addContact("4", "editorCoach", true, "name4", "surname4", "email2bis", birthdate4, "de");
-			this._helper.addContact("5", "editorCustomers", false, "name5", "surname5", "email5", birthdate5, "it");
+			this._helper.addContact("1", "editorCoach", false, "name1 surname1", "email1", birthdate1, "it");
+			this._helper.addContact("2", "editorCoach", false, "name2 surname2", "email2", birthdate2, "en");
+			this._helper.addContact("3", "editorCustomers", false, "name3 surname3", "email3", birthdate3, "fr");
+			this._helper.addContact("4", "editorCoach", true, "name4 surname4", "email2bis", birthdate4, "de");
+			this._helper.addContact("5", "editorCustomers", false, "name5 surname5", "email5", birthdate5, "it");
 			
 			String result = this.executeTrash("editorCoach", "notExistantContact");
 			assertEquals(Action.INPUT, result);
@@ -164,11 +164,11 @@ public class TestContactFinderAction extends ApsAdminPluginBaseTestCase {
 			Date birthdate3 = this._helper.setBirthdate(1983, 10, 25);
 			Date birthdate4 = this._helper.setBirthdate(1984, 10, 25);
 			Date birthdate5 = this._helper.setBirthdate(1985, 10, 25);
-			this._helper.addContact("1", "editorCoach", false, "name1", "surname1", "email1", birthdate1, "it");
-			this._helper.addContact("2", "editorCoach", false, "name2", "surname2", "email2", birthdate2, "en");
-			this._helper.addContact("3", "editorCustomers", false, "name3", "surname3", "email3", birthdate3, "fr");
-			this._helper.addContact("4", "editorCoach", true, "name4", "surname4", "email2bis", birthdate4, "de");
-			this._helper.addContact("5", "editorCustomers", false, "name5", "surname5", "email5", birthdate5, "it");
+			this._helper.addContact("1", "editorCoach", false, "name1 surname1", "email1", birthdate1, "it");
+			this._helper.addContact("2", "editorCoach", false, "name2 surname2", "email2", birthdate2, "en");
+			this._helper.addContact("3", "editorCustomers", false, "name3 surname3", "email3", birthdate3, "fr");
+			this._helper.addContact("4", "editorCoach", true, "name4 surname4", "email2bis", birthdate4, "de");
+			this._helper.addContact("5", "editorCustomers", false, "name5 surname5", "email5", birthdate5, "it");
 
 			String result = this.executeTrash("editorCoach", "1");
 			assertEquals(Action.SUCCESS, result);
@@ -198,11 +198,11 @@ public class TestContactFinderAction extends ApsAdminPluginBaseTestCase {
 			Date birthdate3 = this._helper.setBirthdate(1983, 10, 25);
 			Date birthdate4 = this._helper.setBirthdate(1984, 10, 25);
 			Date birthdate5 = this._helper.setBirthdate(1985, 10, 25);
-			this._helper.addContact("1", "editorCoach", false, "name1", "surname1", "email1", birthdate1, "it");
-			this._helper.addContact("2", "editorCoach", false, "name2", "surname2", "email2", birthdate2, "en");
-			this._helper.addContact("3", "editorCustomers", false, "name3", "surname3", "email3", birthdate3, "fr");
-			this._helper.addContact("4", "editorCoach", true, "name4", "surname4", "email2bis", birthdate4, "de");
-			this._helper.addContact("5", "editorCustomers", false, "name5", "surname5", "email5", birthdate5, "it");
+			this._helper.addContact("1", "editorCoach", false, "name1 surname1", "email1", birthdate1, "it");
+			this._helper.addContact("2", "editorCoach", false, "name2 surname2", "email2", birthdate2, "en");
+			this._helper.addContact("3", "editorCustomers", false, "name3 surname3", "email3", birthdate3, "fr");
+			this._helper.addContact("4", "editorCoach", true, "name4 surname4", "email2bis", birthdate4, "de");
+			this._helper.addContact("5", "editorCustomers", false, "name5 surname5", "email5", birthdate5, "it");
 			
 			String result = this.executeDelete("editorCoach", "notExistantContact");
 			assertEquals(Action.INPUT, result);
@@ -234,11 +234,11 @@ public class TestContactFinderAction extends ApsAdminPluginBaseTestCase {
 			Date birthdate3 = this._helper.setBirthdate(1983, 10, 25);
 			Date birthdate4 = this._helper.setBirthdate(1984, 10, 25);
 			Date birthdate5 = this._helper.setBirthdate(1985, 10, 25);
-			this._helper.addContact("1", "editorCoach", false, "name1", "surname1", "email1", birthdate1, "it");
-			this._helper.addContact("2", "editorCoach", false, "name2", "surname2", "email2", birthdate2, "en");
-			this._helper.addContact("3", "editorCustomers", false, "name3", "surname3", "email3", birthdate3, "fr");
-			this._helper.addContact("4", "editorCoach", true, "name4", "surname4", "email2bis", birthdate4, "de");
-			this._helper.addContact("5", "editorCustomers", false, "name5", "surname5", "email5", birthdate5, "it");
+			this._helper.addContact("1", "editorCoach", false, "name1 surname1", "email1", birthdate1, "it");
+			this._helper.addContact("2", "editorCoach", false, "name2 surname2", "email2", birthdate2, "en");
+			this._helper.addContact("3", "editorCustomers", false, "name3 surname3", "email3", birthdate3, "fr");
+			this._helper.addContact("4", "editorCoach", true, "name4 surname4", "email2bis", birthdate4, "de");
+			this._helper.addContact("5", "editorCustomers", false, "name5 surname5", "email5", birthdate5, "it");
 
 			String result = this.executeDelete("editorCoach", "1");
 			assertEquals(Action.SUCCESS, result);

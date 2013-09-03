@@ -13,7 +13,7 @@
 			class="com.agiletec.plugins.jpaddressbook.apsadmin.addressbook.ContactsFinderAction" 
 			parent="abstractBaseAction" >
 		<property name="addressBookManager" ref="jpaddressbookAddressBookManager" />
-		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
+		<property name="userProfileManager" ref="UserProfileManager" />
 		<property name="entityActionHelper" ref="entityActionHelper" />
 	</bean>
 	
@@ -26,7 +26,7 @@
 			class="com.agiletec.plugins.jpaddressbook.apsadmin.addressbook.ContactAction" 
 			parent="abstractBaseAction" >
 		<property name="addressBookManager" ref="jpaddressbookAddressBookManager"/>
-		<property name="userProfileManager" ref="jpuserprofileUserProfileManager"/>
+		<property name="userProfileManager" ref="UserProfileManager"/>
 		<property name="entityActionHelper" ref="jpaddressbookContactActionHelper"/>
 		<property name="i18nManager" ref="I18nManager" />
 	</bean>
@@ -43,7 +43,7 @@
 			parent="abstractBaseAction" >
 		<property name="vcardManager" ref="jpaddressbookVCardManager"/>
 		<property name="addressBookManager" ref="jpaddressbookAddressBookManager"/>
-		<property name="userProfileManager" ref="jpuserprofileUserProfileManager" />
+		<property name="userProfileManager" ref="UserProfileManager" />
 	</bean>	
 	
 </beans>

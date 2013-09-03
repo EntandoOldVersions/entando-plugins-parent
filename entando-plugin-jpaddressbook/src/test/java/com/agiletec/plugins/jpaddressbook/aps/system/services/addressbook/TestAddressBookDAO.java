@@ -31,8 +31,8 @@ import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.IAddre
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.Contact;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.ContactRecord;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.IContact;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.UserProfile;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
+import org.entando.entando.aps.system.services.userprofile.model.UserProfile;
 
 public class TestAddressBookDAO extends ApsPluginBaseTestCase {
 	
@@ -56,7 +56,7 @@ public class TestAddressBookDAO extends ApsPluginBaseTestCase {
 	public void testAddUpdateDeleteContact() throws Throwable {
 		Date birthdate = this._helper.setBirthdate(1982, 10, 25);
 		IUserProfile profile = this._helper.createUserProfile("mainEditor", 
-				"name", "surname", "indirizzoemail@inesistente.itt", birthdate, "it");
+				"name surname", "indirizzoemail@inesistente.itt", birthdate, "it");
 		Contact contact = this._helper.createContact("1", "editorCoach", true, profile);
 		try {
 			// Aggiunta contatto
@@ -67,7 +67,7 @@ public class TestAddressBookDAO extends ApsPluginBaseTestCase {
 			// Modifica contatto
 			Date newBirthdate = this._helper.setBirthdate(1964, 07, 01);
 			IUserProfile modifiedProfile = this._helper.createUserProfile("supervisorCoach", 
-					"nameMOD", "surnameMOD", "indirizzoemailMOD@inesistente.itt", newBirthdate, "en");
+					"nameMOD surnameMOD", "indirizzoemailMOD@inesistente.itt", newBirthdate, "en");
 			Contact modifiedContact = this._helper.createContact(contact.getId(), "pageManagerCoach", false, modifiedProfile);
 			this._addressBookDAO.updateContact(modifiedContact);
 			record = (ContactRecord) this._addressBookDAO.loadEntityRecord(contact.getId());
@@ -92,7 +92,6 @@ public class TestAddressBookDAO extends ApsPluginBaseTestCase {
 		String expectedXML = ((UserProfile) expected.getContactInfo()).getXML();
 		assertEquals(expectedXML, received.getXml());
 	}
-	
 	
 	private IAddressBookDAO _addressBookDAO;
 	private JpaddressbookTestHelper _helper;

@@ -20,7 +20,7 @@ package com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model
 import java.util.List;
 
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * @author E.Santoboni

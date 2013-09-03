@@ -31,9 +31,11 @@ import com.agiletec.plugins.jpaddressbook.aps.system.JpaddressbookSystemConstant
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.IAddressBookManager;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.IContact;
 import com.agiletec.plugins.jpaddressbook.apsadmin.addressbook.ContactAction;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.UserProfile;
+
 import com.opensymphony.xwork2.Action;
+
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
+import org.entando.entando.aps.system.services.userprofile.model.UserProfile;
 
 public class TestContactAction extends ApsAdminPluginBaseTestCase {
 	
@@ -55,11 +57,11 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 			Date birthdate3 = this._helper.setBirthdate(1983, 10, 25);
 			Date birthdate4 = this._helper.setBirthdate(1984, 10, 25);
 			Date birthdate5 = this._helper.setBirthdate(1985, 10, 25);
-			this._helper.addContact("1", "editorCoach", false, "name1", "surname1", "email1", birthdate1, "it");
-			this._helper.addContact("2", "editorCoach", false, "name2", "surname2", "email2", birthdate2, "en");
-			this._helper.addContact("3", "editorCustomers", false, "name3", "surname3", "email3", birthdate3, "fr");
-			this._helper.addContact("4", "editorCoach", true, "name4", "surname4", "email2bis", birthdate4, "de");
-			this._helper.addContact("5", "editorCustomers", false, "name5", "surname5", "email5", birthdate5, "it");
+			this._helper.addContact("1", "editorCoach", false, "name1 surname1", "email1", birthdate1, "it");
+			this._helper.addContact("2", "editorCoach", false, "name2 surname2", "email2", birthdate2, "en");
+			this._helper.addContact("3", "editorCustomers", false, "name3 surname3", "email3", birthdate3, "fr");
+			this._helper.addContact("4", "editorCoach", true, "name4 surname4", "email2bis", birthdate4, "de");
+			this._helper.addContact("5", "editorCustomers", false, "name5 surname5", "email5", birthdate5, "it");
 			
 			String result = this.executeView("editorCoach", "notExistantContact");
 			assertEquals(Action.INPUT, result);
@@ -117,7 +119,7 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 	public void testEdit() throws Throwable {
 		try {
 			Date birthdate1 = this._helper.setBirthdate(1982, 10, 25);
-			IUserProfile profile = this._helper.createUserProfile("1", "name1", "surname1", "email1", birthdate1, "it");
+			IUserProfile profile = this._helper.createUserProfile("1", "name1 surname1", "email1", birthdate1, "it");
 			IContact contact = this._helper.createContact(profile.getId(), "editorCoach", true, profile);
 			this._addressBookManager.addContact(contact);
 			
@@ -158,9 +160,8 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 			result = this.executeSave("editorCoach", params);
 			assertEquals(Action.INPUT, result);
 			Map<String, List<String>> fieldErrors = this.getAction().getFieldErrors();
-			assertEquals(5, fieldErrors.size());
-			assertEquals(1, fieldErrors.get("Name").size());
-			assertEquals(1, fieldErrors.get("Surname").size());
+			assertEquals(4, fieldErrors.size());
+			assertEquals(1, fieldErrors.get("fullname").size());
 			assertEquals(1, fieldErrors.get("email").size());
 			assertEquals(1, fieldErrors.get("birthdate").size());
 			assertEquals(1, fieldErrors.get("language").size());
@@ -178,8 +179,7 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 			assertEquals(Action.SUCCESS, result);
 			
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("Name", "name");
-			params.put("Surname", "surname");
+			params.put("fullname", "name surname");
 			params.put("email", "email@eeeeeeemail.it");
 			params.put("birthdate", "10/09/1986");
 			params.put("language", "lang");
@@ -192,8 +192,7 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 			assertEquals(username, contact.getOwner());
 			assertEquals(false, contact.isPublicContact());
 			IUserProfile profile = contact.getContactInfo();
-			assertEquals("name", ((ITextAttribute) profile.getAttribute("Name")).getText());
-			assertEquals("surname", ((ITextAttribute) profile.getAttribute("Surname")).getText());
+			assertEquals("name surname", ((ITextAttribute) profile.getAttribute("fullname")).getText());
 			assertEquals("email@eeeeeeemail.it", ((ITextAttribute) profile.getAttribute("email")).getText());
 			assertEquals("10/09/1986", ((DateAttribute) profile.getAttribute("birthdate")).getFormattedDate("dd/MM/yyyy"));
 			assertEquals("lang", ((ITextAttribute) profile.getAttribute("language")).getText());
@@ -208,7 +207,7 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 		try {
 			String username = "editorCoach";
 			Date birthdate = this._helper.setBirthdate(1982, 10, 25);
-			IUserProfile profile = this._helper.createUserProfile("1", "name", "surname", "email", birthdate, "it");
+			IUserProfile profile = this._helper.createUserProfile("1", "name surname", "email", birthdate, "it");
 			IContact contact = this._helper.createContact(profile.getId(), username, true, profile);
 			this._addressBookManager.addContact(contact);
 			
@@ -216,8 +215,7 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 			assertEquals(Action.SUCCESS, result);
 			
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("Name", "nameMOD");
-			params.put("Surname", "surnameMOD");
+			params.put("fullname", "nameMOD surnameMOD");
 			params.put("email", "email@eeeeeeemail.it");
 			params.put("birthdate", "10/09/1986");
 			params.put("language", "langMOD");
@@ -230,8 +228,7 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 			assertEquals(username, contact.getOwner());
 			assertEquals(true, contact.isPublicContact());
 			profile = contact.getContactInfo();
-			assertEquals("nameMOD", ((ITextAttribute) profile.getAttribute("Name")).getText());
-			assertEquals("surnameMOD", ((ITextAttribute) profile.getAttribute("Surname")).getText());
+			assertEquals("nameMOD surnameMOD", ((ITextAttribute) profile.getAttribute("fullname")).getText());
 			assertEquals("email@eeeeeeemail.it", ((ITextAttribute) profile.getAttribute("email")).getText());
 			assertEquals("10/09/1986", ((DateAttribute) profile.getAttribute("birthdate")).getFormattedDate("dd/MM/yyyy"));
 			assertEquals("langMOD", ((ITextAttribute) profile.getAttribute("language")).getText());

@@ -33,10 +33,10 @@ import com.agiletec.aps.system.common.entity.model.attribute.MonoTextAttribute;
 import com.agiletec.aps.system.services.lang.ILangManager;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.AddressBookDAO;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.Contact;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.IUserProfileManager;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.IUserProfile;
-import com.agiletec.plugins.jpuserprofile.aps.system.services.profile.model.UserProfile;
+
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
+import org.entando.entando.aps.system.services.userprofile.model.UserProfile;
 
 public class JpaddressbookTestHelper extends AbstractDAO {
 	
@@ -49,7 +49,7 @@ public class JpaddressbookTestHelper extends AbstractDAO {
 		ILangManager langManager = (ILangManager) applicationContext.getBean(SystemConstants.LANGUAGE_MANAGER);
 		this._addressBookDAO.setLangManager(langManager);
 		
-		this._profileManager = (IUserProfileManager) applicationContext.getBean(ProfileSystemConstants.USER_PROFILE_MANAGER);
+		this._profileManager = (IUserProfileManager) applicationContext.getBean(SystemConstants.USER_PROFILE_MANAGER);
 	}
 	
 	public void cleanAddressBook() {
@@ -66,21 +66,21 @@ public class JpaddressbookTestHelper extends AbstractDAO {
 		}
 	}
 	
-	private void executeQuery(String query, Connection conn) {
+	private void executeQuery(String query, Connection conn) throws Throwable {
 		Statement stat = null;
 		try {
 			stat = conn.createStatement();
 			stat.executeUpdate(query);
 		} catch (Throwable t) {
-			t.printStackTrace();
+			throw t;
 		} finally {
 			closeDaoResources(null, stat);
 		}
 	}
 	
-	public void addContact(String id, String owner, boolean publicContact, 
-			String name, String surname, String email, Date birthdate, String lang) {
-		IUserProfile profile = this.createUserProfile(id, name, surname, email, birthdate, lang);
+	public void addContact(String id, String owner, 
+			boolean publicContact, String fullname, String email, Date birthdate, String lang) {
+		IUserProfile profile = this.createUserProfile(id, fullname, email, birthdate, lang);
 		Contact contact = this.createContact(id, owner, publicContact, profile);
 		this._addressBookDAO.addContact(contact);
 	}
@@ -93,17 +93,13 @@ public class JpaddressbookTestHelper extends AbstractDAO {
 		return contact;
 	}
 	
-	public IUserProfile createUserProfile(String id, String name, String surname, String email, Date birthdate, String lang) {
+	public IUserProfile createUserProfile(String id, String fullname, String email, Date birthdate, String lang) {
 		UserProfile profile = (UserProfile) this._profileManager.getDefaultProfileType();
 		profile.setId(id);
 		
-		MonoTextAttribute nameAttr = (MonoTextAttribute) profile.getAttribute("Name");
-		nameAttr.setSearcheable(true);
-		nameAttr.setText(name);
-		
-		MonoTextAttribute surnameAttr = (MonoTextAttribute) profile.getAttribute("Surname");
-		surnameAttr.setSearcheable(true);
-		surnameAttr.setText(surname);
+		MonoTextAttribute fullnameAttr = (MonoTextAttribute) profile.getAttribute("fullname");
+		fullnameAttr.setSearcheable(true);
+		fullnameAttr.setText(fullname);
 		
 		MonoTextAttribute emailAttr = (MonoTextAttribute) profile.getAttribute("email");
 		emailAttr.setText(email);
