@@ -5,7 +5,7 @@
         <parent>
                 <artifactId>entando-plugins-parent</artifactId>
                 <groupId>org.entando.entando.plugins</groupId>
-                <version>3.3.1-EEE-SNAPSHOT</version>
+                <version>3.3.1-SNAPSHOT</version>
         </parent>
         <artifactId>entando-plugin-jpmassiveresourceloader</artifactId>
         <groupId>org.entando.entando.plugins</groupId>
