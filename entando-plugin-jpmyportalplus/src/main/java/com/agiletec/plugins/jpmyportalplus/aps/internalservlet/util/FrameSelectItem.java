@@ -18,7 +18,8 @@
 package com.agiletec.plugins.jpmyportalplus.aps.internalservlet.util;
 
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.Widget;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -26,7 +27,7 @@ import com.agiletec.aps.system.services.page.Widget;
 public class FrameSelectItem {
 
 	public FrameSelectItem(Integer columnId, Integer columnIdDest,
-			com.agiletec.aps.system.services.page.Widget showlet, Integer frameId, Lang lang) {
+			org.entando.entando.aps.system.services.page.Widget showlet, Integer frameId, Lang lang) {
 		super();
 		this._currentColumnId = columnId;
 		this._columnIdDest = columnIdDest;
@@ -47,7 +48,7 @@ public class FrameSelectItem {
 	public Integer getColumnIdDest() {
 		return _columnIdDest;
 	}
-	public com.agiletec.aps.system.services.page.Widget getShowlet() {
+	public org.entando.entando.aps.system.services.page.Widget getShowlet() {
 		return _showlet;
 	}
 	public Integer getFrameId() {
@@ -69,7 +70,7 @@ public class FrameSelectItem {
 	}
 
 	private Integer _currentColumnId;
-	private com.agiletec.aps.system.services.page.Widget _showlet;
+	private org.entando.entando.aps.system.services.page.Widget _showlet;
 	private Integer _frameId;
 	private Lang _lang;
 

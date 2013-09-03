@@ -17,7 +17,7 @@
 */
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel;
 
-import com.agiletec.aps.system.services.page.Widget;
+import org.entando.entando.aps.system.services.page.Widget;
 
 
 /**
@@ -54,10 +54,10 @@ public class Frame {
 		this._column = column;
 	}
 
-	public com.agiletec.aps.system.services.page.Widget getDefaultShowlet() {
+	public org.entando.entando.aps.system.services.page.Widget getDefaultShowlet() {
 		return _defaultShowlet;
 	}
-	public void setDefaultShowlet(com.agiletec.aps.system.services.page.Widget defaultShowlet) {
+	public void setDefaultShowlet(org.entando.entando.aps.system.services.page.Widget defaultShowlet) {
 		this._defaultShowlet = defaultShowlet;
 	}
 
@@ -73,6 +73,6 @@ public class Frame {
 	private boolean _mainFrame;
 	private boolean _locked;
 	private Integer _column;
-	private com.agiletec.aps.system.services.page.Widget _defaultShowlet;
+	private org.entando.entando.aps.system.services.page.Widget _defaultShowlet;
 
 }

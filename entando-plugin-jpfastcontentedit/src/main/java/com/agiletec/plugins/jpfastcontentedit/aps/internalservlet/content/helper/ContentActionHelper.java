@@ -29,13 +29,14 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.i18n.II18nManager;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
 
 import java.util.List;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -93,7 +94,7 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
 		String paramValue = null;
 		RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
 		if (reqCtx!=null) {
-			com.agiletec.aps.system.services.page.Widget showlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			if (showlet!=null) {
 				ApsProperties config = showlet.getConfig();
 				if (null != config) {

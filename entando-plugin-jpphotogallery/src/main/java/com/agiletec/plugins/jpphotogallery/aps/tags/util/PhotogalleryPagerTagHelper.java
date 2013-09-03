@@ -26,10 +26,11 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.util.IPagerVO;
 import com.agiletec.aps.tags.util.PagerTagHelper;
 import com.agiletec.aps.util.ApsProperties;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 
 public class PhotogalleryPagerTagHelper extends PagerTagHelper {
@@ -69,7 +70,7 @@ public class PhotogalleryPagerTagHelper extends PagerTagHelper {
 		if (maxItems == 0) {
 			RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
 			if (reqCtx != null) {
-				com.agiletec.aps.system.services.page.Widget showlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+				org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 				ApsProperties config = showlet.getConfig();
 				String stringMax = (String) config.get("maxElemForItem");
 				if (stringMax != null && stringMax.length() > 0) {

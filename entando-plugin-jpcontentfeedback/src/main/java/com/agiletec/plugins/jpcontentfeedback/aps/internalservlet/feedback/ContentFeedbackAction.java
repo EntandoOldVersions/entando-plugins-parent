@@ -36,7 +36,6 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.apsadmin.system.BaseAction;
 import com.agiletec.plugins.jacms.apsadmin.content.helper.ContentActionHelper;
@@ -51,6 +50,7 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
 import com.agiletec.plugins.jpcontentfeedback.aps.tags.FeedbackIntroTag;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.feedback.AbstractContentFeedbackAction;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author D.Cherchi
@@ -93,7 +93,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 
 	public String getShowletParam(String param) {
 		RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
-		com.agiletec.aps.system.services.page.Widget currentShowlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+		org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 		return currentShowlet.getConfig().getProperty(param);
 	}
 
@@ -404,7 +404,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		String contentId = null;
 		if (null == contentId || contentId.trim().length() == 0) {
 			RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
-			com.agiletec.aps.system.services.page.Widget currentShowlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			if (null != currentShowlet.getConfig() && currentShowlet.getConfig().getProperty("contentId") != null && currentShowlet.getConfig().getProperty("contentId").length() > 0) {
 				contentId = currentShowlet.getConfig().getProperty("contentId");
 			} else {

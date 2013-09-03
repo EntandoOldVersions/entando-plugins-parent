@@ -26,8 +26,9 @@ import org.apache.commons.lang.StringUtils;
 
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.InternalServletTag;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * Tag che consente la visualisualizzazione del blocco jpcontentFeedback per la publicazione del rating del contenuto,
@@ -38,7 +39,7 @@ import com.agiletec.aps.tags.InternalServletTag;
 public class FeedbackIntroTag extends InternalServletTag {
 
 	@Override
-	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, com.agiletec.aps.system.services.page.Widget showlet) throws ServletException, IOException {
+	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, org.entando.entando.aps.system.services.page.Widget showlet) throws ServletException, IOException {
 		String actionPath = "/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/intro.action";
 		String requestActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_ACTIONPATH);
 		String currentFrameActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_FRAMEDEST);

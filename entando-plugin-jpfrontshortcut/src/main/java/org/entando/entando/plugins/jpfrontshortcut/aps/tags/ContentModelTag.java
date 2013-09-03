@@ -20,7 +20,6 @@ package org.entando.entando.plugins.jpfrontshortcut.aps.tags;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
@@ -29,6 +28,8 @@ import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -40,7 +41,7 @@ public class ContentModelTag extends TagSupport {
 		ServletRequest request = this.pageContext.getRequest();
 		try {
 			RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
-			com.agiletec.aps.system.services.page.Widget showlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
             ApsProperties showletConfig = showlet.getConfig();
             String modelId = this.extractModelId(showletConfig, reqCtx);
 			if (null != modelId) {

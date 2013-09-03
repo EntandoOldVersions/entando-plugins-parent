@@ -27,8 +27,9 @@ import javax.servlet.jsp.tagext.TagSupport;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.plugins.jpgeoref.aps.system.GeoRefSystemConstants;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -42,7 +43,7 @@ public class GeoRouteListTag extends TagSupport {
 		ServletRequest request =  this.pageContext.getRequest();
 		RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
 		try {
-			com.agiletec.aps.system.services.page.Widget showlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			String contentsId = showlet.getConfig().getProperty(GeoRefSystemConstants.ROUTE_CONTENTS_ID_SHOWLET_PARAM);
 			this.pageContext.setAttribute(this.getListName(), this.extractContentIdList(contentsId));
 		} catch (Throwable e) {

@@ -24,13 +24,14 @@ import java.util.logging.Logger;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.services.group.Group;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecordVO;
 import com.agiletec.plugins.jacms.apsadmin.portal.specialshowlet.viewer.ContentViewerShowletAction;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackConfig;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackManager;
+
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.Widget;
 
 
 /**
@@ -49,7 +50,7 @@ public class ContentFeedbackShowletAction  extends ContentViewerShowletAction im
 
 	protected String extractInitConfig() {
 		if (null != this.getShowlet()) return SUCCESS;
-		com.agiletec.aps.system.services.page.Widget showlet = this.getCurrentPage().getShowlets()[this.getFrame()];
+		org.entando.entando.aps.system.services.page.Widget showlet = this.getCurrentPage().getShowlets()[this.getFrame()];
 		Logger log = ApsSystemUtils.getLogger();
 		if (null == showlet) {
 			try {
@@ -78,9 +79,9 @@ public class ContentFeedbackShowletAction  extends ContentViewerShowletAction im
 				this.addActionError(this.getText("Message.userNotAllowed"));
 				return "pageTree";
 			}
-			log.info("Configurating new com.agiletec.aps.system.services.page.Widget " + this.getShowletTypeCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
+			log.info("Configurating new org.entando.entando.aps.system.services.page.Widget " + this.getShowletTypeCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
 		} else {
-			log.info("Edit com.agiletec.aps.system.services.page.Widget config " + showlet.getType().getCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
+			log.info("Edit org.entando.entando.aps.system.services.page.Widget config " + showlet.getType().getCode() + " - Page " + this.getPageCode() + " - Frame " + this.getFrame());
 			showlet = this.createCloneFrom(showlet);
 		}
 		this.setShowlet(showlet);

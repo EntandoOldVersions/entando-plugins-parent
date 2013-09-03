@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>entando-plugins-parent</artifactId>
+        <artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-		<version>3.2.1-SNAPSHOT</version>
-	</parent>
+		<version>3.3.1-EEE-SNAPSHOT-SNAPSHOT</version>
+    </parent>
 	<artifactId>entando-plugin-jpmassiveresourceloader</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
 	<packaging>war</packaging>
@@ -20,6 +19,7 @@
 		</developer>
 	</developers>
 	<url>http://www.entando.com/</url>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -52,4 +52,13 @@
 			</plugin>
 		</plugins>
 	</build>
+    <dependencies>
+        <dependency>
+            <groupId>org.entando.entando</groupId>
+            <artifactId>entando-core-engine</artifactId>
+            <version>3.3.1-EEE-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

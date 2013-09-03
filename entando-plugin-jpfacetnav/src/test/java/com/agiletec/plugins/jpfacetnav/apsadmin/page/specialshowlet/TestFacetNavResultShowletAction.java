@@ -2,11 +2,13 @@ package com.agiletec.plugins.jpfacetnav.apsadmin.page.specialshowlet;
 
 import java.util.List;
 
-import com.agiletec.aps.system.services.page.Widget;
+
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 import com.agiletec.plugins.jpfacetnav.apsadmin.ApsAdminPluginBaseTestCase;
 import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialshowlet.FacetNavResultShowletAction;
 import com.opensymphony.xwork2.Action;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 public class TestFacetNavResultShowletAction extends ApsAdminPluginBaseTestCase {
 
@@ -14,7 +16,7 @@ public class TestFacetNavResultShowletAction extends ApsAdminPluginBaseTestCase 
 		String result = this.executeConfigFacetNavResult("admin", "homepage", "1", "jpfacetnav_results");
 		assertEquals(Action.SUCCESS, result);
 		FacetNavResultShowletAction action = (FacetNavResultShowletAction) this.getAction();
-		com.agiletec.aps.system.services.page.Widget showlet = action.getShowlet();
+		org.entando.entando.aps.system.services.page.Widget showlet = action.getShowlet();
 		assertNotNull(showlet);
 		assertEquals(0, showlet.getConfig().size());
 		List<SmallContentType> contentTypes = action.getContentTypes();

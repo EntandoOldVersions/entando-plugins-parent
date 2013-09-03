@@ -26,10 +26,11 @@ import javax.servlet.jsp.tagext.TagSupport;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * Toggle the visibility of the elements contained in body tag,
@@ -46,7 +47,7 @@ public class CheckValidShowletTag extends TagSupport {
 		try {
 			boolean check = false;
 			RequestContext reqCtx = (RequestContext) req.getAttribute(RequestContext.REQCTX);
-			com.agiletec.aps.system.services.page.Widget currentShowlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			if (null != currentShowlet && null != currentShowlet.getType()) {
 				String typeCode = currentShowlet.getType().getCode();
 				Set<String> showletTypeCodes = myPortalConfigManager.getConfig().getAllowedShowlets();

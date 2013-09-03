@@ -29,11 +29,13 @@ import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.tree.ITreeNode;
 import com.agiletec.aps.system.common.tree.ITreeNodeManager;
-import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpfacetnav.aps.system.JpFacetNavSystemConstants;
 import com.agiletec.plugins.jpfacetnav.aps.system.services.content.showlet.IFacetNavHelper;
 import com.agiletec.plugins.jpfacetnav.aps.tags.util.FacetBreadCrumbs;
+
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  *
@@ -233,10 +235,10 @@ public abstract class AbstractFacetNavTag extends TagSupport {
 	protected List<ITreeNode> getFacetRoots(RequestContext reqCtx) {
 		IPage page = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
 		Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
-		com.agiletec.aps.system.services.page.Widget[] showlets = page.getShowlets();
+		org.entando.entando.aps.system.services.page.Widget[] showlets = page.getShowlets();
 		for (int i = 0; i < showlets.length; i++) {
 			if (i == currentFrame.intValue()) continue;
-			com.agiletec.aps.system.services.page.Widget showlet = showlets[i];
+			org.entando.entando.aps.system.services.page.Widget showlet = showlets[i];
 			String configParamName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
 			if (null != showlet && null != showlet.getConfig()
 					&& null != showlet.getConfig().getProperty(configParamName)) {

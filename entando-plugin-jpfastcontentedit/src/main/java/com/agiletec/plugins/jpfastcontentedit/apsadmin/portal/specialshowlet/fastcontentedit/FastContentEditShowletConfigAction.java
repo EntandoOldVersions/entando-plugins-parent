@@ -24,10 +24,11 @@ import java.util.logging.Logger;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.apsadmin.portal.specialshowlet.SimpleShowletConfigAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 public class FastContentEditShowletConfigAction extends SimpleShowletConfigAction {
 
@@ -42,7 +43,7 @@ public class FastContentEditShowletConfigAction extends SimpleShowletConfigActio
 		}
 		if (this.getActionErrors().size()>0 || this.getFieldErrors().size()>0) {
 			try {
-				com.agiletec.aps.system.services.page.Widget showlet = super.createNewShowlet();
+				org.entando.entando.aps.system.services.page.Widget showlet = super.createNewShowlet();
 				this.setShowlet(showlet);
 			} catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -93,7 +94,7 @@ public class FastContentEditShowletConfigAction extends SimpleShowletConfigActio
 
 	public String configContentType() {
 		try {
-			com.agiletec.aps.system.services.page.Widget showlet = super.createNewShowlet();
+			org.entando.entando.aps.system.services.page.Widget showlet = super.createNewShowlet();
 			showlet.getConfig().setProperty("typeCode", this.getContentType());
 			this.setShowlet(showlet);
 		} catch (Throwable t) {
@@ -105,7 +106,7 @@ public class FastContentEditShowletConfigAction extends SimpleShowletConfigActio
 
 	public String changeContentType() {
 		try {
-			com.agiletec.aps.system.services.page.Widget showlet = super.createNewShowlet();
+			org.entando.entando.aps.system.services.page.Widget showlet = super.createNewShowlet();
 			this.setShowlet(showlet);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "changeContentType");

@@ -20,8 +20,6 @@ package com.agiletec.plugins.jpmyportalplus.aps.tags.util;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.util.BaseFrameDecoratorContainer;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
@@ -31,13 +29,16 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPorta
 
 import java.util.Set;
 
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.Widget;
+
 /**
  * @author E.Santoboni
  */
 public class MyPortalShowletDecoratorContainer extends BaseFrameDecoratorContainer {
 
 	@Override
-	public boolean needsDecoration(com.agiletec.aps.system.services.page.Widget showlet, RequestContext reqCtx) {
+	public boolean needsDecoration(org.entando.entando.aps.system.services.page.Widget showlet, RequestContext reqCtx) {
 		try {
 			IPage page = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
 			Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);

@@ -26,10 +26,11 @@ import org.entando.entando.aps.system.services.widgettype.WidgetType;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.IPageManager;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
+
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.IPageManager;
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
@@ -41,16 +42,16 @@ public class ShowletReplicatorTag extends TagSupport {
 		ServletRequest req =  this.pageContext.getRequest();
 		RequestContext reqCtx = (RequestContext) req.getAttribute(RequestContext.REQCTX);
 		try {
-			com.agiletec.aps.system.services.page.Widget currentShowlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget currentShowlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			String pageCode = currentShowlet.getConfig().getProperty("pageCodeParam");
 			IPageManager pageManager = (IPageManager) ApsWebApplicationUtils.getBean(SystemConstants.PAGE_MANAGER, this.pageContext);
 			IPage targetPage = pageManager.getPage(pageCode);
 			if (null != targetPage) {
 				String frameIdString = currentShowlet.getConfig().getProperty("frameIdParam");
 				int frameId = Integer.parseInt(frameIdString);
-				com.agiletec.aps.system.services.page.Widget[] showlets = targetPage.getShowlets();
+				org.entando.entando.aps.system.services.page.Widget[] showlets = targetPage.getShowlets();
 				if (showlets.length>=frameId) {
-					com.agiletec.aps.system.services.page.Widget targetShowlet = targetPage.getShowlets()[frameId];
+					org.entando.entando.aps.system.services.page.Widget targetShowlet = targetPage.getShowlets()[frameId];
 					if (null != targetShowlet) {
 						reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET, targetShowlet);
 						WidgetType WidgetType = targetShowlet.getType();

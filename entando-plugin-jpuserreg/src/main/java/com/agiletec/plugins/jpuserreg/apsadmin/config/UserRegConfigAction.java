@@ -11,8 +11,6 @@ import com.agiletec.aps.system.services.authorization.authorizator.IApsAuthority
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.group.IGroupManager;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.role.IRoleManager;
 import com.agiletec.aps.system.services.role.Role;
 import com.agiletec.apsadmin.system.BaseAction;
@@ -22,6 +20,9 @@ import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegManage
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.IUserRegConfig;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.Template;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.UserRegConfig;
+
+import org.entando.entando.aps.system.services.page.IPage;
+import org.entando.entando.aps.system.services.page.IPageManager;
 
 public class UserRegConfigAction extends BaseAction implements IUserRegConfigAction {
 	

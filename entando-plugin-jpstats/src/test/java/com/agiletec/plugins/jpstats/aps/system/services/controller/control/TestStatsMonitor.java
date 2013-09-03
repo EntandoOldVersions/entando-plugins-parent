@@ -29,7 +29,6 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.controller.ControllerManager;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.Page;
 import com.agiletec.aps.system.services.pagemodel.PageModel;
 import com.agiletec.aps.system.services.role.Role;
 import com.agiletec.aps.system.services.user.User;
@@ -38,6 +37,8 @@ import com.agiletec.plugins.jpstats.aps.ApsPluginBaseTestCase;
 import com.agiletec.plugins.jpstats.aps.system.services.JpStatsSystemConstants;
 import com.agiletec.plugins.jpstats.aps.util.CalendarConverter;
 import com.agiletec.plugins.jpstats.util.TestStatsUtils;
+
+import org.entando.entando.aps.system.services.page.Page;
 
 /**
  * Test the Stats Monitor.

@@ -31,12 +31,13 @@ import com.agiletec.aps.system.services.authorization.IApsAuthority;
 import com.agiletec.aps.system.services.controller.ControllerManager;
 import com.agiletec.aps.system.services.controller.control.ControlServiceInterface;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.Page;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.role.Role;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpstats.aps.system.services.stats.StatsManager;
 import com.agiletec.plugins.jpstats.aps.system.services.stats.StatsRecord;
+
+import org.entando.entando.aps.system.services.page.Page;
+import org.entando.entando.aps.system.services.page.Widget;
 
 
 /**
@@ -139,7 +140,7 @@ public class StatsMonitor implements ControlServiceInterface {
 		String content = null;
 		int mainFrame = page.getModel().getMainFrame();
 		if(mainFrame >= 0) {
-			com.agiletec.aps.system.services.page.Widget showlet = page.getShowlets()[mainFrame];
+			org.entando.entando.aps.system.services.page.Widget showlet = page.getShowlets()[mainFrame];
 			if(null != showlet && null != showlet.getPublishedContent()) {
 				content = showlet.getPublishedContent();
 			}

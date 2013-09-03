@@ -28,13 +28,14 @@ import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.i18n.II18nManager;
 import com.agiletec.aps.system.services.lang.Lang;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.apsadmin.system.entity.AbstractApsEntityAction;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.JpwebdynamicformSystemConstants;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageManager;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.model.Message;
 import com.agiletec.plugins.jpwebdynamicform.apsadmin.message.common.INewMessageAction;
+
+import org.entando.entando.aps.system.services.page.Widget;
 
 /**
  * Implementation for action managing Message entity editing operations.
@@ -232,7 +233,7 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 		String typeCode = null;
 		RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
 		if (reqCtx != null) {
-			com.agiletec.aps.system.services.page.Widget showlet = (com.agiletec.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
+			org.entando.entando.aps.system.services.page.Widget showlet = (org.entando.entando.aps.system.services.page.Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_SHOWLET);
 			if (showlet != null) {
 				ApsProperties config = showlet.getConfig();
 				if (null != config) {
