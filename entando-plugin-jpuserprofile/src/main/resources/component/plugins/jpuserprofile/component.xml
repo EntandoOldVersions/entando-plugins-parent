@@ -3,13 +3,6 @@
 	<code>jpuserprofile</code>
 	<description>Manage User Profile</description>
 	<installation>
-		<tableMapping>
-			<datasource name="servDataSource">
-				<class>org.entando.entando.plugins.jpuserprofile.aps.system.init.servdb.UserProfile</class>
-				<class>org.entando.entando.plugins.jpuserprofile.aps.system.init.servdb.UserProfileSearch</class>
-				<class>org.entando.entando.plugins.jpuserprofile.aps.system.init.servdb.UserProfileAttributeRole</class>
-			</datasource>
-		</tableMapping>
 		<environment code="production">
 			<defaultSqlResources>
 				<datasource name="portDataSource">
