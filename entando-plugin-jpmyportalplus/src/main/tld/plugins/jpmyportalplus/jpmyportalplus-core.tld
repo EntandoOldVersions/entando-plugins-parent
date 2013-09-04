@@ -28,8 +28,8 @@
 		<description>
 			<![CDATA[Returns the list of widget (in form of {@link WidgetCheckInfo}) to use into the function of page configuration.]]>
 		</description>
-		<name>customizableShowlets</name>
-		<tag-class>com.agiletec.plugins.jpmyportalplus.aps.tags.CustomizableShowletsTag</tag-class>
+		<name>customizableWidgets</name>
+		<tag-class>com.agiletec.plugins.jpmyportalplus.aps.tags.CustomizableWidgetsTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description>
@@ -111,8 +111,8 @@
 			<![CDATA[Toggle the visibility of the elements contained in body tag, depending on the presents of showlet type into the allowed types of MyPortal Service.
 			Is possible to insert the result of the check in a variable placed in the page context.]]>
 		</description>
-		<name>checkValidShowlet</name>
-		<tag-class>com.agiletec.plugins.jpmyportalplus.aps.tags.CheckValidShowletTag</tag-class>
+		<name>checkValidWidget</name>
+		<tag-class>com.agiletec.plugins.jpmyportalplus.aps.tags.CheckValidWidgetTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description><![CDATA[Name of the variable where to store the boolean resulted by the check.]]></description>

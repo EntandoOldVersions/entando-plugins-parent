@@ -37,7 +37,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalC
  * Is possible to insert the result of the check in a variable placed in the page context.
  * @author E.Santoboni
  */
-public class CheckValidShowletTag extends TagSupport {
+public class CheckValidWidgetTag extends TagSupport {
 
 	@Override
 	public int doStartTag() throws JspException {

@@ -5,7 +5,7 @@ import java.util.List;
 import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 import com.agiletec.plugins.jpfacetnav.apsadmin.ApsAdminPluginBaseTestCase;
-import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.FacetNavResultShowletAction;
+import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.FacetNavResultWidgetAction;
 import com.opensymphony.xwork2.Action;
 
 public class TestFacetNavResultWidgetAction extends ApsAdminPluginBaseTestCase {
@@ -13,7 +13,7 @@ public class TestFacetNavResultWidgetAction extends ApsAdminPluginBaseTestCase {
 	public void testInitConfig_1() throws Throwable {
 		String result = this.executeConfigFacetNavResult("admin", "homepage", "1", "jpfacetnav_results");
 		assertEquals(Action.SUCCESS, result);
-		FacetNavResultShowletAction action = (FacetNavResultShowletAction) this.getAction();
+		FacetNavResultWidgetAction action = (FacetNavResultWidgetAction) this.getAction();
 		Widget widget = action.getShowlet();
 		assertNotNull(widget);
 		assertEquals(0, widget.getConfig().size());

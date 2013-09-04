@@ -32,7 +32,7 @@ import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.util.FacetN
 /**
  * @author E.Santoboni
  */
-public class FacetNavResultShowletAction extends SimpleWidgetConfigAction implements IFacetNavResultWidgetAction {
+public class FacetNavResultWidgetAction extends SimpleWidgetConfigAction implements IFacetNavResultWidgetAction {
 	
 	@Override
 	public void validate() {

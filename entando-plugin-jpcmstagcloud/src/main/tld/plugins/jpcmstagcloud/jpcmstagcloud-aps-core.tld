@@ -45,8 +45,8 @@
     	<description>
 			Search and return the page (or the list of pages) with the given showlet type.
     	</description>
-    	<name>pageWithShowlet</name>
-    	<tag-class>com.agiletec.plugins.jpcmstagcloud.aps.tags.PageWithShowletTag</tag-class>
+    	<name>pageWithWidget</name>
+    	<tag-class>com.agiletec.plugins.jpcmstagcloud.aps.tags.PageWithWidgetTag</tag-class>
     	<body-content>empty</body-content>
     	<attribute>
       		<description></description>

@@ -20,7 +20,7 @@ package com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget;
 /**
  * @author E.Santoboni
  */
-public interface IFacetNavTreeShowletAction extends IFacetNavResultWidgetAction {
+public interface IFacetNavTreeWidgetAction extends IFacetNavResultWidgetAction {
 	
 	/**
 	 * Add a facet to the associated facet nodes

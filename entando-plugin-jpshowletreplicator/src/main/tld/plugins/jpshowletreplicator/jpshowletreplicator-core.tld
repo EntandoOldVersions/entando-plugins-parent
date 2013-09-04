@@ -10,7 +10,7 @@
 	<tag>
 		<description>Renderizza il Replicatore</description>
 		<name>showletReplicator</name>
-		<tag-class>com.agiletec.plugins.jpshowletreplicator.aps.tags.ShowletReplicatorTag</tag-class>
+		<tag-class>com.agiletec.plugins.jpshowletreplicator.aps.tags.WidgetReplicatorTag</tag-class>
 		<body-content>empty</body-content>
 	</tag>
 	

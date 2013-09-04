@@ -49,7 +49,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.tags.util.WidgetCheckInfo;
  * Returns the list of widget (in form of {@link WidgetCheckInfo}) to use into the function of page configuration.
  * @author E.Santoboni
  */
-public class CustomizableShowletsTag extends TagSupport {
+public class CustomizableWidgetsTag extends TagSupport {
 
     public int doStartTag() throws JspException {
         RequestContext reqCtx = (RequestContext) this.pageContext.getRequest().getAttribute(RequestContext.REQCTX);

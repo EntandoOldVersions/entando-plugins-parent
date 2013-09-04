@@ -6,7 +6,7 @@
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	
 	<bean id="jpfacetnavFacetNavResultShowletAction" scope="prototype" 
-			class="com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.FacetNavResultShowletAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.FacetNavResultWidgetAction" parent="simpleShowletAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 	</bean>
 	

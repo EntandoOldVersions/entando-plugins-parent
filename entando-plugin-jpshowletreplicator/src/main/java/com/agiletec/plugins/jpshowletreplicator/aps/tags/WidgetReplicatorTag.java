@@ -35,7 +35,7 @@ import com.agiletec.aps.system.services.page.Widget;
 /**
  * @author E.Santoboni
  */
-public class ShowletReplicatorTag extends TagSupport {
+public class WidgetReplicatorTag extends TagSupport {
 
 	@Override
 	public int doEndTag() throws JspException {

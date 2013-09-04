@@ -19,7 +19,7 @@
 	<%-- configure homepage --%>
 		<form action="<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpmyportalplus/front/addWidgets.action#editshowlet" method="post">
 				<p class="help-block"><wp:i18n key="JPMYPORTALPLUS_CONFIG_INTRO"/></p>
-				<jpmpp:customizableShowlets var="customizableShowlets" />
+				<jpmpp:customizableWidgets var="customizableShowlets" />
 				<%-- configurable showlet list --%>
 					<c:if test="${!empty customizableShowlets}">
 						<ul class="thumbnails">
