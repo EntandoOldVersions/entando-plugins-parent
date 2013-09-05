@@ -9,7 +9,7 @@
 	<!-- Tag da usare esclusivamente nelle showlet -->
 	<tag>
 		<description>Renderizza il Replicatore</description>
-		<name>showletReplicator</name>
+		<name>widgetReplicator</name>
 		<tag-class>com.agiletec.plugins.jpshowletreplicator.aps.tags.WidgetReplicatorTag</tag-class>
 		<body-content>empty</body-content>
 	</tag>
