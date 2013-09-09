@@ -190,7 +190,7 @@ public class RssAction extends BaseAction implements IRssAction {
 		try {
 			types.add(new SelectItem(IContentListFilterAction.METADATA_KEY_PREFIX + IContentManager.CONTENT_CREATION_DATE_FILTER_KEY, this.getText("label.creationDate")));
 			types.add(new SelectItem(IContentListFilterAction.METADATA_KEY_PREFIX + IContentManager.CONTENT_MODIFY_DATE_FILTER_KEY, this.getText("label.lastModifyDate")));
-			//String contentType = this.getShowlet().getConfig().getProperty(IContentListShowletHelper.SHOWLET_PARAM_CONTENT_TYPE);
+			//String contentType = this.getShowlet().getConfig().getProperty(IContentListWidgetHelper.WIDGET_PARAM_CONTENT_TYPE);
 			Content prototype = this.getContentManager().createContentType(this.getContentType());
 			List<AttributeInterface> contentAttributes = prototype.getAttributeList();
 			for (int i=0; i<contentAttributes.size(); i++) {

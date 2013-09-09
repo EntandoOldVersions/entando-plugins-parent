@@ -30,7 +30,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPo
 /**
  * @author E.Santoboni
  */
-public class ShowletTypeAction extends com.agiletec.apsadmin.portal.ShowletTypeAction {
+public class ShowletTypeAction extends com.agiletec.apsadmin.portal.WidgetTypeAction {
 	
 	@Override
 	public String edit() {

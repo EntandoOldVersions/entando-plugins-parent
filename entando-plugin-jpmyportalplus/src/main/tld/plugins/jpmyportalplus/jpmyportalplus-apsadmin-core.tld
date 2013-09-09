@@ -10,11 +10,11 @@
 	
 	<tag>
 		<description>
-			<![CDATA[Tag equals to {@link com.agiletec.apsadmin.tags.ShowletTypeInfoTag} tag.
+			<![CDATA[Tag equals to {@link com.agiletec.apsadmin.tags.WidgetTypeInfoTag} tag.
 			Return also a "swappable" property of the type.]]>
 		</description>
-		<name>showletType</name>
-		<tag-class>com.agiletec.plugins.jpmyportalplus.apsadmin.tags.ShowletTypeInfoTag</tag-class>
+		<name>widgetType</name>
+		<tag-class>com.agiletec.plugins.jpmyportalplus.apsadmin.tags.WidgetTypeInfoTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description><![CDATA[The code of the showlet type to return.]]></description>

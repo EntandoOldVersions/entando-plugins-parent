@@ -35,7 +35,7 @@ import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
-import com.agiletec.plugins.jacms.aps.system.services.content.showlet.IContentListShowletHelper;
+import com.agiletec.plugins.jacms.aps.system.services.content.showlet.IContentListWidgetHelper;
 import com.agiletec.plugins.jacms.aps.system.services.content.showlet.IContentListTagBean;
 import com.agiletec.plugins.jacms.aps.system.services.content.showlet.UserFilterOptionBean;
 import com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.helper.IContentActionHelper;
@@ -54,7 +54,7 @@ public class AllowedContentsTag extends TagSupport implements IContentListTagBea
 		ServletRequest request =  this.pageContext.getRequest();
 		RequestContext reqCtx = (RequestContext) request.getAttribute(RequestContext.REQCTX);
 		UserDetails currentUser = (UserDetails) session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
-		IContentListShowletHelper contentListHelper = (IContentListShowletHelper) ApsWebApplicationUtils.getBean(JacmsSystemConstants.CONTENT_LIST_HELPER, this.pageContext);
+		IContentListWidgetHelper contentListHelper = (IContentListWidgetHelper) ApsWebApplicationUtils.getBean(JacmsSystemConstants.CONTENT_LIST_HELPER, this.pageContext);
 		IContentActionHelper helper = (IContentActionHelper) ApsWebApplicationUtils.getBean(JpFastContentEditSystemConstants.FRONT_CONTENT_ACTION_HELPER, this.pageContext);
 		try {
 			Set<String> contentIds = new HashSet<String>();

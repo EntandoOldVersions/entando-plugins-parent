@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="wpmpp" uri="/jpmyportalplus-apsadmin-core" %>
-<wpmpp:showletType key="%{#showletType.key}" property="swappable" var="swappableVar" />
+<wpmpp:widgetType key="%{#showletType.key}" property="swappable" var="swappableVar" />
 <td class="icon">
 	<s:if test="#swappableVar > -1">
 	<s:if test="#swappableVar == 1">

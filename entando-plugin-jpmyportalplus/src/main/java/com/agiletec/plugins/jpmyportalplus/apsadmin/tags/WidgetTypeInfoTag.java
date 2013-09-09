@@ -29,13 +29,13 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConsta
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
 
 /**
- * Tag equals to {@link com.agiletec.apsadmin.tags.ShowletTypeInfoTag} tag.
+ * Tag equals to {@link com.agiletec.apsadmin.tags.WidgetTypeInfoTag} tag.
  * Return also a "swappable" property of the type.
  * If the showlet type is uncompatible with MyPortal Engine, return -1.
  * If the showlet type is unswappable return 0, else return 1.
  * @author E.Santoboni
  */
-public class ShowletTypeInfoTag extends com.agiletec.apsadmin.tags.ShowletTypeInfoTag {
+public class WidgetTypeInfoTag extends com.agiletec.apsadmin.tags.WidgetTypeInfoTag {
 	
 	@Override
 	protected Object getPropertyValue(Object masterObject, String propertyValue) {
