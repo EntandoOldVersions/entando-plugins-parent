@@ -8,7 +8,7 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
 	
 	<bean id="jpshowletreplicatorReplicatorShowletAction" scope="prototype" 
-			class="com.agiletec.plugins.jpshowletreplicator.apsadmin.portal.specialshowlet.replicator.ReplicatorShowletAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpshowletreplicator.apsadmin.portal.specialwidget.replicator.ReplicatorShowletAction" parent="simpleShowletAction" >
 		<property name="pageActionHelper" ref="pageActionHelper" />
 		<property name="invalidShowletTypes">
 			<list>

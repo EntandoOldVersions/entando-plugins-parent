@@ -6,12 +6,12 @@
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	
 	<bean id="jpfacetnavFacetNavResultShowletAction" scope="prototype" 
-			class="com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialshowlet.FacetNavResultShowletAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.FacetNavResultShowletAction" parent="simpleShowletAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 	</bean>
 	
 	<bean id="jpfacetnavFacetNavTreeShowletAction" scope="prototype" 
-			class="com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialshowlet.FacetNavTreeShowletAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.FacetNavTreeShowletAction" parent="simpleShowletAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="treeNodeManager" ref="CategoryManager" />
 		<property name="treeHelper" ref="categoryActionHelper" />

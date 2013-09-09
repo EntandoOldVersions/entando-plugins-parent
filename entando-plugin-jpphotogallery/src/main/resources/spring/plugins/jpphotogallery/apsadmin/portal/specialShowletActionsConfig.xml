@@ -8,31 +8,31 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
 	
 	<bean id="jpphotogalleryPhotogalleryShowletAction" scope="prototype" 
-			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialshowlet.photogallery.PhotogalleryShowletAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.PhotogalleryShowletAction" parent="simpleShowletAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="contentModelManager" ref="jacmsContentModelManager" />
 		<property name="categoryManager" ref="CategoryManager" />
 	</bean>
 	
 	<bean id="jpphotogalleryBaseFilterAction" scope="prototype" 
-			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialshowlet.photogallery.BaseFilterAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.BaseFilterAction" parent="simpleShowletAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 	</bean>
 	
 	<bean id="jpphotogalleryTextFilterAction" scope="prototype" 
-			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialshowlet.photogallery.TextAttributeFilterAction" parent="jpphotogalleryBaseFilterAction" >
+			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.TextAttributeFilterAction" parent="jpphotogalleryBaseFilterAction" >
 	</bean>
 	
 	<bean id="jpphotogalleryNumberFilterAction" scope="prototype" 
-			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialshowlet.photogallery.NumberAttributeFilterAction" parent="jpphotogalleryBaseFilterAction" >
+			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.NumberAttributeFilterAction" parent="jpphotogalleryBaseFilterAction" >
 	</bean>
 	
 	<bean id="jpphotogalleryBooleanFilterAction" scope="prototype" 
-			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialshowlet.photogallery.BooleanAttributeFilterAction" parent="jpphotogalleryBaseFilterAction" >
+			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.BooleanAttributeFilterAction" parent="jpphotogalleryBaseFilterAction" >
 	</bean>
 	
 	<bean id="jpphotogalleryDateFilterAction" scope="prototype" 
-			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialshowlet.photogallery.DateAttributeFilterAction" parent="jpphotogalleryBaseFilterAction" >
+			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.DateAttributeFilterAction" parent="jpphotogalleryBaseFilterAction" >
 	</bean>
 	
 </beans>

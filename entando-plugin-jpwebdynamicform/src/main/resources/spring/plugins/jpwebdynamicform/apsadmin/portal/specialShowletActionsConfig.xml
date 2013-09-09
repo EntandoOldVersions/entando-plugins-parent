@@ -6,7 +6,7 @@
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 	<bean id="jpwebdynamicformWebdynamicformShowletAction" scope="prototype"
-			class="com.agiletec.plugins.jpwebdynamicform.apsadmin.portal.specialshowlet.webdynamicform.WebdynamicformShowletAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpwebdynamicform.apsadmin.portal.specialwidget.webdynamicform.WebdynamicformShowletAction" parent="simpleShowletAction" >
 		<property name="messageManager" ref="jpwebdynamicformMessageManager" />
 	</bean>
 

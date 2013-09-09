@@ -6,7 +6,7 @@
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	
 	<bean id="jfastcontenteditConfigShowletAction" scope="prototype" 
-			class="com.agiletec.plugins.jpfastcontentedit.apsadmin.portal.specialshowlet.fastcontentedit.FastContentEditShowletConfigAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpfastcontentedit.apsadmin.portal.specialwidget.fastcontentedit.FastContentEditShowletConfigAction" parent="simpleShowletAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 	</bean>
 	

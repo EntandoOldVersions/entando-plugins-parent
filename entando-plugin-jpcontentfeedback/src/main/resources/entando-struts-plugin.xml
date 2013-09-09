@@ -9,7 +9,7 @@
     <include file="com/agiletec/plugins/jpcontentfeedback/aps/internalservlet/feedback/feedback.xml"/>
 	
 	<include file="com/agiletec/plugins/jpcontentfeedback/apsadmin/feedback/feedback.xml"/>
-	<include file="com/agiletec/plugins/jpcontentfeedback/apsadmin/portal/specialshowlet/specialShowlet.xml"/>
+	<include file="com/agiletec/plugins/jpcontentfeedback/apsadmin/portal/specialwidget/specialWidget.xml"/>
 	<include file="com/agiletec/plugins/jpcontentfeedback/apsadmin/config/contentFeedbackConfigAction.xml"/>
 	
 </struts>

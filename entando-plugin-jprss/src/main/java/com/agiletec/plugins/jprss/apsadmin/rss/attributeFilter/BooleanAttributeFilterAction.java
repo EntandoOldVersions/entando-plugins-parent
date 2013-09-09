@@ -17,7 +17,7 @@
 */
 package com.agiletec.plugins.jprss.apsadmin.rss.attributeFilter;
 
-public class BooleanAttributeFilterAction extends com.agiletec.plugins.jacms.apsadmin.portal.specialshowlet.listviewer.BooleanAttributeFilterAction {
+public class BooleanAttributeFilterAction extends com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.listviewer.BooleanAttributeFilterAction {
 	
 	public int getId() {
 		return _id;

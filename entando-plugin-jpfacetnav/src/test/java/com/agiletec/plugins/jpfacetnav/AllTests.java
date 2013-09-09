@@ -19,8 +19,9 @@ package com.agiletec.plugins.jpfacetnav;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import com.agiletec.plugins.jpfacetnav.aps.system.services.content.TestContentFacetManager;
-import com.agiletec.plugins.jpfacetnav.apsadmin.page.specialshowlet.TestFacetNavResultShowletAction;
+import com.agiletec.plugins.jpfacetnav.apsadmin.page.specialwidget.TestFacetNavResultShowletAction;
 
 public class AllTests {
 	

@@ -20,7 +20,7 @@ package com.agiletec.plugins.jprss.apsadmin.rss;
 import java.util.List;
 import java.util.Properties;
 
-import com.agiletec.plugins.jacms.apsadmin.portal.specialshowlet.listviewer.BaseFilterAction;
+import com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.listviewer.BaseFilterAction;
 
 /**
  * This class manages allows to build the content filters for the channel configuration.

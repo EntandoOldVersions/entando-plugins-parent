@@ -25,8 +25,7 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.util.ApsProperties;
-import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
-
+import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialwidget.ContentFeedbackShowletAction;
 import com.agiletec.aps.system.services.page.Widget;
 
 /**

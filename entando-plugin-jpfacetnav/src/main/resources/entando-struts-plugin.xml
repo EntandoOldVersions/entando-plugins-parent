@@ -6,6 +6,6 @@
 <struts>
 
 	<!-- ### jpfacetnav ### -->
-	<include file="com/agiletec/plugins/jpfacetnav/apsadmin/portal/specialshowlet/specialShowlet.xml"/>
+	<include file="com/agiletec/plugins/jpfacetnav/apsadmin/portal/specialwidget/specialWidget.xml"/>
 
 </struts>

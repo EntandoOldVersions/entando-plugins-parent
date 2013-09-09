@@ -8,6 +8,6 @@
 	<!-- ### jpwebdynamicform ### -->
 	<include file="com/agiletec/plugins/jpwebdynamicform/aps/internalservlet/message/userMessage.xml"/>
 	<include file="com/agiletec/plugins/jpwebdynamicform/apsadmin/message/message.xml"/>
-	<include file="com/agiletec/plugins/jpwebdynamicform/apsadmin/portal/specialshowlet/specialShowlet.xml"/>
+	<include file="com/agiletec/plugins/jpwebdynamicform/apsadmin/portal/specialwidget/specialWidget.xml"/>
 	
 </struts>

@@ -6,6 +6,6 @@
 <struts>
 	
     <!-- ### jpshowletreplicator ### -->
-    <include file="com/agiletec/plugins/jpshowletreplicator/apsadmin/portal/specialshowlet/specialShowlet.xml"/>
+    <include file="com/agiletec/plugins/jpshowletreplicator/apsadmin/portal/specialwidget/specialWidget.xml"/>
 	
 </struts>

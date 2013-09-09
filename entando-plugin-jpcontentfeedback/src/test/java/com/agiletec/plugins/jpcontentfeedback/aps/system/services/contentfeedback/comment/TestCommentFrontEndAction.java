@@ -45,7 +45,7 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.RatingManager;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.model.IRating;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.JpContentFeedbackApsAdminBaseTestCase;
-import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet.ContentFeedbackShowletAction;
+import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialwidget.ContentFeedbackShowletAction;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 

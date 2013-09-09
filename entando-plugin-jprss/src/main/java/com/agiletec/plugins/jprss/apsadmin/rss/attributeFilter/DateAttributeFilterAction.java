@@ -17,7 +17,7 @@
 */
 package com.agiletec.plugins.jprss.apsadmin.rss.attributeFilter;
 
-public class DateAttributeFilterAction extends com.agiletec.plugins.jacms.apsadmin.portal.specialshowlet.listviewer.DateAttributeFilterAction {
+public class DateAttributeFilterAction extends com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.listviewer.DateAttributeFilterAction {
 
 	public int getId() {
 		return _id;

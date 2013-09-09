@@ -1,0 +1,36 @@
+package com.agiletec.plugins.jpfacetnav.apsadmin.page.specialwidget;
+
+import java.util.List;
+
+import com.agiletec.aps.system.services.page.Widget;
+import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
+import com.agiletec.plugins.jpfacetnav.apsadmin.ApsAdminPluginBaseTestCase;
+import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.FacetNavResultShowletAction;
+import com.opensymphony.xwork2.Action;
+
+public class TestFacetNavResultShowletAction extends ApsAdminPluginBaseTestCase {
+
+	public void testInitConfig_1() throws Throwable {
+		String result = this.executeConfigFacetNavResult("admin", "homepage", "1", "jpfacetnav_results");
+		assertEquals(Action.SUCCESS, result);
+		FacetNavResultShowletAction action = (FacetNavResultShowletAction) this.getAction();
+		Widget widget = action.getShowlet();
+		assertNotNull(widget);
+		assertEquals(0, widget.getConfig().size());
+		List<SmallContentType> contentTypes = action.getContentTypes();
+		assertNotNull(contentTypes);
+		assertEquals(4, contentTypes.size());
+	}
+
+	private String executeConfigFacetNavResult(String username, String pageCode, String frame, String showletTypeCode) throws Throwable {
+		this.setUserOnSession(username);
+		this.initAction("/do/Page/SpecialWidget", "facetNavResultConfig");
+		this.addParameter("pageCode", pageCode);
+		this.addParameter("frame", frame);
+		if (null != showletTypeCode && showletTypeCode.trim().length()>0) {
+			this.addParameter("showletTypeCode", showletTypeCode);
+		}
+		return this.executeAction();
+	}
+
+}

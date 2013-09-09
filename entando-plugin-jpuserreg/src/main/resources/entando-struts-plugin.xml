@@ -9,6 +9,6 @@
 	<include file="com/agiletec/plugins/jpuserreg/aps/internalservlet/userreg.xml" />
 	
 	<include file="com/agiletec/plugins/jpuserreg/apsadmin/config/config.xml" />
-	<include file="com/agiletec/plugins/jpuserreg/apsadmin/portal/specialshowlet/specialShowlet.xml" />
+	<include file="com/agiletec/plugins/jpuserreg/apsadmin/portal/specialwidget/specialWidget.xml" />
 	
 </struts>

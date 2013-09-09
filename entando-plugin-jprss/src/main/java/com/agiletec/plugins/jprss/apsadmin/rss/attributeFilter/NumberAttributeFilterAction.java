@@ -17,7 +17,7 @@
 */
 package com.agiletec.plugins.jprss.apsadmin.rss.attributeFilter;
 
-public class NumberAttributeFilterAction extends com.agiletec.plugins.jacms.apsadmin.portal.specialshowlet.listviewer.NumberAttributeFilterAction {
+public class NumberAttributeFilterAction extends com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.listviewer.NumberAttributeFilterAction {
 
 	public int getId() {
 		return _id;

@@ -6,6 +6,6 @@
 <struts>
 	
 	<!-- ### jpgeoref ### -->
-    <include file="com/agiletec/plugins/jpgeoref/apsadmin/portal/specialshowlet/specialShowlet.xml" />
+    <include file="com/agiletec/plugins/jpgeoref/apsadmin/portal/specialwidget/specialWidget.xml" />
 	
 </struts>
