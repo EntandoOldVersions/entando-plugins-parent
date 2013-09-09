@@ -15,7 +15,7 @@
  * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
  *
  */
-package com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialshowlet.photogallery;
+package com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery;
 
 public class DateAttributeFilterAction extends com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.listviewer.DateAttributeFilterAction {
 	

@@ -24,12 +24,12 @@ import java.util.List;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
-import com.agiletec.apsadmin.portal.specialshowlet.SimpleWidgetConfigAction;
+import com.agiletec.apsadmin.portal.specialwidget.SimpleWidgetConfigAction;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
 
 import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
 
-public class UserRegShowletAction extends SimpleWidgetConfigAction {
+public class UserRegWidgetAction extends SimpleWidgetConfigAction {
 	
 	@Override
 	public void validate() {

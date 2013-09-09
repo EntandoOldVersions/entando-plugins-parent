@@ -15,7 +15,7 @@
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialshowlet;
+package com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialwidget;
 
 import java.util.HashMap;
 import java.util.Iterator;
