@@ -37,7 +37,7 @@ import com.agiletec.apsadmin.system.BaseAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
-import com.agiletec.plugins.jacms.aps.system.services.content.showlet.util.FilterUtils;
+import com.agiletec.plugins.jacms.aps.system.services.content.widget.util.FilterUtils;
 import com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.listviewer.IContentListFilterAction;
 import com.agiletec.plugins.jprss.aps.system.services.rss.Channel;
 import com.agiletec.plugins.jprss.aps.system.services.rss.IRssManager;

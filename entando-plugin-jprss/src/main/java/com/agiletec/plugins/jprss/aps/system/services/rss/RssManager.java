@@ -47,7 +47,7 @@ import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecordVO;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SymbolicLink;
-import com.agiletec.plugins.jacms.aps.system.services.content.showlet.util.EntitySearchFilterDOM;
+import com.agiletec.plugins.jacms.aps.system.services.content.widget.util.EntitySearchFilterDOM;
 import com.agiletec.plugins.jacms.aps.system.services.linkresolver.ILinkResolverManager;
 import com.agiletec.plugins.jprss.aps.system.services.JpRssSystemConstants;
 import com.sun.syndication.feed.synd.SyndContent;

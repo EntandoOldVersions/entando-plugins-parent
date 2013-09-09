@@ -35,9 +35,9 @@ import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
-import com.agiletec.plugins.jacms.aps.system.services.content.showlet.IContentListWidgetHelper;
-import com.agiletec.plugins.jacms.aps.system.services.content.showlet.IContentListTagBean;
-import com.agiletec.plugins.jacms.aps.system.services.content.showlet.UserFilterOptionBean;
+import com.agiletec.plugins.jacms.aps.system.services.content.widget.IContentListTagBean;
+import com.agiletec.plugins.jacms.aps.system.services.content.widget.IContentListWidgetHelper;
+import com.agiletec.plugins.jacms.aps.system.services.content.widget.UserFilterOptionBean;
 import com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.helper.IContentActionHelper;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
 
