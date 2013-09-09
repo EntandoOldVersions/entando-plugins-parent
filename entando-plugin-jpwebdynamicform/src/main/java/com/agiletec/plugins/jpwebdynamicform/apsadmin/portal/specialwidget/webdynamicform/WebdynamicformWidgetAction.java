@@ -25,7 +25,7 @@ import com.agiletec.plugins.jpwebdynamicform.aps.system.services.Jpwebdynamicfor
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageManager;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.model.SmallMessageType;
 
-public class WebdynamicformShowletAction extends SimpleWidgetConfigAction {
+public class WebdynamicformWidgetAction extends SimpleWidgetConfigAction {
 	
 	@Override
 	public void validate() {

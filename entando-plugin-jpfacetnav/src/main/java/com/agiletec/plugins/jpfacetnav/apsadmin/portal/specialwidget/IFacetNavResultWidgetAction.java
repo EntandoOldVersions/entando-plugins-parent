@@ -15,17 +15,23 @@
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package com.agiletec.plugins.jpshowletreplicator.apsadmin.portal.specialwidget.replicator;
+package com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget;
 
 /**
  * @author E.Santoboni
  */
-public interface IReplicatorShowletAction {
+public interface IFacetNavResultWidgetAction {
 	
-	public String resetConfig();
+	/**
+	 * Add a content type to the associated content types
+	 * @return The code describing the result of the operation.
+	 */
+	public String joinContentType();
 	
-	public String browseFrames();
-	
-	public String selectFrame();
+	/**
+	 * Remove a content type from the associated content types
+	 * @return The code describing the result of the operation.
+	 */
+	public String removeContentType();
 	
 }

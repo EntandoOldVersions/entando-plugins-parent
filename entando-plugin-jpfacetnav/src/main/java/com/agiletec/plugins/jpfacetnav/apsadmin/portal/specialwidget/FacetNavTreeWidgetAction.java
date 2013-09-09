@@ -33,7 +33,7 @@ import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.util.FacetN
 /**
  * @author E.Santoboni
  */
-public class FacetNavTreeShowletAction extends FacetNavResultShowletAction implements IFacetNavTreeShowletAction, ITreeAction {
+public class FacetNavTreeWidgetAction extends FacetNavResultShowletAction implements IFacetNavTreeShowletAction, ITreeAction {
 	
 	@Override
 	public void validate() {

@@ -19,7 +19,7 @@ package com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialshowlet.photo
 
 import com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.listviewer.ContentListViewerWidgetAction;
 
-public class PhotogalleryShowletAction extends ContentListViewerWidgetAction {
+public class PhotogalleryWidgetAction extends ContentListViewerWidgetAction {
 	
 	public String getModelIdMaster() {
 		return _modelIdMaster;

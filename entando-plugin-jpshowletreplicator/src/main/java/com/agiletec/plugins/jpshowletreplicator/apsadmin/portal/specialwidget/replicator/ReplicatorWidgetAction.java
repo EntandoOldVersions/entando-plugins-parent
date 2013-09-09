@@ -36,7 +36,7 @@ import com.opensymphony.xwork2.Action;
 /**
  * @author E.Santoboni
  */
-public class ReplicatorShowletAction extends SimpleWidgetConfigAction implements IReplicatorShowletAction, ITreeAction {
+public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements IReplicatorWidgetAction, ITreeAction {
 
 	@Override
 	public void validate() {

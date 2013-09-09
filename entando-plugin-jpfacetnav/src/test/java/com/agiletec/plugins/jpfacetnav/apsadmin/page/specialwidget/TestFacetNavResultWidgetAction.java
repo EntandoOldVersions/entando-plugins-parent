@@ -8,7 +8,7 @@ import com.agiletec.plugins.jpfacetnav.apsadmin.ApsAdminPluginBaseTestCase;
 import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.FacetNavResultShowletAction;
 import com.opensymphony.xwork2.Action;
 
-public class TestFacetNavResultShowletAction extends ApsAdminPluginBaseTestCase {
+public class TestFacetNavResultWidgetAction extends ApsAdminPluginBaseTestCase {
 
 	public void testInitConfig_1() throws Throwable {
 		String result = this.executeConfigFacetNavResult("admin", "homepage", "1", "jpfacetnav_results");

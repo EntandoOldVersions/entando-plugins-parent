@@ -8,7 +8,7 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
 	
 	<bean id="jpcontentfeedbackViewerShowletAction" scope="prototype"
-			class="com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialwidget.ContentFeedbackShowletAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialwidget.ContentFeedbackWidgetAction" parent="simpleShowletAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="contentModelManager" ref="jacmsContentModelManager" />
 		<property name="contentFeedbackManager" ref="jpcontentfeedbackContentFeedbackManager" />

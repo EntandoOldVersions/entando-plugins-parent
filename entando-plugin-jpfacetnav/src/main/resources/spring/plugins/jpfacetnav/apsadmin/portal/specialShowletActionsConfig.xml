@@ -11,7 +11,7 @@
 	</bean>
 	
 	<bean id="jpfacetnavFacetNavTreeShowletAction" scope="prototype" 
-			class="com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.FacetNavTreeShowletAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.FacetNavTreeWidgetAction" parent="simpleShowletAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="treeNodeManager" ref="CategoryManager" />
 		<property name="treeHelper" ref="categoryActionHelper" />

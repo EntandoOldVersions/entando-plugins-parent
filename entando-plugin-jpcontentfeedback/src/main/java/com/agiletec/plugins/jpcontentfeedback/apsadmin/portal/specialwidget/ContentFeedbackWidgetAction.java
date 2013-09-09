@@ -39,7 +39,7 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
  * @author D.Cherchi
  *
  */
-public class ContentFeedbackShowletAction  extends ContentViewerWidgetAction implements IContentFeedbackShowletAction {
+public class ContentFeedbackWidgetAction  extends ContentViewerWidgetAction implements IContentFeedbackWidgetAction {
 
 	@Override
 	public String init() {
@@ -54,7 +54,7 @@ public class ContentFeedbackShowletAction  extends ContentViewerWidgetAction imp
 		if (null == showlet) {
 			try {
 				showlet = this.createNewShowlet();
-				//for ContentFeedbackShowletAction
+				//for ContentFeedbackWidgetAction
 				IContentFeedbackConfig systemConfig = this.getContentFeedbackManager().getConfig();
 				String value = systemConfig.getComment();
 				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(SHOWLET_PARAM_COMMENT_ACTIVE, value);

@@ -1,4 +1,4 @@
-<%@ taglmvn clean install -DskipTests -oib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="wpsa" uri="/apsadmin-core" %>

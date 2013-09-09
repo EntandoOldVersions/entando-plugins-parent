@@ -25,7 +25,7 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.util.ApsProperties;
-import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialwidget.ContentFeedbackShowletAction;
+import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialwidget.ContentFeedbackWidgetAction;
 import com.agiletec.aps.system.services.page.Widget;
 
 /**
@@ -68,10 +68,10 @@ public class CheckOptionContentFeedbackTag extends TagSupport {
 		ApsProperties config = showlet.getConfig();
 
 		String param = this.getParam();
-		if (param.equalsIgnoreCase("allowComment")) param = ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_ACTIVE;
-		if (param.equalsIgnoreCase("allowAnonymousComment")) param = ContentFeedbackShowletAction.SHOWLET_PARAM_COMMENT_ANONYMOUS;
-		if (param.equalsIgnoreCase("allowRateContent")) param = ContentFeedbackShowletAction.SHOWLET_PARAM_RATE_CONTENT;
-		if (param.equalsIgnoreCase("allowRateComment")) param = ContentFeedbackShowletAction.SHOWLET_PARAM_RATE_COMMENT;
+		if (param.equalsIgnoreCase("allowComment")) param = ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ACTIVE;
+		if (param.equalsIgnoreCase("allowAnonymousComment")) param = ContentFeedbackWidgetAction.SHOWLET_PARAM_COMMENT_ANONYMOUS;
+		if (param.equalsIgnoreCase("allowRateContent")) param = ContentFeedbackWidgetAction.SHOWLET_PARAM_RATE_CONTENT;
+		if (param.equalsIgnoreCase("allowRateComment")) param = ContentFeedbackWidgetAction.SHOWLET_PARAM_RATE_COMMENT;
 
 		if (null != config && this.getParam()!=null && this.getParam().length()>0) {
 			String value = config.getProperty(this.getParam());

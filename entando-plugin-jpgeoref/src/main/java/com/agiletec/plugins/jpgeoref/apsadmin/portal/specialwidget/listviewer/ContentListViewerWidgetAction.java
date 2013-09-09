@@ -29,7 +29,7 @@ import com.agiletec.plugins.jpgeoref.aps.system.GeoRefSystemConstants;
  * Action per la gestione della configurazione della showlet erogatore avanzato lista contenuti.
  * @author E.Santoboni
  */
-public class ContentListViewerShowletAction extends com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.listviewer.ContentListViewerWidgetAction {
+public class ContentListViewerWidgetAction extends com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.listviewer.ContentListViewerWidgetAction {
 	
 	@Override
 	public void validate() {

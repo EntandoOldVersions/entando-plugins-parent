@@ -23,7 +23,7 @@ package com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialwidget;
  * @author D.Cherchi
  *
  */
-public interface IContentFeedbackShowletAction {
+public interface IContentFeedbackWidgetAction {
 
 	/**
 	 * Esegue l'operazione di associazione di un contenuto alla showlet.

@@ -21,7 +21,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import com.agiletec.plugins.jpfacetnav.aps.system.services.content.TestContentFacetManager;
-import com.agiletec.plugins.jpfacetnav.apsadmin.page.specialwidget.TestFacetNavResultShowletAction;
+import com.agiletec.plugins.jpfacetnav.apsadmin.page.specialwidget.TestFacetNavResultWidgetAction;
 
 public class AllTests {
 	
@@ -29,7 +29,7 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Test for jAPS Plugin jpfacetnav");
 		
 		suite.addTestSuite(TestContentFacetManager.class);
-		suite.addTestSuite(TestFacetNavResultShowletAction.class);
+		suite.addTestSuite(TestFacetNavResultWidgetAction.class);
 		
 		return suite;
 	}

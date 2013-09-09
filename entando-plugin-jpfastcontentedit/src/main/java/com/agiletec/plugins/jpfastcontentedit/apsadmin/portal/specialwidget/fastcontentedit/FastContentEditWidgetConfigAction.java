@@ -29,7 +29,7 @@ import com.agiletec.apsadmin.portal.specialwidget.SimpleWidgetConfigAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 
-public class FastContentEditShowletConfigAction extends SimpleWidgetConfigAction {
+public class FastContentEditWidgetConfigAction extends SimpleWidgetConfigAction {
 
 	@Override
 	public void validate() {

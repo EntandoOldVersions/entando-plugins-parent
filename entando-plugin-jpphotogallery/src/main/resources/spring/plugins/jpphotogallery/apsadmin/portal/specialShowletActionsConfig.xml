@@ -8,7 +8,7 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
 	
 	<bean id="jpphotogalleryPhotogalleryShowletAction" scope="prototype" 
-			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.PhotogalleryShowletAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.PhotogalleryWidgetAction" parent="simpleShowletAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="contentModelManager" ref="jacmsContentModelManager" />
 		<property name="categoryManager" ref="CategoryManager" />
