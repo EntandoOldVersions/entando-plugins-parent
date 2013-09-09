@@ -115,7 +115,7 @@ public class CustomizableWidgetsTag extends TagSupport {
         Map<String, WidgetType> map = new HashMap<String, WidgetType>();
         UserDetails currentUser = (UserDetails) this.pageContext.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
         try {
-            List<WidgetType> list = pageUserConfigManager.getCustomizableShowlets(currentUser);
+            List<WidgetType> list = pageUserConfigManager.getCustomizableWidgets(currentUser);
             for (int i = 0; i < list.size(); i++) {
                 WidgetType type = list.get(i);
                 map.put(type.getCode(), type);

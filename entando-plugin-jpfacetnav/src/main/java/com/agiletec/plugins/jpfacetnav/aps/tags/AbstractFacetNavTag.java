@@ -235,14 +235,14 @@ public abstract class AbstractFacetNavTag extends TagSupport {
 	protected List<ITreeNode> getFacetRoots(RequestContext reqCtx) {
 		IPage page = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
 		Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
-		Widget[] showlets = page.getShowlets();
-		for (int i = 0; i < showlets.length; i++) {
+		Widget[] widgets = page.getWidgets();
+		for (int i = 0; i < widgets.length; i++) {
 			if (i == currentFrame.intValue()) continue;
-			Widget showlet = showlets[i];
+			Widget widget = widgets[i];
 			String configParamName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
-			if (null != showlet && null != showlet.getConfig()
-					&& null != showlet.getConfig().getProperty(configParamName)) {
-				String facetParamConfig = showlet.getConfig().getProperty(configParamName);
+			if (null != widget && null != widget.getConfig()
+					&& null != widget.getConfig().getProperty(configParamName)) {
+				String facetParamConfig = widget.getConfig().getProperty(configParamName);
 				return this.getFacetRoots(facetParamConfig);
 			}
 		}

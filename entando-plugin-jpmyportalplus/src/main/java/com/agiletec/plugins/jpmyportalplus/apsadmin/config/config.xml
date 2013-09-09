@@ -14,13 +14,13 @@
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
  		
- 		<action name="addShowlet" class="jpmyportalplusConfigAction" method="addShowlet">
+ 		<action name="addWidget" class="jpmyportalplusConfigAction" method="addWidget">
     		<result type="tiles" name="input">admin.jpmyportalplus.config.entry</result>
             <result type="tiles">admin.jpmyportalplus.config.entry</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
  		
- 		<action name="removeShowlet*" class="jpmyportalplusConfigAction" method="removeShowlet">
+ 		<action name="removeWidget*" class="jpmyportalplusConfigAction" method="removeWidget">
     		<result type="tiles">admin.jpmyportalplus.config.entry</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>

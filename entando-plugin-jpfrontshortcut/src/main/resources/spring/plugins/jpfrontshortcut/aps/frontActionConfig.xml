@@ -29,7 +29,7 @@
 			class="org.entando.entando.plugins.jpfrontshortcut.aps.internalservlet.portal.FrontPageConfigAction" parent="abstractPortalAction">
 	</bean>
 	
-	<bean id="jpfrontshortcutShowletDecorationContainer" class="com.agiletec.aps.tags.util.BaseFrameDecoratorContainer" >
+	<bean id="jpfrontshortcutWidgetDecorationContainer" class="com.agiletec.aps.tags.util.BaseFrameDecoratorContainer" >
 		<property name="headerPath"><value>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/widgets/inc/frameOptions.jsp</value></property>
 		<property name="footerPath"><value></value></property>
 		<property name="order"><value>5</value></property>

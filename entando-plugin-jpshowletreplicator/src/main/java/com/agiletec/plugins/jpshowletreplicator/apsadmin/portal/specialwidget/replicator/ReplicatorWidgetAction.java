@@ -129,7 +129,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 					if (selectedNode.equals(this.getPageCode()) && frame==this.getFrame()) {
 						this.addActionError(this.getText("error.target.currentFrame"));
 					} else {
-						Widget[] showlets = targetPage.getShowlets();
+						Widget[] showlets = targetPage.getWidgets();
 						if (showlets.length <= frame) {
 							this.addActionError(this.getText("error.invalidShowletType"));
 						} else {
@@ -157,7 +157,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 			if (targetPage == null) {
 				this.addActionError(this.getText("error.noPageSelected"));
 			} else {
-				Widget targetFrame = targetPage.getShowlets()[this.getFrameIdParam().intValue()];
+				Widget targetFrame = targetPage.getWidgets()[this.getFrameIdParam().intValue()];
 				if (targetFrame == null || this.getInvalidShowletTypes().contains(targetFrame.getType().getCode())) {
 					this.addActionError(this.getText("error.invalidShowletType"));
 				} else {

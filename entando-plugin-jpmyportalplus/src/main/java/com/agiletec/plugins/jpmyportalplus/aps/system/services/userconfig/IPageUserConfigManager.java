@@ -44,7 +44,12 @@ public interface IPageUserConfigManager {
 	@Deprecated
 	public PageUserConfigBean getUserConfig(String username) throws ApsSystemException;
 
+	/**
+	 * @deprecated Use {@link #getCustomizableWidgets(UserDetails)} instead
+	 */
 	public List<WidgetType> getCustomizableShowlets(UserDetails user) throws ApsSystemException;
+
+	public List<WidgetType> getCustomizableWidgets(UserDetails user) throws ApsSystemException;
 
 	public CustomPageConfig getGuestPageConfig(IPage page, HttpServletRequest request) throws ApsSystemException;
 

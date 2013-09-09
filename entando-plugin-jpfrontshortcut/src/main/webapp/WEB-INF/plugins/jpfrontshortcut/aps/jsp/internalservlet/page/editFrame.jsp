@@ -31,7 +31,7 @@
 		<%--
 		<p class="margin-more-bottom"><s:text name="note.editFrame.chooseAShowlet" /></p>
 		--%>
-		<s:form action="joinShowlet" id="formform" theme="simple" cssClass="form-inline">
+		<s:form action="joinWidget" id="formform" theme="simple" cssClass="form-inline">
 			<p class="noscreen">
 				<wpsf:hidden name="langCode" />
 				<wpsf:hidden name="pageCode" />

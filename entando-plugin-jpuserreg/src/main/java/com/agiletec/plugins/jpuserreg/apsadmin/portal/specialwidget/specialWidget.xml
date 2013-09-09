@@ -19,7 +19,7 @@
 		</global-results>
 		
     	<!-- ##### WIDGET WEBDYNAMICFORM **** ENTRY POINT ##### -->
-    	<action name="userRegConfig" class="jpuserregUserRegShowletAction" method="init">
+    	<action name="userRegConfig" class="jpuserregUserRegWidgetAction" method="init">
         	<result type="tiles">admin.jpuserreg.Page.Showlet.UserReg.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
@@ -39,7 +39,7 @@
             </result>
 		</global-results>
 		
-		<action name="saveConfig" class="jpuserregUserRegShowletAction" method="save">
+		<action name="saveConfig" class="jpuserregUserRegWidgetAction" method="save">
     		<result type="tiles" name="input" >admin.jpuserreg.Page.Showlet.UserReg.config</result>
         	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>

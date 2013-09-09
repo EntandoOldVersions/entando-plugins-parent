@@ -38,7 +38,7 @@ public class PageWithWidgetTag extends TagSupport {
 	public int doStartTag() throws JspException {
 		IPageManager pageManager = (IPageManager) ApsWebApplicationUtils.getBean(SystemConstants.PAGE_MANAGER, this.pageContext);
 		try {
-			List<IPage> pages = pageManager.getShowletUtilizers(this.getShowletTypeCode());
+			List<IPage> pages = pageManager.getWidgetUtilizers(this.getShowletTypeCode());
 			if (this.isListResult()) {
 				this.pageContext.setAttribute(this.getVar(), pages);
 			} else if (null != pages && pages.size() > 0) {

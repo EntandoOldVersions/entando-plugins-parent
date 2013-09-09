@@ -49,7 +49,7 @@ public class ContentFeedbackWidgetAction  extends ContentViewerWidgetAction impl
 
 	protected String extractInitConfig() {
 		if (null != this.getShowlet()) return SUCCESS;
-		Widget showlet = this.getCurrentPage().getShowlets()[this.getFrame()];
+		Widget showlet = this.getCurrentPage().getWidgets()[this.getFrame()];
 		Logger log = ApsSystemUtils.getLogger();
 		if (null == showlet) {
 			try {

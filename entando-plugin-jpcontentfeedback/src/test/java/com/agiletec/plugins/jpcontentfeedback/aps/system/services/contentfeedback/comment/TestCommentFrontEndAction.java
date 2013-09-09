@@ -69,7 +69,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			Widget showlet = new Widget();
             IWidgetTypeManager showletTypeMan =
             	(IWidgetTypeManager) this.getService(SystemConstants.WIDGET_TYPE_MANAGER);
-            WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
+            WidgetType WidgetType = showletTypeMan.getWidgetType("content_feedback_viewer");
             showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
             prop.put("contentId", contentId);
@@ -139,7 +139,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			Widget showlet = new Widget();
             IWidgetTypeManager showletTypeMan =
             	(IWidgetTypeManager) this.getService(SystemConstants.WIDGET_TYPE_MANAGER);
-            WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
+            WidgetType WidgetType = showletTypeMan.getWidgetType("content_feedback_viewer");
             showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
             prop.put("contentId", contentId);
@@ -258,7 +258,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			Widget showlet = new Widget();
             IWidgetTypeManager showletTypeMan =
             	(IWidgetTypeManager) this.getService(SystemConstants.WIDGET_TYPE_MANAGER);
-            WidgetType WidgetType = showletTypeMan.getShowletType("content_feedback_viewer");
+            WidgetType WidgetType = showletTypeMan.getWidgetType("content_feedback_viewer");
             showlet.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
             prop.put("contentId", contentId);

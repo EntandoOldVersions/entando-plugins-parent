@@ -85,7 +85,7 @@
 					</optgroup>
 			</s:iterator>
 			</select>
-			<wpsf:submit action="addShowlet" value="%{getText('label.add')}" cssClass="button" />
+			<wpsf:submit action="addWidget" value="%{getText('label.add')}" cssClass="button" />
 		</p>
 
 		<s:if test="%{showletTypeCodes.size > 0}">
@@ -103,7 +103,7 @@
 							<s:property value="%{getTitle(#showletCode, #showletType.getTitles())}" />
 						</td>
 						<td class="icon">
-							<wpsa:actionParam action="removeShowlet" var="actionName" ><wpsa:actionSubParam name="showletCode" value="%{#showletCode}" /></wpsa:actionParam>
+							<wpsa:actionParam action="removeWidget" var="actionName" ><wpsa:actionSubParam name="showletCode" value="%{#showletCode}" /></wpsa:actionParam>
 							<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/delete.png</s:set>
 							<wpsf:submit type="image" src="%{#iconImagePath}" action="%{#actionName}" value="%{getText('label.remove')}" title="%{getText('label.remove') + ': ' + getTitle(#showletCode, #showletType.getTitles())}" />
 						</td>

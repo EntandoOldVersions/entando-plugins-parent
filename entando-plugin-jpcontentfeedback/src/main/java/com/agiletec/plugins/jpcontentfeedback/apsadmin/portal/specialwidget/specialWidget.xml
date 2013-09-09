@@ -7,7 +7,7 @@
 	
 	<package name="jpcontentfeedback_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="jacms_do/Page/SpecialWidget">
 		
-		<action name="viewerContentFeedbackConfig" class="jpcontentfeedbackViewerShowletAction" method="init">
+		<action name="viewerContentFeedbackConfig" class="jpcontentfeedbackViewerWidgetAction" method="init">
 	        <result type="tiles">admin.jpcontentfeedback.page.showlet.contentViewer.config</result>
 	        <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
 	    </action>
@@ -16,19 +16,19 @@
 	
 	<package name="jpcontentfeedback_do/jpcontentfeedback/Page/SpecialWidget/Viewer" namespace="/do/jpcontentfeedback/Page/SpecialWidget/Viewer" extends="jacms_do/jacms/Page/SpecialWidget/Viewer">
 
-		<action name="jpcontentfeedbackSearchContents" class="jpcontentfeedbackViewerShowletAction" method="storeSessionParams">
+		<action name="jpcontentfeedbackSearchContents" class="jpcontentfeedbackViewerWidgetAction" method="storeSessionParams">
             <result name="input" type="tiles">admin.jpcontentfeedback.page.showlet.contentViewer.config</result>
         	<result type="chain">searchContents</result>
         	<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 
-		<action name="executeJoinContent" class="jpcontentfeedbackViewerShowletAction" method="joinContent">
+		<action name="executeJoinContent" class="jpcontentfeedbackViewerWidgetAction" method="joinContent">
         	<result type="tiles" name="input">admin.jpcontentfeedback.page.showlet.contentViewer.searchContents</result>
             <result type="tiles">admin.jpcontentfeedback.page.showlet.contentViewer.config</result>
         	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-		<action name="saveViewerConfig" class="jpcontentfeedbackViewerShowletAction" method="save">
+		<action name="saveViewerConfig" class="jpcontentfeedbackViewerWidgetAction" method="save">
 			<result type="tiles" name="input">admin.jpcontentfeedback.page.showlet.contentViewer.config</result>
     		<result type="tiles">admin.jpcontentfeedback.page.showlet.contentViewer.config</result>
         	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>

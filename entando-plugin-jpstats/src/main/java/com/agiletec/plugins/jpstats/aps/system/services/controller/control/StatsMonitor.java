@@ -139,9 +139,9 @@ public class StatsMonitor implements ControlServiceInterface {
 		String content = null;
 		int mainFrame = page.getModel().getMainFrame();
 		if(mainFrame >= 0) {
-			Widget showlet = page.getShowlets()[mainFrame];
-			if(null != showlet && null != showlet.getPublishedContent()) {
-				content = showlet.getPublishedContent();
+			Widget widget = page.getWidgets()[mainFrame];
+			if(null != widget && null != widget.getPublishedContent()) {
+				content = widget.getPublishedContent();
 			}
 		}
 		return content;

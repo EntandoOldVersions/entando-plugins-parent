@@ -190,7 +190,7 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 		ShowletUpdateInfoBean infoBean = null;
 		Widget showletToInsert = null;
 		String typeCode = showletsToAdd.get(0);
-		WidgetType type = this.getWidgetTypeManager().getShowletType(typeCode);
+		WidgetType type = this.getWidgetTypeManager().getWidgetType(typeCode);
 		if (null != type) {
 			showletsToAdd.remove(typeCode);
 			showletToInsert = new Widget();

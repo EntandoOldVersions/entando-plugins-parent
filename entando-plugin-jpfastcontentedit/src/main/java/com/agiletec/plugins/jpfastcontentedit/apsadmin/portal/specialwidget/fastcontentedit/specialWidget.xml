@@ -19,7 +19,7 @@
 		</global-results>
     	
     	<!-- ##### WIDGET jpfastcontentedit **** ENTRY POINT ##### -->
-    	<action name="jpfastcontenteditConfig" class="jfastcontenteditConfigShowletAction" method="init">
+    	<action name="jpfastcontenteditConfig" class="jfastcontenteditConfigWidgetAction" method="init">
         	<result type="tiles">admin.jpfastcontentedit.Showlet.configParameter</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
@@ -39,22 +39,22 @@
             </result>
 		</global-results>
 		
-    	<action name="fastcontenteditConfigParameter" class="jfastcontenteditConfigShowletAction" method="init">
+    	<action name="fastcontenteditConfigParameter" class="jfastcontenteditConfigWidgetAction" method="init">
         	<result type="tiles">admin.jpfastcontentedit.Showlet.configParameter</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
-        <action name="configContentType" class="jfastcontenteditConfigShowletAction" method="configContentType">
+        <action name="configContentType" class="jfastcontenteditConfigWidgetAction" method="configContentType">
         	<result type="tiles">admin.jpfastcontentedit.Showlet.configParameter</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
-    	<action name="changeContentType" class="jfastcontenteditConfigShowletAction" method="changeContentType"  >
+    	<action name="changeContentType" class="jfastcontenteditConfigWidgetAction" method="changeContentType"  >
         	<result type="tiles">admin.jpfastcontentedit.Showlet.configParameter</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>    	
 		
-    	<action name="saveConfigParameters" class="jfastcontenteditConfigShowletAction" method="save"  >
+    	<action name="saveConfigParameters" class="jfastcontenteditConfigWidgetAction" method="save"  >
         	<result type="tiles">admin.jpfastcontentedit.Showlet.configParameter</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>

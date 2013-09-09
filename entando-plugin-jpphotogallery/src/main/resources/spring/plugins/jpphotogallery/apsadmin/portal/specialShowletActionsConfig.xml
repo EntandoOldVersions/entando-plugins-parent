@@ -7,15 +7,15 @@
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
 	
-	<bean id="jpphotogalleryPhotogalleryShowletAction" scope="prototype" 
-			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.PhotogalleryWidgetAction" parent="simpleShowletAction" >
+	<bean id="jpphotogalleryPhotogalleryWidgetAction" scope="prototype" 
+			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.PhotogalleryWidgetAction" parent="simpleWidgetAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 		<property name="contentModelManager" ref="jacmsContentModelManager" />
 		<property name="categoryManager" ref="CategoryManager" />
 	</bean>
 	
 	<bean id="jpphotogalleryBaseFilterAction" scope="prototype" 
-			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.BaseFilterAction" parent="simpleShowletAction" >
+			class="com.agiletec.plugins.jpphotogallery.apsadmin.portal.specialwidget.photogallery.BaseFilterAction" parent="simpleWidgetAction" >
 		<property name="contentManager" ref="jacmsContentManager" />
 	</bean>
 	

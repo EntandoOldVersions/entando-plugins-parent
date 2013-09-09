@@ -8,7 +8,7 @@
     <package name="jpphotogallery_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="core_do/Page/SpecialWidget">
     	
     	<!-- ##### WIDGET JPPHOTOGALLERY **** ENTRY POINT ##### -->
-    	<action name="jpphotogalleryConfig" class="jpphotogalleryPhotogalleryShowletAction" method="init">
+    	<action name="jpphotogalleryConfig" class="jpphotogalleryPhotogalleryWidgetAction" method="init">
         	<result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
@@ -28,55 +28,55 @@
             </result>
 		</global-results>
 		
-		<action name="configShowlet" class="jpphotogalleryPhotogalleryShowletAction" method="configContentType">
+		<action name="configShowlet" class="jpphotogalleryPhotogalleryWidgetAction" method="configContentType">
         	<result name="input" type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
-        <action name="changeContentType" class="jpphotogalleryPhotogalleryShowletAction" method="changeContentType">
+        <action name="changeContentType" class="jpphotogalleryPhotogalleryWidgetAction" method="changeContentType">
         	<result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-		<action name="addCategory" class="jpphotogalleryPhotogalleryShowletAction" method="addCategory">
+		<action name="addCategory" class="jpphotogalleryPhotogalleryWidgetAction" method="addCategory">
         	<result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-		<action name="removeCategory*" class="jpphotogalleryPhotogalleryShowletAction" method="removeCategory">
+		<action name="removeCategory*" class="jpphotogalleryPhotogalleryWidgetAction" method="removeCategory">
         	<result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-		<action name="removeUserFilter*" class="jpphotogalleryPhotogalleryShowletAction" method="removeUserFilter">
+		<action name="removeUserFilter*" class="jpphotogalleryPhotogalleryWidgetAction" method="removeUserFilter">
         	<result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-		<action name="moveUserFilter*" class="jpphotogalleryPhotogalleryShowletAction" method="moveUserFilter">
+		<action name="moveUserFilter*" class="jpphotogalleryPhotogalleryWidgetAction" method="moveUserFilter">
         	<result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-		<action name="addUserFilter" class="jpphotogalleryPhotogalleryShowletAction" method="addUserFilter">
+		<action name="addUserFilter" class="jpphotogalleryPhotogalleryWidgetAction" method="addUserFilter">
         	<result name="input" type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <result name="userfiltercategory" type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.userfilter.category</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-		<action name="removeFilter*" class="jpphotogalleryPhotogalleryShowletAction" method="removeFilter">
+		<action name="removeFilter*" class="jpphotogalleryPhotogalleryWidgetAction" method="removeFilter">
         	<result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-		<action name="moveFilter*" class="jpphotogalleryPhotogalleryShowletAction" method="moveFilter">
+		<action name="moveFilter*" class="jpphotogalleryPhotogalleryWidgetAction" method="moveFilter">
         	<result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-		<action name="saveConfig" class="jpphotogalleryPhotogalleryShowletAction" method="save">
+		<action name="saveConfig" class="jpphotogalleryPhotogalleryWidgetAction" method="save">
         	<result name="input" type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
@@ -114,7 +114,7 @@
             <result type="chain">addFilter</result>
             <interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
-        
+      
 		<action name="saveBooleanFilter" class="jpphotogalleryBooleanFilterAction" method="saveFilter">
         	<result name="input" type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.entryFilter</result>
             <result type="chain">addFilter</result>
@@ -127,7 +127,7 @@
             <interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
-		<action name="addFilter" class="jpphotogalleryPhotogalleryShowletAction" method="addFilter">
+		<action name="addFilter" class="jpphotogalleryPhotogalleryWidgetAction" method="addFilter">
         	<result type="tiles">admin.jpphotogallery.Page.Showlet.Photogallery.config</result>
             <interceptor-ref name="entandoDefaultStack">
             	<param name="chain.includeParameters">newFilter</param>

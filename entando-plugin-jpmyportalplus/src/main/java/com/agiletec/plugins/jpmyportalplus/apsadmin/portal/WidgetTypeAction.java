@@ -49,11 +49,11 @@ public class WidgetTypeAction extends com.agiletec.apsadmin.portal.WidgetTypeAct
 	public String save() {
 		String result = super.save();
 		if (null == result || result.equals(FAILURE)) return FAILURE;
-		this.updateShowletTypeConfig();
+		this.updateWidgetTypeConfig();
 		return result;
 	}
 	
-	private String updateShowletTypeConfig() {
+	private String updateWidgetTypeConfig() {
 		try {
 			this.getShowletTypeCode();
 			boolean swappable = (null != this.getSwappable()) ? this.getSwappable().booleanValue() : false;
@@ -74,7 +74,7 @@ public class WidgetTypeAction extends com.agiletec.apsadmin.portal.WidgetTypeAct
 	}
 	
 	private boolean isCustomizable() {
-		WidgetType type = this.getWidgetTypeManager().getShowletType(this.getShowletTypeCode());
+		WidgetType type = this.getWidgetTypeManager().getWidgetType(this.getShowletTypeCode());
 		if (null == type) return false;
 		List<WidgetTypeParameter> typeParameters = type.getTypeParameters();
 		if (!type.isUserType() && !type.isLogic() && (null != typeParameters && typeParameters.size() > 0)) return false;

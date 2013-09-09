@@ -28,7 +28,7 @@ import java.util.HashMap;
 /**
  * @author E.Santoboni
  */
-public class SpecialShowletWardenInterceptor extends AbstractInterceptor {
+public class SpecialWidgetWardenInterceptor extends AbstractInterceptor {
 	
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {

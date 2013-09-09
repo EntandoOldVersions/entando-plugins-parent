@@ -18,9 +18,9 @@
 		<property name="groupManager" ref="GroupManager" />
 	</bean>
 	
-	<bean id="jpuserregUserRegShowletAction" scope="prototype" 
+	<bean id="jpuserregUserRegWidgetAction" scope="prototype" 
 			class="com.agiletec.plugins.jpuserreg.apsadmin.portal.specialwidget.userreg.UserRegWidgetAction" 
-			parent="simpleShowletAction" >
+			parent="simpleWidgetAction" >
 		<property name="userProfileManager" ref="UserProfileManager" />
 	</bean>
 	

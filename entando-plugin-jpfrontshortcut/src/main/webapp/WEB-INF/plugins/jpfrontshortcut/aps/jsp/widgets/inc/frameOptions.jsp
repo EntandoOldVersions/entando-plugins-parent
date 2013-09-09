@@ -48,7 +48,7 @@
 								opendialogtitle: "<wp:i18n key="jpfrontshortcut_EMPTY_FRAME" /><c:out value=" " /><c:out value="${framePosVar}" />",
 								jqueryaction: "anchor",
 								id: "<c:out value="options_anchor_TRASH_SHOWLET_${framePosVar}_${random}" />",
-								href: "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpfrontshortcut/Page/trashShowletFromPage?langCode=<c:out value="${currentLang}" />&pageCode=<c:out value="${currentPageCode}" />&frame=<c:out value="${framePosVar}" />"
+								href: "<wp:info key="systemParam" paramName="applicationBaseURL" />do/jpfrontshortcut/Page/trashWidgetFromPage?langCode=<c:out value="${currentLang}" />&pageCode=<c:out value="${currentPageCode}" />&frame=<c:out value="${framePosVar}" />"
 							});
 						});
 						//--><!]]>

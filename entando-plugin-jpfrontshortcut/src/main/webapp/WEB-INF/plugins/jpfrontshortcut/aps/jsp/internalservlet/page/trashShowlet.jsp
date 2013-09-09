@@ -7,7 +7,7 @@
 	<s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/>
 </h2>
 <div id="form-container" class="widget_form"> 
-	<s:form action="deleteShowletFromPage" id="formform" theme="simple">
+	<s:form action="deleteWidgetFromPage" id="formform" theme="simple">
 		<p>
 			<wpsf:hidden name="pageCode"/>
 			<wpsf:hidden name="frame" />

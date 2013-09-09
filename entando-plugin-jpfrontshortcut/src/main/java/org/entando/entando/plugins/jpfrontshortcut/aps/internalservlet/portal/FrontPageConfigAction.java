@@ -27,9 +27,17 @@ import com.agiletec.apsadmin.portal.PageConfigAction;
  */
 public class FrontPageConfigAction extends PageConfigAction {
 
+	/**
+	 * @deprecated Use {@link #joinWidget()} instead
+	 */
 	@Override
 	public String joinShowlet() {
-		String result = super.joinShowlet();
+		return joinWidget();
+	}
+
+	@Override
+	public String joinWidget() {
+		String result = super.joinWidget();
 		try {
             this.waitNotifyingThread();
         } catch (Throwable t) {
@@ -39,15 +47,23 @@ public class FrontPageConfigAction extends PageConfigAction {
 		return result;
 	}
 
+	/**
+	 * @deprecated Use {@link #trashWidget()} instead
+	 */
 	@Override
 	public String trashShowlet() {
+		return trashWidget();
+	}
+
+	@Override
+	public String trashWidget() {
 		try {
 			String result = this.checkBaseParams();
 			if (null != result) {
 				return result;
 			}
 			IPage page = this.getPage(this.getPageCode());
-			this.setShowlet(page.getShowlets()[this.getFrame()]);
+			this.setShowlet(page.getWidgets()[this.getFrame()]);
 		} catch (Exception e) {
 			ApsSystemUtils.logThrowable(e, this, "trashShowlet");
 			return FAILURE;
@@ -55,13 +71,21 @@ public class FrontPageConfigAction extends PageConfigAction {
 		return SUCCESS;
 	}
 
+	/**
+	 * @deprecated Use {@link #deleteWidget()} instead
+	 */
 	@Override
 	public String deleteShowlet() {
-		String result = super.deleteShowlet();
+		return deleteWidget();
+	}
+
+	@Override
+	public String deleteWidget() {
+		String result = super.deleteWidget();
 		try {
             this.waitNotifyingThread();
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "deleteShowlet");
+            ApsSystemUtils.logThrowable(t, this, "deleteWidget");
             return FAILURE;
         }
 		return result;

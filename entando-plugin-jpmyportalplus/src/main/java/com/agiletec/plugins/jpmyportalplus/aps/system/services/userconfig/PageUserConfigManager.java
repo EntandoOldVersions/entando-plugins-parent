@@ -149,38 +149,46 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 
 	@Override
 	public Widget[] getShowletsToRender(IPage page, Widget[] customShowlets) throws ApsSystemException {
-		Widget[] mergedShowlets = null;
+		Widget[] mergedWidgets = null;
 		try {
-			Widget[] defaultShowlets = page.getShowlets();
+			Widget[] defaultWidgets = page.getWidgets();
 			if (null == customShowlets) {
-				return defaultShowlets;
+				return defaultWidgets;
 			}
-			if (defaultShowlets.length != customShowlets.length) {
+			if (defaultWidgets.length != customShowlets.length) {
 				String message = "Page '" + page.getCode() + "' Frame numbers " +
-					defaultShowlets.length + " not equals than custom showlet frames " + customShowlets.length;
+					defaultWidgets.length + " not equals than custom showlet frames " + customShowlets.length;
 				ApsSystemUtils.getLogger().severe(message);
-				return defaultShowlets;
+				return defaultWidgets;
 			}
 			Frame[] frames = ((MyPortalPageModel) page.getModel()).getFrameConfigs();
-			int showletNumber = defaultShowlets.length;
-			mergedShowlets = new Widget[showletNumber];
-			for (int scan = 0; scan < showletNumber; scan++) {
-				Widget customShowlet = customShowlets[scan];
-				if (null == customShowlet || frames[scan].isLocked()) {
-					mergedShowlets[scan] = defaultShowlets[scan];
+			int widgetNumber = defaultWidgets.length;
+			mergedWidgets = new Widget[widgetNumber];
+			for (int scan = 0; scan < widgetNumber; scan++) {
+				Widget customWidget = customShowlets[scan];
+				if (null == customWidget || frames[scan].isLocked()) {
+					mergedWidgets[scan] = defaultWidgets[scan];
 				} else {
-					mergedShowlets[scan] = customShowlet;
+					mergedWidgets[scan] = customWidget;
 				}
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getShowletsToRender");
 			throw new ApsSystemException("Error building the showlet array to render", t);
 		}
-		return mergedShowlets;
+		return mergedWidgets;
+	}
+
+	/**
+	 * @deprecated Use {@link #getCustomizableWidgets(UserDetails)} instead
+	 */
+	@Override
+	public List<WidgetType> getCustomizableShowlets(UserDetails user) throws ApsSystemException {
+		return getCustomizableWidgets(user);
 	}
 
 	@Override
-	public List<WidgetType> getCustomizableShowlets(UserDetails user) throws ApsSystemException {
+	public List<WidgetType> getCustomizableWidgets(UserDetails user) throws ApsSystemException {
 		List<WidgetType> customizableShowletsForUser = new ArrayList<WidgetType>();
 		if (null == user) return customizableShowletsForUser;
 		try {
@@ -196,7 +204,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getCustomizableShowlets");
-			throw new ApsSystemException("Error extracting customizable showlets for user '" + user.getUsername() + "'", t);
+			throw new ApsSystemException("Error extracting customizable widgets user '" + user.getUsername() + "'", t);
 		}
 		return customizableShowletsForUser;
 	}
@@ -272,7 +280,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 
 	@Override
 	public WidgetType getVoidShowlet() {
-		return this.getWidgetTypeManager().getShowletType(this.getVoidShowletCode());
+		return this.getWidgetTypeManager().getWidgetType(this.getVoidShowletCode());
 	}
 
 	protected String getVoidShowletCode() {

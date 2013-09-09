@@ -145,7 +145,7 @@ public class MyPortalPageModelDOM {
 	private Widget buildDefaultShowlet(Element defaultShowletElement, int pos, IWidgetTypeManager showletTypeManager) {
 		Widget showlet = new Widget();
 		String showletCode = defaultShowletElement.getAttributeValue(ATTRIBUTE_CODE);
-		showlet.setType(showletTypeManager.getShowletType(showletCode));
+		showlet.setType(showletTypeManager.getWidgetType(showletCode));
 		Element propertiesElement = defaultShowletElement.getChild(TAB_PROPERTIES);
 		if (null != propertiesElement) {
 			ApsProperties prop = this.buildProperties(propertiesElement);

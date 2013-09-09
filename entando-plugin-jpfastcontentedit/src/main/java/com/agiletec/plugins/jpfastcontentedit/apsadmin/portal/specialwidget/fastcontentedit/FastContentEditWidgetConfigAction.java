@@ -56,7 +56,7 @@ public class FastContentEditWidgetConfigAction extends SimpleWidgetConfigAction 
 		try {
 			this.checkBaseParams();
 			this.createValuedShowlet();
-			this.getPageManager().joinShowlet(this.getPageCode(), this.getShowlet(), this.getFrame());
+			this.getPageManager().joinWidget(this.getPageCode(), this.getShowlet(), this.getFrame());
 			log.finest("Salvataggio showlet - code = " + this.getShowlet().getType().getCode() +
 					", pageCode = " + this.getPageCode() + ", frame = " + this.getFrame());
 		} catch (Throwable t) {

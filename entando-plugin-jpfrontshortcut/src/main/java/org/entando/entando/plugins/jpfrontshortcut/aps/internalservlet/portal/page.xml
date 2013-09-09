@@ -8,7 +8,7 @@
 	<package name="jpfrontshortcut_do/jpfrontshortcut/Page" namespace="/do/jpfrontshortcut/Page" extends="jpfrontshortcut_do/jpfrontshortcut">
 		
 		<interceptors>
-			<interceptor name="specialShowletWarden" class="org.entando.entando.plugins.jpfrontshortcut.aps.internalservlet.portal.SpecialShowletWardenInterceptor" />
+			<interceptor name="specialWidgetWarden" class="org.entando.entando.plugins.jpfrontshortcut.aps.internalservlet.portal.SpecialWidgetWardenInterceptor" />
 		</interceptors>
 		
     	<global-results>
@@ -58,20 +58,20 @@
 		<!-- ****************** -->
 		
         <action name="editFrame" class="jpfrontshortcutFrontPageConfigAction" method="editFrame">
-			<result name="configureSpecialShowlet" type="chain">initConfigureSpecialShowlet</result>
+			<result name="configureSpecialShowlet" type="chain">initConfigureSpecialWidget</result>
 			<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/editFrame.jsp</result>
         	<interceptor-ref name="i18nInterceptor" />
 			<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
-        <action name="joinShowlet" class="jpfrontshortcutFrontPageConfigAction" method="joinShowlet">
+        <action name="joinWidget" class="jpfrontshortcutFrontPageConfigAction" method="joinWidget">
         	<result name="input">/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/editFrame.jsp</result>
-        	<result name="configureSpecialShowlet" type="chain">initConfigureSpecialShowlet</result>
+        	<result name="configureSpecialShowlet" type="chain">initConfigureSpecialWidget</result>
         	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/success-reload.jsp</result>
         	<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
-        <action name="initConfigureSpecialShowlet" class="jpfrontshortcutFrontPageConfigAction">
+        <action name="initConfigureSpecialWidget" class="jpfrontshortcutFrontPageConfigAction">
         	<result name="configSimpleParameter" type="chain">
         		<param name="namespace">/do/jpfrontshortcut/Page/SpecialWidget</param>
     			<param name="actionName">configSimpleParameter</param>
@@ -84,16 +84,16 @@
 				<param name="requestAuth.requiredPermission">managePages</param>
 				<param name="chain.includeParameters">showletAction</param>
 			</interceptor-ref>
-			<interceptor-ref name="specialShowletWarden" />
+			<interceptor-ref name="specialWidgetWarden" />
 		</action>
         
-        <action name="trashShowletFromPage" class="jpfrontshortcutFrontPageConfigAction" method="trashShowlet">
+        <action name="trashWidgetFromPage" class="jpfrontshortcutFrontPageConfigAction" method="trashWidget">
         	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/page/trashShowlet.jsp</result>
         	<interceptor-ref name="i18nInterceptor" />
 			<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
         
-        <action name="deleteShowletFromPage" class="jpfrontshortcutFrontPageConfigAction" method="deleteShowlet">
+        <action name="deleteWidgetFromPage" class="jpfrontshortcutFrontPageConfigAction" method="deleteWidget">
         	<result>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/internalservlet/success-reload.jsp</result>
         	<interceptor-ref name="jpfrontshortcutFrontEndStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>

@@ -60,7 +60,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			res = stat.executeQuery();
 			while (res.next()) {
 				String currentCode = res.getString(1);
-				WidgetType currentConfiguredShowlet = this.getWidgetTypeManager().getShowletType(currentCode);
+				WidgetType currentConfiguredShowlet = this.getWidgetTypeManager().getWidgetType(currentCode);
 				if (null == currentConfiguredShowlet) {
 					ApsSystemUtils.getLogger().info(JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM + ": deleting unknown showlet '"+currentCode+"' from the configuration bean");
 					this.purgeConfigurationFromInvalidShowlets(conn, currentCode);
@@ -112,7 +112,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		if (null == config) {
 			return result;
 		}
-		allShowlets = this.getWidgetTypeManager().getShowletTypes();
+		allShowlets = this.getWidgetTypeManager().getWidgetTypes();
 		if (null != allShowlets) {
 			Set<String> allowedShowletsCode = config.getAllowedShowlets();
 			if (allowedShowletsCode != null && allowedShowletsCode.size() > 0) {
@@ -224,7 +224,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	 */
 	private Widget createShowletFromRecord(String widgetcode, String config) throws ApsSystemException {
 		Widget newShowlet = new Widget();
-		WidgetType inheritedType = this.getWidgetTypeManager().getShowletType(widgetcode);
+		WidgetType inheritedType = this.getWidgetTypeManager().getWidgetType(widgetcode);
 		newShowlet.setType(inheritedType);
 		ApsProperties properties = null;
 		newShowlet.setConfig(properties);

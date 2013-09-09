@@ -75,8 +75,16 @@ public class MyPortalExecWidgetTag extends ExecWidgetTag {
 		return super.doStartTag();
 	}
 
+	/**
+	 * @deprecated Use {@link #buildWidgetOutput(IPage,String[])} instead
+	 */
 	@Override
 	protected void buildShowletOutput(IPage page, String[] showletOutput) throws JspException {
+		buildWidgetOutput(page, showletOutput);
+	}
+
+	@Override
+	protected void buildWidgetOutput(IPage page, String[] showletOutput) throws JspException {
 		HttpServletRequest req =  (HttpServletRequest) this.pageContext.getRequest();
 		RequestContext reqCtx = (RequestContext) req.getAttribute(RequestContext.REQCTX);
 		try {
@@ -93,7 +101,7 @@ public class MyPortalExecWidgetTag extends ExecWidgetTag {
 			}
 			if (null == customPageConfig || customPageConfig.getConfig() == null || !customPageConfig.getPageCode().equals(page.getCode())) {
 				req.getSession().removeAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG);
-				super.buildShowletOutput(page, showletOutput);
+				super.buildWidgetOutput(page, showletOutput);
 				return;
 			}
 			req.getSession().setAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG, customPageConfig);
@@ -104,7 +112,7 @@ public class MyPortalExecWidgetTag extends ExecWidgetTag {
 			for (int scan = 0; scan < showletsToRender.length; scan++) {
 				reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME, new Integer(scan));
 				body.clearBody();
-				this.includeShowlet(reqCtx, showletsToRender[scan], decorators);
+				this.includeWidget(reqCtx, showletsToRender[scan], decorators);
 				showletOutput[scan] = body.getString();
 			}
 		} catch (Throwable t) {

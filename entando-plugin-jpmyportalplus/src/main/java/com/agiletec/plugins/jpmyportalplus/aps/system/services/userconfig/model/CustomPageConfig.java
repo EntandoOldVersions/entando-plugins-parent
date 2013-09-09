@@ -76,7 +76,7 @@ public class CustomPageConfig {
 				if (null == frame) continue;
 				Object showletCode = frame.get("code");
 				if (null == showletCode) continue;
-				WidgetType type = showletTypeManager.getShowletType(showletCode.toString());
+				WidgetType type = showletTypeManager.getWidgetType(showletCode.toString());
 				if (null == type) continue;
 				Widget showlet = null;
 				if (showletCode.equals(voidShowletCode) || allowedShowlets.contains(showletCode) || this.isViewerType(type)) {

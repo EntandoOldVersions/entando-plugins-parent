@@ -24,9 +24,19 @@ public interface IConfigAction {
 	
 	public String edit();
 	
+	/**
+	 * @deprecated Use {@link #addWidget()} instead
+	 */
 	public String addShowlet();
+
+	public String addWidget();
 	
+	/**
+	 * @deprecated Use {@link #removeWidget()} instead
+	 */
 	public String removeShowlet();
+
+	public String removeWidget();
 	
 	public String save();
 	

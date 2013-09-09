@@ -49,9 +49,9 @@ public class WidgetReplicatorTag extends TagSupport {
 			if (null != targetPage) {
 				String frameIdString = currentShowlet.getConfig().getProperty("frameIdParam");
 				int frameId = Integer.parseInt(frameIdString);
-				Widget[] showlets = targetPage.getShowlets();
+				Widget[] showlets = targetPage.getWidgets();
 				if (showlets.length>=frameId) {
-					Widget targetShowlet = targetPage.getShowlets()[frameId];
+					Widget targetShowlet = targetPage.getWidgets()[frameId];
 					if (null != targetShowlet) {
 						reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET, targetShowlet);
 						WidgetType WidgetType = targetShowlet.getType();
