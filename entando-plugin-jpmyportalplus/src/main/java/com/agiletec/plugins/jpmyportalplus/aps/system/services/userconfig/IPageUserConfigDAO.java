@@ -24,7 +24,7 @@ import org.entando.entando.aps.system.services.widgettype.WidgetType;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
+import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
 
 /**
  * @author E.Santoboni
@@ -48,7 +48,7 @@ public interface IPageUserConfigDAO {
 
 	public void syncCustomization(List<WidgetType> configurableShowlets, String voidShowletCode);
 
-	public void updateUserPageConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfos);
+	public void updateUserPageConfig(String username, IPage page, WidgetUpdateInfoBean[] updateInfos);
 
 	public void removeUserPageConfig(String username, String pageCode, Integer framePosition);
 

@@ -30,7 +30,7 @@ import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
+import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
 
 /**
  * Interface for the service of MyPortal that handles the configuration of the page models. MyPortal enables
@@ -55,9 +55,9 @@ public interface IPageUserConfigManager {
 
 	public Widget[] getShowletsToRender(IPage page, Widget[] customShowlets) throws ApsSystemException;
 
-	public void updateUserPageConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfo) throws ApsSystemException;
+	public void updateUserPageConfig(String username, IPage page, WidgetUpdateInfoBean[] updateInfo) throws ApsSystemException;
 
-	public void updateGuestPageConfig(IPage page, ShowletUpdateInfoBean[] updateInfos, HttpServletRequest request, HttpServletResponse response) throws ApsSystemException;
+	public void updateGuestPageConfig(IPage page, WidgetUpdateInfoBean[] updateInfos, HttpServletRequest request, HttpServletResponse response) throws ApsSystemException;
 
 	public void removeUserPageConfig(String username, IPage page) throws ApsSystemException;
 

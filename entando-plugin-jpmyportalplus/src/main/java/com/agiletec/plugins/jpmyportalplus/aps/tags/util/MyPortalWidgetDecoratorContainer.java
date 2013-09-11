@@ -34,7 +34,7 @@ import java.util.Set;
 /**
  * @author E.Santoboni
  */
-public class MyPortalShowletDecoratorContainer extends BaseFrameDecoratorContainer {
+public class MyPortalWidgetDecoratorContainer extends BaseFrameDecoratorContainer {
 
 	@Override
 	public boolean needsDecoration(Widget showlet, RequestContext reqCtx) {
@@ -48,8 +48,8 @@ public class MyPortalShowletDecoratorContainer extends BaseFrameDecoratorContain
 			Frame currentFrameObject = model.getFrameConfigs()[currentFrame];
 			return (!currentFrameObject.isLocked() && allowedShowlet.contains(showlet.getType().getCode()));
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "needsDecoration", "Error checking showlet decorators");
-			throw new RuntimeException("Error checking showlet decorators", t);
+			ApsSystemUtils.logThrowable(t, this, "needsDecoration", "Error checking widget decorators");
+			throw new RuntimeException("Error checking widget decorators", t);
 		}
 	}
 

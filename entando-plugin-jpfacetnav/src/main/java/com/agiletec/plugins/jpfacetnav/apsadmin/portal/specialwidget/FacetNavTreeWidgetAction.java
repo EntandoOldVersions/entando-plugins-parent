@@ -28,7 +28,7 @@ import com.agiletec.aps.system.common.tree.ITreeNodeManager;
 import com.agiletec.apsadmin.system.ITreeAction;
 import com.agiletec.apsadmin.system.ITreeNodeBaseActionHelper;
 import com.agiletec.plugins.jpfacetnav.aps.system.JpFacetNavSystemConstants;
-import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.util.FacetNavShowletHelper;
+import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.util.FacetNavWidgetHelper;
 
 /**
  * @author E.Santoboni
@@ -79,7 +79,7 @@ public class FacetNavTreeWidgetAction extends FacetNavResultWidgetAction impleme
 				ITreeNode facet = this.getTreeNodeManager().getNode(this.getFacetCode());
 				if (facet != null && !facet.getCode().equals(facet.getParent().getCode()) && !facetCodes.contains(facetCode)) {//se esiste, non è la Home e non è 
 					facetCodes.add(facetCode);
-					String facetsFilter = FacetNavShowletHelper.concatStrings(facetCodes, ",");
+					String facetsFilter = FacetNavWidgetHelper.concatStrings(facetCodes, ",");
 					String configParamName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
 					this.getShowlet().getConfig().setProperty(configParamName, facetsFilter);
 					this.setFacetRootNodes(facetsFilter);
@@ -103,7 +103,7 @@ public class FacetNavTreeWidgetAction extends FacetNavResultWidgetAction impleme
 			List<String> facetCodes = this.getFacetRootCodes();
 			if (facetCode != null) {
 				facetCodes.remove(facetCode);
-				String facetsFilter = FacetNavShowletHelper.concatStrings(facetCodes, ",");
+				String facetsFilter = FacetNavWidgetHelper.concatStrings(facetCodes, ",");
 				String configParamName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
 				this.getShowlet().getConfig().setProperty(configParamName, facetsFilter);
 				this.setFacetRootNodes(facetsFilter);
@@ -141,7 +141,7 @@ public class FacetNavTreeWidgetAction extends FacetNavResultWidgetAction impleme
 
 	public List<String> getFacetRootCodes() {
 		String facetsParam = this.getFacetRootNodes();
-		List<String> facetCodes = FacetNavShowletHelper.splitValues(facetsParam, ",");
+		List<String> facetCodes = FacetNavWidgetHelper.splitValues(facetsParam, ",");
 		return facetCodes;
 	}
 

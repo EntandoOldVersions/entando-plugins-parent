@@ -135,9 +135,9 @@ public class CustomPageConfig {
 		return false;
 	}
 
-	public void update(ShowletUpdateInfoBean[] updateInfos) {
+	public void update(WidgetUpdateInfoBean[] updateInfos) {
 		for (int i = 0; i < updateInfos.length; i++) {
-			ShowletUpdateInfoBean infoBean = updateInfos[i];
+			WidgetUpdateInfoBean infoBean = updateInfos[i];
 			int pos = infoBean.getFramePos();
 			this.getConfig()[pos] = infoBean.getShowlet();
 			this.getStatus()[pos] = infoBean.getStatus();

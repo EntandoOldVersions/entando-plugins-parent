@@ -39,7 +39,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConsta
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
+import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
 
 /**
  * @author E.Santoboni
@@ -57,14 +57,14 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 			Widget showletToMove = showletsToRender[this.getStartFramePos()];
 			Integer statusShowletToMoveInteger = this.getCustomShowletStatus() != null ? this.getCustomShowletStatus()[this.getStartFramePos()] : null;
 			int statusShowletToMove = (statusShowletToMoveInteger == null) ? 0 : statusShowletToMoveInteger;
-			ShowletUpdateInfoBean frameTargetUpdate =
-				new ShowletUpdateInfoBean(this.getTargetFramePos(), showletToMove, statusShowletToMove);
+			WidgetUpdateInfoBean frameTargetUpdate =
+				new WidgetUpdateInfoBean(this.getTargetFramePos(), showletToMove, statusShowletToMove);
 			this.addUpdateInfoBean(frameTargetUpdate);
 			Widget showletOnFrameDest = showletsToRender[this.getTargetFramePos()];
 			Integer statusShowletOnFrameDestInteger = this.getCustomShowletStatus() != null ? this.getCustomShowletStatus()[this.getTargetFramePos()] : null;
 			int statusShowletOnFrameDest = (statusShowletOnFrameDestInteger == null) ? 0 : statusShowletOnFrameDestInteger;
-			ShowletUpdateInfoBean frameStartUpdate =
-				new ShowletUpdateInfoBean(this.getStartFramePos(), showletOnFrameDest, statusShowletOnFrameDest);
+			WidgetUpdateInfoBean frameStartUpdate =
+				new WidgetUpdateInfoBean(this.getStartFramePos(), showletOnFrameDest, statusShowletOnFrameDest);
 			this.addUpdateInfoBean(frameStartUpdate);
 
 			this.executeUpdateUserConfig(currentPage);
@@ -79,8 +79,8 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 	protected boolean executeResetFrame() throws ApsSystemException {
 		try {
 			IPage currentPage = this.getCurrentPage();
-			ShowletUpdateInfoBean resetFrame =
-				new ShowletUpdateInfoBean(this.getFrameToEmpty(), this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
+			WidgetUpdateInfoBean resetFrame =
+				new WidgetUpdateInfoBean(this.getFrameToEmpty(), this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
 			this.addUpdateInfoBean(resetFrame);
 			this.executeUpdateUserConfig(currentPage);
 		} catch (Throwable t) {
@@ -106,8 +106,8 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
 			Widget showlet = showletsToRender[this.getFrameToResize()];
 			if (null == showlet) return true;
-			ShowletUpdateInfoBean resizingFrame =
-				new ShowletUpdateInfoBean(this.getFrameToResize(), showlet, status);
+			WidgetUpdateInfoBean resizingFrame =
+				new WidgetUpdateInfoBean(this.getFrameToResize(), showlet, status);
 			this.addUpdateInfoBean(resizingFrame);
 			this.executeUpdateUserConfig(currentPage);
 		} catch (Throwable t) {
@@ -118,7 +118,7 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 	}
 
 	protected void updateSessionParams() throws Throwable {
-		ShowletUpdateInfoBean[] infos = this.getUpdateInfos();
+		WidgetUpdateInfoBean[] infos = this.getUpdateInfos();
 		if (null == infos || infos.length == 0) {
 			return;
 		}
@@ -191,22 +191,22 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		return true;
 	}
 
-	private PageUserConfigBean createNewPageUserConfig(ShowletUpdateInfoBean[] infos, UserDetails currentUser, IPage currentPage) {
+	private PageUserConfigBean createNewPageUserConfig(WidgetUpdateInfoBean[] infos, UserDetails currentUser, IPage currentPage) {
 		PageUserConfigBean bean = new PageUserConfigBean(currentUser.getUsername());
 		CustomPageConfig pageConfig = this.createNewPageConfig(infos, currentPage);
 		bean.getConfig().put(currentPage.getCode(), pageConfig);
 		return bean;
 	}
 
-	private void updatePageConfig(CustomPageConfig customUserPageConfig, ShowletUpdateInfoBean[] infos) {
+	private void updatePageConfig(CustomPageConfig customUserPageConfig, WidgetUpdateInfoBean[] infos) {
 		for (int i = 0; i < infos.length; i++) {
-			ShowletUpdateInfoBean updateInfo = infos[i];
+			WidgetUpdateInfoBean updateInfo = infos[i];
 			customUserPageConfig.getConfig()[updateInfo.getFramePos()] = updateInfo.getShowlet();
 			customUserPageConfig.getStatus()[updateInfo.getFramePos()] = updateInfo.getStatus();
 		}
 	}
 
-	private CustomPageConfig createNewPageConfig(ShowletUpdateInfoBean[] infos, IPage currentPage) {
+	private CustomPageConfig createNewPageConfig(WidgetUpdateInfoBean[] infos, IPage currentPage) {
 		CustomPageConfig pageConfig = new CustomPageConfig(currentPage.getCode(), currentPage.getModel().getFrames().length);
 		this.updatePageConfig(pageConfig, infos);
 		return pageConfig;
@@ -261,10 +261,10 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		return (Lang) this.getRequest().getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_LANG);
 	}
 
-	protected void addUpdateInfoBean(ShowletUpdateInfoBean toAdd) {
-		ShowletUpdateInfoBean[] infos = this.getUpdateInfos();
+	protected void addUpdateInfoBean(WidgetUpdateInfoBean toAdd) {
+		WidgetUpdateInfoBean[] infos = this.getUpdateInfos();
 		int len = infos.length;
-		ShowletUpdateInfoBean[] newInfos = new ShowletUpdateInfoBean[len + 1];
+		WidgetUpdateInfoBean[] newInfos = new WidgetUpdateInfoBean[len + 1];
 		for(int i=0; i < len; i++){
 			newInfos[i] = infos[i];
 		}
@@ -307,10 +307,10 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		this._frameToResize = frameToResize;
 	}
 
-	protected ShowletUpdateInfoBean[] getUpdateInfos() {
+	protected WidgetUpdateInfoBean[] getUpdateInfos() {
 		return _updateInfos;
 	}
-	protected void setUpdateInfos(ShowletUpdateInfoBean[] updateInfos) {
+	protected void setUpdateInfos(WidgetUpdateInfoBean[] updateInfos) {
 		this._updateInfos = updateInfos;
 	}
 
@@ -358,7 +358,7 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 	private Integer _frameToEmpty;
 	private Integer _frameToResize;
 
-	private ShowletUpdateInfoBean[] _updateInfos = new ShowletUpdateInfoBean[0];
+	private WidgetUpdateInfoBean[] _updateInfos = new WidgetUpdateInfoBean[0];
 
 	private HttpServletResponse _servletResponse;
 

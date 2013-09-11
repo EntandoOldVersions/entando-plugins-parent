@@ -27,7 +27,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.internalservlet.AbstractFrontActi
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
+import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
 
 /**
  * @author E.Santoboni
@@ -75,10 +75,10 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 			//System.out.println("Frame di destinazione " + this.getTargetFramePos() + " - occupato " + isFrameDestBusy);
 			if (!isFrameDestBusy) {
 				//frame destinazione non occupato
-				ShowletUpdateInfoBean frameStartUpdate =
-					new ShowletUpdateInfoBean(this.getStartFramePos(), this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
+				WidgetUpdateInfoBean frameStartUpdate =
+					new WidgetUpdateInfoBean(this.getStartFramePos(), this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
 				this.addUpdateInfoBean(frameStartUpdate);
-				ShowletUpdateInfoBean frameTargetUpdate = this.buildShowletToMoveUpdateInfo(showletsToRender);
+				WidgetUpdateInfoBean frameTargetUpdate = this.buildShowletToMoveUpdateInfo(showletsToRender);
 				this.addUpdateInfoBean(frameTargetUpdate);
 			} else {
 				//frame destinazione occupato
@@ -236,12 +236,12 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 		}
 	}
 
-	private ShowletUpdateInfoBean buildShowletToMoveUpdateInfo(Widget[] showletsToRender) throws Throwable {
+	private WidgetUpdateInfoBean buildShowletToMoveUpdateInfo(Widget[] showletsToRender) throws Throwable {
 		Widget showletToMove = showletsToRender[this.getStartFramePos()];
 		Integer statusShowletToMoveInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[this.getStartFramePos()] : null;
 		int statusShowletToMove = (statusShowletToMoveInteger == null) ? 0 : statusShowletToMoveInteger;
-		ShowletUpdateInfoBean frameTargetUpdate =
-			new ShowletUpdateInfoBean(this.getTargetFramePos(), showletToMove, statusShowletToMove);
+		WidgetUpdateInfoBean frameTargetUpdate =
+			new WidgetUpdateInfoBean(this.getTargetFramePos(), showletToMove, statusShowletToMove);
 		//System.out.println("MESSA SHOWLET da spostare in POSIZIONE TARGET " + this.getTargetFramePos());
 		return frameTargetUpdate;
 	}
@@ -297,7 +297,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 				framePos = columnFrames[columnFrames.length - i - 1];
 			}
 			if (framePos.equals(this.getTargetFramePos())) {
-				ShowletUpdateInfoBean frameTargetUpdate = this.buildShowletToMoveUpdateInfo(showletsToRender);
+				WidgetUpdateInfoBean frameTargetUpdate = this.buildShowletToMoveUpdateInfo(showletsToRender);
 				this.addUpdateInfoBean(frameTargetUpdate);
 				check = true;
 				prevFrames = framePos;
@@ -307,7 +307,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 				Widget showletToSwitch = showletsToRender[prevFrames];
 				Integer statusShowletToSwitchInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[prevFrames] : null;
 				int statusShowletToSwitch = (statusShowletToSwitchInteger == null) ? 0 : statusShowletToSwitchInteger;
-				ShowletUpdateInfoBean showletToSwitchUpdateInfo = new ShowletUpdateInfoBean(framePos, showletToSwitch, statusShowletToSwitch);
+				WidgetUpdateInfoBean showletToSwitchUpdateInfo = new WidgetUpdateInfoBean(framePos, showletToSwitch, statusShowletToSwitch);
 				//System.out.println("MESSA SHOWLET da switchare da posizione " + prevFrames + " a POSIZIONE " + framePos);
 				this.getShiftingElements().put(prevFrames, framePos);
 				this.addUpdateInfoBean(showletToSwitchUpdateInfo);
@@ -320,8 +320,8 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 		}
 		if (!endFramePos.equals(this.getStartFramePos())) {
 			//System.out.println("SVUOTAMENTO FRAME PARTENZA");
-			ShowletUpdateInfoBean frameStartUpdate =
-				new ShowletUpdateInfoBean(this.getStartFramePos(), this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
+			WidgetUpdateInfoBean frameStartUpdate =
+				new WidgetUpdateInfoBean(this.getStartFramePos(), this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
 			this.addUpdateInfoBean(frameStartUpdate);
 		} else {
 			//System.out.println("CASO IN CUI IL FRAME DI PARTENZA E' IL DESTINATARIO DI UN FRAME SWITCHATO");

@@ -28,7 +28,7 @@
             </result>
 		</global-results>
 		
-		<action name="configShowlet" class="jpphotogalleryPhotogalleryWidgetAction" method="configContentType">
+		<action name="configWidget" class="jpphotogalleryPhotogalleryWidgetAction" method="configContentType">
         	<result name="input" type="tiles">admin.jpphotogallery.Page.Widget.Photogallery.config</result>
             <result type="tiles">admin.jpphotogallery.Page.Widget.Photogallery.config</result>
             <interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>

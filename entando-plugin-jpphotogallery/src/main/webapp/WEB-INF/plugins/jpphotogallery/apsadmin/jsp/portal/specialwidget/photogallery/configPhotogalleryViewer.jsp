@@ -44,7 +44,7 @@
 <p>
 	<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
 	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" cssClass="text" />
-	<wpsf:submit useTabindexAutoIncrement="true" action="configShowlet" value="%{getText('label.continue')}" cssClass="button" />	
+	<wpsf:submit useTabindexAutoIncrement="true" action="configWidget" value="%{getText('label.continue')}" cssClass="button" />	
 </p>
 </fieldset>
 </s:if>

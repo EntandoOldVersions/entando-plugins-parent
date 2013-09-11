@@ -27,7 +27,7 @@ import com.agiletec.apsadmin.portal.specialwidget.SimpleWidgetConfigAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
 import com.agiletec.plugins.jpfacetnav.aps.system.JpFacetNavSystemConstants;
-import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.util.FacetNavShowletHelper;
+import com.agiletec.plugins.jpfacetnav.apsadmin.portal.specialwidget.util.FacetNavWidgetHelper;
 
 /**
  * @author E.Santoboni
@@ -82,7 +82,7 @@ public class FacetNavResultWidgetAction extends SimpleWidgetConfigAction impleme
 			String contentTypeCode = this.getContentTypeCode();
 			if (contentTypeCode!=null && contentTypeCode.length()>0 && !contentTypes.contains(contentTypeCode) && this.getContentType(contentTypeCode)!=null) {
 				contentTypes.add(contentTypeCode);
-				String contentTypesFilter = FacetNavShowletHelper.concatStrings(contentTypes, ",");
+				String contentTypesFilter = FacetNavWidgetHelper.concatStrings(contentTypes, ",");
 				String configParamName = JpFacetNavSystemConstants.CONTENT_TYPES_FILTER_SHOWLET_PARAM_NAME;
 				this.getShowlet().getConfig().setProperty(configParamName, contentTypesFilter);
 				this.setContentTypesFilter(contentTypesFilter);
@@ -105,7 +105,7 @@ public class FacetNavResultWidgetAction extends SimpleWidgetConfigAction impleme
 			String contentTypeCode = this.getContentTypeCode();
 			if (contentTypeCode != null) {
 				contentTypes.remove(contentTypeCode);
-				String contentTypesFilter = FacetNavShowletHelper.concatStrings(contentTypes, ",");
+				String contentTypesFilter = FacetNavWidgetHelper.concatStrings(contentTypes, ",");
 				String configParamName = JpFacetNavSystemConstants.CONTENT_TYPES_FILTER_SHOWLET_PARAM_NAME;
 				this.getShowlet().getConfig().setProperty(configParamName, contentTypesFilter);
 				this.setContentTypesFilter(contentTypesFilter);
@@ -160,7 +160,7 @@ public class FacetNavResultWidgetAction extends SimpleWidgetConfigAction impleme
 
 	public List<String> getContentTypeCodes() {
 		String contentTypesParam = this.getContentTypesFilter();
-		List<String> contentTypes = FacetNavShowletHelper.splitValues(contentTypesParam, ",");
+		List<String> contentTypes = FacetNavWidgetHelper.splitValues(contentTypesParam, ",");
 		return contentTypes;
 	}
 

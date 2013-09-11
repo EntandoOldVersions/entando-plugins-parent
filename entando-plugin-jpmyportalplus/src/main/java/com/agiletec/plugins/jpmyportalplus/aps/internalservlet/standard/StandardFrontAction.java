@@ -39,7 +39,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConsta
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
+import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
 
 /**
  * @author E.Santoboni
@@ -58,13 +58,13 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 			Widget movedShowlet = showletsToRender[this.getStartFramePos()];
 			Integer movedShowletStatusInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[this.getStartFramePos()] : null;
 			int movedShowletStatus = (movedShowletStatusInteger == null) ? 0 : movedShowletStatusInteger;
-			ShowletUpdateInfoBean movedShowletUpdateInfo = new ShowletUpdateInfoBean(this.getTargetFramePos(), movedShowlet, movedShowletStatus);
+			WidgetUpdateInfoBean movedShowletUpdateInfo = new WidgetUpdateInfoBean(this.getTargetFramePos(), movedShowlet, movedShowletStatus);
 			this.addUpdateInfoBean(movedShowletUpdateInfo);
 
 			Widget showletToMove = showletsToRender[this.getTargetFramePos()];
 			Integer showletToMoveStatusInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[this.getTargetFramePos()] : null;
 			int showletToMoveStatus = (showletToMoveStatusInteger == null) ? 0 : showletToMoveStatusInteger;
-			ShowletUpdateInfoBean showletToMoveUpdateInfo = new ShowletUpdateInfoBean(this.getStartFramePos(), showletToMove, showletToMoveStatus);
+			WidgetUpdateInfoBean showletToMoveUpdateInfo = new WidgetUpdateInfoBean(this.getStartFramePos(), showletToMove, showletToMoveStatus);
 			this.addUpdateInfoBean(showletToMoveUpdateInfo);
 
 			super.executeUpdateUserConfig(currentPage);
@@ -118,7 +118,7 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 							this.addNewWidgetUpdateInfo(showletsToAdd, i, isFrameToFlow);
 						} else {
 							Widget showletToInsert = this.getShowletVoid();
-							ShowletUpdateInfoBean infoBean = new ShowletUpdateInfoBean(i, showletToInsert, IPageUserConfigManager.STATUS_OPEN);
+							WidgetUpdateInfoBean infoBean = new WidgetUpdateInfoBean(i, showletToInsert, IPageUserConfigManager.STATUS_OPEN);
 							this.addUpdateInfoBean(infoBean);
 						}
 					} else {
@@ -187,7 +187,7 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 	}
 
 	protected void addNewWidgetUpdateInfo(List<String> showletsToAdd, int framePos, boolean frameToFlow) {
-		ShowletUpdateInfoBean infoBean = null;
+		WidgetUpdateInfoBean infoBean = null;
 		Widget showletToInsert = null;
 		String typeCode = showletsToAdd.get(0);
 		WidgetType type = this.getWidgetTypeManager().getWidgetType(typeCode);
@@ -197,10 +197,10 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 			showletToInsert.setType(type);
 		}
 		if (null != showletToInsert) {
-			infoBean = new ShowletUpdateInfoBean(framePos, showletToInsert, IPageUserConfigManager.STATUS_OPEN);
+			infoBean = new WidgetUpdateInfoBean(framePos, showletToInsert, IPageUserConfigManager.STATUS_OPEN);
 			this.addUpdateInfoBean(infoBean);
 		} else if (frameToFlow) {
-			infoBean = new ShowletUpdateInfoBean(framePos, this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
+			infoBean = new WidgetUpdateInfoBean(framePos, this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
 			this.addUpdateInfoBean(infoBean);
 		}
 	}

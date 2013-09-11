@@ -24,9 +24,9 @@ import com.agiletec.aps.system.services.page.Widget;
 /**
  * @author E.Santoboni
  */
-public class ShowletUpdateInfoBean {
+public class WidgetUpdateInfoBean {
 
-	public ShowletUpdateInfoBean(int framePos, Widget showlet, int status) {
+	public WidgetUpdateInfoBean(int framePos, Widget showlet, int status) {
 		this.setFramePos(framePos);
 		this.setShowlet(showlet);
 		this.setStatus(status);

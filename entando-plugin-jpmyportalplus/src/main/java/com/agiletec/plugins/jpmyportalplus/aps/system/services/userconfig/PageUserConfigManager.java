@@ -44,7 +44,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
+import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
 
 /**
  * @author E.Santoboni
@@ -210,7 +210,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	}
 
 	@Override
-	public void updateGuestPageConfig(IPage page, ShowletUpdateInfoBean[] updateInfos, HttpServletRequest request, HttpServletResponse response) throws ApsSystemException {
+	public void updateGuestPageConfig(IPage page, WidgetUpdateInfoBean[] updateInfos, HttpServletRequest request, HttpServletResponse response) throws ApsSystemException {
 		try {
 			CustomPageConfig pageConfig = this.getGuestPageConfig(page, request);
 			if (null == pageConfig) {
@@ -227,7 +227,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	}
 
 	@Override
-	public void updateUserPageConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfos) throws ApsSystemException {
+	public void updateUserPageConfig(String username, IPage page, WidgetUpdateInfoBean[] updateInfos) throws ApsSystemException {
 		try {
 			this.getPageUserConfigDAO().updateUserPageConfig(username, page, updateInfos);
 		} catch (Throwable t) {

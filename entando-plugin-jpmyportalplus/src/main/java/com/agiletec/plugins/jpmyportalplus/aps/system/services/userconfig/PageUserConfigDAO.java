@@ -41,7 +41,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConsta
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.ShowletUpdateInfoBean;
+import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
 
 /**
  * @author E.Santoboni
@@ -127,7 +127,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	}
 
 	@Override
-	public void updateUserPageConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfos) {
+	public void updateUserPageConfig(String username, IPage page, WidgetUpdateInfoBean[] updateInfos) {
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -143,12 +143,12 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		}
 	}
 
-	protected void deleteUserConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfos, Connection conn) {
+	protected void deleteUserConfig(String username, IPage page, WidgetUpdateInfoBean[] updateInfos, Connection conn) {
 		PreparedStatement stat = null;
 		try {
 			stat = conn.prepareStatement(DELETE_PAGE_USER_CONFIG);
 			for (int i = 0; i < updateInfos.length; i++) {
-				ShowletUpdateInfoBean infoBean = updateInfos[i];
+				WidgetUpdateInfoBean infoBean = updateInfos[i];
 				stat.setString(1, username);
 				stat.setString(2, page.getCode());
 				stat.setInt(3, infoBean.getFramePos());
@@ -163,12 +163,12 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		}
 	}
 
-	protected void addUserConfig(String username, IPage page, ShowletUpdateInfoBean[] updateInfos, Connection conn) {
+	protected void addUserConfig(String username, IPage page, WidgetUpdateInfoBean[] updateInfos, Connection conn) {
 		PreparedStatement stat = null;
 		try {
 			stat = conn.prepareStatement(ADD_USER_CONFIG);
 			for (int i = 0; i < updateInfos.length; i++) {
-				ShowletUpdateInfoBean infoBean = updateInfos[i];
+				WidgetUpdateInfoBean infoBean = updateInfos[i];
 				stat.setString(1, username);
 				stat.setString(2, page.getCode());
 				stat.setInt(3, infoBean.getFramePos());
