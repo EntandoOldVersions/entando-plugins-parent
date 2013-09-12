@@ -1,7 +1,7 @@
 <apiMethodDefinitions>
     
     <resource name="content" namespace="jacms">
-        <description>The rappresentation of the content</description>
+        <description>The representation of the content</description>
         <source pluginCode="jacms">plugins</source>
         <method httpMethod="GET" active="true" canSpawnOthers="true">
             <description>Return a public content</description>

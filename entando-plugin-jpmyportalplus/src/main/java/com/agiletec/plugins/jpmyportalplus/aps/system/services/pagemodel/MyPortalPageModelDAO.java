@@ -47,7 +47,7 @@ public class MyPortalPageModelDAO extends PageModelDAO {
 				pageModel.setFrames(pageModelDOM.getFrames());
 				pageModel.setMainFrame(pageModelDOM.getMainFrame());
 				pageModel.setFrameConfigs(pageModelDOM.getFrameConfigs());
-				pageModel.setDefaultShowlet(pageModelDOM.getDefaultShowlet());
+				pageModel.setDefaultWidget(pageModelDOM.getDefaultShowlet());
 			}
 			pageModel.setPluginCode(res.getString(4));
 		} catch (Throwable t) {

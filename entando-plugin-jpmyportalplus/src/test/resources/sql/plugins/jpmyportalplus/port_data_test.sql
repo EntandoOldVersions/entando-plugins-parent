@@ -1,11 +1,11 @@
 INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpmyportalplus_pagemodel', 'My Portal', '<frames>
 <frame pos="0" locked="true"><descr>Header</descr></frame>
-<frame pos="1" column="1" locked="false"><descr>Left Column I</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="2" column="1" locked="false"><descr>Left Column II</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="3" column="2" locked="false"><descr>Middle Column I</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="4" column="2" locked="false"><descr>Middle Column II</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="5" column="3" locked="false"><descr>Right Column I</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
-<frame pos="6" column="3" locked="false"><descr>Right Column II</descr><defaultShowlet code="jpmyportalplus_void" /></frame>
+<frame pos="1" column="1" locked="false"><descr>Left Column I</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="2" column="1" locked="false"><descr>Left Column II</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="3" column="2" locked="false"><descr>Middle Column I</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="4" column="2" locked="false"><descr>Middle Column II</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="5" column="3" locked="false"><descr>Right Column I</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="6" column="3" locked="false"><descr>Right Column II</descr><defaultWidget code="jpmyportalplus_void" /></frame>
 <frame pos="7" locked="true"><descr>Footer</descr></frame>
 </frames>', 'jpmyportalplus');
 

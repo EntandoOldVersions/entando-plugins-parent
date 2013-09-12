@@ -136,7 +136,7 @@ public class MyPortalPageModelDOM {
 		Element defaultShowletElement = frameElement.getChild(TAB_DEFAULT_SHOWLET);
 		if (null != defaultShowletElement) {
 			Widget defaultShowlet = this.buildDefaultShowlet(defaultShowletElement, pos, showletTypeManager);
-			frame.setDefaultShowlet(defaultShowlet);
+			frame.setDefaultWidget(defaultShowlet);
 			this.getDefaultShowlet()[pos] = defaultShowlet;
 		}
 		_frameConfigs[pos] = frame;

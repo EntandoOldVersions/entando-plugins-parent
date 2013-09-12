@@ -54,11 +54,23 @@ public class Frame {
 		this._column = column;
 	}
 
+	/**
+	 * @deprecated Use {@link #getDefaultWidget()} instead
+	 */
 	public Widget getDefaultShowlet() {
-		return _defaultShowlet;
+		return getDefaultWidget();
 	}
+	public Widget getDefaultWidget() {
+		return _defaultWidget;
+	}
+	/**
+	 * @deprecated Use {@link #setDefaultWidget(Widget)} instead
+	 */
 	public void setDefaultShowlet(Widget defaultShowlet) {
-		this._defaultShowlet = defaultShowlet;
+		setDefaultWidget(defaultShowlet);
+	}
+	public void setDefaultWidget(Widget defaultWidget) {
+		this._defaultWidget = defaultWidget;
 	}
 
 	public boolean isLocked() {
@@ -73,6 +85,6 @@ public class Frame {
 	private boolean _mainFrame;
 	private boolean _locked;
 	private Integer _column;
-	private Widget _defaultShowlet;
+	private Widget _defaultWidget;
 
 }
