@@ -115,7 +115,7 @@
 					</p>
 					<ul class="noBullet unstyled">
 						<li>
-							<label class="checkbox" for="<c:out value="defaultShowlet${random}" />"><wpsf:checkbox useTabindexAutoIncrement="true" name="defaultShowlet" id="%{'defaultShowlet'+#random}" cssClass="radiocheck" /><s:text name="name.hasDefaultShowlets" /></label>
+							<label class="checkbox" for="<c:out value="defaultShowlet${random}" />"><wpsf:checkbox useTabindexAutoIncrement="true" name="defaultShowlet" id="%{'defaultShowlet'+#random}" cssClass="radiocheck" /><s:text name="name.hasDefaultWidgets" /></label>
 						</li>
 						<li>
 							<label class="checkbox" for="<c:out value="viewerPage${random}" />"><wpsf:checkbox useTabindexAutoIncrement="true" name="viewerPage" id="%{'viewerPage'+#random}" cssClass="radiocheck" /><s:text name="name.isViewerPage" /></label></li>

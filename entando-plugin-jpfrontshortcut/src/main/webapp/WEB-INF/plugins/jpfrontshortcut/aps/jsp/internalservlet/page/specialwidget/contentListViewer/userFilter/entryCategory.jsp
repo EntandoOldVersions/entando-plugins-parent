@@ -4,12 +4,12 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 
 <div id="form-container" class="widget_form jpfrontshortcut-frameconfig-navigatorConfig">
-<h2 class="margin-more-top"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h2>
+<h2 class="margin-more-top"><s:text name="name.widget" />:&#32;<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h2>
 
 <h3><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h3>
 
 <s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
-<h3 class="margin-more-top"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
+<h3 class="margin-more-top"><s:text name="name.widget" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
 <h4 class="margin-bit-bottom"><s:text name="title.userFilterCategoryConfigure" /></h4>
 
 <s:form namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" id="formform" theme="simple">

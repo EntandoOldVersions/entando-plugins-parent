@@ -12,7 +12,7 @@
 		<s:include value="/WEB-INF/apsadmin/jsp/portal/include/frameInfo.jsp" />
 		--%>
 		<h2><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h2>
-		<h3><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h3>
+		<h3><s:text name="name.widget" />:&#32;<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h3>
 		<p><s:text name="note.editFrame.noConfigNeeded" /></p>
 	</s:if>
 	<s:else>
@@ -29,7 +29,7 @@
 			</div>
 		</s:if>
 		<%--
-		<p class="margin-more-bottom"><s:text name="note.editFrame.chooseAShowlet" /></p>
+		<p class="margin-more-bottom"><s:text name="note.editFrame.chooseAWidget" /></p>
 		--%>
 		<s:form action="joinWidget" id="formform" theme="simple" cssClass="form-inline">
 			<p class="noscreen">
@@ -37,9 +37,9 @@
 				<wpsf:hidden name="pageCode" />
 				<wpsf:hidden name="frame" />
 			</p>
-			<p><s:text name="title.editFrame.chooseAShowlet" /></p>
+			<p><s:text name="title.editFrame.chooseAWidget" /></p>
 			<p>
-				<label for="<c:out value="showletCode${random}" />" class="basic-mint-label"><s:text name="name.showlet" /></label>
+				<label for="<c:out value="showletCode${random}" />" class="basic-mint-label"><s:text name="name.widget" /></label>
 				<select name="showletTypeCode" tabindex="<wpsa:counter />" id="<c:out value="showletCode${random}" />">
 				<s:iterator var="showletFlavour" value="showletFlavours">
 
@@ -50,13 +50,13 @@
 						<s:if test="#showletType.optgroup != #tmpShowletType">
 						
 							<s:if test="#showletType.optgroup == 'stockShowletCode'">
-								<wpsa:set var="optgroupLabel"><s:text name="title.showletManagement.showlets.stock" /></wpsa:set>
+								<wpsa:set var="optgroupLabel"><s:text name="title.widgetManagement.showlets.stock" /></wpsa:set>
 							</s:if>
 							<s:elseif test="#showletType.optgroup == 'customShowletCode'">
-								<wpsa:set var="optgroupLabel"><s:text name="title.showletManagement.showlets.custom" /></wpsa:set>
+								<wpsa:set var="optgroupLabel"><s:text name="title.widgetManagement.showlets.custom" /></wpsa:set>
 							</s:elseif>
 							<s:elseif test="#showletType.optgroup == 'userShowletCode'">
-								<wpsa:set var="optgroupLabel"><s:text name="title.showletManagement.showlets.user" /></wpsa:set>
+								<wpsa:set var="optgroupLabel"><s:text name="title.widgetManagement.showlets.user" /></wpsa:set>
 							</s:elseif>
 							<s:else>
 								<wpsa:set var="pluginPropertyName" value="%{getText(#showletType.optgroup + '.name')}" />		

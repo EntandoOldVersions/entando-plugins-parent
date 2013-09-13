@@ -4,7 +4,7 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 
 <div id="form-container" class="widget_form jpfrontshortcut-frameconfig-navigatorConfig">
-<h2 class="margin-more-top"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h2>
+<h2 class="margin-more-top"><s:text name="name.widget" />:&#32;<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h2>
 
 <h3><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h3>
 

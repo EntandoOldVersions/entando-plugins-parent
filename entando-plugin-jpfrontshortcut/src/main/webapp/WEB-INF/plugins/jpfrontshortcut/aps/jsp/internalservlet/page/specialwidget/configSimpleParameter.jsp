@@ -7,7 +7,7 @@
 <s:set var="random"><c:out value="${random}" /></s:set>
 <div id="form-container" class="widget_form jpfrontshortcut-frameconfig-configSimpleParameter"> 
 	<h2><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h2>
-	<h3 class="margin-more-bottom margin-more-top"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h3>
+	<h3 class="margin-more-bottom margin-more-top"><s:text name="name.widget" />:&#32;<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" /></h3>
 	<s:form cssClass="form-horizonal" action="saveConfigSimpleParameter" id="formform" theme="simple">
 		<p class="noscreen">
 			<wpsf:hidden name="pageCode" />

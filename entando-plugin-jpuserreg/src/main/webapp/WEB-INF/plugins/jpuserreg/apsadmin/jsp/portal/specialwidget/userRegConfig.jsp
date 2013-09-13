@@ -17,7 +17,7 @@
 <s:include value="/WEB-INF/apsadmin/jsp/portal/include/frameInfo.jsp" />
 
 <s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
-<h3 class="margin-more-top margin-more-bottom"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
+<h3 class="margin-more-top margin-more-bottom"><s:text name="name.widget" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
 
 <s:form action="saveConfig" namespace="/do/jpuserreg/Page/SpecialWidget/UserReg" >
 	<s:if test="hasActionErrors()">

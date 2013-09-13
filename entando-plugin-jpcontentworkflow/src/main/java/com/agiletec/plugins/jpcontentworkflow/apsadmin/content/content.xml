@@ -93,7 +93,10 @@
 				<param name="actionName">entryContent</param>
 				<param name="contentOnSessionMarker">${contentOnSessionMarker}</param>
 			</result>
-        	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">editContents</param></interceptor-ref>
+        	<interceptor-ref name="entandoValidationStack">
+        		<param name="requestAuth.requiredPermission">editContents</param>
+        		<param name="chain.includeParameters">contentOnSessionMarker</param>
+        	</interceptor-ref>
         </action>
         
         <action name="entryContent*" class="jpcontentworkflowContentAction" method="forwardToEntryContent">

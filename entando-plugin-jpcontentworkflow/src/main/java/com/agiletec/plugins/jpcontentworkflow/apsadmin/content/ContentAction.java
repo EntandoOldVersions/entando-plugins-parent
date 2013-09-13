@@ -156,22 +156,28 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 	
 	@Override
 	public List<SelectItem> getAvalaibleStatus() {
-		Content content = this.getContent();
-		List<SelectItem> items = new ArrayList<SelectItem>(1);
-		String statusDescrKey = "name.contentStatus." +content.getStatus();
-		SelectItem item = null;
-		if (statusDescrKey.equals(this.getText(statusDescrKey))) {
-			String contentType = content.getTypeCode();
-			Workflow workflow = this.getWorkflowManager().getWorkflow(contentType);
-			if (null != workflow && null != workflow.getStep(content.getStatus())) {
-				item = new SelectItem(content.getStatus(), workflow.getStep(content.getStatus()).getDescr());
+		List<SelectItem> items;
+		try {
+			Content content = this.getContent();
+			items = new ArrayList<SelectItem>(1);
+			String statusDescrKey = "name.contentStatus." +content.getStatus();
+			SelectItem item = null;
+			if (statusDescrKey.equals(this.getText(statusDescrKey))) {
+				String contentType = content.getTypeCode();
+				Workflow workflow = this.getWorkflowManager().getWorkflow(contentType);
+				if (null != workflow && null != workflow.getStep(content.getStatus())) {
+					item = new SelectItem(content.getStatus(), workflow.getStep(content.getStatus()).getDescr());
+				} else {
+					item = new SelectItem(content.getStatus(), content.getStatus());
+				}
 			} else {
-				item = new SelectItem(content.getStatus(), content.getStatus());
+				item = new SelectItem(content.getStatus(), statusDescrKey);
 			}
-		} else {
-			item = new SelectItem(content.getStatus(), statusDescrKey);
+			items.add(item);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "getAvalaibleStatus");
+			throw new RuntimeException("Error in getAvalaibleStatus");
 		}
-		items.add(item);
 		return items;
 	}
 	

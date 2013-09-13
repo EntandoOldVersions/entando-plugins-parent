@@ -7,18 +7,18 @@
 	<s:if test="#swappableVar == 1">
 		<img
 			src="<wp:resourceURL/>plugins/jpmyportalplus/administration/common/img/icons/22x22/showlet-is-swappable.png" 
-			alt="<s:text name="jpmyportalplus.showlet.swappable" />"
-			title="<s:property value="#showletType.value" />: <s:text name="jpmyportalplus.showlet.swappable" />" 
+			alt="<s:text name="jpmyportalplus.widget.swappable" />"
+			title="<s:property value="#showletType.value" />: <s:text name="jpmyportalplus.widget.swappable" />" 
 		/>
 	</s:if>
 	<s:else>
 		<img
 			src="<wp:resourceURL/>plugins/jpmyportalplus/administration/common/img/icons/22x22/showlet-isnot-swappable.png" 
-			alt="<s:text name="jpmyportalplus.showlet.not.swappable" />"
-			title="<s:property value="#showletType.value" />: <s:text name="jpmyportalplus.showlet.not.swappable" />" 
+			alt="<s:text name="jpmyportalplus.widget.not.swappable" />"
+			title="<s:property value="#showletType.value" />: <s:text name="jpmyportalplus.widget.not.swappable" />" 
 		/>
 	</s:else>
 	</s:if>
-	<s:else><abbr title="<s:text name="jpmyportalplus.showlet.na" />">&ndash;</abbr></s:else>
+	<s:else><abbr title="<s:text name="jpmyportalplus.widget.na" />">&ndash;</abbr></s:else>
 	<s:set var="swappableVar" value="null" />
 </td>

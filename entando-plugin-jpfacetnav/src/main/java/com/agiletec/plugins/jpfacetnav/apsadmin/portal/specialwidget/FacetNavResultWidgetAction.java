@@ -52,7 +52,7 @@ public class FacetNavResultWidgetAction extends SimpleWidgetConfigAction impleme
 			if (!smallContentTypes.containsKey(contentTypeCode)) {
 				String[] args = { contentTypeCode };
 				String fieldName = JpFacetNavSystemConstants.CONTENT_TYPES_FILTER_SHOWLET_PARAM_NAME;
-				this.addFieldError(fieldName, this.getText("message.facetNavShowlet.contentTypesFilter.notValid", args));
+				this.addFieldError(fieldName, this.getText("message.facetNavWidget.contentTypesFilter.notValid", args));
 			}
 		}
 	}

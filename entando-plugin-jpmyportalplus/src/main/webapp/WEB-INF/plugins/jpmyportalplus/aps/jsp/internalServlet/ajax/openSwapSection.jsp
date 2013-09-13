@@ -10,7 +10,7 @@
 	</p>
 
 	<p>
-		<label for="scambia_<c:out value="${showletId}" />"><s:text name="jpmyportalplus.movethisshowlet" /></label>
+		<label for="scambia_<c:out value="${showletId}" />"><s:text name="jpmyportalplus.movethiswidget" /></label>
 		<select id="scambia_<c:out value="${showletId}" />" name="targetFramePos">
 			<s:iterator value="selectItems" var="selectItem" >
 				<option value="<s:property value="#selectItem.frameId" />">

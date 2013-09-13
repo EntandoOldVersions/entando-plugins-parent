@@ -18,7 +18,7 @@
 		<s:include value="/WEB-INF/apsadmin/jsp/portal/include/frameInfo.jsp" />
 
 		<s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
-		<h3 class="margin-more-top"><s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
+		<h3 class="margin-more-top"><s:text name="name.widget" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
 
 		<s:form>
 			<s:if test="hasActionErrors()">
@@ -56,7 +56,7 @@
 					<tr>
 						<th><abbr title="<s:text name="name.position" />"><s:text name="name.position.abbr" /></abbr></th>
 						<th><s:text name="label.description" /></th>
-						<th><s:text name="name.showlet" /></th>
+						<th><s:text name="name.widget" /></th>
 					</tr>
 					<s:iterator value="targetPage.showlets" id="showlet" status="rowstatus">
 						<s:set var="frames" value="targetPage.getModel().getFrames()" ></s:set>

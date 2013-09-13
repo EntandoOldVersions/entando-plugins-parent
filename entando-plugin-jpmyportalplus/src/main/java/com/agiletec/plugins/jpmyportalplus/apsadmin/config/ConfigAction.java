@@ -45,7 +45,7 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 		IWidgetTypeManager widgetTypeManager = this.getWidgetTypeManager();
 		for (String widgetCode : widgetTypeCodes) {
 			if (!this.isShowletAllowed(widgetTypeManager.getWidgetType(widgetCode))) {
-				this.addFieldError("showlets", this.getText("Errors.jpmyportalConfig.showlets.notValid", new String[] { widgetCode }));
+				this.addFieldError("showlets", this.getText("errors.jpmyportalConfig.widgets.notValid", new String[] { widgetCode }));
 			}
 		}
 	}

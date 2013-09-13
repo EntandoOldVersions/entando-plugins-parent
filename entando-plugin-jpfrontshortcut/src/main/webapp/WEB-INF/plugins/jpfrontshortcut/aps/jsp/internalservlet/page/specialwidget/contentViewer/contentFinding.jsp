@@ -12,7 +12,7 @@
 	<div class="subsection-light">
 		<h3 class="margin-more-top margin-bit-bottom">
 			<s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
-			<s:text name="name.showlet" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" />
+			<s:text name="name.widget" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" />
 		</h3>
 		<s:form cssClass="form-inline" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Viewer" action="searchContents" id="formform" theme="simple">
 			<p class="noscreen">

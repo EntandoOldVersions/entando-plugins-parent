@@ -123,7 +123,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 				this.addActionError(this.getText("error.noPageSelected"));
 			} else {
 				if (this.getFrameIdParam() == null) {
-					this.addActionError(this.getText("error.invalidShowletType"));
+					this.addActionError(this.getText("error.invalidWidgetType"));
 				} else {
 					int frame = this.getFrameIdParam().intValue();
 					if (selectedNode.equals(this.getPageCode()) && frame==this.getFrame()) {
@@ -131,11 +131,11 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 					} else {
 						Widget[] showlets = targetPage.getWidgets();
 						if (showlets.length <= frame) {
-							this.addActionError(this.getText("error.invalidShowletType"));
+							this.addActionError(this.getText("error.invalidWidgetType"));
 						} else {
 							Widget showlet = showlets[frame];
 							if (showlet != null && this.getInvalidShowletTypes().contains(showlet.getType().getCode())) {
-								this.addActionError(this.getText("error.invalidShowletType"));
+								this.addActionError(this.getText("error.invalidWidgetType"));
 							} else {
 								checked = true;
 							}
@@ -159,7 +159,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 			} else {
 				Widget targetFrame = targetPage.getWidgets()[this.getFrameIdParam().intValue()];
 				if (targetFrame == null || this.getInvalidShowletTypes().contains(targetFrame.getType().getCode())) {
-					this.addActionError(this.getText("error.invalidShowletType"));
+					this.addActionError(this.getText("error.invalidWidgetType"));
 				} else {
 					checked = true;
 				}

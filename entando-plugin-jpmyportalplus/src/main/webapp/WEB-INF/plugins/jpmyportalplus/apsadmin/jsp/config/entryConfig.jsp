@@ -51,23 +51,23 @@
 	</p>
 
 	<fieldset  class="margin-bit-top">
-		<legend><s:text name="jpmyportalplus.label.configShowlet" /></legend>
+		<legend><s:text name="jpmyportalplus.label.configWidget" /></legend>
 
 		<p>
-			<label for="showletCode" class="basic-mint-label"><s:text name="jpmyportalplus.label.addShowlet" />:</label>
+			<label for="showletCode" class="basic-mint-label"><s:text name="jpmyportalplus.label.addWidget" />:</label>
 			<select name="showletCode" tabindex="<wpsa:counter />" id="showletCode">
 			<s:iterator var="showletFlavour" value="showletFlavours">
 				<wpsa:set var="tmpShowletType">tmpShowletTypeValue</wpsa:set>
 				<s:iterator var="showletType" value="#showletFlavour" >
 					<s:if test="#showletType.optgroup != #tmpShowletType">
 						<s:if test="#showletType.optgroup == 'stockShowletCode'">
-							<wpsa:set var="optgroupLabel"><s:text name="title.showletManagement.showlets.stock" /></wpsa:set>
+							<wpsa:set var="optgroupLabel"><s:text name="title.widgetManagement.showlets.stock" /></wpsa:set>
 						</s:if>
 						<s:elseif test="#showletType.optgroup == 'customShowletCode'">
-							<wpsa:set var="optgroupLabel"><s:text name="title.showletManagement.showlets.custom" /></wpsa:set>
+							<wpsa:set var="optgroupLabel"><s:text name="title.widgetManagement.showlets.custom" /></wpsa:set>
 						</s:elseif>
 						<s:elseif test="#showletType.optgroup == 'userShowletCode'">
-							<wpsa:set var="optgroupLabel"><s:text name="title.showletManagement.showlets.user" /></wpsa:set>
+							<wpsa:set var="optgroupLabel"><s:text name="title.widgetManagement.showlets.user" /></wpsa:set>
 						</s:elseif>
 						<s:else>
 							<wpsa:set var="pluginPropertyName" value="%{getText(#showletType.optgroup + '.name')}" />
@@ -90,7 +90,7 @@
 
 		<s:if test="%{showletTypeCodes.size > 0}">
 			<table class="generic">
-				<caption><span><s:text name="jpmyportalplus.label.currentConfigShowlet"></s:text></span></caption>
+				<caption><span><s:text name="jpmyportalplus.label.currentConfigWidget"></s:text></span></caption>
 				<tr>
 					<th scope="col">Showlet</th>
 					<th scope="col"><abbr title="<s:text name="label.remove" />">&ndash;</abbr></th>

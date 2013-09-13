@@ -37,7 +37,7 @@ public class ContentListViewerWidgetAction extends com.agiletec.plugins.jacms.ap
 		try {
 			if (null == this.getFieldErrors().get("contentType")) {
 				if (null == this.getContentManager().createContentType(this.getContentType())) {
-					this.addFieldError("contentType", this.getText("error.showlet.listViewer.invalidContentType", new String[]{this.getContentType()}));
+					this.addFieldError("contentType", this.getText("error.widget.listViewer.invalidContentType", new String[]{this.getContentType()}));
 				}
 			}
 			if (this.getActionErrors().size()>0 || this.getFieldErrors().size()>0) {

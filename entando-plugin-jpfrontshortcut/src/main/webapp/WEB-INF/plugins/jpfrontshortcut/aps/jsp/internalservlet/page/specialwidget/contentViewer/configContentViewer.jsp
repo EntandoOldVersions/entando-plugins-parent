@@ -7,7 +7,7 @@
 	<h2><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h2>
 	<div class="subsection-light">
 		<h3 class="margin-more-top margin-bit-bottom">
-			<s:text name="name.showlet" />:&#32;
+			<s:text name="name.widget" />:&#32;
 			<s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" />
 		</h3>
 		<s:form namespace="/do/jpfrontshortcut/Page/SpecialWidget/Viewer" action="saveViewerConfig" id="formform" theme="simple">

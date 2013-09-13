@@ -51,7 +51,7 @@ public class FacetNavTreeWidgetAction extends FacetNavResultWidgetAction impleme
 			if (null == this.getFacet(facetCode)) {
 				String[] args = { facetCode };
 				String fieldName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
-				this.addFieldError(fieldName, this.getText("message.facetNavShowlet.facets.notValid", args));
+				this.addFieldError(fieldName, this.getText("message.facetNavWidget.facets.notValid", args));
 			}
 		}
 	}
