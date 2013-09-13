@@ -9,3 +9,4 @@ entando-plugin-*/.gitignore
 ./settings/
 .classpath
 nbactions.xml
+.DS_Store
