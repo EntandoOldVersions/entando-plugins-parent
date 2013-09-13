@@ -15,10 +15,10 @@
                     <description>The Id of the content model used to render each content in the HTML section of the response. Must be an integer, "default" or "list".</description>
                 </parameter>
             </parameters>
-            <relatedShowlet code="content_viewer">
-                <mapParameter showlet="contentId" method="id" />
-                <mapParameter showlet="modelId" method="modelId" />
-            </relatedShowlet>
+            <relatedWidget code="content_viewer">
+                <mapParameter widget="contentId" method="id" />
+                <mapParameter widget="modelId" method="modelId" />
+            </relatedWidget>
         </method>
         <method httpMethod="POST" active="true" requiredAuth="true" requiredPermission="validateContents">
             <description>Add a content</description>
