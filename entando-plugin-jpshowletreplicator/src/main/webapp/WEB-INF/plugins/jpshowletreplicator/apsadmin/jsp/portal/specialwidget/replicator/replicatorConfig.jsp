@@ -18,7 +18,7 @@
 <s:action namespace="/do/Page" name="printPageDetails" executeResult="true" ignoreContextParams="true"><s:param name="selectedNode" value="pageCode"></s:param></s:action>
 <s:include value="/WEB-INF/apsadmin/jsp/portal/include/frameInfo.jsp" />
 
-<s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
+<s:set var="showletType" value="%{getShowletType(widgetTypeCode)}"></s:set>
 <h3 class="margin-more-top"><s:text name="name.widget" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
 
 	<s:form action="saveConfig">
@@ -50,7 +50,7 @@
 		<p class="noscreen">
 			<wpsf:hidden name="pageCode" />
 			<wpsf:hidden name="frame" />
-			<wpsf:hidden name="showletTypeCode" value="%{showlet.type.code}"/>
+			<wpsf:hidden name="widgetTypeCode" value="%{showlet.type.code}"/>
 			<wpsf:hidden name="frameIdParam" value="%{#showletConfig.get('frameIdParam')}"/>
 			<s:if test="#pageTreeStyleVar == 'classic'">
 			<s:iterator value="treeNodesToOpen" var="treeNodeToOpenVar"><wpsf:hidden name="treeNodesToOpen" value="%{#treeNodeToOpenVar}"></wpsf:hidden></s:iterator>

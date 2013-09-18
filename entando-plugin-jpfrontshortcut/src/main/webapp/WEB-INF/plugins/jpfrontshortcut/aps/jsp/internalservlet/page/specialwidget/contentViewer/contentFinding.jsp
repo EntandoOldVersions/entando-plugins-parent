@@ -11,14 +11,14 @@
 	<h2><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h2>
 	<div class="subsection-light">
 		<h3 class="margin-more-top margin-bit-bottom">
-			<s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
+			<s:set var="showletType" value="%{getShowletType(widgetTypeCode)}"></s:set>
 			<s:text name="name.widget" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" />
 		</h3>
 		<s:form cssClass="form-inline" namespace="/do/jpfrontshortcut/Page/SpecialWidget/Viewer" action="searchContents" id="formform" theme="simple">
 			<p class="noscreen">
 				<wpsf:hidden name="pageCode" />
 				<wpsf:hidden name="frame" />
-				<wpsf:hidden name="showletTypeCode" />
+				<wpsf:hidden name="widgetTypeCode" />
 				<wpsf:hidden name="modelId" />
 			</p>
 			<s:if test="hasFieldErrors()">
@@ -112,7 +112,7 @@
 									<s:param name="modelId">
 										<s:property value="#request.modelId"/>
 									</s:param>
-									<s:param name="showletTypeCode"><s:property value="showletTypeCode" /></s:param>
+									<s:param name="widgetTypeCode"><s:property value="widgetTypeCode" /></s:param>
 									<s:param name="lastGroupBy"><s:property value="lastGroupBy"/></s:param>
 									<s:param name="lastOrder"><s:property value="lastOrder"/></s:param>
 									<s:param name="groupBy">descr</s:param>
@@ -148,7 +148,7 @@
 									<s:param name="modelId">
 										<s:property value="#request.modelId"/>
 									</s:param>
-									<s:param name="showletTypeCode"><s:property value="showletTypeCode" /></s:param>
+									<s:param name="widgetTypeCode"><s:property value="widgetTypeCode" /></s:param>
 									<s:param name="lastGroupBy"><s:property value="lastGroupBy"/></s:param>
 									<s:param name="lastOrder"><s:property value="lastOrder"/></s:param>
 									<s:param name="groupBy">code</s:param>
@@ -186,7 +186,7 @@
 									<s:param name="modelId">
 										<s:property value="#request.modelId"/>
 									</s:param>
-									<s:param name="showletTypeCode"><s:property value="showletTypeCode" /></s:param>
+									<s:param name="widgetTypeCode"><s:property value="widgetTypeCode" /></s:param>
 									<s:param name="lastGroupBy"><s:property value="lastGroupBy"/></s:param>
 									<s:param name="lastOrder"><s:property value="lastOrder"/></s:param>
 									<s:param name="groupBy">created</s:param>
@@ -223,7 +223,7 @@
 									<s:param name="modelId">
 										<s:property value="#request.modelId"/>
 									</s:param>
-									<s:param name="showletTypeCode"><s:property value="showletTypeCode" /></s:param>
+									<s:param name="widgetTypeCode"><s:property value="widgetTypeCode" /></s:param>
 									<s:param name="lastGroupBy"><s:property value="lastGroupBy"/></s:param>
 									<s:param name="lastOrder"><s:property value="lastOrder"/></s:param>
 									<s:param name="groupBy">lastModified</s:param>

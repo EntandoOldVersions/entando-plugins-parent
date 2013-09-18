@@ -37,7 +37,7 @@ public class WidgetTypeAction extends com.agiletec.apsadmin.portal.WidgetTypeAct
 		String result = super.edit();
 		if (null == result || !result.equals(SUCCESS)) return result;
 		try {
-			this.setSwappable(this.isSwappableType(this.getShowletTypeCode()));
+			this.setSwappable(this.isSwappableType(this.getWidgetTypeCode()));
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "edit");
 			return FAILURE;
@@ -55,14 +55,14 @@ public class WidgetTypeAction extends com.agiletec.apsadmin.portal.WidgetTypeAct
 	
 	private String updateWidgetTypeConfig() {
 		try {
-			this.getShowletTypeCode();
+			this.getWidgetTypeCode();
 			boolean swappable = (null != this.getSwappable()) ? this.getSwappable().booleanValue() : false;
 			if (this.isCustomizable()) {
 				MyPortalConfig config = this.getMyPortalConfigManager().getConfig();
 				if (swappable) {
-					config.getAllowedShowlets().add(this.getShowletTypeCode());
+					config.getAllowedShowlets().add(this.getWidgetTypeCode());
 				} else {
-					config.getAllowedShowlets().remove(this.getShowletTypeCode());
+					config.getAllowedShowlets().remove(this.getWidgetTypeCode());
 				}
 				this.getMyPortalConfigManager().saveConfig(config);
 			}
@@ -74,7 +74,7 @@ public class WidgetTypeAction extends com.agiletec.apsadmin.portal.WidgetTypeAct
 	}
 	
 	private boolean isCustomizable() {
-		WidgetType type = this.getWidgetTypeManager().getWidgetType(this.getShowletTypeCode());
+		WidgetType type = this.getWidgetTypeManager().getWidgetType(this.getWidgetTypeCode());
 		if (null == type) return false;
 		List<WidgetTypeParameter> typeParameters = type.getTypeParameters();
 		if (!type.isUserType() && !type.isLogic() && (null != typeParameters && typeParameters.size() > 0)) return false;

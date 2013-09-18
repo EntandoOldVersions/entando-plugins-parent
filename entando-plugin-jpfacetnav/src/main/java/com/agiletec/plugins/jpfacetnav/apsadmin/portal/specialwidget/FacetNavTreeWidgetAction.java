@@ -62,9 +62,9 @@ public class FacetNavTreeWidgetAction extends FacetNavResultWidgetAction impleme
 	@Override
 	protected void initSpecialParams() {
 		super.initSpecialParams();
-		if (null != this.getShowlet().getConfig()) {
+		if (null != this.getWidget().getConfig()) {
 			String configParamName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
-			String facetsParam = this.getShowlet().getConfig().getProperty(configParamName);
+			String facetsParam = this.getWidget().getConfig().getProperty(configParamName);
 			this.setFacetRootNodes(facetsParam);
 		}
 	}
@@ -81,7 +81,7 @@ public class FacetNavTreeWidgetAction extends FacetNavResultWidgetAction impleme
 					facetCodes.add(facetCode);
 					String facetsFilter = FacetNavWidgetHelper.concatStrings(facetCodes, ",");
 					String configParamName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
-					this.getShowlet().getConfig().setProperty(configParamName, facetsFilter);
+					this.getWidget().getConfig().setProperty(configParamName, facetsFilter);
 					this.setFacetRootNodes(facetsFilter);
 				}
 			}
@@ -105,7 +105,7 @@ public class FacetNavTreeWidgetAction extends FacetNavResultWidgetAction impleme
 				facetCodes.remove(facetCode);
 				String facetsFilter = FacetNavWidgetHelper.concatStrings(facetCodes, ",");
 				String configParamName = JpFacetNavSystemConstants.FACET_ROOTS_SHOWLET_PARAM_NAME;
-				this.getShowlet().getConfig().setProperty(configParamName, facetsFilter);
+				this.getWidget().getConfig().setProperty(configParamName, facetsFilter);
 				this.setFacetRootNodes(facetsFilter);
 			}
 		} catch (Throwable t) {

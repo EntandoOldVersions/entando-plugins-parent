@@ -48,7 +48,7 @@ public class ContentFeedbackWidgetAction  extends ContentViewerWidgetAction impl
 	}
 
 	protected String extractInitConfig() {
-		if (null != this.getShowlet()) return SUCCESS;
+		if (null != this.getWidget()) return SUCCESS;
 		Widget showlet = this.getCurrentPage().getWidgets()[this.getFrame()];
 		Logger log = ApsSystemUtils.getLogger();
 		if (null == showlet) {
@@ -106,7 +106,7 @@ public class ContentFeedbackWidgetAction  extends ContentViewerWidgetAction impl
 			while (it.hasNext()) {
 				String key = it.next();
 				if (null != sessionParams.get(key) && sessionParams.get(key).equalsIgnoreCase("true")) {
-					this.getShowlet().getConfig().setProperty(key, "true");
+					this.getWidget().getConfig().setProperty(key, "true");
 				}
 			}
 		}

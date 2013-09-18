@@ -56,8 +56,8 @@ public class FastContentEditWidgetConfigAction extends SimpleWidgetConfigAction 
 		try {
 			this.checkBaseParams();
 			this.createValuedShowlet();
-			this.getPageManager().joinWidget(this.getPageCode(), this.getShowlet(), this.getFrame());
-			log.finest("Salvataggio showlet - code = " + this.getShowlet().getType().getCode() +
+			this.getPageManager().joinWidget(this.getPageCode(), this.getWidget(), this.getFrame());
+			log.finest("Salvataggio showlet - code = " + this.getWidget().getType().getCode() +
 					", pageCode = " + this.getPageCode() + ", frame = " + this.getFrame());
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "save");
@@ -77,7 +77,7 @@ public class FastContentEditWidgetConfigAction extends SimpleWidgetConfigAction 
 	}
 
 	public List<AttributeInterface> getSelectableAttributes() {
-		String typeCode = this.getShowlet().getConfig().getProperty("typeCode");
+		String typeCode = this.getWidget().getConfig().getProperty("typeCode");
 		List<AttributeInterface> attributesForSelect = new ArrayList<AttributeInterface>();
 		if (null != typeCode && typeCode.length() > 0) {
 			IApsEntity  contentType =  getContentManager().getEntityPrototype(typeCode);

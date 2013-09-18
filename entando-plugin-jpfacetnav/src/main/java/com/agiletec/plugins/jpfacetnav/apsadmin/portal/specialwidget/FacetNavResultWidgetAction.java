@@ -84,7 +84,7 @@ public class FacetNavResultWidgetAction extends SimpleWidgetConfigAction impleme
 				contentTypes.add(contentTypeCode);
 				String contentTypesFilter = FacetNavWidgetHelper.concatStrings(contentTypes, ",");
 				String configParamName = JpFacetNavSystemConstants.CONTENT_TYPES_FILTER_SHOWLET_PARAM_NAME;
-				this.getShowlet().getConfig().setProperty(configParamName, contentTypesFilter);
+				this.getWidget().getConfig().setProperty(configParamName, contentTypesFilter);
 				this.setContentTypesFilter(contentTypesFilter);
 			}
 		} catch (Throwable t) {
@@ -107,7 +107,7 @@ public class FacetNavResultWidgetAction extends SimpleWidgetConfigAction impleme
 				contentTypes.remove(contentTypeCode);
 				String contentTypesFilter = FacetNavWidgetHelper.concatStrings(contentTypes, ",");
 				String configParamName = JpFacetNavSystemConstants.CONTENT_TYPES_FILTER_SHOWLET_PARAM_NAME;
-				this.getShowlet().getConfig().setProperty(configParamName, contentTypesFilter);
+				this.getWidget().getConfig().setProperty(configParamName, contentTypesFilter);
 				this.setContentTypesFilter(contentTypesFilter);
 			}
 		} catch (Throwable t) {
@@ -121,9 +121,9 @@ public class FacetNavResultWidgetAction extends SimpleWidgetConfigAction impleme
 	 * Prepare action with the parameters contained in showlet.
 	 */
 	protected void initSpecialParams() {
-		if (null != this.getShowlet().getConfig()) {
+		if (null != this.getWidget().getConfig()) {
 			String paramName = JpFacetNavSystemConstants.CONTENT_TYPES_FILTER_SHOWLET_PARAM_NAME;
-			String configParamName = this.getShowlet().getConfig().getProperty(paramName);
+			String configParamName = this.getWidget().getConfig().getProperty(paramName);
 			this.setContentTypesFilter(configParamName);
 		}
 	}
@@ -134,7 +134,7 @@ public class FacetNavResultWidgetAction extends SimpleWidgetConfigAction impleme
 	 * @return com.agiletec.aps.system.services.page.Widget type parameter
 	 */
 	public WidgetTypeParameter getShowletTypeParameter(String paramName) {
-		List<WidgetTypeParameter> parameters = this.getShowlet().getType().getTypeParameters();
+		List<WidgetTypeParameter> parameters = this.getWidget().getType().getTypeParameters();
 		for (WidgetTypeParameter param : parameters) {
 			if (param.getName().equals(paramName)) {
 				return param;

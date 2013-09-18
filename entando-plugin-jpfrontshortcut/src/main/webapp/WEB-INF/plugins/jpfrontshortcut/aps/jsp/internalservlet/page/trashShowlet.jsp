@@ -11,7 +11,7 @@
 		<p>
 			<wpsf:hidden name="pageCode"/>
 			<wpsf:hidden name="frame" />
-			<wpsf:hidden name="showletTypeCode" />
+			<wpsf:hidden name="widgetTypeCode" />
 			<s:text name="note.clearPosition.areYouSure.position" />&#32;<em class="important">&#32;<s:property value="frame" />&#32;&ndash;&#32;<s:property value="%{getPage(pageCode).model.getFrames()[frame]}"/></em>
 			<s:text name="note.clearPosition.areYouSure.page" />&#32;<em class="important"><s:property value="%{getPage(pageCode).getTitle(currentLang.getCode())}" /></em>
 			<s:set var="showletTypeVar" value="%{showlet.type}"></s:set>

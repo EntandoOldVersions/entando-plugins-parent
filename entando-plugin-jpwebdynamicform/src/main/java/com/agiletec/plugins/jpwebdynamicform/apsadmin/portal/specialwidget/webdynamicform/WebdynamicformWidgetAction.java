@@ -46,7 +46,7 @@ public class WebdynamicformWidgetAction extends SimpleWidgetConfigAction {
 		try {
 			if (result.equals(SUCCESS)) {
 				String paramName = JpwebdynamicformSystemConstants.TYPECODE_SHOWLET_PARAM;
-				String typeCode = this.getShowlet().getConfig().getProperty(paramName);
+				String typeCode = this.getWidget().getConfig().getProperty(paramName);
 				this.setTypeCode(typeCode);
 			}
 		} catch (Throwable t) {

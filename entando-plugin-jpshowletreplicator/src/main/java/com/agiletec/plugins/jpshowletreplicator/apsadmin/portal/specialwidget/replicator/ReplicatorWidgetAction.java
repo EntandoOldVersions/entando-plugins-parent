@@ -66,7 +66,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 	public String resetConfig() {
 		try {
 			this.createValuedShowlet();
-			ApsProperties config = this.getShowlet().getConfig();
+			ApsProperties config = this.getWidget().getConfig();
 			config.remove("pageCodeParam");
 			config.remove("frameIdParam");
 		} catch (Throwable t) {

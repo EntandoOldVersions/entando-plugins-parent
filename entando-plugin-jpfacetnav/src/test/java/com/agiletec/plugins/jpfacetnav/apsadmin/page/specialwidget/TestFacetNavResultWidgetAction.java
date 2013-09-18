@@ -14,7 +14,7 @@ public class TestFacetNavResultWidgetAction extends ApsAdminPluginBaseTestCase {
 		String result = this.executeConfigFacetNavResult("admin", "homepage", "1", "jpfacetnav_results");
 		assertEquals(Action.SUCCESS, result);
 		FacetNavResultWidgetAction action = (FacetNavResultWidgetAction) this.getAction();
-		Widget widget = action.getShowlet();
+		Widget widget = action.getWidget();
 		assertNotNull(widget);
 		assertEquals(0, widget.getConfig().size());
 		List<SmallContentType> contentTypes = action.getContentTypes();
@@ -28,7 +28,7 @@ public class TestFacetNavResultWidgetAction extends ApsAdminPluginBaseTestCase {
 		this.addParameter("pageCode", pageCode);
 		this.addParameter("frame", frame);
 		if (null != widgetTypeCode && widgetTypeCode.trim().length()>0) {
-			this.addParameter("showletTypeCode", widgetTypeCode);
+			this.addParameter("widgetTypeCode", widgetTypeCode);
 		}
 		return this.executeAction();
 	}

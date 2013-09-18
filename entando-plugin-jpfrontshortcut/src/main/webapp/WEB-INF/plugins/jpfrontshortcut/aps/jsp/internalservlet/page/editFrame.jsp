@@ -40,7 +40,7 @@
 			<p><s:text name="title.editFrame.chooseAWidget" /></p>
 			<p>
 				<label for="<c:out value="showletCode${random}" />" class="basic-mint-label"><s:text name="name.widget" /></label>
-				<select name="showletTypeCode" tabindex="<wpsa:counter />" id="<c:out value="showletCode${random}" />">
+				<select name="widgetTypeCode" tabindex="<wpsa:counter />" id="<c:out value="showletCode${random}" />">
 				<s:iterator var="showletFlavour" value="showletFlavours">
 
 					<wpsa:set var="tmpShowletType">tmpShowletTypeValue</wpsa:set>

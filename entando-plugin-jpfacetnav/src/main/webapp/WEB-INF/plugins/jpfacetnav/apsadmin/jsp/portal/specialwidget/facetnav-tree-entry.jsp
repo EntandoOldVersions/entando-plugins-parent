@@ -20,7 +20,7 @@
 			<p class="noscreen">
 				<wpsf:hidden name="pageCode" />
 				<wpsf:hidden name="frame" />
-				<wpsf:hidden name="showletTypeCode" value="%{showlet.type.code}" />
+				<wpsf:hidden name="widgetTypeCode" value="%{showlet.type.code}" />
 			</p>
 
 			<s:if test="hasFieldErrors()">

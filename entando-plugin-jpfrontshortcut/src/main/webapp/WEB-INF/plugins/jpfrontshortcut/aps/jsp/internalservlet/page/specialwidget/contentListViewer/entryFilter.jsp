@@ -8,14 +8,14 @@
 
 <h3><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h3>
 
-<s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
+<s:set var="showletType" value="%{getShowletType(widgetTypeCode)}"></s:set>
 <h4 class="margin-bit-bottom"><s:text name="title.filterAdd" /></h4>
 
 <s:form namespace="/do/jpfrontshortcut/Page/SpecialWidget/ListViewer" id="formform" theme="simple">
 <p class="noscreen">
 	<wpsf:hidden name="pageCode" />
 	<wpsf:hidden name="frame" />
-	<wpsf:hidden name="showletTypeCode" />
+	<wpsf:hidden name="widgetTypeCode" />
 </p>
 
 	<s:if test="hasFieldErrors()">

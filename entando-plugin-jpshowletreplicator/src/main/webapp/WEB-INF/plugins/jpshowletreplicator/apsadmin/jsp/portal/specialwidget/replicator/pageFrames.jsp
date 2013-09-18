@@ -17,7 +17,7 @@
 		<s:action namespace="/do/Page" name="printPageDetails" executeResult="true" ignoreContextParams="true"><s:param name="selectedNode" value="pageCode"></s:param></s:action>
 		<s:include value="/WEB-INF/apsadmin/jsp/portal/include/frameInfo.jsp" />
 
-		<s:set var="showletType" value="%{getShowletType(showletTypeCode)}"></s:set>
+		<s:set var="showletType" value="%{getShowletType(widgetTypeCode)}"></s:set>
 		<h3 class="margin-more-top"><s:text name="name.widget" />:&#32;<s:property value="%{getTitle(#showletType.code, #showletType.titles)}" /></h3>
 
 		<s:form>
@@ -36,7 +36,7 @@
 				<p class="noscreen">
 					<s:hidden name="pageCode" />
 					<s:hidden name="frame" />
-					<s:hidden name="showletTypeCode" />
+					<s:hidden name="widgetTypeCode" />
 					<s:hidden name="pageCodeParam" />
 				</p>
 
@@ -70,7 +70,7 @@
 								<a href="<s:url action="selectFrame" >
 									<s:param name="frame" value="frame"/>
 									<s:param name="pageCode" value="pageCode"/>
-									<s:param name="showletTypeCode" value="showletTypeCode"/>
+									<s:param name="widgetTypeCode" value="widgetTypeCode"/>
 									<s:param name="pageCodeParam" value="pageCodeParam" />
 									<s:param name="frameIdParam" value="#rowstatus.index" />
 								</s:url>"><s:property value="targetPage.getModel().getFrames()[#rowstatus.index]"/></a>
