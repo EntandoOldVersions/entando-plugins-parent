@@ -32,10 +32,9 @@ public class AvatarAction extends BaseAction implements IAvatarAction {
 		super.validate();
 		this.checkAvatar();
 	}
-
+	
 	private void checkAvatar() {
 		File avatar = this.getAvatar();
-		
 		if (null != avatar && this.getAvatarFileName().trim().length() > 0) {
 			String fileName = this.getAvatarFileName();
 			String docType = fileName.substring(fileName.lastIndexOf('.')+1).trim();
@@ -58,13 +57,13 @@ public class AvatarAction extends BaseAction implements IAvatarAction {
 				if (imageInfo.check()) {
 					int width = imageInfo.getWidth();
 					int heigth = imageInfo.getHeight();
-					if (width > this.getImageMaxWidth()|| heigth > this.getImageMaxHeight()) {
-						String[] args = new String [4];
-						args[0] = new Integer(this.getImageMaxWidth()).toString();
-						args[1] = new Integer(this.getImageMaxHeight()).toString();
+					if (width != this.getImageWidth() || heigth != this.getImageHeight()) {
+						String[] args = new String[4];
+						args[0] = new Integer(this.getImageWidth()).toString();
+						args[1] = new Integer(this.getImageHeight()).toString();
 						args[2] = new Integer(width).toString();
 						args[3] = new Integer(heigth).toString();
-						this.addFieldError("Avatar", this.getText("jpavatar.avatar.worngSize", args));
+						this.addFieldError("Avatar", this.getText("jpavatar.avatar.wrongSize", args));
 					}
 				}
 			} catch (Throwable t) {
@@ -156,19 +155,19 @@ public class AvatarAction extends BaseAction implements IAvatarAction {
 	public int getImageMaxSize() {
 		return _imageMaxSize;
 	}
-
-	public void setImageMaxWidth(int imageMaxWidth) {
-		this._imageMaxWidth = imageMaxWidth;
+	
+	public void setImageWidth(int imageWidth) {
+		this._imageWidth = imageWidth;
 	}
-	public int getImageMaxWidth() {
-		return _imageMaxWidth;
+	public int getImageWidth() {
+		return _imageWidth;
 	}
-
-	public void setImageMaxHeight(int imageMaxHeight) {
-		this._imageMaxHeight = imageMaxHeight;
+	
+	public void setImageHeight(int imageHeight) {
+		this._imageHeight = imageHeight;
 	}
-	public int getImageMaxHeight() {
-		return _imageMaxHeight;
+	public int getImageHeight() {
+		return _imageHeight;
 	}
 
 	public void setAvatar(File avatar) {
@@ -204,7 +203,8 @@ public class AvatarAction extends BaseAction implements IAvatarAction {
 	private String _avatarFileName;
 	private String _imageTypes;
 	private int _imageMaxSize;
-	private int _imageMaxWidth;
-	private int _imageMaxHeight;
+	private int _imageWidth;
+	private int _imageHeight;
 	private IAvatarManager _avatarManager;
+	
 }

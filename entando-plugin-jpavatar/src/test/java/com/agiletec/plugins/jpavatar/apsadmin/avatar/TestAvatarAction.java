@@ -45,8 +45,8 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 		String result = this.executeEdit();
 		assertEquals(Action.SUCCESS, result);
 		AvatarAction action = (AvatarAction) this.getAction();
-		assertEquals(100, action.getImageMaxHeight());
-		assertEquals(100, action.getImageMaxWidth());
+		assertEquals(56, action.getImageHeight());
+		assertEquals(56, action.getImageWidth());
 		assertEquals(100, action.getImageMaxSize());
 		assertEquals("png,jpg", action.getImageTypes());
 	}
@@ -123,7 +123,6 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 	
 	@Override
 	protected void tearDown() throws Exception {
-		
 		FileUtils.cleanDirectory(new File(this._avatarManager.getAvatarDiskFolder() + "avatar"));
 		super.tearDown();
 	}

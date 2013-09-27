@@ -14,23 +14,35 @@
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
-package com.agiletec.plugins.jpavatar.apsadmin.common.currentuser;
+package org.entando.entando.plugins.jpavatar.apsadmin.common.currentuser;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.user.UserDetails;
-import com.agiletec.plugins.jpavatar.aps.system.services.avatar.AvatarConfig;
-import com.agiletec.plugins.jpavatar.aps.system.services.avatar.IAvatarManager;
 
-import java.io.File;
-import java.io.FileInputStream;
+import org.entando.entando.plugins.jpavatar.apsadmin.common.UserAvatarAction;
 
-import javax.activation.MimetypesFileTypeMap;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * @author E.Santoboni
  */
-public class CurrentAvatarAction extends org.entando.entando.apsadmin.common.currentuser.CurrentAvatarAction {
+public class CurrentAvatarAction extends UserAvatarAction {
 	
+	@Override
+	protected IUserProfile getUserProfile() throws ApsSystemException {
+		UserDetails currentUser = super.getCurrentUser();
+		IUserProfile profile = (null != currentUser && null != currentUser.getProfile()) 
+				? (IUserProfile) currentUser.getProfile() 
+				: null;
+		return profile;
+	}
+	
+	@Override
+	public String getUsername() {
+		return super.getCurrentUser().getUsername();
+	}
+	
+	/*
 	@Override
 	public String returnAvatarStream() {
 		AvatarConfig config = this.getAvatarManager().getConfig();
@@ -70,5 +82,5 @@ public class CurrentAvatarAction extends org.entando.entando.apsadmin.common.cur
 	private String mimeType;
 	
 	private IAvatarManager _avatarManager;
-	
+	*/
 }

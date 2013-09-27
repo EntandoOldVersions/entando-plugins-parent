@@ -15,23 +15,35 @@
 			class="com.agiletec.plugins.jpavatar.apsadmin.avatar.config.AvatarConfigAction" parent="abstractBaseAction" >
 		<property name="avatarManager" ref="jpavatarAvatarManager" />
 	</bean>
-
+	
 	<bean id="jpavatarAvatarAction" scope="prototype" 
 			class="com.agiletec.plugins.jpavatar.apsadmin.avatar.AvatarAction" parent="abstractBaseAction" >
 		<property name="avatarManager" ref="jpavatarAvatarManager" />
 		<property name="imageMaxSize"><value>100</value></property>
-		<property name="imageMaxWidth"><value>34</value></property>
-		<property name="imageMaxHeight"><value>34</value></property>
+		<property name="imageWidth"><value>56</value></property>
+		<property name="imageHeight"><value>56</value></property>
 		<property name="imageTypes"><value>png,jpg</value></property>
 	</bean>
 	
 	<!-- override of core bean -->
 	
-	<bean id="currentUserAvatarAction" 
-			class="com.agiletec.plugins.jpavatar.apsadmin.common.currentuser.CurrentAvatarAction" 
-			scope="prototype" parent="abstractBaseAction" >
-		<property name="avatarManager" ref="jpavatarAvatarManager" />
+	<bean id="jpavatarAbstractUserAvatarAction" 
+			class="org.entando.entando.apsadmin.common.UserAvatarAction" 
+			scope="prototype" parent="abstractBaseAction" abstract="true" >
+		<property name="userProfileManager" ref="UserProfileManager" />
 		<property name="gravatarUrl"><value>http://www.gravatar.com/avatar/</value></property>
+	</bean>
+	
+	<bean id="userAvatarAction" 
+			class="org.entando.entando.plugins.jpavatar.apsadmin.common.UserAvatarAction" 
+			scope="prototype" parent="jpavatarAbstractUserAvatarAction" >
+		<property name="avatarManager" ref="jpavatarAvatarManager" />
+	</bean>
+	
+	<bean id="currentUserAvatarAction" 
+			class="org.entando.entando.plugins.jpavatar.apsadmin.common.currentuser.CurrentAvatarAction" 
+			scope="prototype" parent="jpavatarAbstractUserAvatarAction" >
+		<property name="avatarManager" ref="jpavatarAvatarManager" />
 	</bean>
 	
 </beans>
