@@ -15,9 +15,8 @@
 			<result name="input">/WEB-INF/plugins/jpcasclient/apsadmin/jsp/common/login.jsp</result>
 			<result type="redirectAction">main</result>
 			<interceptor-ref name="entandoLoginStack" />
-			<interceptor-ref name="backendGuiClient" />
 		</action>
-	
+		
 	</package>
 	
 </struts>
