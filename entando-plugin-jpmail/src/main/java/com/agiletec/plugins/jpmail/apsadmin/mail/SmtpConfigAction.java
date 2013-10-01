@@ -94,8 +94,6 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 		return SUCCESS;
 	}
 
-	
-
 	/**
 	 * Populate the action with the content of the given MailConfig.
 	 *
@@ -159,7 +157,9 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 	 * Validation Service method
 	 */
 	public boolean isValidProtocol() {
-		return (this.getSmtpProtocol() == JpmailSystemConstants.PROTO_SSL || this.getSmtpProtocol() == JpmailSystemConstants.PROTO_STD || this.getSmtpProtocol() == JpmailSystemConstants.PROTO_TLS);
+		return (null != this.getSmtpProtocol()
+				&& this.getSmtpProtocol().intValue() >= 0
+				&& this.getSmtpProtocol().intValue() <= 2);
 	}
 
 	public boolean isActive() {

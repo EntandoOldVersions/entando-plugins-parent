@@ -97,11 +97,10 @@ public class TestSmtpConfigAction extends ApsAdminPluginBaseTestCase {
 		String result = this.executeSave("admin", params);
 		assertEquals(Action.INPUT, result);
 		Map<String, List<String>> fieldErrors = this.getAction().getFieldErrors();
-		assertEquals(4, fieldErrors.size());
+		assertEquals(3, fieldErrors.size());
 		assertEquals(1, fieldErrors.get("smtpHost").size());
 		assertEquals(1, fieldErrors.get("smtpPort").size());
 		assertEquals(1, fieldErrors.get("smtpUserName").size());
-		assertEquals(1, fieldErrors.get("smtpPassword").size());
 		
 		params.put("smtpProtocol", "0");
 		params.put("smtpPort", "invalidNumber");
@@ -123,9 +122,8 @@ public class TestSmtpConfigAction extends ApsAdminPluginBaseTestCase {
 		result = this.executeSave("admin", params);
 		assertEquals(Action.INPUT, result);
 		fieldErrors = this.getAction().getFieldErrors();
-		assertEquals(2, fieldErrors.size());
+		assertEquals(1, fieldErrors.size());
 		assertEquals(1, fieldErrors.get("smtpUserName").size());
-		assertEquals(1, fieldErrors.get("smtpPassword").size());
 	}
 
 	public void testSaveFailure_4() throws Throwable {
