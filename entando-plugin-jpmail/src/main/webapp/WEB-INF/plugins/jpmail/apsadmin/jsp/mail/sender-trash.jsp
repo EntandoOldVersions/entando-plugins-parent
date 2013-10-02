@@ -9,12 +9,16 @@
 		<p class="noscreen"><wpsf:hidden name="code"/></p>
 		
 		<p>
-			<s:text name="note.sendersConfig.trash" />&#32;<em class="important"><s:property value="code" /></em>?
-			&#32;
-			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.remove')}" cssClass="button" />
-		</p>
-		
-		<p><s:text name="note.sendersConfig.trash.goBack" />&nbsp;<a href="<s:url action="viewSenders"/>"><s:text name="title.eMailManagement.sendersConfig" /></a></p>
+                <div class="alert alert-warning">
+                    <s:text name="note.sendersConfig.trash" />&#32;<code><s:property value="code" /></code>?&#32;
+                     <div class="text-center margin-large-top">
+			<wpsf:submit type="button" cssClass="btn btn-warning btn-lg">
+                            <span class="icon icon-remove-sign"></span>&#32;
+                            <s:text name="%{getText('label.remove')}"/>
+                        </wpsf:submit>
+                     </div>           
+                    <p class="text-center margin-small-top"><s:text name="note.sendersConfig.trash.goBack" />&nbsp;<a class="btn btn-link" href="<s:url action="viewSenders"/>"><s:text name="title.eMailManagement.sendersConfig" /></a></p>
+                </div>
 	</s:form>
 
 </div> 
