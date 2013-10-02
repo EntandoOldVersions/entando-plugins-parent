@@ -6,81 +6,90 @@
 
 
 
-<h1><s:text name="title.eMailManagement" /></h1>
+<h1 class="panel panel-default title-page"><span class="panel-body display-block"><s:text name="title.eMailManagement" />&#32;/&#32;<s:text name="label.smtpConfig" /></span></h1>
 
 
 <div id="main">
-
-	<h2 class="margin-bit-bottom"><s:text name="label.smtpConfig" /></h2> 
-
-	<p>
+    <div class="panel panel-default">
+	<div class="panel-body">
 		<s:text name="label.jpmail.intro" />
-	</p>
-	<s:form id="configurationForm" name="configurationForm" method="post" action="testSmtp">
-			
+	</div>
+    </div>
+        <div id="messages">
 		<s:include value="/WEB-INF/plugins/jpmail/apsadmin/jsp/mail/inc/smtp-messages.jsp" />
-		<fieldset class="margin-more-top">
+	</div>
+	<s:form id="configurationForm" name="configurationForm" method="post" action="testSmtp">
+		
+		<fieldset class="col-xs-12">
 			<legend><s:text name="legend.generalSettings" /></legend>
-			<p class="margin-more-top">
-				<wpsf:checkbox useTabindexAutoIncrement="true" name="active" id="active" cssClass="radiocheck" />&nbsp;<label for="active"><s:text name="label.active" /></label>
-			</p>
-			<p>
-				<wpsf:checkbox useTabindexAutoIncrement="true" name="debug" id="debug" cssClass="radiocheck" />&nbsp;<label for="debug"><s:text name="label.debug" /></label>
-			</p>
+			<div class="form-group">
+				<wpsf:checkbox name="active" id="active" cssClass="radiocheck" />&nbsp;<label for="active"><s:text name="label.active" /></label>
+			</div>
+			<div class="form-group">
+				<wpsf:checkbox name="debug" id="debug" cssClass="radiocheck" />&nbsp;<label for="debug"><s:text name="label.debug" /></label>
+			</div>
 		</fieldset> 
 
-		<fieldset class="margin-more-top">
+		<fieldset class="col-xs-12">
 			<legend><s:text name="legend.connection" /></legend>
 
-			<p class="margin-more-top">
-				<label for="smtpHost" class="basic-mint-label"><s:text name="smtpHost" />:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="smtpHost" id="smtpHost" cssClass="text" />
-			</p>
-			<p>
-				<label for="smtpPort" class="basic-mint-label"><s:text name="label.smtpPort" />:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="smtpPort" id="smtpPort" cssClass="text" />
-			</p>
-			<p class="important">
-				<s:text name="label.security" />:
-			</p>
-			<ul class="noBullet radiocheck">
-				<li>
-					<wpsf:radio useTabindexAutoIncrement="true" id="smtpstd" name="smtpProtocol" value="0" checked="%{smtpProtocol == 0}" cssClass="radio" />
-					<label for="smtpstd"><s:text name="label.smtp.standard"/></label>
-				</li>
-				<li>
-					<wpsf:radio useTabindexAutoIncrement="true" id="smtpssl" name="smtpProtocol" value="1" checked="%{smtpProtocol == 1}" cssClass="radio" />
-					<label for="smtpssl"><s:text name="label.smtp.ssl"/></label>
-				</li>
-				<li>
-					<wpsf:radio useTabindexAutoIncrement="true" id="smtptls" name="smtpProtocol" value="2" checked="%{smtpProtocol == 2}" cssClass="radio" />
-					<label for="smtptls"><s:text name="label.smtp.tls"/></label>
-				</li>
-			</ul>
-			<p>
-				<label for="smtpTimeout" class="basic-mint-label"><s:text name="label.smtpTimeout" />:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="smtpTimeout" id="smtpTimeout" cssClass="text" />
-			</p>
+			<div class="form-group">
+				<label for="smtpHost"><s:text name="smtpHost" /></label>
+				<wpsf:textfield name="smtpHost" id="smtpHost" cssClass="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="smtpPort"><s:text name="label.smtpPort" /></label>
+				<wpsf:textfield name="smtpPort" id="smtpPort" cssClass="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="smtpPort"><s:text name="label.security" /></label>
+                                
+                        <div class="radio">
+                            <label for="smtpstd">
+                                <wpsf:radio id="smtpstd" name="smtpProtocol" value="0" checked="%{smtpProtocol == 0}" cssClass="radio" />
+                                <s:text name="label.smtp.standard"/>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label for="smtpssl">
+                                <wpsf:radio id="smtpssl" name="smtpProtocol" value="1" checked="%{smtpProtocol == 1}" cssClass="radio" />
+                                <s:text name="label.smtp.ssl"/>
+                            </label>
+                        </div>    
+                        <div class="radio">
+                            <label for="smtptls">
+                                <wpsf:radio id="smtptls" name="smtpProtocol" value="2" checked="%{smtpProtocol == 2}" cssClass="radio" />
+                                <s:text name="label.smtp.tls"/>
+                            </label>
+                        </div>
+			<div class="form-group">
+				<label for="smtpTimeout"><s:text name="label.smtpTimeout" /></label>
+				<wpsf:textfield name="smtpTimeout" id="smtpTimeout" cssClass="form-control" />
+			</div>
+                        </div>
 		</fieldset> 
-		<fieldset>
+		<fieldset class="col-xs-12">
 			<legend><s:text name="legend.authentication" /></legend> 
-			<p class="margin-more-top">
-				<label for="smtpUserName" class="basic-mint-label"><s:text name="smtpUserName" />:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="smtpUserName" id="smtpUserName" cssClass="text" />
-			</p>
-			<p>
-				<label for="smtpPassword" class="basic-mint-label"><s:text name="smtpPassword" />:</label>
+			<div class="form-group">
+				<label for="smtpUserName"><s:text name="smtpUserName" /></label>
+				<wpsf:textfield name="smtpUserName" id="smtpUserName" cssClass="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="smtpPassword"><s:text name="smtpPassword" /></label>
 				<wpsf:hidden value="%{getSmtpPassword()}" />
-				<wpsf:password useTabindexAutoIncrement="true" name="smtpPassword" id="smtpPassword" cssClass="text" />
-			</p>
+				<wpsf:password  name="smtpPassword" id="smtpPassword" cssClass="form-control" />
+			</div>
 		</fieldset> 
-		<div id="messages">
-		</div>
-		<p class="centerText">
-			<wpsf:submit name="save" useTabindexAutoIncrement="true" action="saveSmtp" value="%{getText('label.save')}" cssClass="button" onclick="overrideSubmit('saveSmtp')"/>
-			<wpsf:submit name="testMail" useTabindexAutoIncrement="true" value="%{getText('label.sendEmail')}" action="testMail" cssClass="button" onclick="overrideSubmit('testMail')"/>
-			<sj:submit parentTheme="simple" formIds="configurationForm" value="%{getText('label.testConnection')}" targets="messages" cssClass="button"/>
-		</p>
-
+		
+		<div class="form-group">
+                    <div class="col-xs-12">
+                        <wpsf:submit name="save" action="saveSmtp" value="%{getText('label.save')}" cssClass="btn btn-primary" onclick="overrideSubmit('saveSmtp')"/>
+                        <div class="btn-group margin-small-left">
+                            <sj:submit parentTheme="simple" formIds="configurationForm" value="%{getText('label.testConnection')}" targets="messages" cssClass="btn btn-default"/>
+                            <wpsf:submit name="testMail"  value="%{getText('label.sendEmail')}" action="testMail" cssClass="btn btn-default" onclick="overrideSubmit('testMail')"/>
+                        </div>    
+                    </div>
+		</div>	
+			
 	</s:form>
 </div>

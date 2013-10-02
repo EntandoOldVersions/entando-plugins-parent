@@ -2,9 +2,8 @@
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 
-<h1><s:text name="title.eMailManagement" /></h1>
+<h1 class="panel panel-default title-page"><span class="panel-body display-block"><s:text name="title.eMailManagement" />&#32;/&#32;<s:text name="title.eMailManagement.sendersConfig.trashSender" /></span></h1>
 <div id="main">
-	<h2><s:text name="title.eMailManagement.sendersConfig.trashSender" /></h2>
 
 	<s:form action="deleteSender" >
 		<p class="noscreen"><wpsf:hidden name="code"/></p>

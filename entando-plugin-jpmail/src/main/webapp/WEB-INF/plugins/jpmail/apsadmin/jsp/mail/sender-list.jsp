@@ -3,12 +3,10 @@
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 
-<h1><s:text name="title.eMailManagement" /></h1>
-<div id="main">
-	<h2><s:text name="title.eMailManagement.sendersConfig" /></h2>
-	
+<h1 class="panel panel-default title-page"><span class="panel-body display-block"><s:text name="title.eMailManagement" />&#32;/&#32;<s:text name="title.eMailManagement.sendersConfig" /></span></h1>
+<div id="main">	
 	<p>
-		<a href="<s:url action="newSender" />" ><s:text name="label.senders.new" /></a>
+            <a class="btn btn-default margin-base-bottom" href="<s:url action="newSender" />" ><span class="icon icon-plus-sign"> <s:text name="label.senders.new" /></span></a>
 	</p>
 	
 	<s:if test="hasActionErrors()">
@@ -26,24 +24,24 @@
 		<p><s:text name="label.senders.none" /></p>
 	</s:if>
 	<s:else>
-		<table class="generic" summary="<s:text name="note.sendersConfig.summary" />">
-			<caption><span><s:text name="note.sendersConfig.caption" /></span></caption>
+		<table class="table table-bordered" />
 			<tr>
+                                <th class="text-center text-nowap col-xs-6 col-sm-3 col-md-3 col-lg-3 "><abbr title="<s:text name="label.remove" />">&ndash;</abbr></th>
 				<th><s:text name="code" /></th>
 				<th><s:text name="mail" /></th>
-				<th class="icon"><abbr title="<s:text name="label.remove" />">&ndash;</abbr></th>
 			</tr>
 			<s:iterator value="%{config.senders.entrySet()}" id="sender">
 				<tr>
-					<td><span class="monospace"><s:property value="#sender.key"/></span></td>
+                                    	<td class="text-center text-nowrap">
+                                            <a class="btn btn-warning btn-xs" href="<s:url action="trashSender" ><s:param name="code" value="#sender.key" /></s:url>" title="<s:text name="label.remove" />: <s:property value="#sender.value" />">
+                                                    <span class="sr-only"></span>
+                                                    <span class="icon icon-remove-circle"></span>
+						</a>
+					</td>
+					<td><code><s:property value="#sender.key"/></code></td>
 					<td>
 						<a href="<s:url action="editSender" ><s:param name="code" value="#sender.key" /></s:url>" title="<s:text name="label.edit" />: <s:property value="#sender.value" />">
 							<s:property value="#sender.value" />
-						</a>
-					</td>
-					<td class="icon">
-						<a href="<s:url action="trashSender" ><s:param name="code" value="#sender.key" /></s:url>" title="<s:text name="label.remove" />: <s:property value="#sender.value" />">
-							<img src="<wp:resourceURL/>administration/common/img/icons/delete.png" alt="<s:text name="label.alt.clear" />" />
 						</a>
 					</td>
 				</tr>

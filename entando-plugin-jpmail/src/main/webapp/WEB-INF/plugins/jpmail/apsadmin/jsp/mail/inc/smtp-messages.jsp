@@ -1,8 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <s:if test="hasFieldErrors()">
-	<div class="message message_error">	
-		<h3><s:text name="message.title.FieldErrors" /></h3>
-		<ul>
+	<div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+		<h2 class="h4 margin-none"><s:text name="message.title.FieldErrors" /></h2>
+		<ul class="margin-base-vertical">
 			<s:iterator value="fieldErrors">
 				<s:iterator value="value">
 					<li><s:property escape="false" /></li>
@@ -12,9 +13,10 @@
 	</div>
 </s:if>
 <s:if test="hasActionErrors()">
-	<div class="message message_error">	
-		<h3><s:text name="message.title.ActionErrors" /></h3>
-		<ul>
+	<div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+		<h2 class="h4 margin-none"><s:text name="message.title.ActionErrors" /></h2>
+		<ul class="margin-base-vertical">
 			<s:iterator value="actionErrors">
 				<li><s:property escape="false" /></li>
 			</s:iterator>
@@ -22,9 +24,10 @@
 	</div>
 </s:if>
 <s:if test="hasActionMessages()">
-	<div class="message message_confirm">
-		<h3><s:text name="messages.confirm" /></h3>	
-		<ul>
+	<div class="alert alert-info alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+		<h2 class="h4 margin-none"><s:text name="messages.confirm" /></h2>	
+		<ul class="margin-base-vertical">
 			<s:iterator value="actionMessages">
 				<li><s:property escape="false" /></li>
 			</s:iterator>

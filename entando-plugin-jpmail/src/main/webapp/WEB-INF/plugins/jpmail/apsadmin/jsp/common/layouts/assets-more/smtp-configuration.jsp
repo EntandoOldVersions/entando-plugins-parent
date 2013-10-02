@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
-<s:include value="/WEB-INF/apsadmin/jsp/common/template/defaultExtraResources.jsp" />
+<s:include value="/WEB-INF/apsadmin/jsp/common/layouts/assets-common.jsp" />
 
 <sj:head />
 

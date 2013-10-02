@@ -3,19 +3,22 @@
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 
-<h1><s:text name="title.eMailManagement" /></h1>
+<h1 class="panel panel-default title-page">
+    <span class="panel-body display-block">
+        <s:text name="title.eMailManagement" />&#32;/&#32;
+        <s:if test="%{strutsAction==1}" ><s:text name="title.eMailManagement.newSender" /></s:if>
+        <s:else><s:text name="title.eMailManagement.editSender" />:&nbsp;<s:property value="code"/></s:else>
+    </span>
+</h1>
+    
 <div id="main">
-	
-	<h2 class="margin-bit-bottom">
-		<s:if test="%{strutsAction==1}" ><s:text name="title.eMailManagement.newSender" /></s:if>
-		<s:else><s:text name="title.eMailManagement.editSender" />:&nbsp;<s:property value="currentCode"/></s:else>
-	</h2>
-	
+    
 	<s:form action="saveSender" >
 		<s:if test="hasFieldErrors()">
-			<div class="message message_error">	
-				<h3><s:text name="message.title.FieldErrors" /></h3>
-				<ul>
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                            <h2 class="h4 margin-none"><s:text name="message.title.FieldErrors" /></h2>
+				<ul class="margin-base-vertical">
 					<s:iterator value="fieldErrors">
 						<s:iterator value="value">
 							<li><s:property escape="false" /></li>
@@ -25,14 +28,15 @@
 			</div>
 		</s:if>
 		<s:if test="hasActionErrors()">
-			<div class="message message_error">	
-				<h3><s:text name="message.title.ActionErrors" /></h3>
-				<ul>
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                            <h2 class="h4 margin-none"><s:text name="message.title.ActionErrors" /></h2>
+				<ul class="margin-base-vertical">
 					<s:iterator value="actionErrors">
 						<li><s:property escape="false" /></li>
 					</s:iterator>
 				</ul>
-			</div>
+                    </div>
 		</s:if>
 		
 		<p class="noscreen">	
@@ -40,21 +44,22 @@
 			<s:if test="%{strutsAction==2}" ><wpsf:hidden name="code"/></s:if>
 		</p>
 		
-		<fieldset class="margin-more-top"> 
+		<fieldset class="col-xs-12"> 
 			<legend><s:text name="label.info" /></legend> 
-			<p>
-				<label for="code" class="basic-mint-label"><s:text name="code" />:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="code" id="code" disabled="%{strutsAction==2}" cssClass="text" />
-			</p>
-			<p>
-				<label for="mail" class="basic-mint-label"><s:text name="mail" />:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="mail" id="mail" cssClass="text" />
-			</p>
+			<div class="form-group">
+				<label for="code"><s:text name="code" /></label>
+				<wpsf:textfield name="code" id="code" disabled="%{strutsAction==2}" cssClass="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="mail"><s:text name="mail" /></label>
+				<wpsf:textfield name="mail" id="mail" cssClass="form-control" />
+			</div>
 		</fieldset>
 		
-		<p class="centerText">
-			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.save')}" cssClass="button" />
-		</p>
-		
+                <div class="form-group">
+                    <div class="col-xs-12">
+			<wpsf:submit value="%{getText('label.save')}" cssClass="btn btn-primary" />
+                    </div>
+                </div>
 	</s:form>	
 </div>
