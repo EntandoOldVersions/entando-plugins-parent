@@ -37,7 +37,7 @@ public class ContentAuthorizationHelper extends com.agiletec.plugins.jacms.aps.s
 	public boolean isAuthToEdit(UserDetails user, Content content) throws ApsSystemException {
 		boolean isAllowed = false;
 		try {
-			boolean firstCheck = super.isAuth(user, content);
+			boolean firstCheck = super.isAuthToEdit(user, content);
 			if (firstCheck) {
 				if (this.getAuthorizationManager().isAuthOnPermission(user, Permission.SUPERUSER)) {
 					return true;
