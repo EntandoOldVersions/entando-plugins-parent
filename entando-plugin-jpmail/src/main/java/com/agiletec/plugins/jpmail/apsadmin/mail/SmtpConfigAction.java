@@ -145,8 +145,8 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 	public boolean hasEmailCurrentUser() {
 		IUserProfile userProfile = (IUserProfile) this.getCurrentUser().getProfile();
 		if (null != userProfile) {
-			String mail = userProfile.getValue(userProfile.getMailAttributeName()).toString();
-			if (StringUtils.isNotBlank(mail)) {
+			Object mailAttribute = userProfile.getValue(userProfile.getMailAttributeName());
+			if (null != mailAttribute && StringUtils.isNotBlank(mailAttribute.toString())) {
 				return true;
 			}
 		}
