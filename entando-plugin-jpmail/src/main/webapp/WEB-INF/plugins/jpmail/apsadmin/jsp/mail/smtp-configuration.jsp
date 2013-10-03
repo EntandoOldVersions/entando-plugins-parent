@@ -45,22 +45,16 @@
 				<label for="smtpPort"><s:text name="label.security" /></label>
                                 
                         <div class="radio">
-                            <label for="smtpstd">
-                                <wpsf:radio id="smtpstd" name="smtpProtocol" value="0" checked="%{smtpProtocol == 0}" cssClass="radio" />
                                 <s:text name="label.smtp.standard"/>
-                            </label>
+                                <wpsf:radio id="smtpstd" name="smtpProtocol" value="0" checked="%{smtpProtocol == 0}" cssClass="radio" />
                         </div>
                         <div class="radio">
-                            <label for="smtpssl">
-                                <wpsf:radio id="smtpssl" name="smtpProtocol" value="1" checked="%{smtpProtocol == 1}" cssClass="radio" />
                                 <s:text name="label.smtp.ssl"/>
-                            </label>
+                                <wpsf:radio id="smtpssl" name="smtpProtocol" value="1" checked="%{smtpProtocol == 1}" cssClass="radio" />
                         </div>    
                         <div class="radio">
-                            <label for="smtptls">
-                                <wpsf:radio id="smtptls" name="smtpProtocol" value="2" checked="%{smtpProtocol == 2}" cssClass="radio" />
-                                <s:text name="label.smtp.tls"/>
-                            </label>
+                            <s:text name="label.smtp.tls"/>
+                            <wpsf:radio id="smtptls" name="smtpProtocol" value="2" checked="%{smtpProtocol == 2}" cssClass="radio" />    
                         </div>
 			<div class="form-group">
 				<label for="smtpTimeout"><s:text name="label.smtpTimeout" /></label>
@@ -81,14 +75,12 @@
 			</div>
 		</fieldset> 
 		
-		<div class="form-group">
-                    <div class="col-xs-12">
+		<div class="form-group col-xs-12">
                         <wpsf:submit name="save" action="saveSmtp" value="%{getText('label.save')}" cssClass="btn btn-primary" onclick="overrideSubmit('saveSmtp')"/>
                         <div class="btn-group margin-small-left">
                             <sj:submit parentTheme="simple" formIds="configurationForm" value="%{getText('label.testConnection')}" targets="messages" cssClass="btn btn-default"/>
                             <wpsf:submit name="testMail"  value="%{getText('label.sendEmail')}" action="testMail" cssClass="btn btn-default" onclick="overrideSubmit('testMail')"/>
                         </div>    
-                    </div>
 		</div>	
 			
 	</s:form>
