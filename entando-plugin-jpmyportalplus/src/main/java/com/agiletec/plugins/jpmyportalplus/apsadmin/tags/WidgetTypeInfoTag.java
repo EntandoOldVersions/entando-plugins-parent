@@ -31,26 +31,27 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalC
 /**
  * Tag equals to {@link com.agiletec.apsadmin.tags.WidgetTypeInfoTag} tag.
  * Return also a "swappable" property of the type.
- * If the showlet type is uncompatible with MyPortal Engine, return -1.
- * If the showlet type is unswappable return 0, else return 1.
+ * If the widget type is uncompatible with MyPortal Engine, return -1.
+ * If the widget type is unswappable return 0, else return 1.
  * @author E.Santoboni
  */
 public class WidgetTypeInfoTag extends com.agiletec.apsadmin.tags.WidgetTypeInfoTag {
 	
 	@Override
 	protected Object getPropertyValue(Object masterObject, String propertyValue) {
-		Object value = super.getPropertyValue(masterObject, propertyValue);
+		if (null == propertyValue || !propertyValue.equals("swappable")) {
+			return super.getPropertyValue(masterObject, propertyValue);
+		}
+		Object value = null;
 		try {
-			if (null == value && null != propertyValue && propertyValue.equals("swappable")) {
-				WidgetType type = (WidgetType) masterObject;
-				IMyPortalConfigManager myPortalConfigManager = (IMyPortalConfigManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.MYPORTAL_CONFIG_MANAGER, this.pageContext);
-				if (this.isCustomizable(myPortalConfigManager, type)) {
-					Set<String> swappables = myPortalConfigManager.getConfig().getAllowedShowlets();
-					boolean swappable = (null != swappables && swappables.contains(type.getCode()));
-					value = (swappable) ? new Integer(1) : new Integer(0);
-				} else {
-					value = new Integer(-1);
-				}
+			WidgetType type = (WidgetType) masterObject;
+			IMyPortalConfigManager myPortalConfigManager = (IMyPortalConfigManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.MYPORTAL_CONFIG_MANAGER, this.pageContext);
+			if (this.isCustomizable(myPortalConfigManager, type)) {
+				Set<String> swappables = myPortalConfigManager.getConfig().getAllowedShowlets();
+				boolean swappable = (null != swappables && swappables.contains(type.getCode()));
+				value = (swappable) ? new Integer(1) : new Integer(0);
+			} else {
+				value = new Integer(-1);
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getPropertyValue");
