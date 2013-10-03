@@ -52,6 +52,10 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 	
 	@Override
 	public void validate() {
+		Message message = this.getMessage();
+		if (message == null) {
+			return;
+		}
 		super.validate();
 		if (this.getRecaptchaEnabled()) {
 			String remoteAddr = ServletActionContext.getRequest().getRemoteAddr();
@@ -181,21 +185,6 @@ public class UserNewMessageAction extends AbstractApsEntityAction implements INe
 		return SUCCESS;
 	}
 	
-	/*
-	public String entryAndUpdateMessage() {
-		try {
-			Message message = this.getMessage();
-			if (message == null) {
-				return "expiredMessage";
-			}
-			this.getEntityActionHelper().updateEntity(this.getApsEntity(), this.getRequest());
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "entryAndUpdateMessage");
-			return FAILURE;
-		}
-		return SUCCESS;
-	}
-	*/
 	@Override
 	public String save() {
 		try {

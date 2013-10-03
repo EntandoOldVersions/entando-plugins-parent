@@ -147,9 +147,9 @@ public class MessageSearcherDAO extends AbstractEntitySearcherDAO implements IMe
 			return this.getEntityMasterTableIdFieldName();
 		} else if (metadataFieldKey.equals(IEntityManager.ENTITY_TYPE_CODE_FILTER_KEY)) {
 			return this.getEntityMasterTableIdTypeFieldName();
-		} else if (metadataFieldKey.equals(USERNAME_FILTER_KEY)) {
+		} else if (metadataFieldKey.equals(IMessageManager.USERNAME_FILTER_KEY)) {
 			return "username";
-		} else if (metadataFieldKey.equals(CREATION_DATE_FILTER_KEY)) {
+		} else if (metadataFieldKey.equals(IMessageManager.CREATION_DATE_FILTER_KEY)) {
 			return "creationdate";
 		} else throw new RuntimeException("Chiave di ricerca '" + metadataFieldKey + "' non riconosciuta");
 	}

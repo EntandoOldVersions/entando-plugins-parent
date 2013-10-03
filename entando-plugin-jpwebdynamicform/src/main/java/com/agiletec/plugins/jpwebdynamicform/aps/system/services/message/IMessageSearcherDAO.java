@@ -38,7 +38,10 @@ public interface IMessageSearcherDAO extends IEntitySearcherDAO {
 	 */
 	public List<String> searchId(EntitySearchFilter[] filters, boolean answered) throws ApsSystemException;
 	
-	public static final String USERNAME_FILTER_KEY = "username";
-	public static final String CREATION_DATE_FILTER_KEY = "created";
+	@Deprecated
+	public static final String USERNAME_FILTER_KEY = IMessageManager.USERNAME_FILTER_KEY;
+	
+	@Deprecated
+	public static final String CREATION_DATE_FILTER_KEY = IMessageManager.CREATION_DATE_FILTER_KEY;
 	
 }

@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.common.FieldSearchFilter;
 import com.agiletec.aps.system.common.entity.IEntityManager;
 import com.agiletec.aps.system.common.entity.model.EntitySearchFilter;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
@@ -28,6 +29,7 @@ import com.agiletec.apsadmin.system.entity.AbstractApsEntityFinderAction;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageManager;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageSearcherDAO;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.model.Answer;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * Implementation for the Operator Message list operations.
@@ -51,10 +53,13 @@ public class MessageFinderAction extends AbstractApsEntityFinderAction {
 	
 	@Override
 	public List<String> getSearchResult() {
-		if (null==this._messageIds) {
+		if (null == this._messageIds) {
 			try {
 				Integer answered = this.getAnswered();
-				if (null==answered) {
+				EntitySearchFilter dateFilter = new EntitySearchFilter(IMessageManager.CREATION_DATE_FILTER_KEY, false);
+				dateFilter.setOrder(FieldSearchFilter.Order.DESC);
+				super.addFilter(dateFilter);
+				if (null == answered) {
 					this._messageIds = this.getMessageManager().loadMessagesId(this.getFilters());
 				} else {
 					boolean answeredFlag = answered.intValue()==1;

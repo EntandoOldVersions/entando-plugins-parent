@@ -136,4 +136,7 @@ public interface IMessageManager extends IEntityManager {
 	 */
 	public List<Answer> getAnswers(String messageId) throws ApsSystemException;
 	
+	public static final String USERNAME_FILTER_KEY = "username";
+	public static final String CREATION_DATE_FILTER_KEY = "created";
+	
 }
