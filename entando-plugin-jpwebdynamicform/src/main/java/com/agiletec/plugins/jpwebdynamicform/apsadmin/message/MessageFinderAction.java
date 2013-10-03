@@ -29,7 +29,6 @@ import com.agiletec.apsadmin.system.entity.AbstractApsEntityFinderAction;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageManager;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageSearcherDAO;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.model.Answer;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * Implementation for the Operator Message list operations.
