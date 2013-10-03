@@ -41,10 +41,10 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 	@Override
 	public void validate() {
 		super.validate();
-		Set<String> widgetTypeCodes = this.getShowletTypeCodes();
+		Set<String> widgetTypeCodes = this.getWidgetTypeCodes();
 		IWidgetTypeManager widgetTypeManager = this.getWidgetTypeManager();
 		for (String widgetCode : widgetTypeCodes) {
-			if (!this.isShowletAllowed(widgetTypeManager.getWidgetType(widgetCode))) {
+			if (!this.isWidgetAllowed(widgetTypeManager.getWidgetType(widgetCode))) {
 				this.addFieldError("showlets", this.getText("errors.jpmyportalConfig.widgets.notValid", new String[] { widgetCode }));
 			}
 		}
@@ -73,10 +73,10 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 	@Override
 	public String addWidget() {
 		try {
-			String widgetCode = this.getShowletCode();
+			String widgetCode = this.getWidgetCode();
 			WidgetType type = this.getWidgetTypeManager().getWidgetType(widgetCode);
-			if (this.isShowletAllowed(type)) {
-				this.getShowletTypeCodes().add(widgetCode);
+			if (this.isWidgetAllowed(type)) {
+				this.getWidgetTypeCodes().add(widgetCode);
 			} else {
 				this.addFieldError("showletCode", this.getText("Errors.jpmyportalConfig.WidgetType.notValid", new String[] { widgetCode }));
 				return INPUT;
@@ -99,9 +99,9 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 	@Override
 	public String removeWidget() {
 		try {
-			String widgetCode = this.getShowletCode();
+			String widgetCode = this.getWidgetCode();
 			if (widgetCode != null) {
-				this.getShowletTypeCodes().remove(widgetCode);
+				this.getWidgetTypeCodes().remove(widgetCode);
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "removeWidget");
@@ -125,52 +125,75 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 	
 	private void populateForm(MyPortalConfig config) {
 		Set<String> allowedShowlets = config.getAllowedShowlets();
-		IWidgetTypeManager showletTypeManager = this.getWidgetTypeManager();
+		IWidgetTypeManager widgetTypeManager = this.getWidgetTypeManager();
 		Set<String> showlets = new TreeSet<String>();
 		for (String showletCode : allowedShowlets) {
-			if (this.isShowletAllowed(showletTypeManager.getWidgetType(showletCode))) {
+			if (this.isWidgetAllowed(widgetTypeManager.getWidgetType(showletCode))) {
 				showlets.add(showletCode);
 			}
 		}
-		this.setShowletTypeCodes(showlets);
+		this.setWidgetTypeCodes(showlets);
 	}
 	
 	@Override
-	protected void addFlavourShowletType(String mapCode, WidgetType type, Map<String, List<SelectItem>> mapping) {
+	protected void addFlavourWidgetType(String mapCode, WidgetType type, Map<String, List<SelectItem>> mapping) {
 		if (null == type) return;
 		List<WidgetTypeParameter> typeParameters = type.getTypeParameters();
 		if (!type.isUserType() && !type.isLogic() && (null != typeParameters && typeParameters.size() > 0)) return;
 		if (type.getCode().equals(this.getMyPortalConfigManager().getVoidShowletCode())) return;
-		super.addFlavourShowletType(mapCode, type, mapping);
+		super.addFlavourWidgetType(mapCode, type, mapping);
 	}
 	
 	private MyPortalConfig prepareConfig() throws ApsSystemException {
 		MyPortalConfig config = new MyPortalConfig();
-		config.setAllowedShowlets(this.getShowletTypeCodes());
+		config.setAllowedShowlets(this.getWidgetTypeCodes());
 		return config;
 	}
 	
+	public WidgetType getWidgetType(String widgetCode) {
+		return this.getWidgetTypeManager().getWidgetType(widgetCode);
+	}
+	
+	@Deprecated
 	public WidgetType getShowletType(String showletCode) {
-		return this.getWidgetTypeManager().getWidgetType(showletCode);
+		return this.getWidgetType(showletCode);
 	}
 	
-	private boolean isShowletAllowed(WidgetType WidgetType) {
-		return WidgetType != null && 
-				(WidgetType.isLogic() || WidgetType.isUserType() || WidgetType.getTypeParameters()==null || WidgetType.getTypeParameters().isEmpty());
+	private boolean isWidgetAllowed(WidgetType widgetType) {
+		return widgetType != null && 
+				(widgetType.isLogic() || widgetType.isUserType() || widgetType.getTypeParameters() == null || widgetType.getTypeParameters().isEmpty());
 	}
 	
+	@Deprecated
 	public Set<String> getShowletTypeCodes() {
-		return _showletTypeCodes;
+		return this.getWidgetTypeCodes();
 	}
+	@Deprecated
 	public void setShowletTypeCodes(Set<String> showletTypeCodes) {
-		this._showletTypeCodes = showletTypeCodes;
+		this.setWidgetTypeCodes(showletTypeCodes);
 	}
 	
-	public String getShowletCode() {
-		return _showletCode;
+	public Set<String> getWidgetTypeCodes() {
+		return _widgetTypeCodes;
 	}
+	public void setWidgetTypeCodes(Set<String> widgetTypeCodes) {
+		this._widgetTypeCodes = widgetTypeCodes;
+	}
+	
+	@Deprecated
+	public String getShowletCode() {
+		return this.getWidgetCode();
+	}
+	@Deprecated
 	public void setShowletCode(String showletCode) {
-		this._showletCode = showletCode;
+		this.setWidgetCode(showletCode);
+	}
+	
+	public String getWidgetCode() {
+		return _widgetCode;
+	}
+	public void setWidgetCode(String widgetCode) {
+		this._widgetCode = widgetCode;
 	}
 	
 	protected IMyPortalConfigManager getMyPortalConfigManager() {
@@ -180,9 +203,9 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 		this._myPortalConfigManager = myPortalConfigManager;
 	}
 	
-	private Set<String> _showletTypeCodes = new TreeSet<String>();
+	private Set<String> _widgetTypeCodes = new TreeSet<String>();
 	
-	private String _showletCode;
+	private String _widgetCode;
 	
 	private IMyPortalConfigManager _myPortalConfigManager;
 	

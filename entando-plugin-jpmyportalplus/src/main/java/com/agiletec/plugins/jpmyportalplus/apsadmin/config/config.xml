@@ -7,8 +7,6 @@
 	
 	<package name="jpmyportal_do/jpmyportal/Config" namespace="/do/jpmyportalplus/Config" extends="entando-default">
 		
- 		<!-- INIZIO - AREA PER LA CONFIGURAZIONE DEL SERVIZIO -->
- 		
  		<action name="edit" class="jpmyportalplusConfigAction" method="edit">
     		<result type="tiles">admin.jpmyportalplus.config.entry</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
@@ -31,8 +29,6 @@
             <interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
         </action>
         
-		<!-- FINE - AREA PER LA CONFIGURAZIONE DEL SERVIZIO -->
-		
 	</package>
 	
 </struts>
