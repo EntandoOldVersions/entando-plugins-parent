@@ -43,6 +43,9 @@ public class UserAvatarAction extends org.entando.entando.apsadmin.common.UserAv
 			MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
 			this.setMimeType(mimeTypesMap.getContentType(url));
 			File avatar = this.getAvatarManager().getAvatarResource(this.getUsername());
+			if (null == avatar) {
+				return this.extractDefaultAvatarStream();
+			}
 			this.setInputStream(new FileInputStream(avatar));
 		} catch (Throwable t) {
             ApsSystemUtils.logThrowable(t, this, "returnAvatarStream");
