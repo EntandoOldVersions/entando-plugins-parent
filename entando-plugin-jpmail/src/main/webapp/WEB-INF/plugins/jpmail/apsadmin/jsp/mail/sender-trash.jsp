@@ -5,10 +5,9 @@
 <h1 class="panel panel-default title-page"><span class="panel-body display-block"><s:text name="title.eMailManagement" />&#32;/&#32;<s:text name="title.eMailManagement.sendersConfig.trashSender" /></span></h1>
 <div id="main">
 
-	<s:form action="deleteSender" >
+	<s:form action="deleteSender" cssClass="form-horizontal">
 		<p class="noscreen"><wpsf:hidden name="code"/></p>
 		
-		<p>
                 <div class="alert alert-warning">
                     <s:text name="note.sendersConfig.trash" />&#32;<code><s:property value="code" /></code>?&#32;
                      <div class="text-center margin-large-top">

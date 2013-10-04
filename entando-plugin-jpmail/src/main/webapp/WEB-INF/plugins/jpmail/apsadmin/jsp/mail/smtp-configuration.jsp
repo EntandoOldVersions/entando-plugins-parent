@@ -23,10 +23,18 @@
 		<fieldset class="col-xs-12">
 			<legend><s:text name="legend.generalSettings" /></legend>
 			<div class="form-group">
-				<wpsf:checkbox name="active" id="active" cssClass="radiocheck" />&nbsp;<label for="active"><s:text name="label.active" /></label>
+                            <div class="checkbox">
+                                <label for="active"><s:text name="label.active" />
+                                    <wpsf:checkbox name="active" id="active" />
+                                </label>
+                            </div>    
 			</div>
 			<div class="form-group">
-				<wpsf:checkbox name="debug" id="debug" cssClass="radiocheck" />&nbsp;<label for="debug"><s:text name="label.debug" /></label>
+                            <div class="checkbox">
+                                <label for="debug"><s:text name="label.debug" />
+                                    <wpsf:checkbox name="debug" id="debug" />
+                                </label>
+                            </div>    
 			</div>
 		</fieldset> 
 
@@ -75,13 +83,20 @@
 			</div>
 		</fieldset> 
 		
-		<div class="form-group col-xs-12">
-                        <wpsf:submit name="save" action="saveSmtp" value="%{getText('label.save')}" cssClass="btn btn-primary" onclick="overrideSubmit('saveSmtp')"/>
-                        <div class="btn-group margin-small-left">
+            <div class="form-horizontal">            
+		<div class="form-group">
+                    <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
+                        <wpsf:submit name="save" type="button" action="saveSmtp" cssClass="btn btn-primary btn-block" onclick="overrideSubmit('saveSmtp')">
+                            <span class="icon icon-save"></span>&#32;
+                            <s:text name="%{getText('label.save')}"/>
+                        </wpsf:submit>    
+                    </div>    
+                        <div class="btn-group margin-small-left margin-small-vertical">
                             <sj:submit parentTheme="simple" formIds="configurationForm" value="%{getText('label.testConnection')}" targets="messages" cssClass="btn btn-default"/>
                             <wpsf:submit name="testMail"  value="%{getText('label.sendEmail')}" action="testMail" cssClass="btn btn-default" onclick="overrideSubmit('testMail')"/>
                         </div>    
-		</div>	
+		</div>
+            </div>            
 			
 	</s:form>
 </div>

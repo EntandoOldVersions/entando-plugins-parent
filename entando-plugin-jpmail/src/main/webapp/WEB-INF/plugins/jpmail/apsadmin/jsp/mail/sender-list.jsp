@@ -10,9 +10,10 @@
 	</p>
 	
 	<s:if test="hasActionErrors()">
-		<div class="message message_error">	
-			<h3><s:text name="message.title.ActionErrors" /></h3>
-			<ul>
+	<div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+		<h2 class="h4 margin-none"><s:text name="message.title.ActionErrors" /></h2>
+			<ul class="margin-base-vertical">
 				<s:iterator value="actionErrors">
 					<li><s:property escape="false" /></li>
 				</s:iterator>
@@ -24,7 +25,7 @@
 		<p><s:text name="label.senders.none" /></p>
 	</s:if>
 	<s:else>
-		<table class="table table-bordered" />
+		<table class="table table-bordered">
 			<tr>
                                 <th class="text-center text-nowap col-xs-6 col-sm-3 col-md-3 col-lg-3 "><abbr title="<s:text name="label.remove" />">&ndash;</abbr></th>
 				<th><s:text name="code" /></th>

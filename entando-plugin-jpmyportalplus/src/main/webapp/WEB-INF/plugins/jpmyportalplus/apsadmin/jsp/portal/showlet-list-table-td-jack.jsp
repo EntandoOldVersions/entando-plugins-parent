@@ -5,20 +5,26 @@
 <td class="icon">
 	<s:if test="#swappableVar > -1">
 	<s:if test="#swappableVar == 1">
-		<img
-			src="<wp:resourceURL/>plugins/jpmyportalplus/administration/common/img/icons/22x22/showlet-is-swappable.png" 
-			alt="<s:text name="jpmyportalplus.widget.swappable" />"
-			title="<s:property value="#showletType.value" />: <s:text name="jpmyportalplus.widget.swappable" />" 
-		/>
+            <button 
+                class="btn btn-default" 
+		alt="<s:text name="jpmyportalplus.widget.swappable" />"
+		title="<s:property value="#showletType.value" />: <s:text name="jpmyportalplus.widget.swappable" />">
+                <span class="icon-ok"></span>
+            </button>    
 	</s:if>
 	<s:else>
-		<img
-			src="<wp:resourceURL/>plugins/jpmyportalplus/administration/common/img/icons/22x22/showlet-isnot-swappable.png" 
-			alt="<s:text name="jpmyportalplus.widget.not.swappable" />"
-			title="<s:property value="#showletType.value" />: <s:text name="jpmyportalplus.widget.not.swappable" />" 
-		/>
+            <button 
+                class="btn btn-default" 
+                alt="<s:text name="jpmyportalplus.widget.not.swappable" />" 
+                title="<s:property value="#showletType.value" />: <s:text name="jpmyportalplus.widget.not.swappable" />">
+                <span class="icon-exclamation"></span>
+            </button>    
 	</s:else>
 	</s:if>
-	<s:else><abbr title="<s:text name="jpmyportalplus.widget.na" />">&ndash;</abbr></s:else>
+                <s:else>
+                    <button class="btn btn-default">
+                        <span class="icon-minus"></span>
+                    </button>    
+                </s:else>
 	<s:set var="swappableVar" value="null" />
 </td>

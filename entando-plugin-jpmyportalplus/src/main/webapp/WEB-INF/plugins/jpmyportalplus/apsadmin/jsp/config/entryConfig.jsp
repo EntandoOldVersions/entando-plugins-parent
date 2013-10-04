@@ -3,42 +3,45 @@
 <%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
 <%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
 <%@ page contentType="charset=UTF-8" %>
-<h1><s:text name="title.jpmyportalplus" /></h1>
+<h1 class="panel panel-default title-page"><span class="panel-body display-block"><s:text name="title.jpmyportalplus" /></span></h1>
 <div id="main">
 <s:form action="save">
 
 	<s:if test="hasFieldErrors()">
-	<div class="message message_error">
-	<h2><s:text name="message.title.FieldErrors" /></h2>
-	<ul>
-		<s:iterator value="fieldErrors">
+	<div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+		<h2 class="h4 margin-none"><s:text name="message.title.FieldErrors" /></h2>
+                    <ul class="margin-base-vertical">
+                    <s:iterator value="fieldErrors">
 			<s:iterator value="value">
 				<li><s:property escape="false" /></li>
 			</s:iterator>
-		</s:iterator>
-	</ul>
-	</div>
+                    </s:iterator>
+                    </ul>
+        </div>
 	</s:if>
 
 	<s:if test="hasActionErrors()">
-	<div class="message message_error">
-	<h2><s:text name="message.title.ActionErrors" /></h2>
-	<ul>
-		<s:iterator value="actionErrors">
-			<li><s:property escape="false" /></li>
-		</s:iterator>
-	</ul>
+	<div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+		<h2 class="h4 margin-none"><s:text name="message.title.ActionErrors" /></h2>
+                    <ul class="margin-base-vertical">
+                        <s:iterator value="actionErrors">
+                            <li><s:property escape="false" /></li>
+                        </s:iterator>
+                    </ul>
 	</div>
 	</s:if>
 
 	<s:if test="hasActionMessages()">
-	<div class="message message_confirm">
-	<h2><s:text name="messages.confirm" /></h2>
-	<ul>
-		<s:iterator value="actionMessages">
-			<li><s:property escape="false" /></li>
-		</s:iterator>
-	</ul>
+	<div class="alert alert-info alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+		<h2 class="h4 margin-none"><s:text name="messages.confirm" /></h2>
+                    <ul class="margin-base-vertical">
+                        <s:iterator value="actionMessages">
+                            <li><s:property escape="false" /></li>
+                        </s:iterator>
+                    </ul>
 	</div>
 	</s:if>
 
@@ -50,12 +53,13 @@
 	</s:iterator>
 	</p>
 
-	<fieldset  class="margin-bit-top">
+	<fieldset class="col-xs-12">
 		<legend><s:text name="jpmyportalplus.label.configWidget" /></legend>
 
-		<p>
-			<label for="showletCode" class="basic-mint-label"><s:text name="jpmyportalplus.label.addWidget" />:</label>
-			<select name="showletCode" tabindex="<wpsa:counter />" id="showletCode">
+		<div class="form-group">
+                    <label for="showletCode"><s:text name="jpmyportalplus.label.addWidget" /></label>
+                    <div class="input-group">
+			<select name="showletCode" tabindex="<wpsa:counter />" id="showletCode" class="form-control">
 			<s:iterator var="showletFlavour" value="showletFlavours">
 				<wpsa:set var="tmpShowletType">tmpShowletTypeValue</wpsa:set>
 				<s:iterator var="showletType" value="#showletFlavour" >
@@ -85,37 +89,45 @@
 					</optgroup>
 			</s:iterator>
 			</select>
-			<wpsf:submit action="addWidget" value="%{getText('label.add')}" cssClass="button" />
-		</p>
+                        <span class="input-group-btn">
+                            <wpsf:submit action="addWidget" value="%{getText('label.add')}" cssClass="btn btn-warning" />
+                        </span>
+                    </div>
+		</div>
 
 		<s:if test="%{showletTypeCodes.size > 0}">
-			<table class="generic">
-				<caption><span><s:text name="jpmyportalplus.label.currentConfigWidget"></s:text></span></caption>
+			<table class="table table-bordered">
 				<tr>
-					<th scope="col">Showlet</th>
-					<th scope="col"><abbr title="<s:text name="label.remove" />">&ndash;</abbr></th>
+                                    <th class="text-center text-nowap col-xs-6 col-sm-3 col-md-3 col-lg-3" scope="col"><abbr title="<s:text name="label.remove" />">&ndash;</abbr></th>
+                                    <th scope="col">Showlet</th>
 				</tr>
 
 				<s:iterator var="showletCode" value="#showletTypeCodes" status="rowstatus">
-					<tr>
-						<td>
-							<wpsa:set var="showletType" value="%{getShowletType(#showletCode)}" />
-							<s:property value="%{getTitle(#showletCode, #showletType.getTitles())}" />
-						</td>
-						<td class="icon">
-							<wpsa:actionParam action="removeWidget" var="actionName" ><wpsa:actionSubParam name="showletCode" value="%{#showletCode}" /></wpsa:actionParam>
-							<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/delete.png</s:set>
-							<wpsf:submit type="image" src="%{#iconImagePath}" action="%{#actionName}" value="%{getText('label.remove')}" title="%{getText('label.remove') + ': ' + getTitle(#showletCode, #showletType.getTitles())}" />
-						</td>
-					</tr>
+                                    <tr>
+                                        <td class="text-center text-nowrap">
+                                            <wpsa:actionParam action="removeWidget" var="actionName" ><wpsa:actionSubParam name="showletCode" value="%{#showletCode}" /></wpsa:actionParam>
+                                            <wpsf:submit type="button" src="%{#iconImagePath}" action="%{#actionName}" value="%{getText('label.remove')}" title="%{getText('label.remove') + ': ' + getTitle(#showletCode, #showletType.getTitles())}" cssClass="btn btn-warning btn-xs">
+                                                <span class="icon icon-remove-circle"></span>
+                                            </wpsf:submit>    
+                                        </td>
+                                        <td>
+                                            <wpsa:set var="showletType" value="%{getShowletType(#showletCode)}" />
+                                            <s:property value="%{getTitle(#showletCode, #showletType.getTitles())}" />
+					</td>
+                                    </tr>
 				</s:iterator>
-
 			</table>
 		</s:if>
 	</fieldset>
-
-	<p class="centerText">
-		<wpsf:submit value="%{getText('label.save')}" cssClass="button" />
-	</p>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
+		<wpsf:submit type="button" value="%{getText('label.save')}" cssClass="btn btn-primary btn-block">
+                    <span class="icon icon-save"></span>&#32;
+                    <s:text name="%{getText('label.save')}"/>
+                </wpsf:submit>
+            </div>    
+	</div>
+    </div>    
 </s:form>
 </div>
