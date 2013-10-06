@@ -27,11 +27,4 @@
 		</field-validator>
     </field>
     
-    <field name="smtpPassword">
-        <field-validator type="fieldexpression">
-			<param name="expression"><![CDATA[(!isValidProtocol() || smtpProtocol == 0 || (smtpProtocol > 0 && smtpPassword != null && smtpPassword.trim().length() > 0))]]></param>
-			<message key="error.smtpPassword.required" />
-		</field-validator>
-    </field>
-    
 </validators>

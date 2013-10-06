@@ -31,4 +31,17 @@ public interface ISmtpConfigAction {
 	 */
 	public String save();
 	
+	/**
+	 * Execute the action of test of the SMTP Server.
+	 * @return The action result code.
+	 */
+	public String testSmtp();
+	
+	/**
+	 * Execute the action of test of the SMTP Server, sending a mail.
+	 * @return The action result code.
+	 */
+	public String testMail();
+	
+	
 }

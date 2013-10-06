@@ -106,6 +106,24 @@ public interface IMailManager {
 			String[] recipientsTo, String[] recipientsCc, String[] recipientsBcc, String senderCode) throws ApsSystemException;
 	
 	/**
+	 *
+	 * @param mailConfig
+	 * @return True if smtp server is working
+	 * @throws ApsSystemException
+	 */
+	public boolean smtpServerTest(MailConfig mailConfig);
+
+	/***
+	 * Send and e-mail without checking if mail service is active
+	 * @param text The text of mail part in text/plain contentType.
+	 * @param subject The e-mail subject.
+	 * @param recipientsTo The e-mail main destination addresses.
+	 * @param senderCode
+	 * @return
+	 * @throws ApsSystemException 
+	 */
+	public boolean sendMailForTest(String text, String subject, String[] recipientsTo, String senderCode) throws ApsSystemException;
+	/**
 	 * The text/plain contentType.
 	 */
 	public static final String CONTENTTYPE_TEXT_PLAIN = "text/plain";

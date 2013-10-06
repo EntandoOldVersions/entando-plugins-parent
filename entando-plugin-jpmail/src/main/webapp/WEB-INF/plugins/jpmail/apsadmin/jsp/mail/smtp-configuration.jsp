@@ -2,64 +2,37 @@
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
+
+
 
 <h1><s:text name="title.eMailManagement" /></h1>
+
+
 <div id="main">
-	
+
 	<h2 class="margin-bit-bottom"><s:text name="label.smtpConfig" /></h2> 
 
 	<p>
 		<s:text name="label.jpmail.intro" />
 	</p>
-	
-	<s:form action="saveSmtp" >
-		<s:if test="hasFieldErrors()">
-			<div class="message message_error">	
-				<h3><s:text name="message.title.FieldErrors" /></h3>
-				<ul>
-					<s:iterator value="fieldErrors">
-						<s:iterator value="value">
-							<li><s:property escape="false" /></li>
-						</s:iterator>
-					</s:iterator>
-				</ul>
-			</div>
-		</s:if>
-		<s:if test="hasActionErrors()">
-			<div class="message message_error">	
-				<h3><s:text name="message.title.ActionErrors" /></h3>
-				<ul>
-					<s:iterator value="actionErrors">
-						<li><s:property escape="false" /></li>
-					</s:iterator>
-				</ul>
-			</div>
-		</s:if>
-		<s:if test="hasActionMessages()">
-			<div class="message message_confirm">
-				<h3><s:text name="messages.confirm" /></h3>	
-				<ul>
-					<s:iterator value="actionMessages">
-						<li><s:property escape="false" /></li>
-					</s:iterator>
-				</ul>
-			</div>
-		</s:if>
-		
+	<s:form id="configurationForm" name="configurationForm" method="post" action="testSmtp">
+			
+		<s:include value="/WEB-INF/plugins/jpmail/apsadmin/jsp/mail/inc/smtp-messages.jsp" />
 		<fieldset class="margin-more-top">
 			<legend><s:text name="legend.generalSettings" /></legend>
-			<p>
+			<p class="margin-more-top">
 				<wpsf:checkbox useTabindexAutoIncrement="true" name="active" id="active" cssClass="radiocheck" />&nbsp;<label for="active"><s:text name="label.active" /></label>
 			</p>
 			<p>
 				<wpsf:checkbox useTabindexAutoIncrement="true" name="debug" id="debug" cssClass="radiocheck" />&nbsp;<label for="debug"><s:text name="label.debug" /></label>
 			</p>
 		</fieldset> 
-		
+
 		<fieldset class="margin-more-top">
 			<legend><s:text name="legend.connection" /></legend>
-			
-			<p>
+
+			<p class="margin-more-top">
 				<label for="smtpHost" class="basic-mint-label"><s:text name="smtpHost" />:</label>
 				<wpsf:textfield useTabindexAutoIncrement="true" name="smtpHost" id="smtpHost" cssClass="text" />
 			</p>
@@ -91,19 +64,23 @@
 		</fieldset> 
 		<fieldset>
 			<legend><s:text name="legend.authentication" /></legend> 
-			<p>
+			<p class="margin-more-top">
 				<label for="smtpUserName" class="basic-mint-label"><s:text name="smtpUserName" />:</label>
 				<wpsf:textfield useTabindexAutoIncrement="true" name="smtpUserName" id="smtpUserName" cssClass="text" />
 			</p>
 			<p>
 				<label for="smtpPassword" class="basic-mint-label"><s:text name="smtpPassword" />:</label>
+				<wpsf:hidden value="%{getSmtpPassword()}" />
 				<wpsf:password useTabindexAutoIncrement="true" name="smtpPassword" id="smtpPassword" cssClass="text" />
 			</p>
 		</fieldset> 
+		<div id="messages">
+		</div>
 		<p class="centerText">
-			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.save')}" cssClass="button" />
+			<wpsf:submit name="save" useTabindexAutoIncrement="true" action="saveSmtp" value="%{getText('label.save')}" cssClass="button" onclick="overrideSubmit('saveSmtp')"/>
+			<wpsf:submit name="testMail" useTabindexAutoIncrement="true" value="%{getText('label.sendEmail')}" action="testMail" cssClass="button" onclick="overrideSubmit('testMail')"/>
+			<sj:submit parentTheme="simple" formIds="configurationForm" value="%{getText('label.testConnection')}" targets="messages" cssClass="button"/>
 		</p>
-		
+
 	</s:form>
-	
 </div>
