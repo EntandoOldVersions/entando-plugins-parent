@@ -18,11 +18,16 @@
 		<property name="messageManager" ref="jpwebdynamicformMessageManager" />
 		<property name="i18nManager" ref="I18nManager" />
 	</bean>
-
+	
 	<bean id="jpwebdynamicformListAttributeAction" scope="prototype"
 			class="com.agiletec.plugins.jpwebdynamicform.aps.internalservlet.message.attribute.action.list.ListAttributeAction"
 			parent="abstractBaseAction" >
 		<property name="entityActionHelper" ref="entityActionHelper"/>
 	</bean>
-
+	
+	<bean id="jpwebdynamicformCaptchaAction" scope="prototype"
+			class="com.agiletec.plugins.jpwebdynamicform.aps.internalservlet.message.CaptchaAction"
+			parent="jpwebdynamicformUserNewMessageAction" >
+	</bean>
+	
 </beans>

@@ -9,5 +9,5 @@
 			class="com.agiletec.plugins.jpwebdynamicform.apsadmin.portal.specialwidget.webdynamicform.WebdynamicformWidgetAction" parent="simpleWidgetAction" >
 		<property name="messageManager" ref="jpwebdynamicformMessageManager" />
 	</bean>
-
+	
 </beans>

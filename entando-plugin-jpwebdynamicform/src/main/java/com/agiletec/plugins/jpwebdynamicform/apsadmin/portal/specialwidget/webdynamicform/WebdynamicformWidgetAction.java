@@ -17,10 +17,15 @@
 */
 package com.agiletec.plugins.jpwebdynamicform.apsadmin.portal.specialwidget.webdynamicform;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.util.ApsProperties;
+import com.agiletec.aps.util.SelectItem;
 import com.agiletec.apsadmin.portal.specialwidget.SimpleWidgetConfigAction;
+
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.JpwebdynamicformSystemConstants;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.IMessageManager;
 import com.agiletec.plugins.jpwebdynamicform.aps.system.services.message.model.SmallMessageType;
@@ -34,6 +39,13 @@ public class WebdynamicformWidgetAction extends SimpleWidgetConfigAction {
 			String typeCode = this.getTypeCode();
 			if (typeCode == null || this.getMessageManager().getSmallMessageTypesMap().get(typeCode) == null) {
 				this.addFieldError("typeCode", this.getText("Errors.typeCode.required"));
+			} else {
+				List<String> protectionTypes = Arrays.asList(JpwebdynamicformSystemConstants.FORM_PROTECTION_TYPES);
+				if (null != this.getFormProtectionType() && this.getFormProtectionType().trim().length() > 0) {
+					if (!protectionTypes.contains(this.getFormProtectionType())) {
+						this.addFieldError("formProtectionType", this.getText("Errors.formProtectionType.invalid"));
+					}
+				}
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "validate");
@@ -45,9 +57,11 @@ public class WebdynamicformWidgetAction extends SimpleWidgetConfigAction {
 		String result = super.init();
 		try {
 			if (result.equals(SUCCESS)) {
-				String paramName = JpwebdynamicformSystemConstants.TYPECODE_SHOWLET_PARAM;
-				String typeCode = this.getWidget().getConfig().getProperty(paramName);
+				ApsProperties config = this.getWidget().getConfig();
+				String typeCode = config.getProperty(JpwebdynamicformSystemConstants.TYPECODE_WIDGET_PARAM);
 				this.setTypeCode(typeCode);
+				String protectionType = config.getProperty(JpwebdynamicformSystemConstants.FORM_PROTECTION_TYPE_WIDGET_PARAM);
+				this.setFormProtectionType(protectionType);
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "init");
@@ -65,6 +79,15 @@ public class WebdynamicformWidgetAction extends SimpleWidgetConfigAction {
 		}
 	}
 	
+	public List<SelectItem> getFormProtectionTypeSelectItems() {
+		List<SelectItem> items = new ArrayList<SelectItem>();
+		for (int i = 0; i < JpwebdynamicformSystemConstants.FORM_PROTECTION_TYPES.length; i++) {
+			String key = JpwebdynamicformSystemConstants.FORM_PROTECTION_TYPES[i];
+			items.add(new SelectItem(key, this.getText("label.formProtectionType." + key)));
+		}
+		return items;
+	}
+	
 	public String getTypeCode() {
 		return _typeCode;
 	}
@@ -72,23 +95,22 @@ public class WebdynamicformWidgetAction extends SimpleWidgetConfigAction {
 		this._typeCode = typeCode;
 	}
 	
-	/**
-	 * Returns the MessageManager.
-	 * @return The MessageManager.
-	 */
+	public String getFormProtectionType() {
+		return _formProtectionType;
+	}
+	public void setFormProtectionType(String formProtectionType) {
+		this._formProtectionType = formProtectionType;
+	}
+	
 	protected IMessageManager getMessageManager() {
 		return _messageManager;
 	}
-	
-	/**
-	 * Sets the MessageManager. Must be setted with Spring bean injection.
-	 * @param messageManager The MessageManager.
-	 */
 	public void setMessageManager(IMessageManager messageManager) {
 		this._messageManager = messageManager;
 	}
 	
 	private String _typeCode;
+	private String _formProtectionType;
 	
 	private IMessageManager _messageManager;
 	

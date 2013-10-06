@@ -28,14 +28,48 @@
         	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
         </action>
         
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
         <action name="send" class="jpwebdynamicformUserNewMessageAction" method="save">
             <result name="input" type="dispatcher">/WEB-INF/plugins/jpwebdynamicform/aps/jsp/internalservlet/message/entryMessage.jsp</result>
             <result name="expiredMessage" type="chain">new</result>
-            <result type="dispatcher">/WEB-INF/plugins/jpwebdynamicform/aps/jsp/internalservlet/message/messageSaveConfirmed.jsp</result>
-        	<interceptor-ref name="entandoFrontEndFreeValidationStack"></interceptor-ref>
+            <result name="captchaPage" type="dispatcher">/WEB-INF/plugins/jpwebdynamicform/aps/jsp/internalservlet/message/captchaPage.jsp</result>
+			<result type="dispatcher">/WEB-INF/plugins/jpwebdynamicform/aps/jsp/internalservlet/message/messageSaveConfirmed.jsp</result>
+			<interceptor-ref name="entandoFrontEndFreeValidationStack"></interceptor-ref>
         </action>
-
-    	<action name="entryMessage" class="jpwebdynamicformUserNewMessageAction" method="entryMessage">
+		<!--
+		<action name="reloadFormCaptcha" class="jpwebdynamicformUserNewMessageAction" method="entryAndUpdateMessage">
+            <result name="expiredMessage" type="chain">new</result>
+            <result type="dispatcher">/WEB-INF/plugins/jpwebdynamicform/aps/jsp/internalservlet/message/entryMessage.jsp</result>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
+        </action>
+		-->
+        <action name="captchaConfirm" class="jpwebdynamicformCaptchaAction" method="captchaConfirm">
+            <result name="input" type="dispatcher">/WEB-INF/plugins/jpwebdynamicform/aps/jsp/internalservlet/message/captchaPage.jsp</result>
+            <result name="expiredMessage" type="chain">new</result>
+            <result type="dispatcher">/WEB-INF/plugins/jpwebdynamicform/aps/jsp/internalservlet/message/messageSaveConfirmed.jsp</result>
+			<interceptor-ref name="entandoFrontEndFreeValidationStack"></interceptor-ref>
+        </action>
+		
+		<!-- non so se necessario -->
+    	<action name="reloadSingleFormCaptcha" class="jpwebdynamicformCaptchaAction" method="entryMessage">
+            <result name="expiredMessage" type="chain">new</result>
+            <result type="dispatcher">/WEB-INF/plugins/jpwebdynamicform/aps/jsp/internalservlet/message/captchaPage.jsp</result>
+        	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>
+        </action>
+		
+		<action name="entryMessage" class="jpwebdynamicformUserNewMessageAction" method="entryMessage">
             <result name="expiredMessage" type="chain">new</result>
             <result type="dispatcher">/WEB-INF/plugins/jpwebdynamicform/aps/jsp/internalservlet/message/entryMessage.jsp</result>
         	<interceptor-ref name="entandoFrontEndFreeStack"></interceptor-ref>

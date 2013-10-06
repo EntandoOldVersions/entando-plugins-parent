@@ -40,10 +40,12 @@ public interface INewMessageAction extends IMessageAction {
 	 * @return The action result code.
 	 */
 	public String save();
-
+	
 	/**
 	 * The name of the session attribute containing the current message.
 	 */
 	public static final String SESSION_PARAM_NAME_CURRENT_MESSAGE = "jpwebdynamicformCurrentMessage";
-
+	
+	public static final String SESSION_PARAM_NAME_HONEYPOT = "jpwebdynamicformHoneypotFieldName";
+	
 }

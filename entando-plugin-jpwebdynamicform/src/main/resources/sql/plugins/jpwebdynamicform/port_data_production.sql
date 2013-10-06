@@ -5,6 +5,7 @@ INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, parenttypecode
 <property key="it">Dynamic Web Forms - Pubblica il form di un tipo di Messaggio</property>
 </properties>', '<config>
 	<parameter name="typeCode">Code of the Message Type</parameter>
+	<parameter name="formProtectionType">Protection type of the form</parameter>
 	<action name="webdynamicformConfig"/>
 </config>', 'jpwebdynamicform', NULL, NULL, 1 );
 

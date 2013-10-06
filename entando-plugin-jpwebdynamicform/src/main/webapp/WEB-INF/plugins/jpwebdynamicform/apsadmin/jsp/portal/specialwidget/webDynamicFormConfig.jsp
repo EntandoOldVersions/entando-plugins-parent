@@ -52,6 +52,11 @@
 		<label for="jpwebdynamicform_typecode"><s:text name="label.typeCode"/></label>:<br />
 		<wpsf:select useTabindexAutoIncrement="true" id="jpwebdynamicform_typecode" name="typeCode" list="messageTypes" listKey="code" listValue="descr" />
 	</p>
+	<p>
+		<label for="jpwebdynamicform_formProtectionType"><s:text name="label.formProtectionType"/></label>:<br />
+		<wpsf:select useTabindexAutoIncrement="true" id="jpwebdynamicform_formProtectionType" 
+					 name="formProtectionType" list="formProtectionTypeSelectItems" listKey="key" listValue="value" />
+	</p>
 	<p><wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.save')}" cssClass="button" /></p>
 </s:form>
 </div>

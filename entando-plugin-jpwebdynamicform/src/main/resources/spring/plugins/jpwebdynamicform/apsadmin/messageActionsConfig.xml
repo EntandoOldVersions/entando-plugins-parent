@@ -8,7 +8,12 @@
 	<bean id="jpwebdynamicformSubMenu" class="com.agiletec.apsadmin.system.plugin.PluginSubMenuContainer" >
 		<property name="subMenuFilePath"><value>/WEB-INF/plugins/jpwebdynamicform/apsadmin/jsp/common/template/subMenu.jsp</value></property>
 	</bean>
-
+	
+    <bean id="jpwebdynamicformConfigSystemParamsHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
+        <property name="filePath"><value>/WEB-INF/plugins/jpwebdynamicform/apsadmin/jsp/admin/configSystemParams-jack.jsp</value></property>
+        <property name="hookPointKey"><value>core.configSystemParams</value></property>
+    </bean>
+    
 	<bean id="jpwebdynamicformMessageFinderAction" scope="prototype"
 			class="com.agiletec.plugins.jpwebdynamicform.apsadmin.message.MessageFinderAction"
 			parent="defaultEntityFinderAction" >

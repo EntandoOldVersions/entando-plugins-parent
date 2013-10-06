@@ -37,10 +37,28 @@ public interface JpwebdynamicformSystemConstants {
 	 * Base Entity Renderer bean name.
 	 */
 	public static final String BASE_ENTITY_RENDERER = "jpwebdynamicformBaseMessageRenderer";
-
+	
 	/**
-	 * Type code parameter in showlet.
+	 * Type code parameter in widget.
 	 */
-	public static final String TYPECODE_SHOWLET_PARAM = "typeCode";
-
+	public static final String TYPECODE_WIDGET_PARAM = "typeCode";
+	
+	@Deprecated
+	public static final String TYPECODE_SHOWLET_PARAM = TYPECODE_WIDGET_PARAM;
+	
+	public static final String FORM_PROTECTION_TYPE_WIDGET_PARAM = "formProtectionType";
+	
+	public static final String RECAPTCHA_PUBLICKEY_PARAM_NAME = "jpwebdynamicform_recaptcha_publickey";
+	public static final String RECAPTCHA_PRIVATEKEY_PARAM_NAME = "jpwebdynamicform_recaptcha_privatekey";
+	
+	public static final String FORM_PROTECTION_TYPE_NONE = "NONE";
+	public static final String FORM_PROTECTION_TYPE_HONEYPOT ="HONEYPOT";
+	//public static final String FORM_PROTECTION_TYPE_CAPTCHA = "CAPTCHA";
+	//public static final String FORM_PROTECTION_TYPE_CAPTCHA_AFTER = "CAPTCHA_AFTER";
+	public static final String FORM_PROTECTION_TYPE_RECAPTCHA = "RECAPTCHA";
+	public static final String FORM_PROTECTION_TYPE_RECAPTCHA_AFTER = "RECAPTCHA_AFTER";
+	public static final String[] FORM_PROTECTION_TYPES = {FORM_PROTECTION_TYPE_NONE, 
+		FORM_PROTECTION_TYPE_HONEYPOT, /*FORM_PROTECTION_TYPE_CAPTCHA, FORM_PROTECTION_TYPE_CAPTCHA_AFTER, */
+		FORM_PROTECTION_TYPE_RECAPTCHA, FORM_PROTECTION_TYPE_RECAPTCHA_AFTER};
+	
 }
