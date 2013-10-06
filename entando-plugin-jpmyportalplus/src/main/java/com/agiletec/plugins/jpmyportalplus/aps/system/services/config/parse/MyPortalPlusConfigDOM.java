@@ -1,26 +1,19 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
-
-/**
- * This class parses the configuration of jpmyportal
- * @author E. Mezzano
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+*
+* See the file License for the specific language governing permissions
+* and limitations under the License
+*
+*
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.config.parse;
 
 import java.io.StringReader;
@@ -39,7 +32,8 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
 
 /**
- * @author E.Santoboni
+ * This class parses the configuration of jpmyportal
+ * @author E.Santoboni - E. Mezzano
  */
 public class MyPortalPlusConfigDOM {
 	
@@ -71,7 +65,7 @@ public class MyPortalPlusConfigDOM {
 		Set<String> allowedWidgets = new TreeSet<String>();
 		if (null != element) {
 			List<Element> codeElements = element.getChildren(WIDGET_ELEM);
-			if (null == codeElements) {
+			if (null == codeElements || codeElements.isEmpty()) {
 				codeElements = element.getChildren(SHOWLET_ELEM);
 			}
 			if (null != codeElements) {
