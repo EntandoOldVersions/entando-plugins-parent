@@ -39,7 +39,7 @@ import com.agiletec.aps.util.ApsProperties;
 <frames>
 	<frame pos="0" locked="false" column="3">
 		<descr>Search in this site</descr>
-		<defaultShowlet code="searchForm"/>
+		<defaultWidget code="searchForm"/>
 	</frame>
 	....
 	....
@@ -133,7 +133,10 @@ public class MyPortalPageModelDOM {
 			_frames[pos] = descr;
 			frame.setDescr(descr);
 		}
-		Element defaultShowletElement = frameElement.getChild(TAB_DEFAULT_SHOWLET);
+		Element defaultShowletElement = frameElement.getChild(TAB_DEFAULT_WIDGET);
+		if (null == defaultShowletElement) {
+			defaultShowletElement = frameElement.getChild("defaultShowlet");
+		}
 		if (null != defaultShowletElement) {
 			Widget defaultShowlet = this.buildDefaultShowlet(defaultShowletElement, pos, showletTypeManager);
 			frame.setDefaultWidget(defaultShowlet);
@@ -194,7 +197,7 @@ public class MyPortalPageModelDOM {
 	private final String ATTRIBUTE_POS = "pos";
 	private final String ATTRIBUTE_MAIN = "main";
 	private final String TAB_DESCR = "descr";
-	private final String TAB_DEFAULT_SHOWLET = "defaultShowlet";
+	private final String TAB_DEFAULT_WIDGET = "defaultWidget";
 	private final String ATTRIBUTE_CODE = "code";
 	private final String TAB_PROPERTIES = "properties";
 	private final String TAB_PROPERTY = "property";
