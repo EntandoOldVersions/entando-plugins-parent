@@ -75,7 +75,7 @@
 
 <s:set name="removeIcon" var="removeIcon"><wp:resourceURL/>administration/common/img/icons/list-remove.png</s:set>
 
-<h1><wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_SHOWLET_TITLE" /></h1>
+<h1><wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_WIDGET_TITLE" /></h1>
 
 
 

@@ -40,8 +40,8 @@ public class TestPageUserConfigManager extends ApsPluginBaseTestCase {
 		MyPortalConfig config = this._myPortalConfigManager.getConfig();
 		assertNotNull(config);
 		assertEquals(3, config.getAllowedShowlets().size());
-		assertTrue(config.getAllowedShowlets().contains("jpmyportalplus_sample_showlet"));
-		assertTrue(config.getAllowedShowlets().contains("jpmyportalplus_test_showlet_1"));
+		assertTrue(config.getAllowedShowlets().contains("jpmyportalplus_sample_widget"));
+		assertTrue(config.getAllowedShowlets().contains("jpmyportalplus_test_widget_1"));
 	}
 	
 	public void testUpdateConfig() throws Throwable {
@@ -52,7 +52,7 @@ public class TestPageUserConfigManager extends ApsPluginBaseTestCase {
 			assertNull(newConfig.getAllowedShowlets());
 			Set<String> allowedShowlets = new HashSet<String>();
 			allowedShowlets.addAll(config.getAllowedShowlets());
-			allowedShowlets.add("jpmyportalplus_test_showlet_2");
+			allowedShowlets.add("jpmyportalplus_test_widget_2");
 			newConfig.setAllowedShowlets(allowedShowlets);
 			this._myPortalConfigManager.saveConfig(newConfig);
 			MyPortalConfig extractedNewConfig = this._myPortalConfigManager.getConfig();

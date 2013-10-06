@@ -7,7 +7,7 @@ INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, 
 </properties>',null,'jpmyportalplus',null,null,1);
 
 INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
-'jpmyportalplus_sample_showlet',
+'jpmyportalplus_sample_widget',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">My Portal - Sample Widget</property>
@@ -16,9 +16,9 @@ INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, 
 
 INSERT INTO sysconfig (version, item, descr, config) VALUES ( 'production', 'jpmyportalplus_config', 'Definizione degli oggetti configurabili di My Portal', '<?xml version="1.0" encoding="UTF-8"?>
 <myportalConfig>
-	<showlets>
-		<showlet code="jpmyportalplus_sample_showlet" />
-	</showlets>
+	<widgets>
+		<widget code="jpmyportalplus_sample_widget" />
+	</widgets>
 </myportalConfig>' );
 
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_APPLY','en','Apply');
@@ -39,8 +39,8 @@ INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_RESET','en','Reset the Page');
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_RESET','it','Reimposta la pagina');
 
-INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_MOVETHISSHOWLET','en','Move this box');
-INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_MOVETHISSHOWLET','it','Sposta questo box');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_MOVETHISWIDGET','en','Move this box');
+INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_MOVETHISWIDGET','it','Sposta questo box');
 
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_RESET_INTRO','en','If you want to discard the current configuration you can reset the page.');
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_RESET_INTRO','it','Se desideri riportare la pagina alla configurazione predefinita, puoi resettare le impostazioni.');

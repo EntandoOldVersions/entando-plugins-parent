@@ -39,7 +39,7 @@
 <wp:headInfo type="JS_RAW" info="${category_tree_js_code}" />
 <wp:headInfo type="CSS" info="../../plugins/jpfastcontentedit/static/css/tree.css" />
 
-<h1><wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_SHOWLET_TITLE" /></h1>
+<h1><wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_WIDGET_TITLE" /></h1>
 <form 
 	class="form-horizontal"
 	action="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Resource/search.action" />" 

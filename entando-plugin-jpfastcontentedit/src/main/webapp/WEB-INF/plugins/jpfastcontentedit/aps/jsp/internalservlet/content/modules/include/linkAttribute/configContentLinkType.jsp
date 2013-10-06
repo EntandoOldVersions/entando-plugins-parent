@@ -4,7 +4,7 @@
 <%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h1><wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_SHOWLET_TITLE" /></h1>
+<h1><wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_WIDGET_TITLE" /></h1>
 <s:include value="linkAttributeConfigIntro.jsp"></s:include>
 <h3><wp:i18n key="jpfastcontentedit_CONFIGURE_LINK_ATTRIBUTE" />&#32;<wp:i18n key="jpfastcontentedit_STEP_2_OF_2" /></h3>
 <s:include value="linkAttributeConfigReminder.jsp" />

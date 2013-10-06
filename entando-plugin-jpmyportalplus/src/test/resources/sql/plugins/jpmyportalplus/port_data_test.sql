@@ -18,7 +18,7 @@ INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, 
 </properties>',null,'jpmyportalplus',null,null,1);
 
 INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
-'jpmyportalplus_sample_showlet',
+'jpmyportalplus_sample_widget',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">My Portal - Sample Widget</property>
@@ -26,7 +26,7 @@ INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, 
 </properties>',null,'jpmyportalplus',null,null,1);
 
 INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
-'jpmyportalplus_test_showlet_1',
+'jpmyportalplus_test_widget_1',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">My Portal - Test Widget 1</property>
@@ -34,7 +34,7 @@ INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, 
 </properties>',null,'jpmyportalplus',null,null,1);
 
 INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
-'jpmyportalplus_test_showlet_2',
+'jpmyportalplus_test_widget_2',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">My Portal - Test Widget 2</property>
@@ -42,7 +42,7 @@ INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, 
 </properties>',null,'jpmyportalplus',null,null,1);
 
 INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
-'jpmyportalplus_test_showlet_3',
+'jpmyportalplus_test_widget_3',
 '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">My Portal - Test Widget 3</property>
@@ -51,11 +51,11 @@ INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, 
 
 INSERT INTO sysconfig (version, item, descr, config) VALUES ( 'test', 'jpmyportalplus_config', 'Definizione degli oggetti configurabili di My Portal', '<?xml version="1.0" encoding="UTF-8"?>
 <myportalConfig>
-	<showlets>
-		<showlet code="jpmyportalplus_sample_showlet" />
-		<showlet code="jpmyportalplus_test_showlet_1" />
-		<showlet code="jpmyportalplus_test_showlet_3" />
-	</showlets>
+	<widgets>
+		<widget code="jpmyportalplus_sample_widget" />
+		<widget code="jpmyportalplus_test_widget_1" />
+		<widget code="jpmyportalplus_test_widget_3" />
+	</widgets>
 </myportalConfig>' );
 
 INSERT INTO pages (code, parentcode, pos, modelcode, titles, groupcode, showinmenu, extraconfig) VALUES (
@@ -69,11 +69,11 @@ INSERT INTO pages (code, parentcode, pos, modelcode, titles, groupcode, showinme
 INSERT INTO widgetconfig (pagecode, framepos, widgetcode, config, publishedcontent) VALUES (
 'jpmyportalplus_testpage', 0, 'login_form', NULL, NULL);
 INSERT INTO widgetconfig (pagecode, framepos, widgetcode, config, publishedcontent) VALUES (
-'jpmyportalplus_testpage', 1, 'jpmyportalplus_sample_showlet', NULL, NULL);
+'jpmyportalplus_testpage', 1, 'jpmyportalplus_sample_widget', NULL, NULL);
 INSERT INTO widgetconfig (pagecode, framepos, widgetcode, config, publishedcontent) VALUES (
 'jpmyportalplus_testpage', 2, 'jpmyportalplus_void', NULL, NULL);
 INSERT INTO widgetconfig (pagecode, framepos, widgetcode, config, publishedcontent) VALUES (
-'jpmyportalplus_testpage', 4, 'jpmyportalplus_test_showlet_3', NULL, NULL);
+'jpmyportalplus_testpage', 4, 'jpmyportalplus_test_widget_3', NULL, NULL);
 
 
 INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, widgetcode, config, closed)
@@ -82,12 +82,12 @@ INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, widgetco
 
 INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, widgetcode, config, closed)
     VALUES ('editorCustomers', 'jpmyportalplus_testpage',
-    2, 'jpmyportalplus_test_showlet_1', null, 1);
+    2, 'jpmyportalplus_test_widget_1', null, 1);
 
 INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, widgetcode, config, closed)
     VALUES ('editorCustomers', 'jpmyportalplus_testpage',
-    3, 'jpmyportalplus_sample_showlet', null, 0);
+    3, 'jpmyportalplus_sample_widget', null, 0);
 
 INSERT INTO jpmyportalplus_userpageconfig(username, pagecode, framepos, widgetcode, config, closed)
     VALUES ('editorCustomers', 'jpmyportalplus_testpage',
-    6, 'jpmyportalplus_test_showlet_3', null, 1);
+    6, 'jpmyportalplus_test_widget_3', null, 1);

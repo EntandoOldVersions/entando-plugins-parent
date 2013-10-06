@@ -22,13 +22,13 @@ public class TestFacetNavResultWidgetAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(4, contentTypes.size());
 	}
 
-	private String executeConfigFacetNavResult(String username, String pageCode, String frame, String showletTypeCode) throws Throwable {
+	private String executeConfigFacetNavResult(String username, String pageCode, String frame, String widgetTypeCode) throws Throwable {
 		this.setUserOnSession(username);
 		this.initAction("/do/Page/SpecialWidget", "facetNavResultConfig");
 		this.addParameter("pageCode", pageCode);
 		this.addParameter("frame", frame);
-		if (null != showletTypeCode && showletTypeCode.trim().length()>0) {
-			this.addParameter("showletTypeCode", showletTypeCode);
+		if (null != widgetTypeCode && widgetTypeCode.trim().length()>0) {
+			this.addParameter("showletTypeCode", widgetTypeCode);
 		}
 		return this.executeAction();
 	}

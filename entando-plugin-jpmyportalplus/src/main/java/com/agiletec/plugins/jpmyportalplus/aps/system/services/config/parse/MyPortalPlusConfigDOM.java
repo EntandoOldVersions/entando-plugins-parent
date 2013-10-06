@@ -64,13 +64,13 @@ public class MyPortalPlusConfigDOM {
 	}
 	
 	private void extractShowletConfig(Element root, MyPortalConfig config) {
-		Element element = root.getChild(ALLOWED_SHOWLETS_ELEM);
+		Element element = root.getChild(ALLOWED_WIDGETS_ELEM);
 		Set<String> allowedShowlets = new TreeSet<String>();
 		if (null != element) {
-			List<Element> codeElements = element.getChildren(SHOWLET_ELEM);
+			List<Element> codeElements = element.getChildren(WIDGET_ELEM);
 			if (null != codeElements) {
 				for (Element codeElem : codeElements) {
-					String code = codeElem.getAttributeValue(SHOWLET_CODE_ATTR);
+					String code = codeElem.getAttributeValue(WIDGET_CODE_ATTR);
 					allowedShowlets.add(code);
 				}
 			}
@@ -91,14 +91,14 @@ public class MyPortalPlusConfigDOM {
 	}
 	
 	private Element createShowletsElement(MyPortalConfig config) {
-		Element showletsElement = new Element(ALLOWED_SHOWLETS_ELEM);
+		Element showletsElement = new Element(ALLOWED_WIDGETS_ELEM);
 		Set<String> showlets = config.getAllowedShowlets();
 		if (null != showlets && showlets.size() > 0) {
 			Iterator<String> iter = showlets.iterator();
 			while (iter.hasNext()) {
 				String showletCode = iter.next();
-				Element showletElem = new Element(SHOWLET_ELEM);
-				showletElem.setAttribute(SHOWLET_CODE_ATTR, showletCode);
+				Element showletElem = new Element(WIDGET_ELEM);
+				showletElem.setAttribute(WIDGET_CODE_ATTR, showletCode);
 				showletsElement.addContent(showletElem);
 			}
 		}
@@ -127,9 +127,9 @@ public class MyPortalPlusConfigDOM {
 	}
 	
 	private static final String ROOT = "myportalConfig";
-	
-	private static final String ALLOWED_SHOWLETS_ELEM = "showlets";
-	private static final String SHOWLET_ELEM = "showlet";
-	private static final String SHOWLET_CODE_ATTR = "code";
-	
+
+	private static final String ALLOWED_WIDGETS_ELEM = "widgets";
+	private static final String WIDGET_ELEM = "widget";
+	private static final String WIDGET_CODE_ATTR = "code";
+
 }

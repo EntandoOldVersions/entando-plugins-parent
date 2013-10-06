@@ -30,8 +30,8 @@ INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode,
 </config>', 'jpfastcontentedit', NULL, NULL, 1);
 
 
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpfastcontentedit_FASTCONTENTEDIT_SHOWLET_TITLE', 'it', 'Bacheca Annunci' );
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpfastcontentedit_FASTCONTENTEDIT_SHOWLET_TITLE', 'en', 'Notice Board' );
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpfastcontentedit_FASTCONTENTEDIT_WIDGET_TITLE', 'it', 'Bacheca Annunci' );
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpfastcontentedit_FASTCONTENTEDIT_WIDGET_TITLE', 'en', 'Notice Board' );
 
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpfastcontentedit_USER_NOT_ALLOWED', 'it', 'Operazione non consentita' );
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpfastcontentedit_USER_NOT_ALLOWED', 'en', 'Operation not allowed' );

@@ -62,11 +62,11 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 
 		assertNull(showlets[0]);
 		assertEquals("jpmyportalplus_void", showlets[1].getType().getCode());
-		assertEquals("jpmyportalplus_test_showlet_1", showlets[2].getType().getCode());
-		assertEquals("jpmyportalplus_sample_showlet", showlets[3].getType().getCode());
+		assertEquals("jpmyportalplus_test_widget_1", showlets[2].getType().getCode());
+		assertEquals("jpmyportalplus_sample_widget", showlets[3].getType().getCode());
 		assertNull(showlets[4]);
 		assertNull(showlets[5]);
-		assertEquals("jpmyportalplus_test_showlet_3", showlets[6].getType().getCode());
+		assertEquals("jpmyportalplus_test_widget_3", showlets[6].getType().getCode());
 		assertNull(showlets[7]);
 	}
 
@@ -81,11 +81,11 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 
 		assertEquals("login_form", showlets[0].getType().getCode());
 		assertEquals("jpmyportalplus_void", showlets[1].getType().getCode());
-		assertEquals("jpmyportalplus_test_showlet_1", showlets[2].getType().getCode());
-		assertEquals("jpmyportalplus_sample_showlet", showlets[3].getType().getCode());
-		assertEquals("jpmyportalplus_test_showlet_3", showlets[4].getType().getCode());
+		assertEquals("jpmyportalplus_test_widget_1", showlets[2].getType().getCode());
+		assertEquals("jpmyportalplus_sample_widget", showlets[3].getType().getCode());
+		assertEquals("jpmyportalplus_test_widget_3", showlets[4].getType().getCode());
 		assertNull(showlets[5]);
-		assertEquals("jpmyportalplus_test_showlet_3", showlets[6].getType().getCode());
+		assertEquals("jpmyportalplus_test_widget_3", showlets[6].getType().getCode());
 		assertNull(showlets[7]);
 
 	}

@@ -58,7 +58,7 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
         this.init();
     }
 
-	public void testAddDeleteCommentByShowletConfig()throws Throwable{
+	public void testAddDeleteCommentByWidgetConfig()throws Throwable{
 		String contentId = "ART1";
 		try{
 			Content content = this._contentManager.loadContent(contentId, true);
@@ -66,24 +66,24 @@ public class TestCommentFrontEndAction extends JpContentFeedbackApsAdminBaseTest
 			PublicContentAuthorizationInfo authInfo = new PublicContentAuthorizationInfo(content);
 			cacheManager.putInCache(JacmsSystemConstants.CONTENT_AUTH_INFO_CACHE_PREFIX + contentId, authInfo);
 			this.setUserOnSession("admin");
-			Widget showlet = new Widget();
-            IWidgetTypeManager showletTypeMan =
+			Widget widget = new Widget();
+            IWidgetTypeManager widgetTypeMan =
             	(IWidgetTypeManager) this.getService(SystemConstants.WIDGET_TYPE_MANAGER);
-            WidgetType WidgetType = showletTypeMan.getWidgetType("content_feedback_viewer");
-            showlet.setType(WidgetType);
+            WidgetType WidgetType = widgetTypeMan.getWidgetType("content_feedback_viewer");
+            widget.setType(WidgetType);
             ApsProperties prop = new ApsProperties();
             prop.put("contentId", contentId);
             prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ACTIVE, "true");
             prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_MODERATED, "false");
             prop.put(ContentFeedbackWidgetAction.WIDGET_PARAM_COMMENT_ANONYMOUS, "false");
-            showlet.setConfig(prop);
-            showlet.setPublishedContent(contentId);
+            widget.setConfig(prop);
+            widget.setPublishedContent(contentId);
 
             List<String> listaIds = this._commentManager.searchCommentIds(null);
 			assertEquals(0, listaIds.size());
 
             RequestContext e = new RequestContext();
-            e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET, showlet);
+            e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET, widget);
             Lang lang = new Lang();
     		lang.setCode("en");
             e.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_LANG, lang);

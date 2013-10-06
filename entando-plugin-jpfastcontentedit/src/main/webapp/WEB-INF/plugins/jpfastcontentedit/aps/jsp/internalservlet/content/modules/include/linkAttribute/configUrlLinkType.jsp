@@ -3,7 +3,7 @@
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 
-<h1><wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_SHOWLET_TITLE" /></h1>
+<h1><wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_WIDGET_TITLE" /></h1>
 
 <s:include value="linkAttributeConfigIntro.jsp" />
 <h2><wp:i18n key="jpfastcontentedit_CONFIGURE_LINK_ATTRIBUTE" />&#32;<wp:i18n key="jpfastcontentedit_STEP_2_OF_2" /></h2>
