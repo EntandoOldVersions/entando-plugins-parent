@@ -89,7 +89,7 @@
 								<td class="monospace"><s:property value="#logRecord.username"/></td>
 								<td><s:property value="#logRecord.namespace"/></td>
 								<td><s:property value="#logRecord.actionName"/></td>
-								<td><s:property value="#logRecord.params"/></td>
+								<td><s:property value="#logRecord.parameters"/></td>
 								<td class="icon"><a href="<s:url action="delete"><s:param name="id" value="#logRecord.id"></s:param></s:url>" title="<s:text name="label.remove" />: <s:date name="#logRecord.actionDate" format="dd/MM/yyyy HH:mm:ss" />"><img src="<wp:resourceURL />administration/common/img/icons/delete.png" alt="<s:text name="label.alt.clear" />" /></a></td>
 							</tr>
 						</s:iterator>

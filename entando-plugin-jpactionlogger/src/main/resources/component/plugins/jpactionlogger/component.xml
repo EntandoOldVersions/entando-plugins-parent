@@ -3,11 +3,6 @@
 	<code>jpactionlogger</code>
 	<description>Action Logger</description>
 	<installation>
-		<tableMapping>
-			<datasource name="servDataSource">
-				<class>org.entando.entando.plugins.jpactionlogger.aps.system.init.servdb.Record</class>
-			</datasource>
-		</tableMapping>
 		<environment code="production">
 			<defaultSqlResources>
 				<datasource name="portDataSource">

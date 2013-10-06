@@ -25,15 +25,14 @@
     </package>
     
     <!-- used only for test -->
-    <package name="jpactionlogger_do/jpactionlogger/Test" namespace="/do/jpactionlogger/Test" extends="entando-default">
-		<interceptors>
-			<interceptor name="jpactionlogger_actionLogger" class="com.agiletec.plugins.jpactionlogger.apsadmin.system.ActionLoggerInterceptor" />
-		</interceptors>
+	<package name="jpactionlogger_do/jpactionlogger/Test" namespace="/do/jpactionlogger/Test" extends="entando-default">
+		
 		<action name="ping" class="jpactionloggerActionLoggerAction" >
 			<result type="tiles">jpactionlogger.admin.actionlogger.testResult</result>
-                        <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
-			<interceptor-ref name="jpactionlogger_actionLogger"><param name="excludeParams">password</param></interceptor-ref>
+			<interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">superuser</param></interceptor-ref>
+			<interceptor-ref name="entandoActionLogger"><param name="excludeRequestParameters">password</param></interceptor-ref>
 		</action>
-    </package>
+		
+	</package>
     
 </struts>

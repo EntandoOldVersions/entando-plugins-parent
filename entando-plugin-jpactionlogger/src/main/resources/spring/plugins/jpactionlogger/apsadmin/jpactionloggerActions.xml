@@ -12,7 +12,7 @@
 	<bean id="jpactionloggerActionLoggerAction" scope="prototype" 
 			class="com.agiletec.plugins.jpactionlogger.apsadmin.actionlogger.ActionLoggerAction" 
 			parent="abstractBaseAction" >
-		<property name="actionLoggerManager" ref="jpactionloggerActionLoggerManager" />
+		<property name="actionLogManager" ref="ActionLogManager" />
 	</bean>
  	
 </beans>

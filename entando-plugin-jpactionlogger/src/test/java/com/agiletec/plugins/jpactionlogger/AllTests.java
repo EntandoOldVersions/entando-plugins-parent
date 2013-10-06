@@ -19,8 +19,7 @@ package com.agiletec.plugins.jpactionlogger;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import com.agiletec.plugins.jpactionlogger.aps.system.services.actionlogger.TestActionLoggerDAO;
-import com.agiletec.plugins.jpactionlogger.aps.system.services.actionlogger.TestActionLoggerManager;
+
 import com.agiletec.plugins.jpactionlogger.apsadmin.actionlogger.TestActionLoggerAction;
 
 public class AllTests {
@@ -28,8 +27,8 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Test for jpactionlogger");
 		
-		suite.addTestSuite(TestActionLoggerDAO.class);
-		suite.addTestSuite(TestActionLoggerManager.class);
+		//suite.addTestSuite(TestActionLoggerDAO.class);
+		//suite.addTestSuite(TestActionLoggerManager.class);
 		
 		suite.addTestSuite(TestActionLoggerAction.class);
 		

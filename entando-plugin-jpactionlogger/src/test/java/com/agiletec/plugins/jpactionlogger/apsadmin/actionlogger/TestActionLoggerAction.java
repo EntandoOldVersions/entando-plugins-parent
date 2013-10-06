@@ -2,10 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
 * 
 * See the file License for the specific language governing permissions   
 * and limitations under the License
@@ -17,19 +16,19 @@
 */
 package com.agiletec.plugins.jpactionlogger.apsadmin.actionlogger;
 
+import com.agiletec.aps.system.SystemConstants;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.agiletec.plugins.jpactionlogger.apsadmin.ApsAdminPluginBaseTestCase;
-import com.agiletec.plugins.jpactionlogger.util.JpactionloggerTestHelper;
-
 import com.agiletec.aps.util.DateConverter;
-import com.agiletec.plugins.jpactionlogger.aps.system.JpactionloggerSystemConstants;
-import com.agiletec.plugins.jpactionlogger.aps.system.services.actionlogger.IActionLoggerManager;
-import com.agiletec.plugins.jpactionlogger.aps.system.services.actionlogger.model.ActionRecord;
-import com.agiletec.plugins.jpactionlogger.apsadmin.actionlogger.IActionLoggerAction;
+
 import com.opensymphony.xwork2.Action;
+
+import org.entando.entando.aps.system.services.actionlog.ActionLoggerTestHelper;
+import org.entando.entando.aps.system.services.actionlog.IActionLogManager;
+import org.entando.entando.aps.system.services.actionlog.model.ActionLogRecord;
 
 public class TestActionLoggerAction extends ApsAdminPluginBaseTestCase {
 
@@ -46,20 +45,20 @@ public class TestActionLoggerAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(Action.SUCCESS, result);
 		List<Integer> ids = ((IActionLoggerAction) this.getAction()).getActionRecords();
 		assertEquals(1, ids.size());
-		ActionRecord record = this._actionLoggerManager.getActionRecord(ids.get(0).intValue());
+		ActionLogRecord record = this._actionLoggerManager.getActionRecord(ids.get(0).intValue());
 
 		assertEquals("admin", record.getUsername());
 		assertEquals("ping", record.getActionName());
 		assertEquals("/do/jpactionlogger/Test", record.getNamespace());
-		assertEquals("", record.getParams());
+		assertEquals("", record.getParameters());
 	}
 
 	public void testSearch() throws Throwable {
-		ActionRecord record1 = this._helper.createActionRecord(1, "username1", "actionName1", 
+		ActionLogRecord record1 = this._helper.createActionRecord(1, "username1", "actionName1", 
 				"namespace1", DateConverter.parseDate("01/01/2009 00:00", "dd/MM/yyyy HH:mm"), "params1");
-		ActionRecord record2 = this._helper.createActionRecord(2, "username2", "actionName2", 
+		ActionLogRecord record2 = this._helper.createActionRecord(2, "username2", "actionName2", 
 				"namespace2", DateConverter.parseDate("02/01/2009 10:00", "dd/MM/yyyy HH:mm"), "params2");
-		ActionRecord record3 = this._helper.createActionRecord(3, "username123", "actionName123", 
+		ActionLogRecord record3 = this._helper.createActionRecord(3, "username123", "actionName123", 
 				"namespace123", DateConverter.parseDate("03/01/2009 12:00", "dd/MM/yyyy HH:mm"), "params123");
 		this._helper.addActionRecord(record1);
 		this._helper.addActionRecord(record2);
@@ -88,12 +87,6 @@ public class TestActionLoggerAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(Action.SUCCESS, result);
 		ids = ((IActionLoggerAction) this.getAction()).getActionRecords();
 		this.compareIds(new Integer [] { 2 }, ids);
-
-		params = this.createSearchParams("name 1 2 3", "Name 1 2 3", "space 1 2 3", "arams 1 2 3", "01/01/2009", "03/01/2009");
-		result = this.executeSearch("admin", params);
-		assertEquals(Action.SUCCESS, result);
-		ids = ((IActionLoggerAction) this.getAction()).getActionRecords();
-		this.compareIds(new Integer [] { 3 }, ids);
 	}
 
 	public void testSearch_2() throws Throwable {
@@ -108,12 +101,12 @@ public class TestActionLoggerAction extends ApsAdminPluginBaseTestCase {
 		this.executeDummyAction("admin", searchParams);
 		ids = this._actionLoggerManager.getActionRecords(null);
 		assertEquals(1, ids.size());
-		ActionRecord record = this._actionLoggerManager.getActionRecord(ids.get(0).intValue());
+		ActionLogRecord record = this._actionLoggerManager.getActionRecord(ids.get(0).intValue());
 
 		assertEquals("admin", record.getUsername());
 		assertEquals("ping", record.getActionName());
 		assertEquals("/do/jpactionlogger/Test", record.getNamespace());
-		String actionParams = record.getParams();
+		String actionParams = record.getParameters();
 		assertTrue(actionParams.contains("username=usernamePARAM"));
 		assertTrue(actionParams.contains("actionName=actionNamePARAM"));
 		assertTrue(actionParams.contains("namespace=namespacePARAM"));
@@ -124,11 +117,11 @@ public class TestActionLoggerAction extends ApsAdminPluginBaseTestCase {
 	}
 
 	public void testDelete() throws Throwable {
-		ActionRecord record1 = this._helper.createActionRecord(1, "username1", "actionName1", 
+		ActionLogRecord record1 = this._helper.createActionRecord(1, "username1", "actionName1", 
 				"namespace1", DateConverter.parseDate("01/01/2009 00:00", "dd/MM/yyyy HH:mm"), "params1");
-		ActionRecord record2 = this._helper.createActionRecord(2, "username2", "actionName2", 
+		ActionLogRecord record2 = this._helper.createActionRecord(2, "username2", "actionName2", 
 				"namespace2", DateConverter.parseDate("02/01/2009 10:00", "dd/MM/yyyy HH:mm"), "params2");
-		ActionRecord record3 = this._helper.createActionRecord(3, "username123", "actionName123", 
+		ActionLogRecord record3 = this._helper.createActionRecord(3, "username123", "actionName123", 
 				"namespace123", DateConverter.parseDate("03/01/2009 12:00", "dd/MM/yyyy HH:mm"), "params123");
 		this._helper.addActionRecord(record1);
 		this._helper.addActionRecord(record2);
@@ -215,10 +208,10 @@ public class TestActionLoggerAction extends ApsAdminPluginBaseTestCase {
 		}
 		return searchParams;
 	}
-
+	
 	private void init() {
-		this._actionLoggerManager = (IActionLoggerManager) this.getService(JpactionloggerSystemConstants.ACTION_LOGGER_MANAGER);
-		this._helper = new JpactionloggerTestHelper(this.getApplicationContext());
+		this._actionLoggerManager = (IActionLogManager) this.getService(SystemConstants.ACTION_LOGGER_MANAGER);
+		this._helper = new ActionLoggerTestHelper(this.getApplicationContext());
 	}
 
 	@Override
@@ -227,7 +220,7 @@ public class TestActionLoggerAction extends ApsAdminPluginBaseTestCase {
 		super.tearDown();
 	}
 
-	private IActionLoggerManager _actionLoggerManager;
-	private JpactionloggerTestHelper _helper;
+	private IActionLogManager _actionLoggerManager;
+	private ActionLoggerTestHelper _helper;
 
 }

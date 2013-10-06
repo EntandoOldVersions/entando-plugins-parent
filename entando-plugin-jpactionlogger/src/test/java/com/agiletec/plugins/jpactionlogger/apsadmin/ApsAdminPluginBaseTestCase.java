@@ -20,7 +20,6 @@ package com.agiletec.plugins.jpactionlogger.apsadmin;
 import com.agiletec.ConfigTestUtils;
 import com.agiletec.apsadmin.ApsAdminBaseTestCase;
 import com.agiletec.plugins.jpactionlogger.PluginConfigTestUtils;
-import com.agiletec.plugins.jpactionlogger.util.JpactionloggerTestHelper;
 
 public class ApsAdminPluginBaseTestCase extends ApsAdminBaseTestCase {
 	
@@ -28,19 +27,5 @@ public class ApsAdminPluginBaseTestCase extends ApsAdminBaseTestCase {
 	protected ConfigTestUtils getConfigUtils() {
 		return new PluginConfigTestUtils();
 	}
-	
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		this._helper = new JpactionloggerTestHelper(this.getApplicationContext());
-	}
-	
-	@Override
-	protected void tearDown() throws Exception {
-		this._helper.cleanRecords();
-		super.tearDown();
-	}
-	
-	protected JpactionloggerTestHelper _helper;	
 	
 }

@@ -2,10 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
 * 
 * See the file License for the specific language governing permissions   
 * and limitations under the License
@@ -23,11 +22,13 @@ import java.util.List;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.apsadmin.system.BaseAction;
-import com.agiletec.plugins.jpactionlogger.aps.system.services.actionlogger.IActionLoggerManager;
-import com.agiletec.plugins.jpactionlogger.aps.system.services.actionlogger.model.ActionRecord;
-import com.agiletec.plugins.jpactionlogger.aps.system.services.actionlogger.model.ActionRecordSearchBean;
-import com.agiletec.plugins.jpactionlogger.aps.system.services.actionlogger.model.IActionRecordSearchBean;
+
 import com.opensymphony.xwork2.Action;
+
+import org.entando.entando.aps.system.services.actionlog.IActionLogManager;
+import org.entando.entando.aps.system.services.actionlog.model.ActionLogRecord;
+import org.entando.entando.aps.system.services.actionlog.model.ActionLogRecordSearchBean;
+import org.entando.entando.aps.system.services.actionlog.model.IActionLogRecordSearchBean;
 
 public class ActionLoggerAction extends BaseAction implements IActionLoggerAction {
 	
@@ -35,8 +36,8 @@ public class ActionLoggerAction extends BaseAction implements IActionLoggerActio
 	public List<Integer> getActionRecords() {
 		List<Integer> actionRecords = new ArrayList<Integer>();
 		try {
-			IActionRecordSearchBean searchBean = this.prepareSearchBean();
-			actionRecords = this.getActionLoggerManager().getActionRecords(searchBean);
+			IActionLogRecordSearchBean searchBean = this.prepareSearchBean();
+			actionRecords = this.getActionLogManager().getActionRecords(searchBean);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getActionRecords");
 		}
@@ -46,7 +47,7 @@ public class ActionLoggerAction extends BaseAction implements IActionLoggerActio
 	@Override
 	public String delete() {
 		try {
-			this.getActionLoggerManager().deleteActionRecord(this.getId());
+			this.getActionLogManager().deleteActionRecord(this.getId());
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "delete");
 			return FAILURE;
@@ -54,18 +55,18 @@ public class ActionLoggerAction extends BaseAction implements IActionLoggerActio
 		return Action.SUCCESS;
 	}
 	
-	public ActionRecord getActionRecord(int id) {
-		ActionRecord actionRecord = null;
+	public ActionLogRecord getActionRecord(int id) {
+		ActionLogRecord actionRecord = null;
 		try {
-			actionRecord = this.getActionLoggerManager().getActionRecord(id);
+			actionRecord = this.getActionLogManager().getActionRecord(id);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getActionRecord");
 		}
 		return actionRecord;
 	}
 	
-	protected IActionRecordSearchBean prepareSearchBean() {
-		ActionRecordSearchBean searchBean = new ActionRecordSearchBean();
+	protected IActionLogRecordSearchBean prepareSearchBean() {
+		ActionLogRecordSearchBean searchBean = new ActionLogRecordSearchBean();
 		searchBean.setUsername(this.getUsername());
 		searchBean.setActionName(this.getActionName());
 		searchBean.setNamespace(this.getNamespace());
@@ -127,11 +128,11 @@ public class ActionLoggerAction extends BaseAction implements IActionLoggerActio
 		return _end;
 	}
 	
-	public void setActionLoggerManager(IActionLoggerManager actionLoggerManager) {
-		this._actionLoggerManager = actionLoggerManager;
+	protected IActionLogManager getActionLogManager() {
+		return _actionLogManager;
 	}
-	protected IActionLoggerManager getActionLoggerManager() {
-		return _actionLoggerManager;
+	public void setActionLogManager(IActionLogManager actionLogManager) {
+		this._actionLogManager = actionLogManager;
 	}
 	
 	private int _id;
@@ -142,6 +143,6 @@ public class ActionLoggerAction extends BaseAction implements IActionLoggerActio
 	private Date _start;
 	private Date _end;
 	
-	private IActionLoggerManager _actionLoggerManager;
+	private IActionLogManager _actionLogManager;
 	
 }
