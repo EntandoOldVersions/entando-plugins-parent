@@ -46,7 +46,7 @@ public class MyPortalPlusConfigDOM {
 	public MyPortalConfig extractConfig(String xml) throws ApsSystemException {
 		Element root = this.getRootElement(xml);
 		MyPortalConfig config = new MyPortalConfig();
-		this.extractShowletConfig(root, config);
+		this.extractWidgetConfig(root, config);
 		return config;
 	}
 	
@@ -62,20 +62,26 @@ public class MyPortalPlusConfigDOM {
 		String xml = new XMLOutputter().outputString(doc);
 		return xml;
 	}
-	
-	private void extractShowletConfig(Element root, MyPortalConfig config) {
+
+	private void extractWidgetConfig(Element root, MyPortalConfig config) {
 		Element element = root.getChild(ALLOWED_WIDGETS_ELEM);
-		Set<String> allowedShowlets = new TreeSet<String>();
+		if (null == element) {
+			element = root.getChild(ALLOWED_SHOWLETS_ELEM);
+		}
+		Set<String> allowedWidgets = new TreeSet<String>();
 		if (null != element) {
 			List<Element> codeElements = element.getChildren(WIDGET_ELEM);
+			if (null == codeElements) {
+				codeElements = element.getChildren(SHOWLET_ELEM);
+			}
 			if (null != codeElements) {
 				for (Element codeElem : codeElements) {
 					String code = codeElem.getAttributeValue(WIDGET_CODE_ATTR);
-					allowedShowlets.add(code);
+					allowedWidgets.add(code);
 				}
 			}
 		}
-		config.setAllowedShowlets(allowedShowlets);
+		config.setAllowedShowlets(allowedWidgets);
 	}
 	
 	/**
@@ -127,9 +133,15 @@ public class MyPortalPlusConfigDOM {
 	}
 	
 	private static final String ROOT = "myportalConfig";
-
+	
+	@Deprecated
+	private static final String ALLOWED_SHOWLETS_ELEM = "showlets";
 	private static final String ALLOWED_WIDGETS_ELEM = "widgets";
+	
+	@Deprecated
+	private static final String SHOWLET_ELEM = "showlet";
 	private static final String WIDGET_ELEM = "widget";
+	
 	private static final String WIDGET_CODE_ATTR = "code";
 
 }
