@@ -44,7 +44,7 @@
 
     <!-- ********* END Messages Management Area ********* -->
 
-    <definition extends="main.layout" name="admin.jpwebdynamicform.Page.Showlet.Webdynamicform.config">
+    <definition extends="main.layout" name="admin.jpwebdynamicform.Page.Widget.Webdynamicform.config">
 		<put-attribute name="title" value="title.pageManagement" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpwebdynamicform/apsadmin/jsp/portal/specialwidget/webDynamicFormConfig.jsp" />
 	</definition>

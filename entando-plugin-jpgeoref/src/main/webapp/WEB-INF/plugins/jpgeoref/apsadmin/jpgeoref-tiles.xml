@@ -5,18 +5,18 @@
 
 <tiles-definitions>
 	
-	<definition extends="main.layout" name="admin.jpgeoref.page.showlet.contentListViewer.config">
+	<definition extends="main.layout" name="admin.jpgeoref.page.widget.contentListViewer.config">
 		<put-attribute name="title" value="title.pageManagement" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpgeoref/apsadmin/jsp/portal/specialwidget/contentListViewer/configContentListViewer.jsp" />
 	</definition>
 	
-	<definition extends="main.layout" name="admin.jpgeoref.page.showlet.contentListViewer.entryFilter">
+	<definition extends="main.layout" name="admin.jpgeoref.page.widget.contentListViewer.entryFilter">
 		<put-attribute name="title" value="title.pageManagement" />
 		<put-attribute name="extraResources" value="/WEB-INF/apsadmin/jsp/common/template/extraresources/entryFilter.jsp" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpgeoref/apsadmin/jsp/portal/specialwidget/contentListViewer/entryFilter.jsp" />
 	</definition>
 	
-	<definition extends="main.layout" name="admin.jpgeoref.page.showlet.contentListViewer.config.userfilter.category">
+	<definition extends="main.layout" name="admin.jpgeoref.page.widget.contentListViewer.config.userfilter.category">
 		<put-attribute name="title" value="title.pageManagement" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpgeoref/apsadmin/jsp/portal/specialwidget/contentListViewer/userFilter/entryCategory.jsp" />
 	</definition>

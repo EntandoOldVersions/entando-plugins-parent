@@ -5,7 +5,7 @@
 
 <tiles-definitions>
 	
-   	<definition extends="main.layout" name="admin.jpfastcontentedit.Showlet.configParameter">
+   	<definition extends="main.layout" name="admin.jpfastcontentedit.Widget.configParameter">
 		<put-attribute name="title" value="title.pageManagement" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpfastcontentedit/apsadmin/jsp/portal/specialwidget/configFastContentEdit.jsp" />
 	</definition>

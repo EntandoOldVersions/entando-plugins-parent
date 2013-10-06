@@ -20,7 +20,7 @@
 		
     	<!-- ##### WIDGET WEBDYNAMICFORM **** ENTRY POINT ##### -->
     	<action name="webdynamicformConfig" class="jpwebdynamicformWebdynamicformWidgetAction" method="init">
-        	<result type="tiles">admin.jpwebdynamicform.Page.Showlet.Webdynamicform.config</result>
+        	<result type="tiles">admin.jpwebdynamicform.Page.Widget.Webdynamicform.config</result>
             <interceptor-ref name="entandoDefaultStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		
@@ -40,7 +40,7 @@
 		</global-results>
 		
 		<action name="saveConfig" class="jpwebdynamicformWebdynamicformWidgetAction" method="save">
-    		<result type="tiles" name="input">admin.jpwebdynamicform.Page.Showlet.Webdynamicform.config</result>
+    		<result type="tiles" name="input">admin.jpwebdynamicform.Page.Widget.Webdynamicform.config</result>
         	<interceptor-ref name="entandoValidationStack"><param name="requestAuth.requiredPermission">managePages</param></interceptor-ref>
         </action>
 		

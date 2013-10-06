@@ -5,13 +5,13 @@
 
 <tiles-definitions>
 	
-    <definition extends="main.layout" name="admin.jpshowletreplicator.Page.Showlet.Replicator.config">
+    <definition extends="main.layout" name="admin.jpwidgetreplicator.Page.Widget.Replicator.config">
 		<put-attribute name="title" value="title.pageManagement" />
 		<put-attribute name="extraResources" value="/WEB-INF/plugins/jpshowletreplicator/apsadmin/jsp/template/extraresources/pageTree.jsp" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpshowletreplicator/apsadmin/jsp/portal/specialwidget/replicator/replicatorConfig.jsp" />
 	</definition>
 	
-	<definition extends="main.layout" name="admin.jpshowletreplicator.Page.Showlet.Replicator.showPageFrames">
+	<definition extends="main.layout" name="admin.jpwidgetreplicator.Page.Widget.Replicator.showPageFrames">
 		<put-attribute name="title" value="title.pageManagement" />
 		<put-attribute name="extraResources" value="/WEB-INF/plugins/jpshowletreplicator/apsadmin/jsp/template/extraresources/pageTree.jsp" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpshowletreplicator/apsadmin/jsp/portal/specialwidget/replicator/pageFrames.jsp" />
