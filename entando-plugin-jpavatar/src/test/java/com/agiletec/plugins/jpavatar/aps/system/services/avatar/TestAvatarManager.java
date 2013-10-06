@@ -54,7 +54,7 @@ public class TestAvatarManager extends ApsPluginBaseTestCase {
 		String username = "admin";
 		File file = new File("target/test/jAPS_logo.jpg");
 		this._avatarManager.saveAvatar(username, file, "jAPS_logo.jpg");
-		String filename = this._avatarManager.getAvatar(username);
+		String filename = this._avatarManager.getAvatarUrl(username);
 		assertEquals("/Entando/resources/plugins/jpavatar/avatar/admin.jpg", filename);
 		
 
@@ -66,10 +66,10 @@ public class TestAvatarManager extends ApsPluginBaseTestCase {
 		String username = "admin";
 		File file = new File("target/test/jAPS_logo.jpg");
 		this._avatarManager.saveAvatar(username, file, "jAPS_logo.jpg");
-		String filename = this._avatarManager.getAvatar(username);
+		String filename = this._avatarManager.getAvatarUrl(username);
 		assertEquals("/Entando/resources/plugins/jpavatar/avatar/admin.jpg", filename);
 		this._avatarManager.removeAvatar(username);
-		filename = this._avatarManager.getAvatar(username);
+		filename = this._avatarManager.getAvatarUrl(username);
 		assertEquals("/Entando/resources/plugins/jpavatar/default.png", filename);
 		assertNull(this._avatarManager.getAvatarResource(username));
 	}
@@ -85,10 +85,10 @@ public class TestAvatarManager extends ApsPluginBaseTestCase {
 		assertNotNull(_userManager.getUser(username));
 		File file = new File("target/test/jAPS_logo.jpg");
 		this._avatarManager.saveAvatar(username, file, "jAPS_logo.jpg");
-		String filename = this._avatarManager.getAvatar(username);
+		String filename = this._avatarManager.getAvatarUrl(username);
 		assertEquals("/Entando/resources/plugins/jpavatar/avatar/" + username +".jpg", filename);
 		this._userManager.removeUser(username);
-		filename = this._avatarManager.getAvatar(username);
+		filename = this._avatarManager.getAvatarUrl(username);
 		assertEquals("/Entando/resources/plugins/jpavatar/default.png", filename);
 		assertNull(this._avatarManager.getAvatarResource(username));	
 	}

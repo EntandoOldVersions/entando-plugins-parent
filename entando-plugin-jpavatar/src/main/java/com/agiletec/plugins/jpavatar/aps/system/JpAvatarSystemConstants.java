@@ -18,20 +18,20 @@
 package com.agiletec.plugins.jpavatar.aps.system;
 
 public interface JpAvatarSystemConstants {
-
+	
 	/**
 	 * Name of the bean that manages the avatars
 	 */
 	public static final String AVATAR_MANAGER = "jpavatarAvatarManager";
-
+	
 	/**
 	 * Filename that must be returned when no avatar is found. This file must exists and placed in the "avatarDiskFolder" directory
 	 */
-	public static final String DEFAULT_AVATAR_NAME = "default.png";
+	public static final String DEFAULT_AVATAR_NAME = "avatar-default.png";
 	
 	/**
 	 * Config item stored into sysconfig table, *port db
 	 */
 	public static final String CONFIG_ITEM = "jpavatar_config";
-
+	
 }

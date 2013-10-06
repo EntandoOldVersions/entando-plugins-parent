@@ -44,8 +44,10 @@ public class AvatarTag extends TagSupport {
 				this.doOut(this.getNullAvatar(avatarManager));
 			} else {
 				String username = this.getUsername();
-				if (StringUtils.isBlank(username)) username = currentUser.getUsername();
-				String avatarName = avatarManager.getAvatar(username);
+				if (StringUtils.isBlank(username)) {
+					username = currentUser.getUsername();
+				}
+				String avatarName = avatarManager.getAvatarUrl(username);
 				if (null != avatarName) {
 					this.doOut(avatarName);
 				} else {
@@ -80,7 +82,7 @@ public class AvatarTag extends TagSupport {
 	private String getNullAvatar(IAvatarManager avatarManager) throws ApsSystemException {
 		String nullAvatar = null;
 		if (null != this.getReturnDefaultAvatar() && this.getReturnDefaultAvatar().equalsIgnoreCase("true")) {
-			nullAvatar = avatarManager.getAvatar(null);// + JpAvatarSystemConstants.DEFAULT_AVATAR_NAME;
+			nullAvatar = avatarManager.getAvatarUrl(null);// + JpAvatarSystemConstants.DEFAULT_AVATAR_NAME;
 		}
 		return nullAvatar;
 	}

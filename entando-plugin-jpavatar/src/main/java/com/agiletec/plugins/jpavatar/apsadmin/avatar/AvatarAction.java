@@ -24,7 +24,6 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.apsadmin.system.BaseAction;
 import com.agiletec.plugins.jpavatar.aps.system.services.avatar.IAvatarManager;
 import com.agiletec.plugins.jpavatar.aps.system.utils.ImageInfo;
-import com.agiletec.plugins.jpavatar.apsadmin.avatar.IAvatarAction;
 
 public class AvatarAction extends BaseAction implements IAvatarAction {
 
@@ -104,10 +103,12 @@ public class AvatarAction extends BaseAction implements IAvatarAction {
 		return avatarRes;
 	}
 	
+	@Override
 	public String edit() {
 		return SUCCESS;
 	}
-
+	
+	@Override
 	public String save() {
 		try {
 			if (null != this.getAvatar()) {
@@ -120,6 +121,7 @@ public class AvatarAction extends BaseAction implements IAvatarAction {
 		return SUCCESS;
 	}
 
+	@Override
 	public String bin() {
 		try {
 			this.addActionMessage(this.getText("jpavatar.message.confirmDelete"));
@@ -129,7 +131,8 @@ public class AvatarAction extends BaseAction implements IAvatarAction {
 		}
 		return SUCCESS;
 	}
-
+	
+	@Override
 	public String delete() {
 		try {
 			this.getAvatarManager().removeAvatar(this.getCurrentUser().getUsername());

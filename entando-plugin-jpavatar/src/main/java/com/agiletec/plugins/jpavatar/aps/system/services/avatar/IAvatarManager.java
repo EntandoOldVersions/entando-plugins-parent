@@ -48,20 +48,23 @@ public interface IAvatarManager {
 	 * @return the avatar directory 
 	 */
 	public String getAvatarDiskFolder();
-
+	
+	@Deprecated
+	public String getAvatar(String username) throws ApsSystemException;
 	
 	/**
-	 * Returns the name of the file associated with the username passed as parameter (es: admin.png)
-	 * @param username the name of the user 
-	 * @return a filename of the avatar associated to the user
+	 * Returns the url of the file associated with the username
+	 * @param username the username
+	 * @return the url of the file associated with the user
 	 * @throws ApsSystemException if an error occurs
 	 */
-	public String getAvatar(String username) throws ApsSystemException;
+	public String getAvatarUrl(String username) throws ApsSystemException;
+	
 	/**
 	 * Returns the avatar File
-	 * @param username
-	 * @return
-	 * @throws ApsSystemException
+	 * @param username the username
+	 * @return the avatar File
+	 * @throws ApsSystemException if an error occurs
 	 */
 	public File getAvatarResource(String username) throws ApsSystemException;
 	

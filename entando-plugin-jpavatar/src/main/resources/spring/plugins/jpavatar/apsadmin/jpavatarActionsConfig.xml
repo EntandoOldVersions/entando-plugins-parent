@@ -20,15 +20,18 @@
 			class="com.agiletec.plugins.jpavatar.apsadmin.avatar.AvatarAction" parent="abstractBaseAction" >
 		<property name="avatarManager" ref="jpavatarAvatarManager" />
 		<property name="imageMaxSize"><value>100</value></property>
-		<property name="imageMaxWidth"><value>100</value></property>
-		<property name="imageMaxHeight"><value>100</value></property>
+		<property name="imageMaxWidth"><value>34</value></property>
+		<property name="imageMaxHeight"><value>34</value></property>
 		<property name="imageTypes"><value>png,jpg</value></property>
-		<!--
-		<property name="imageMaxSize"><jee:jndi-lookup jndi-name="java:comp/env/jpavatarImageMaxSize" /></property>
-		<property name="imageMaxWidth"><jee:jndi-lookup jndi-name="java:comp/env/jpavatarImageMaxWidth" /></property>
-		<property name="imageMaxHeight"><jee:jndi-lookup jndi-name="java:comp/env/jpavatarImageMaxHeight" /></property>
-		<property name="imageTypes"><jee:jndi-lookup jndi-name="java:comp/env/jpavatarImageTypes" /></property>
-		-->
+	</bean>
+	
+	<!-- override of core bean -->
+	
+	<bean id="currentUserAvatarAction" 
+			class="com.agiletec.plugins.jpavatar.apsadmin.common.currentuser.CurrentAvatarAction" 
+			scope="prototype" parent="abstractBaseAction" >
+		<property name="avatarManager" ref="jpavatarAvatarManager" />
+		<property name="gravatarUrl"><value>http://www.gravatar.com/avatar/</value></property>
 	</bean>
 	
 </beans>
