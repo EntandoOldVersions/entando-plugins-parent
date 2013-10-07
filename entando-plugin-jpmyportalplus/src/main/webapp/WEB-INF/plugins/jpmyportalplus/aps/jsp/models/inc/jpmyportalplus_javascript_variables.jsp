@@ -37,10 +37,10 @@
 		"i18n": {
 			"loading": "<wp:i18n key="jpmyportalplus_LOADING_INFO" />",
 			"error": "<wp:i18n key="jpmyportalplus_ERROR_INFO" />",
-			"statusClosed": '<i class="icon-chevron-up" alt="close widget"></i>',
+			"statusClosed": '<i class="icon-chevron-up" alt="close widget"></i><span class="sr-only">toggle open/close</span>',
 			//"statusClosed": '<img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/closed-false.png" alt="open/close">'
 			//"statusOpen": '<img src="<wp:resourceURL />plugins/jpmyportalplus/static/img/closed-true.png" alt="open/close">',
-			"statusOpen": '<i class="icon-chevron-down" alt="open widget"></i>' 
+			"statusOpen": '<i class="icon-chevron-down" alt="open widget"></i><span class="sr-only">toggle open/close</span>' 
 		},
 		loaderImgPath: "<wp:resourceURL />plugins/jpmyportalplus/static/img/ajax-loader.gif"
 	};
