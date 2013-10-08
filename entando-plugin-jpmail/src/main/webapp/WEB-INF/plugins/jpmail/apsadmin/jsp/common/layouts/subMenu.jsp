@@ -3,16 +3,10 @@
 <%@ taglib prefix="wp" uri="/aps-core" %>
 
 <wp:ifauthorized permission="superuser">
-	<li class="openmenu"><a href="#" rel="fagiano_jpmail" id="fagiano_menu_jpmail" class="subMenuToggler" ><s:text name="jpmail.admin.menu" /></a>
-		<div id="fagiano_jpmail" class="menuToggler">
-			<div class="menuToggler-1">
-				<div class="menuToggler-2">
-					<ul>
-						<li><a href="<s:url action="editSmtp" namespace="/do/jpmail/MailConfig" />" ><s:text name="jpmail.admin.menu.smtp" /></a></li>
-						<li><a href="<s:url action="viewSenders" namespace="/do/jpmail/MailConfig" />" ><s:text name="jpmail.admin.menu.senders" /></a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</li>
+    <li class="margin-large-bottom"><span class="h5"><s:text name="jpmail.admin.menu" /></span>
+    <ul class="nav nav-pills nav-stacked">
+        <li><a href="<s:url action="editSmtp" namespace="/do/jpmail/MailConfig" />" ><s:text name="jpmail.admin.menu.smtp" /></a></li>
+	<li><a href="<s:url action="viewSenders" namespace="/do/jpmail/MailConfig" />" ><s:text name="jpmail.admin.menu.senders" /></a></li>
+    </ul>
+    </li>
 </wp:ifauthorized>
