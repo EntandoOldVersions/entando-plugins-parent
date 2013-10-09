@@ -4,19 +4,28 @@
 <%@ taglib prefix="jpavatar" uri="/jpavatar-apsadmin-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h1><s:text name="title.avatarManagement" /></h1>
+<h1 class="panel panel-default title-page">
+    <span class="panel-body display-block">
+        <s:text name="title.avatarManagement" />
+    </span>
+</h1>
 <div id="main">
-	<s:form action="delete">
-		<p>
-			<s:text name="jpavatar.label.confirm.delete" />&#32;
-		</p>
-		<jpavatar:avatar var="currentAvatar" returnDefaultAvatar="true"  />
-		<img src="<c:out value="${currentAvatar}" />"/>
-		<p>
-			<s:submit value="%{getText('label.remove')}" cssClass="button" />
-		</p>
-		<p>
-			<a href="<s:url action="edit" />"><s:text name="label.back" /></a>
-		</p>
-	</s:form>
+    <s:form action="delete" class="form-horizontal">            
+        <div class="alert alert-warning">
+            <s:text name="jpavatar.label.confirm.delete" />&#32;
+            <jpavatar:avatar var="currentAvatar" returnDefaultAvatar="true"  />
+            <img src="<c:out value="${currentAvatar}" />"/>
+            <div class="text-center margin-large-top">
+                <s:submit type="button" cssClass="btn btn-warning btn-lg" >
+                    <span class="icon icon-remove-sign"></span>&#32;
+                    <s:text name="%{getText('label.remove')}" />
+                </s:submit>
+            </div>    
+            <p class="text-center margin-small-top">
+                <a class="btn btn-link" href="<s:url action="edit"/>">
+                    <s:text name="label.back" />
+                </a>
+            </p>
+        </div>
+    </s:form>
 </div>

@@ -3,12 +3,14 @@
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="jpavatar" uri="/jpavatar-apsadmin-core" %>
 
-<h1><s:text name="title.avatarManagement" /></h1>
+<h1 class="panel panel-default title-page">
+    <span class="panel-body display-block">
+        <s:text name="title.avatarManagement" />
+    </span>
+</h1>
 <div id="main">
-	<p class="message message_confirm">
-		<s:text name="jpavatar.label.saveOK" />
-	</p>
-	<p>
-		<a href="<s:url action="edit" />"><s:text name="label.back.to.management" /></a>
-	</p>
+    <div class="alert alert-success">
+        <s:text name="jpavatar.label.saveOK" />&#32;
+        <a class="alert-link" href="<s:url action="edit" />"><s:text name="label.back.to.management" /></a>
+    </div>
 </div>
