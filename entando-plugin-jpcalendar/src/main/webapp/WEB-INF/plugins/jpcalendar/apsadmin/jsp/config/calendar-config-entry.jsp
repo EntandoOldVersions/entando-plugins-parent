@@ -3,75 +3,107 @@
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 
-<h1><s:text name="title.jpcalendar.configManagement" /></h1>
+<h1 class="panel panel-default title-page">
+    <span class="panel-body display-block">
+        <s:text name="title.jpcalendar.configManagement" />
+    </span>
+</h1>
 
 <div id="main">
 
-<s:form action="save" namespace="/do/jpcalendar/Config">
+    <s:form action="save" namespace="/do/jpcalendar/Config">
 
-<s:if test="hasFieldErrors()">
-<div class="message message_error">
-<h4><s:text name="message.title.FieldErrors" /></h4>	
-	<ul>
-	<s:iterator value="fieldErrors">
-		<s:iterator value="value">
-		<li><s:property escape="false" /></li>
-		</s:iterator>
-	</s:iterator>
-	</ul>
-</div>
-</s:if>
-<s:if test="hasActionMessages()">
-<div class="message message_confirm">
-<h2><s:text name="messages.confirm" /></h2>	
-<ul>
-	<s:iterator value="actionMessages">
-		<li><s:property escape="false" /></li>
-	</s:iterator>
-</ul>
-</div>
-</s:if>
+        <s:if test="hasFieldErrors()">
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                <h4 class="margin-none"><s:text name="message.title.FieldErrors" /></h4>	
+                <ul class="margin-base-vertical">
+                    <s:iterator value="fieldErrors">
+                        <s:iterator value="value">
+                            <li><s:property escape="false" /></li>
+                            </s:iterator>
+                        </s:iterator>
+                </ul>
+            </div>
+        </s:if>
+        <s:if test="hasActionMessages()">
+            <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                <h2 class="h4 margin-none"><s:text name="messages.confirm" /></h2>	
+                <ul class="margin-base-vertical">
+                    <s:iterator value="actionMessages">
+                        <li><s:property escape="false" /></li>
+                        </s:iterator>
+                </ul>
+            </div>
+        </s:if>
 
-<s:if test="null == contentType">
-<fieldset><legend><s:text name="title.contentInfo" /></legend>
-<p>
-	<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
-	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" cssClass="text" />
-	<wpsf:submit useTabindexAutoIncrement="true" action="configContentType" value="%{getText('label.continue')}" cssClass="button" />	
-</p>
-</fieldset>
-</s:if>
-<s:else>
+        <s:if test="null == contentType">
+            <fieldset class="col-xs-12">
+                <legend><s:text name="title.contentInfo" /></legend>
+                <div class="form-group">
+                    <label for="contentType" ><s:text name="label.type"/></label>
+                    <wpsf:select name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" cssClass="form-control" />
+                </div>
+            </fieldset>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
+                        <wpsf:submit type="button" action="configContentType" cssClass="btn btn-primary btn-block" >
+                            <s:text name="%{getText('label.continue')}"/>
+                        </wpsf:submit>
+                    </div>
+                </div>
+            </div>	
+        </s:if>
+        <s:else>
 
-<fieldset class="margin-bit-bottom"><legend><s:text name="title.contentInfo" /></legend>
-<p>
-	<label for="contentType" class="basic-mint-label"><s:text name="label.type"/>:</label>
-	<wpsf:select useTabindexAutoIncrement="true" name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" disabled="true" cssClass="text" />
-	<wpsf:submit useTabindexAutoIncrement="true" action="changeContentType" value="%{getText('label.change')}" cssClass="button" />	
-</p>
-<p class="noscreen">
-	<wpsf:hidden name="contentType" />
-</p>
+            <fieldset class="col-xs-12">
+                <legend><s:text name="title.contentInfo" /></legend>
+                <div class="form-group">
+                    <label for="contentType" ><s:text name="label.type"/>:</label>
+                    <wpsf:select  name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" disabled="true" cssClass="form-control" />	
+                </div>
+                <p class="noscreen">
+                    <wpsf:hidden name="contentType" />
+                </p>
+            </fieldset>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
+                        <wpsf:submit action="changeContentType" type="button" cssClass="btn btn-primary btn-block" >
+                            <s:text name="%{getText('label.change')}"/>
+                        </wpsf:submit>
+                    </div>
+                </div>
+            </div>
 
-</fieldset>
+            <fieldset class="col-xs-12">
+                <legend><s:text name="title.attributes" /></legend>
+                <div class="form-group">
+                    <label for="startDateAttributeName" ><s:text name="label.startDateAttribute"/></label>
+                    <wpsf:select  name="startDateAttributeName" id="startDateAttributeName" 
+                                  list="allowedDateAttributes" listKey="key" listValue="value" cssClass="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="endDateAttributeName" ><s:text name="label.endDateAttribute"/></label>
+                    <wpsf:select  name="endDateAttributeName" id="endDateAttributeName" 
+                                  list="allowedDateAttributes" listKey="key" listValue="value" cssClass="form-control" />
+                </div>
+            </fieldset>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
+                        <wpsf:submit action="save" type="button" cssClass="btn btn-primary btn-block" >
+                            <span class="icon icon-save"></span>&#32;
+                            <s:text name="%{getText('label.save')}"/>
+                        </wpsf:submit>
+                    </div>
+                </div>
+            </div>
 
-<fieldset><legend><s:text name="title.attributes" /></legend>
-<p>
-	<label for="startDateAttributeName" class="basic-mint-label"><s:text name="label.startDateAttribute"/>:</label>
-	<wpsf:select useTabindexAutoIncrement="true" name="startDateAttributeName" id="startDateAttributeName" 
-				 list="allowedDateAttributes" listKey="key" listValue="value" cssClass="text" />
-</p>
-<p>
-	<label for="endDateAttributeName" class="basic-mint-label"><s:text name="label.endDateAttribute"/>:</label>
-	<wpsf:select useTabindexAutoIncrement="true" name="endDateAttributeName" id="endDateAttributeName" 
-				 list="allowedDateAttributes" listKey="key" listValue="value" cssClass="text" />
-</p>
-</fieldset>
+        </s:else>
 
-<p class="centerText"><wpsf:submit useTabindexAutoIncrement="true" action="save" value="%{getText('label.save')}" cssClass="button" /></p>
-
-</s:else>
-
-</s:form>
+    </s:form>
 
 </div>
