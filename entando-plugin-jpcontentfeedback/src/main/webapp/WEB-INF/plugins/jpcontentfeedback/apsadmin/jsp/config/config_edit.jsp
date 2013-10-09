@@ -2,14 +2,21 @@
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
 <%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
-<h1><s:text name="title.contentfeedbackManagement" /></h1>
+
+<h1 class="panel panel-default title-page">
+    <span class="panel-body display-block">
+        <s:text name="title.contentfeedbackManagement" />&#32;/&#32;
+        <s:text name="title.contentfeedbackSettings" />
+    </span>
+</h1>
+
 <div id="main">
-	<h2><s:text name="title.contentfeedbackSettings" /></h2>
 	<s:form action="update">
 		<s:if test="hasActionErrors()">
-			<div class="message message_error">
-				<h3><s:text name="message.title.ActionErrors" /></h3>
-				<ul>
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                        <h2 class="h4 margin-none"><s:text name="message.title.ActionErrors" /></h2>
+				<ul class="margin-base-vertical">
 					<s:iterator value="actionErrors">
 						<li><s:property escape="false" /></li>
 					</s:iterator>
@@ -18,9 +25,10 @@
 		</s:if>
 
 		<s:if test="hasFieldErrors()">
-			<div class="message message_error">
-				<h3><s:text name="message.title.FieldErrors" /></h3>
-				<ul>
+	                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                        <h2 class="h4 margin-none"><s:text name="message.title.FieldErrors" /></h2>
+				<ul class="margin-base-vertical">
 					<s:iterator value="fieldErrors">
 						<s:iterator value="value">
 							<li><s:property escape="false" /></li>
@@ -31,9 +39,10 @@
 		</s:if>
 
 		<s:if test="hasActionMessages()">
-			<div class="message message_confirm">
-				<h3><s:text name="messages.confirm" /></h3>
-				<ul>
+                <div class="alert alert-info alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                        <h2 class="h4 margin-none"><s:text name="messages.confirm" /></h2>
+				<ul class="margin-base-vertical">
 					<s:iterator value="actionMessages">
 						<li><s:property/></li>
 					</s:iterator>
@@ -41,9 +50,10 @@
 			</div>
 		</s:if>
 
-		<fieldset class="margin-more-top">
+		<fieldset class="col-xs-12">
 			<legend><s:text name="jpcontentfeedback.comments" /></legend>
-			<p>
+                        <div class="form-group">
+                            <div class="checkbox">
 				<input 
 					type="checkbox" 
 					class="radiocheck"
@@ -52,8 +62,10 @@
 					value="true" <s:if test="config.comment"> checked="checked"</s:if>  
 				/>
 				<label for="jpcontentfeedback_comment"><s:text name="jpcontentfeedback.label.commentsOnContent" /></label>
-			</p>
-			<p>
+                            </div>
+                            </div>
+			<div class="form-group">
+                            <div class="checkbox">
 				<input 
 					type="checkbox" 
 					class="radiocheck"
@@ -63,8 +75,10 @@
 				/>
 				<label for="jpcontentfeedback_anonymousComment"><s:text name="jpcontentfeedback.label.anonymousComments"/></label>
 				<span class="inline"><s:text name="jpcontentfeedback.note.anonymousComments" /></span>
-			</p>
-			<p>
+                            </div>
+			</div>
+			<div class="form-group">
+                            <div class="checkbox">
 				<input 
 					type="checkbox" 
 					class="radiocheck"
@@ -74,9 +88,11 @@
 				/>
 				<label for="jpcontentfeedback_moderatedComment"><s:text name="jpcontentfeedback.label.commentsModeration"/></label>
 				<span class="inline"><s:text name="jpcontentfeedback.note.commentsModeration" /></span>
-			</p>
+                            </div>
+                            </div>
 			
-			<p>
+			<div class="form-group">
+                            <div class="checkbox">
 				<input 
 					type="checkbox" 
 					class="radiocheck"
@@ -85,12 +101,14 @@
 					value="true" <s:if test="config.rateComment"> checked="checked"</s:if>
 				/>
 				<label for="jpcontentfeedback_rateComment"><s:text name="jpcontentfeedback.label.commentsRating" /></label>
-			</p>
+                            </div>
+                            </div>
 		
 		</fieldset>
-		<fieldset>
+		<fieldset class="col-xs-12">
 			<legend><s:text name="jpcontentfeedback.contents" /></legend>
-			<p>
+                        <div class="form-group">
+                            <div class="checkbox">
 				<input 
 					type="checkbox" 
 					class="radiocheck"
@@ -99,10 +117,18 @@
 					value="true" <s:if test="config.rateContent"> checked="checked"</s:if> 
 				/>
 				<label for="jpcontentfeedback_rateContent"><s:text name="jpcontentfeedback.label.contentsRating" /></label>
-			</p>
+                            </div>
+                        </div>
 		</fieldset>
-		<p class="centerText">
-			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.save')}" cssClass="button" />
-		</p>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
+			<wpsf:submit type="button" cssClass="btn btn-primary btn-block" >
+                            <span class="icon icon-save"></span>&#32;
+                            <s:text name="%{getText('label.save')}"/>
+                        </wpsf:submit>
+                    </div>
+                </div>
+            </div>
 	</s:form>
 </div>
