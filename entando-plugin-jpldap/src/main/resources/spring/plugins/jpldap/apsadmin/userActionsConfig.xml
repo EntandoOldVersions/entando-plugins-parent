@@ -9,6 +9,7 @@
 			class="com.agiletec.plugins.jpldap.apsadmin.user.UserFinderAction" parent="abstractBaseAction" >
 		<property name="userManager" ref="UserManager" />
 		<property name="userProfileManager" ref="UserProfileManager" />
+		<property name="entityActionHelper" ref="entityActionHelper" />
 	</bean>
 	
 </beans>
