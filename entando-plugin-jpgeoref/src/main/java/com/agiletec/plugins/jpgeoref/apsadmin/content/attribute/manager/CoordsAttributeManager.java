@@ -90,14 +90,6 @@ public class CoordsAttributeManager extends AbstractMonoLangAttributeManager {
 		return "CoordsAttribute.incompleteAttribute";
 	}
 	
-	/**
-     * @deprecated As of version 2.4.1 of Entando, moved validation within single attribute.
-     */
-	@Override
-    protected Object getValue(AttributeInterface attribute) {
-		return null;
-	}
-
 	@Override
 	protected void setValue(AttributeInterface attribute, String value) {
 		//do notning

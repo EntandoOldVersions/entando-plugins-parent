@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.common.entity.model.AttributeTracer;
 import com.agiletec.apsadmin.system.entity.attribute.manager.AbstractAttributeManager;
@@ -37,29 +36,6 @@ import com.agiletec.plugins.jpimagemap.aps.system.services.content.model.attribu
  * @author E.Santoboni - G.Cocco
  */
 public class ImageMapAttributeManager extends AbstractAttributeManager {
-	
-	/**
-	 * @deprecated As of version 2.4.1 of Entando, moved validation within single attribute.
-	 */
-	@Override
-	protected int getState(AttributeInterface attribute, com.agiletec.apsadmin.system.entity.attribute.AttributeTracer tracer) {
-		ImageMapAttribute imageMap = (ImageMapAttribute) attribute;
-		if (imageMap.getImage() != null && imageMap.getAreas().size() > 0) {
-			return this.VALUED_ATTRIBUTE_STATE;
-		} else if ((imageMap.getImage().getResource() != null && imageMap.getAreas().size()==0 ) 
-				|| (imageMap.getImage().getResource()==null && imageMap.getAreas().size() != 0) ) {
-			return this.INCOMPLETE_ATTRIBUTE_STATE;
-		}
-		return this.EMPTY_ATTRIBUTE_STATE;
-	}
-	
-	/**
-	 * @deprecated As of version 2.4.1 of Entando, moved validation within single attribute.
-	 */
-	@Override
-	protected void updateAttribute(AttributeInterface attribute, com.agiletec.apsadmin.system.entity.attribute.AttributeTracer tracer, HttpServletRequest request) {
-		this.updateAttribute(attribute, (AttributeTracer) tracer, request);
-	}
 	
 	@Override
 	protected void updateAttribute(AttributeInterface attribute, AttributeTracer tracer, HttpServletRequest request) {
@@ -87,6 +63,7 @@ public class ImageMapAttributeManager extends AbstractAttributeManager {
 		}
 	}
 	
+	@Override
 	protected String getCustomAttributeErrorMessage(AttributeFieldError attributeFieldError, ActionSupport action) {
 		String errorCode = attributeFieldError.getErrorCode();
         String messageKey = null;
