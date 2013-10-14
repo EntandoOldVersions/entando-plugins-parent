@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <% pageContext.setAttribute("newLine", "\n"); %> 
-<jpsu:pageWithWidget var="surveyDetailsPageCode" showletTypeCode="jpsurvey_detailsSurvey" />
+<wp:pageWithWidget var="surveyDetailsPageCode" widgetTypeCode="jpsurvey_detailsSurvey" />
 
 <wp:info key="currentLang" var="currentLang" />
 <wp:info key="defaultLang" var="defaultLang" />
@@ -62,8 +62,7 @@
 		</c:forEach>
 	</ul>
 </c:if>
-
-<jpsu:pageWithWidget var="pollArchivePage" showletTypeCode="jpsurvey_pollArchive" />
+<wp:pageWithWidget var="pollArchivePage" widgetTypeCode="jpsurvey_pollArchive" />
 <p>
 	<span class="label label-info">
 	<wp:i18n key="JPSURVEY_POLLS_LIST_INTRO" />&#32;

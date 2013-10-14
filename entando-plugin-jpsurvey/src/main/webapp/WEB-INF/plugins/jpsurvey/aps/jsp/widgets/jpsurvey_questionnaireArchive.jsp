@@ -5,7 +5,7 @@
 <% pageContext.setAttribute("newLine", "\n"); %> 
 <wp:info key="currentLang" var="currentLang" />
 <wp:info key="defaultLang" var="defaultLang" />
-<jpsu:pageWithWidget var="surveyDetailsPageCode" showletTypeCode="jpsurvey_detailsSurvey" />
+<wp:pageWithWidget var="surveyDetailsPageCode" widgetTypeCode="jpsurvey_detailsSurvey" />
 <jpsu:surveyList ctxName="pollList" category="questionnaire" expired="true" />
 <c:if test="${!(empty pollList)}">
 	<ul class="unstyled jpsurvey-list archive">
@@ -61,7 +61,7 @@
 	</ul>
 </c:if>
 
-<jpsu:pageWithWidget var="archivePageVar" showletTypeCode="jpsurvey_questionnaireList" />
+<wp:pageWithWidget var="archivePageVar" widgetTypeCode="jpsurvey_questionnaireList" />
 <p>
 	<span class="label label-info">
 		<wp:i18n key="JPSURVEY_POLLS_ARCHIVE_INTRO" />

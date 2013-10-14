@@ -86,7 +86,7 @@
 				<s:if test="!#surveyInfo.questionnaire">
 					<s:if test="%{(#surveyInfo.archive && #surveyInfo.publicResult) || (!#surveyInfo.archive && #surveyInfo.publicPartialResult && #surveyInfo.open) }">
 							&#32;
-						<jpsu:pageWithWidget var="resultsPageVar" showletTypeCode="jpsurvey_resultsSurvey" />
+						<wp:pageWithWidget var="resultsPageVar" widgetTypeCode="jpsurvey_resultsSurvey" />
 							<a 
 								class="btn"
 								href="<wp:url page="${resultsPageVar.code}"><wp:parameter name="surveyId"><s:property value="#surveyInfo.id" /></wp:parameter></wp:url>">
