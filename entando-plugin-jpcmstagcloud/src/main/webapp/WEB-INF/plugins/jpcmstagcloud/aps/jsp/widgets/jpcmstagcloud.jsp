@@ -3,7 +3,7 @@
 <%@ taglib prefix="jptc" uri="/jpcmstagcloud-aps-core" %>
 <wp:headInfo type="CSS" info="../../plugins/jpcmstagcloud/static/css/jpcmstagcloud.css"/>
 <jptc:tagCloudBuilder occurrencesVar="occurrences" cloudBeansVar="cloudBeans" />
-<jptc:pageWithWidget var="jptagcloud_listPage" showletTypeCode="jpcmstagcloud_viewer_list" />
+<wp:pageWithWidget var="jptagcloud_listPage" widgetTypeCode="jpcmstagcloud_viewer_list" />
 <div class="jpcmstagcloud">
 	<h2><wp:i18n key="jpcmstagcloud_TITLE" /></h2>
 	<c:if test="${!empty cloudBeans}">

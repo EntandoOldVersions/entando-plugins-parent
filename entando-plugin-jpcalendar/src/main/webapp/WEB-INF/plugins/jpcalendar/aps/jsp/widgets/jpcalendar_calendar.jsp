@@ -88,9 +88,12 @@
 		<c:if test="${(giorno.formattedDate != today) && (!giorno.hasEvents)}">
 		<td>
 		</c:if>		
-				
+		
 		<c:if test="${!giorno.hasEvents}"><c:if test="${giorno.formattedDate == today}"><strong></c:if><c:out value="${giorno.day}"/><c:if test="${giorno.formattedDate == today}"></strong></c:if></c:if>
-		<c:if test="${giorno.hasEvents}"><a href="<wp:url page="codice_pagina_eventi_del_giorno" ><wp:parameter name="selectedDate" ><c:out value="${giorno.formattedDate}"/></wp:parameter></wp:url>"><c:if test="${giorno.formattedDate == today}"><strong></c:if><c:out value="${giorno.day}"/><c:if test="${giorno.formattedDate == today}"></strong></c:if></a></c:if>
+		<c:if test="${giorno.hasEvents}">
+			<wp:pageWithWidget var="jpcalendar_dailyEventsVar" widgetTypeCode="jpcalendar_dailyEvents" />
+			<a href="<wp:url page="${jpcalendar_dailyEventsVar.code}" ><wp:parameter name="selectedDate" ><c:out value="${giorno.formattedDate}"/></wp:parameter></wp:url>"><c:if test="${giorno.formattedDate == today}"><strong></c:if><c:out value="${giorno.day}"/><c:if test="${giorno.formattedDate == today}"></strong></c:if></a>
+		</c:if>
 		</td>
 		</c:if>
 		<c:if test="${giorno == null}"><td></td></c:if>

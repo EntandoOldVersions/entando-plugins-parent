@@ -36,9 +36,11 @@
 	
 		<c:if test="${ctrl != 'admin'}">
 			<p><a href="<wp:url page="disactiv" />" ><wp:i18n key="jpuserreg_ACCOUNT_SUSPENSION" /></a></p>
-		</c:if>				
-		
-		<p><a href="<wp:url page="editprof_page_code" />" ><wp:i18n key="jpuserreg_PROFILE_CONFIGURATION" /></a></p>
+		</c:if>
+		<wp:pageWithWidget var="editProfilePageVar" widgetTypeCode="userprofile_editCurrentUser" />
+		<c:if test="${null != editProfilePageVar}" >
+		<p><a href="<wp:url page="${editProfilePageVar.code}" />" ><wp:i18n key="jpuserreg_PROFILE_CONFIGURATION" /></a></p>
+		</c:if>
 		
 	</c:when>
 	<c:otherwise>
