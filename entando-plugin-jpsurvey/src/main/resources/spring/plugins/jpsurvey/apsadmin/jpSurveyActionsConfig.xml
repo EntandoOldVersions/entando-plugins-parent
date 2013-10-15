@@ -8,7 +8,7 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
 	
 	<bean id="jpsurveyPluginSubMenu" class="com.agiletec.apsadmin.system.plugin.PluginSubMenuContainer" >
-		<property name="subMenuFilePath"><value>/WEB-INF/plugins/jpsurvey/apsadmin/jsp/common/template/subMenu.jsp</value></property>
+		<property name="subMenuFilePath"><value>/WEB-INF/plugins/jpsurvey/apsadmin/jsp/common/layouts/subMenu.jsp</value></property>
 	</bean>
 
 	<bean id="SurveyResourceFinderAction" scope="prototype" 
