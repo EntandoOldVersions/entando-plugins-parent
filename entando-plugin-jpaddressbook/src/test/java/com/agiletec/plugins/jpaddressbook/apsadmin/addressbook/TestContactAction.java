@@ -161,10 +161,10 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 			assertEquals(Action.INPUT, result);
 			Map<String, List<String>> fieldErrors = this.getAction().getFieldErrors();
 			assertEquals(4, fieldErrors.size());
-			assertEquals(1, fieldErrors.get("fullname").size());
-			assertEquals(1, fieldErrors.get("email").size());
-			assertEquals(1, fieldErrors.get("birthdate").size());
-			assertEquals(1, fieldErrors.get("language").size());
+			assertEquals(1, fieldErrors.get("Monotext:fullname").size());
+			assertEquals(1, fieldErrors.get("Monotext:email").size());
+			assertEquals(1, fieldErrors.get("Date:birthdate").size());
+			assertEquals(1, fieldErrors.get("Monotext:language").size());
 		} catch (Throwable t) {
 			throw t;
 		} finally {
@@ -179,10 +179,10 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 			assertEquals(Action.SUCCESS, result);
 			
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("fullname", "name surname");
-			params.put("email", "email@eeeeeeemail.it");
-			params.put("birthdate", "10/09/1986");
-			params.put("language", "lang");
+			params.put("Monotext:fullname", "name surname");
+			params.put("Monotext:email", "email@eeeeeeemail.it");
+			params.put("Date:birthdate", "10/09/1986");
+			params.put("Monotext:language", "lang");
 			result = this.executeSave(username, params);
 			assertEquals(Action.SUCCESS, result);
 			
@@ -215,10 +215,10 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 			assertEquals(Action.SUCCESS, result);
 			
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("fullname", "nameMOD surnameMOD");
-			params.put("email", "email@eeeeeeemail.it");
-			params.put("birthdate", "10/09/1986");
-			params.put("language", "langMOD");
+			params.put("Monotext:fullname", "nameMOD surnameMOD");
+			params.put("Monotext:email", "email@eeeeeeemail.it");
+			params.put("Date:birthdate", "10/09/1986");
+			params.put("Monotext:language", "langMOD");
 			result = this.executeSave(username, params);
 			assertEquals(Action.SUCCESS, result);
 			
@@ -252,38 +252,33 @@ public class TestContactAction extends ApsAdminPluginBaseTestCase {
 		this.setUserOnSession(username);
 		this.initAction("/do/jpaddressbook/AddressBook", "view");
 		this.addParameter("entityId", entityId);
-		String result = this.executeAction();
-		return result;
+		return this.executeAction();
 	}
 	
 	private String executeNew(String username) throws Throwable {
 		this.setUserOnSession(username);
 		this.initAction("/do/jpaddressbook/AddressBook", "new");
-		String result = this.executeAction();
-		return result;
+		return this.executeAction();
 	}
 	
 	private String executeEdit(String username, String entityId) throws Throwable {
 		this.setUserOnSession(username);
 		this.initAction("/do/jpaddressbook/AddressBook", "edit");
 		this.addParameter("entityId", entityId);
-		String result = this.executeAction();
-		return result;
+		return this.executeAction();
 	}
 	
 	private String executeSave(String username, Map<String, Object> params) throws Throwable {
 		this.setUserOnSession(username);
 		this.initAction("/do/jpaddressbook/AddressBook", "save");
 		this.addParameters(params);
-		String result = this.executeAction();
-		return result;
+		return this.executeAction();
 	}
 	
 	private String executeEntryContact(String username) throws Throwable {
 		this.setUserOnSession(username);
 		this.initAction("/do/jpaddressbook/AddressBook", "entryContact");
-		String result = this.executeAction();
-		return result;
+		return this.executeAction();
 	}
 	
 	private IAddressBookManager _addressBookManager;

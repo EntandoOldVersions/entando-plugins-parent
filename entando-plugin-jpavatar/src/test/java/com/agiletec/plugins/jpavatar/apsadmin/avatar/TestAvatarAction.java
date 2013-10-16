@@ -78,7 +78,7 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 		String result = this.executeDelete();
 		assertEquals(Action.SUCCESS, result);
 		filename = this._avatarManager.getAvatarUrl("admin");
-		assertEquals("/Entando/resources/plugins/jpavatar/default.png", filename);
+		assertEquals("/Entando/resources/plugins/jpavatar/avatar-default.png", filename);
 		assertNull(this._avatarManager.getAvatarResource("admin"));		
 	}
 	

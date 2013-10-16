@@ -47,7 +47,7 @@ import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
  * @author G.Cocco
  * */
 public class UserRegistrationAction extends AbstractApsEntityAction implements IUserRegistrationAction {
-
+	
 	@Override
 	public void validate() {
 		try {
@@ -66,7 +66,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 			throw new RuntimeException("Error validation of request for account activation" + this.getUsername(), t);
 		}
 	}
-
+	
 	@Override
 	public String createNew() {
 		String profileTypeCode = this.getProfileTypeCode();
@@ -95,7 +95,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return SUCCESS;
 	}
-
+	
 	protected void checkTypeLabels(IUserProfile userProfile) {
 		if (null == userProfile) {
 			return;
@@ -142,11 +142,11 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		this.addActionError(this.getText("jpuserreg.error.operation.unsupported"));
 		return FAILURE;
 	}
-
+	
 	/**
 	 * It Adds user account and profile in to the system,
 	 * keeping disabled status until the end of registration process
-	 * */
+	 */
 	@Override
 	public String save() {
 		try {
@@ -165,7 +165,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return SUCCESS;
 	}
-
+	
 	/**
 	 * Extract the typeCode from the current showlet.
 	 * @return The type code extracted from the showlet.
@@ -187,7 +187,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return typeCode;
 	}
-
+	
 	/**
 	 * check if user exist
 	 * @param username
@@ -202,15 +202,15 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 	private void checkEmailAddress() throws ApsSystemException {
 		String emailAttrName = this.getEmailAttrName();
 		String email = (String) this.getUserProfile().getValue(emailAttrName);
-		if (null!=email) {
+		if (null != email) {
 			if (!email.equals(this.getEmailConfirm())) {
-				this.addFieldError(emailAttrName, this.getText("jpuserreg.error.email.wrongConfirm"));
+				this.addFieldError("emailConfirm", this.getText("jpuserreg.error.email.wrongConfirm"));
 			} else if(this.verifyEmailAlreadyInUse(email)){
 				this.addFieldError(emailAttrName, this.getText("jpuserreg.error.email.alreadyInUse"));
 			}
 		}
 	}
-
+	
 	/**
 	 * Verify if email already in use
 	 * @param email
@@ -229,7 +229,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 		}
 		return false;
 	}
-
+	
 	@Override
 	public IApsEntity getApsEntity() {
 		return (IApsEntity) this.getRequest().getSession().getAttribute(SESSION_PARAM_NAME_REQ_PROFILE);

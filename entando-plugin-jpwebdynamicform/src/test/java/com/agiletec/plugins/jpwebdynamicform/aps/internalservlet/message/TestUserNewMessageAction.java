@@ -51,74 +51,72 @@ public class TestUserNewMessageAction extends ApsAdminPluginBaseTestCase {
 		Message message = action.getMessage();
 		assertEquals("PER", message.getTypeCode());
 	}
-
+	
 	public void testSend() throws Throwable {
 		String result = this.executeNew(SystemConstants.GUEST_USER_NAME, "PER");
 		assertEquals(Action.SUCCESS, result);
 		Map<String, String> params = new HashMap<String, String>();
 		result = this.executeSend(SystemConstants.GUEST_USER_NAME, params);
 		assertEquals("expiredMessage", result);
-
+		
 		params.put("typeCode", "PER");
 		result = this.executeSend(SystemConstants.GUEST_USER_NAME, params);
 		assertEquals(Action.INPUT, result);
 		UserNewMessageAction action = (UserNewMessageAction) this.getAction();
 		Collection<String> fieldErrors = action.getFieldErrors().keySet();
 		assertEquals(4, fieldErrors.size());
-		assertTrue(fieldErrors.contains("Name"));
-		assertTrue(fieldErrors.contains("Surname"));
-		assertTrue(fieldErrors.contains("eMail"));
-		assertTrue(fieldErrors.contains("Note"));
-
-		params.put("Name", "MyName");
-		params.put("Surname", "MySurname");
-		params.put("Note", "MyNote");
-		params.put("eMail", "MyEmail@inesistente.itte");
+		assertTrue(fieldErrors.contains("Monotext:Name"));
+		assertTrue(fieldErrors.contains("Monotext:Surname"));
+		assertTrue(fieldErrors.contains("Monotext:eMail"));
+		assertTrue(fieldErrors.contains("Monotext:Note"));
+		
+		params.put("Monotext:Name", "MyName");
+		params.put("Monotext:Surname", "MySurname");
+		params.put("Monotext:Note", "MyNote");
+		params.put("Monotext:eMail", "MyEmail@inesistente.itte");
 		result = this.executeSend(SystemConstants.GUEST_USER_NAME, params);
 		assertEquals(Action.SUCCESS, result);
 		List<String> messagesId = this._messageManager.loadMessagesId(null);
 		assertEquals(1, messagesId.size());
 		Message message = this._messageManager.getMessage(messagesId.get(0));
 		assertEquals(SystemConstants.GUEST_USER_NAME, message.getUsername());
-
-		params.put("eMail", "MyEmail");
+		
+		params.put("Monotext:eMail", "MyEmail");
 		result = this.executeNew("mainEditor", "PER");
 		assertEquals(Action.SUCCESS, result);
 		result = this.executeSend(SystemConstants.GUEST_USER_NAME, params);
 		assertEquals(Action.INPUT, result);
 		fieldErrors = this.getAction().getFieldErrors().keySet();
 		assertEquals(1, fieldErrors.size());
-		assertTrue(fieldErrors.contains("eMail"));
+		assertTrue(fieldErrors.contains("Monotext:eMail"));
 		messagesId = this._messageManager.loadMessagesId(null);
 		assertEquals(1, messagesId.size());
-
+		
 		result = this.executeNew("mainEditor", "PER");
 		assertEquals(Action.SUCCESS, result);
-		params.put("eMail", "MyEmail@inesistente.itte");
+		params.put("Monotext:eMail", "MyEmail@inesistente.itte");
 		result = this.executeSend("mainEditor", params);
 		assertEquals(Action.SUCCESS, result);
-
+		
 		EntitySearchFilter[] filters = new EntitySearchFilter[] { new EntitySearchFilter(IMessageSearcherDAO.USERNAME_FILTER_KEY, false, "mainEditor", false)};
 		messagesId = this._messageManager.loadMessagesId(filters);
 		assertEquals(1, messagesId.size());
 		message = this._messageManager.getMessage(messagesId.get(0));
 		assertEquals("mainEditor", message.getUsername());
 	}
-
+	
 	private String executeNew(String username, String typeCode) throws Throwable {
 		this.setUserOnSession(username);
 		this.initAction("/do/jpwebdynamicform/Message/User", "new");
 		this.addParameter("typeCode", typeCode);
-		String result = this.executeAction();
-		return result;
+		return this.executeAction();
 	}
-
+	
 	private String executeSend(String username, Map<String, String> params) throws Throwable {
 		this.setUserOnSession(username);
 		this.initAction("/do/jpwebdynamicform/Message/User", "send");
 		this.addParameters(params);
-		String result = this.executeAction();
-		return result;
+		return this.executeAction();
 	}
 	
 	@Override

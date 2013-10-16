@@ -70,7 +70,7 @@ public class TestAvatarManager extends ApsPluginBaseTestCase {
 		assertEquals("/Entando/resources/plugins/jpavatar/avatar/admin.jpg", filename);
 		this._avatarManager.removeAvatar(username);
 		filename = this._avatarManager.getAvatarUrl(username);
-		assertEquals("/Entando/resources/plugins/jpavatar/default.png", filename);
+		assertEquals("/Entando/resources/plugins/jpavatar/avatar-default.png", filename);
 		assertNull(this._avatarManager.getAvatarResource(username));
 	}
 
@@ -89,7 +89,7 @@ public class TestAvatarManager extends ApsPluginBaseTestCase {
 		assertEquals("/Entando/resources/plugins/jpavatar/avatar/" + username +".jpg", filename);
 		this._userManager.removeUser(username);
 		filename = this._avatarManager.getAvatarUrl(username);
-		assertEquals("/Entando/resources/plugins/jpavatar/default.png", filename);
+		assertEquals("/Entando/resources/plugins/jpavatar/avatar-default.png", filename);
 		assertNull(this._avatarManager.getAvatarResource(username));	
 	}
 

@@ -38,6 +38,7 @@ import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegDAO;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.UserRegDAO;
 
 import com.opensymphony.xwork2.Action;
+import static junit.framework.Assert.assertNotNull;
 
 /**
  * @author zuanni G.Cocco
@@ -66,12 +67,12 @@ public class TestUserRegistrationAction extends ApsAdminPluginBaseTestCase {
 			
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("username", username);
-			params.put("fullname", "admin admin");
-			params.put("email", JpUserRegTestHelper.EMAIL);
+			params.put("Monotext:fullname", "admin admin");
+			params.put("Monotext:email", JpUserRegTestHelper.EMAIL);
 			params.put("emailConfirm", JpUserRegTestHelper.EMAIL);
 			params.put("privacyPolicyAgreement", "true");
-			params.put("language", "it");
-			params.put("birthdate", "01/01/1981");
+			params.put("Monotext:language", "it");
+			params.put("Date:birthdate", "01/01/1981");
 			result = this.executeRegister(params);
 			assertEquals(Action.SUCCESS, result);
 			
@@ -103,18 +104,20 @@ public class TestUserRegistrationAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(0, messages.size());
 		Map<String, List<String>> fieldErrors = reqAccountAction.getFieldErrors();
 		assertNotNull(fieldErrors);
-		assertEquals(6, fieldErrors.size());
+		assertEquals(7, fieldErrors.size());
 		List<String> error = fieldErrors.get("privacyPolicyAgreement");
 		assertNotNull(error);
 		error = fieldErrors.get("username");
 		assertNotNull(error);
-		error = fieldErrors.get("fullname");
+		error = fieldErrors.get("Monotext:fullname");
 		assertNotNull(error);
-		error = fieldErrors.get("language");
+		error = fieldErrors.get("Monotext:language");
 		assertNotNull(error);
-		error = fieldErrors.get("email");
+		error = fieldErrors.get("Monotext:email");
 		assertNotNull(error);
-		error = fieldErrors.get("birthdate");
+		error = fieldErrors.get("Monotext:email");
+		assertNotNull(error);
+		error = fieldErrors.get("emailConfirm");
 		assertNotNull(error);
 		
 		params.put("username", "user#name");
@@ -122,7 +125,7 @@ public class TestUserRegistrationAction extends ApsAdminPluginBaseTestCase {
 		assertEquals(Action.INPUT, result);
 		reqAccountAction = (UserRegistrationAction) this.getAction();
 		fieldErrors = reqAccountAction.getFieldErrors();
-		assertEquals(6, fieldErrors.size());
+		assertEquals(7, fieldErrors.size());
 		assertNotNull(fieldErrors.get("username"));
 	}
 	
@@ -132,13 +135,13 @@ public class TestUserRegistrationAction extends ApsAdminPluginBaseTestCase {
 		
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("username", "admin");
-		params.put("birthdate", "01/01/1981");
+		params.put("Date:birthdate", "01/01/1981");
 		result = this.executeRegister(params);
 		assertEquals(Action.INPUT, result);
 		UserRegistrationAction reqAccountAction = (UserRegistrationAction) this.getAction();
 		Map<String, List<String>> fieldErrors = reqAccountAction.getFieldErrors();
 		assertNotNull(fieldErrors);
-		assertEquals(5, fieldErrors.size());
+		assertEquals(6, fieldErrors.size());
 		List<String> errors = fieldErrors.get("username");
 		assertNotNull(errors);
 		assertEquals(1, errors.size());
@@ -154,12 +157,12 @@ public class TestUserRegistrationAction extends ApsAdminPluginBaseTestCase {
 			
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("username", username_1);
-			params.put("fullname", "admin admin");
-			params.put("email", JpUserRegTestHelper.EMAIL);
+			params.put("Monotext:fullname", "admin admin");
+			params.put("Monotext:email", JpUserRegTestHelper.EMAIL);
 			params.put("emailConfirm", JpUserRegTestHelper.EMAIL);
 			params.put("privacyPolicyAgreement", "true");
-			params.put("language", "it");
-			params.put("birthdate", "01/01/1981");
+			params.put("Monotext:language", "it");
+			params.put("Date:birthdate", "01/01/1981");
 			result = this.executeRegister(params);
 			assertEquals(Action.SUCCESS, result);
 			UserRegistrationAction action = (UserRegistrationAction) this.getAction();
