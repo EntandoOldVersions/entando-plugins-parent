@@ -73,7 +73,7 @@ public class TestContentAction extends AbstractBaseTestContentAction {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("descr", content.getDescr());
 			params.put("mainGroup", content.getMainGroup());
-			params.put("it_Titolo", "titolo");
+			params.put("Text:it_Titolo", "titolo");
 			String result = this.executePreviousStep("admin", contentId, params);
 			assertEquals(Action.SUCCESS, result);
 			modifiedContent = this._contentManager.loadContent(contentId, false);
@@ -115,7 +115,7 @@ public class TestContentAction extends AbstractBaseTestContentAction {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("descr", content.getDescr());
 			params.put("mainGroup", content.getMainGroup());
-			params.put("it_Titolo", "titolo");
+			params.put("Text:it_Titolo", "titolo");
 			String result = this.executeNextStep("admin", contentId, params);
 			assertEquals(Action.SUCCESS, result);
 			Content modifiedContent = this._contentManager.loadContent(contentId, false);

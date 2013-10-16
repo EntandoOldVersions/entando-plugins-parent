@@ -158,6 +158,7 @@ public class TestActionLoggerAction extends ApsAdminPluginBaseTestCase {
 			this.addParameters(params);
 		}
 		String result = this.executeAction();
+		super.waitThreads(IActionLogManager.LOG_APPENDER_THREAD_NAME_PREFIX);
 		return result;
 	}
 
