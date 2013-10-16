@@ -11,6 +11,6 @@
 	<include file="org/entando/entando/plugins/jpfrontshortcut/aps/internalservlet/content/attribute/action/contentAttribute.xml" />
 	
 	<include file="org/entando/entando/plugins/jpfrontshortcut/aps/internalservlet/portal/page.xml" />
-    <include file="org/entando/entando/plugins/jpfrontshortcut/aps/internalservlet/portal/specialShowlet.xml" />
+    <include file="org/entando/entando/plugins/jpfrontshortcut/aps/internalservlet/portal/specialWidget.xml" />
     
 </struts>
