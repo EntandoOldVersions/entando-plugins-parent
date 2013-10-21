@@ -2,7 +2,7 @@
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <s:include value="/WEB-INF/apsadmin/jsp/common/layouts/assets-common.jsp" />
-<s:include value="/WEB-INF/apsadmin/jsp/common/template/extraresources/inc/snippet-calendar.jsp" />
+<s:include value="/WEB-INF/apsadmin/jsp/common/layouts/assets-more/inc/snippet-calendar.jsp" />
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 //per tab di contenuto
