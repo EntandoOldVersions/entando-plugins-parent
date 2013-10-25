@@ -123,13 +123,13 @@
 
                             <div class="form-group">
                                 <label for="startDate_cal"><s:text name="jpsurvey_start_date" /></label>
-                                <wpsf:textfield name="startDate" id="startDate_cal" cssClass="form-control" />
+                                <wpsf:textfield name="startDate" id="startDate_cal" cssClass="form-control datepicker" />
                                 <span class="help help-block">dd/MM/yyyy</span>
                             </div>
 
                             <div class="form-group">
                                 <label for="endDate_cal"><s:text name="jpsurvey_end_date" /></label>
-                                <wpsf:textfield name="endDate" id="endDate_cal" cssClass="form-control" />
+                                <wpsf:textfield name="endDate" id="endDate_cal" cssClass="form-control datepicker" />
                                 <span class="help help-block">dd/MM/yyyy</span>
                             </div>
 
