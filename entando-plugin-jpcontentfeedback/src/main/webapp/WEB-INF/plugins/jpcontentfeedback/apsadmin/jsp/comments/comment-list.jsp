@@ -95,7 +95,7 @@
                     <div class="form-group">
                         <label for="from_cal" class="control-label col-sm-2 text-right"><s:text name="jpcontentfeedback.date.from" /></label>
                         <div class="col-sm-5" id="content_list-changeContentType">                 
-                            <wpsf:textfield name="from" id="from_cal" value="%{from}" cssClass="form-control"/>
+                            <wpsf:textfield name="from" id="from_cal" value="%{from}" cssClass="form-control datepicker"/>
                             <span class="help-block">dd/MM/yyyy</span>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                     <div class="form-group">
                         <label for="to_cal" class="control-label col-sm-2 text-right"><s:text name="jpcontentfeedback.date.to" /></label>
                         <div class="col-sm-5" id="content_list-changeContentType">                 
-                            <wpsf:textfield name="to" id="to_cal" value="%{to}" cssClass="form-control"/>
+                            <wpsf:textfield name="to" id="to_cal" value="%{to}" cssClass="form-control datepicker"/>
                             <span class="help-block">dd/MM/yyyy</span>
                         </div>
                     </div>    
