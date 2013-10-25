@@ -2,23 +2,23 @@
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
-
-<div class="centerText">
-<dl class="table-display">
-	<dt><s:text name="label.user" />:</dt>
-	<dd><s:property value="%{message.username}" /></dd>
-
-	<dt><s:text name="label.creationDate" />:</dt>
-	<dd><s:date name="%{message.creationDate}" format="dd/MM/yyyy HH:mm" /></dd>
-
+<table class="table table-bordered">
+    <tr>
+        <th class="text-right"><s:text name="label.user" /></th>
+        <td><code><s:property value="%{message.username}" /></code></td>
+    </tr>
+    <tr>
+        <th class="text-right"><s:text name="label.creationDate" /></th>
+        <td><code><s:date name="%{message.creationDate}" format="dd/MM/yyyy HH:mm" /></code></td>
+    </tr>
+    
 <s:set name="lang" value="defaultLang" />
 <s:iterator value="message.attributeList" id="attribute">
 <%-- INIZIALIZZAZIONE TRACCIATORE --%>
 <s:set name="attributeTracer" value="initAttributeTracer(#attribute, #lang)"></s:set>
-	<dt><s:property value="#attribute.name" />:</dt>
-
-	<dd>
-
+<tr>
+	<th class="text-right"><s:property value="#attribute.name" /></th>
+	<td>
 	<s:if test="#attribute.type == 'Boolean' || #attribute.type == 'CheckBox'">
 		<!-- ############# ATTRIBUTO Boolean ############# -->
 		<s:include value="/WEB-INF/plugins/jpwebdynamicform/apsadmin/jsp/message/modules/view/booleanAttribute.jsp" />
@@ -48,7 +48,7 @@
 		<!-- ############# ATTRIBUTO Monotext (Text, Longtext, Enumerator, ecc.) ############# -->
 		<s:include value="/WEB-INF/plugins/jpwebdynamicform/apsadmin/jsp/message/modules/view/monotextAttribute.jsp" />
 	</s:else>
-	</dd>
+	</td>
+</tr>
 </s:iterator>
-</dl>
-</div>
+</table>
