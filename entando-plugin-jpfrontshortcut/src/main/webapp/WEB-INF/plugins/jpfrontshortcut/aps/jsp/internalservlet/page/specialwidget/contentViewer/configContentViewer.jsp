@@ -3,7 +3,7 @@
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
-<div class="widget_form"> 
+<div id="form-container" class="widget_form jpfrontshortcut-frameconfig-configContentViewer">
 	<h2><s:text name="title.editFrame" />: <s:property value="frame" /> &ndash; <s:property value="currentPage.getModel().getFrames()[frame]"/></h2>
 	<div class="subsection-light">
 		<h3 class="margin-more-top margin-bit-bottom">
