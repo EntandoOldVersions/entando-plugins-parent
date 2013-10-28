@@ -90,77 +90,36 @@
             <div class="form-group">
                 <%-- Il mittente è quello di sistema che figurerà nelle mail agli operatori o all'utente
                 E' obbligatorio solo se mailAttrName o notifiable sono true --%>
-                <label class="display-block" for="jpwebdynamicform_sendercode"><s:text name="label.senderCode" />
-                    <span class="label label-info pull-right" id="sender" data-toggle="popover">
-                        <span class="icon icon-info"></span>
-                    </span>
-                </label>
+                <label for="jpwebdynamicform_sendercode"><s:text name="label.senderCode" /></label>
                 <wpsf:select id="jpwebdynamicform_sendercode" list="senders" name="senderCode" listKey="key" listValue="value" headerKey="" headerValue="%{getText('label.select')}" cssClass="form-control"/>
+                <span class="help-block"><s:text name="label.sender.help" /></span>
             </div>
-            <script>
-                $("#sender").popover({
-                    html: true,
-                    placement: "left",
-                    content: '<s:text name="label.sender.help" />',
-                    title:'Info'
-                });
-            </script>            
 
             <div class="form-group">
                 <%-- L'attributo dell'entità che contiene l'indirizzo eMail dell'utente del portale.
                 Serve se si vuole consentire l'invio di eMail di risposta in back-end --%>
-                <label class="display-block" for="jpwebdynamicform_mailattribute">
+                <label for="jpwebdynamicform_mailattribute">
                     <s:text name="label.mailAttrName" />
-                    <span class="label label-info pull-right" id="email_attribute" data-toggle="popover">
-                        <span class="icon icon-info"></span>
-                    </span>
                 </label>
                 <wpsf:select id="jpwebdynamicform_mailattribute" list="textAttributes" name="mailAttrName" listKey="name" listValue="name" headerKey="" headerValue="%{getText('label.select')}" cssClass="form-control" />
+                <span class="help-block"><s:text name="label.attribute.email.help" /></span>
             </div>
-            <script>
-                $("#email_attribute").popover({
-                    html: true,
-                    placement: "left",
-                    content: '<s:text name="label.attribute.email.help" />',
-                    title:'Info'
-                });
-            </script>              
 
             <div class="form-group">
-                <label class="display-block" for="jpwebdynamicform_subjectmodel">
+                <label for="jpwebdynamicform_subjectmodel">
                     <s:text name="label.subjectModel" />
-                    <span class="label label-info pull-right" id="subject" data-toggle="popover">
-                        <span class="icon icon-info"></span>
-                    </span>                    
                 </label>
                 <wpsf:textfield id="jpwebdynamicform_subjectmodel" name="subjectModel" cssClass="form-control" />
+                <span class="help-block"><s:text name="label.subjectModel.help"/></span>
             </div>
-            <script>
-                $("#subject").popover({
-                    html: true,
-                    placement: "left",
-                    content: '<s:text name="label.subjectModel.help"/>',
-                    title:'Info'
-                });
-            </script>             
 
             <div class="form-group">
-                <label class="display-block" for="jpwebdynamicform_bodymodel">
+                <label for="jpwebdynamicform_bodymodel">
                     <s:text name="label.bodyModel" />
-                    <span class="label label-info pull-right" id="template_body" data-toggle="popover">
-                        <span class="icon icon-info"></span>
-                    </span>                     
                 </label>
                 <wpsf:textarea name="bodyModel" rows="6" cols="60" cssClass="form-control" />
+                <span class="help-block"><s:text name="label.bodyModel.help" /></span>
             </div>
-            <script>
-                $("#template_body").popover({
-                    html: true,
-                    placement: "left",
-                    content: '<s:text name="label.bodyModel.help" />',
-                    title:'Info'
-                });
-            </script>             
         </fieldset>
 
         <fieldset class="col-xs-12">
@@ -209,7 +168,6 @@
                             <div class="clearfix">
                                 <s:iterator value="recipientsTo" var="recipient" >
                                     <span class="label label-default label-sm pull-left padding-small-top padding-small-bottom margin-small-right margin-small-bottom">
-                                        <span class="icon icon-tag"></span>&#32;
                                         <abbr title="<s:property value="#recipient"/>">
                                             <s:property value="#recipient"/>
                                         </abbr>&#32;
@@ -243,7 +201,6 @@
                             <div class="clearfix">
                                 <s:iterator value="recipientsCc" var="recipient" >
                                     <span class="label label-default label-sm pull-left padding-small-top padding-small-bottom margin-small-right margin-small-bottom">
-                                        <span class="icon icon-tag"></span>&#32;
                                         <abbr title="<s:property value="#recipient"/>">
                                             <s:property value="#recipient"/>
                                         </abbr>&#32;
@@ -276,7 +233,6 @@
                             <div class="clearfix">
                                 <s:iterator value="recipientsBcc" var="recipient" >
                                     <span class="label label-default label-sm pull-left padding-small-top padding-small-bottom margin-small-right margin-small-bottom">
-                                        <span class="icon icon-tag"></span>&#32;
                                         <abbr title="<s:property value="#recipient"/>">
                                             <s:property value="#recipient"/>
                                         </abbr>&#32;
@@ -297,22 +253,8 @@
                             </div>
                         </s:else>
                     </div>
-                        
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-btn">
-                                <wpsf:select list="#{1: getText('label.recipient.to'), 2: getText('label.recipient.cc'), 3: getText('label.recipient.bcc')}" name="recipientType" id="jpwebdynamicform_addrectype" cssClass="form-control"/>
-                            </div>
-                                <wpsf:textfield cssClass="form-control" id="jpwebdynamicform_addrecaddress" name="address" />
-                            <div class="input-group-btn">
-                                <wpsf:submit type="button" cssClass="btn btn-default" action="addAddress" >
-                                    <span class="icon icon-plus-sign-alt"></span>&#32;
-                                    <s:text name="%{getText('label.addAddress')}"/>
-                                </wpsf:submit>
-                            </div>
-                         </div>    
                     </div>
-                    </div>
+            </div>
 <%--                        
                         
                         <label for="jpwebdynamicform_addrectype"><s:text name="label.recipientType" /></label>
@@ -325,8 +267,7 @@
                         
                 </div>
             </div>
---%>
-<%--                        
+--%>                        
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="margin-none">
@@ -349,8 +290,7 @@
                         </wpsf:submit>
                     </div>
                 </div>
-            </div>
---%>                    
+            </div>                    
         </fieldset>
 
         <div class="form-horizontal">
