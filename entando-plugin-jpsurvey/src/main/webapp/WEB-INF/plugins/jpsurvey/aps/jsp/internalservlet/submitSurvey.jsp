@@ -10,7 +10,7 @@
 		<wp:i18n key="JPSURVEY_ACTIVE_QUESTIONNAIRE" var="descrLabelVar" />
 	</s:if>
 	<s:else>
-		<wp:pageWithWidget var="archivePageVar" widgetTypeCode="jpsurvey_pollsListPage" />
+		<wp:pageWithWidget var="archivePageVar" widgetTypeCode="jpsurvey_pollList" />
 		<wp:i18n key="JPSURVEY_GO_TO_ACTIVE_POLLS" var="titleLabelVar" />
 		<wp:i18n key="JPSURVEY_GO_ACTIVE_POLLS" var="descrLabelVar" />
 	</s:else>
