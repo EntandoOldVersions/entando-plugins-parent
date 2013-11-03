@@ -17,16 +17,16 @@
 */
 package com.agiletec.plugins.jpcontentrefs.apsadmin.contentrelations;
 
-import java.util.List;
-
-import com.agiletec.apsadmin.system.BaseAction;
+import com.agiletec.apsadmin.system.AbstractTreeAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
+
+import java.util.List;
 
 /**
  * @author E.Santoboni
  */
-public abstract class AbstractContentRelationAction extends BaseAction implements IContentRelationAction {
+public abstract class AbstractContentRelationAction extends AbstractTreeAction implements IContentRelationAction {
 	
 	@Override
 	public String edit() {

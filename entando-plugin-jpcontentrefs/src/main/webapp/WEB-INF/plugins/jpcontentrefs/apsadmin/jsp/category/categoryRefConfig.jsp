@@ -13,16 +13,26 @@
 <s:form method="get" cssClass="action-form">
 <p class="noscreen">
 	<wpsf:hidden name="contentTypeCode" />
+	<s:iterator value="treeNodesToOpen" var="treeNodeToOpenVar"><wpsf:hidden name="treeNodesToOpen" value="%{#treeNodeToOpenVar}"/></s:iterator>
 </p>
 
 <fieldset class="margin-more-top"><legend><s:text name="jpcontentrefs.title.categoryTree" /></legend>
-<!--  ###<s:property value="selectedNode" />###  -->
+
+<s:set var="categoryTreeStyleVar" ><wp:info key="systemParam" paramName="treeStyle_category" /></s:set>
 <ul id="categoryTree">
-	<s:set name="inputFieldName" value="'categoryCode'" />
-	<s:set name="selectedTreeNode" value="categoryCode" />
+	<s:set name="inputFieldName" value="'selectedNode'" />
+	<s:set name="selectedTreeNode" value="selectedNode" />
 	<s:set name="liClassName" value="'category'" />
-	<s:set name="currentRoot" value="root" />
+	<s:if test="%{#categoryTreeStyleVar == 'classic'}">
+	<s:set name="currentRoot" value="allowedTreeRootNode" />
 	<s:include value="/WEB-INF/apsadmin/jsp/common/treeBuilder.jsp" />
+	</s:if>
+	<s:elseif test="%{#categoryTreeStyleVar == 'request'}">
+	<s:set name="openTreeActionName" value="'openCloseFacetTree'" />
+	<s:set name="closeTreeActionName" value="'openCloseFacetTree'" />
+	<s:set name="currentRoot" value="showableTree" />
+	<s:include value="/WEB-INF/apsadmin/jsp/common/treeBuilder-request-submits.jsp" />
+	</s:elseif>
 </ul>
 
 <div id="actions-container">
@@ -47,7 +57,7 @@
 	<td><s:property value="%{#joinedCategory.getFullTitle(currentLang.code)}" /></td>
  	<td class="icon">
  	<wpsa:actionParam action="remove" var="actionName" >
-		<wpsa:actionSubParam name="categoryCode" value="%{#joinedCategory.code}" />
+		<wpsa:actionSubParam name="selectedNode" value="%{#joinedCategory.code}" />
 	</wpsa:actionParam>
 	<wpsa:set name="iconImagePath" id="iconImagePath"><wp:resourceURL />administration/common/img/icons/delete.png</wpsa:set>
 	<wpsf:submit useTabindexAutoIncrement="true" type="image" src="%{iconImagePath}" action="%{#actionName}" value="%{getText('label.remove')}: %{#joinedCategory.getFullTitle(currentLang.code)}" title="%{getText('label.remove')}: %{#joinedCategory.getFullTitle(currentLang.code)}" />

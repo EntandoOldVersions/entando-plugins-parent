@@ -41,9 +41,9 @@ public class CategoryRelationAction extends AbstractContentRelationAction {
 				//TODO MESSAGGIO DI ERRORE
 				return SUCCESS;
 			}
-			Category category = this.getCategoryManager().getCategory(this.getCategoryCode());
+			Category category = this.getCategoryManager().getCategory(this.getSelectedNode());
 			if (!category.getCode().equals(category.getParentCode())) {//se non è la Home
-				this.getContentCategoryRefManager().addRelation(this.getCategoryCode(), this.getContentTypeCode());
+				this.getContentCategoryRefManager().addRelation(this.getSelectedNode(), this.getContentTypeCode());
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "join");
@@ -62,7 +62,7 @@ public class CategoryRelationAction extends AbstractContentRelationAction {
 				this.setReferences(referencingContent);
 				return "references";
 			}
-			this.getContentCategoryRefManager().removeRelation(this.getCategoryCode(), this.getContentTypeCode());
+			this.getContentCategoryRefManager().removeRelation(this.getSelectedNode(), this.getContentTypeCode());
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "remove");
 			return FAILURE;
@@ -73,7 +73,7 @@ public class CategoryRelationAction extends AbstractContentRelationAction {
 	private List<ContentRecordVO> getReferencingContents() throws Throwable {
 		List<ContentRecordVO> list = new ArrayList<ContentRecordVO>();
 		CategoryUtilizer contentManager = (CategoryUtilizer) this.getContentManager();
-		List<ContentRecordVO> referencingContents = contentManager.getCategoryUtilizers(this.getCategoryCode());
+		List<ContentRecordVO> referencingContents = contentManager.getCategoryUtilizers(this.getSelectedNode());
 		for (ContentRecordVO contentVo : referencingContents) {
 			if (contentVo.getTypeCode().equals(this.getContentTypeCode())) {
 				list.add(contentVo);
@@ -83,7 +83,7 @@ public class CategoryRelationAction extends AbstractContentRelationAction {
 	}
 	
 	private boolean isValidCategory() {
-		String catCode = this.getCategoryCode();
+		String catCode = this.getSelectedNode();
 		return (catCode != null && this.getCategoryManager().getCategory(catCode) != null);
 	}
 	
@@ -113,13 +113,13 @@ public class CategoryRelationAction extends AbstractContentRelationAction {
 		this._contentCategoryRefManager = contentCategoryManager;
 	}
 	
-	public String getCategoryCode() {
-		return _categoryCode;
+	public String getSelectedNode() {
+		return _selectedNode;
 	}
-	public void setCategoryCode(String categoryCode) {
-		this._categoryCode = categoryCode;
+	public void setSelectedNode(String selectedNode) {
+		this._selectedNode = selectedNode;
 	}
-
+	
 	public List<ContentRecordVO> getReferences() {
 		return _references;
 	}
@@ -130,7 +130,7 @@ public class CategoryRelationAction extends AbstractContentRelationAction {
 	public ICategoryManager _categoryManager;
 	public IContentCategoryRefManager _contentCategoryRefManager;
 	
-	private String _categoryCode;
+	private String _selectedNode;
 	private List<ContentRecordVO> _references;
 	
 }

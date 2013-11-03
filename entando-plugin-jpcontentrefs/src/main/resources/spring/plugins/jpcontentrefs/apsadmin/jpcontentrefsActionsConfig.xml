@@ -18,4 +18,9 @@
 		<property name="contentCategoryRefManager" ref="jpcontentrefsContentCategoryRefManager" />
 	</bean>
 	
+	<bean id="jpcontentrefsCategoryReferencesHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
+		<property name="filePath"><value>/WEB-INF/plugins/jpcontentrefs/apsadmin/jsp/category/categoryReferences-jack.jsp</value></property>
+		<property name="hookPointKey"><value>core.categoryReferences</value></property>
+	</bean>
+	
 </beans>
