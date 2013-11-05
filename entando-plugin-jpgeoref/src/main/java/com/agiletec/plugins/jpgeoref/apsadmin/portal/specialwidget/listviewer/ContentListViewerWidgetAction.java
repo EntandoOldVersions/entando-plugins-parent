@@ -21,8 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
+import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.util.SelectItem;
+import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
+import com.agiletec.plugins.jacms.aps.system.services.content.widget.IContentListWidgetHelper;
+import com.agiletec.plugins.jacms.aps.system.services.content.widget.UserFilterOptionBean;
+import com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.listviewer.IContentListFilterAction;
 import com.agiletec.plugins.jpgeoref.aps.system.GeoRefSystemConstants;
 
 /**
@@ -78,5 +85,55 @@ public class ContentListViewerWidgetAction extends com.agiletec.plugins.jacms.ap
 		}
 		return list;
 	}
+        
+        public static final String ATTRIBUTE_TYPE_COORD = "Coords";        
+        
+        @Override
+	public List<SelectItem> getAllowedUserFilterTypes() throws ApsSystemException {
+		List<SelectItem> types = new ArrayList<SelectItem>();
+		try {
+			types.add(new SelectItem(UserFilterOptionBean.KEY_FULLTEXT, this.getText("label.fulltext")));
+			types.add(new SelectItem(UserFilterOptionBean.KEY_CATEGORY, this.getText("label.category")));
+			String contentType = this.getWidget().getConfig().getProperty(IContentListWidgetHelper.WIDGET_PARAM_CONTENT_TYPE);
+			Content prototype = this.getContentManager().createContentType(contentType);
+			List<AttributeInterface> contentAttributes = prototype.getAttributeList();
+			for (int i=0; i<contentAttributes.size(); i++) {
+				AttributeInterface attribute = contentAttributes.get(i);
+				if (attribute.isSearcheable()) {
+                                    // Escludo filtro per tipo Coordinate
+                                    if(!ContentListViewerWidgetAction.ATTRIBUTE_TYPE_COORD.equals(attribute.getType()))
+					types.add(new SelectItem(UserFilterOptionBean.TYPE_ATTRIBUTE + "_" + attribute.getName(), this.getText("label.attribute", new String[]{attribute.getName()})));
+				}
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "getAllowedUserFilterTypes");
+			throw new ApsSystemException("Error extracting allowed user filter types", t);
+		}
+		return types;
+	}
+        
+        @Override
+	public List<SelectItem> getAllowedFilterTypes() throws ApsSystemException {
+		List<SelectItem> types = new ArrayList<SelectItem>();
+		try {
+			types.add(new SelectItem(IContentListFilterAction.METADATA_KEY_PREFIX + IContentManager.CONTENT_CREATION_DATE_FILTER_KEY, this.getText("label.creationDate")));
+			types.add(new SelectItem(IContentListFilterAction.METADATA_KEY_PREFIX + IContentManager.CONTENT_MODIFY_DATE_FILTER_KEY, this.getText("label.lastModifyDate")));
+			String contentType = this.getWidget().getConfig().getProperty(IContentListWidgetHelper.WIDGET_PARAM_CONTENT_TYPE);
+			Content prototype = this.getContentManager().createContentType(contentType);
+			List<AttributeInterface> contentAttributes = prototype.getAttributeList();
+			for (int i=0; i<contentAttributes.size(); i++) {
+				AttributeInterface attribute = contentAttributes.get(i);
+				if (attribute.isSearcheable()) {
+                                    // Escludo filtro per tipo Coordinate
+                                    if(!ContentListViewerWidgetAction.ATTRIBUTE_TYPE_COORD.equals(attribute.getType()))
+					types.add(new SelectItem(attribute.getName(), this.getText("label.attribute", new String[]{attribute.getName()})));
+				}
+			}
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "getAllowedFilterTypes");
+			throw new ApsSystemException("Error extracting allowed filter types", t);
+		}
+		return types;
+	}        
 	
 }
