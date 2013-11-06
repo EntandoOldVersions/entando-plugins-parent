@@ -23,6 +23,8 @@
 
         <s:action namespace="/do/Page" name="printPageDetails" executeResult="true" ignoreContextParams="true"><s:param name="selectedNode" value="currentPage.code"></s:param></s:action>
 
+        <s:property value="%{getContentTypes().get(0).getDescr()}"/>
+        
         <s:form action="saveConfigParameters" namespace="/do/jpfastcontentedit/Page/SpecialWidget">
             <p class="noscreen">
                 <wpsf:hidden name="pageCode" />
@@ -50,7 +52,10 @@
                                     <wpsf:select name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" cssClass="form-control" />
                                     <span class="input-group-btn">
 
-                                        <wpsf:submit action="configContentType" value="%{getText('label.continue')}" cssClass="btn btn-default" />
+                                        <wpsf:submit type="button" action="configContentType" cssClass="btn btn-info">
+                                            <span class="icon icon-play-circle"></span>&#32;
+                                            <s:text name="%{getText('label.continue')}"/>
+                                        </wpsf:submit>
                                     </span>
                                 </div>
                             </div>
@@ -62,9 +67,11 @@
                             <div class="form-group">
                                 <label for="contentType"><s:text name="label.type"/></label>
                                 <div class="input-group">
-                                    <wpsf:select name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" disabled="true" value="%{getShowlet().getConfig().get('contentType')}" cssClass="form-control" />
+                                    <wpsf:select name="contentType" id="contentType" list="contentTypes" listKey="code" listValue="descr" disabled="true" cssClass="form-control" value="%{getShowlet().getConfig().get('typeCode')}"/>
                                     <span class="input-group-btn">
-                                        <wpsf:submit action="changeContentType" value="%{getText('label.change')}" cssClass="btn btn-default" />	
+                                        <wpsf:submit type="button" action="changeContentType" cssClass="btn btn-info">
+                                            <s:text name="%{getText('label.change')}"/>
+                                        </wpsf:submit>
                                     </span>
                                 </div>
                             </div>
@@ -75,19 +82,22 @@
                                              cssClass="form-control"/>
                             </div>
                         </fieldset>
-                        <div class="form-horizontal">
-                            <div class="form-group">
-                                <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
-                                    <wpsf:submit type="button" cssClass="btn btn-primary btn-block">
-                                        <span class="icon icon-save"></span>&#32;
-                                        <s:text name="%{getText('label.save')}"/>
-                                    </wpsf:submit>
-                                </div>
-                            </div>
-                        </div>
                     </s:else>
                 </div>
             </div>
+            <s:if test="showlet.config['typeCode'] != null">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
+                            <wpsf:submit type="button" cssClass="btn btn-primary btn-block">
+                                <span class="icon icon-save"></span>&#32;
+                                <s:text name="%{getText('label.save')}"/>
+                            </wpsf:submit>
+                        </div>
+                    </div>
+                </div>
+
+            </s:if>
         </s:form>
     </div>
 </div>
