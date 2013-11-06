@@ -17,66 +17,75 @@
 */
 package com.agiletec.plugins.jpcontentfeedback.aps.tags;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-
-import org.apache.commons.lang.StringUtils;
-
+import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.InternalServletTag;
+import com.agiletec.aps.tags.InternalServletTag.ResponseWrapper;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Tag che consente la visualisualizzazione del blocco jpcontentFeedback per la publicazione del rating del contenuto,
  * dei commenti e del rating dei commenti
  * @author D.Cherchi
- *
  */
 public class FeedbackIntroTag extends InternalServletTag {
-
+	
 	@Override
-	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget showlet) throws ServletException, IOException {
-		String actionPath = "/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/intro.action";
-		String requestActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_ACTIONPATH);
-		String currentFrameActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_FRAMEDEST);
-		Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
-
-		if (requestActionPath != null && currentFrameActionPath != null && currentFrame.toString().equals(currentFrameActionPath)) {
-			actionPath = requestActionPath;
+	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget widget) throws ServletException, IOException {
+		HttpServletRequest request = reqCtx.getRequest();
+		try {
+			String actionPath = this.extractIntroActionPath(reqCtx, widget);
+			if (!this.isStaticAction()) {
+				String requestActionPath = request.getParameter(REQUEST_PARAM_ACTIONPATH);
+				String currentFrameActionPath = request.getParameter(REQUEST_PARAM_FRAMEDEST);
+				Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
+				if (requestActionPath != null && currentFrameActionPath != null && currentFrame.toString().equals(currentFrameActionPath)) {
+					actionPath = requestActionPath;
+				}
+			}
+			reqCtx.addExtraParam(EXTRAPAR_STATIC_ACTION, this.isStaticAction());
+			StringBuilder params = new StringBuilder();
+			// 1) showlet 2) tag 3)request
+			String contentId = null;
+			if (null != this.getContentId()) {
+				contentId = this.getContentId();
+			}
+			if (null != contentId) {
+				reqCtx.getRequest().setAttribute("currentContentId", contentId);
+			}
+			if (null != this.getReverseVotes() && this.getReverseVotes().equalsIgnoreCase("true")) {
+				if (params.length() > 0) params.append("&");
+				params.append("reverseVotes=true");
+			}
+			if (StringUtils.isNotBlank(this.getExtraParamsRedirect())) {
+				String[] redirectParams = this.getExtraParamsRedirect().split(",");
+				reqCtx.getRequest().setAttribute("extraParamNames", redirectParams);
+			}
+			actionPath = actionPath + "?" + params.toString();
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(actionPath);
+			requestDispatcher.include(request, responseWrapper);
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "includeShowlet", "Error including showlet");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/aps/jsp/system/internalServlet_error.jsp");
+			requestDispatcher.include(request, responseWrapper);
 		}
-
-		StringBuffer params = new StringBuffer();
-
-		// 1) showlet 2) tag 3)request
-		String contentId = null;
-		if (null != this.getContentId()) {
-			contentId = this.getContentId();
-		}
-
-
-		if (null != contentId) {
-			reqCtx.getRequest().setAttribute("currentContentId", contentId);
-		}
-
-		if (null != this.getReverseVotes() && this.getReverseVotes().equalsIgnoreCase("true")) {
-			if (params.length() > 0) params.append("&");
-			params.append("reverseVotes=true");
-		}
-
-		if (StringUtils.isNotBlank(this.getExtraParamsRedirect())) {
-			String[] redirectParams = this.getExtraParamsRedirect().split(",");
-			reqCtx.getRequest().setAttribute("extraParamNames", redirectParams);
-		}
-		actionPath = actionPath + "?" + params.toString();
-
-		RequestDispatcher requestDispatcher = reqCtx.getRequest().getRequestDispatcher(actionPath);
-		requestDispatcher.include(reqCtx.getRequest(), responseWrapper);
-
 	}
-
+	
+	@Override
+	public String getActionPath() {
+		return "/ExtStr2/do/jpcontentfeedback/FrontEnd/contentfeedback/intro.action";
+	}
+	
 	@Override
 	public void release() {
 		super.release();

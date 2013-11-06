@@ -17,34 +17,17 @@
 */
 package org.entando.entando.plugins.jpfrontshortcut.aps.tags;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.RequestContext;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.InternalServletTag;
 
 /**
  * @author E.Santoboni
+ * @deprecated use InternalServletTag with parameter staticAction="true"
  */
 public class StaticInternalServletTag extends InternalServletTag {
 	
 	@Override
-	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget widget) throws ServletException, IOException {
-		HttpServletRequest request = reqCtx.getRequest();
-		try {
-			String actionPath = super.getActionPath();
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(actionPath);
-			requestDispatcher.include(request, responseWrapper);
-		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "includeShowlet", "Error including showlet");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/aps/jsp/system/internalServlet_error.jsp");
-			requestDispatcher.include(request, responseWrapper);
-		}
+	public boolean isStaticAction() {
+		return true;
 	}
 	
 }

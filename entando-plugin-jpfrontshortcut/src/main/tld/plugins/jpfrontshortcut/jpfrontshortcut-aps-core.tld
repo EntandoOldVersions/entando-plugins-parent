@@ -7,7 +7,7 @@
     <uri>/jpfrontshortcut-aps-core</uri>
     
     <tag>
-        <description><![CDATA[]]></description>
+        <description><![CDATA[DEPRECATED: use wp:internalServlet (core tag) with parameter staticAction="true"]]></description>
         <name>staticInternalServlet</name>
         <tag-class>org.entando.entando.plugins.jpfrontshortcut.aps.tags.StaticInternalServletTag</tag-class>
         <body-content>empty</body-content>

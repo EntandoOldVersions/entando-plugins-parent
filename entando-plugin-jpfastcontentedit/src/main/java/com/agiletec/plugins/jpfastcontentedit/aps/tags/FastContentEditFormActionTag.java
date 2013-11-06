@@ -17,14 +17,6 @@
 */
 package com.agiletec.plugins.jpfastcontentedit.aps.tags;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-
-import com.agiletec.aps.system.RequestContext;
-import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.InternalServletTag;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
 
@@ -32,18 +24,10 @@ import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystem
  * Tag for widget "jpfastcontentedit_formAction".
  */
 public class FastContentEditFormActionTag extends InternalServletTag {
-
+	
 	@Override
-	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget widget) throws ServletException, IOException {
-		String actionPath = JpFastContentEditSystemConstants.ACTION_PATH_FOR_CONTENT_EDIT;
-		String requestActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_ACTIONPATH);
-		String currentFrameActionPath = reqCtx.getRequest().getParameter(REQUEST_PARAM_FRAMEDEST);
-		Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
-		if (requestActionPath != null && currentFrameActionPath != null && currentFrame.toString().equals(currentFrameActionPath)) {
-			actionPath = requestActionPath;
-		}
-		RequestDispatcher requestDispatcher = reqCtx.getRequest().getRequestDispatcher(actionPath);
-		requestDispatcher.include(reqCtx.getRequest(), responseWrapper);
+	public String getActionPath() {
+		return JpFastContentEditSystemConstants.ACTION_PATH_FOR_CONTENT_EDIT;
 	}
-
+	
 }
