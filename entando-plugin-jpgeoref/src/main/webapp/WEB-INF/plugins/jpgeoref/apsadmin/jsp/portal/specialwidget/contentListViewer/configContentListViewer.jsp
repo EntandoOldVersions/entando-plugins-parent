@@ -209,7 +209,7 @@
 
                                                         <s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/delete.png</s:set>
                                                         <wpsf:submit type="button" action="%{#actionName}" title="%{getText('label.remove')}" cssClass="btn btn-warning">
-                                                            <span class="icon icon-remove-circle"></span>
+                                                            <span class="icon fa fa-times-circle-o"></span>
                                                         </wpsf:submit>
                                                     </div>
                                                 </td>	
@@ -372,7 +372,7 @@
                                                             <wpsa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
                                                         </wpsa:actionParam>
                                                         <wpsf:submit type="button" action="%{#actionName}" title="%{getText('label.remove')}" cssClass="btn btn-warning">
-                                                            <span class="icon icon-remove-circle"></span>
+                                                            <span class="icon fa fa-times-circle-o"></span>
                                                         </wpsf:submit>
                                                     </div>
                                                 </td>	

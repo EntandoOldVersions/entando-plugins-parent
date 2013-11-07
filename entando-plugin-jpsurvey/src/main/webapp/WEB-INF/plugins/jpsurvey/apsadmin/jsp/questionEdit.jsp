@@ -181,7 +181,7 @@
                                href="<s:url action="trashChoice">
                                    <s:param name="choiceId" value="#currentChoice.id"/>
                                </s:url>" title="<s:text name="label.remove" />:&#32;<s:if test="%{#currentChoice.freeText== false}"><s:property value="%{getLabel(#currentChoice.choices)}"/></s:if><s:else><s:property value="#localizedString"/></s:else>">
-                                    <span class="icon icon-remove-circle"></span>
+                                    <span class="icon fa fa-times-circle-o"></span>
                                     <span class="sr-only"><s:text name="label.remove" /></span>                                
                             </a>
                             </div>

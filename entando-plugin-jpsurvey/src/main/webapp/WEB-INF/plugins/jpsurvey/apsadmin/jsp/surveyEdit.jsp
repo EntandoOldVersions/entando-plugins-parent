@@ -328,7 +328,7 @@
                                                <s:param name="questionId" value="#currentQuestion.id"/></s:url>" 
                                            title="<s:text name="label.remove" />: <s:property value="%{getLabel(#currentQuestion.questions)}"/>">
                                             <span class="sr-only"><s:text name="label.remove" /></span>
-                                            <span class="icon icon-remove-circle"></span>
+                                            <span class="icon fa fa-times-circle-o"></span>
                                         </a>
                                     </div>
                                 </td>

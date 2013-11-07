@@ -107,7 +107,7 @@
                                         <td class="text-center text-nowrap">
                                             <wpsa:actionParam action="removeWidget" var="actionName" ><wpsa:actionSubParam name="showletCode" value="%{#showletCode}" /></wpsa:actionParam>
                                             <wpsf:submit type="button" src="%{#iconImagePath}" action="%{#actionName}" value="%{getText('label.remove')}" title="%{getText('label.remove') + ': ' + getTitle(#showletCode, #showletType.getTitles())}" cssClass="btn btn-warning btn-xs">
-                                                <span class="icon icon-remove-circle"></span>
+                                                <span class="icon fa fa-times-circle-o"></span>
                                             </wpsf:submit>    
                                         </td>
                                         <td>

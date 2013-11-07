@@ -157,7 +157,7 @@
                                            href="<s:url action="trash"><s:param name="selectedComment" value="#commentoId" /></s:url>" 
                                            title="<s:text name="label.remove" />:&#32;<s:date name="#commento.creationDate" format="dd/MM/yyyy HH:mm" />">
                                             <span class="sr-only"></span>
-                                            <span class="icon icon-remove-circle"></span>
+                                            <span class="icon fa fa-times-circle-o"></span>
                                         </a>
                                     </div> 
                                 </td>

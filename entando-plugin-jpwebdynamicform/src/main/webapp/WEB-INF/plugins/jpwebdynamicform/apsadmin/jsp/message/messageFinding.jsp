@@ -261,7 +261,7 @@
                                 <div class="btn-group btn-group-xs">
                                     <a class="btn btn-warning" href="<s:url action="trash"><s:param name="id" value="#message.id"/></s:url>" 
                                        title="<s:text name="label.remove" />: <s:property value="#message.id" />">
-                                        <span class="icon icon-remove-circle"></span>
+                                        <span class="icon fa fa-times-circle-o"></span>
                                         <span class="sr-only"><s:text name="label.remove" /></span>                                        
                                     </a>
                                 </div>

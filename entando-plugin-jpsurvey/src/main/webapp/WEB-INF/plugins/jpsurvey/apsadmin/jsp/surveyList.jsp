@@ -186,7 +186,7 @@
                                                <s:param name="deleteInfo" value="%{getLabel(#survey.titles)}"/>
                                            </s:url>" title="<s:text name="label.remove" />: <s:property value="%{getLabel(#survey.titles)}"/>">
                                             <span class="sr-only">Delete</span>
-                                            <span class="icon icon-remove-circle"></span>
+                                            <span class="icon fa fa-times-circle-o"></span>
                                         </a>
                                     </div>
                                 </td>

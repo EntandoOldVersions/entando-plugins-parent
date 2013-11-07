@@ -50,7 +50,7 @@
                             <a class="btn btn-warning" href="<s:url action="trashSender" >
                                    <s:param name="code" value="#sender.key" /></s:url>" 
                                title="<s:text name="label.remove" />: <s:property value="#sender.value" />">
-                                <span class="icon icon-remove-circle"></span>
+                                <span class="icon fa fa-times-circle-o"></span>
                             </a>
                         </div>        
                     </td>
