@@ -220,7 +220,7 @@
                                             <label class="display-block" for="imageDescription-<s:property value="%{#currentLang.code}"/>"><s:text name="jpsurvey_imageDescription" /></label>
                                             <wpsa:actionParam action="associateSurveyImageEntry" var="associateImageAction"><wpsa:actionSubParam name="resourceTypeCode" value="Image" /></wpsa:actionParam>
                                             <wpsf:submit type="button" action="%{#associateImageAction}" cssClass="btn btn-default" title="%{getText('label.choose')}">
-                                                <span class="icon icon-picture"></span>&#32; 
+                                                <span class="icon fa fa-picture-o"></span>&#32; 
                                                 <s:text name="%{getText('jpsurvey_new_image')}"/>
                                             </wpsf:submit>
                                         </div>
@@ -254,7 +254,7 @@
 
                                                             <div class="col-xs-12">
                                                                 <div class="input-group">
-                                                                    <span class="input-group-addon"><span class="icon icon-picture"></span></span>
+                                                                    <span class="input-group-addon"><span class="icon fa fa-picture-o"></span></span>
                                                                         <wpsf:textfield name="%{'imageDescription-'+#currentLang.code}" id="%{'imageDescription-'+#currentLang.code}" value="%{imageDescriptions[#currentLang.code]}" cssClass="form-control" />
                                                                 </div>
                                                             </div>

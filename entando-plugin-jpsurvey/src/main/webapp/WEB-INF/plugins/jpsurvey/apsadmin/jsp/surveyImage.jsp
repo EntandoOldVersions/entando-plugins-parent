@@ -136,7 +136,7 @@
                                        </s:url>" 
                                        title="<s:text name="note.joinThisToThat" />: TITOLO_SONDAGGIO_CORRENTE" 
                                        class="btn btn-default">
-                                        <span class="icon icon-picture"></span> 
+                                        <span class="icon fa fa-picture-o"></span> 
                                         <s:text name="label.join" />
                                     </a>
                                     <button type="button" class="btn btn-info" data-toggle="popover" data-title="<s:property value="#resource.descr" />" data-original-title="" title="">
