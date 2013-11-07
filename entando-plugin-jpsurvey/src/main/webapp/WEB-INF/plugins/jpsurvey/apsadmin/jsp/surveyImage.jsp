@@ -70,7 +70,7 @@
                                 </p>
                                 <ul id="categoryTree" class="icons-ul list-unstyled">
                                     <li class="tree_node_flag">
-                                        <span class="icon icon-li icon-folder-close"></span>
+                                        <span class="icon icon-li fa fa-folder"></span>
                                         <input type="radio" name="categoryCode" id="<s:property value="categoryRoot.code" />" 
                                                value="<s:property value="categoryRoot.code" />" 
                                                class="subTreeToggler" />
