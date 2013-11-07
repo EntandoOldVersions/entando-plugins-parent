@@ -68,7 +68,7 @@
                                     <div class="input-group-btn">
                                         <wpsf:submit type="button" action="configListViewer" cssClass="btn btn-default" >
                                             <s:text name="%{getText('label.continue')}"/>
-                                            <span class="icon icon-play-circle"></span>
+                                            <span class="icon fa fa-play-circle-o"></span>
                                         </wpsf:submit>
                                     </div>
                                 </div>

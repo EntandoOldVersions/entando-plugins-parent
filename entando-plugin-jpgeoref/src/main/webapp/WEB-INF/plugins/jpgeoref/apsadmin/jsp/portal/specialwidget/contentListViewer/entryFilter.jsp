@@ -83,7 +83,7 @@
                                     <div class="input-group-btn">
                                         <wpsf:submit type="button" action="setFilterType" cssClass="btn btn-default">
                                             <s:text name="%{getText('label.continue')}"/>
-                                            <span class="icon icon-play-circle"></span>
+                                            <span class="icon fa fa-play-circle-o"></span>
                                         </wpsf:submit>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                         <s:else>
                                             <div class="input-group-btn">
                                                 <wpsf:submit type="button" action="setFilterOption" cssClass="btn btn-info">
-                                                    <span class="icon icon-play-circle"></span>&#32;
+                                                    <span class="icon fa fa-play-circle-o"></span>&#32;
                                                     <s:text name="%{getText('label.continue')}"/>
                                                 </wpsf:submit>
                                             </div>

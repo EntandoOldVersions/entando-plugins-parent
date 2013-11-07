@@ -53,7 +53,7 @@
                                     <span class="input-group-btn">
 
                                         <wpsf:submit type="button" action="configContentType" cssClass="btn btn-info">
-                                            <span class="icon icon-play-circle"></span>&#32;
+                                            <span class="icon fa fa-play-circle-o"></span>&#32;
                                             <s:text name="%{getText('label.continue')}"/>
                                         </wpsf:submit>
                                     </span>
