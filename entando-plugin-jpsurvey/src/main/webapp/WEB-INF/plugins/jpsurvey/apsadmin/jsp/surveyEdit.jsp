@@ -367,7 +367,7 @@
                     </s:if>
                     <s:elseif test="getStrutsAction() == 2">
                         <wpsf:submit type="button" action="saveSurvey" cssClass="btn btn-primary btn-block">
-                            <span class="icon icon-save"></span>&#32;
+                            <span class="icon fa fa-floppy-o"></span>&#32;
                             <s:text name="%{getText('label.save')}"/>
                         </wpsf:submit>
                     </s:elseif>
