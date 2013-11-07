@@ -106,7 +106,7 @@
             <%//TODO verificare posizione new %>
             <p>
                 <a class="btn btn-default" href="<s:url action="newSurvey" namespace="/do/jpsurvey/Survey" ><s:param name="questionnaire" value="questionnaire"/></s:url>" tabindex="<wpsa:counter />">
-                        <span class="icon icon-plus-sign"></span>
+                        <span class="icon fa fa-plus-circle"></span>
                     <s:if test="questionnaire"><s:text name="jpsurvey_new_survey" /></s:if>
                     <s:else><s:text name="jpsurvey_new_poll" /></s:else>
                     </a>

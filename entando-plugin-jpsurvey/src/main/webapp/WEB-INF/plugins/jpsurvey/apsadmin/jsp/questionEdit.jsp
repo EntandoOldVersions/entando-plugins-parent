@@ -232,7 +232,7 @@
                 <wpsa:actionSubParam name="overrideResponseNumberFieldsCheck" value="true"></wpsa:actionSubParam>
             </wpsa:actionParam>
             <wpsf:submit type="button" action="%{#addChoiceAction}" cssClass="btn btn-default">
-                <span class="icon icon-plus-sign"></span>&#32;
+                <span class="icon fa fa-plus-circle"></span>&#32;
                 <s:text name="%{getText('jpsurvey_new_choice')}"/>
             </wpsf:submit>
             <s:if test="question.questionnaire">

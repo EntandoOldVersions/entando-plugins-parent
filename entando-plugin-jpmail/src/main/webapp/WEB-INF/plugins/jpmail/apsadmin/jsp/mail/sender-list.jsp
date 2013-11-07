@@ -11,7 +11,7 @@
 </h1>
 <div id="main">	
     <p>
-        <a class="btn btn-default margin-base-bottom" href="<s:url action="newSender" />" ><span class="icon icon-plus-sign"> <s:text name="label.senders.new" /></span></a>
+        <a class="btn btn-default margin-base-bottom" href="<s:url action="newSender" />" ><span class="icon fa fa-plus-circle"> <s:text name="label.senders.new" /></span></a>
     </p>
 
     <s:if test="hasActionErrors()">

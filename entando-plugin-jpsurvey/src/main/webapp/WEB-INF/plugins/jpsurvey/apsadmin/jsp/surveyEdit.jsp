@@ -348,7 +348,7 @@
                 <s:if test="%{surveyId != null}">
                     <div class="form-group">
                         <wpsf:submit type="button" action="addQuestion" value="" cssClass="btn btn-default">
-                            <span class="icon icon-plus-sign"></span>
+                            <span class="icon fa fa-plus-circle"></span>
                             <s:text name="%{getText('jpsurvey_new_questions')}"/>
                         </wpsf:submit>
                     </div>
