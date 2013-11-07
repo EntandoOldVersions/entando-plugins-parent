@@ -285,7 +285,7 @@
                     </div>
                     <div class="form-group">
                         <wpsf:submit type="button" cssClass="btn btn-default" action="addAddress" >
-                            <span class="icon icon-plus-sign-alt"></span>&#32;
+                            <span class="icon fa fa-plus-square"></span>&#32;
                             <s:text name="%{getText('label.addAddress')}"/>
                         </wpsf:submit>
                     </div>
