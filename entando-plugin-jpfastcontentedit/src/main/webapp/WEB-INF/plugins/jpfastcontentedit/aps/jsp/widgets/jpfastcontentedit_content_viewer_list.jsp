@@ -41,7 +41,7 @@
 									<wp:parameter name="contentId" ><c:out value="${contentId}" /></wp:parameter>
 									<wp:parameter name="contentTypeCode" ><wp:currentWidget param="config" configParam="contentType" /></wp:parameter>
 									<wp:parameter name="finalPageDest" ><wp:currentPage param="code" /></wp:parameter>
-								</wp:url>" ><span class="icon icon-remove-sign"></span> <wp:i18n key="jpfastcontentedit_REMOVE_CONTENT" />
+								</wp:url>" ><span class="icon fa fa-times-circle"></span> <wp:i18n key="jpfastcontentedit_REMOVE_CONTENT" />
 							</a>
 						</p>
 					</fce:isContentAllowed>
