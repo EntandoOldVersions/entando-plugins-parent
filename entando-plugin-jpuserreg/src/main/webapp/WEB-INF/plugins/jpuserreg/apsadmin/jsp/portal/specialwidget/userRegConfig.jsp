@@ -26,7 +26,7 @@
 <s:form action="saveConfig" namespace="/do/jpuserreg/Page/SpecialWidget/UserReg" cssClass="form-horizontal">
 	<s:if test="hasActionErrors()">
                 <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                    <button type="button" class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
                         <h4 class="margin-none"><s:text name="message.title.ActionErrors" /></h4>
 		<ul class="margin-base-vertical">
 		<s:iterator value="actionErrors">
@@ -37,7 +37,7 @@
 	</s:if>
 	<s:if test="hasFieldErrors()">
                 <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                    <button type="button" class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
                         <h4 class="margin-none"><s:text name="message.title.FieldErrors" /></h4>
 		<ul class="margin-base-vertical">
 		<s:iterator value="fieldErrors">

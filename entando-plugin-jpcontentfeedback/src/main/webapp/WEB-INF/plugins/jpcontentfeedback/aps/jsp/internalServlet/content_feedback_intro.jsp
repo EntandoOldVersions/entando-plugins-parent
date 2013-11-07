@@ -12,7 +12,7 @@
   <s:if test="hasActionErrors()">
   <div class="row-fluid">
     <div class="alert alert-error span12">
-      <button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>
+      <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
       <p class="alert-heading"><wp:i18n key="ERRORS" /></p>
       <ul>
       <s:iterator value="actionErrors">
@@ -25,7 +25,7 @@
   <s:if test="hasActionMessages()">
   <div class="row-fluid">
     <div class="alert alert-info span12">
-      <button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>
+      <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
       <p class="alert-heading"><wp:i18n key="MESSAGES" /></p>
       <ul>
         <s:iterator value="actionMessages">
@@ -184,7 +184,7 @@
 			              </s:if>
 					</wp:action>
 
-					<a href="<c:out value="${deleteAction}" escapeXml="false" />" class="btn btn-danger"><i class="icon-remove icon-white"></i>&#32;<wp:i18n key="jpcontentfeedback_DELETE" /></a>
+					<a href="<c:out value="${deleteAction}" escapeXml="false" />" class="btn btn-danger"><i class="fa fa-times icon-white"></i>&#32;<wp:i18n key="jpcontentfeedback_DELETE" /></a>
                   </p>
                 </wp:ifauthorized>
               </c:if>
@@ -218,7 +218,7 @@
           <%-- Messaggi di errore utente/validazione --%>
           <s:if test="hasFieldErrors()">
             <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>
+            <button type="button" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
             <p class="alert-heading"><wp:i18n key="ERRORS" /></p>
             <ul>
               <s:iterator value="fieldErrors">

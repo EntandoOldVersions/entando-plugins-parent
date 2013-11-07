@@ -16,7 +16,7 @@
     <s:form action="save">
         <s:if test="hasFieldErrors()">
             <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                <button type="button" class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
                 <h2 class="h4 margin-none"><s:text name="message.title.FieldErrors" /></h2>
                 <ul class="margin-base-vertical">
                     <s:iterator value="fieldErrors">
@@ -29,7 +29,7 @@
         </s:if>
         <s:if test="hasActionErrors()">
             <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                <button type="button" class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
                 <h2 class="h4 margin-none"><s:text name="message.title.ActionErrors" /></h2>
                 <ul class="margin-base-vertical">
                     <s:iterator value="actionErrors">
@@ -181,7 +181,7 @@
                                             action="%{#actionName}"
                                             title="%{getText('label.remove')}: %{#recipient}"
                                             cssClass="btn btn-default btn-xs badge">
-                                            <span class="icon icon-remove"></span>
+                                            <span class="icon fa fa-times"></span>
                                             <span class="sr-only">x</span>
                                         </wpsf:submit>
                                     </span>
@@ -213,7 +213,7 @@
                                             action="%{#actionName}"
                                             title="%{getText('label.remove')}: %{#recipient}"
                                             cssClass="btn btn-default btn-xs badge">
-                                            <span class="icon icon-remove"></span>
+                                            <span class="icon fa fa-times"></span>
                                             <span class="sr-only">x</span>
                                         </wpsf:submit>
                                     </span>
@@ -245,7 +245,7 @@
                                             action="%{#actionName}"
                                             title="%{getText('label.remove')}: %{#recipient}"
                                             cssClass="btn btn-default btn-xs badge">
-                                            <span class="icon icon-remove"></span>
+                                            <span class="icon fa fa-times"></span>
                                             <span class="sr-only">x</span>
                                         </wpsf:submit>
                                     </span>

@@ -29,7 +29,7 @@
 
             <s:if test="hasFieldErrors()">
                 <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert"><span class="icon icon-remove"></span></button>
+                    <button type="button" class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
                     <h4 class="margin-none"><s:text name="message.title.FieldErrors" /></h4>	
                     <ul class="margin-base-vertical">
                         <s:iterator value="fieldErrors">
@@ -124,7 +124,7 @@
                                                 <wpsa:actionSubParam name="categoryCode" value="%{#categoryCodeVar}" />
                                             </wpsa:actionParam>
                                             <wpsf:submit type="button" action="%{#actionName}" title="%{getText('label.remove') + ': ' + #showletCategory.getFullTitle(currentLang.code)}" cssClass="btn btn-default btn-xs badge">
-                                                <span class="icon icon-remove"></span>
+                                                <span class="icon fa fa-times"></span>
                                                 <span class="sr-only">x</span>
                                             </wpsf:submit>
                                         </span>                                    

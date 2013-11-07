@@ -90,7 +90,7 @@ class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero 
 
 <div class="widget margin-medium-bottom" id="<c:out value="${showletId}" />"> <%-- contenitore del box | class="dragdrop_box" : classe css referenziata in jpmyportalplus.js, serve per dichiarare che è un box che può essere spostato | id="<c:out value="${showletId}" />" : identificativo della showlet o della sua attuale posizione --%>
 	<div class="widget-toolbar btn-group pull-left">
-		<a href="<c:out value="${removeActionURL}" />" class="btn btn-mini btn-danger button-toggler-remove" title="remove"><i class="icon-remove"></i><span class="sr-only">remove</span></a>&#32;<%-- class="removeBox": referenziato in jpmyportalplus.js, rimuove il box corrente --%>
+		<a href="<c:out value="${removeActionURL}" />" class="btn btn-mini btn-danger button-toggler-remove" title="remove"><i class="fa fa-times"></i><span class="sr-only">remove</span></a>&#32;<%-- class="removeBox": referenziato in jpmyportalplus.js, rimuove il box corrente --%>
 		<a href="<c:out value="${moveActionUrl}" />" class="btn btn-mini btn-info button-toggler-edit" title="configure/options"><i class="icon-cog"></i><span class="sr-only">configure/options</span></a>
 		<a href="<c:out value="${opencloseActionURL}" />" class="btn btn-mini btn-info button-toggler-open-close" title="toggle open close"><i class="<c:out value="icon-chevron-${isClosed ? 'down' : 'up'}" />"></i><span class="sr-only">toggle open/close</span></a>&#32;<%-- class="openClose": referenziato in jpmyportalplus.js, apre e chiude il contenuto di "editcontentBox" e "content" --%>
 	</div>
