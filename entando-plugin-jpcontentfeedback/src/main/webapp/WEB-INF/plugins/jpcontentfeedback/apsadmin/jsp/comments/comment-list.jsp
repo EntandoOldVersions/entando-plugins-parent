@@ -148,7 +148,7 @@
                                         <a class="btn btn-default" 
                                            title="<s:text name="label.edit" />:&#32;<s:date name="#commento.creationDate" format="dd/MM/yyyy HH:mm" />" 
                                            href="<s:url action="view"><s:param name="selectedComment" value="#commentoId" /></s:url>">
-                                            <span class="icon icon-edit"></span>
+                                            <span class="icon fa fa-pencil-square-o"></span>
                                             <span class="sr-only"><s:text name="label.edit" />: <s:property value="#ideaInstance_var.code" /></span>
                                         </a>
                                     </div>

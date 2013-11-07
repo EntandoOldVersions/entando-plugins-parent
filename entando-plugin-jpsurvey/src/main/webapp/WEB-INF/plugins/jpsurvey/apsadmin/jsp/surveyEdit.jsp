@@ -302,7 +302,7 @@
                                                <s:param name="strutsAction" value="2"/></s:url>" 
                                            title="<s:text name="label.edit" />: <s:property value="%{getLabel(#currentQuestion.questions)}"/>">
                                             <span class="sr-only"><s:text name="label.edit" /></span>
-                                            <span class="icon icon-edit"></span>                                                                                    
+                                            <span class="icon fa fa-pencil-square-o"></span>                                                                                    
                                         </a>
                                     </div>
                                     <div class="btn-group btn-group-xs">

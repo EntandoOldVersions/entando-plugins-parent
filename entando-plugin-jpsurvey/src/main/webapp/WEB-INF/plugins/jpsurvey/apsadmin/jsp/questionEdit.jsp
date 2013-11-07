@@ -148,12 +148,12 @@
                                            <s:param name="choiceId" value="#currentChoice.id"/>
                                            <s:param name="strutsAction" value="2"/>
                                        </s:url>" title="<s:text name="label.edit" />: <s:property value="%{getLabel(#currentChoice.choices)}"/>" >
-                                        <span class="icon icon-edit"></span>   
+                                        <span class="icon fa fa-pencil-square-o"></span>   
                                     </a>
                                 </s:if>
                                     <s:else>
                                         <button class="btn btn-default disabled">
-                                            <span class="icon icon-edit"></span>   
+                                            <span class="icon fa fa-pencil-square-o"></span>   
                                         </button> 
                                     </s:else>
                                 </div>

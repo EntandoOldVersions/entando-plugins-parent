@@ -33,7 +33,7 @@
 									<wp:parameter name="contentId" ><c:out value="${contentId}" /></wp:parameter>
 									<wp:parameter name="contentTypeCode" ><wp:currentWidget param="config" configParam="contentType" /></wp:parameter>
 									<wp:parameter name="finalPageDest" ><wp:currentPage param="code" /></wp:parameter>
-								</wp:url>" ><span class="icon icon-edit"></span> <wp:i18n key="jpfastcontentedit_EDIT_CONTENT" />
+								</wp:url>" ><span class="icon fa fa-pencil-square-o"></span> <wp:i18n key="jpfastcontentedit_EDIT_CONTENT" />
 							</a>
 
 							<a class="btn btn-danger" href="<wp:url page="${fastcontenteditVar}" >

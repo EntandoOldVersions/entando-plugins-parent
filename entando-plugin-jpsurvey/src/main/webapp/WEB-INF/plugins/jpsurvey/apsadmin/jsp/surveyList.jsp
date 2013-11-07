@@ -165,7 +165,7 @@
                                                <s:param name="surveyId" value="#survey.id"/>
                                                <s:param name="questionnaire" value="questionnaire"/>
                                            </s:url>" title="<s:text name="label.edit" />:&#32;<s:property value="%{getLabel(#survey.titles)}" />">
-                                            <span class="icon icon-edit"></span>
+                                            <span class="icon fa fa-pencil-square-o"></span>
                                             <span class="sr-only"><s:text name="label.edit" /></span>
                                         </a>
                                         <a class="btn btn-default"

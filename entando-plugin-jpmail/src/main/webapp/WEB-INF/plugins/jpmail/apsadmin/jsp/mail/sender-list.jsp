@@ -43,7 +43,7 @@
                             <a class="btn btn-default" href="<s:url action="editSender" >
                                    <s:param name="code" value="#sender.key" /></s:url>" 
                                title="<s:text name="label.edit" />: <s:property value="#sender.value" />">
-                                <span class="icon icon-edit"></span>                                                    
+                                <span class="icon fa fa-pencil-square-o"></span>                                                    
                             </a>        
                         </div>
                         <div class="btn-group btn-group-xs">
