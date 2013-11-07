@@ -191,7 +191,7 @@
                                                         </wpsa:actionParam>
                                                         <s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/go-up.png</s:set>		
                                                         <wpsf:submit type="button" action="%{#actionName}" title="%{getText('label.moveUp')}" cssClass="btn btn-default">
-                                                            <span class="icon icon-sort-up"></span>
+                                                            <span class="icon fa fa-sort-desc"></span>
                                                         </wpsf:submit>
                                                         <wpsa:actionParam action="moveFilter" var="actionName" >
                                                             <wpsa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
@@ -357,7 +357,7 @@
                                                             <wpsa:actionSubParam name="movement" value="UP" />
                                                         </wpsa:actionParam>
                                                         <wpsf:submit type="button" action="%{#actionName}" title="%{getText('label.moveUp')}" cssClass="btn btn-default">
-                                                            <span class="icon icon-sort-up"></span>
+                                                            <span class="icon fa fa-sort-desc"></span>
                                                         </wpsf:submit>
                                                         <wpsa:actionParam action="moveUserFilter" var="actionName" >
                                                             <wpsa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />

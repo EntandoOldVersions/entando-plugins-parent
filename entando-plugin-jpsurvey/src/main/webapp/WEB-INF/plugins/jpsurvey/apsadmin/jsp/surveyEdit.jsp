@@ -311,7 +311,7 @@
                                                <s:param name="questionId" value="#currentQuestion.id"/></s:url>" 
                                            title="<s:text name="label.moveUp" />: <s:property value="%{getLabel(#currentQuestion.questions)}"/>" >
                                             <span class="sr-only"><s:text name="label.moveUp" /></span>
-                                            <span class="icon icon-sort-up"></span>
+                                            <span class="icon fa fa-sort-desc"></span>
                                         </a>
                                         <a class="btn btn-default" href="<s:url action="moveQuestionDown">
                                                <s:param name="surveyId" value="surveyId"/>
