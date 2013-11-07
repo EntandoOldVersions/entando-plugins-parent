@@ -199,7 +199,7 @@
                                                         </wpsa:actionParam>
                                                         <s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/go-down.png</s:set>
                                                         <wpsf:submit type="button" action="%{#actionName}" title="%{getText('label.moveDown')}" cssClass="btn btn-default">
-                                                            <span class="icon icon-sort-down"></span>
+                                                            <span class="icon fa fa-sort-asc"></span>
                                                         </wpsf:submit>
                                                         <wpsa:actionParam action="removeFilter" var="actionName" >
                                                             <wpsa:actionSubParam name="filterIndex" value="%{#rowstatus.index}" />
@@ -364,7 +364,7 @@
                                                             <wpsa:actionSubParam name="movement" value="DOWN" />
                                                         </wpsa:actionParam>
                                                         <wpsf:submit type="button" action="%{#actionName}" title="%{getText('label.moveDown')}" cssClass="btn btn-default">
-                                                            <span class="icon icon-sort-down"></span>
+                                                            <span class="icon fa fa-sort-asc"></span>
                                                         </wpsf:submit>
                                                     </div>
                                                     <div class="btn-group btn-group-xs">

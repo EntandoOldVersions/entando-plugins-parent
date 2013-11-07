@@ -172,7 +172,7 @@
                                    <s:param name="questionId" value="question.id"/>
                                </s:url>" 
                                title="<s:text name="label.moveDown" />:&#32;<s:if test="%{#currentChoice.freeText== false}"><s:property value="%{getLabel(#currentChoice.choices)}"/></s:if><s:else><s:property value="#localizedString"/></s:else>"> 
-                                    <span class="icon icon-sort-down"></span>
+                                    <span class="icon fa fa-sort-asc"></span>
                                     <span class="sr-only"><s:text name="label.moveDown" /></span>
                             </a>
                                 </div>

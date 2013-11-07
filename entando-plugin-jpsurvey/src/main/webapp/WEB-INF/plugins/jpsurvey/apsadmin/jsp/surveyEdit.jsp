@@ -318,7 +318,7 @@
                                                <s:param name="questionId" value="#currentQuestion.id"/></s:url>" 
                                            title="<s:text name="label.moveDown" />: <s:property value="%{getLabel(#currentQuestion.questions)}"/>" >
                                             <span class="sr-only"><s:text name="label.moveDown" /></span>
-                                            <span class="icon icon-sort-down"></span>
+                                            <span class="icon fa fa-sort-asc"></span>
                                         </a>
                                     </div>
                                     <div class="btn-group btn-group-xs">
