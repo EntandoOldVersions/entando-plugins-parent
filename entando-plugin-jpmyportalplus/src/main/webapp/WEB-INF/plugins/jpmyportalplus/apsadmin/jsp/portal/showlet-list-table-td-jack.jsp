@@ -9,7 +9,7 @@
                 class="btn btn-default" 
 		alt="<s:text name="jpmyportalplus.widget.swappable" />"
 		title="<s:property value="#showletType.value" />: <s:text name="jpmyportalplus.widget.swappable" />">
-                <span class="icon-ok"></span>
+                <span class="icon fa fa-check"></span>
             </button>    
 	</s:if>
 	<s:else>

@@ -269,7 +269,7 @@
                             <td><s:property value="#message.id"/>&#32;&ndash;&#32;<s:property value="#message.typeDescr"/></td>
                             <td class="text-center"><code><s:date name="#message.creationDate" format="dd/MM/yyyy HH:mm"/></code></td>
                                     <s:if test="%{#answers.size()>0}">
-                                        <s:set name="iconImage" id="iconImage">icon icon-ok text-success</s:set>
+                                        <s:set name="iconImage" id="iconImage">icon fa fa-check text-success</s:set>
                                 <s:set name="thereIsAnswer" value="%{getText('label.answered')}" />
                             </s:if>
                             <s:else>

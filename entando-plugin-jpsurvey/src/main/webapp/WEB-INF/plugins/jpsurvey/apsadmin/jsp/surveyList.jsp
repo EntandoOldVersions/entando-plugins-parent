@@ -156,7 +156,7 @@
                                                     <s:param name="surveyId" value="#survey.id"/>
                                                     <s:param name="questionnaire" value="questionnaire"/>
                                                 </s:url>" title="<s:text name="jpsurvey_publish" />:&#32;<s:property value="%{getLabel(#survey.titles)}"/>">
-                                                <span class="icon icon-ok"></span>
+                                                <span class="icon fa fa-check"></span>
                                                 <span class="sr-only"><s:text name="jpsurvey_publish" /></span>
                                             </a>
                                         </s:else>
@@ -195,7 +195,7 @@
                                 </td>
                                 <td class="text-center"><code><s:date name="#survey.startDate" format="dd/MM/yyyy" /></code></td> 
                                         <s:if test="%{#survey.active}">
-                                            <wpsa:set name="iconImage" id="iconImage">icon icon-ok text-success</wpsa:set>
+                                            <wpsa:set name="iconImage" id="iconImage">icon fa fa-check text-success</wpsa:set>
                                     <s:set name="isOnlineStatus" value="%{getText('jpsurvey_published_yes')}" />
                                 </s:if>
                                 <s:elseif test="%{#survey.publishable}">
