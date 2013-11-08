@@ -36,7 +36,7 @@
         <div class="form-group">
             <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <span class="input-group-addon">
-                    <span class="icon fa fa-file-text-o icon-large" 
+                    <span class="icon fa fa-file-text-o fa-lg" 
                           title="<s:text name="label.search.by"/>&#32;<s:text name="label.text" />">
                     </span>
                 </span>        
@@ -70,7 +70,7 @@
                                 </p>
                                 <ul id="categoryTree" class="icons-ul list-unstyled">
                                     <li class="tree_node_flag">
-                                        <span class="icon icon-li fa fa-folder"></span>
+                                        <span class="icon fa-li fa fa-folder"></span>
                                         <input type="radio" name="categoryCode" id="<s:property value="categoryRoot.code" />" 
                                                value="<s:property value="categoryRoot.code" />" 
                                                class="subTreeToggler" />

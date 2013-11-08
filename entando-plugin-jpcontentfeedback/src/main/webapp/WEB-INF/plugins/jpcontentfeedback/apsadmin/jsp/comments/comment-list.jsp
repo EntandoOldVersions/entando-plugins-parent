@@ -50,7 +50,7 @@
         <div class="form-group">
             <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <span class="input-group-addon">
-                    <span class="icon fa fa-file-text-o icon-large" 
+                    <span class="icon fa fa-file-text-o fa-lg" 
                           title="<s:text name="label.search.by" />&#32;<s:text name="jpcontentfeedback.status" />">
                     </span>
                 </span>  
