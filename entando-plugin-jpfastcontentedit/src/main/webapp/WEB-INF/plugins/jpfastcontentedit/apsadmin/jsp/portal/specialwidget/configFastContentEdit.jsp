@@ -23,8 +23,6 @@
 
         <s:action namespace="/do/Page" name="printPageDetails" executeResult="true" ignoreContextParams="true"><s:param name="selectedNode" value="currentPage.code"></s:param></s:action>
 
-        <s:property value="%{getContentTypes().get(0).getDescr()}"/>
-        
         <s:form action="saveConfigParameters" namespace="/do/jpfastcontentedit/Page/SpecialWidget">
             <p class="noscreen">
                 <wpsf:hidden name="pageCode" />
