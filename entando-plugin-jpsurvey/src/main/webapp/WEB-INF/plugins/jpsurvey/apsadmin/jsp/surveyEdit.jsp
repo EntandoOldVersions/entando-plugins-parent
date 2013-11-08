@@ -235,7 +235,7 @@
                                             <div class="panel panel-default margin-small-top">
                                                 <div class="panel-heading text-right">
                                                     <wpsf:submit type="button" action="removeSurveyImage" cssClass="btn btn-warning btn-xs" title="%{getText('jpsurvey_remove_image')}">
-                                                        <span class="icon icon-eraser"></span>&#32; 
+                                                        <span class="icon fa fa-eraser"></span>&#32; 
                                                         <s:text name="%{getText('jpsurvey_remove_image')}"/>
                                                     </wpsf:submit>
 

@@ -63,7 +63,7 @@
                 <span class="input-group-btn">
                     <wpsf:submit type="button" cssClass="btn btn-primary btn-lg" title="%{getText('label.search')}">
                         <span class="sr-only"><s:text name="%{getText('label.search')}" /></span>
-                        <span class="icon icon-search"></span>
+                        <span class="icon fa fa-search"></span>
                     </wpsf:submit>
 
                     <button type="button" class="btn btn-primary btn-lg dropdown-toggle" 
@@ -113,7 +113,7 @@
                         <div class="col-sm-5 col-sm-offset-2">
                             <wpsf:submit type="button" cssClass="btn btn-primary">
                                 <s:text name="%{getText('label.search')}" />
-                                <span class="icon icon-search"></span>
+                                <span class="icon fa fa-search"></span>
                             </wpsf:submit>    
                         </div>    
                     </div>    

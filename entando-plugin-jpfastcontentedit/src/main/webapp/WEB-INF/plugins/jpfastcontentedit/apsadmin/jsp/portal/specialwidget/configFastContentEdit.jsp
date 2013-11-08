@@ -40,7 +40,7 @@
                 </div>
                 <div class="panel-body">
                     <h2 class="h5 margin-small-vertical">
-                        <span class="icon icon-puzzle-piece" title="Widget"></span>
+                        <span class="icon fa fa-puzzle-piece" title="Widget"></span>
                         <s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" />
                     </h2>
                     <s:if test="showlet.config['typeCode'] == null">

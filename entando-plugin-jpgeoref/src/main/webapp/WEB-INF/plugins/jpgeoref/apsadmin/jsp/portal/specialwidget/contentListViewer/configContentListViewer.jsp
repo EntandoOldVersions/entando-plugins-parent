@@ -47,7 +47,7 @@
                 </div>
                 <div class="panel-body">
                     <h2 class="h5 margin-small-vertical">
-                        <span class="icon icon-puzzle-piece" title="Widget"></span>
+                        <span class="icon fa fa-puzzle-piece" title="Widget"></span>
                         <s:property value="%{getTitle(showlet.type.code, showlet.type.titles)}" />
                     </h2>
                     <%--<s:set var="contentTypes" value="contentTypes" />--%>
@@ -103,7 +103,7 @@
                                     <wpsf:select name="categoryCode" id="category" list="categories" listKey="code" listValue="getShortFullTitle(currentLang.code)" headerKey="" headerValue="%{getText('label.all')}" cssClass="form-control" />
                                     <div class="input-group-btn">
                                         <wpsf:submit type="button" action="addCategory" cssClass="btn btn-info">
-                                            <span class="icon icon-plus"></span>&#32;
+                                            <span class="icon fa fa-plus"></span>&#32;
                                             <s:text name="%{getText('label.join')}"/>
                                         </wpsf:submit>
                                     </div>
@@ -116,7 +116,7 @@
                                         <s:set name="showletCategory" value="%{getCategory(#categoryCodeVar)}"></s:set>
 
                                             <span class="label label-default label-sm pull-left padding-small-top padding-small-bottom margin-small-right margin-small-bottom">
-                                                <span class="icon icon-tag"></span>&#32;
+                                                <span class="icon fa fa-tag"></span>&#32;
                                                 <abbr title="<s:property value="#showletCategory.getFullTitle(currentLang.code)"/>">
                                                 <s:property value="#showletCategory.getShortFullTitle(currentLang.code)" />
                                             </abbr>&#32;
@@ -150,7 +150,7 @@
                         <fieldset class="col-xs-12"> 
                             <legend data-toggle="collapse" data-target="#filterOptions">
                                 <s:text name="title.filterOptions"/>
-                                <span class="icon icon-chevron-down"></span>
+                                <span class="icon fa fa-chevron-down"></span>
                             </legend>
                             <div class="collapse" id="filterOptions">
 
@@ -161,7 +161,7 @@
                                         <div class="input-group-btn">
 
                                             <wpsf:submit type="button" action="setFilterType" cssClass="btn btn-info">
-                                                <span class="icon icon-filter"></span>
+                                                <span class="icon fa fa-filter"></span>
                                                 <s:text name="%{getText('label.add')}"/>
                                             </wpsf:submit>
                                         </div>
@@ -284,7 +284,7 @@
                         <fieldset class="col-xs-12">
                             <legend data-toggle="collapse" data-target="#extraOption">
                                 <s:text name="title.extraOption" />
-                                <span class="icon icon-chevron-down"></span>
+                                <span class="icon fa fa-chevron-down"></span>
                             </legend>
                             <div class="collapse" id="extraOption">
                                 <p><s:text name="note.extraOption.intro" /></p>
@@ -321,7 +321,7 @@
                         <fieldset class="col-xs-12">
                             <legend data-toggle="collapse" data-target="#filtersSearch">
                                 <s:text name="title.filters.search" />&#32;
-                                <span class="icon icon-chevron-down"></span>
+                                <span class="icon fa fa-chevron-down"></span>
                             </legend>
                             <div class="collapse" id="filtersSearch">
                                 <div class="form-group">
@@ -330,7 +330,7 @@
                                         <wpsf:select name="userFilterKey" id="userFilterKey" list="allowedUserFilterTypes" listKey="key" listValue="value" cssClass="form-control" />
                                         <div class="input-group-btn">
                                             <wpsf:submit type="button" action="addUserFilter" cssClass="btn btn-info">
-                                                <span class="icon icon-plus"></span>
+                                                <span class="icon fa fa-plus"></span>
                                                 <s:text name="%{getText('label.add')}"/>
                                             </wpsf:submit>
                                         </div>
@@ -412,7 +412,7 @@
                         <fieldset class="col-xs-12">
                             <legend data-toggle="collapse" data-target="#publishingOptions">
                                 <s:text name="title.publishingOptions" />&#32;
-                                <span class="icon icon-chevron-down"></span>
+                                <span class="icon fa fa-chevron-down"></span>
                             </legend>
                             <div class="collapse" id="publishingOptions">
 

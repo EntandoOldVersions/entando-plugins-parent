@@ -65,11 +65,11 @@
                 </div>
                 <div class="panel-body">
                     <h2 class="h5 margin-small-vertical">
-                        <span class="icon icon-puzzle-piece" title="Widget"></span>
+                        <span class="icon fa fa-puzzle-piece" title="Widget"></span>
                         <s:property value="%{getTitle(#showletType.code, #showletType.titles)}" />
                     </h2>
                     <p>
-                        <span class="icon icon-filter" title="Filter by"></span>&#32;
+                        <span class="icon fa fa-filter" title="Filter by"></span>&#32;
                         <s:text name="title.filterAdd" />
                     </p>
 
@@ -278,7 +278,7 @@
                             <div class="form-group">
                                 <div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
                             <wpsf:submit action="%{#saveFilterActionName}" type="button" cssClass="btn btn-primary btn-block">
-                                <span class="icon icon-filter"></span>&#32;
+                                <span class="icon fa fa-filter"></span>&#32;
                                 <s:text name="%{getText('label.save')}" />
                             </wpsf:submit>
                         </div>

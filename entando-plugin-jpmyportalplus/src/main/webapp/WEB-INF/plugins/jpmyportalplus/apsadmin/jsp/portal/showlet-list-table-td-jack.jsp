@@ -17,13 +17,13 @@
                 class="btn btn-default" 
                 alt="<s:text name="jpmyportalplus.widget.not.swappable" />" 
                 title="<s:property value="#showletType.value" />: <s:text name="jpmyportalplus.widget.not.swappable" />">
-                <span class="icon-exclamation"></span>
+                <span class="fa fa-exclamation"></span>
             </button>    
 	</s:else>
 	</s:if>
                 <s:else>
                     <button class="btn btn-default">
-                        <span class="icon-minus"></span>
+                        <span class="fa fa-minus"></span>
                     </button>    
                 </s:else>
 	<s:set var="swappableVar" value="null" />

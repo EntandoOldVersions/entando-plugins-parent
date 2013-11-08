@@ -62,7 +62,7 @@
                 <span class="input-group-btn">
                     <wpsf:submit type="button" cssClass="btn btn-primary btn-lg" title="%{getText('label.search')}">
                         <span class="sr-only"><s:text name="%{getText('label.search')}" /></span>
-                        <span class="icon icon-search"></span>
+                        <span class="icon fa fa-search"></span>
                     </wpsf:submit>
 
                     <button type="button" class="btn btn-primary btn-lg dropdown-toggle" 
@@ -94,7 +94,7 @@
                         <div class="col-sm-5 col-sm-offset-2">
                             <wpsf:submit type="button" cssClass="btn btn-primary">
                                 <s:text name="%{getText('label.search')}" />
-                                <span class="icon icon-search"></span>
+                                <span class="icon fa fa-search"></span>
                             </wpsf:submit>    
                         </div>    
                     </div>
@@ -146,7 +146,7 @@
                                                    <s:param name="surveyId" value="#survey.id"/>
                                                    <s:param name="questionnaire" value="questionnaire" />
                                                </s:url>" title="<s:text name="jpsurvey_exitPublish" />:&#32;<s:property value="%{getLabel(#survey.titles)}"/>">
-                                                <span class="icon icon-pause"></span>
+                                                <span class="icon fa fa-pause"></span>
                                                 <span class="sr-only"><s:text name="jpsurvey_exitPublish" /></span>
                                             </a>
                                         </s:if>
@@ -173,7 +173,7 @@
                                                <s:param name="surveyId" value="#survey.id"/>
                                                <s:param name="questionnaire" value="questionnaire" />
                                            </s:url>" title="<s:text name="jpsurvey_results" />:&#32;<s:property value="%{getLabel(#survey.titles)}"/>">
-                                            <span class="icon icon-info"></span>
+                                            <span class="icon fa fa-info"></span>
                                             <span class="sr-only"><s:text name="jpsurvey_results" /></span>                                            
                                         </a>
                                     </div>
@@ -199,11 +199,11 @@
                                     <s:set name="isOnlineStatus" value="%{getText('jpsurvey_published_yes')}" />
                                 </s:if>
                                 <s:elseif test="%{#survey.publishable}">
-                                    <wpsa:set name="iconImage" id="iconImage">icon icon-pause text-warning</wpsa:set>
+                                    <wpsa:set name="iconImage" id="iconImage">icon fa fa-pause text-warning</wpsa:set>
                                     <s:set name="isOnlineStatus" value="%{getText('jpsurvey_published_not_but_ready')}" />
                                 </s:elseif>
                                 <s:else>
-                                    <wpsa:set name="iconImage" id="iconImage">icon icon-pause text-adjust</wpsa:set>
+                                    <wpsa:set name="iconImage" id="iconImage">icon fa fa-pause text-adjust</wpsa:set>
                                     <s:set name="isOnlineStatus" value="%{getText('jpsurvey_published_not_ready')}" />
                                 </s:else>
                                 <td class="text-right"><s:property value="#survey.questionsNumber"/></td>

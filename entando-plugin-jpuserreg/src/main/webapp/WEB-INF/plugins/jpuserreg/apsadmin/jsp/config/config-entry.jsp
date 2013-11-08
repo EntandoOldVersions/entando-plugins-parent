@@ -92,7 +92,7 @@
                 <s:iterator var="auth" value="config.groups">
 
                     <span class="label label-default label-sm pull-left padding-small-top padding-small-bottom margin-small-right margin-small-bottom">
-                        <span class="icon icon-tag"></span>&#32;
+                        <span class="icon fa fa-tag"></span>&#32;
                         <abbr><s:property value="#auth" /></abbr>&#32;
                         <wpsa:actionParam action="removeGroup" var="removeGroupActionName" >
                             <wpsa:actionSubParam name="groupName" value="%{#auth}" />
@@ -128,7 +128,7 @@
 		<s:if test="%{config.roles.size > 0}">
 			<s:iterator var="auth" value="config.roles">
 			                    <span class="label label-default label-sm pull-left padding-small-top padding-small-bottom margin-small-right margin-small-bottom">
-                        <span class="icon icon-tag"></span>&#32;
+                        <span class="icon fa fa-tag"></span>&#32;
                         <abbr><s:property value="#auth" /></abbr>&#32;
 				<wpsa:actionParam action="removeRole" var="removeRoleActionName" >
 					<wpsa:actionSubParam name="roleName" value="%{#auth}" />

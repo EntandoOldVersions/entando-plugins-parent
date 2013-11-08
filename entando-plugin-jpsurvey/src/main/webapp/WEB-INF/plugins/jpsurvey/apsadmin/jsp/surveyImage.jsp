@@ -44,7 +44,7 @@
                 <span class="input-group-btn">
                     <wpsf:submit type="button" cssClass="btn btn-primary btn-lg" title="%{getText('label.search')}">
                         <span class="sr-only"><s:text name="%{getText('label.search')}" /></span>
-                        <span class="icon icon-search"></span>
+                        <span class="icon fa fa-search"></span>
                     </wpsf:submit>
 
                     <button type="button" class="btn btn-primary btn-lg dropdown-toggle" 
@@ -140,7 +140,7 @@
                                         <s:text name="label.join" />
                                     </a>
                                     <button type="button" class="btn btn-info" data-toggle="popover" data-title="<s:property value="#resource.descr" />" data-original-title="" title="">
-                                        <span class="icon icon-info"></span>
+                                        <span class="icon fa fa-info"></span>
                                         <span class="sr-only">Info</span>
                                     </button>
                                 </div>

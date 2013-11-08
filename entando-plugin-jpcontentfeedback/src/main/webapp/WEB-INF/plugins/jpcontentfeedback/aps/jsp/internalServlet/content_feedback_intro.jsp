@@ -184,7 +184,7 @@
 			              </s:if>
 					</wp:action>
 
-					<a href="<c:out value="${deleteAction}" escapeXml="false" />" class="btn btn-danger"><i class="fa fa-times icon-white"></i>&#32;<wp:i18n key="jpcontentfeedback_DELETE" /></a>
+					<a href="<c:out value="${deleteAction}" escapeXml="false" />" class="btn btn-danger"><i class="icon-remove icon-white"></i>&#32;<wp:i18n key="jpcontentfeedback_DELETE" /></a>
                   </p>
                 </wp:ifauthorized>
               </c:if>

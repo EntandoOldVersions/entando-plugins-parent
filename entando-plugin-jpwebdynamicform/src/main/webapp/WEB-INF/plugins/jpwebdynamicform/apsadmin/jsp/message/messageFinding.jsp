@@ -41,7 +41,7 @@
                     </s:if>
                     <wpsf:submit type="button" cssClass="btn btn-primary btn-lg" title="%{getText('label.search')}">
                         <span class="sr-only"><s:text name="%{getText('label.search')}" /></span>
-                        <span class="icon icon-search"></span>
+                        <span class="icon fa fa-search"></span>
                     </wpsf:submit>
 
                     <button type="button" class="btn btn-primary btn-lg dropdown-toggle" 
@@ -172,7 +172,7 @@
                         <div class="col-sm-5 col-sm-offset-2">
                             <wpsf:submit type="button" cssClass="btn btn-primary">
                                 <s:text name="%{getText('label.search')}" />
-                                <span class="icon icon-search"></span>
+                                <span class="icon fa fa-search"></span>
                             </wpsf:submit>    
                         </div>    
                     </div>                                
@@ -249,13 +249,13 @@
                                     <a class="btn btn-default" href="<s:url action="newAnswer">
                                            <s:param name="id" value="#message.id"/></s:url>" 
                                        title="<s:text name="label.newAnswer.at" />: <s:property value="#message.id" />">
-                                        <span class="icon icon-envelope"></span>
+                                        <span class="icon fa fa-envelope"></span>
                                         <span class="sr-only"><s:text name="label.newAnswer" /></span>
                                     </a>
                                     <a class="btn btn-default" href="<s:url action="view">
                                            <s:param name="id" value="#message.id"></s:param></s:url>" 
                                        title="<s:text name="label.view"/>&#32;<s:property value="#message.id"/>">
-                                        <span class="icon icon-info"></span>
+                                        <span class="icon fa fa-info"></span>
                                     </a>
                                 </div>
                                 <div class="btn-group btn-group-xs">
@@ -273,7 +273,7 @@
                                 <s:set name="thereIsAnswer" value="%{getText('label.answered')}" />
                             </s:if>
                             <s:else>
-                                <s:set name="iconImage" id="iconImage">icon icon-pause text-warning</s:set>
+                                <s:set name="iconImage" id="iconImage">icon fa fa-pause text-warning</s:set>
                                 <s:set name="thereIsAnswer" value="%{getText('label.waiting')}" />
                             </s:else>
                             <td class="text-center">
