@@ -51,5 +51,13 @@
 				</executions>
 			</plugin>			
 		</plugins>
-	</build>	
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.entando.entando.bundles.misc</groupId>
+			<artifactId>entando-misc-bootstrap</artifactId>
+			<version>4.0.0-EEE-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>        	
 </project>

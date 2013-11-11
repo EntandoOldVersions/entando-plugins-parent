@@ -4,6 +4,9 @@
 <%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
 <%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
 
+<wp:headInfo type="JS" info="entando-misc-jquery/jquery-1.10.0.min.js" />
+<wp:headInfo type="JS" info="entando-misc-bootstrap/bootstrap.min.js" />
+
 <c:set var="javascript_date_helper_code">
 	/* Italian initialisation for the jQuery UI date picker plugin. */
 	/* Written by Antonello Pasella (antonello.pasella@gmail.com). */
