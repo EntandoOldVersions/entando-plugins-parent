@@ -129,7 +129,7 @@
 		</wpsa:subset>
 	</fieldset>
 	<fieldset class="well well-small">
-		<legend><wp:i18n key="jpfastcontentedit_INSERT_NEW_RESOURCE" /></legend>
+		<legend><wp:i18n key="jpfastcontentedit_LABEL_NEW_RESOURCE" /></legend>
 		<p>
 			<a class="btn btn-primary" href="<wp:action path="/ExtStr2/do/jpfastcontentedit/Content/Resource/new.action">
 					<wp:parameter name="resourceTypeCode">Image</wp:parameter>

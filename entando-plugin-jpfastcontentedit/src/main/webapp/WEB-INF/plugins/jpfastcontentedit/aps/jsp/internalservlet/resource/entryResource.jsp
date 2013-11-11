@@ -41,7 +41,7 @@
 	<wp:headInfo type="CSS" info="../../plugins/jpfastcontentedit/static/css/tree.css" />
 </s:if>
 
-<h1><wp:i18n key="jpfastcontentedit_INSERT_NEW_RESOURCE" /></h1>
+<h1><wp:i18n key="jpfastcontentedit_LABEL_NEW_RESOURCE" /></h1>
 	
 	<form 
 		class="form-horizontal"

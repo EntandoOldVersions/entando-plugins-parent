@@ -76,7 +76,7 @@
 </c:set>
 <wp:headInfo type="JS_RAW" info="${javascript_attribute_code}" /> 
 
-<s:set name="removeIcon" var="removeIcon"><wp:resourceURL/>administration/common/img/icons/list-remove.png</s:set>
+<s:set name="removeIcon" var="removeIcon"><wp:resourceURL/>icon icon-remove-circle icon-white</s:set>
 
 <h1><wp:i18n key="jpfastcontentedit_FASTCONTENTEDIT_WIDGET_TITLE" /></h1>
 
@@ -149,11 +149,13 @@
 								<wpsf:submit 
 									useTabindexAutoIncrement="true" 
 									action="%{#actionName}" 
-									type="image" 
-									src="%{#removeIcon}" 
+									type="button" 
 									value="%{getText('label.remove')}" 
-									title="%{getText('label.remove')}" />
-									<span class="noscreen">: </span><s:property value="%{getGroupsMap()[#groupName].getDescr()}" />
+									title="%{getText('label.remove')}"
+                                                                        cssClass="btn btn-warning btn-small">
+                                                                <span class="<s:property value="%{#removeIcon}"/>"></span>
+                                                                </wpsf:submit>&#32;
+                                                                <s:property value="%{getGroupsMap()[#groupName].getDescr()}" />
 							</li>
 						</s:iterator>
 					</ul>
@@ -185,7 +187,13 @@
 								<wpsa:actionParam action="removeCategory" var="actionName" >
 									<wpsa:actionSubParam name="categoryCode" value="%{#contentCategory.code}" />
 								</wpsa:actionParam>
-								<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="image" src="%{#removeIcon}" value="%{getText('label.remove')}" title="%{getText('label.remove')}" />: <s:property value="#contentCategory.getFullTitle(currentLang.code)"/>
+								<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="button" 
+                                                                             value="%{getText('label.remove')}" 
+                                                                             title="%{getText('label.remove')}"
+                                                                             cssClass="btn btn-warning btn-small"> 
+                                                                    <span class="<s:property value="%{#removeIcon}"/>"></span>
+                                                                </wpsf:submit>:&#32;    
+                                                                <s:property value="#contentCategory.getFullTitle(currentLang.code)"/>
 							</li>
 						</s:iterator>
 					</ul>

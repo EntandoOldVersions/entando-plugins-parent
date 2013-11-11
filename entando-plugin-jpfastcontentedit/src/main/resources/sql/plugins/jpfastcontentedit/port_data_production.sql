@@ -177,6 +177,10 @@ INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpfastcont
 
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfastcontentedit_LABEL_NEW_RESOURCE', 'en', 'New Resource');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfastcontentedit_LABEL_NEW_RESOURCE', 'it', 'Nuova Risorsa');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfastcontentedit_LABEL_NEW_IMAGE', 'en', 'New Image');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfastcontentedit_LABEL_NEW_IMAGE', 'it', 'Nuova Immagine');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfastcontentedit_LABEL_NEW_ATTACH', 'en', 'New Attachment');
+INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfastcontentedit_LABEL_NEW_ATTACH', 'it', 'Nuova Allegato');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfastcontentedit_BACK_TO_CONTENT', 'en', 'Back to the Content');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfastcontentedit_BACK_TO_CONTENT', 'it', 'Torna al Contenuto');
 INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpfastcontentedit_REQUIRED_SHORT', 'en', '*');
