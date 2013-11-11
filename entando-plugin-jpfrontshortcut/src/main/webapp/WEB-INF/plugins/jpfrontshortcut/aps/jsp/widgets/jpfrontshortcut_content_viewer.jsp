@@ -7,13 +7,14 @@
 <c:if test="${canEditThisVar}">
 <div class="bar-content-edit">
 	<p>
-		<a href="<wp:info key="systemParam" paramName="applicationBaseURL" />do/jacms/Content/edit.action?contentId=<c:out value="${contentIdVar}" />&amp;backend_client_gui=advanced" title="<wp:i18n key="EDIT_THIS_CONTENT" />">
-		&dArr;
-		<img src="<wp:resourceURL />administration/common/img/icons/edit-content.png" width="22" height="22" alt="<wp:i18n key="EDIT_THIS_CONTENT" />" />
-		&dArr;
+		<a href="<wp:info key="systemParam" paramName="applicationBaseURL" />do/jacms/Content/edit.action?contentId=<c:out value="${contentIdVar}" />" title="<wp:i18n key="EDIT_THIS_CONTENT" />" class="btn btn-info">
+		<!--&dArr;-->
+                <wp:i18n key="EDIT_THIS_CONTENT" />
+                <span class="icon icon-edit icon-white"></span>
+		<!--&dArr;-->
 		</a>
 		<c:if test="${canEditThisVar}">
-			&#32;|&#32;
+<!--			&#32;|&#32;-->
 			<wp:info key="systemParam" paramName="jpfrontshortcut_activeContentFrontEndEditing" var="activeContentEditingVar" />
 			<c:if test="${null != activeContentEditingVar && activeContentEditingVar  == 'true'}">
 				<% pageContext.setAttribute("random", (int) (Math.random() * 999999)); %>
