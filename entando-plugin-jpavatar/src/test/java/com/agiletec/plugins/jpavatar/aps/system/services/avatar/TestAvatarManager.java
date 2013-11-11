@@ -39,9 +39,9 @@ public class TestAvatarManager extends ApsPluginBaseTestCase {
 	public void testSaveAvatar() throws Throwable {
 		this.setAvatarStyle(AvatarConfig.STYLE_LOCAL);
 		
-		File file = new File("target/test/jAPS_logo.jpg");
+		File file = new File("target/test/entando_logo.jpg");
 		String username = "admin";
-		this._avatarManager.saveAvatar(username, file, "jAPS_logo.jpg");
+		this._avatarManager.saveAvatar(username, file, "entando_logo.jpg");
 		File avatarFile = this._avatarManager.getAvatarResource(username);
 		assertTrue(avatarFile.exists());
 		FileUtils.forceDelete(avatarFile);
@@ -52,8 +52,8 @@ public class TestAvatarManager extends ApsPluginBaseTestCase {
 		this.setAvatarStyle(AvatarConfig.STYLE_LOCAL);
 		
 		String username = "admin";
-		File file = new File("target/test/jAPS_logo.jpg");
-		this._avatarManager.saveAvatar(username, file, "jAPS_logo.jpg");
+		File file = new File("target/test/entando_logo.jpg");
+		this._avatarManager.saveAvatar(username, file, "entando_logo.jpg");
 		String filename = this._avatarManager.getAvatarUrl(username);
 		assertEquals("/Entando/resources/plugins/jpavatar/avatar/admin.jpg", filename);
 		
@@ -64,8 +64,8 @@ public class TestAvatarManager extends ApsPluginBaseTestCase {
 		this.setAvatarStyle(AvatarConfig.STYLE_LOCAL);
 		
 		String username = "admin";
-		File file = new File("target/test/jAPS_logo.jpg");
-		this._avatarManager.saveAvatar(username, file, "jAPS_logo.jpg");
+		File file = new File("target/test/entando_logo.jpg");
+		this._avatarManager.saveAvatar(username, file, "entando_logo.jpg");
 		String filename = this._avatarManager.getAvatarUrl(username);
 		assertEquals("/Entando/resources/plugins/jpavatar/avatar/admin.jpg", filename);
 		this._avatarManager.removeAvatar(username);
@@ -83,8 +83,8 @@ public class TestAvatarManager extends ApsPluginBaseTestCase {
 		user.setPassword(username);
 		_userManager.addUser(user);
 		assertNotNull(_userManager.getUser(username));
-		File file = new File("target/test/jAPS_logo.jpg");
-		this._avatarManager.saveAvatar(username, file, "jAPS_logo.jpg");
+		File file = new File("target/test/entando_logo.jpg");
+		this._avatarManager.saveAvatar(username, file, "entando_logo.jpg");
 		String filename = this._avatarManager.getAvatarUrl(username);
 		assertEquals("/Entando/resources/plugins/jpavatar/avatar/" + username +".jpg", filename);
 		this._userManager.removeUser(username);

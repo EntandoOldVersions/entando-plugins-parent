@@ -160,7 +160,7 @@ public class TestTrashedResourceManager extends ApsPluginBaseTestCase {
 	}
 	
 	private ResourceDataBean getMockResource(String resourceType, String mainGroup, String resDescrToAdd, String categoryCodeToAdd) {
-		File file = new File("target/test/jAPS_logo.jpg");
+		File file = new File("target/test/entando_logo.jpg");
 		BaseResourceDataBean bean = new BaseResourceDataBean(file);
 		bean.setDescr(resDescrToAdd);
 		bean.setMainGroup(mainGroup);

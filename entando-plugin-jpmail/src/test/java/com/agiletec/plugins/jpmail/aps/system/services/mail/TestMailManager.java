@@ -117,7 +117,7 @@ public class TestMailManager extends AbstractMailConfigTestCase {
 	
 	public void testSendMailWithAttachment() throws Throwable {
 		Properties attachments = new Properties();
-		attachments.setProperty("ALLEGATO", "target/test/jAPS_logo.jpg");
+		attachments.setProperty("ALLEGATO", "target/test/entando_logo.jpg");
 		this._mailManager.sendMail(MAIL_TEXT, "Mail with attachment & text html", 
 				IMailManager.CONTENTTYPE_TEXT_HTML, attachments, JpmailTestHelper.MAIL_ADDRESSES, null, null, SENDER_CODE);
 		
@@ -138,7 +138,7 @@ public class TestMailManager extends AbstractMailConfigTestCase {
 	
 	public void testSendMixedMail() throws Throwable {
 		Properties attachments = new Properties();
-		attachments.setProperty("ALLEGATO", "target/test/jAPS_logo.jpg");
+		attachments.setProperty("ALLEGATO", "target/test/entando_logo.jpg");
 		String[] mailAddresses = JpmailTestHelper.MAIL_ADDRESSES;
 		this._mailManager.sendMixedMail("AAAAAAAAAMixed"+MAIL_TEXT, "Mixed"+MAIL_TEXT, "Oggetto Mail composta", 
 				attachments, mailAddresses, mailAddresses, mailAddresses, SENDER_CODE);

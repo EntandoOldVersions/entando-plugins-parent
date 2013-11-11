@@ -85,7 +85,7 @@ public class TestRemoteResourceLoaderAction extends ApsAdminPluginBaseTestCase {
 		this.addParameter("descr", "Image");
 		this.addParameter("alternateName", "Image");
 		this.addParameter("mainGroup", "free");
-		this.addParameter("url", "http://www.google.com/jAPSPortal/resources/static/img/headerLogo_background.jpg");
+		this.addParameter("url", "http://www.google.com/entando/resources/static/img/headerLogo_background.jpg");
 		
 		result = this.executeAction();
 		assertEquals(Action.INPUT, result);
@@ -118,8 +118,8 @@ public class TestRemoteResourceLoaderAction extends ApsAdminPluginBaseTestCase {
 	}
 
 	public void testSaveFile() throws Throwable {
-		File file = new File("admin/test/jAPS_logo.jpg");
-		File destFile = new File("admin/test/jpremoteresourceloader_jAPS_logo.jpg");
+		File file = new File("admin/test/entando_logo.jpg");
+		File destFile = new File("admin/test/jpremoteresourceloader_entando_logo.jpg");
 		FileUtils.copyFile(file, destFile, true);
 		String result = this.executeSaveFromFile(NAME_DESCR, destFile.getAbsolutePath());	
 		assertEquals(Action.INPUT, result);
@@ -214,17 +214,18 @@ public class TestRemoteResourceLoaderAction extends ApsAdminPluginBaseTestCase {
 		if (null != resIds && resIds.size() > 0) {
 			String resId = resIds.get(0);
 			this._resourceManager.deleteResource(this._resourceManager.loadResource(resId));
-			File destFile = new File("admin/test/jpremoteresourceloader_jAPS_logo.jpg");
+			File destFile = new File("admin/test/jpremoteresourceloader_entando_logo.jpg");
 			if (destFile.exists()) {
 				FileUtils.forceDelete(destFile);
 			}
 		}
 	}
-
+	
 	private void init() {
-		_resourceManager = (IResourceManager) this.getService(JacmsSystemConstants.RESOURCE_MANAGER);
+		this._resourceManager = (IResourceManager) this.getService(JacmsSystemConstants.RESOURCE_MANAGER);
 	}
-
+	
 	private IResourceManager _resourceManager;
 	private static final String  NAME_DESCR = "testFile";
+	
 }

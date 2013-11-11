@@ -71,8 +71,8 @@ public class TestAvatarAction extends ApsAdminPluginBaseTestCase {
 	public void testDelete() throws Throwable {
 		this.setAvatarStyle(AvatarConfig.STYLE_LOCAL);
 		
-		File file = new File("target/test/jAPS_logo.jpg");
-		this._avatarManager.saveAvatar("admin", file, "jAPS_logo.jpg");
+		File file = new File("target/test/entando_logo.jpg");
+		this._avatarManager.saveAvatar("admin", file, "entando_logo.jpg");
 		String filename = this._avatarManager.getAvatarUrl("admin");
 		assertEquals("/Entando/resources/plugins/jpavatar/avatar/admin.jpg", filename);
 		String result = this.executeDelete();
