@@ -1,78 +1,94 @@
 <%@ taglib prefix="jacms" uri="/jacms-aps-core" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
-<%@ taglib prefix="gwp" uri="/jpgeoref-aps-core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="gwp" uri="/jpgeoref-aps-core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<wp:headInfo type="JS_URL" info="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAPDUET0Qt7p2VcSk6JNU1sBRRwPhutbWBmyj82Go_H6JlE7EvFBSKFFFHFePAwvib9UM0geoA3Pgafw" />
+<%-- javascript escape setup --%>
+<% pageContext.setAttribute("carriageReturn", "\r"); %>
+<% pageContext.setAttribute("newLine", "\n"); %>
+<c:set var="singleQuotes">'</c:set>
+<c:set var="singleQuotesReplace">\'</c:set>
+<c:set var="doubleQuotes">"</c:set>
+<c:set var="doubleQuotesReplace">\"</c:set>
 
-<gwp:bodyReader var="htmlBodyTagAttribute">onunload="GUnload()"</gwp:bodyReader>
-
-<jacms:contentList listName="contentList" titleVar="titleVar" 
+<jacms:contentList listName="contentList" titleVar="titleVar"
 	pageLinkVar="pageLinkVar" pageLinkDescriptionVar="pageLinkDescriptionVar" userFilterOptionsVar="userFilterOptionsVar" />
 
-<c:if test="${null != titleVar}">
-	<h2><span><c:out value="${titleVar}" /></span></h2>
-</c:if>
+<gwp:geoRenderList
+	centerCoordsParamName="center"
+	southWestCoordsParamName="southWest"
+	northEastCoordsParamName="northEast"
+	master="contentList"
+	markerParamName="markers"/>
 
-<c:set var="userFilterOptionsVar" value="${userFilterOptionsVar}" scope="request" />
-<c:import url="/WEB-INF/plugins/jacms/aps/jsp/widgets/inc/js_content_viewer_list.jsp" />
-<c:import url="/WEB-INF/plugins/jacms/aps/jsp/widgets/inc/userFilter-module.jsp" />
+<div class="jpgeoref-content_viewer_list">
 
-<div id="map" style="width: 550px; height: 450px"></div>
- 
-<script type="text/javascript">
-//<![CDATA[
+	<c:if test="${!(empty titleVar)}">
+		<h1><c:out value="${titleVar}" /></h1>
+	</c:if>
 
-if (GBrowserIsCompatible()) { 
-  
-  // A function to create the marker and set up the event window
-  // Dont try to unroll this function. It has to be here for the function closure
-  // Each instance of the function preserves the contends of a different instance
-  // of the "marker" and "html" variables which will be needed later when the event triggers.    
-  function createMarker(point,html) {
-    var marker = new GMarker(point);
-    GEvent.addListener(marker, "click", function() {
-      marker.openInfoWindowHtml(html);
-    });
-    return marker;
-  }
+	<c:set var="userFilterOptionsVar" value="${userFilterOptionsVar}" scope="request" />
+	<c:import url="/WEB-INF/plugins/jacms/aps/jsp/widgets/inc/userFilter-module.jsp" />
 
-<gwp:geoRenderList centerCoordsParamName="center" southWestCoordsParamName="southWest" northEastCoordsParamName="northEast" master="contentList" markerParamName="markers"/>
+	<c:choose>
+		<c:when test="${markers != null && !(empty markers)}">
+			<wp:headInfo type="CSS" info="widgets/jacms/content_viewer_list.css" />
+			<wp:headInfo type="JS_EXT" info="//maps.googleapis.com/maps/api/js?v=3&amp;sensor=false" />
+			<c:set var="javascript_map">
+				<c:set var="random"><%= java.lang.Math.round(java.lang.Math.random()*10000) %></c:set>
+				jQuery(function(){
+					google.maps.event.addDomListener(window, 'load', function(){
+						var bounds = new google.maps.LatLngBounds();
+						var map = new google.maps.Map(document.getElementById('jpgeoref-contentlist-map<c:out value="${random}" />'),
+						{
+							zoom: 8,
+							center: new google.maps.LatLng(<c:out value="${center[0]}" />, <c:out value="${center[1]}" />),
+							mapTypeId: google.maps.MapTypeId.ROADMAP
+						});
+						var infowindow = new google.maps.InfoWindow();
+						var jsmarker;
+						<c:forEach var="currentMarker" items="${markers}">
+							(function(){
+								<%-- your string --%>
+								<c:set var="STRING_TO_ESCAPE"><jacms:content contentId="${currentMarker.contentId}" /></c:set>
+								<c:set var="ESCAPED_STRING" value="${fn:replace(fn:replace(fn:replace(fn:replace(STRING_TO_ESCAPE,carriageReturn,' '),newLine,' '), singleQuotes, singleQuotesReplace),doubleQuotes,doubleQuotesReplace)}" />
+								var jsmarker = new google.maps.Marker({
+									position: new google.maps.LatLng(<c:out value="${currentMarker.x}" />, <c:out value="${currentMarker.y}" />),
+									map: map,
+									title: '<c:out value="${currentMarker.contentId}" />',
+									infowindow: '<c:out value="${ESCAPED_STRING}" escapeXml="false" />'
+								});
+								bounds.extend(jsmarker.position);
+								google.maps.event.addListener(jsmarker, 'click', function() {
+									infowindow.setContent(jsmarker.infowindow);
+									infowindow.open(map,jsmarker);
+								});
+							})();
+							<c:remove var="STRING_TO_ESCAPE" />
+							<c:remove var="ESCAPED_STRING" />
+						</c:forEach>
+						map.fitBounds(bounds);
+					});
+				});
+			</c:set>
+			<wp:headInfo type="JS_RAW" info="${javascript_map}" />
+			<wp:headInfo type="CSS" info="../../plugins/jpgeoref/static/css/jpgeoref.css" />
+			<div class="row-fluid">
+				<div class="span12 jpgeoref-contentlist-map" id="jpgeoref-contentlist-map<c:out value="${random}" />"></div>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<c:if test="${!(empty userFilterOptionsVar)}">
+				<p class="alert alert-info"><wp:i18n key="LIST_VIEWER_EMPTY" /></p>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 
-  // Display the map, with some controls and set the initial location 
-  var map = new GMap2(document.getElementById("map"));
-  map.addControl(new GLargeMapControl());
-  map.addControl(new GMapTypeControl());
-  
-  var bounds = new GLatLngBounds(new GLatLng(<c:out value="${southWest[0]}"/>, <c:out value="${southWest[1]}"/>), 
-  		new GLatLng(<c:out value="${northEast[0]}"/>, <c:out value="${northEast[1]}"/>));
-  var zoomLevel = map.getBoundsZoomLevel(bounds);
-  
-  map.setCenter(new GLatLng(<c:out value="${center[0]}"/>, <c:out value="${center[1]}"/>), zoomLevel);
-  
-  <c:forEach var="geoInfoBean" items="${markers}">
-  	var point = new GLatLng(<c:out value="${geoInfoBean.x}" />,<c:out value="${geoInfoBean.y}" />);
-  	var marker = createMarker(point,'<jacms:content contentId="${geoInfoBean.contentId}" />');
-  	map.addOverlay(marker);
-  </c:forEach>
-}
-
-// display a warning if the browser was not compatible
-else {
-  alert("Sorry, the Google Maps API is not compatible with this browser");
-}
-
-// This Javascript is based on code provided by the
-// Blackpool Community Church Javascript Team
-// http://www.commchurch.freeserve.co.uk/   
-// http://econym.googlepages.com/index.htm
-
-//]]>
-</script>
-
-<c:if test="${null != pageLinkVar && null != pageLinkDescriptionVar}">
-	<p><a href="<wp:url page="${pageLinkVar}"/>"><c:out value="${pageLinkDescriptionVar}" /></a></p>
-</c:if>
+	<c:if test="${!(empty pageLinkVar) && !(empty pageLinkDescriptionVar)}">
+		<p class="text-right"><a class="btn btn-primary" href="<wp:url page="${pageLinkVar}"/>"><c:out value="${pageLinkDescriptionVar}" /></a></p>
+	</c:if>
+</div>
 
 <%-- Important: reset variables --%>
 <c:set var="userFilterOptionsVar" value="${null}" scope="request" />
