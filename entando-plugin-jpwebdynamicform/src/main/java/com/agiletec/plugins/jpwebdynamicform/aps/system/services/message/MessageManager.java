@@ -2,16 +2,15 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software;
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
-*
-* See the file License for the specific language governing permissions
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
+* 
+* See the file License for the specific language governing permissions   
 * and limitations under the License
-*
-*
-*
+* 
+* 
+* 
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -63,7 +62,7 @@ public class MessageManager extends ApsEntityManager implements IMessageManager,
 		this.initSmallMessageTypes();
 		this.loadNotifierConfig();
 		this.checkConfig();
-		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized " +
+		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized " +
 				super.getEntityTypes().size() + " entity types");
 	}
 
@@ -106,7 +105,7 @@ public class MessageManager extends ApsEntityManager implements IMessageManager,
 				case EntityTypesChangingEvent.REMOVE_OPERATION_CODE:
 					String typeCode = event.getOldEntityType().getTypeCode();
 					this.removeNotifierConfig(typeCode);
-					ApsSystemUtils.getLogger().finest("Removed notifier configuration for entity type " + typeCode);
+					ApsSystemUtils.getLogger().trace("Removed notifier configuration for entity type " + typeCode);
 					break;
 				case EntityTypesChangingEvent.INSERT_OPERATION_CODE:
 					MessageTypeNotifierConfig config = new MessageTypeNotifierConfig();
@@ -183,7 +182,7 @@ public class MessageManager extends ApsEntityManager implements IMessageManager,
 		Map<String, MessageTypeNotifierConfig> notifierConfig = this.getNotifierConfigMap();
 		for (String messageType : this.getSmallMessageTypesMap().keySet()) {
 			if (!notifierConfig.containsKey(messageType)) {
-				ApsSystemUtils.getLogger().log(Level.WARNING, "Message Type " + messageType + " hasn't notifier configuration!");
+				ApsSystemUtils.getLogger().warn("Message Type " + messageType + " hasn't notifier configuration!");
 			}
 		}
 	}
@@ -351,7 +350,7 @@ public class MessageManager extends ApsEntityManager implements IMessageManager,
 						recipientsTo, recipientsCc, recipientsBcc, senderCode, IMailManager.CONTENTTYPE_TEXT_HTML);
 				sent = true;
 			} else {
-				ApsSystemUtils.getLogger().log(Level.WARNING, "Message notification not sent! Message lacking in notifier configuration.");
+				ApsSystemUtils.getLogger().warn("Message notification not sent! Message lacking in notifier configuration.");
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "sendMessageNotification");
@@ -383,13 +382,13 @@ public class MessageManager extends ApsEntityManager implements IMessageManager,
 							attachmentFiles, recipientsTo, null, null, senderCode);
 					sent = true;
 				} else {
-					ApsSystemUtils.getLogger().log(Level.WARNING, "ATTENTION: email Attribute \"" +
+					ApsSystemUtils.getLogger().warn("ATTENTION: email Attribute \"" +
 							config.getMailAttrName() + "\" for Message \"" + message.getId() +
 							"\" isn't valued!!\nCheck \"jpwebdynamicform_messageTypes\" Configuration or " +
 							"\"" + JpwebdynamicformSystemConstants.MESSAGE_NOTIFIER_CONFIG_ITEM + "\" Configuration");
 				}
 			} else {
-				ApsSystemUtils.getLogger().log(Level.WARNING, "Answer not sent! Message lacking in notifier configuration.");
+				ApsSystemUtils.getLogger().warn("Answer not sent! Message lacking in notifier configuration.");
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "sendAnswerNotification");

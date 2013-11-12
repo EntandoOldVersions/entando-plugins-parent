@@ -2,9 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
 * See the file License for the specific language governing permissions   
@@ -40,10 +40,10 @@ public class AuthCommon {
     	String realmDomain = remoteUser.substring(at, lenght);
     	if (this.verifyRealm(realmDomain)) {
     		String temp = remoteUser.substring(0, at);
-    		ApsSystemUtils.getLogger().finest(" Username extracted from remoteUser: " + remoteUser + " username: " + temp);
+    		ApsSystemUtils.getLogger().trace(" Username extracted from remoteUser: " + remoteUser + " username: " + temp);
     		return temp;
     	}
-    	ApsSystemUtils.getLogger().finest(" NO Username extracted from remoteUser: " + remoteUser);
+    	ApsSystemUtils.getLogger().trace(" NO Username extracted from remoteUser: " + remoteUser);
 		return null;
 	}
 
@@ -63,7 +63,7 @@ public class AuthCommon {
 		
 		String realm = this.getCasConfigManager().getClientConfig().getRealm();
 		this.setRealmDomain(realm);
-		ApsSystemUtils.getLogger().finest(" verifyRealm with Realm Domain conf: " + this.getRealmDomain() + " for Realm: " + realmDomain);
+		ApsSystemUtils.getLogger().trace(" verifyRealm with Realm Domain conf: " + this.getRealmDomain() + " for Realm: " + realmDomain);
 		if (realmDomain.equals('@' + this.getRealmDomain())) {
 			return true;
 		}

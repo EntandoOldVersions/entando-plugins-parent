@@ -2,16 +2,16 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* JAPS and its  source-code is  licensed under the  terms of the
-* GNU General Public License  as published by  the Free Software
-* Foundation (http://www.fsf.org/licensing/licenses/gpl.txt).
+* This file is part of Entando software. 
+* Entando is a free software; 
+* You can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
-* You may copy, adapt, and redistribute this file for commercial
-* or non-commercial use.
-* When copying,  adapting,  or redistributing  this document you
-* are required to provide proper attribution  to AgileTec, using
-* the following attribution line:
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -31,7 +31,7 @@ import com.agiletec.aps.util.DateConverter;
  * @author M.Casari - E.Santoboni
  */
 public class Scheduler extends TimerTask {
-	
+
 	/**
 	 * Costruttore dello scheduler
 	 * @param task Task da eseguire.
@@ -44,16 +44,16 @@ public class Scheduler extends TimerTask {
 		this._task = task;
 		ApsSystemUtils.getLogger().log(Level.FINEST, "jpcontentnotifier: Scheduler - StartTime: " + DateConverter.getFormattedDate(start, "dd/MM/yyyy HH:mm:ss") + " - Delay: " + delay);
 	}
-	
+
 	public boolean cancel() {
 		this._task = null;
 		return super.cancel();
 	}
-	
+
 	public void run() {
 		if (null != _task) _task.execute();
 	}
-	
+
 	private Task _task;
-	
+
 }

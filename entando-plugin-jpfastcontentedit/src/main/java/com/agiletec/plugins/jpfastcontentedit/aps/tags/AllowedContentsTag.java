@@ -2,16 +2,16 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
-* See the file License for the specific language governing permissions
+* See the file License for the specific language governing permissions   
 * and limitations under the License
-*
-*
-*
+* 
+* 
+* 
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -42,12 +42,10 @@ import com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.helper
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
 
 public class AllowedContentsTag extends TagSupport implements IContentListTagBean {
-
 	public AllowedContentsTag() {
 		super();
 		this.release();
 	}
-
 	@Override
 	public int doStartTag() throws JspException {
 		HttpSession session = this.pageContext.getSession();
@@ -75,12 +73,12 @@ public class AllowedContentsTag extends TagSupport implements IContentListTagBea
 		}
 		return super.doStartTag();
 	}
-
+        
         public int doEndTag() throws JspException {
 		this.release();
 		return super.doEndTag();
 	}
-
+	
 	@Override
 	public String getContentType() {
 		return _contentType;
@@ -89,12 +87,12 @@ public class AllowedContentsTag extends TagSupport implements IContentListTagBea
 	public void setContentType(String contentType) {
 		this._contentType = contentType;
 	}
-
+	
 	@Override
 	public String getCategory() {
 		return null;
 	}
-
+	
 	@Override
 	public void addFilter(EntitySearchFilter filter) {
 		int len = this._filters.length;
@@ -121,7 +119,7 @@ public class AllowedContentsTag extends TagSupport implements IContentListTagBea
 	public void setCategory(String category) {
 		//nothing to do
 	}
-
+	
 	@Override
 	public void addCategory(String category) {
 		//nothing to do
@@ -139,14 +137,14 @@ public class AllowedContentsTag extends TagSupport implements IContentListTagBea
 	public void setVar(String var) {
 		this._var = var;
 	}
-
+	
 	@Override
 	public void release() {
 		this._var = null;
 		this._contentType = null;
 		this._filters = new EntitySearchFilter[0];
 	}
-
+	
 	@Override
 	public void addUserFilterOption(UserFilterOptionBean filter) {
 		// nothing to do
@@ -156,10 +154,10 @@ public class AllowedContentsTag extends TagSupport implements IContentListTagBea
 		// nothing to do
 		return null;
 	}
-
+	
 	private String _contentType;
 	private EntitySearchFilter[] _filters = new EntitySearchFilter[0];
-
+	
 	private String _var;
-
+	
 }

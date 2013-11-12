@@ -1,3 +1,20 @@
+/*
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando software. 
+* Entando is a free software; 
+* You can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpuserreg.apsadmin.config;
 
 import java.util.ArrayList;
@@ -24,7 +41,7 @@ import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.Template
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.UserRegConfig;
 
 public class UserRegConfigAction extends BaseAction implements IUserRegConfigAction {
-	
+
 	@Override
 	public void validate() {
 		super.validate();
@@ -39,7 +56,7 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 			this.addActionError(this.getText("jpuserreg.errors.genericError"));
 		}
 	}
-	
+
 	private void checkTemplates(Map<String, Template> templates, String fieldName) {
 		Iterator<Lang> langs = this.getLangManager().getLangs().iterator();
 		while (langs.hasNext()) {
@@ -59,7 +76,7 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 			}
 		}
 	}
-	
+
 	private void checkAuthorities(Collection<String> authorities, IApsAuthorityManager authorityManager, String fieldName) {
 		if (authorities!=null) {
 			Iterator<String> authIter = authorities.iterator();
@@ -71,14 +88,14 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 			}
 		}
 	}
-	
+
 	/*
 	 * Used in validation xml
 	 */
 	public boolean checkPage(String pageCode) {
 		return this.getPageManager().getPage(pageCode)!=null;
 	}
-	
+
 	/*
 	 * Used in validation xml
 	 */
@@ -92,7 +109,7 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 		}
 		return existsSender;
 	}
-	
+
 	@Override
 	public String edit() {
 		try {
@@ -104,7 +121,7 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String save() {
 		try {
@@ -115,7 +132,7 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String addGroup() {
 		try {
@@ -130,7 +147,7 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String removeGroup() {
 		try {
@@ -141,7 +158,7 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String addRole() {
 		try {
@@ -156,7 +173,7 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 		}
 		return SUCCESS;
 	}
-	
+
 	@Override
 	public String removeRole() {
 		try {
@@ -167,7 +184,7 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 		}
 		return SUCCESS;
 	}
-	
+
 	public List<SelectItem> getMailSenders() {
 		try {
 			Map<String, String> senders = this.getMailManager().getMailConfig().getSenders();
@@ -184,15 +201,15 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 			throw new RuntimeException(t);
 		}
 	}
-	
+
 	public List<Role> getSystemRoles() {
 		return this.getRoleManager().getRoles();
 	}
-	
+
 	public List<Group> getSystemGroups() {
 		return this.getGroupManager().getGroups();
 	}
-	
+
 	public List<IPage> getPages() {
 		if (this._pages==null) {
 			this._pages = new ArrayList<IPage>();
@@ -201,7 +218,7 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 		}
 		return this._pages;
 	}
-	
+
 	protected void addPages(IPage page, List<IPage> pages) {
 		pages.add(page);
 		IPage[] children = page.getChildren();
@@ -209,77 +226,77 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 			this.addPages(children[i], pages);
 		}
 	}
-	
+
 	public List<Lang> getLangs() {
 		return this.getLangManager().getLangs();
 	}
-	
+
 	public IUserRegConfig getConfig() {
 		return _config;
 	}
 	public void setConfig(IUserRegConfig config) {
 		this._config = config;
 	}
-	
+
 	public String getGroupName() {
 		return _groupName;
 	}
 	public void setGroupName(String groupName) {
 		this._groupName = groupName;
 	}
-	
+
 	public String getRoleName() {
 		return _roleName;
 	}
 	public void setRoleName(String roleName) {
 		this._roleName = roleName;
 	}
-	
+
 	protected IUserRegManager getUserRegManager() {
 		return _userRegManager;
 	}
 	public void setUserRegManager(IUserRegManager userRegManager) {
 		this._userRegManager = userRegManager;
 	}
-	
+
 	protected IMailManager getMailManager() {
 		return _mailManager;
 	}
 	public void setMailManager(IMailManager mailManager) {
 		this._mailManager = mailManager;
 	}
-	
+
 	protected IPageManager getPageManager() {
 		return _pageManager;
 	}
 	public void setPageManager(IPageManager pageManager) {
 		this._pageManager = pageManager;
 	}
-	
+
 	protected IGroupManager getGroupManager() {
 		return _groupManager;
 	}
 	public void setGroupManager(IGroupManager groupManager) {
 		this._groupManager = groupManager;
 	}
-	
+
 	protected IRoleManager getRoleManager() {
 		return _roleManager;
 	}
 	public void setRoleManager(IRoleManager roleManager) {
 		this._roleManager = roleManager;
 	}
-	
+
 	private IUserRegConfig _config = new UserRegConfig();
 	private String _groupName;
 	private String _roleName;
-	
+
 	private List<IPage> _pages;
-	
+
 	private IUserRegManager _userRegManager;
 	private IMailManager _mailManager;
 	private IPageManager _pageManager;
 	private IGroupManager _groupManager;
 	private IRoleManager _roleManager;
-	
+
 }

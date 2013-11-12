@@ -1,20 +1,20 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando software. 
+* Entando is a free software; 
+* You can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpcalendar.aps.tags;
 
 import java.util.Date;
@@ -49,7 +49,7 @@ public class EventsOfDayTag extends TagSupport implements EventsOfDayDataBean {
 	@Override
 	public int doStartTag() throws JspException {
 		RequestContext reqCtx = (RequestContext) this.pageContext.getRequest().getAttribute(RequestContext.REQCTX);
-		ApsSystemUtils.getLogger().finest("EventsOfDayTag Invoked");
+		ApsSystemUtils.getLogger().trace("EventsOfDayTag Invoked");
 		try {
 			this._calMan = (ICalendarManager) ApsWebApplicationUtils.getBean(CalendarConstants.CALENDAR_MANAGER, this.pageContext);
 			IAuthorizationManager authorizatorManager = (IAuthorizationManager) 

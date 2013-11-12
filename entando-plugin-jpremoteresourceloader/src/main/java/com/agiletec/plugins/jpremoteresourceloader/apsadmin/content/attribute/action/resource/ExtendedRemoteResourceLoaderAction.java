@@ -1,3 +1,20 @@
+/*
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando software. 
+* Entando is a free software; 
+* You can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpremoteresourceloader.apsadmin.content.attribute.action.resource;
 
 import java.io.File;
@@ -22,7 +39,7 @@ import com.agiletec.plugins.jpremoteresourceloader.apsadmin.resource.IRemoteReso
 import com.agiletec.plugins.jpremoteresourceloader.apsadmin.resource.helper.RemoteResourceLoaderActionHelper;
 
 public class ExtendedRemoteResourceLoaderAction extends ExtendedResourceAction implements IRemoteResourceLoaderAction, ResourceDataBean {
-	
+
 	@Override
 	public void validate() {
 		if (ApsAdminSystemConstants.ADD == this.getStrutsAction()) {
@@ -38,7 +55,7 @@ public class ExtendedRemoteResourceLoaderAction extends ExtendedResourceAction i
 			this.checkDuplicateFile(resourcePrototype);
 		}
 	}
-	
+
 	/*
 	protected void checkRightFileType(ResourceInterface resourcePrototype) {
 		if (!this.isRightType(resourcePrototype)) {
@@ -80,7 +97,7 @@ public class ExtendedRemoteResourceLoaderAction extends ExtendedResourceAction i
 		}
 		return isRight;
 	}
-	
+
 	private boolean isValidType(String docType, String[] rightTypes) {
 		boolean isValid = false;
 		if (rightTypes.length > 0) {
@@ -104,7 +121,7 @@ public class ExtendedRemoteResourceLoaderAction extends ExtendedResourceAction i
 				return;
 			}
 			URLConnection conn = RemoteResourceLoaderActionHelper.getRemoteResourceConnection(this.getUrl(), this.getDefaultStorageDirPath());
-			conn.connect();	
+			conn.connect();
 			InputStream inputStream = conn.getInputStream();
 			String filename = null;
 			String urlFileName = RemoteResourceLoaderActionHelper.extractFilenameFromUrl(this.getUrl()) ;
@@ -117,7 +134,7 @@ public class ExtendedRemoteResourceLoaderAction extends ExtendedResourceAction i
 					String docType = urlFileName.substring(urlFileName.lastIndexOf(".")+1).trim();
 					filename = new StringBuffer(this.getAlternateName()).append(".").append(docType).toString();
 				}
-				File file = RemoteResourceLoaderActionHelper.createFileFromInputStream(inputStream, filename);		
+				File file = RemoteResourceLoaderActionHelper.createFileFromInputStream(inputStream, filename);
 				this.setUpload(file);
 				this.setFileName(filename);
 			}
@@ -130,7 +147,7 @@ public class ExtendedRemoteResourceLoaderAction extends ExtendedResourceAction i
 			ApsSystemUtils.logThrowable(t, this, "loadExternalResource");
 		}
 	}
-	
+
 	@Override
 	public String newResource() {
 		this.setStrutsAction(ApsAdminSystemConstants.ADD);
@@ -227,12 +244,12 @@ public class ExtendedRemoteResourceLoaderAction extends ExtendedResourceAction i
 	public InputStream getInputStream() throws Throwable {
 		return new FileInputStream(this.getUpload());
 	}
-	
+
 	@Override
 	public String getResourceType() {
 		return this.getResourceTypeCode();
 	}
-	
+
 	public void setUrl(String url) {
 		this._url = url;
 	}
@@ -250,25 +267,25 @@ public class ExtendedRemoteResourceLoaderAction extends ExtendedResourceAction i
 	public String getFileName() {
 		return this.getFilename();
 	}
-	
+
 	public void setAlternateName(String alternateName) {
 		this._alternateName = alternateName;
 	}
 	public String getAlternateName() {
 		return _alternateName;
 	}
-	
+
 	public void setDefaultStorageDirPath(String defaultStorageDirPath) {
 		this._defaultStorageDirPath = defaultStorageDirPath;
 	}
 	public String getDefaultStorageDirPath() {
 		return _defaultStorageDirPath;
 	}
-	
+
 	private String _url;
 	private String _filename;
 	private String _alternateName;
-	
+
 	private String _defaultStorageDirPath;
-	
+
 }

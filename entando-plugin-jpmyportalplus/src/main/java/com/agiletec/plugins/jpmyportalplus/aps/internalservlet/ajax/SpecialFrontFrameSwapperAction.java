@@ -60,7 +60,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 		try {
 			IPage currentPage = this.getCurrentPage();
 			if (null == this.getTargetPrevFramePos() && null == this.getTargetNextFramePos()) {
-				ApsSystemUtils.getLogger().finer("Page '" + currentPage.getCode() + "' - No swap to do");
+				ApsSystemUtils.getLogger().debug("Page '" + currentPage.getCode() + "' - No swap to do");
 				return SUCCESS;
 			}
 			Widget[] customShowlets = super.getCustomShowletConfig();

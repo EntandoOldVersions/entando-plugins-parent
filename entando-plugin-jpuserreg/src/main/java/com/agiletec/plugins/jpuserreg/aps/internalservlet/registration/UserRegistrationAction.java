@@ -76,7 +76,7 @@ public class UserRegistrationAction extends AbstractApsEntityAction implements I
 				IUserProfile userProfile = (IUserProfile) this.getUserProfileManager().getProfileType(profileTypeCode);
 				if (userProfile != null) {
 					if (userProfile.getAttributeByRole(SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_MAIL) == null) {// Verifica che contenga l'attributo della mail
-						ApsSystemUtils.getLogger().warning("Registration attempt with profile " + profileTypeCode + " missing email address");
+						ApsSystemUtils.getLogger().warn("Registration attempt with profile " + profileTypeCode + " missing email address");
 					} else {
 						userProfile.disableAttributes(JpUserRegSystemConstants.ATTRIBUTE_DISABLING_CODE_ON_REGISTRATION);
 						this.setUserProfile(userProfile);

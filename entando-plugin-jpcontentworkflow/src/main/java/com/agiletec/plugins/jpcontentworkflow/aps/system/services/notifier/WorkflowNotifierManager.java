@@ -2,9 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
 * See the file License for the specific language governing permissions   
@@ -67,7 +67,7 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 	public void init() throws Exception {
 		this.loadConfigs();
 		this.openScheduler();
-		ApsSystemUtils.getLogger().config(this.getName() + ": inizializzato " +
+		ApsSystemUtils.getLogger().debug(this.getName() + ": inizializzato " +
 				"servizio notificatore cambiamento stato contenuti");
 	}
 	
@@ -196,7 +196,7 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 	public void sendMails() throws ApsSystemException {
 		try {
 			Map<String, List<ContentStatusChangedEventInfo>> statusChangedInfos = this.getNotifierDAO().getEventsToNotify();
-			ApsSystemUtils.getLogger().finest("Found " + statusChangedInfos.size() + " events to notify");
+			ApsSystemUtils.getLogger().trace("Found " + statusChangedInfos.size() + " events to notify");
 			if (statusChangedInfos.size()>0) {
 				Map<String, List<ContentStatusChangedEventInfo>> contentsForUsers = this.prepareContentsForUsers(statusChangedInfos);
 				Iterator<String> iter = contentsForUsers.keySet().iterator();
@@ -209,7 +209,7 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 				for (List<ContentStatusChangedEventInfo> contentsForType : statusChangedInfos.values()) {
 					notifiedContents.addAll(contentsForType);
 				}
-				ApsSystemUtils.getLogger().finest("Notified " + notifiedContents.size() + " events");
+				ApsSystemUtils.getLogger().trace("Notified " + notifiedContents.size() + " events");
 				this.getNotifierDAO().signNotifiedEvents(notifiedContents);
 			}
 		} catch (Throwable t) {

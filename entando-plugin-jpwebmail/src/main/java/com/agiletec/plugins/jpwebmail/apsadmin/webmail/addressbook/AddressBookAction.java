@@ -2,10 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
-* Entando is a free software; 
-* you can redistribute it and/or modify it
-* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* This file is part of Entando Enterprise Edition software.
+* You can redistribute it and/or modify it
+* under the terms of the Entando's EULA
 * 
 * See the file License for the specific language governing permissions   
 * and limitations under the License
@@ -57,7 +56,7 @@ public class AddressBookAction extends BaseAction implements IAddressBookAction 
 							JpwebmailSystemConstants.BCC_RECIPIENT } 
 			);
 			if (null == allowedRecipents || !allowedRecipents.contains(this.getActualRecipient())) {	    	
-				ApsSystemUtils.getLogger().severe("ERRORE: impossibile determinare il tipo di recipient selezionato");
+				ApsSystemUtils.getLogger().error("ERRORE: impossibile determinare il tipo di recipient selezionato");
 				this.addActionError(this.getText("Error.addressBookManager.unknownRecipient",new String[]{this.getActualRecipient()}));
 				return "unknownRecipient";
 			}

@@ -65,7 +65,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 	@Override
 	public void init() throws Exception {
 		this.loadMappingConfig();
-		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized");
+		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
 	}
 
 	@Override
@@ -198,7 +198,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 			ContentRecordVO currentContent = this.getContentManager().loadContentVO(id);
 			RssContentMapping mapping = (RssContentMapping) this.getContentMapping().get(currentContent.getTypeCode());
 			if (null == mapping) {
-				ApsSystemUtils.getLogger().severe("Null content mapping by existed channel for content type " + currentContent.getTypeCode());
+				ApsSystemUtils.getLogger().error("Null content mapping by existed channel for content type " + currentContent.getTypeCode());
 				continue;
 			}
 			entries.add(this.createEntry(currentContent, lang, feedLink, req, resp));
@@ -300,7 +300,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 	private List<String> getContentsId(Channel channel, String langCode) throws ApsSystemException {
 		RssContentMapping mapping = (RssContentMapping) this.getContentMapping().get(channel.getContentType());
 		if (null == mapping) {
-			ApsSystemUtils.getLogger().severe("Null content mapping by existed channel for content type " + channel.getContentType());
+			ApsSystemUtils.getLogger().error("Null content mapping by existed channel for content type " + channel.getContentType());
 			return new ArrayList<String>();
 		}
 		try {

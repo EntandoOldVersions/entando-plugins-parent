@@ -46,27 +46,23 @@ import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientCon
  * @author zuanni - G.Cocco
  * */
 public class CasClientRequestAuthorizator extends RequestAuthorizator {
-
-
+	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		CasClientConfig casClientConfig = this.getCasConfigManager().getClientConfig();
 		this.setCasClientConfig(casClientConfig);
 		super.afterPropertiesSet();
 	}
-
+	
 	@Override
 	public int service(RequestContext reqCtx, int status) {
-		if (_log.isLoggable(Level.FINEST)) {
-			_log.finest("Invoked " + this.getClass().getName());
-		}
+		_log.trace("Invoked " + this.getClass().getName());
 		int retStatus = ControllerManager.INVALID_STATUS;
 		if (status == ControllerManager.ERROR) {
 			return status;
 		}
 		try {
 			boolean isActive = this.getCasClientConfig().isActive();
-
 			if (!isActive) {
 				// if cas client is disactivate normal Authorization on request
 				return super.service(reqCtx, retStatus);
@@ -84,7 +80,7 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 					_log.info("CAS - user not authorized and guest");
 					CasClientUtils casClientUtils = new CasClientUtils();
 					String loginBaseUrl = this.getCasClientConfig().getCasLoginURL();
-					StringBuffer loginUrl = new StringBuffer(loginBaseUrl);
+					StringBuilder loginUrl = new StringBuilder(loginBaseUrl);
 					loginUrl.append("?service=");
 					PageURL pageUrl = this.getUrlManager().createURL(reqCtx);
 					String serviceUrl = casClientUtils.getURLStringWithoutTicketParam(pageUrl, reqCtx);
@@ -109,14 +105,14 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 		}
 		return retStatus;
 	}
-
+	
 	public void setPageManager(IPageManager pageManager) {
 		this._pageManager = pageManager;
 	}
 	public IPageManager getPageManager() {
 		return _pageManager;
 	}
-
+	
 	public ICasClientConfigManager getCasConfigManager() {
 		return _casConfigManager;
 	}

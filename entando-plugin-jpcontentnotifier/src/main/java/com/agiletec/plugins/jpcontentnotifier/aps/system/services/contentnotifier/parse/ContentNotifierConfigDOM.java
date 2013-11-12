@@ -14,8 +14,7 @@
 * 
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-*/
-package com.agiletec.plugins.jpcontentnotifier.aps.system.services.contentnotifier.parse;
+*/package com.agiletec.plugins.jpcontentnotifier.aps.system.services.contentnotifier.parse;
 
 import java.io.StringReader;
 import java.util.Date;
@@ -245,7 +244,7 @@ public class ContentNotifierConfigDOM {
 			Document doc = builder.build(reader);
 			root = doc.getRootElement();
 		} catch (Throwable t) {
-			ApsSystemUtils.getLogger().severe("Error parsing xml: " + t.getMessage());
+			ApsSystemUtils.getLogger().error("Error parsing xml: " + t.getMessage());
 			throw new ApsSystemException("Error parsing xml", t);
 		}
 		return root;

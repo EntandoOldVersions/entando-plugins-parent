@@ -1,20 +1,20 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando software. 
+* Entando is a free software; 
+* You can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator;
 
 import java.util.HashMap;
@@ -22,13 +22,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
-import java.util.logging.Logger;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator.event.AggregatorItemsChangedEvent;
 import com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator.event.AggregatorItemsChangedObserver;
+import org.slf4j.Logger;
 
 /**
  * This Service hendles the notifications for the AggregatorItemsChangedEvent.
@@ -39,7 +39,7 @@ public class RssTimerManager extends AbstractService implements AggregatorItemsC
 	public void init() throws Exception {
 		this.loadMap();
 		this.startThreads();
-		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized. Active tasks: " + this.getTimerTaskMap().size());
+		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized. Active tasks: " + this.getTimerTaskMap().size());
 	}	
 
 	/**
@@ -67,14 +67,14 @@ public class RssTimerManager extends AbstractService implements AggregatorItemsC
 				ApsAggregatorItem item = this.getAggregatorManager().getItem(itemCode);
 				RssTimerTask timerTask = new RssTimerTask(item, this.getAggregatorManager());
 				this.getTimerTaskMap().put(new Integer(itemCode).toString(), timerTask);
-				log.finest("jprssaggregator Created new thread: " + itemCode);
+				log.trace("jprssaggregator Created new thread: " + itemCode);
 				this.startThread(new Integer(event.getItemCode()).toString());
 			} else if (event.getOperationCode() == AggregatorItemsChangedEvent.REMOVE_OPERATION_CODE) {
 				String taskKey = new Integer(event.getItemCode()).toString();
 				RssTimerTask task = this.getTimerTaskMap().get(taskKey);
 				task.cancel();
 				this.getTimerTaskMap().remove(taskKey);
-				log.finest("jprssaggregator Removed thread: " + taskKey);
+				log.trace("jprssaggregator Removed thread: " + taskKey);
 			} else if (event.getOperationCode() == AggregatorItemsChangedEvent.UPDATE_OPERATION_CODE) {
 				String taskKey = new Integer(event.getItemCode()).toString();
 				RssTimerTask task = this.getTimerTaskMap().get(taskKey);
@@ -83,7 +83,7 @@ public class RssTimerManager extends AbstractService implements AggregatorItemsC
 				ApsAggregatorItem item = this.getAggregatorManager().getItem(event.getItemCode());
 				RssTimerTask timerTask = new RssTimerTask(item, this.getAggregatorManager());
 				this.getTimerTaskMap().put(new Integer(item.getCode()).toString(), timerTask);
-				log.finest("jprssaggregator Updating thread: " + taskKey);
+				log.trace("jprssaggregator Updating thread: " + taskKey);
 				this.startThread(taskKey);
 			}
 		} catch (Throwable t) {
@@ -130,8 +130,7 @@ public class RssTimerManager extends AbstractService implements AggregatorItemsC
 	 * @param taskId the code of the task
 	 */
 	private void startThread(String taskId)  {
-		Logger log = ApsSystemUtils.getLogger();
-		log.finest("jprssaggregator Starting thread: " + taskId);
+		ApsSystemUtils.getLogger().trace("jprssaggregator Starting thread: " + taskId);
 		try {
 			RssTimerTask task =	(RssTimerTask) this.getTimerTaskMap().get(taskId);
 			ApsAggregatorItem item = task.getItem();

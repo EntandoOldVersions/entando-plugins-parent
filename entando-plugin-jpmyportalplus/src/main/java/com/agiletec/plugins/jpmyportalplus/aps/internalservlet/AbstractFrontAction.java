@@ -17,8 +17,6 @@
 */
 package com.agiletec.plugins.jpmyportalplus.aps.internalservlet;
 
-import java.util.logging.Logger;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -122,7 +120,6 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		if (null == infos || infos.length == 0) {
 			return;
 		}
-		Logger log = ApsSystemUtils.getLogger();
 		try {
 			//AGGIORNARE SE L'UTENTE CORRENTE è DIVERSO DA GUEST
 			//public static final String SESSIONPARAM_CURRENT_CUSTOM_USER_PAGE_CONFIG = "jpmyportalplus_currentCustomUserPageConfig";
@@ -139,7 +136,7 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 				PageUserConfigBean pageUserConfigBean =
 					(PageUserConfigBean) this.getRequest().getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_USER_PAGE_CONFIG);
 				if (null == pageUserConfigBean) {
-					log.info("No Page User Config by user " + currentUser.getUsername());
+					ApsSystemUtils.getLogger().info("No Page User Config by user " + currentUser.getUsername());
 					pageUserConfigBean = this.createNewPageUserConfig(infos, currentUser, currentPage);
 					this.getRequest().getSession().setAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_USER_PAGE_CONFIG, pageUserConfigBean);
 					customUserPageConfig = pageUserConfigBean.getConfig().get(currentPage.getCode());
@@ -246,7 +243,7 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		IPage currentPage = this.getCurrentPage();
 		CustomPageConfig config = (CustomPageConfig) this.getRequest().getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG);
 		if (config != null && !config.getPageCode().equals(currentPage.getCode())) {
-			ApsSystemUtils.getLogger().severe("Current page '" + currentPage
+			ApsSystemUtils.getLogger().error("Current page '" + currentPage
 					+ "' not equals then pageCode of custom config param '" + config.getPageCode() + "'");
 			return null;
 		}

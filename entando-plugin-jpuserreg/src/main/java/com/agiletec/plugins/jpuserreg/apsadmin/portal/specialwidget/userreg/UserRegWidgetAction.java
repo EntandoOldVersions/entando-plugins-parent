@@ -2,9 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
 * See the file License for the specific language governing permissions   
@@ -21,13 +21,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
 import com.agiletec.apsadmin.portal.specialwidget.SimpleWidgetConfigAction;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
-
-import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
 
 public class UserRegWidgetAction extends SimpleWidgetConfigAction {
 	

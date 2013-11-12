@@ -20,7 +20,6 @@ package com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialwidget;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.services.group.Group;
@@ -31,6 +30,7 @@ import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecor
 import com.agiletec.plugins.jacms.apsadmin.portal.specialwidget.viewer.ContentViewerWidgetAction;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackConfig;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.IContentFeedbackManager;
+import org.slf4j.Logger;
 
 
 /**
@@ -46,7 +46,8 @@ public class ContentFeedbackWidgetAction  extends ContentViewerWidgetAction impl
 		this.getRequest().getSession().removeAttribute(SESSION_PARAM_STORE_CONFIG);
 		return super.init();
 	}
-
+	
+	@Override
 	protected String extractInitConfig() {
 		if (null != this.getWidget()) return SUCCESS;
 		Widget showlet = this.getCurrentPage().getWidgets()[this.getFrame()];
@@ -72,8 +73,8 @@ public class ContentFeedbackWidgetAction  extends ContentViewerWidgetAction impl
 				if (null != value && value.equalsIgnoreCase("true")) showlet.getConfig().setProperty(WIDGET_PARAM_RATE_COMMENT, value);
 				//---
 
-			} catch (Exception e) {
-				log.severe(e.getMessage());
+			} catch (Throwable t) {
+				ApsSystemUtils.logThrowable(t, this, NONE);
 				//TODO METTI MESSAGGIO DI ERRORE NON PREVISO... Vai in pageTree con messaggio di errore Azione non prevista o cosa del genere
 				this.addActionError(this.getText("Message.userNotAllowed"));
 				return "pageTree";

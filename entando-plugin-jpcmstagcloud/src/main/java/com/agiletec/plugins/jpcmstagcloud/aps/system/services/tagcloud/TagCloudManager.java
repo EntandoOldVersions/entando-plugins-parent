@@ -2,9 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
 * See the file License for the specific language governing permissions   
@@ -56,7 +56,7 @@ public class TagCloudManager extends AbstractService
     
     public void init() throws Exception {
         this.checkCategoryRoot();
-        ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized");
+        ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
     }
     
     private void checkCategoryRoot() {
@@ -79,7 +79,7 @@ public class TagCloudManager extends AbstractService
             tagCloudRoot.setParent(root);
             tagCloudRoot.setParentCode(root.getCode());
             this.getCategoryManager().addCategory(tagCloudRoot);
-            ApsSystemUtils.getLogger().config(this.getClass().getName() + ": TagCloud category root Created ");
+            ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": TagCloud category root Created ");
         } catch (Throwable t) {
             ApsSystemUtils.logThrowable(t, this, "checkCategoryRoot");
             throw new RuntimeException("Error on adding tag cloud category root", t);
@@ -108,7 +108,7 @@ public class TagCloudManager extends AbstractService
         try {
             Category root = this.getCategoryManager().getCategory(this.getTagCloudCategoryRoot());
             if (root == null || root.getChildren() == null || root.getChildren().length == 0) {
-                ApsSystemUtils.getLogger().severe("Category Root '" + this.getTagCloudCategoryRoot() + "' null or dosn't has children");
+                ApsSystemUtils.getLogger().error("Category Root '" + this.getTagCloudCategoryRoot() + "' null or dosn't has children");
                 return new HashMap<ITreeNode, Integer>();
             }
             Set<String> userGroupCodes = this.getGroupsForSearch(currentUser);

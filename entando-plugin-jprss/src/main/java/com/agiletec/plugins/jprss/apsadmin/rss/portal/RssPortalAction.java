@@ -2,9 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
 * See the file License for the specific language governing permissions   
@@ -17,14 +17,6 @@
 */
 package com.agiletec.plugins.jprss.apsadmin.rss.portal;
 
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts2.interceptor.ServletResponseAware;
-
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
@@ -32,6 +24,15 @@ import com.agiletec.apsadmin.system.BaseAction;
 import com.agiletec.plugins.jprss.aps.system.services.rss.Channel;
 import com.agiletec.plugins.jprss.aps.system.services.rss.IRssManager;
 import com.sun.syndication.feed.synd.SyndFeed;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletResponseAware;
+
+import org.slf4j.Logger;
 
 public class RssPortalAction extends BaseAction implements ServletResponseAware, IRssPortalAction {
 	

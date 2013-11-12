@@ -54,7 +54,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized");
+		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			if (null == cookie
 					|| cookie.getValue() == null
 					|| cookie.getValue().trim().length() == 0) {
-				ApsSystemUtils.getLogger().finest("Cookie nullo o invalido per pagina " + page.getCode());
+				ApsSystemUtils.getLogger().trace("Cookie nullo o invalido per pagina " + page.getCode());
 				return null;
 			}
 			MyPortalConfig mPortalConfig = this.getMyPortalConfigManager().getConfig();
@@ -158,7 +158,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			if (defaultWidgets.length != customShowlets.length) {
 				String message = "Page '" + page.getCode() + "' Frame numbers " +
 					defaultWidgets.length + " not equals than custom showlet frames " + customShowlets.length;
-				ApsSystemUtils.getLogger().severe(message);
+				ApsSystemUtils.getLogger().error(message);
 				return defaultWidgets;
 			}
 			Frame[] frames = ((MyPortalPageModel) page.getModel()).getFrameConfigs();

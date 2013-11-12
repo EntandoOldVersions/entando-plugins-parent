@@ -6,8 +6,6 @@
 package com.agiletec.plugins.jpcasclient.aps.filter;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -28,6 +26,8 @@ import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
 
+import org.slf4j.Logger;
+
 /**
  * Implements the Single Sign Out protocol. It handles registering the session and destroying the session.
  * Zuanni's change setting encodnig to UTF8 and minor refactorings like managing plugin disactivation config
@@ -38,11 +38,13 @@ import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientCon
  * @since 3.1
  */
 public class CasSingleSignOutFilter implements Filter {
-
+	
+	@Override
 	public void init(final FilterConfig filterConfig) throws ServletException {
 		_log = ApsSystemUtils.getLogger();
 	}
-
+	
+	@Override
 	public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
 		final HttpServletRequest request = (HttpServletRequest) servletRequest;
 		request.setCharacterEncoding("UTF-8");
@@ -51,25 +53,14 @@ public class CasSingleSignOutFilter implements Filter {
 		if (isActive) {
 			if ("POST".equals(request.getMethod())) {
 				final String logoutRequest = request.getParameter("logoutRequest");
-
 				if (CommonUtils.isNotBlank(logoutRequest)) {
-
-					if(_log.isLoggable(Level.FINE)){
-						_log.fine("Logout request=[" + logoutRequest + "]");
-					}
-
+					_log.debug("Logout request=[" + logoutRequest + "]");
 					final String sessionIdentifier = XmlUtils.getTextForElement(logoutRequest, "SessionIndex");
-
 					if (CommonUtils.isNotBlank(sessionIdentifier)) {
 						final HttpSession session = SESSION_MAPPING_STORAGE.removeSessionByMappingId(sessionIdentifier);
-
 						if (session != null) {
 							String sessionID = session.getId();
-
-							if (_log.isLoggable(Level.FINE)) {
-								_log.fine("Invalidating session [" + sessionID + "] for ST [" + sessionIdentifier + "]");
-							}
-
+							_log.debug("Invalidating session [" + sessionID + "] for ST [" + sessionIdentifier + "]");
 							try {
 								session.invalidate();
 							} catch (final IllegalStateException e) {
@@ -83,8 +74,8 @@ public class CasSingleSignOutFilter implements Filter {
 				final String artifact = request.getParameter(this._artifactParameterName);
 				final HttpSession session = request.getSession();
 
-				if (_log.isLoggable(Level.FINE) && session != null) {
-					_log.fine("Storing session identifier for " + session.getId());
+				if (session != null) {
+					_log.debug("Storing session identifier for " + session.getId());
 				}
 				if (CommonUtils.isNotBlank(artifact)) {
 					try {
@@ -106,18 +97,19 @@ public class CasSingleSignOutFilter implements Filter {
 	public static SessionMappingStorage getSessionMappingStorage() {
 		return SESSION_MAPPING_STORAGE;
 	}
-
+	
+	@Override
 	public void destroy() {
 		// nothing to do
 	}
-
+	
 	/**
 	 * The name of the artifact parameter.  This is used to capture the session identifier.
 	 */
 	private final static String _artifactParameterName = "ticket";
-
+	
 	private static SessionMappingStorage SESSION_MAPPING_STORAGE = new HashMapBackedSessionMappingStorage();
-
+	
 	private static Logger _log;
-
+	
 }

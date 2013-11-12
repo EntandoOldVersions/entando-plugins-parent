@@ -2,9 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
 * See the file License for the specific language governing permissions   
@@ -20,7 +20,6 @@ package com.agiletec.plugins.jpcontentrefs.aps.system.services.contentrelations;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
@@ -28,6 +27,7 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
+import org.slf4j.Logger;
 
 /**
  * @author E.Santoboni
@@ -37,7 +37,7 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 	@Override
 	public void init() throws Exception {
 		this.loadContentTypeElement();
-		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized");
+		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
 	}
 	
 	private void loadContentTypeElement() throws ApsSystemException {
@@ -47,7 +47,7 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 			if (xml == null) {
 				throw new ApsSystemException("Missing config item: " + this.getConfigItemName());
 			} else {
-				log.finest(this.getConfigItemName()+": " + xml);
+				log.trace(this.getConfigItemName()+": " + xml);
 				AbstractContentRelactionDOM catDom = this.getConfigDom(xml);
 				this.setContentTypeElements(catDom.getContentTypes());
 			}

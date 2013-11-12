@@ -66,7 +66,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 	public void init() throws ApsSystemException {
 		this.loadConfigs();
 		this.openScheduler();
-		ApsSystemUtils.getLogger().config(this.getName() + ": service for notifications on contents changes initialized");
+		ApsSystemUtils.getLogger().debug(this.getName() + ": service for notifications on contents changes initialized");
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			if ((config.isNotifyRemove() || PublicContentChangedEvent.REMOVE_OPERATION_CODE!=event.getOperationCode())) {
 				try {
 					this.getContentNotifierDao().saveEvent(event);
-					ApsSystemUtils.getLogger().finest("Traced operation " + event.getOperationCode() + " on Content " + event.getContent().getId());
+					ApsSystemUtils.getLogger().trace("Traced operation " + event.getOperationCode() + " on Content " + event.getContent().getId());
 				} catch (ApsSystemException e) {
 					ApsSystemUtils.logThrowable(e, this, "updateFromPublicContentChanged");
 					throw new RuntimeException("error in updateFromPublicContentChanged", e);
@@ -102,7 +102,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			this.getConfigManager().updateConfigItem(JpcontentnotifierSystemConstants.CONTENT_NOTIFIER_CONFIG_ITEM, xml);
 			this.setSchedulerConfig(config);
 			this.openScheduler();
-			ApsSystemUtils.getLogger().finest("Updated Content Notifier Configuration");
+			ApsSystemUtils.getLogger().trace("Updated Content Notifier Configuration");
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "updateNotifierConfig");
 			throw new ApsSystemException("Errore in aggiornamento configurazione ContentNotifier", t);
@@ -165,7 +165,7 @@ public class ContentNotifierManager extends AbstractService implements PublicCon
 			if (xml == null) {
 				throw new ApsSystemException("Missing content item: " + JpcontentnotifierSystemConstants.CONTENT_NOTIFIER_CONFIG_ITEM);
 			}
-			ApsSystemUtils.getLogger().finest(JpcontentnotifierSystemConstants.CONTENT_NOTIFIER_CONFIG_ITEM + ": " + xml);
+			ApsSystemUtils.getLogger().trace(JpcontentnotifierSystemConstants.CONTENT_NOTIFIER_CONFIG_ITEM + ": " + xml);
 			ContentNotifierConfigDOM configDOM = new ContentNotifierConfigDOM();
 			this.setSchedulerConfig(configDOM.extractConfig(xml));
 		} catch (Throwable t) {

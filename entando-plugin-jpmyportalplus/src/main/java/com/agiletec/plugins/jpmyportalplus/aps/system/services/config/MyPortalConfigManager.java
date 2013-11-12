@@ -1,20 +1,20 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando software. 
+* Entando is a free software; 
+* You can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.config;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 		this.loadConfig();
 		this.buildCustomizableShowletsSet();
 		this.syncPageModelUserDatabase();
-		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized, the code of the'void showlet' is '"+_voidShowletCode+"'");
+		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized, the code of the'void showlet' is '"+_voidShowletCode+"'");
 	}
 	
 	@Override

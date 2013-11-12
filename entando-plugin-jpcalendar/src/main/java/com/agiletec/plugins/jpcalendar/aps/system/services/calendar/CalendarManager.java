@@ -1,20 +1,20 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando software. 
+* Entando is a free software; 
+* You can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpcalendar.aps.system.services.calendar;
 
 import java.util.ArrayList;
@@ -26,8 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
@@ -44,6 +42,7 @@ import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpcalendar.aps.system.services.CalendarConstants;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.util.EventsOfDayDataBean;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.util.SmallEventOfDay;
+import org.slf4j.Logger;
 
 /**
  * Service for calendar data.
@@ -56,7 +55,7 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 	public void init() throws ApsSystemException {
 		this.loadConfig();
 		this.initFirstYear();
-		ApsSystemUtils.getLogger().config(this.getName() + ": initialized");
+		ApsSystemUtils.getLogger().debug(this.getName() + ": initialized");
 	}
 	
 	@Override
@@ -69,20 +68,16 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 	public int[] getEventsForMonth(Calendar requiredMonth, UserDetails user)
 			throws ApsSystemException {
 		Logger log = ApsSystemUtils.getLogger();
-		if (log.isLoggable(Level.FINEST)) {
-			log.info("Required calendar for month "
+		log.info("Required calendar for month "
 					+ DateConverter.getFormattedDate(requiredMonth.getTime(),
 							"MMMM yyyy"));
-		}
 		int[] eventsForMonth = new int[31];
 		List<Group> groups = this.getAuthorizationManager().getUserGroups(user);
 		Set<String> groupForSearch = this.getGroupsForSearch(groups);
 		Iterator<String> iter = groupForSearch.iterator();
 		while (iter.hasNext()) {
 			String groupName = (String) iter.next();
-			if (log.isLoggable(Level.FINEST)) {
-				log.info("User " + user.getUsername() + " of group " + groupName);
-			}
+			log.trace("User " + user.getUsername() + " of group " + groupName);
 			int[] eventsForMonthOfGroup = this.searchEventsForMonth(
 					requiredMonth, groupName);
 			for (int i = 0; i < eventsForMonthOfGroup.length; i++) {
@@ -187,7 +182,7 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 			CalendarConfigDOM dom = new CalendarConfigDOM(xml);
 			this.setConfig(dom.extractConfig());
 		} catch (Throwable t) {
-			ApsSystemUtils.getLogger().throwing(this.getName(), "loadConfig", t);
+			ApsSystemUtils.logThrowable(t, this, "loadConfig");
 			throw new ApsSystemException("Error on initialization", t);
 		}
 	}
@@ -197,7 +192,7 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 			//this._firstYear = this.getCalendarDao().getFirstYear(_managedContentType, _managedDateStartAttribute);
 			this._firstYear = this.getCalendarDao().getFirstYear(this.getManagedContentType(), this.getManagedDateStartAttribute());
 		} catch (Throwable t) {
-			ApsSystemUtils.getLogger().throwing(this.getName(), "initFirstYear", t);
+			ApsSystemUtils.logThrowable(t, this, "initFirstYear");
 			throw new ApsSystemException("Error on initialization", t);
 		}
 	}

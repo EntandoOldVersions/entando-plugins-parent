@@ -2,16 +2,16 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
 * See the file License for the specific language governing permissions   
 * and limitations under the License
-*
-*
-*
+* 
+* 
+* 
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -46,11 +46,12 @@ import java.util.Date;
  * @author G.Cocco
  * */
 public class CasClientAuthenticatorControlService extends AbstractControlService {
-
+	
+	@Override
     public void afterPropertiesSet() throws Exception {
-    	this._log.config(this.getClass().getName() + ": initialized");
+    	this._log.debug(this.getClass().getName() + ": initialized");
 	}
-
+	
     /**
      * Execution.
      *
@@ -69,100 +70,93 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
      * @param status the status  returned by the preceding service
      * @return the resulting status
      */
-    public int service(RequestContext reqCtx, int status) {
-    	String name = null;
-    	if (_log.isLoggable(Level.FINEST)) {
-    		_log.finest("Invoked " + this.getClass().getName());
-    	}
-        int retStatus = ControllerManager.INVALID_STATUS;
-        if (status == ControllerManager.ERROR) {
-        	return status;
-        }
-        try {
-            HttpServletRequest req = reqCtx.getRequest();
-
-            //Punto 1
-            Assertion assertion =
-            	(Assertion) req.getSession().getAttribute(CasClientPluginSystemCostants.JPCASCLIENT_CONST_CAS_ASSERTION);
-            if (_log.isLoggable(Level.FINEST)) {
-        		_log.finest(" Assertion "+assertion);
-            }
-            if (null != assertion) {
-            	AttributePrincipal attributePrincipal = assertion.getPrincipal();
-            	name = attributePrincipal.getName();
-            	if (_log.isLoggable(Level.FINEST)) {
-            		this._log.finest(" Princ " + attributePrincipal);
-            		this._log.finest(" Princ - Name " + attributePrincipal.getName());
-            	}
-            }
-            this._log.finest("jpcasclient: request From User with Principal [CAS tiket validation]: " + name + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
-            HttpSession session = req.getSession();
-            if (null != name) {
-            	String username = name;
-            	if (getAuthCommon().hasRealmDomainInformation(name)) {
-            		 username = getAuthCommon().getUsernameFromPrincipal(name);
-            	}
-            	this._log.finest("Request From User with Username: " + username + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
-            	if (username != null) {
-            		this._log.finest("jpcasclient: user is " + username );
-            		UserDetails userOnSession = (UserDetails) session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
-            		if (userOnSession == null || (userOnSession != null && !username.equals(userOnSession.getUsername()))) {
-            			UserDetails user = this.getAuthenticationProvider().getUser(username);
-                		if (user != null) {
-                			if (!user.isAccountNotExpired()) {
-                				req.setAttribute("accountExpired", new Boolean(true));
-                			} else {
-                				if (userOnSession != null && !userOnSession.getUsername().equals(SystemConstants.GUEST_USER_NAME)) {
-                					((AbstractUser) user).setPassword(userOnSession.getPassword());
-                				}
-                				session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
-                				this._log.finest("jpcasclient: new user: " + user.getUsername());
-                			}
-                		} else {
+	@Override
+	public int service(RequestContext reqCtx, int status) {
+		String name = null;
+		this._log.trace("Invoked " + this.getClass().getName());
+		int retStatus = ControllerManager.INVALID_STATUS;
+		if (status == ControllerManager.ERROR) {
+			return status;
+		}
+		try {
+			HttpServletRequest req = reqCtx.getRequest();
+			//Punto 1
+			Assertion assertion = (Assertion) req.getSession().getAttribute(CasClientPluginSystemCostants.JPCASCLIENT_CONST_CAS_ASSERTION);
+			this._log.trace(" Assertion " + assertion);
+			if (null != assertion) {
+				AttributePrincipal attributePrincipal = assertion.getPrincipal();
+				name = attributePrincipal.getName();
+				this._log.trace(" Princ " + attributePrincipal);
+				this._log.trace(" Princ - Name " + attributePrincipal.getName());
+			}
+			this._log.trace("jpcasclient: request From User with Principal [CAS tiket validation]: " + name + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
+			HttpSession session = req.getSession();
+			if (null != name) {
+				String username = name;
+				if (getAuthCommon().hasRealmDomainInformation(name)) {
+					username = getAuthCommon().getUsernameFromPrincipal(name);
+				}
+				this._log.trace("Request From User with Username: " + username + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
+				if (username != null) {
+					this._log.trace("jpcasclient: user is " + username);
+					UserDetails userOnSession = (UserDetails) session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
+					if (userOnSession == null || (userOnSession != null && !username.equals(userOnSession.getUsername()))) {
+						UserDetails user = this.getAuthenticationProvider().getUser(username);
+						if (user != null) {
+							if (!user.isAccountNotExpired()) {
+								req.setAttribute("accountExpired", new Boolean(true));
+							} else {
+								if (userOnSession != null && !userOnSession.getUsername().equals(SystemConstants.GUEST_USER_NAME)) {
+									((AbstractUser) user).setPassword(userOnSession.getPassword());
+								}
+								session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
+								this._log.trace("jpcasclient: new user: " + user.getUsername());
+							}
+						} else {
 //                			req.setAttribute("wrongAccountCredential", new Boolean(true));
-                      /* create user on the fly */
-                      user = new User();
-                      ((User)user).setUsername(username);
-                      ((User)user).setPassword(CasClientPluginSystemCostants.JPCAS_RUNTIME_USER);
-                      ((User)user).setLastAccess(new Date());
-                      /* put in the session */
-                      session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
-                      this._log.finest("jpcasclient: new user created on the fly: " + user.getUsername());
-                		}
-            		}
-            	}
-            }
+							/* create user on the fly */
+							user = new User();
+							((User) user).setUsername(username);
+							((User) user).setPassword(CasClientPluginSystemCostants.JPCAS_RUNTIME_USER);
+							((User) user).setLastAccess(new Date());
+							/* put in the session */
+							session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
+							this._log.trace("jpcasclient: new user created on the fly: " + user.getUsername());
+						}
+					}
+				}
+			}
 
-            //Punto 2
-            String userName = req.getParameter("username");
-            String password = req.getParameter("password");
-            if (userName != null && password != null) {
-            	_log.finest("user " + userName + " - password ******** ");
-                UserDetails user = this.getAuthenticationProvider().getUser(userName, password);
-                if (user != null) {
-                	if (!user.isAccountNotExpired()) {
-                		req.setAttribute("accountExpired", new Boolean(true));
-                	} else {
-                		session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
-                		_log.finest("Nuovo User: " + user.getUsername());
-                	}
-                } else {
-                	req.setAttribute("wrongAccountCredential", new Boolean(true));
-                }
-            }
+			//Punto 2
+			String userName = req.getParameter("username");
+			String password = req.getParameter("password");
+			if (userName != null && password != null) {
+				_log.trace("user " + userName + " - password ******** ");
+				UserDetails user = this.getAuthenticationProvider().getUser(userName, password);
+				if (user != null) {
+					if (!user.isAccountNotExpired()) {
+						req.setAttribute("accountExpired", new Boolean(true));
+					} else {
+						session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
+						_log.trace("Nuovo User: " + user.getUsername());
+					}
+				} else {
+					req.setAttribute("wrongAccountCredential", new Boolean(true));
+				}
+			}
 
-            //Punto 3
-            if (session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER) == null) {
-            	UserDetails guestUser = this.getUserManager().getGuestUser();
-                session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, guestUser);
-            }
-            retStatus = ControllerManager.CONTINUE;
-        } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "service", "Error in processing the request");
-            retStatus = ControllerManager.ERROR;
-        }
-        return retStatus;
-    }
+			//Punto 3
+			if (session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER) == null) {
+				UserDetails guestUser = this.getUserManager().getGuestUser();
+				session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, guestUser);
+			}
+			retStatus = ControllerManager.CONTINUE;
+		} catch (Throwable t) {
+			ApsSystemUtils.logThrowable(t, this, "service", "Error in processing the request");
+			retStatus = ControllerManager.ERROR;
+		}
+		return retStatus;
+	}
 
 	protected IUserManager getUserManager() {
 		return _userManager;

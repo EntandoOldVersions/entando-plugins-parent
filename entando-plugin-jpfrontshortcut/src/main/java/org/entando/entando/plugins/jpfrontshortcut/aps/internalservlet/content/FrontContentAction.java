@@ -2,9 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
 * See the file License for the specific language governing permissions   
@@ -89,7 +89,7 @@ public class FrontContentAction extends ContentAction {
 			ContentModel model = this.getContentModel();
 			if (null != this.getAttributeName() && null != model) {
 				if (!content.getTypeCode().equals(model.getContentType())) {
-					ApsSystemUtils.getLogger().severe("Invalid model id " + model.getId() + 
+					ApsSystemUtils.getLogger().error("Invalid model id " + model.getId() + 
 						" of type " + model.getContentType() + " for content " + this.getContentId());
 					//return SUCCESS;
 				}
@@ -122,11 +122,11 @@ public class FrontContentAction extends ContentAction {
     
 	private void extractAttributesToEdit(String text, Content content) {
 		if (null == content) {
-			ApsSystemUtils.getLogger().severe("null content in extractAttributesToEdit");
+			ApsSystemUtils.getLogger().error("null content in extractAttributesToEdit");
 			return;
 		}
 		if (null == content.getAttributeMap() || content.getAttributeMap().isEmpty()) {
-			ApsSystemUtils.getLogger().severe("no attributes for content " + content.getId() + " in extractAttributesToEdit");
+			ApsSystemUtils.getLogger().error("no attributes for content " + content.getId() + " in extractAttributesToEdit");
 			return;
 		}
 		Set<String> attributes = content.getAttributeMap().keySet();

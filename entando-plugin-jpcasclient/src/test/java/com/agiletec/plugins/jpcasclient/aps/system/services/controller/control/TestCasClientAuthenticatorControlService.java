@@ -1,3 +1,20 @@
+/*
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando software. 
+* Entando is a free software; 
+* You can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpcasclient.aps.system.services.controller.control;
 
 import java.util.HashMap;
@@ -17,14 +34,14 @@ import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.ApsPluginBaseTestCase;
 
 public class TestCasClientAuthenticatorControlService extends ApsPluginBaseTestCase {
-	
+
 	@Override
 	protected void setUp() throws Exception {
         super.setUp();
         this.init();
     }
-	
-	
+
+
 	public void test_no_auth() {
 		RequestContext reqCtx = this.getRequestContext();
 		int status = _authenticator.service(reqCtx, ControllerManager.CONTINUE);
@@ -32,7 +49,7 @@ public class TestCasClientAuthenticatorControlService extends ApsPluginBaseTestC
 		UserDetails currentUser = (UserDetails) reqCtx.getRequest().getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
 		assertEquals(SystemConstants.GUEST_USER_NAME, currentUser.getUsername());
 	}
-	
+
 	public void test_no_cas_auth() throws ApsSystemException {
 		RequestContext reqCtx = this.getRequestContext();
 		MockHttpServletRequest request = (MockHttpServletRequest) reqCtx.getRequest();
@@ -43,7 +60,7 @@ public class TestCasClientAuthenticatorControlService extends ApsPluginBaseTestC
 		UserDetails currentUser = (UserDetails) request.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
 		assertEquals("admin", currentUser.getUsername());
 	}
-	
+
 	public void test_no_cas_auth_authFailure() throws ApsSystemException {
 		RequestContext reqCtx = this.getRequestContext();
 		MockHttpServletRequest request = (MockHttpServletRequest) reqCtx.getRequest();
@@ -54,22 +71,22 @@ public class TestCasClientAuthenticatorControlService extends ApsPluginBaseTestC
 		UserDetails currentUser = (UserDetails) request.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
 		assertEquals(SystemConstants.GUEST_USER_NAME, currentUser.getUsername());
 	}
-	
-	
+
+
 	public void test_cas_auth_authFailure() throws ApsSystemException {
 		RequestContext reqCtx = this.getRequestContext();
 		MockHttpServletRequest request = (MockHttpServletRequest) reqCtx.getRequest();
-		
+
 		AttributePrincipal attributePrincipal = new AttributePrincipalImpl("admin");
 		Assertion assertion = new AssertionImpl(attributePrincipal, new HashMap());
 		request.setAttribute(CasClientPluginSystemCostants.JPCASCLIENT_CONST_CAS_ASSERTION, assertion);
-	
+
 		int status = _authenticator.service(reqCtx, ControllerManager.CONTINUE);
 		assertEquals(status, ControllerManager.CONTINUE);
 		UserDetails currentUser = (UserDetails) request.getSession().getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
 		assertEquals(SystemConstants.GUEST_USER_NAME, currentUser.getUsername());
 	}
-	
+
 	private void init() throws Exception {
         try {
         	this._authenticator = (CasClientAuthenticatorControlService) this.getApplicationContext().getBean("AuthenticatorControlService");
@@ -77,11 +94,11 @@ public class TestCasClientAuthenticatorControlService extends ApsPluginBaseTestC
             throw new Exception(e);
         }
     }
-	
+
 	private CasClientAuthenticatorControlService _authenticator;
-	
-	
-	
-	
+
+
+
+
 
 }

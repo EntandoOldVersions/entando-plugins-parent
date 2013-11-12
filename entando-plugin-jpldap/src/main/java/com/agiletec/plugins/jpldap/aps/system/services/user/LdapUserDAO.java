@@ -2,9 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
 * See the file License for the specific language governing permissions   
@@ -21,7 +21,6 @@ import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.naming.CommunicationException;
 import javax.naming.Context;
@@ -47,6 +46,7 @@ import javax.naming.ldap.StartTlsResponse;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+import org.slf4j.Logger;
 import sun.misc.BASE64Encoder;
 
 /**
@@ -212,7 +212,7 @@ public class LdapUserDAO implements ILdapUserDAO {
     
     @Override
     public List<UserDetails> loadUsersForGroup(String groupName) {
-        ApsSystemUtils.getLogger().severe("Method not supported");
+        ApsSystemUtils.getLogger().error("Method not supported");
         return null;
     }
     
@@ -255,13 +255,13 @@ public class LdapUserDAO implements ILdapUserDAO {
     
     @Override
     public List<String> loadUsernamesForGroup(String groupName) {
-        ApsSystemUtils.getLogger().severe("Method not supported");
+        ApsSystemUtils.getLogger().error("Method not supported");
         return null;
     }
     
     @Override
     public void updateLastAccess(String username) {
-        ApsSystemUtils.getLogger().severe("Method not supported");
+        ApsSystemUtils.getLogger().error("Method not supported");
     }
     
     @Override

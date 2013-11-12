@@ -19,7 +19,6 @@ package com.agiletec.plugins.jpfastcontentedit.apsadmin.portal.specialwidget.fas
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
@@ -28,6 +27,8 @@ import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.apsadmin.portal.specialwidget.SimpleWidgetConfigAction;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
+
+import org.slf4j.Logger;
 
 public class FastContentEditWidgetConfigAction extends SimpleWidgetConfigAction {
 
@@ -57,7 +58,7 @@ public class FastContentEditWidgetConfigAction extends SimpleWidgetConfigAction 
 			this.checkBaseParams();
 			this.createValuedShowlet();
 			this.getPageManager().joinWidget(this.getPageCode(), this.getWidget(), this.getFrame());
-			log.finest("Salvataggio showlet - code = " + this.getWidget().getType().getCode() +
+			log.trace("Salvataggio showlet - code = " + this.getWidget().getType().getCode() +
 					", pageCode = " + this.getPageCode() + ", frame = " + this.getFrame());
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "save");

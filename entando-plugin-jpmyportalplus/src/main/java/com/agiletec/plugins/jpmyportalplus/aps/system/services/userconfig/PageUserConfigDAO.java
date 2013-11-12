@@ -244,7 +244,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 				}
 				int currentFramePos = res.getInt(2);
 				if (currentFramePos >= pageConfig.getConfig().length) {
-					ApsSystemUtils.getLogger().severe("Posizione " + currentFramePos + " incompatibile con pagina '" + currentPageCode + "' " +
+					ApsSystemUtils.getLogger().error("Posizione " + currentFramePos + " incompatibile con pagina '" + currentPageCode + "' " +
 							"- utente " + username);
 					continue;
 				}

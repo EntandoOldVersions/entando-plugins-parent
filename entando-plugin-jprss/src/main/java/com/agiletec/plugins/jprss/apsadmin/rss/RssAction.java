@@ -2,16 +2,16 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
-* See the file License for the specific language governing permissions
+* See the file License for the specific language governing permissions   
 * and limitations under the License
-*
-*
-*
+* 
+* 
+* 
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 */
@@ -48,7 +48,7 @@ import com.opensymphony.xwork2.Action;
  * This action handles backend operations for the channel
  */
 public class RssAction extends BaseAction implements IRssAction {
-
+	
 	@Override
 	public void validate() {
 		super.validate();
@@ -81,7 +81,7 @@ public class RssAction extends BaseAction implements IRssAction {
 		}
 		return SUCCESS;
 	}
-
+	
 	@Override
 	public String save() {
 		try {
@@ -97,7 +97,7 @@ public class RssAction extends BaseAction implements IRssAction {
 		}
 		return SUCCESS;
 	}
-
+	
 	@Override
 	public String delete() {
 		try {
@@ -112,7 +112,7 @@ public class RssAction extends BaseAction implements IRssAction {
 		}
 		return SUCCESS;
 	}
-
+	
 	@Override
 	public String edit() {
 		try {
@@ -137,7 +137,7 @@ public class RssAction extends BaseAction implements IRssAction {
 		}
 		return SUCCESS;
 	}
-
+	
 	@Override
 	public String trash() {
 		try {
@@ -161,16 +161,16 @@ public class RssAction extends BaseAction implements IRssAction {
 		}
 		return SUCCESS;
 	}
-
+	
 	public List<Category> getAvailableCategories() {
 		return this.getCategoryManager().getCategoriesList();
 	}
-
+	
 	public SmallContentType getSmallContentType(String code) {
 		Map<String, SmallContentType> smallContentTypes = this.getContentManager().getSmallContentTypesMap();
 		return smallContentTypes.get(code);
 	}
-
+	
 	public List<IApsEntity> getContentTypes() {
 		List<IApsEntity> entityPrototypes = null;
 		try {
@@ -184,7 +184,7 @@ public class RssAction extends BaseAction implements IRssAction {
 		}
 		return entityPrototypes;
 	}
-
+	
 	public List<SelectItem> getAllowedFilterTypes() throws ApsSystemException {
 		List<SelectItem> types = new ArrayList<SelectItem>();
 		try {
@@ -205,11 +205,11 @@ public class RssAction extends BaseAction implements IRssAction {
 		}
 		return types;
 	}
-
+	
 	public Map<String, String> getAvailableFeedTypes() {
 		return this.getRssManager().getAvailableFeedTypes();
 	}
-
+	
 	/**
 	 * Restituisce una mappa [codice, descr] dei tipi di contenuto configurati come erogabili via rss
 	 * @return
@@ -217,11 +217,11 @@ public class RssAction extends BaseAction implements IRssAction {
 	public Map<String, String> getAvailableContentTypes() {
 		return this.getRssManager().getAvailableContentTypes();
 	}
-
+	
 	public RssContentMapping getContentMapping(String typeCode) {
 		return this.getRssManager().getContentMapping(typeCode);
 	}
-
+	
 	public String selectContentType() {
 		try {
 			if (null != this.getContentType() &&  this.getContentType().trim().length() > 0) {
@@ -237,7 +237,7 @@ public class RssAction extends BaseAction implements IRssAction {
 		}
 		return SUCCESS;
 	}
-
+	
 	private Channel buildChannel() {
 		Channel channel = new Channel();
 		channel.setActive(this.isActive());
@@ -272,7 +272,7 @@ public class RssAction extends BaseAction implements IRssAction {
 		}
 		return SUCCESS;
 	}
-
+	
 	private List<Properties> buildFilterProperties() {
 		String filters = this.getFilters();
 		if (null == filters || filters.trim().length() == 0) {
@@ -309,10 +309,10 @@ public class RssAction extends BaseAction implements IRssAction {
 		try {
 			//ESTRAI "filters" campo testo
 			String filters = this.getFilters();
-
+			
 			//Estrai lista properties da testo
 			List<Properties> properties = FilterUtils.getFiltersProperties(filters);
-
+			
 			//FAI LO SPOSTAMENTO.
 			int filterIndex = this.getFilterIndex();
 			Properties element = properties.get(filterIndex);
@@ -329,11 +329,11 @@ public class RssAction extends BaseAction implements IRssAction {
 			}
 			//Setta Properties
 			this.setFiltersProperties(properties);
-
+			
 			//crea nuovo "filters" String
 			String newShowletParam = FilterUtils.getShowletParam(properties);
 			this.setFilters(newShowletParam);
-
+			
 			//SETTA property FILTERS nella showlet
 			this.setFiltersProperties(properties);
 		} catch (Throwable t) {
@@ -342,28 +342,28 @@ public class RssAction extends BaseAction implements IRssAction {
 		}
 		return SUCCESS;
 	}
-
+	
 	public int getId() {
 		return _id;
 	}
 	public void setId(int id) {
 		this._id = id;
 	}
-
+	
 	public String getTitle() {
 		return _title;
 	}
 	public void setTitle(String title) {
 		this._title = title;
 	}
-
+	
 	public String getDescription() {
 		return _description;
 	}
 	public void setDescription(String description) {
 		this._description = description;
 	}
-
+	
 	public boolean isActive() {
 		return _active;
 	}
@@ -384,7 +384,7 @@ public class RssAction extends BaseAction implements IRssAction {
 	public int getStrutsAction() {
 		return _strutsAction;
 	}
-
+	
 	public void setFiltersProperties(List<Properties> filtersProperties) {
 		this._filtersProperties = filtersProperties;
 	}
@@ -405,7 +405,7 @@ public class RssAction extends BaseAction implements IRssAction {
 	public String getMovement() {
 		return _movement;
 	}
-
+	
 	public void setContentType(String contentType) {
 		this._contentType = contentType;
 	}
@@ -419,14 +419,14 @@ public class RssAction extends BaseAction implements IRssAction {
 	public String getCategory() {
 		return _category;
 	}
-
+	
 	public int getMaxContentsSize() {
 		return _maxContentsSize;
 	}
 	public void setMaxContentsSize(int maxContentsSize) {
 		this._maxContentsSize = maxContentsSize;
 	}
-
+	
 	public void setFilters(String filters) {
 		this._filters = filters;
 	}
@@ -440,28 +440,28 @@ public class RssAction extends BaseAction implements IRssAction {
 	public Properties getNewFilter() {
 		return _newFilter;
 	}
-
+	
 	protected IRssManager getRssManager() {
 		return _rssManager;
 	}
 	public void setRssManager(IRssManager rssManager) {
 		this._rssManager = rssManager;
 	}
-
+	
 	protected ICategoryManager getCategoryManager() {
 		return _categoryManager;
 	}
 	public void setCategoryManager(ICategoryManager categoryManager) {
 		this._categoryManager = categoryManager;
 	}
-
+	
 	protected IContentManager getContentManager() {
 		return _contentManager;
 	}
 	public void setContentManager(IContentManager contentManager) {
 		this._contentManager = contentManager;
 	}
-
+	
 	private int _id;
 	private String _title;
 	private String _description;
@@ -471,18 +471,18 @@ public class RssAction extends BaseAction implements IRssAction {
 	private String _contentType;
 	private String _category;
 	private int _maxContentsSize = -1;
-
+	
 	private String _filters;
 	private String _movement;
-
+	
 	private Properties _newFilter;
-
+	
 	private List<Properties> _filtersProperties;
-
+	
 	private int _strutsAction;
-
+	
 	private IRssManager _rssManager;
 	private ICategoryManager _categoryManager;
 	private IContentManager _contentManager;
-
+	
 }

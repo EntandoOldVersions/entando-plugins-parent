@@ -3,7 +3,7 @@
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
 * This file is part of Entando software. 
-* Entando is a free software;
+* Entando is a free software; 
 * You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
@@ -82,7 +82,7 @@ public class NewsletterManager extends AbstractService
 	public void init() throws Exception {
 		this.loadConfigs();
 		this.startScheduler();
-		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized");
+		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
 	}
 	
 	@Override
@@ -320,7 +320,7 @@ public class NewsletterManager extends AbstractService
 					}
 				}
 			} else {
-				ApsSystemUtils.getLogger().severe("Newsletter: no receivers to send newsletter to!");
+				ApsSystemUtils.getLogger().error("Newsletter: no receivers to send newsletter to!");
 			}
 			this.sendNewsletterToSubscribers(contents, newsletterReport);
 			this.addNewsletterReport(newsletterReport);
@@ -890,7 +890,7 @@ public class NewsletterManager extends AbstractService
 					this.getMailManager().sendMail(textBody, subject, recipientsTo, null, null, senderCode, IMailManager.CONTENTTYPE_TEXT_PLAIN);
 				}
 			} else {
-				ApsSystemUtils.getLogger().warning("Incomplete configuration for newsletter subscribers! CHECK " + JpnewsletterSystemConstants.NEWSLETTER_CONFIG_ITEM + " item!!");
+				ApsSystemUtils.getLogger().warn("Incomplete configuration for newsletter subscribers! CHECK " + JpnewsletterSystemConstants.NEWSLETTER_CONFIG_ITEM + " item!!");
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "sendMail");
@@ -948,7 +948,7 @@ public class NewsletterManager extends AbstractService
 			body.append(unlink);
 			return body.toString();
 		} else {
-			ApsSystemUtils.getLogger().warning("Incomplete configuration for newsletter subscribers! CHECK " + JpnewsletterSystemConstants.NEWSLETTER_CONFIG_ITEM + " item!!");
+			ApsSystemUtils.getLogger().warn("Incomplete configuration for newsletter subscribers! CHECK " + JpnewsletterSystemConstants.NEWSLETTER_CONFIG_ITEM + " item!!");
 			return this.prepareMailBody(userContents, newsletterReport, isHtml);
 		}
 	}

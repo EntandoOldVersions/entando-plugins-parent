@@ -1,20 +1,20 @@
 /*
- *
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- * This file is part of Entando software.
- * Entando is a free software; 
- * you can redistribute it and/or modify it
- * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
- * 
- * See the file License for the specific language governing permissions   
- * and limitations under the License
- * 
- * 
- * 
- * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
- *
- */
+*
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+* This file is part of Entando software. 
+* Entando is a free software; 
+* You can redistribute it and/or modify it
+* under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
+* 
+* See the file License for the specific language governing permissions   
+* and limitations under the License
+* 
+* 
+* 
+* Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
+*
+*/
 package com.agiletec.plugins.jpaddressbook.aps.system.services.vcard.parse;
 
 import java.io.ByteArrayInputStream;
@@ -39,6 +39,7 @@ public class VCardDOM implements IVCardDOM {
 	 * Build vcard-mapping document
 	 * @param vcards
 	 */
+	@Override
 	public void buildVcardMappingDOM(List<VCardContactField> vcards) {
 		this.setDoc(new Document());
 		this.setRoot(new Element(VCARD_FIELDS_ELEMENT));
@@ -63,6 +64,7 @@ public class VCardDOM implements IVCardDOM {
 	 * @return vcard list
 	 */
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<VCardContactField> parseVcardMapping() {
 		Element element = null;
 		List<VCardContactField> cards = new ArrayList<VCardContactField>();
@@ -80,24 +82,26 @@ public class VCardDOM implements IVCardDOM {
 		}
 		return  cards;
 	}
-
+	
 	/**
 	 * Read vcard mapping
 	 * @param vcard mapping
 	 */
+	@Override
 	public void readVcardMapping(String vcardMapping){
 		SAXBuilder builder = new SAXBuilder();
 		try {
 			this.setDoc(builder.build(new ByteArrayInputStream(vcardMapping.getBytes())));
 		} catch (Throwable t) {
-			ApsSystemUtils.getLogger().fine("Method readVcardMapping failed.");
+			ApsSystemUtils.getLogger().trace("Method readVcardMapping failed.");
 		} 
 	}
-
+	
 	/**
 	 * Returns vcard mapping in XML format
 	 * @return vcard mapping in XML format
 	 */	
+	@Override
 	public String getXMLDocument(){
 		XMLOutputter out = new XMLOutputter();
 		Format format = Format.getPrettyFormat();

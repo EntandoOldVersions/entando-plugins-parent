@@ -216,7 +216,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		try {
 			String contentId = this.getCurrentContentId();
 			if (StringUtils.isBlank(contentId)) {
-				ApsSystemUtils.getLogger().severe("Content id null");
+				ApsSystemUtils.getLogger().error("Content id null");
 				return commentIds;
 			}
 			if (this.isAuth(contentId)) {
@@ -288,7 +288,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		try {
 			String contentId = this.getCurrentContentId();
 			if (StringUtils.isBlank(contentId)) {
-				ApsSystemUtils.getLogger().severe("Content id null");
+				ApsSystemUtils.getLogger().error("Content id null");
 				return null;
 			}
 			rating = this.getRatingManager().getContentRating(contentId);
@@ -304,7 +304,7 @@ public class ContentFeedbackAction extends AbstractContentFeedbackAction impleme
 		IRating rating = null;
 		try {
 			if (commentId == 0) {
-				ApsSystemUtils.getLogger().severe("Content id null");
+				ApsSystemUtils.getLogger().error("Content id null");
 				return null;
 			}
 			rating = this.getRatingManager().getCommentRating(commentId);

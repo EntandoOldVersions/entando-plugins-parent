@@ -19,7 +19,6 @@ package com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,6 +34,7 @@ import com.agiletec.aps.system.services.url.IURLManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.helper.IContentActionHelper;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
+import org.slf4j.Logger;
 
 /**
  * Classe action delegata alla redazione del contenuto in Front-End.
@@ -52,7 +52,7 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 			helper.checkTypeLabels(this.getContent());
 			this.disableAttributes(this.getContent());
 		} else {
-			ApsSystemUtils.getLogger().severe("Error on super.edit - result " + result);
+			ApsSystemUtils.getLogger().error("Error on super.edit - result " + result);
 		}
 		return result;
 	}

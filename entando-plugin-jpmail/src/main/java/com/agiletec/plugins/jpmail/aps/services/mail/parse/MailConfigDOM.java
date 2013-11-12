@@ -2,9 +2,9 @@
 *
 * Copyright 2013 Entando S.r.l. (http://www.entando.com) All rights reserved.
 *
-* This file is part of Entando software.
+* This file is part of Entando software. 
 * Entando is a free software; 
-* you can redistribute it and/or modify it
+* You can redistribute it and/or modify it
 * under the terms of the GNU General Public License (GPL) as published by the Free Software Foundation; version 2.
 * 
 * See the file License for the specific language governing permissions   
@@ -246,7 +246,7 @@ public class MailConfigDOM {
 			Document doc = builder.build(reader);
 			root = doc.getRootElement();
 		} catch (Throwable t) {
-			ApsSystemUtils.getLogger().severe("Error parsing xml: " + t.getMessage());
+			ApsSystemUtils.getLogger().error("Error parsing xml: " + t.getMessage());
 			throw new ApsSystemException("Error parsing xml", t);
 		}
 		return root;

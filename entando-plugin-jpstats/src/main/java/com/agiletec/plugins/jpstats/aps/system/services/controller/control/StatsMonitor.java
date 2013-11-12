@@ -63,7 +63,7 @@ import com.agiletec.plugins.jpstats.aps.system.services.stats.StatsRecord;
 public class StatsMonitor implements ControlServiceInterface {
 
 	public void afterPropertiesSet() throws Exception {
-		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": init");
+		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": init");
 	}
 
 	/**
@@ -72,10 +72,9 @@ public class StatsMonitor implements ControlServiceInterface {
 	 * @param status the exit status of the previous service
 	 * @return the exit status
 	 */
+	@Override
 	public int service(RequestContext reqCtx, int status) {
-		if (ApsSystemUtils.getLogger().isLoggable(Level.FINEST)) {
-			ApsSystemUtils.getLogger().finest("Invoked " + this.getClass().getName());
-		}
+		ApsSystemUtils.getLogger().trace("Invoked " + this.getClass().getName());
 		int retStatus = ControllerManager.INVALID_STATUS;
 		if (status == ControllerManager.ERROR) {
 			return status;

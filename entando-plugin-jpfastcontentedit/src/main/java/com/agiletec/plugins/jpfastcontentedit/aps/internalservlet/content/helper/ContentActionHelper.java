@@ -57,7 +57,7 @@ public class ContentActionHelper extends com.agiletec.plugins.jacms.apsadmin.con
     			}
     		}
         } catch (Throwable t) {
-        	ApsSystemUtils.getLogger().throwing("ContentActionHelper", "updateEntity", t);
+        	ApsSystemUtils.logThrowable(t, this, "updateEntity");
         	throw new RuntimeException("Errore on updateEntity", t);
         }
 	}

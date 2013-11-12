@@ -78,7 +78,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 	@Override
 	public void init() throws Exception {
 		this.loadConfigs();
-		ApsSystemUtils.getLogger().config(this.getClass().getName() + ": initialized");
+		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
 	}
 
 	private void loadConfigs() throws ApsSystemException {

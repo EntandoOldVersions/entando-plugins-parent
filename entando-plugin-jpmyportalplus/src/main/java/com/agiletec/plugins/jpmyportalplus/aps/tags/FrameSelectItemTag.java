@@ -111,7 +111,7 @@ public class FrameSelectItemTag extends TagSupport {
 			if (customPageConfig != null && !customPageConfig.getPageCode().equals(currentPage.getCode())) {
 				//throw new RuntimeException("Current page '" + currentPage.getCode()
 				//		+ "' not equals then pageCode of custom config param '" + customPageConfig.getPageCode() + "'");
-				ApsSystemUtils.getLogger().severe("Current page '" + currentPage.getCode()
+				ApsSystemUtils.getLogger().error("Current page '" + currentPage.getCode()
 						+ "' not equals then pageCode of custom config param '" + customPageConfig.getPageCode() + "'");
 				return null;
 			}
