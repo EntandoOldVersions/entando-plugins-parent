@@ -33,8 +33,9 @@
 
 	<c:choose>
 		<c:when test="${markers != null && !(empty markers)}">
+			<wp:info key="currentLang" var="currentLang" />
 			<c:set var="random"><%= java.lang.Math.round(java.lang.Math.random()*10000) %></c:set>
-			<wp:headInfo type="JS_EXT" info="//maps.googleapis.com/maps/api/js?v=3&amp;sensor=false" />
+			<wp:headInfo type="JS_EXT" info="//maps.googleapis.com/maps/api/js?v=3&amp;sensor=false&language=${currentLang}" />
 			<c:set var="javascript_map">
 				jQuery(function(){
 					google.maps.event.addDomListener(window, 'load', function(){
