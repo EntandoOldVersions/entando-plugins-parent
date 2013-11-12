@@ -17,7 +17,7 @@
 			<s:iterator value="content.attributeList" var="attribute">
 				<s:if test="#attribute.type == 'Coords'">
 					(function(){
-						console.log('started... <s:property value="#attribute.name" />');
+						//console.log('started... <s:property value="#attribute.name" />');
 						var mapcontainerHtmlId  = "mapcontainer_<s:property value="#attribute.name" />";
 						var center = [<s:property value="#attribute.x" />||39.22453601575102, <s:property value="#attribute.y" />||9.096148437500005 ];
 						var ourMap = new google.maps.Map(document.getElementById(mapcontainerHtmlId), {
