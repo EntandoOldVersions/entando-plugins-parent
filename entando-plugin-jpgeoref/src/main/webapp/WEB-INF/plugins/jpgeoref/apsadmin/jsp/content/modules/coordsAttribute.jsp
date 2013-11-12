@@ -8,7 +8,7 @@
 			<div class="input-group">
 				<span class="input-group-addon">X</span>
 				<wpsf:textfield useTabindexAutoIncrement="true" id="%{'x_'+#attribute.name}"
-								name="x_%{#attributeTracer.getFormFieldName(#attribute)}" value="%{#attribute.x}"
+								name="x_%{#attribute.name}" value="%{#attribute.x}"
 								maxlength="254" cssClass="text" cssClass="form-control" />
 			</div>
 		</div>
@@ -16,7 +16,7 @@
 			<div class="input-group">
 				<span class="input-group-addon">Y</span>
 				<wpsf:textfield useTabindexAutoIncrement="true" id="%{'y_'+#attribute.name}"
-								name="y_%{#attributeTracer.getFormFieldName(#attribute)}" value="%{#attribute.y}"
+								name="y_%{#attribute.name}" value="%{#attribute.y}"
 								maxlength="254" cssClass="text" cssClass="form-control" />
 			</div>
 		</div>
@@ -24,7 +24,7 @@
 			<div class="input-group">
 				<span class="input-group-addon">Z</span>
 				<wpsf:textfield useTabindexAutoIncrement="true" id="%{'z_'+#attribute.name}"
-								name="z_%{#attributeTracer.getFormFieldName(#attribute)}" value="%{#attribute.z}"
+								name="z_%{#attribute.name}" value="%{#attribute.z}"
 								maxlength="254" cssClass="text" cssClass="form-control" />
 			</div>
 		</div>
