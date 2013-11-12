@@ -33,10 +33,9 @@
 
 	<c:choose>
 		<c:when test="${markers != null && !(empty markers)}">
-			<wp:headInfo type="CSS" info="widgets/jacms/content_viewer_list.css" />
+			<c:set var="random"><%= java.lang.Math.round(java.lang.Math.random()*10000) %></c:set>
 			<wp:headInfo type="JS_EXT" info="//maps.googleapis.com/maps/api/js?v=3&amp;sensor=false" />
 			<c:set var="javascript_map">
-				<c:set var="random"><%= java.lang.Math.round(java.lang.Math.random()*10000) %></c:set>
 				jQuery(function(){
 					google.maps.event.addDomListener(window, 'load', function(){
 						var bounds = new google.maps.LatLngBounds();
