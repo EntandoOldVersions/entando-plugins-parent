@@ -5,6 +5,6 @@
     <s:property value="#attribute.name" />
     <s:include value="/WEB-INF/apsadmin/jsp/entity/modules/include/attributeInfo.jsp" />
 </label>
-<!-- ############# ATTRIBUTO Coords ############# -->
+<%-- ############# jpgeoref Coords attribute ############# --%>
 <s:include value="/WEB-INF/plugins/jpgeoref/apsadmin/jsp/content/modules/coordsAttribute.jsp" />
 </s:if>
