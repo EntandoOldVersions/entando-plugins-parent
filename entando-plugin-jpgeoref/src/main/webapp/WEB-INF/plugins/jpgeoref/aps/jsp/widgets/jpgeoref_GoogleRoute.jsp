@@ -67,16 +67,19 @@
 	</c:set>
 	<wp:headInfo type="JS_RAW" info="${javascript_map}" />
 	<wp:headInfo type="CSS" info="../../plugins/jpgeoref/static/css/jpgeoref.css" />
-	<div class="<c:out value="${(!(empty listModelId)) ? '6 ' : '12 '}" /> jpgeoref-contentlist-map" id="jpgeoref-contentlist-map<c:out value="${random}" />">
+	<div class="row-fluid">
+		<div class="span6 jpgeoref-contentlist-map" id="jpgeoref-contentlist-map<c:out value="${random}" />"></div>
+		<div class="span6" id="directions_panel<c:out value="${random}" />"></div>
 	</div>
-	<div id="directions_panel<c:out value="${random}" />"></div>
 	<c:if test="${!(empty listModelId)}">
-		<div class="span6">
-			<ol>
-				<c:forEach items="${contentList}" var="contentId">
-					<li><jacms:content contentId="${contentId}" modelId="${listModelId}" /></li>
-				</c:forEach>
-			</ol>
+		<div class="row-fluid">
+			<div class="span12">
+				<ol>
+					<c:forEach items="${contentList}" var="contentId">
+						<li><jacms:content contentId="${contentId}" modelId="${listModelId}" /></li>
+					</c:forEach>
+				</ol>
+			</div>
 		</div>
 	</c:if>
 </div>
