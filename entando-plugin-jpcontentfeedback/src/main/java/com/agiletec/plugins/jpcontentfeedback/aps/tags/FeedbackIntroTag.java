@@ -49,7 +49,9 @@ public class FeedbackIntroTag extends InternalServletTag {
 				String currentFrameActionPath = request.getParameter(REQUEST_PARAM_FRAMEDEST);
 				Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
 				if (requestActionPath != null && currentFrameActionPath != null && currentFrame.toString().equals(currentFrameActionPath)) {
-					actionPath = requestActionPath;
+					if (this.isAllowedRequestPath(requestActionPath)) {
+						actionPath = requestActionPath;
+					}
 				}
 			}
 			reqCtx.addExtraParam(EXTRAPAR_STATIC_ACTION, this.isStaticAction());
@@ -63,7 +65,9 @@ public class FeedbackIntroTag extends InternalServletTag {
 				reqCtx.getRequest().setAttribute("currentContentId", contentId);
 			}
 			if (null != this.getReverseVotes() && this.getReverseVotes().equalsIgnoreCase("true")) {
-				if (params.length() > 0) params.append("&");
+				if (params.length() > 0) {
+					params.append("&");
+				}
 				params.append("reverseVotes=true");
 			}
 			if (StringUtils.isNotBlank(this.getExtraParamsRedirect())) {
@@ -71,7 +75,7 @@ public class FeedbackIntroTag extends InternalServletTag {
 				reqCtx.getRequest().setAttribute("extraParamNames", redirectParams);
 			}
 			actionPath = actionPath + "?" + params.toString();
-			
+
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(actionPath);
 			requestDispatcher.include(request, responseWrapper);
 		} catch (Throwable t) {
