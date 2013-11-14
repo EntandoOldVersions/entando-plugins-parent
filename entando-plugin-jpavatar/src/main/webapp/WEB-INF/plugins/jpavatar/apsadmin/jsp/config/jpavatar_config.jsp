@@ -37,7 +37,7 @@
             </div>
         </s:if>
         <s:if test="hasActionMessages()">
-            <div class="alert alert-info alert-dismissable">
+            <div class="alert alert-success alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
                 <h2 class="h4 margin-none"><s:text name="messages.confirm" /></h2>	
                     <ul class="margin-base-vertical">
@@ -53,23 +53,18 @@
             <legend><s:text name="legend.config" /></legend>
 
             <div class="form-group">
-                <span class="important"><s:property value="SYTLE" /></span><br />
+                <span class="important"><s:property value="SYTLE" /></span>
             </div>
             <div class="form-group">
-
-                <div class="radio">
-                    <label for="local_avatarConfig_style">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default <s:if test="%{avatarConfig.style == 'local'}"> active</s:if>">
                         <s:text name="label.avatarConfig.style.local"/>
-                        <wpsf:radio name="avatarConfig.style" value="local" id="local_avatarConfig_style" checked="%{avatarConfig.style == 'local'}" cssClass="radio" />
+                        <wpsf:radio name="avatarConfig.style" value="local" id="local_avatarConfig_style" checked="%{avatarConfig.style == 'local'}" cssClass="radiocheck" />
                     </label>
-                </div>        
-            </div>
-            <div class="form-group">
-
-                <div class="radio">        
-                    <label for="gravatar_avatarConfig_style">
+                    
+                    <label class="btn btn-default <s:if test="%{avatarConfig.style == 'gravatar'}"> active</s:if>">
                         <s:text name="label.avatarConfig.style.gravatar"/>
-                        <wpsf:radio name="avatarConfig.style" value="gravatar" id="gravatar_avatarConfig_style" checked="%{avatarConfig.style == 'gravatar'}" cssClass="radio" />
+                        <wpsf:radio name="avatarConfig.style" value="gravatar" id="gravatar_avatarConfig_style" checked="%{avatarConfig.style == 'gravatar'}" cssClass="radiocheck" />
                     </label>
                 </div>
             </div>
