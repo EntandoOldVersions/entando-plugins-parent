@@ -6,7 +6,7 @@ INSERT INTO sysconfig (version, item, descr, config) VALUES ('production', 'jpus
 	<userAuthDefaults />
 	<activation pageCode="activation">
 		<template lang="it">
-			<subject><![CDATA[[jAPS]: Attivazione account]]></subject>
+			<subject><![CDATA[Il tuo account è stato creato]></subject>
 			<body><![CDATA[
 Gentile {name} {surname},
 grazie per esserti registrato.
@@ -16,7 +16,7 @@ Cordiali Saluti.
 			]]></body>
 		</template>
 		<template lang="en">
-			<subject><![CDATA[[jAPS]: Account activation]]></subject>
+			<subject><![CDATA[Your account has been created]]></subject>
 			<body><![CDATA[
 Dear {name} {surname}, 
 thank you for registering.
@@ -28,7 +28,7 @@ Best regards.
 	</activation>
 	<reactivation pageCode="reactivation">
 		<template lang="it">
-			<subject><![CDATA[[jAPS]: Ripristino password]]></subject>
+			<subject><![CDATA[[Entando]: Ripristino password]]></subject>
 			<body><![CDATA[
 Gentile {name} {surname}, 
 il tuo userName è {userName}.
@@ -38,7 +38,7 @@ Cordiali Saluti.
 			]]></body>
 		</template>
 		<template lang="en">
-			<subject><![CDATA[[jAPS]: Password recover]]></subject>
+			<subject><![CDATA[[Entando]: Password recover]]></subject>
 			<body><![CDATA[
 Dear {name} {surname}, 
 your username is {userName}.

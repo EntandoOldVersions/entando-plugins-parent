@@ -3,10 +3,10 @@
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<form action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/activate.action"/>" method="post" >
+<form action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/activate.action"/>" method="post" class="form-horizontal">
 	
 	<s:if test="hasFieldErrors()">
-		<h3><s:text name="message.title.FieldErrors" /></h3>
+		<h2><wp:i18n key="ERRORS" /></h2>
 		<ul>
 			<s:iterator value="fieldErrors">
 				<s:iterator value="value">
@@ -16,7 +16,7 @@
 		</ul>
 	</s:if>
 	<s:if test="hasActionErrors()">
-		<h3><s:text name="message.title.ActionErrors" /></h3>
+		<h2><wp:i18n key="ERRORS" /></h2>
 		<ul>
 			<s:iterator value="actionErrors">
 				<li><s:property/></li>
@@ -24,20 +24,24 @@
 		</ul>
 	</s:if>
 	
-	<p>
+	<p class="noscreen">
 		<wpsf:hidden name="token" value="%{token}" />
 	</p>
 	
-	<p>
-		<label for="password"><wp:i18n key="jpuserreg_PASSWORD"/> <abbr title="(<wp:i18n key="jpuserreg_REQUIRED"/>)">*</abbr></label><br />
-		<wpsf:password useTabindexAutoIncrement="true" name="password" id="password" maxlength="20" />
-	</p>
-	<p>
-		<label for="passwordConfirm"><wp:i18n key="jpuserreg_PASSWORD_CONFIRM"/> <abbr title="(<wp:i18n key="jpuserreg_REQUIRED"/>)">*</abbr></label><br />
-		<wpsf:password useTabindexAutoIncrement="true" name="passwordConfirm" id="passwordConfirm" maxlength="20" />
-	</p>
-	<p>
-		<input type="submit" value="<wp:i18n key="jpuserreg_SAVE"/>" />
+	<div class="control-group">
+		<label for="password" class="control-label"><wp:i18n key="jpuserreg_PASSWORD"/> <abbr title="<wp:i18n key="jpuserreg_REQUIRED"/>">*</abbr></label><br />
+		<div class="controls">
+			<wpsf:password useTabindexAutoIncrement="true" name="password" id="password" maxlength="20" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="passwordConfirm" class="control-label"><wp:i18n key="jpuserreg_PASSWORD_CONFIRM"/> <abbr title="<wp:i18n key="jpuserreg_REQUIRED"/>">*</abbr></label><br />
+		<div class="controls">
+			<wpsf:password useTabindexAutoIncrement="true" name="passwordConfirm" id="passwordConfirm" maxlength="20" />
+		</div>
+	</div>
+	<p class="form-actions">
+		<input type="submit" value="<wp:i18n key="jpuserreg_SAVE"/>" class="btn btn-primary" />
 	</p>
 
 </form>
