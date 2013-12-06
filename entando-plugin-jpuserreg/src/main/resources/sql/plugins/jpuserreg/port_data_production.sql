@@ -6,7 +6,7 @@ INSERT INTO sysconfig (version, item, descr, config) VALUES ('production', 'jpus
 	<userAuthDefaults />
 	<activation pageCode="activation">
 		<template lang="it">
-			<subject><![CDATA[Il tuo account è stato creato]></subject>
+			<subject><![CDATA[Il tuo account è stato creato]]></subject>
 			<body><![CDATA[
 Gentile {name} {surname},
 grazie per esserti registrato.
@@ -204,7 +204,7 @@ INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_PRIVACY_AGREEMENT', 'it', 'Consenso privacy' );
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_PRIVACY_AGREEMENT', 'en', 'Privacy agreement' );
 
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_ERROR_USER_LOGGED', 'it', 'Utente attualmente loggato, non è possibile utilizzare la funzionalità di recuperò password. E'' necessario sloggarsi.' );
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_ERROR_USER_LOGGED', 'it', 'Utente attualmente loggato, non è possibile utilizzare la funzionalità di recupero password. E'' necessario sloggarsi.' );
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_ERROR_USER_LOGGED', 'en', 'User already logged, you can''t use recover password functionality. You must log out.' );
 
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_ACCOUNT_SUSPENSION', 'it', 'Sospensione Account');
@@ -216,8 +216,8 @@ INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_PASSWORD_RECOVER', 'it', 'Recupero Password');
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_PASSWORD_RECOVER', 'en', 'Password Recover');
 
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_ERROR_USER_ADMIN_OR_NO_JAPS_USER', 'it', 'Gli amministratori e gli utenti non locali di jAPS non possono sospendere il proprio account.');
-INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_ERROR_USER_ADMIN_OR_NO_JAPS_USER', 'en', 'Administrators and the users that aren''t jAPS local users can''t suspend their account.');
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_ERROR_USER_ADMIN_OR_NO_ENTANDO_USER', 'it', 'Gli amministratori e gli utenti non locali di Entando non possono sospendere il proprio account.');
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_ERROR_USER_ADMIN_OR_NO_ENTANDO_USER', 'en', 'Administrators and the users that aren''t Entando local users can''t suspend their account.');
 
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_PROFILE_CONFIGURATION', 'it', 'Il tuo profilo');
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpuserreg_PROFILE_CONFIGURATION', 'en', 'Your profile');

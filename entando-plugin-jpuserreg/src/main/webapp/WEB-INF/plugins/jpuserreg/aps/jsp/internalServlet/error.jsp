@@ -1,5 +1,7 @@
 <%@ taglib uri="/aps-core" prefix="wp" %>
 
-<p>
-	<wp:i18n key="jpuserreg_ERROR_USER_ADMIN_OR_NO_JAPS_USER"/>
-</p>
+<h1><wp:i18n key="jpuserreg_REGISTRATION"/></h1>
+
+<div class="alert alert-block">
+	<wp:i18n key="jpuserreg_ERROR_USER_ADMIN_OR_NO_ENTANDO_USER"/>
+</div>

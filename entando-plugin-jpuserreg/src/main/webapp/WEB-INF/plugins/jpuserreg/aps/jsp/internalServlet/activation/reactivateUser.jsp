@@ -3,40 +3,52 @@
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
-<h2><wp:i18n key="jpuserreg_PASSWORD_RECOVERY" /></h2>
+<h1><wp:i18n key="jpuserreg_PASSWORD_RECOVERY" /></h1>
 
-<form action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/reactivate.action"/>" method="post" >
+<form action="<wp:action path="/ExtStr2/do/jpuserreg/UserReg/reactivate.action"/>" method="post" class="form-horizontal" >
 
 	<s:if test="hasFieldErrors()">
-		<h3><s:text name="message.title.FieldErrors" /></h3>
-		<ul>
-			<s:iterator value="fieldErrors">
-				<s:iterator value="value">
-		            <li><s:property/></li>
+		<div class="alert alert-block">
+			<h2><wp:i18n key="ERRORS" /></h2>
+			<ul>
+				<s:iterator value="fieldErrors">
+					<s:iterator value="value">
+			            <li><s:property/></li>
+					</s:iterator>
 				</s:iterator>
-			</s:iterator>
-		</ul>
+			</ul>
+		</div>
 	</s:if>
 	<s:if test="hasActionErrors()">
-		<h3><s:text name="message.title.ActionErrors" /></h3>
-		<ul>
-			<s:iterator value="actionErrors">
-				<li><s:property/></li>
-			</s:iterator>
-		</ul>
+		<div class="alert alert-block">
+			<h2><wp:i18n key="ERRORS" /></h2>
+			<ul>
+				<s:iterator value="actionErrors">
+					<li><s:property/></li>
+				</s:iterator>
+			</ul>
+		</div>
 	</s:if>
 	
-	<p>
+	<p class="noscreen">
 		<wpsf:hidden name="token" value="%{token}" />
-		<label for="password"><wp:i18n key="jpuserreg_PASSWORD"/> <abbr title="(<wp:i18n key="jpuserreg_REQUIRED"/>)">*</abbr></label><br />
-		<wpsf:password useTabindexAutoIncrement="true" name="password" id="password" maxlength="20" />
 	</p>
-	<p>
-		<label for="passwordConfirm"><wp:i18n key="jpuserreg_PASSWORD_CONFIRM"/> <abbr title="(<wp:i18n key="jpuserreg_REQUIRED"/>)">*</abbr></label><br />
-		<wpsf:password useTabindexAutoIncrement="true" name="passwordConfirm" id="passwordConfirm" maxlength="20" />
-	</p>
-	<p>	
-		<input type="submit" value="<wp:i18n key="jpuserreg_SAVE"/>" />
+	<div class="control-group">
+		<label for="password" class="control-label"><wp:i18n key="jpuserreg_PASSWORD"/>&nbsp;<abbr class="icon icon-asterisk" title="<wp:i18n key="jpuserreg_REQUIRED" />">
+			<span class="noscreen"><wp:i18n key="jpuserreg_REQUIRED" /></span></abbr></label>
+		<div class="controls">
+			<wpsf:password useTabindexAutoIncrement="true" name="password" id="password" maxlength="20" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="passwordConfirm" class="control-label"><wp:i18n key="jpuserreg_PASSWORD_CONFIRM"/>&nbsp;<abbr class="icon icon-asterisk" title="<wp:i18n key="jpuserreg_REQUIRED" />">
+			<span class="noscreen"><wp:i18n key="jpuserreg_REQUIRED" /></span></abbr></label>
+		<div class="controls">
+			<wpsf:password useTabindexAutoIncrement="true" name="passwordConfirm" id="passwordConfirm" maxlength="20" />
+		</div>
+	</div>
+	<p class="form-actions">
+		<input type="submit" value="<wp:i18n key="jpuserreg_SAVE"/>" cssClass="btn btn-primary" />
 	</p>
 	
 </form>
