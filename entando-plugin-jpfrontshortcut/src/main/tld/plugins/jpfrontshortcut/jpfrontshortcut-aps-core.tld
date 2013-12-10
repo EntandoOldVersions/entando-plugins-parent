@@ -6,6 +6,13 @@
     <short-name>jpfrontshortcut</short-name>
     <uri>/jpfrontshortcut-aps-core</uri>
     
+	<tag>
+        <description><![CDATA[Create the head info for front shortcut plugin. This tag has to be used only into widget decorator (footer)]]></description>
+        <name>headInfoStaticInternalServlet</name>
+        <tag-class>org.entando.entando.plugins.jpfrontshortcut.aps.tags.HeadInfoStaticInternalServletTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+	
     <tag>
         <description><![CDATA[DEPRECATED: use wp:internalServlet (core tag) with parameter staticAction="true"]]></description>
         <name>staticInternalServlet</name>

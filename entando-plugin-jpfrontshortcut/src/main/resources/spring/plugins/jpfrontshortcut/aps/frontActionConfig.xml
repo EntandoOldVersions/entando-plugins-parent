@@ -30,8 +30,8 @@
 	</bean>
 	
 	<bean id="jpfrontshortcutWidgetDecorationContainer" class="com.agiletec.aps.tags.util.BaseFrameDecoratorContainer" >
-		<property name="headerPath"><value>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/widgets/inc/frameOptions.jsp</value></property>
-		<property name="footerPath"><value></value></property>
+		<property name="headerPath"><value>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/widgets/inc/widgetDecorator_header.jsp</value></property>
+		<property name="footerPath"><value>/WEB-INF/plugins/jpfrontshortcut/aps/jsp/widgets/inc/widgetDecorator_footer.jsp</value></property>
 		<property name="order"><value>5</value></property>
 	</bean>
 	

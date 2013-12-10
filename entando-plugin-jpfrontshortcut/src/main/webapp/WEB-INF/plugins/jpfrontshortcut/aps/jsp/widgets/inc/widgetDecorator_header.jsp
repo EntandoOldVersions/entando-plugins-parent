@@ -6,7 +6,7 @@
 <wp:headInfo type="CSS" info="../../plugins/jpfrontshortcut/static/css/jpfrontshortcut-editcontent.css" />
 <wp:headInfo type="CSS" info="../../plugins/jpfrontshortcut/static/css/jpfrontshortcut-frameconfig.css" />
 <wp:headInfo type="JS" info="../../plugins/jpfrontshortcut/static/js/ckeditor/ckeditor.js" />
-<wp:internalServlet actionPath="/ExtStr2/do/jpfrontshortcut/introHeader" staticAction="true" />
+
 <wp:info key="systemParam" paramName="jpfrontshortcut_activeFrameFrontEndEditing" var="frontEditingActiveVar" /> 
 <c:if test="${null != frontEditingActiveVar && frontEditingActiveVar  == 'true'}">
 	<c:set var="showletCodeVar" value="${null}" />
