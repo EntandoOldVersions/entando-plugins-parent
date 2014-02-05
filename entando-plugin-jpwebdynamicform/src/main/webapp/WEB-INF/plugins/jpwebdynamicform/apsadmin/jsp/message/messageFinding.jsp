@@ -32,7 +32,7 @@
                     </span>
                 </span>        
 
-                <wpsf:select name="entityTypeCode" id="entityTypeCode" list="entityPrototypes" listKey="typeCode" listValue="typeDescr" headerKey="" headerValue="%{getText('label.all')}" cssClass="text" disabled="!(null == entityTypeCode || entityTypeCode == '')" cssClass="form-control input-lg"/>
+                <wpsf:select name="entityTypeCode" id="entityTypeCode" list="entityPrototypes" listKey="typeCode" listValue="typeDescr" headerKey="" headerValue="%{getText('label.all')}" disabled="!(null == entityTypeCode || entityTypeCode == '')" cssClass="form-control input-lg"/>
                 <span class="input-group-btn">
                     <s:if test="!(null == entityTypeCode || entityTypeCode == '')">
                         <wpsf:submit type="button" cssClass="btn btn-primary btn-lg" action="changeEntityType">
