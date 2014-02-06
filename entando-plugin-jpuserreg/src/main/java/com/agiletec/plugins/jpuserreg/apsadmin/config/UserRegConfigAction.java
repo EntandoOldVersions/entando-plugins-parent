@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.authorization.authorizator.IApsAuthorityManager;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.group.IGroupManager;
@@ -32,8 +33,8 @@ import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.role.IRoleManager;
 import com.agiletec.aps.system.services.role.Role;
+import com.agiletec.aps.util.SelectItem;
 import com.agiletec.apsadmin.system.BaseAction;
-import com.agiletec.apsadmin.util.SelectItem;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.IUserRegManager;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.IUserRegConfig;
@@ -226,11 +227,44 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 			this.addPages(children[i], pages);
 		}
 	}
+	
+	public List<IPage> getActivationPages() throws ApsSystemException {
+		return this.getSystemPages(this.getActivationWidgetCode());
+	}
+	
+	public List<IPage> getReactivationPages() throws ApsSystemException {
+		return this.getSystemPages(this.getReactivationWidgetCode());
+	}
+	
+	protected List<IPage> getSystemPages(String widgetCode) throws ApsSystemException {
+		List<IPage> pages = null;
+		try {
+			pages = this.getPageManager().getWidgetUtilizers(widgetCode);
+		} catch (Exception e) {
+			ApsSystemUtils.logThrowable(e, this, "getSystemPages");
+			pages = new ArrayList<IPage>();
+		}
+		return pages;
+	}
 
 	public List<Lang> getLangs() {
 		return this.getLangManager().getLangs();
 	}
-
+	
+	protected String getActivationWidgetCode() {
+		return _activationWidgetCode;
+	}
+	public void setActivationWidgetCode(String activationWidgetCode) {
+		this._activationWidgetCode = activationWidgetCode;
+	}
+	
+	protected String getReactivationWidgetCode() {
+		return _reactivationWidgetCode;
+	}
+	public void setReactivationWidgetCode(String reactivationWidgetCode) {
+		this._reactivationWidgetCode = reactivationWidgetCode;
+	}
+	
 	public IUserRegConfig getConfig() {
 		return _config;
 	}
@@ -286,7 +320,10 @@ public class UserRegConfigAction extends BaseAction implements IUserRegConfigAct
 	public void setRoleManager(IRoleManager roleManager) {
 		this._roleManager = roleManager;
 	}
-
+	
+	private String _activationWidgetCode = "jpuserreg_Activation";
+	private String _reactivationWidgetCode = "jpuserreg_Reactivation";
+	
 	private IUserRegConfig _config = new UserRegConfig();
 	private String _groupName;
 	private String _roleName;

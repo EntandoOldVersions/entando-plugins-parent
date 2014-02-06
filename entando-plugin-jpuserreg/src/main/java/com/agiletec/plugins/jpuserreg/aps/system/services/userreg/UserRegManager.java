@@ -58,6 +58,7 @@ import com.agiletec.aps.system.services.user.User;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.DateConverter;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
+import com.agiletec.plugins.jpuserprofile.aps.system.services.ProfileSystemConstants;
 import com.agiletec.plugins.jpuserreg.aps.JpUserRegSystemConstants;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.IUserRegConfig;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.Template;
@@ -274,17 +275,14 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 				String token = this.createToken(username);
 				this.getUserRegDAO().clearTokenByUsername(username);
 				this.getUserRegDAO().addActivationToken(username, token, new Date(), IUserRegDAO.REACTIVATION_RECOVER_TOKEN_TYPE);
-				this.sendAlertReactivateUser(username, profile, token);
+				this.sendAlertReactivateUser(profile, token);
 			}
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "reactivationByUserName");
 			throw new ApsSystemException("Error in request for Account Reactivation", t);
 		}
 	}
-
-	/**
-	 * Create link for email confirmation
-	 */
+	
 	protected String createLink(String pageCode, String userName, String token, String langcode) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("token", token);
@@ -295,10 +293,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 		}
 		return this.getUrlManager().createUrl(page, lang, params);
 	}
-
-	/**
-	 * Populate email template
-	 * */
+	
 	protected String replaceParams(String defaultText, Map<String, String> params) {
 		String body = defaultText;
 		StringBuffer strBuff = null;
@@ -318,13 +313,10 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 		}
 		return body;
 	}
-
-	/**
-	 * Generated random token
-	 * */
+	
 	protected String createToken(String userName) throws NoSuchAlgorithmException {
 		Random random = new Random();
-		StringBuffer salt = new StringBuffer();
+		StringBuilder salt = new StringBuilder();
 		long rndLong = random.nextLong();
 		salt.append(rndLong);
 		String date = DateConverter.getFormattedDate(new Date(), "SSSmmyyyy-SSS-MM:ssddmmHHmmEEE");
@@ -336,22 +328,20 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 		return token;
 	}
 	
-	/**
-	 * Prepares the parameters to populate email's template
-	 */
-	private Map<String, String> prepareMailParams(IUserProfile profile, String token, String pageCode) {
+	protected Map<String, String> prepareMailParams(IUserProfile profile, String token, String pageCode) {
 		Map<String, String> params = new HashMap<String, String>();
-		/*
-		String name = this.getFieldValue(profile, SystemConstants.ATTRIBUTE_ROLE_FIRST_NAME);
+		
+		String name = this.getFieldValue(profile, ProfileSystemConstants.ATTRIBUTE_ROLE_FIRST_NAME);
 		params.put("name", name!=null ? name : "");
 		String surname = this.getFieldValue(profile, ProfileSystemConstants.ATTRIBUTE_ROLE_SURNAME);
 		params.put("surname", surname!=null ? surname : "");
-		*/
+		
 		String fullname = this.getFieldValue(profile, SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_FULL_NAME);
 		params.put("fullname", fullname!=null ? fullname : "");
 		
 		String username = profile.getUsername();
 		params.put("userName", username);
+		params.put("username", username);
 
 		String profileLangAttr = this.getLangForLinkCreation(profile);
 		String link = this.createLink(pageCode, username, token, profileLangAttr);
@@ -359,7 +349,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 
 		return params;
 	}
-
+	
 	private String getLangForLinkCreation(IUserProfile profile) {
 		ILangManager langManager = this.getLangManager();
 		String langCode = this.getFieldValue(profile, JpUserRegSystemConstants.ATTRIBUTE_ROLE_LANGUAGE);
@@ -389,14 +379,14 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 		this.sendAlert(config.getActivationTemplates(), params, profile);
 	}
 
-	private void sendAlertReactivateUser(String userName, IUserProfile profile, String token) throws ApsSystemException {
+	private void sendAlertReactivateUser(IUserProfile profile, String token) throws ApsSystemException {
 		IUserRegConfig config = this.getConfig();
 		String reactivationPageCode = config.getReactivationPageCode();
 		Map<String, String> params = this.prepareMailParams(profile, token, reactivationPageCode);
 		this.sendAlert(config.getReactivationTemplates(), params, profile);
 	}
 
-	private void sendAlert(Map<String, Template> templates, Map<String, String> params, IUserProfile profile) throws ApsSystemException {
+	protected void sendAlert(Map<String, Template> templates, Map<String, String> params, IUserProfile profile) throws ApsSystemException {
 		IUserRegConfig config = this.getConfig();
 		
 		String[] eMail = { this.getFieldValue(profile, SystemConstants.USER_PROFILE_ATTRIBUTE_ROLE_MAIL) };
@@ -405,7 +395,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 		if (langCode!=null) {
 			template = templates.get(langCode);
 		}
-		if (template==null) {
+		if (template == null) {
 			template = templates.get(this.getLangManager().getDefaultLang().getCode());
 		}
 		String subject = template.getSubject();
