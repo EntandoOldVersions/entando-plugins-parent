@@ -72,10 +72,10 @@ public class ActionLoggerAction extends BaseAction implements IActionLoggerActio
 		searchBean.setActionName(this.getActionName());
 		searchBean.setNamespace(this.getNamespace());
 		searchBean.setParams(this.getParams());
-		searchBean.setStart(this.getStart());
+		searchBean.setStartCreation(this.getStart());
 		Date end = this.getEnd();
 		if (end != null) {
-			searchBean.setEnd(new Date(end.getTime() + 86400000)); // un giorno dopo
+			searchBean.setEndCreation(new Date(end.getTime() + 86400000)); // un giorno dopo
 		}
 		return searchBean;
 	}
