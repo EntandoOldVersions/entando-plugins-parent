@@ -17,32 +17,36 @@
 */
 package com.agiletec.plugins.jpmail.aps.services.mail;
 
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.common.AbstractService;
-import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
-import com.agiletec.plugins.jpmail.aps.services.JpmailSystemConstants;
-import com.agiletec.plugins.jpmail.aps.services.mail.parse.MailConfigDOM;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.Message.RecipientType;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.agiletec.aps.system.common.AbstractService;
+import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
+import com.agiletec.plugins.jpmail.aps.services.JpmailSystemConstants;
+import com.agiletec.plugins.jpmail.aps.services.mail.parse.MailConfigDOM;
 
 
 /**
@@ -52,10 +56,12 @@ import javax.mail.internet.MimeMultipart;
  */
 public class MailManager extends AbstractService implements IMailManager {
 
+	private static final Logger _logger = LoggerFactory.getLogger(MailManager.class);
+	
 	@Override
 	public void init() throws Exception {
 		this.loadConfigs();
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized; mail sender active : " + isActive());
+		_logger.debug("{} ready with activie: {}", this.getClass().getName(), isActive());
 	}
 
 	/**
@@ -74,8 +80,8 @@ public class MailManager extends AbstractService implements IMailManager {
 			MailConfigDOM configDOM = new MailConfigDOM();
 			this.setConfig(configDOM.extractConfig(xml));
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
-			throw new ApsSystemException("Errore in fase di inizializzazione", t);
+			_logger.error("Error in loadConfigs", t);
+			throw new ApsSystemException("Error in loadConfigs", t);
 		}
 	}
 
@@ -87,7 +93,7 @@ public class MailManager extends AbstractService implements IMailManager {
 		try {
 			return (MailConfig) this._config.clone();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getMailConfig");
+			_logger.error("Error loading mail service configuration", t);
 			throw new ApsSystemException("Error loading mail service configuration", t);
 		}
 	}
@@ -102,8 +108,8 @@ public class MailManager extends AbstractService implements IMailManager {
 			this.getConfigManager().updateConfigItem(JpmailSystemConstants.MAIL_CONFIG_ITEM, xml);
 			this.setConfig(config);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateMailConfig");
-			throw new ApsSystemException("Errore in fase di aggiornamento configurazione mail", t);
+			_logger.error("Error updating configs", t);
+			throw new ApsSystemException("Error updating configs", t);
 		}
 	}
 
@@ -131,14 +137,13 @@ public class MailManager extends AbstractService implements IMailManager {
 	@Override
 	public boolean smtpServerTest(MailConfig mailConfig) {
 		try {
-			Properties props = new Properties();
 			Session session = prepareSession(mailConfig);
 			Transport transport = prepareTransport(session, mailConfig);
 			transport.connect(mailConfig.getSmtpHost(), mailConfig.getSmtpPort(), mailConfig.getSmtpUserName(), mailConfig.getSmtpPassword());
 			transport.close();
 			return true;
 		} catch (Exception e) {
-			ApsSystemUtils.logThrowable(e, this, "smtpServerTest - smtpServerTest");
+			_logger.error("error in test smptserver", e);
 			return false;
 		}
 	}
@@ -150,7 +155,7 @@ public class MailManager extends AbstractService implements IMailManager {
 	public boolean sendMail(String text, String subject, String contentType, Properties attachmentFiles, String[] recipientsTo,
 			String[] recipientsCc, String[] recipientsBcc, String senderCode) throws ApsSystemException {
 		if (!isActive()) {
-			ApsSystemUtils.getLogger().info("Sender function disabled : mail Subject " + subject);
+			_logger.info("Sender function disabled : mail Subject {}", subject);
 			return true;
 		}
 		return send(text, subject, recipientsTo, recipientsCc, recipientsBcc, senderCode, attachmentFiles, contentType);
@@ -196,7 +201,7 @@ public class MailManager extends AbstractService implements IMailManager {
 	public boolean sendMixedMail(String simpleText, String htmlText, String subject, Properties attachmentFiles,
 			String[] recipientsTo, String[] recipientsCc, String[] recipientsBcc, String senderCode) throws ApsSystemException {
 		if (!isActive()) {
-			ApsSystemUtils.getLogger().info("Sender function disabled : mail Subject " + subject);
+			_logger.info("Sender function disabled : mail Subject " + subject);
 			return true;
 		}
 		Transport bus = null;
