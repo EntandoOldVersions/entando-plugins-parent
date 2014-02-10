@@ -25,6 +25,9 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
@@ -39,6 +42,8 @@ import com.agiletec.plugins.jpgeoref.aps.tags.helper.GeorefInfoBean;
  */
 public class GeoRenderListTag extends TagSupport {
 
+	private static final Logger _logger = LoggerFactory.getLogger(GeoRenderListTag.class);
+	
 	/**
 	 * Start tag analysis.
 	 */
@@ -98,9 +103,9 @@ public class GeoRenderListTag extends TagSupport {
 				this.pageContext.setAttribute(this.getSouthWestCoordsParamName(), southWest);
 				this.pageContext.setAttribute(this.getNorthEastCoordsParamName(), northEast);
 			}
-		} catch (Throwable e) {
-			ApsSystemUtils.logThrowable(e, this, "doStartTag");
-			throw new JspException("Error initialization tag", e);
+		} catch (Throwable t) {
+			_logger.error("error in doStartTag", t);
+			throw new JspException("Error initialization tag", t);
 		}
 		return super.doStartTag();
 	}

@@ -24,7 +24,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.Widget;
@@ -35,6 +37,8 @@ import com.agiletec.plugins.jpgeoref.aps.system.GeoRefSystemConstants;
  */
 public class GeoRouteListTag extends TagSupport {
 
+	private static final Logger _logger = LoggerFactory.getLogger(GeoRouteListTag.class);
+	
 	/**
 	 * Start tag analysis.
 	 */
@@ -45,9 +49,9 @@ public class GeoRouteListTag extends TagSupport {
 			Widget showlet = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
 			String contentsId = showlet.getConfig().getProperty(GeoRefSystemConstants.ROUTE_CONTENTS_ID_SHOWLET_PARAM);
 			this.pageContext.setAttribute(this.getListName(), this.extractContentIdList(contentsId));
-		} catch (Throwable e) {
-			ApsSystemUtils.logThrowable(e, this, "doStartTag");
-			throw new JspException("Error initialization tag", e);
+		} catch (Throwable t) {
+			_logger.error("error in doStartTag", t);
+			throw new JspException("Error initialization tag", t);
 		}
 		return super.doStartTag();
 	}

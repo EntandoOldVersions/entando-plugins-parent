@@ -21,7 +21,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 
 /**
@@ -29,6 +31,8 @@ import com.agiletec.aps.system.RequestContext;
  */
 public class ReqCtxParamPrinterTag extends TagSupport {
 
+	private static final Logger _logger = LoggerFactory.getLogger(ReqCtxParamPrinterTag.class);
+	
 	/**
 	 * End tag analysis.
 	 */
@@ -40,8 +44,8 @@ public class ReqCtxParamPrinterTag extends TagSupport {
 			if (value == null) value = "";
 			this.pageContext.getOut().print(value);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Error in end tag", t);
+			_logger.error("error in Error in doEndTag", t);
+			throw new JspException("Error in doEndTag", t);
 		}
 		return EVAL_PAGE;
 	}
