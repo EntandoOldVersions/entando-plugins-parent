@@ -28,6 +28,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.entando.entando.aps.system.services.widgettype.IWidgetTypeManager;
 import org.entando.entando.aps.system.services.widgettype.WidgetType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
@@ -52,9 +54,11 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.
 @Aspect
 public class PageUserConfigManager extends AbstractService implements IPageUserConfigManager {
 
+	private static final Logger _logger = LoggerFactory.getLogger(PageUserConfigManager.class);
+	
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 
 	@Override
@@ -73,8 +77,8 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			}
 			pageUserBean = this.getPageUserConfigDAO().getUserConfig(user.getUsername());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getUserConfig");
-			throw new ApsSystemException("Error reading the user configuration", t);
+			_logger.error("Error reading user configuration", t);
+			throw new ApsSystemException("Error reading user configuration", t);
 		}
 		return pageUserBean;
 	}
@@ -86,7 +90,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 		try {
 			pageUserBean = this.getPageUserConfigDAO().getUserConfig(username);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getUserConfig");
+			_logger.error("Error reading the user configuration", t);
 			throw new ApsSystemException("Error reading the user configuration", t);
 		}
 		return pageUserBean;
@@ -122,7 +126,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getGuestPageConfig");
+			_logger.error("Error reading the configuration of guest user", t);
 			throw new ApsSystemException("Error reading the configuration of guest user", t);
 		}
 		return customConfig;
@@ -173,7 +177,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getShowletsToRender");
+			_logger.error("Error building the widget array to render", t);
 			throw new ApsSystemException("Error building the showlet array to render", t);
 		}
 		return mergedWidgets;
@@ -203,7 +207,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getCustomizableShowlets");
+			_logger.error("Error extracting customizable widgets user '{}'", user.getUsername(), t);
 			throw new ApsSystemException("Error extracting customizable widgets user '" + user.getUsername() + "'", t);
 		}
 		return customizableShowletsForUser;
@@ -221,7 +225,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			Cookie newCookie = pageConfig.toCookie(cookieName);
 			response.addCookie(newCookie);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateGuestPageConfig");
+			_logger.error("Error building Guest Page Config", t);
 			throw new ApsSystemException("Error building Guest Page Config", t);
 		}
 	}
@@ -231,7 +235,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 		try {
 			this.getPageUserConfigDAO().updateUserPageConfig(username, page, updateInfos);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateGuestPageConfig");
+			_logger.error("Error building Page Config for user {}", username, t);
 			throw new ApsSystemException("Error building User Page Config", t);
 		}
 	}
@@ -249,7 +253,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 		try {
 			this.getPageUserConfigDAO().removeUserPageConfig(username, page.getCode(), null);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "removeUserPageConfig");
+			_logger.error("Error removing Page Config for user {}", username, t);
 			throw new ApsSystemException("Error removing Page user Config", t);
 		}
 	}
@@ -273,7 +277,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 		try {
 			this.getPageUserConfigDAO().removeUserPageConfig(null, pageCode, pos);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "removeConfig");
+			_logger.error("Error cleaning Page Config from page:{} frame:{}", pageCode, pageCode, t);
 			throw new ApsSystemException("Error removing Page user Config", t);
 		}
 	}

@@ -31,8 +31,9 @@ import org.entando.entando.aps.system.services.widgettype.WidgetTypeParameter;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.page.IPage;
@@ -45,6 +46,8 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPorta
  */
 public class CustomPageConfig {
 
+	private static final Logger _logger = LoggerFactory.getLogger(CustomPageConfig.class);
+	
 	public CustomPageConfig(String pageCode, int frames) {
 		this.setPageCode(pageCode);
 		this.setConfig(new Widget[frames]);
@@ -57,7 +60,8 @@ public class CustomPageConfig {
 			value = URLDecoder.decode(cookie.getValue(),"UTF-8");
 		} catch (UnsupportedEncodingException e1) {
 			value=null;
-			ApsSystemUtils.logThrowable(e1, this, "CustomPageConfig", "Error decoding cookie");
+			_logger.error("Error decoding cookie ", e1);
+			//ApsSystemUtils.logThrowable(e1, this, "CustomPageConfig", "Error decoding cookie");
 		}
 		// FIX temporaneo :: problema escape sui doppi apici
 		String tmp = value.replace("\\", "");
@@ -114,9 +118,9 @@ public class CustomPageConfig {
 				}
 			}
 		} catch (ParseException e) {
-			ApsSystemUtils.logThrowable(e, this, "CustomPageConfig", "Invalid coockie value : VALUE :\n" + value);
+			_logger.error("Invalid cockie value: {} ", value, e);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "CustomPageConfig");
+			_logger.error("Error reading the configuration of guest user", t);
 			throw new ApsSystemException("Error reading the configuration of guest user", t);
 		}
 	}
@@ -185,7 +189,7 @@ public class CustomPageConfig {
 			value = frames.toJSONString();
 			//value = "{\"23\": {\"status\": 1,\"config\": {\"contentType\": \"NEW\"},\"code\": \"latest_news\"},\"23\": {\"status\": 1,\"config\": {\"contentType\": \"NEW\"},\"code\": \"latest_news\"},\"23\": {\"status\": 1,\"config\": {\"contentType\": \"NEW\"},\"code\": \"latest_news\"},\"23\": {\"status\": 1,\"config\": {\"contentType\": \"NEW\"},\"code\": \"latest_news\"},\"23\": {\"status\": 1,\"config\": {\"contentType\": \"NEW\"},\"code\": \"latest_news\"}}";
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "toCookie");
+			_logger.error("Error building the showlet array to render", t);
 			throw new ApsSystemException("Error building the showlet array to render", t);
 		}
 		Cookie cookie = null;

@@ -24,7 +24,9 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -45,6 +47,8 @@ import com.agiletec.plugins.jpmyportalplus.aps.tags.util.FrameSelectItem;
  */
 public class FrameSelectItemTag extends TagSupport {
 
+	private static final Logger _logger = LoggerFactory.getLogger(FrameSelectItemTag.class);
+	
 	@Override
 	public int doStartTag() throws JspException {
 		RequestContext reqCtx = (RequestContext) this.pageContext.getRequest().getAttribute(RequestContext.REQCTX);
@@ -87,8 +91,8 @@ public class FrameSelectItemTag extends TagSupport {
 			}
 			this.pageContext.setAttribute(this.getVar(), selectItems);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Errore inizializzazione tag", t);
+			_logger.error("error in doStartTag", t);
+			throw new JspException("error in doStartTag", t);
 		}
 		return super.doStartTag();
 	}
@@ -111,16 +115,15 @@ public class FrameSelectItemTag extends TagSupport {
 			if (customPageConfig != null && !customPageConfig.getPageCode().equals(currentPage.getCode())) {
 				//throw new RuntimeException("Current page '" + currentPage.getCode()
 				//		+ "' not equals then pageCode of custom config param '" + customPageConfig.getPageCode() + "'");
-				ApsSystemUtils.getLogger().error("Current page '" + currentPage.getCode()
-						+ "' not equals then pageCode of custom config param '" + customPageConfig.getPageCode() + "'");
+				_logger.error("Current page '{}' not equals then pageCode of custom config param '{}'",currentPage.getCode(), customPageConfig.getPageCode());
 				return null;
 			}
 			if (null != customPageConfig) {
 				customShowlets = customPageConfig.getConfig();
 			}
 		} catch (Throwable t) {
-			String message = "Errore in estrazione custom showlets";
-			ApsSystemUtils.logThrowable(t, this, "getCustomShowletConfig", message);
+			_logger.error("Error loading custom widgets config", t);
+			String message = "Error loading custom widgets config";
 			throw new ApsSystemException(message, t);
 		}
 		return customShowlets;

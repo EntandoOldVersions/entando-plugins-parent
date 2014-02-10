@@ -17,7 +17,11 @@
 */
 package com.agiletec.plugins.jpmyportalplus.aps.tags.util;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.IPage;
@@ -29,13 +33,13 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalC
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 
-import java.util.Set;
-
 /**
  * @author E.Santoboni
  */
 public class MyPortalWidgetDecoratorContainer extends BaseFrameDecoratorContainer {
 
+	private static final Logger _logger = LoggerFactory.getLogger(MyPortalWidgetDecoratorContainer.class);
+	
 	@Override
 	public boolean needsDecoration(Widget showlet, RequestContext reqCtx) {
 		try {
@@ -48,7 +52,7 @@ public class MyPortalWidgetDecoratorContainer extends BaseFrameDecoratorContaine
 			Frame currentFrameObject = model.getFrameConfigs()[currentFrame];
 			return (!currentFrameObject.isLocked() && allowedShowlet.contains(showlet.getType().getCode()));
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "needsDecoration", "Error checking widget decorators");
+			_logger.error("Error checking widget decorators", t);
 			throw new RuntimeException("Error checking widget decorators", t);
 		}
 	}

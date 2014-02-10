@@ -22,8 +22,9 @@ import java.util.List;
 import org.entando.entando.aps.system.services.widgettype.WidgetType;
 import org.entando.entando.aps.system.services.widgettype.events.WidgetTypeChangedEvent;
 import org.entando.entando.aps.system.services.widgettype.events.WidgetTypeChangedObserver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
@@ -36,13 +37,15 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageU
  * @author E.Santoboni
  */
 public class MyPortalConfigManager extends AbstractService implements IMyPortalConfigManager, WidgetTypeChangedObserver {
+
+	private static final Logger _logger = LoggerFactory.getLogger(MyPortalConfigManager.class);
 	
 	@Override
 	public void init() throws Exception {
 		this.loadConfig();
 		this.buildCustomizableShowletsSet();
 		this.syncPageModelUserDatabase();
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized, the code of the'void showlet' is '"+_voidShowletCode+"'");
+		_logger.debug("{} ready. the code of the'void widget is '{}'", this.getClass().getName(), _voidShowletCode);
 	}
 	
 	@Override
@@ -50,7 +53,7 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 		try {
 			this.init();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateFromShowletTypeChanged", "Error inittializating manager");
+			_logger.error("Error on init after ShowletTypeChanged", t);
 		}
 	}
 	
@@ -63,8 +66,8 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 			MyPortalPlusConfigDOM configDom = new MyPortalPlusConfigDOM();
 			this.setConfig(configDom.extractConfig(xml));
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadConfig");
-			throw new ApsSystemException("Error during initialization", t);
+			_logger.error("error loading config", t);
+			throw new ApsSystemException("error loading config", t);
 		}
 	}
 	
@@ -97,7 +100,7 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 			this.buildCustomizableShowletsSet();
 			this.syncPageModelUserDatabase();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveConfig");
+			_logger.error("Error saving myportal configuration", t);
 			throw new ApsSystemException("Error saving myportal configuration", t);
 		}
 	}

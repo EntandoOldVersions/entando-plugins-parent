@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
@@ -32,6 +34,8 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.
  * @author E.Santoboni
  */
 public class CheckFrameStatusTag extends TagSupport {
+
+	private static final Logger _logger = LoggerFactory.getLogger(CheckFrameStatusTag.class);
 	
 	@Override
 	public int doStartTag() throws JspException {
@@ -54,7 +58,7 @@ public class CheckFrameStatusTag extends TagSupport {
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getCustomShowletStatus", "Error on doStartTag");
+			_logger.error("Error on doStartTag", t);
 			throw new JspException("Error on doStartTag", t);
 		}
 		return SKIP_BODY;

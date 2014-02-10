@@ -21,7 +21,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 
 /**
@@ -30,6 +32,8 @@ import com.agiletec.aps.system.RequestContext;
  * @author E.Santoboni
  */
 public class RequestContextParamTag extends TagSupport {
+
+	private static final Logger _logger = LoggerFactory.getLogger(RequestContextParamTag.class);
 	
 	@Override
 	public int doStartTag() throws JspException {
@@ -46,8 +50,8 @@ public class RequestContextParamTag extends TagSupport {
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Errore inizializzazione tag", t);
+			_logger.error("error in doStartTag", t);
+			throw new JspException("error in doStartTag", t);
 		}
 		return super.doStartTag();
 	}

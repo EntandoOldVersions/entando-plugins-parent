@@ -19,6 +19,9 @@ package com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel;
 
 import java.sql.ResultSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.pagemodel.PageModel;
 import com.agiletec.aps.system.services.pagemodel.PageModelDAO;
@@ -28,6 +31,8 @@ import com.agiletec.aps.system.services.pagemodel.PageModelDAO;
  * @author E. Santoboni
  */
 public class MyPortalPageModelDAO extends PageModelDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(MyPortalPageModelDAO.class);
 	
 	/**
 	 * Build and return a page model from a result set.
@@ -51,7 +56,8 @@ public class MyPortalPageModelDAO extends PageModelDAO {
 			}
 			pageModel.setPluginCode(res.getString(4));
 		} catch (Throwable t) {
-			processDaoException(t, "Error detected building the page model", "getPageModelFromResultSet");
+			_logger.error("Error detected building the page model",  t);
+			throw new RuntimeException("Error detected building the page model", t);
 		}
 		return pageModel;
 	}

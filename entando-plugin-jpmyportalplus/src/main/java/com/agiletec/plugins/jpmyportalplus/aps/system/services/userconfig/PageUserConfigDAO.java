@@ -27,8 +27,9 @@ import java.util.Set;
 
 import org.entando.entando.aps.system.services.widgettype.IWidgetTypeManager;
 import org.entando.entando.aps.system.services.widgettype.WidgetType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.page.IPage;
@@ -48,6 +49,8 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.
  */
 public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO {
 
+	private static final Logger _logger = LoggerFactory.getLogger(PageUserConfigDAO.class);
+	
 	@Override
 	public void syncCustomization(List<WidgetType> allowedShowlets, String voidShowletCode) {
 		Set<String> allowedShowletCodes = this.getAllowedShowletCodes(allowedShowlets);
@@ -62,17 +65,18 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 				String currentCode = res.getString(1);
 				WidgetType currentConfiguredShowlet = this.getWidgetTypeManager().getWidgetType(currentCode);
 				if (null == currentConfiguredShowlet) {
-					ApsSystemUtils.getLogger().info(JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM + ": deleting unknown showlet '"+currentCode+"' from the configuration bean");
+					_logger.warn("{}: deleting unknown widget '{}' from the configuration bean", JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM, currentCode);
 					this.purgeConfigurationFromInvalidShowlets(conn, currentCode);
 				} else {
 					if (!allowedShowletCodes.contains(currentCode) && !currentCode.equals(voidShowletCode)) {
-						ApsSystemUtils.getLogger().info(JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM + ": removing the no longer configurable showlet '"+currentCode+"' from the configuration bean");
+						_logger.info("{}: removing the no longer configurable showlet '{}' from the configuration bean", JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM, currentCode);
 						this.purgeConfigurationFromInvalidShowlets(conn, currentCode);
 					}
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while cleaning the configuration database", "syncCustomization");
+			_logger.error("Error while cleaning the configuration",  t);
+			throw new RuntimeException("Error while cleaning the configuration", t);
 		} finally {
 			this.closeDaoResources(res, stat, conn);
 		}
@@ -137,7 +141,8 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while updating user config", "updateUserPageConfig");
+			_logger.error("Error while updating user config",  t);
+			throw new RuntimeException("Error while updating user config", t);
 		} finally {
 			this.closeConnection(conn);
 		}
@@ -157,7 +162,8 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			}
 			stat.executeBatch();
 		} catch (Throwable t) {
-			processDaoException(t, "Error while deleting a user config record", "deleteUserConfig");
+			_logger.error("Error while deleting a user config record for {}", username,  t);
+			throw new RuntimeException("Error while deleting a user config record", t);
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -180,7 +186,9 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			}
 			stat.executeBatch();
 		} catch (Throwable t) {
-			processDaoException(t, "Error while adding a user config record", "addUserConfig");
+			_logger.error("Error while adding a user config record",  t);
+			throw new RuntimeException("Error while adding a user config record", t);
+			//processDaoException(t, "Error while adding a user config record", "addUserConfig");
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -199,7 +207,8 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			res = stat.executeQuery();
 			result = this.createPageUserConfigBeanFromResultSet(username, res);
 		} catch (Throwable t) {
-			processDaoException(t, "Error while saving user customization", "getUserConfig");
+			_logger.error("Error loading user config for user {}", username, t);
+			throw new RuntimeException("Error loading user config", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -244,8 +253,7 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 				}
 				int currentFramePos = res.getInt(2);
 				if (currentFramePos >= pageConfig.getConfig().length) {
-					ApsSystemUtils.getLogger().error("Posizione " + currentFramePos + " incompatibile con pagina '" + currentPageCode + "' " +
-							"- utente " + username);
+					_logger.error("invalid position {} in pagecode {} - user {}", currentFramePos, currentPageCode, username);
 					continue;
 				}
 				String currentShowletCode = res.getString(3);
@@ -256,7 +264,8 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 				pageConfig.getStatus()[currentFramePos] = status;
 			}
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error while parsing the result set", "createPageUserConfigBeanFromResultSet");
+			_logger.error("Error while parsing the resultset",  t);
+			throw new RuntimeException("Error while parsing the resultset", t);
 		}
 		return pageUserBean;
 	}
@@ -285,7 +294,8 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while updating user configs", "removeUserPageConfig");
+			_logger.error("Error while updating user configs",  t);
+			throw new RuntimeException("Error while updating user configs", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -305,7 +315,8 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while removing unauthorized showlet", "removeUnauthorizedShowlet");
+			_logger.error("Error while removing unauthorized widget",  t);
+			throw new RuntimeException("Error while removing unauthorized widget", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}

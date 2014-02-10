@@ -23,7 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.Widget;
@@ -39,6 +41,8 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalC
  */
 public class CheckValidWidgetTag extends TagSupport {
 
+	private static final Logger _logger = LoggerFactory.getLogger(CheckValidWidgetTag.class);
+	
 	@Override
 	public int doStartTag() throws JspException {
 		IMyPortalConfigManager myPortalConfigManager = (IMyPortalConfigManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.MYPORTAL_CONFIG_MANAGER, pageContext);
@@ -61,7 +65,7 @@ public class CheckValidWidgetTag extends TagSupport {
 				return SKIP_BODY;
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag", "Error on doStartTag");
+			_logger.error("error in doStartTag", t);
 			throw new JspException("Error on doStartTag", t);
 		}
 	}

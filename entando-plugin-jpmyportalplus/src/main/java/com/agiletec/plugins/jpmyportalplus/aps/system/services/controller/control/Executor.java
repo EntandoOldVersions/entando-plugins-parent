@@ -22,21 +22,23 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.services.controller.ControllerManager;
 import com.agiletec.aps.system.services.controller.control.ControlServiceInterface;
-
-import org.slf4j.Logger;
 
 /**
  * @author M.Diana - E.Santoboni
  */
 public class Executor implements ControlServiceInterface {
+
+	private static final Logger _logger = LoggerFactory.getLogger(Executor.class);
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
+		_logger.debug(this.getClass().getName() + ": initialized");
 	}
 	
 	@Override
@@ -45,7 +47,6 @@ public class Executor implements ControlServiceInterface {
 		if (status == ControllerManager.ERROR) {
 			return status;
 		}
-		Logger log = ApsSystemUtils.getLogger();
 		try {
 			HttpServletResponse resp = reqCtx.getResponse();
 			HttpServletRequest req = reqCtx.getRequest();
@@ -53,14 +54,14 @@ public class Executor implements ControlServiceInterface {
 			req.setCharacterEncoding("UTF-8");
 			RequestDispatcher dispatcher = req.getRequestDispatcher(jspPath);
 			dispatcher.forward(req, resp);
-			log.trace("Executed forward to " + jspPath);
+			_logger.trace("Executed forward to {}", jspPath);
 			retStatus = ControllerManager.OUTPUT;
 		} catch (ServletException t) {
-			ApsSystemUtils.logThrowable(t, this, "service", "Error while building page portal");
+			_logger.error("Error while building page portal", t);
 			retStatus = ControllerManager.ERROR;
 			reqCtx.setHTTPError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "service", "Error while forwarding to main.jsp");
+			_logger.error("Error while forwarding to main.jsp", t);
 			retStatus = ControllerManager.SYS_ERROR;
 			reqCtx.setHTTPError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}

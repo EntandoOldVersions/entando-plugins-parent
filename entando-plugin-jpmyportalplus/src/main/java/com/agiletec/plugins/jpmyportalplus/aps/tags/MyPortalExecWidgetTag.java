@@ -24,11 +24,14 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyContent;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.IPage;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.tags.ExecWidgetTag;
 import com.agiletec.aps.tags.util.IFrameDecoratorContainer;
@@ -37,13 +40,14 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConsta
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
-import com.agiletec.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
  */
 public class MyPortalExecWidgetTag extends ExecWidgetTag {
 
+	private static final Logger _logger = LoggerFactory.getLogger(MyPortalExecWidgetTag.class);
+	
 	@Override
 	public int doStartTag() throws JspException {
 		HttpServletRequest req =  (HttpServletRequest) this.pageContext.getRequest();
@@ -69,7 +73,7 @@ public class MyPortalExecWidgetTag extends ExecWidgetTag {
 			}
 		} catch (Throwable t) {
 			String msg = "Error detected during preprocessing doStartTag";
-			ApsSystemUtils.logThrowable(t, this, "doStartTag", msg);
+			_logger.error("Error in doStartTag", t);
 			throw new JspException(msg, t);
 		}
 		return super.doStartTag();
@@ -116,8 +120,8 @@ public class MyPortalExecWidgetTag extends ExecWidgetTag {
 				showletOutput[scan] = body.getString();
 			}
 		} catch (Throwable t) {
+			_logger.error("Error detected preprocessing widget", t);
 			String msg = "Error detected preprocessing showlet";
-			ApsSystemUtils.logThrowable(t, this, "buildShowletOutput", msg);
 			throw new JspException(msg, t);
 		}
 	}

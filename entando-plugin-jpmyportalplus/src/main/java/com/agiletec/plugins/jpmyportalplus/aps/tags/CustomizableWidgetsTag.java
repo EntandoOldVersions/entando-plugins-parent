@@ -28,8 +28,9 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.entando.entando.aps.system.services.widgettype.WidgetType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -51,6 +52,8 @@ import com.agiletec.plugins.jpmyportalplus.aps.tags.util.WidgetCheckInfo;
  */
 public class CustomizableWidgetsTag extends TagSupport {
 
+	private static final Logger _logger = LoggerFactory.getLogger(CustomizableWidgetsTag.class);
+	
     public int doStartTag() throws JspException {
         RequestContext reqCtx = (RequestContext) this.pageContext.getRequest().getAttribute(RequestContext.REQCTX);
         List<WidgetCheckInfo> checkInfos = new ArrayList<WidgetCheckInfo>();
@@ -85,7 +88,7 @@ public class CustomizableWidgetsTag extends TagSupport {
             Collections.sort(checkInfos, comparator);
             this.pageContext.setAttribute(this.getVar(), checkInfos);
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "doStartTag");
+        	_logger.error("error in doStartTag", t);
             throw new JspException("Error on doStartTag", t);
         }
         return super.doStartTag();
@@ -104,8 +107,8 @@ public class CustomizableWidgetsTag extends TagSupport {
                 customShowlets = customPageConfig.getConfig();
             }
         } catch (Throwable t) {
+        	_logger.error("Error extracting custom widgets", t);
             String message = "Error extracting custom showlets";
-            ApsSystemUtils.logThrowable(t, this, "getCustomShowletConfig", message);
             throw new ApsSystemException(message, t);
         }
         return customShowlets;
@@ -121,8 +124,8 @@ public class CustomizableWidgetsTag extends TagSupport {
                 map.put(type.getCode(), type);
             }
         } catch (Throwable t) {
+        	_logger.error("Error extracting customizable Showlets by user {}", currentUser.getUsername(), t);
             String message = "Error extracting customizable Showlets by user '" + currentUser.getUsername() + "'";
-            ApsSystemUtils.logThrowable(t, this, "getCustomizableShowlets", message);
             throw new ApsSystemException(message, t);
         }
         return map;

@@ -21,7 +21,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.IPage;
@@ -34,6 +36,8 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPorta
  */
 public class ColumnInfoTag extends TagSupport {
 
+	private static final Logger _logger = LoggerFactory.getLogger(ColumnInfoTag.class);
+	
 	@Override
 	public int doStartTag() throws JspException {
 		ServletRequest request =  this.pageContext.getRequest();
@@ -62,8 +66,8 @@ public class ColumnInfoTag extends TagSupport {
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Errore inizializzazione tag", t);
+			_logger.error("error in ", t);
+			throw new JspException("Error in doStartTag", t);
 		}
 		return super.doStartTag();
 	}
