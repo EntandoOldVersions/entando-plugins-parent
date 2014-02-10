@@ -25,8 +25,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.jfree.data.time.TimeSeries;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpstats.aps.system.services.stats.model.VisitsStat;
@@ -36,11 +37,13 @@ import com.agiletec.plugins.jpstats.aps.system.services.stats.model.VisitsStat;
  * @author M.Lisci - E.Santoboni
  */
 public class StatsManager extends AbstractService implements IStatsManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(StatsManager.class);
 	
 	@Override
 	public void init() throws Exception {
 		this._firstCalendarDay = this.getStatsDao().getFirstCalendarDay();
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 	
 	@Override
@@ -49,7 +52,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			records = this.getStatsDao().loadStatsRecord(from, to);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadStatsRecord");
+			_logger.error("Error occurred extracting stats records", t);
 			throw new ApsSystemException("An error occurred extracting stats records", t);
 		}
 		return records;
@@ -62,7 +65,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 			thread.setName(RECORDER_THREAD_PREFIX + System.currentTimeMillis());
 			thread.start();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addStatsRecord");
+			_logger.error("Error occurred adding a stats record", t);
 			throw new ApsSystemException("An error occurred adding a stats record", t);
 		}
 	}
@@ -72,7 +75,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			this.getStatsDao().deleteStatsRecord(from, to);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteStatsRecord");
+			_logger.error("Error occurred removing stats records", t);
 			throw new ApsSystemException("An error occurred removing stats records", t);
 		}
 	}
@@ -88,8 +91,8 @@ public class StatsManager extends AbstractService implements IStatsManager {
 			
 			return this.getAverageTimeSite(fromCal, endCal);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAverageTimeSite");
-			throw new ApsSystemException("An error occurred removing stats records", t);
+			_logger.error("error in getAverageTimeSite", t);
+			throw new ApsSystemException("An error occurred in getAverageTimeSite", t);
 		}
 	}
 	
@@ -98,7 +101,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			return this.getStatsDao().searchVisitsForDate(from, to);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "searchVisitsForDate");
+			_logger.error("Error occurred searching visits for date", t);
 			throw new ApsSystemException("An error occurred searching visits for date", t);
 		}
 	}
@@ -109,7 +112,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 			List<VisitsStat> visitsStat = this.getStatsDao().searchVisitsForPages(from, to);
 			return visitsStat;
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "searchVisitsForPages");
+			_logger.error("Error occurred searching visits for pages", t);
 			throw new ApsSystemException("An error occurred searching visits for pages", t);
 		}
 	}
@@ -119,7 +122,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			return this.getStatsDao().searchVisitsForContents(from, to);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "searchVisitsForContents");
+			_logger.error("error occurred searching visits for contents", t);
 			throw new ApsSystemException("An error occurred searching visits for contents", t);
 		}
 	}
@@ -130,7 +133,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			hitsPage = this.getStatsDao().getHitsByInterval(start,end);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getHitsByInterval");
+			_logger.error("error occurred getting HitsByInterval", t);
 			throw new ApsSystemException("An error occurred getting HitsByInterval", t);
 		}
 		return hitsPage;
@@ -142,7 +145,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			timeSite = this.getStatsDao().getAverageTimeSite(start,end);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAverageTimeSite");
+			_logger.error("error occurred getting the AverageTimeSite", t);			
 			throw new ApsSystemException("An error occurred getting the AverageTimeSite", t);
 		}
 		return timeSite;
@@ -154,7 +157,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			timePage = this.getStatsDao().getAverageTimePage(start, end);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAverageTimePage");
+			_logger.error("error occurred getting the AverageTimePage", t);
 			throw new ApsSystemException("An error occurred getting the AverageTimePage", t);
 		}
 		return timePage;
@@ -166,7 +169,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			numPage = this.getStatsDao().getNumPageSession(start, end);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getNumPageSession");
+			_logger.error("error occurred getting the NumPageSession", t);
 			throw new ApsSystemException("An error occurred getting the NumPageSession", t);
 		}
 		return numPage;
@@ -185,7 +188,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			hitsPage = this.getStatsDao().getTopPages(start, end);			
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getTopPages");
+			_logger.error("error occurred getting the TopPages", t);
 			throw new ApsSystemException("An error occurred getting the TopPages", t);
 		}
 		return hitsPage;
@@ -204,7 +207,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			topContents = this.getStatsDao().getTopContents(start, end);			
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getTopContents");
+			_logger.error("error occurred getting the TopPages", t);
 			throw new ApsSystemException("An error occurred getting the TopPages", t);
 		}
 		return topContents;
@@ -223,7 +226,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			hitsCount = this.getStatsDao().getIPByDateInterval(start, end).size();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getIPByDateInterval");
+			_logger.error("error occurred getting the Ip addresses ", t);
 			throw new ApsSystemException("An error occurred getting the Ip addresses ", t);
 		}
 		return hitsCount;
@@ -233,7 +236,7 @@ public class StatsManager extends AbstractService implements IStatsManager {
 		try {
 			this.getStatsDao().addStatsRecord(statsRecord);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addStatsRecordFromThread");
+			_logger.error("error occurred adding a stats record", t);
 			throw new ApsSystemException("An error occurred adding a stats record", t);
 		}
 	}

@@ -37,6 +37,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.StringUtils;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.services.lang.ILangManager;
@@ -59,6 +61,8 @@ import com.agiletec.plugins.jpstats.aps.system.services.stats.model.VisitsStat;
  */
 public class StatsDAO extends AbstractDAO implements IStatsDAO {
 
+	private static final Logger _logger = LoggerFactory.getLogger(StatsDAO.class);
+	
 	protected String getDriverName() throws Throwable {
 		String driverName = null;
 		Method method = this.getDataSource().getClass().getDeclaredMethod("getDriverClassName");
@@ -107,7 +111,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				records.add(record);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting Ip address ", "loadStatsRecord");
+			_logger.error("Error getting Ip address ",  t);
+			throw new RuntimeException("Error getting Ip address ", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -143,7 +148,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 			prepStat.executeUpdate();
 			conn.commit();
 		} catch (Throwable t) {
-			processDaoException(t, "Error adding a statistic record",	"addStatsRecord");
+			_logger.error("Error adding a statistic record",  t);
+			throw new RuntimeException("Error adding a statistic record", t);
 		} finally {
 			closeDaoResources(null, prepStat, conn);
 		}
@@ -162,7 +168,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 			prepStat.executeUpdate();
 			conn.commit();
 		} catch (Throwable t) {
-			processDaoException(t, "Error removing statistic records", "deleteStatsRecord");
+			_logger.error("Error removing statistic records",  t);
+			throw new RuntimeException("Error removing statistic records", t);
 		} finally {
 			closeDaoResources(null, prepStat, conn);
 		}
@@ -191,7 +198,9 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				visitsStats.add(statistic);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error searching visits for date", "searchVisitsForDate");
+			_logger.error("Error searching visits for date",  t);
+			throw new RuntimeException("Error searching visits for date", t);
+			//processDaoException(t, "Error searching visits for date", "searchVisitsForDate");
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -223,7 +232,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				visitsStats.add(statistic);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error searching visits for pages", "searchVisitsForPages");
+			_logger.error("Error searching visits for pages",  t);
+			throw new RuntimeException("Error searching visits for pages", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -259,7 +269,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				visitsStats.add(statistic);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error searching visits for contents", "searchVisitsForContents");
+			_logger.error("Error searching visits for contents",  t);
+			throw new RuntimeException("Error searching visits for contents", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -299,7 +310,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				hitsPage.add(endDay,0);
 			} catch (Throwable t) {}
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting hits by interval ", "getHitsByInterval");
+			_logger.error("Error getting hits by interval ",  t);
+			throw new RuntimeException("Error getting hits by interval ", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -335,7 +347,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 			}
 			mediaSessioni = media;
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting  average time site", "getAverageTimeSite");
+			_logger.error("Error getting  average time site",  t);
+			throw new RuntimeException("Error getting  average time site", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -368,7 +381,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				mediaTimePage = this.convertSecondsToInterval(seconds);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting average time page", "getAverageTimePage");
+			_logger.error("Error getting average time page", t);
+			throw new RuntimeException("Error getting average time page", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -399,7 +413,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				mediaPage = res.getInt(1);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting average num page session ", "getNumPageSession");
+			_logger.error("Error getting average num page session ",  t);
+			throw new RuntimeException("Error getting average num page session ", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -432,7 +447,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				hitsPage.put(res.getString("pagecode"), new Integer(count));
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting the most visited pages ", "getPageVisitedDesc");
+			_logger.error("Error getting the most visited pages ", t);
+			throw new RuntimeException("Error getting the most visited pages ", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -477,7 +493,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				topContents.put(contentDescr, new Integer(count));
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting the most visited contents ", "getTopContents");
+			_logger.error("Error getting the most visited contents",  t);
+			throw new RuntimeException("Error getting the most visited contents", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -508,7 +525,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				firstDay.set(Calendar.MILLISECOND, 0);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting the first day ", "getFirstCalendarDay");
+			_logger.error("Error getting the first day",  t);
+			throw new RuntimeException("Error getting the first day", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -541,7 +559,8 @@ public class StatsDAO extends AbstractDAO implements IStatsDAO {
 				statsRecord.put(ip, new Integer(count));
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting Ip address ", "getIPByDateInterval");
+			_logger.error("Error getting Ip address",  t);
+			throw new RuntimeException("Error getting Ip address", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}

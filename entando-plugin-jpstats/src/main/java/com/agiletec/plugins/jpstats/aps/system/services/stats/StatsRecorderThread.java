@@ -17,12 +17,17 @@
 */
 package com.agiletec.plugins.jpstats.aps.system.services.stats;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 
 /**
  * @author E.Santoboni
  */
 public class StatsRecorderThread extends Thread {
+
+	private static final Logger _logger = LoggerFactory.getLogger(StatsRecorderThread.class);
 	
 	public StatsRecorderThread(StatsManager statsManager, StatsRecord statsRecord) {
 		this.statsManager = statsManager;
@@ -33,7 +38,7 @@ public class StatsRecorderThread extends Thread {
 		try {
 			this.statsManager.addStatsRecordFromThread(this.statsRecord);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "run");
+			_logger.error("error in run", t);
 		}
 	}
 	

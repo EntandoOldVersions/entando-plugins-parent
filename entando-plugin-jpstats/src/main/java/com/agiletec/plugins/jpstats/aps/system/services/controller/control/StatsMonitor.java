@@ -19,10 +19,12 @@ package com.agiletec.plugins.jpstats.aps.system.services.controller.control;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
-import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
@@ -62,8 +64,10 @@ import com.agiletec.plugins.jpstats.aps.system.services.stats.StatsRecord;
  */
 public class StatsMonitor implements ControlServiceInterface {
 
+	private static final Logger _logger = LoggerFactory.getLogger(StatsMonitor.class);
+	
 	public void afterPropertiesSet() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": init");
+		_logger.debug("{} init", this.getClass().getName());
 	}
 
 	/**
@@ -85,7 +89,8 @@ public class StatsMonitor implements ControlServiceInterface {
 			retStatus = ControllerManager.CONTINUE;
 		} catch (Throwable t) {
 			retStatus = ControllerManager.SYS_ERROR;
-			ApsSystemUtils.logThrowable(t, this, "service", "An error occurred in statistics control");
+			_logger.error("An error occurred in statistics control", t);
+			//ApsSystemUtils.logThrowable(t, this, "service", "An error occurred in statistics control");
 		}
 		return retStatus;
 	}
