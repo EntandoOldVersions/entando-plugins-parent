@@ -22,21 +22,24 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.entando.entando.aps.system.services.widgettype.WidgetType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.IPageManager;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.tags.ExecWidgetTag;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
-import com.agiletec.aps.system.services.page.Widget;
 
 /**
  * @author E.Santoboni
  */
 public class WidgetReplicatorTag extends TagSupport {
 
+	private static final Logger _logger = LoggerFactory.getLogger(WidgetReplicatorTag.class);
+	
 	@Override
 	public int doEndTag() throws JspException {
 		ServletRequest req =  this.pageContext.getRequest();
@@ -72,7 +75,7 @@ public class WidgetReplicatorTag extends TagSupport {
 			}
 		} catch (Throwable t) {
 			String msg = "Errore in preelaborazione showlets";
-			ApsSystemUtils.logThrowable(t, this, "doEndTag", msg);
+			_logger.error("error in doEndTag", t);
 			throw new JspException(msg, t);
 		}
 		return EVAL_PAGE;

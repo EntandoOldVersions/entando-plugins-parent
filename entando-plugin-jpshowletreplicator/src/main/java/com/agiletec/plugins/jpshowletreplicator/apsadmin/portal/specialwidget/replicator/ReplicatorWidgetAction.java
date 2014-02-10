@@ -22,7 +22,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.tree.ITreeNode;
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.page.IPage;
@@ -38,6 +40,8 @@ import com.opensymphony.xwork2.Action;
  */
 public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements IReplicatorWidgetAction, ITreeAction {
 
+	private static final Logger _logger = LoggerFactory.getLogger(ReplicatorWidgetAction.class);
+	
 	@Override
 	public void validate() {
 		super.validate();
@@ -45,7 +49,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 			try {
 				this.createValuedShowlet();
 			} catch (Throwable t) {
-				ApsSystemUtils.logThrowable(t, this, "validate");
+				_logger.error("error in validate", t);
 				this.addActionError("error.genericError");
 			}
 		}
@@ -57,7 +61,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 			String result = super.init();
 			return result;
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "init");
+			_logger.error("error in init", t);
 			return FAILURE;
 		}
 	}
@@ -70,7 +74,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 			config.remove("pageCodeParam");
 			config.remove("frameIdParam");
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "resetConfig");
+			_logger.error("error in reset config", t);
 			return FAILURE;
 		}
 		return SUCCESS;
@@ -86,7 +90,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 				return INPUT;
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "browseFrames");
+			_logger.error("error in browseFrames", t);
 			return FAILURE;
 		}
 		return SUCCESS;
@@ -100,7 +104,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 				return INPUT;
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "selectFrame");
+			_logger.error("error in selectFrame", t);
 		}
 		return Action.SUCCESS;
 	}
@@ -183,7 +187,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 			}
 			this.setTreeNodesToOpen(targets);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "buildTree");
+			_logger.error("error in buildTree", t);
 			return FAILURE;
 		}
 		return SUCCESS;
@@ -196,7 +200,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 			ITreeNode allowedTree = this.getAllowedTreeRootNode();
 			node = this.getPageActionHelper().getShowableTree(this.getTreeNodesToOpen(), allowedTree, this.getNodeGroupCodes());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getShowableTree");
+			_logger.error("error in getShowableTree", t);
 		}
 		return node;
 	}
@@ -207,7 +211,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 		try {
 			node = this.getPageActionHelper().getAllowedTreeRoot(this.getNodeGroupCodes());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAllowedTreeRootNode");
+			_logger.error("error in getAllowedTreeRootNode", t);
 		}
 		return node;
 	}
