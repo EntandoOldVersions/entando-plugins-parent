@@ -22,7 +22,9 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jprss.aps.system.services.JpRssSystemConstants;
 import com.agiletec.plugins.jprss.aps.system.services.rss.Channel;
@@ -32,6 +34,8 @@ import com.agiletec.plugins.jprss.aps.system.services.rss.IRssManager;
  * This tag puts in the pageContext a list of all the active channels.
  */
 public class RssListTag extends TagSupport {
+
+	private static final Logger _logger = LoggerFactory.getLogger(RssListTag.class);
 	
 	@Override
 	public int doStartTag() throws JspException {
@@ -40,7 +44,7 @@ public class RssListTag extends TagSupport {
 			List<Channel> activeChannels = rssManager.getChannels(Channel.STATUS_ACTIVE);
 			this.pageContext.setAttribute(this.getListName(), activeChannels);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
+			_logger.error("error in doStartTag", t);
 			throw new JspException("Error in RssListTag - doStartTag", t);
 		}
 		return super.doStartTag();

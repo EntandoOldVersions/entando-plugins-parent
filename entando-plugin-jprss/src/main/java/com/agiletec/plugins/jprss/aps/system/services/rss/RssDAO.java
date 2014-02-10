@@ -24,12 +24,17 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 
 /**
  * Data Access Object for Channel Object. 
  */
 public class RssDAO extends AbstractDAO implements IRssDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(RssDAO.class);
 	
 	@Override
 	public void addChannel(Channel channel) {
@@ -59,7 +64,8 @@ public class RssDAO extends AbstractDAO implements IRssDAO {
 			stat.executeUpdate();
 			conn.commit();
 		} catch (Throwable t) {
-			processDaoException(t, "Error adding a channel", "addChannel");
+			_logger.error("Error adding a channel",  t);
+			throw new RuntimeException("Error adding a channel", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -94,7 +100,8 @@ public class RssDAO extends AbstractDAO implements IRssDAO {
 			stat.executeUpdate();
 			conn.commit();
 		} catch (Throwable t) {
-			processDaoException(t, "Error updating a channel", "updateChannel");
+			_logger.error("Error updating a channel",  t);
+			throw new RuntimeException("Error updating a channel", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -112,7 +119,8 @@ public class RssDAO extends AbstractDAO implements IRssDAO {
 			stat.executeUpdate();
 			conn.commit();
 		} catch (Throwable t) {
-			processDaoException(t, "Error deleting a channel", "deleteChannel");
+			_logger.error("Error deleting a channel",  t);
+			throw new RuntimeException("Error deleting a channel", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -139,7 +147,8 @@ public class RssDAO extends AbstractDAO implements IRssDAO {
 				channels.add(channel);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error loading the channels list with status", "getChannels");
+			_logger.error("Error loading the channels list with status {}", status,  t);
+			throw new RuntimeException("Error loading the channels list by status", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -161,7 +170,8 @@ public class RssDAO extends AbstractDAO implements IRssDAO {
 				channel = this.getChannelFromResultSet(res);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error loading a channel", "getChannel");
+			_logger.error("Error loading channel with id {}", id, t);
+			throw new RuntimeException("Error loading channel by id", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -185,6 +195,7 @@ public class RssDAO extends AbstractDAO implements IRssDAO {
 				channel.setMaxContentsSize(maxContentSize);
 			}
 		} catch (Throwable t) {
+			_logger.error("Error creating a channel from resultset");
 			throw new Throwable("Error creating a channel from resultset", t);
 		}
 		return channel;

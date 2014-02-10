@@ -27,7 +27,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.common.entity.event.EntityTypesChangingEvent;
@@ -62,10 +64,12 @@ import com.sun.syndication.feed.synd.SyndFeedImpl;
  */
 public class RssManager extends AbstractService implements IRssManager, EntityTypesChangingObserver {
 
+	private static final Logger _logger = LoggerFactory.getLogger(RssManager.class);
+	
 	@Override
 	public void init() throws Exception {
 		this.loadMappingConfig();
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 
 	@Override
@@ -76,7 +80,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 		try {
 			this.loadMappingConfig();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addChannel", "error loading Rss Content Config");
+			_logger.error("error loading Rss Content Config", t);
 		}
 	}
 
@@ -100,7 +104,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadMappingConfig");
+			_logger.error("Error loading rss content mapping", t);
 			throw new ApsSystemException("Error loading rss content mapping", t);
 		}
 		this.setContentMapping(mappings);
@@ -113,7 +117,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 			channel.setId(key);
 			this.getRssDAO().addChannel(channel);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addChannel");
+			_logger.error("Error adding a new channel", t);
 			throw new ApsSystemException("Error adding a new channel", t);
 		}
 	}
@@ -123,7 +127,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 		try {
 			this.getRssDAO().deleteChannel(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteChannel");
+			_logger.error("Error deleting the channel with code ", id, t);
 			throw new ApsSystemException("Error deleting the channel with code: " + id, t);
 		}
 	}
@@ -133,7 +137,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 		try {
 			this.getRssDAO().updateChannel(channel);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateChannel");
+			_logger.error("Error updating a channel", t);
 			throw new ApsSystemException("Error updating a channel", t);
 		}
 	}
@@ -144,7 +148,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 		try {
 			channels = this.getRssDAO().getChannels(status);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getChannels");
+			_logger.error("Error getting the list of the channels by status {}", status, t);
 			throw new ApsSystemException("Error getting the list of the channels", t);
 		}
 		return channels;
@@ -156,7 +160,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 		try {
 			channel = this.getRssDAO().getChannel(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getChannel");
+			_logger.error("Error loading channel with id {}", id, t);
 			throw new ApsSystemException("Error loading channel with id" + id,t);
 		}
 		return channel;
@@ -198,7 +202,8 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 			ContentRecordVO currentContent = this.getContentManager().loadContentVO(id);
 			RssContentMapping mapping = (RssContentMapping) this.getContentMapping().get(currentContent.getTypeCode());
 			if (null == mapping) {
-				ApsSystemUtils.getLogger().error("Null content mapping by existed channel for content type " + currentContent.getTypeCode());
+				
+				_logger.error("Null content mapping by existed channel for content type {}", currentContent.getTypeCode());
 				continue;
 			}
 			entries.add(this.createEntry(currentContent, lang, feedLink, req, resp));
@@ -243,7 +248,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 				entry.setDescription(description);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "createEntry");
+			_logger.error("Error in createEntry", t);
 			throw new ApsSystemException("Error in createEntry", t);
 		}
 		return entry;
@@ -300,7 +305,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 	private List<String> getContentsId(Channel channel, String langCode) throws ApsSystemException {
 		RssContentMapping mapping = (RssContentMapping) this.getContentMapping().get(channel.getContentType());
 		if (null == mapping) {
-			ApsSystemUtils.getLogger().error("Null content mapping by existed channel for content type " + channel.getContentType());
+			_logger.error("Null content mapping by existed channel for content type {}", channel.getContentType());
 			return new ArrayList<String>();
 		}
 		try {
@@ -322,7 +327,7 @@ public class RssManager extends AbstractService implements IRssManager, EntityTy
 				return contentsId;
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getContentsId");
+			_logger.error("Error in rss contents", t);
 			throw new ApsSystemException("Error in rss contents", t);
 		}
 	}
