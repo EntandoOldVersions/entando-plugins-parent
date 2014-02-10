@@ -27,7 +27,9 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.entity.model.EntitySearchFilter;
@@ -35,13 +37,16 @@ import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
-import com.agiletec.plugins.jacms.aps.system.services.content.widget.IContentListWidgetHelper;
 import com.agiletec.plugins.jacms.aps.system.services.content.widget.IContentListTagBean;
+import com.agiletec.plugins.jacms.aps.system.services.content.widget.IContentListWidgetHelper;
 import com.agiletec.plugins.jacms.aps.system.services.content.widget.UserFilterOptionBean;
 import com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.helper.IContentActionHelper;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
 
 public class AllowedContentsTag extends TagSupport implements IContentListTagBean {
+
+	private static final Logger _logger = LoggerFactory.getLogger(AllowedContentsTag.class);
+	
 	public AllowedContentsTag() {
 		super();
 		this.release();
@@ -68,7 +73,7 @@ public class AllowedContentsTag extends TagSupport implements IContentListTagBea
 			contentIds.addAll(contentListHelper.getContentsId(this, reqCtx));
                         this.pageContext.setAttribute(this.getVar(), contentIds);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
+			_logger.error("error in doStartTag", t);
 			throw new JspException("Error during tag initialization ", t);
 		}
 		return super.doStartTag();

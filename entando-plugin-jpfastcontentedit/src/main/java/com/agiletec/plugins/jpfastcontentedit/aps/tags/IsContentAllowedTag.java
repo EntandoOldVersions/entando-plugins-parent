@@ -22,9 +22,12 @@ import java.util.Set;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IsContentAllowedTag extends TagSupport {
+
+	private static final Logger _logger = LoggerFactory.getLogger(IsContentAllowedTag.class);
 	
 	@Override
 	public int doStartTag() throws JspException {
@@ -37,8 +40,8 @@ public class IsContentAllowedTag extends TagSupport {
 				return SKIP_BODY;
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Error during tag initialization ", t);
+			_logger.error("error in doStartTag", t);
+			throw new JspException("error in doStartTag", t);
 		}
 	}
 	
