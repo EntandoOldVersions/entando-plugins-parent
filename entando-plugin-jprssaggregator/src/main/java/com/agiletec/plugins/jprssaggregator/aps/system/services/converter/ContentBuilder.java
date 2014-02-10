@@ -24,8 +24,9 @@ import java.util.List;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.common.entity.model.attribute.HypertextAttribute;
 import com.agiletec.aps.system.common.entity.model.attribute.MonoTextAttribute;
@@ -50,6 +51,8 @@ import com.sun.syndication.feed.synd.SyndEntryImpl;
  */
 public class ContentBuilder {
 
+	private static final Logger _logger = LoggerFactory.getLogger(ContentBuilder.class);
+	
 	/**
 	 * Populate a content.
 	 * @param content The content to polulate 
@@ -136,7 +139,7 @@ public class ContentBuilder {
 		try {
 			value = ((String)PropertyUtils.getNestedProperty(target, property)).trim();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "extractValue");
+			_logger.error("error in extractValue", t);
 		}
 		return value;
 	}

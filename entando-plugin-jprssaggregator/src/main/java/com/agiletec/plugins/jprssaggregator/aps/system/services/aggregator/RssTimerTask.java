@@ -20,7 +20,8 @@ package com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator;
 import java.util.Date;
 import java.util.TimerTask;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class maintains the source updated.
@@ -28,6 +29,8 @@ import com.agiletec.aps.system.ApsSystemUtils;
  */
 public class RssTimerTask extends TimerTask {
 
+	private static final Logger _logger = LoggerFactory.getLogger(RssTimerTask.class);
+	
 	public RssTimerTask(ApsAggregatorItem item, IAggregatorManager aggregatorManager) {
 		this.setItem(item);
 		this.setAggregatorManager(aggregatorManager);
@@ -40,7 +43,7 @@ public class RssTimerTask extends TimerTask {
 				this.getAggregatorManager().updateSource(this.getItem());
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "run");
+			_logger.error("error in run", t);
 			throw new RuntimeException(t);
 		}
 	}

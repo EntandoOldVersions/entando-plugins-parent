@@ -23,23 +23,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator.event.AggregatorItemsChangedEvent;
 import com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator.event.AggregatorItemsChangedObserver;
+
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This Service hendles the notifications for the AggregatorItemsChangedEvent.
  */
 public class RssTimerManager extends AbstractService implements AggregatorItemsChangedObserver {
 
+	private static final Logger _logger = LoggerFactory.getLogger(RssTimerManager.class);
+	
 	@Override
 	public void init() throws Exception {
 		this.loadMap();
 		this.startThreads();
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized. Active tasks: " + this.getTimerTaskMap().size());
+		_logger.debug("{}: ready. Active tasks: {}", this.getClass().getName(), this.getTimerTaskMap().size());
 	}	
 
 	/**
@@ -60,21 +63,20 @@ public class RssTimerManager extends AbstractService implements AggregatorItemsC
 
 	@Override
 	public void updateTasks(AggregatorItemsChangedEvent event) {
-		Logger log = ApsSystemUtils.getLogger();
 		try {	
 			if (event.getOperationCode() == AggregatorItemsChangedEvent.INSERT_OPERATION_CODE) {
 				int itemCode = event.getItemCode();
 				ApsAggregatorItem item = this.getAggregatorManager().getItem(itemCode);
 				RssTimerTask timerTask = new RssTimerTask(item, this.getAggregatorManager());
 				this.getTimerTaskMap().put(new Integer(itemCode).toString(), timerTask);
-				log.trace("jprssaggregator Created new thread: " + itemCode);
+				_logger.trace("jprssaggregator Created new thread: {}", itemCode);
 				this.startThread(new Integer(event.getItemCode()).toString());
 			} else if (event.getOperationCode() == AggregatorItemsChangedEvent.REMOVE_OPERATION_CODE) {
 				String taskKey = new Integer(event.getItemCode()).toString();
 				RssTimerTask task = this.getTimerTaskMap().get(taskKey);
 				task.cancel();
 				this.getTimerTaskMap().remove(taskKey);
-				log.trace("jprssaggregator Removed thread: " + taskKey);
+				_logger.trace("jprssaggregator Removed thread: {}", taskKey);
 			} else if (event.getOperationCode() == AggregatorItemsChangedEvent.UPDATE_OPERATION_CODE) {
 				String taskKey = new Integer(event.getItemCode()).toString();
 				RssTimerTask task = this.getTimerTaskMap().get(taskKey);
@@ -83,11 +85,11 @@ public class RssTimerManager extends AbstractService implements AggregatorItemsC
 				ApsAggregatorItem item = this.getAggregatorManager().getItem(event.getItemCode());
 				RssTimerTask timerTask = new RssTimerTask(item, this.getAggregatorManager());
 				this.getTimerTaskMap().put(new Integer(item.getCode()).toString(), timerTask);
-				log.trace("jprssaggregator Updating thread: " + taskKey);
+				_logger.trace("jprssaggregator Updating thread: {}", taskKey);
 				this.startThread(taskKey);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateTasks");
+			_logger.error("error in updateTasks", t);
 		}
 	}
 	
@@ -104,7 +106,7 @@ public class RssTimerManager extends AbstractService implements AggregatorItemsC
 				task.cancel();
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "destroy");
+			_logger.error("error in destroy", t);
 		}
 	}
 	
@@ -120,7 +122,7 @@ public class RssTimerManager extends AbstractService implements AggregatorItemsC
 				this.startThread(taskId);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "startThreads");
+			_logger.error("error in startThreads", t);
 			throw new RuntimeException(t);
 		}
 	}
@@ -130,14 +132,14 @@ public class RssTimerManager extends AbstractService implements AggregatorItemsC
 	 * @param taskId the code of the task
 	 */
 	private void startThread(String taskId)  {
-		ApsSystemUtils.getLogger().trace("jprssaggregator Starting thread: " + taskId);
+		_logger.trace("jprssaggregator Starting thread: {}", taskId);
 		try {
 			RssTimerTask task =	(RssTimerTask) this.getTimerTaskMap().get(taskId);
 			ApsAggregatorItem item = task.getItem();
 			long delay = new Long(item.getDelay()).longValue();
 			this.getTimer().schedule(task, 0, delay * 1000);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "startThread " + taskId);
+			_logger.error("error in startThread '{}'", taskId, t);
 			throw new RuntimeException(t);
 		}
 	}

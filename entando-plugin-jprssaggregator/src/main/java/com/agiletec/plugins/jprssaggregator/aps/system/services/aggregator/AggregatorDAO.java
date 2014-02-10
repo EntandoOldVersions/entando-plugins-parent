@@ -29,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.util.ApsProperties;
 
@@ -37,6 +40,8 @@ import com.agiletec.aps.util.ApsProperties;
  */
 public class AggregatorDAO extends AbstractDAO implements IAggregatorDAO {
 
+	private static final Logger _logger = LoggerFactory.getLogger(AggregatorDAO.class);
+	
 	@Override
 	public void addItem(ApsAggregatorItem item) {
 		Connection conn = null;
@@ -59,7 +64,8 @@ public class AggregatorDAO extends AbstractDAO implements IAggregatorDAO {
 			stat.executeUpdate();
 			conn.commit();
 		} catch (Throwable t) {
-			processDaoException(t, "Error inserting a new ApsAggregatorItem", "addItem");
+			_logger.error("Error inserting a new ApsAggregatorItem",  t);
+			throw new RuntimeException("Error inserting a new ApsAggregatorItem", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -78,7 +84,8 @@ public class AggregatorDAO extends AbstractDAO implements IAggregatorDAO {
 			res = stat.executeQuery();
 			item = this.createItemFromRecord(res);
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting the ApsAggregatorItem with code: " + code, "getItem");
+			_logger.error("Error getting the ApsAggregatorItem with code {}", code,  t);
+			throw new RuntimeException("Error getting the ApsAggregatorItem", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -98,7 +105,8 @@ public class AggregatorDAO extends AbstractDAO implements IAggregatorDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error removing the ApsAggregatorItem with code: " + code, "deleteItem");
+			_logger.error("Error removing the ApsAggregatorItem with code {}", code,  t);
+			throw new RuntimeException("Error removing the ApsAggregatorItem", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -116,7 +124,8 @@ public class AggregatorDAO extends AbstractDAO implements IAggregatorDAO {
 			res = stat.executeQuery(LOAD_AGGREGATOR_ITEMS);
 			items = this.loadItems(res);
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in caricamento lista items", "getItems");
+			_logger.error("Errore loading items",  t);
+			throw new RuntimeException("Errore loading items", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -145,7 +154,8 @@ public class AggregatorDAO extends AbstractDAO implements IAggregatorDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Errore in aggiornamento item", "updateItem");
+			_logger.error("Error updating item",  t);
+			throw new RuntimeException("Error updating item", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}

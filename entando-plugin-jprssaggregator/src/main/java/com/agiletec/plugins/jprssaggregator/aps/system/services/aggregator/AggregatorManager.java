@@ -22,7 +22,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.keygenerator.IKeyGeneratorManager;
@@ -38,9 +40,11 @@ import com.agiletec.plugins.jprssaggregator.aps.system.services.converter.IRssCo
  */
 public class AggregatorManager extends AbstractService implements IAggregatorManager {
 
+	private static final Logger _logger = LoggerFactory.getLogger(AggregatorManager.class);
+	
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
+		_logger.debug("{} ready ", this.getClass().getName());
 	}
 	
 	@Override
@@ -53,7 +57,7 @@ public class AggregatorManager extends AbstractService implements IAggregatorMan
 			this.updateSource(item);
 			notifyItemsChangedEvent(item.getCode(), AggregatorItemsChangedEvent.INSERT_OPERATION_CODE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "searchTrashedResourceIds");
+			_logger.error("An error occurred adding a new ApsAggregatorItem", t);
 			throw new ApsSystemException("An error occurred adding a new ApsAggregatorItem", t);
 		}
 	}
@@ -64,7 +68,7 @@ public class AggregatorManager extends AbstractService implements IAggregatorMan
 		try {
 			item = this.getAggregatorDAO().getItem(code);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getItem");
+			_logger.error("An error occurred getting the ApsAggregatorItem with code {}", code, t);
 			throw new ApsSystemException("An error occurred getting the ApsAggregatorItem with code: " + code, t);
 		}
 		return item;
@@ -76,7 +80,7 @@ public class AggregatorManager extends AbstractService implements IAggregatorMan
 			this.getAggregatorDAO().deleteItem(code);
 			notifyItemsChangedEvent(code, AggregatorItemsChangedEvent.REMOVE_OPERATION_CODE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteItem");
+			_logger.error("An error occurred trying to delete the ApsAggregatorItem {}", code, t);
 			throw new ApsSystemException ("An error occurred trying to delete the ApsAggregatorItem: " + code, t);
 		}
 	}
@@ -87,7 +91,7 @@ public class AggregatorManager extends AbstractService implements IAggregatorMan
 		try {
 			items = this.getAggregatorDAO().getItems();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getItems");
+			_logger.error("An error occurred loading the list", t);
 			throw new ApsSystemException ("An error occurred loading the list", t);
 		}
 		return items;
@@ -99,7 +103,7 @@ public class AggregatorManager extends AbstractService implements IAggregatorMan
 			this.getAggregatorDAO().update(item);
 			notifyItemsChangedEvent(item.getCode(), AggregatorItemsChangedEvent.UPDATE_OPERATION_CODE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "update");
+			_logger.error("An error occurred updating the item {}", item.getCode(), t);
 			throw new ApsSystemException ("An error occurred updating the item " + item.getCode(), t);
 		}
 	}
@@ -120,7 +124,7 @@ public class AggregatorManager extends AbstractService implements IAggregatorMan
 			item.setLastUpdate(new Date());
 			this.update(item);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateSource");
+			_logger.error("An error occurred in updateSource for the item {}", item.getCode(), t);
 			throw new ApsSystemException("An error occurred in updateSource for the item " + item.getCode(), t);
 		}
 	}

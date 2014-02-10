@@ -17,7 +17,9 @@
 */
 package com.agiletec.plugins.jprssaggregator.aps.system.services.aggregator.event;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.IManager;
 import com.agiletec.aps.system.common.notify.ApsEvent;
 
@@ -26,11 +28,13 @@ import com.agiletec.aps.system.common.notify.ApsEvent;
  */
 public class AggregatorItemsChangedEvent extends ApsEvent {
 
+	private static final Logger _logger = LoggerFactory.getLogger(AggregatorItemsChangedEvent.class);
+	
 	public void notify(IManager srv) {
 		try {
 			((AggregatorItemsChangedObserver) srv).updateTasks(this);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "notify");
+			_logger.error("error in notify", t);
 		}
 	}
 

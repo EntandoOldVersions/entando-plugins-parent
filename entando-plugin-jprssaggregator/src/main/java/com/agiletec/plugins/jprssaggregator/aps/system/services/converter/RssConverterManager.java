@@ -30,8 +30,9 @@ import java.util.Set;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.common.entity.model.EntitySearchFilter;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -53,10 +54,12 @@ import com.sun.syndication.fetcher.impl.HttpURLFeedFetcher;
  */
 public class RssConverterManager extends AbstractService implements IRssConverterManager {
 
+	private static final Logger _logger = LoggerFactory.getLogger(RssConverterManager.class);
+	
 	@Override
 	public void init() throws Exception {
 		this.loadMappingMap();
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + " is ready");
+		_logger.debug("{} ready ", this.getClass().getName());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -76,7 +79,7 @@ public class RssConverterManager extends AbstractService implements IRssConverte
 				this.getMappingMap().put(key, new AggregatorConfig(currentElement));
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadMappingMap");
+			_logger.error("An error occurred loading configuration", t);
 			throw new ApsSystemException("An error occurred loading configuration", t);
 		}
 	}
@@ -93,7 +96,7 @@ public class RssConverterManager extends AbstractService implements IRssConverte
 			Reader stringReader = new StringReader(xmlText);
 			doc = saxBuilder.build(stringReader);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getDocument");
+			_logger.error("error parsing the configuration", t);
 			throw new ApsSystemException ("error parsing the configuration", t);
 		}
 		return doc;
@@ -124,8 +127,8 @@ public class RssConverterManager extends AbstractService implements IRssConverte
 				contents.add(content);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getContents");
-			throw new ApsSystemException("errore in conversione lista feed", t);
+			_logger.error("error transforming feed to content list", t);
+			throw new ApsSystemException("error transforming feed to content list", t);
 		}
 		return contents;
 	}
@@ -165,7 +168,7 @@ public class RssConverterManager extends AbstractService implements IRssConverte
 			URL inputUrl = new URL(url);
 			inFeed = feedFetcher.retrieveFeed(inputUrl);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "error in retrieveFeed with url: " + url);
+			_logger.error("error in retrieveFeed with url {}", url, t);
 		}
 		return inFeed;
 	}
