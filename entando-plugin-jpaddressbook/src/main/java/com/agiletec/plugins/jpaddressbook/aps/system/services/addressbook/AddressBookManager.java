@@ -24,6 +24,12 @@ import java.util.List;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.event.ProfileChangedEvent;
+import org.entando.entando.aps.system.services.userprofile.event.ProfileChangedObserver;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
 import com.agiletec.aps.system.ApsSystemUtils;
@@ -38,20 +44,18 @@ import com.agiletec.aps.system.services.keygenerator.IKeyGeneratorManager;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.Contact;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.ContactRecord;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.IContact;
-import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
-import org.entando.entando.aps.system.services.userprofile.event.ProfileChangedEvent;
-import org.entando.entando.aps.system.services.userprofile.event.ProfileChangedObserver;
-import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * @author E.Santoboni
  */
 public class AddressBookManager extends AbstractService 
 		implements IAddressBookManager, ReloadingEntitiesReferencesObserver, ProfileChangedObserver {
+
+	private static final Logger _logger = LoggerFactory.getLogger(AddressBookManager.class);
 	
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getName() + ": initialized ");
+		ApsSystemUtils.getLogger().debug("{} ready", this.getClass().getName());
 	}
 	
 	@Override
@@ -81,7 +85,7 @@ public class AddressBookManager extends AbstractService
 				this.getAddressBookDAO().addContact(contact);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveProfile");
+			_logger.error("error in saveProfile", t);
 		}
 	}
 	
@@ -94,7 +98,7 @@ public class AddressBookManager extends AbstractService
 			}
 			this.getAddressBookDAO().addContact(contact);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addContact");
+			_logger.error("Error on adding Contact", t);
 			throw new ApsSystemException("Error on adding Contact", t);
 		}
 	}
@@ -108,7 +112,7 @@ public class AddressBookManager extends AbstractService
 			}
 			this.getAddressBookDAO().deleteContact(contactKey);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteContact");
+			_logger.error("Error on removing Contact by key {}", contactKey, t);
 			throw new ApsSystemException("Error on removing Contact", t);
 		}
 	}
@@ -122,7 +126,7 @@ public class AddressBookManager extends AbstractService
 			}
 			this.getAddressBookDAO().updateContact(contact);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateContact");
+			_logger.error("Error on updating Contact", t);
 			throw new ApsSystemException("Error on updating Contact", t);
 		}
 	}
@@ -147,8 +151,8 @@ public class AddressBookManager extends AbstractService
 				contact.setPublicContact(contactVo.isPublicContact());
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getContact");
-			throw new ApsSystemException("Errore recupero getContact", t);
+			_logger.error("Error loading Contact by key {}", contactKey, t);
+			throw new ApsSystemException("Error loading Contact", t);
 		}
 		return contact;
 	}
@@ -164,8 +168,8 @@ public class AddressBookManager extends AbstractService
 			parser.parse(is, handler);
 			return entityPrototype;
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "createEntityFromXml");
-			throw new ApsSystemException("Errore caricamento entità", t);
+			_logger.error("Error building entity with typecode {} and xml {}", entityTypeCode, xml, t);
+			throw new ApsSystemException("Error building entity", t);
 		}
 	}
 	
@@ -175,7 +179,7 @@ public class AddressBookManager extends AbstractService
 		try {
 			idList = this.getAddressBookSearcherDAO().searchId(filters);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getContacts");
+			_logger.error("Error on search contacts", t);
 			throw new ApsSystemException("Error on search contacts", t);
 		}
 		return idList;
@@ -188,7 +192,7 @@ public class AddressBookManager extends AbstractService
 		try {
 			idList = this.getAddressBookSearcherDAO().searchAllowedContacts(owner, filters);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAllowedContacts");
+			_logger.error("Error on search contacts", t);
 			throw new ApsSystemException("Error on search contacts", t);
 		}
 		return idList;
@@ -226,7 +230,8 @@ public class AddressBookManager extends AbstractService
 				}
 				ApsSystemUtils.getLogger().info("Reloaded search references for entity " + entityId);
 			} catch (Throwable t) {
-				ApsSystemUtils.logThrowable(t, this, "reloadEntitySearchReferences", "Error on reloading search references entity : " + entityId);
+				_logger.error("Error on reloading search references entity : {}", entityId, t);
+				//ApsSystemUtils.logThrowable(t, this, "reloadEntitySearchReferences", "Error on reloading search references entity : " + entityId);
 			}
 		}
 	}
@@ -236,8 +241,8 @@ public class AddressBookManager extends AbstractService
 		try {
 			entitiesId = this.getAddressBookDAO().getAllEntityId();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAllEntityId");
-			throw new RuntimeException("Errore in Caricamento lista id entità", t);
+			_logger.error("Error loading entities list", t);
+			throw new RuntimeException("Error loading entities list", t);
 		}
 		return entitiesId;
 	}

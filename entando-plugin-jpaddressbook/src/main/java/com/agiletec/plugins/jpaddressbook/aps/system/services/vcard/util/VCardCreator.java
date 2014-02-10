@@ -36,7 +36,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
@@ -55,7 +57,8 @@ import com.agiletec.plugins.jpaddressbook.aps.system.services.vcard.parse.VCardA
  * @author A.Cocco
  */
 public class VCardCreator {
-	
+
+	private static final Logger _logger = LoggerFactory.getLogger(VCardCreator.class);
 	/**
 	 * Create the VCARD
 	 * @param contact
@@ -84,7 +87,7 @@ public class VCardCreator {
 			vcard.addAddress(this.createAddress(vcardAddress, MailingAddressType.HOME_MAILING_ADDRESS));
 			vcardMapping = vcard.toString();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "createVCard");
+			_logger.error("error in createVCard", t);
 		}
 		return vcardMapping;
 	}

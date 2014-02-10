@@ -21,6 +21,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.entity.AbstractEntityDAO;
 import com.agiletec.aps.system.common.entity.model.ApsEntityRecord;
 import com.agiletec.aps.system.common.entity.model.IApsEntity;
@@ -31,6 +34,8 @@ import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.
  * @author E.Santoboni
  */
 public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(AddressBookDAO.class);
 	
 	@Override
 	public String getLoadEntityRecordQuery() {
@@ -71,7 +76,8 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error on adding Contact", "addContact");
+			_logger.error("Error on adding Contact",  t);
+			throw new RuntimeException("Error on adding Contact", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -92,7 +98,8 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error on deleting contact by id " + contactKey, "deleteContact by id " + contactKey);
+			_logger.error("Error deleting contact by id {}", contactKey, t);
+			throw new RuntimeException("Error on deleting contact by id " + contactKey, t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -122,7 +129,8 @@ public class AddressBookDAO extends AbstractEntityDAO implements IAddressBookDAO
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error on updating ", "updateContact");
+			_logger.error("Error on updating contact",  t);
+			throw new RuntimeException("Error on updating contact", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}

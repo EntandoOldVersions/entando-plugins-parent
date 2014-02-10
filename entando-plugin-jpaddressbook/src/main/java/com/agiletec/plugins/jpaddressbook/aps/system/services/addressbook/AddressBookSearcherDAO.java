@@ -23,6 +23,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.entity.AbstractEntitySearcherDAO;
 import com.agiletec.aps.system.common.entity.IEntityManager;
 import com.agiletec.aps.system.common.entity.model.ApsEntityRecord;
@@ -33,6 +36,8 @@ import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.
  * @author E.Santoboni
  */
 public class AddressBookSearcherDAO extends AbstractEntitySearcherDAO implements IAddressBookSearcherDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(AddressBookSearcherDAO.class);
 	
 	@Override
 	public List<String> searchAllowedContacts(String owner, EntitySearchFilter[] filters) {
@@ -46,7 +51,8 @@ public class AddressBookSearcherDAO extends AbstractEntitySearcherDAO implements
 			result = stat.executeQuery();
 			this.flowResult(contactIds, filters, result);
 		} catch (Throwable t) {
-			processDaoException(t, "Error on search contacts", "searchAllowedContacts");
+			_logger.error("Error on search contacts",  t);
+			throw new RuntimeException("Error on search contacts", t);
 		} finally {
 			closeDaoResources(result, stat, conn);
 		}
@@ -65,7 +71,8 @@ public class AddressBookSearcherDAO extends AbstractEntitySearcherDAO implements
 				stat.setString(++index, owner);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error on creation statement", "buildStatement");
+			_logger.error("Error creating statement",  t);
+			throw new RuntimeException("Error creating statement", t);
 		}
 		return stat;
 	}
@@ -143,7 +150,7 @@ public class AddressBookSearcherDAO extends AbstractEntitySearcherDAO implements
 			return this.getEntityMasterTableIdTypeFieldName();
 		} else if (metadataFieldKey.equals(IAddressBookManager.CONTACT_OWNER_FILTER_KEY)) {
 			return "contactowner";
-		} else throw new RuntimeException("Chiave di ricerca '" + metadataFieldKey + "' non riconosciuta");
+		} else throw new RuntimeException("Search key '" + metadataFieldKey + "' not defined");
 	}
 
 }

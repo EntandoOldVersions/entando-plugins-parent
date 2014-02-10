@@ -20,11 +20,15 @@ package com.agiletec.plugins.jpaddressbook.aps.system.services.vcard;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.plugins.jpaddressbook.aps.system.JpaddressbookSystemConstants;
+import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.AddressBookDAO;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.IAddressBookManager;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.addressbook.model.IContact;
 import com.agiletec.plugins.jpaddressbook.aps.system.services.vcard.model.VCardContactField;
@@ -35,6 +39,8 @@ import com.agiletec.plugins.jpaddressbook.aps.system.services.vcard.util.VCardCr
  * @author A.Cocco
  */
 public class VCardManager extends AbstractService implements IVCardManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(VCardManager.class);
 	
 	@Override
 	public void init() throws Exception {
@@ -48,7 +54,7 @@ public class VCardManager extends AbstractService implements IVCardManager {
 			String vcardMapping = this.getVcardDOM().getXMLDocument();
 			this.getConfigManager().updateConfigItem(JpaddressbookSystemConstants.VCARD_MAPPING_ITEM, vcardMapping);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateVCardMapping");
+			_logger.error("Error updating vcard mapping", t);
 			throw new ApsSystemException("Error on updating vcard mapping", t);
 		}
 	}
@@ -64,7 +70,7 @@ public class VCardManager extends AbstractService implements IVCardManager {
 				vcard = vcardBuffer.toString();
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getVCard");
+			_logger.error("Error creating vcard mapping", t);
 			throw new ApsSystemException("Error on creating vcard mapping", t);
 		}
 		return vcard;
@@ -82,7 +88,7 @@ public class VCardManager extends AbstractService implements IVCardManager {
 			this.getVcardDOM().readVcardMapping(mappingVCards);
 			vCardFields = this.getVcardDOM().parseVcardMapping();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getVCardFields");
+			_logger.error("Error loading VCard fields", t);
 			throw new ApsSystemException("Error loading VCard fields", t);
 		}
 		return vCardFields;
