@@ -24,6 +24,10 @@ import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
@@ -31,24 +35,22 @@ import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.user.UserDetails;
-
 import com.agiletec.plugins.jpavatar.aps.system.JpAvatarSystemConstants;
 import com.agiletec.plugins.jpavatar.aps.system.services.avatar.parse.AvatarConfigDOM;
 import com.agiletec.plugins.jpavatar.aps.system.utils.MD5Util;
-
-import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
-import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 /**
  * @author S.Puddu
  */
 @Aspect
 public class AvatarManager extends AbstractService implements IAvatarManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(AvatarManager.class);
 	
 	@Override
 	public void init() throws Exception {
 		this.loadConfig();
-		ApsSystemUtils.getLogger().info(this.getClass().getName() + " : inizialized");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 	
 	/**
@@ -60,12 +62,13 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 			ConfigInterface configManager = this.getConfigManager();
 			String xml = configManager.getConfigItem(JpAvatarSystemConstants.CONFIG_ITEM);
 			if (xml == null) {
+				_logger.error("Configuration item not present {}", JpAvatarSystemConstants.CONFIG_ITEM);
 				throw new ApsSystemException("Configuration item not present: " + JpAvatarSystemConstants.CONFIG_ITEM);
 			}
 			AvatarConfigDOM configDOM = new AvatarConfigDOM();
 			this.setConfig(configDOM.extractConfig(xml));
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
+			_logger.error("Error on AvatarManager startup", t);
 			throw new ApsSystemException("Error on AvatarManager startup", t);
 		}
 	}
@@ -77,7 +80,7 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 			this.getConfigManager().updateConfigItem(JpAvatarSystemConstants.CONFIG_ITEM, xml);
 			this.setConfig(config);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateConfig");
+			_logger.error("Error updating jpavatar config", t);
 			throw new ApsSystemException("Error updating jpavatar config", t);
 		}
 	}
@@ -113,7 +116,7 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 				url = this.getGravatarUrl() + this.getGravatarHash(username);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAvatar");
+			_logger.error("Error getting avatar for user {}", username, t);
 			throw new ApsSystemException("Error getting avatar for user " + username, t);
 		}
 		return url;
@@ -135,7 +138,7 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAvatarResource");
+			_logger.error("Error getting avatar resource for user {}", username, t);
 			throw new ApsSystemException("Error getting avatar resource for user " + username, t);
 		}
 		return avatarFile;
@@ -159,7 +162,7 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getGravatarHash");
+			_logger.error("Error getting gravatar hash for user {}", username, t);
 			throw new ApsSystemException("Error getting gravatar hash for user " + username, t);
 		}
 		return hash;
@@ -177,7 +180,7 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 			File destFile = new File(path);
 			FileUtils.copyFile(file, destFile);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveAvatar");
+			_logger.error("Error saving avatar for user {}", username, t);
 			throw new ApsSystemException("Error saving avatar for user " + username, t);
 		}
 	}
@@ -210,7 +213,7 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 				FileUtils.forceDelete(fileToDelete);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "removeAvatar");
+			_logger.error("Error deleting avatar for user {}", username, t);
 			throw new ApsSystemException("Error deleting avatar for user " + username, t);
 		}
 	}
@@ -230,7 +233,7 @@ public class AvatarManager extends AbstractService implements IAvatarManager {
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAvatarDiskFolder");
+			_logger.error("Error creating Avatar Disk Folder", t);
 			throw new RuntimeException("Error creating Avatar Disk Folder", t);
 		}
 		return _avatarDiskFolder;
