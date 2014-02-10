@@ -22,13 +22,17 @@ import java.util.Collection;
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.tags.PagerTag;
 import com.agiletec.aps.tags.util.IPagerVO;
 import com.agiletec.aps.tags.util.PagerTagHelper;
 import com.agiletec.plugins.jpphotogallery.aps.tags.util.PhotogalleryPagerTagHelper;
 
 public class PhotogalleryPagerTag extends PagerTag {
+
+	private static final Logger _logger = LoggerFactory.getLogger(PhotogalleryPagerTag.class);
 	
 	@Override
 	public int doStartTag() throws JspException {
@@ -36,18 +40,17 @@ public class PhotogalleryPagerTag extends PagerTag {
 		try {
 			Collection object = (Collection) this.pageContext.getAttribute(this.getListName());
 			if (object == null) {
-				ApsSystemUtils.getLogger().error("Non c'è nessuna lista nella request");
+				_logger.error("No list in request");
 			} else {
 				PagerTagHelper helper = new PhotogalleryPagerTagHelper();
 				IPagerVO pagerVo = helper.getPagerVO(object, this.getPagerId(), 
 						this.isPagerIdFromFrame(), this.getMax(),  this.isAdvanced(), this.getOffset(), request);
 				this.pageContext.setAttribute(this.getObjectName(), pagerVo);
 			}
-		} catch (Throwable e) {
-			ApsSystemUtils.logThrowable(e, this, "doStartTag");
-			throw new JspException("Errore inizializzazione tag", e);
+		} catch (Throwable t) {
+			_logger.error("error in doStartTag", t);
+			throw new JspException("error in doStartTag", t);
 		}
 		return EVAL_BODY_INCLUDE;
-	}
-	
+	}	
 }

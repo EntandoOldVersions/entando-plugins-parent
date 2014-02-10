@@ -22,7 +22,9 @@ import java.util.List;
 
 import javax.servlet.ServletRequest;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -34,6 +36,8 @@ import com.agiletec.aps.util.ApsProperties;
 
 public class PhotogalleryPagerTagHelper extends PagerTagHelper {
 
+	private static final Logger _logger = LoggerFactory.getLogger(PhotogalleryPagerTagHelper.class);
+	
 	/**
 	 * Restituisce l'oggetto necessario per fornire gli elementi necessari
 	 * a determinare l'item corrente.
@@ -59,8 +63,8 @@ public class PhotogalleryPagerTagHelper extends PagerTagHelper {
 			int item = this.getItemNumber(collection, maxElement, truePagerId, request);
 			pagerVo = this.buildPageVO(collection, item, maxElement, truePagerId, isAdvanced, offset);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getPagerVO");
-			throw new ApsSystemException("Errore in fase di preparazione del pagerVo", t);
+			_logger.error("Error creating pagerVO", t);
+			throw new ApsSystemException("Error creating pagerVO", t);
 		}
 		return pagerVo;
 	}
@@ -116,7 +120,7 @@ public class PhotogalleryPagerTagHelper extends PagerTagHelper {
 			try {
 				item = Integer.parseInt(stringItem);
 			} catch (Throwable t) {
-				ApsSystemUtils.logThrowable(t, this, "getItemNumber", "Errore in parsing stringItem '" + stringItem + "'");
+				_logger.error("Error parsing stringItem '{}'", stringItem, t);
 			}
 		}
 		return item;
