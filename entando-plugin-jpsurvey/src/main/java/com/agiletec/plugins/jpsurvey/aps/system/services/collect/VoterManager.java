@@ -20,17 +20,21 @@ package com.agiletec.plugins.jpsurvey.aps.system.services.collect;
 import java.util.Date;
 import java.util.List;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.common.FieldSearchFilter;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.model.Voter;
 
 public class VoterManager extends AbstractService implements IVoterManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(VoterManager.class);
 	
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initiated ");		
+		_logger.debug("{} ready", this.getClass().getName());		
 	}
 	
 	@Override
@@ -39,7 +43,7 @@ public class VoterManager extends AbstractService implements IVoterManager {
 		try {
 			voter = this.getVoterDAO().getVoter(username, ipAddress, surveyId);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getVoter");
+			_logger.error("Error getting the voter {} by IP  {} and idSurvey ", username, ipAddress, t);
             throw new ApsSystemException("Errore getting the voter " + username + " by IP "+ ipAddress + " and idSurvey " + surveyId, t);
 		}
 		return voter;
@@ -53,7 +57,7 @@ public class VoterManager extends AbstractService implements IVoterManager {
 		try {
 			voter=this.getVoterDAO().getVoterById(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getVoterById");
+			_logger.error("Error finding the voter of ID {}", id, t);
             throw new ApsSystemException("Error finding the voter of ID "+id, t);
 		}
 		return voter;
@@ -66,7 +70,7 @@ public class VoterManager extends AbstractService implements IVoterManager {
 		try {
 			this.getVoterDAO().saveVoter(voter);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveVoter");
+			_logger.error("Error registering new voter", t);
             throw new ApsSystemException("Error registering new voter", t);
 		} 
 	}
@@ -78,7 +82,7 @@ public class VoterManager extends AbstractService implements IVoterManager {
 		try {
 			this.getVoterDAO().deleteVoterById(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteVoterById");
+			_logger.error("Error deleting voter ID {}", id, t);
             throw new ApsSystemException("Error deleting voter ID "+id, t);
 		} 
 	}
@@ -87,8 +91,8 @@ public class VoterManager extends AbstractService implements IVoterManager {
 		try {
 			this.getVoterDAO().deleteVoterBySurveyId(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteVoterBySurveyId");
-            throw new ApsSystemException("Errore deleting voters associated to survey ID "+id, t);
+			_logger.error("Error deleting voters associated to survey ID {}", id, t);
+            throw new ApsSystemException("Error deleting voters associated to survey ID "+id, t);
 		} 
 	}
 	
@@ -98,7 +102,7 @@ public class VoterManager extends AbstractService implements IVoterManager {
 		try {
 			list = this.getVoterDAO().searchVotersByIds(id, age, country, sex, date, surveyId, ipAddress);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getVotersByIds");
+			_logger.error("Error searching voters", t);
             throw new ApsSystemException("Error searching voters", t);
 		}
 		return list;
@@ -110,7 +114,7 @@ public class VoterManager extends AbstractService implements IVoterManager {
 		try {
 			list = this.getVoterDAO().searchVotersId(filters);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "searchVoters");
+			_logger.error("Error searching voters", t);
             throw new ApsSystemException("Error searching voters", t);
 		}
 		return list;

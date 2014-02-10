@@ -22,7 +22,9 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
@@ -33,6 +35,8 @@ import com.agiletec.plugins.jpsurvey.aps.system.services.survey.ISurveyManager;
  * This tag is used to get a list of the active surveys (both questionnairs and polls). 
  */
 public class ListSurveyTag  extends TagSupport {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ListSurveyTag.class);
 	
 	public int doStartTag() throws JspException {
 		try {
@@ -42,7 +46,7 @@ public class ListSurveyTag  extends TagSupport {
 			List<Integer> list = surveyManager.getActiveSurveyByUser(currentUser, isQuestionnaire, this.isExpired());
 			this.pageContext.setAttribute(this.getCtxName(), list);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
+			_logger.error("error in doStartTag", t);
 			throw new JspException("Error in tag \"SurveyListTag\"", t);
 		}
 		return SKIP_BODY;

@@ -24,12 +24,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.FieldSearchFilter;
 import com.agiletec.plugins.jpsurvey.aps.system.services.AbstractSurveyDAO;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.model.Voter;
 
 public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 
+	private static final Logger _logger = LoggerFactory.getLogger(VoterDAO.class);
+	
 	@Override
 	public List<Integer> searchVotersId(FieldSearchFilter[] filters) {
 		List recordsId = null;
@@ -55,7 +60,8 @@ public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 			res = stat.executeQuery();
 			voter = this.buildVoterByResultSet(res);
 		} catch (Throwable t) {
-			processDaoException(t, "Error extracting the voting user by IP "+ ipAddress + " and idSurvey " + surveyId, "getVoter");
+			_logger.error("Error extracting the voting user by IP {} and idSurvey {}", ipAddress, surveyId,  t);
+			throw new RuntimeException("Error extracting the voting user by IP", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -72,7 +78,8 @@ public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 			conn=this.getConnection();
 			voter=this.getVoterById(conn, id);
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting the user ID "+id, "getVoterbyId");
+			_logger.error("Error getting the voter by ID {}", id,  t);
+			throw new RuntimeException("Error getting the voter by ID", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -92,7 +99,8 @@ public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 			res = stat.executeQuery();
 			voter = this.buildVoterByResultSet(res);
 		} catch (Throwable t) {
-			processDaoException(t, "Error loading user voter from id " + id, "getVoterbyId");
+			_logger.error("Error loading user voter from id {}", id, t);
+			throw new RuntimeException("Error loading user voter", t);
 		} finally {
 			closeDaoResources(res, stat);
 		}
@@ -117,7 +125,8 @@ public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 				voter.setIpaddress(res.getString(8)); // 8	
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error loading voting user", "buildVoterByResultSet");
+			_logger.error("Error loading voting user",  t);
+			throw new RuntimeException("Error loading voting user", t);
 		}
 		return voter;
 	}
@@ -134,7 +143,8 @@ public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 			this.saveVoter(conn, voter);
 			conn.commit();
 		} catch (Throwable t) {
-			this.processDaoException(t, "Errore saving voting user", "saveVoter");
+			_logger.error("Error saving voting user",  t);
+			throw new RuntimeException("Error saving voting user", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -173,7 +183,8 @@ public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 			stat.setString(8, voter.getIpaddress()); // 8
 			stat.executeUpdate();
 		} catch (Throwable t) {
-			this.processDaoException(t, "Errore nel salvataggio dell'utente votante", "saveVoter");
+			_logger.error("Error saving voter",  t);
+			throw new RuntimeException("Error saving voter", t);
 		} finally  {
 			closeDaoResources(null, stat);
 		}
@@ -191,7 +202,8 @@ public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 			stat.setInt(1, id);
 			stat.execute();
 		} catch (Throwable t) {
-			this.processDaoException(t, "Errore nella cancellazione dell'utente votante", "deleteVoterById");
+			_logger.error("Errore nella cancellazione dell'utente votante",  t);
+			throw new RuntimeException("Errore nella cancellazione dell'utente votante", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -203,7 +215,8 @@ public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 			conn=this.getConnection();
 			deleteVoterBySurveyId(conn, surveyId);
 		} catch (Throwable t) {
-			this.processDaoException(t, "Errore nella cancellazione degli utenti che hanno votato il survey dato ", "deleteVoterBySurveyId");
+			_logger.error("Errore nella cancellazione degli utenti che hanno votato il survey {}", surveyId,  t);
+			throw new RuntimeException("Errore nella cancellazione degli utenti che hanno votato il survey", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -216,7 +229,8 @@ public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 			stat.setInt(1, surveyId);
 			stat.execute();
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error deleting users associated to the survey " + surveyId, "deleteVoterBySurveyId");
+			_logger.error("Error deleting users associated to the survey",  t);
+			throw new RuntimeException("Error deleting users associated to the survey", t);
 		} finally {
 			closeDaoResources(null, stat);			
 		}
@@ -257,7 +271,8 @@ public class VoterDAO extends AbstractSurveyDAO implements IVoterDAO {
 				list.add(res.getInt(1));
 			}
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error building the list of voter users", "getVotersByIds");
+			_logger.error("Error building the list of voter users",  t);
+			throw new RuntimeException("Error building the list of voter users", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}

@@ -20,7 +20,9 @@ package com.agiletec.plugins.jpsurvey.aps.system.services.collect;
 import java.util.List;
 import java.util.Map;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.model.SingleQuestionResponse;
@@ -29,10 +31,12 @@ import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Question;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Survey;
 
 public class ResponseManager extends AbstractService implements IResponseManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ResponseManager.class);
 	
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initiated ");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 	
 	/* (non-Javadoc)
@@ -42,7 +46,7 @@ public class ResponseManager extends AbstractService implements IResponseManager
 		try {
 			this.getResponseDAO().submitResponse(response);
 		} catch (Throwable t ) {
-			ApsSystemUtils.logThrowable(t, this, "submitResponse");
+			_logger.error("Error while recording the response of a survey", t);
 			throw new ApsSystemException("Error while recording the response of a survey", t);
 		}
 	}
@@ -56,7 +60,7 @@ public class ResponseManager extends AbstractService implements IResponseManager
 		try {
 			list = this.getResponseDAO().aggregateResponseByIds(voterId, questionId, choiceId, freetext);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "aggregateResponseByIds");
+			_logger.error("Error while grouping responses", t);
 			throw new ApsSystemException("Error while grouping responses", t);
 		}
 		return list;
@@ -68,7 +72,7 @@ public class ResponseManager extends AbstractService implements IResponseManager
 		try {
 			list = this.getResponseDAO().loadQuestionStatistics(questionId);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadQuestionStatistics");
+			_logger.error("Errore in caricamento statistiche question ", questionId, t);
 			throw new ApsSystemException("Errore in caricamento statistiche question " + questionId, t);
 		}
 		return list;
@@ -78,8 +82,8 @@ public class ResponseManager extends AbstractService implements IResponseManager
 		try {
 			this.getResponseDAO().deleteResponse(response);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteResponse");
-			throw new ApsSystemException("Error while deleting a result from the database ", t);
+			_logger.error("Error while deleting a result from the database", t);
+			throw new ApsSystemException("Error while deleting a result from the database", t);
 		}
 	}
 	
@@ -87,7 +91,7 @@ public class ResponseManager extends AbstractService implements IResponseManager
 		try {
 			this.getResponseDAO().deleteResponseByQuestionId(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteResponseByQuestionId");
+			_logger.error("Error while deleting responses by the question ID {}", id, t);
 			throw new ApsSystemException("Error while deleting responses by the question ID "+id);
 		}
 	}
@@ -96,7 +100,7 @@ public class ResponseManager extends AbstractService implements IResponseManager
 		try {
 			this.getResponseDAO().deleteResponseByChoiceId(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteResponseByQuestionId");
+			_logger.error("Error while deleting responses by choice ID {}", id, t);
 			throw new ApsSystemException("Error while deleting responses by choice ID "+id);
 		}
 	}
@@ -109,8 +113,8 @@ public class ResponseManager extends AbstractService implements IResponseManager
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteResponseByQuestionId");
-			throw new ApsSystemException("Error while deleting all the responses of the given survey ");
+			_logger.error("Error while deleting all the responses of the given survey", t);
+			throw new ApsSystemException("Error while deleting all the responses of the given survey");
 		}
 	}
 	
@@ -126,7 +130,7 @@ public class ResponseManager extends AbstractService implements IResponseManager
 			if (voter.getId() > 0) {
 				this.getVoterManager().deleteVoterById(voter.getId());
 			}
-			ApsSystemUtils.logThrowable(t, this, "saveVoterResponse");
+			_logger.error("Error saving a vote", t);
 			throw new ApsSystemException("Error saving a vote", t);
 		}
 	}

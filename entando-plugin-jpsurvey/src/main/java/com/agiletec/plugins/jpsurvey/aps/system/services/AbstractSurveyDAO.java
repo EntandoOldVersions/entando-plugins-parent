@@ -23,12 +23,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractSearcherDAO;
-import com.agiletec.aps.system.common.FieldSearchFilter;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Choice;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Question;
@@ -36,6 +36,8 @@ import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Survey;
 
 public class AbstractSurveyDAO extends AbstractSearcherDAO {
 
+	private static final Logger _logger = LoggerFactory.getLogger(AbstractSurveyDAO.class);
+	
 	@Override
 	protected String getTableFieldName(String metadataFieldKey) {
 		return metadataFieldKey;
@@ -72,7 +74,8 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 			res.next();
 			id = res.getInt(1) + 1;
 		} catch (Throwable t) {
-			processDaoException(t, "Error while getting last used ID - '" + query + "'", "getUniqueId");
+			_logger.error("Error while getting last used ID",  t);
+			throw new RuntimeException("Error while getting last used ID", t);
 		} finally {
 			closeDaoResources(res, stat);
 		}
@@ -106,8 +109,7 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 				question.setMaxResponseNumber(res.getInt(shift + 7));
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "buildQuestionRecordFromResultSet", 
-					"Error while building a 'question' object from the result set");
+			_logger.error("Error while building a 'question' object from the result set", t);
 		}
 		return question;
 	}
@@ -136,8 +138,7 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 				choice.setFreeText(res.getBoolean(shift + 5));
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "buildChoiceRecordFromResultSet", 
-			"Error while building a 'choice' object from the result set");
+			_logger.error("Error while building a 'choice' object from the result set", t);
 		}
 		return choice;
 	}
@@ -166,7 +167,8 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 			}
 			stat.executeUpdate();
 		} catch (Throwable t) {
-			processDaoException(t, "Error while saving 'choice' ", "saveChoice");
+			_logger.error("Error while saving 'choice'",  t);
+			throw new RuntimeException("Error while saving 'choice'", t);
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -179,7 +181,9 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 			stat.setInt(1, id);
 			stat.execute();
 		} catch (Throwable t) {
-			processDaoException(t, "Error while deleting the 'choice'", "deleteChoice");
+			_logger.error("Error while deleting the 'choice'",  t);
+			throw new RuntimeException("Error while deleting the 'choice'", t);
+			//processDaoException(t, "Error while deleting the 'choice'", "deleteChoice");
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -220,7 +224,8 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while saving the question", "saveQuestion");
+			_logger.error("Error while saving the question",  t);
+			throw new RuntimeException("Error while saving the question", t);
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -242,7 +247,8 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 			stat.setInt(1, id);
 			stat.execute();
 		} catch (Throwable t) {
-			processDaoException(t, "Error while deleting the question", "deleteQuestion");
+			_logger.error("Error while deleting the question",  t);
+			throw new RuntimeException("Error while deleting the question", t);
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -268,7 +274,8 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 			stat.setInt(5, choice.getId());
 			stat.executeUpdate();
 		} catch (Throwable t) {
-			processDaoException(t, "Error while updating a 'choice' record", "updateChoice");
+			_logger.error("Error while updating a 'choice' record",  t);
+			throw new RuntimeException("Error while updating a 'choice' record", t);
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -307,11 +314,11 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while updating a question in the database", "updateQuestion");
+			_logger.error("Error while updating a question in the database",  t);
+			throw new RuntimeException("Error while updating a question in the database", t);
 		} finally {
 			closeDaoResources(null, stat);
 		}
-		
 	}
 	
 	/**
@@ -326,7 +333,8 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 			stat.setInt(1, id);
 			stat.execute();
 		} catch (Throwable t) {
-			processDaoException(t, "Error while updating a question in the database", "deleteChoiceByQuestionId");
+			_logger.error("Error while updating a question in the database",  t);
+			throw new RuntimeException("Error while updating a question in the database", t);
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -349,7 +357,8 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 				this.deleteQuestion(conn, questionId);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while updating a question in the database", "deleteQuestionsBySurveyId");
+			_logger.error("Error while updating a question in the database", t);
+			throw new RuntimeException("Error while updating a question in the database", t);
 		} finally {
 			closeDaoResources(res, stat);
 		}
@@ -375,7 +384,8 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 				isQquestionnaire = (type == 1 ? true:false);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Errore nell'ottenere il tipo di survey", "loadSurveyType");
+			_logger.error("Errore nell'ottenere il tipo di survey",  t);
+			throw new RuntimeException("Errore nell'ottenere il tipo di survey", t);
 		} finally {
 			closeDaoResources(res, stat);
 		}
@@ -406,7 +416,8 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 				}
 			}
 		} catch (Throwable t) {
-			this.processDaoException(t, "error while deleting question in excess from a survey", "deleteQuestionInExcess");
+			_logger.error("error while deleting question in excess from a survey", t);
+			throw new RuntimeException("error while deleting question in excess from a survey", t);
 		} finally {
 			closeDaoResources(res, stat);
 		}
@@ -437,7 +448,9 @@ public class AbstractSurveyDAO extends AbstractSearcherDAO {
 				}
 			}
 		} catch (Throwable t) {
-			this.processDaoException(t, "error while deleting question in excess from a survey", "deleteQuestionInExcess");
+			_logger.error("error while deleting question in excess from a survey", t);
+			throw new RuntimeException("error while deleting question in excess from a survey", t);
+			//this.processDaoException(t, "error while deleting question in excess from a survey", "deleteQuestionInExcess");
 		} finally {
 			closeDaoResources(res, stat);
 		}

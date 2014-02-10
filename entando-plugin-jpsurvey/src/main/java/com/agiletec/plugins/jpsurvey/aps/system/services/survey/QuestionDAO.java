@@ -23,6 +23,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jpsurvey.aps.system.services.AbstractSurveyDAO;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Choice;
@@ -33,7 +36,9 @@ import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Question;
  * @author M.E. Minnai
  */
 public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
-	
+
+	private static final Logger _logger = LoggerFactory.getLogger(QuestionDAO.class);
+
 	@Override
 	public Question loadQuestion(int id) {
 		Question question = null;
@@ -63,7 +68,8 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while loading the question of ID "+id, "loadQuestion");
+			_logger.error("Error while loading the question of ID {}",  t);
+			throw new RuntimeException("Error while loading a question", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -79,7 +85,8 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 				list = question.getChoices();
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while loading the choices belonging to the question of ID " + id, "loadQuestion");
+			_logger.error("Error while loading the choices belonging to the question of ID {}", id,  t);
+			throw new RuntimeException("Error while loading the choices belonging a question", t);
 		}
 		return list;
 	}
@@ -94,7 +101,8 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while saving the question", "saveQuestion");
+			_logger.error("Error while saving the question",  t);
+			throw new RuntimeException("Error while saving the question", t);
 		} finally {
 			this.refreshExtraInfo(question);
 			closeConnection(conn);
@@ -111,7 +119,8 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while deleting the question", "deleteQuestion");
+			_logger.error("Error while deleting the question {}", id,  t);
+			throw new RuntimeException("Error while deleting the question", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -127,7 +136,8 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while updating a 'question'", "deleteQuestion");
+			_logger.error("Error while updating a 'question'",  t);
+			throw new RuntimeException("Error while updating a 'question'", t);
 		} finally {
 			this.refreshExtraInfo(question);
 			closeConnection(conn);
@@ -144,7 +154,8 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while updating a question in the database", "deleteQuestionsBySurveyId");
+			_logger.error("Error while updating a question in the database",  t);
+			throw new RuntimeException("Error while updating a question in the database", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -181,7 +192,8 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Errore swapping position of two 'choice' objects", "swapQuestionPosition");
+			_logger.error("Errore swapping position of two 'choice' objects",  t);
+			throw new RuntimeException("Errore swapping position of two 'choice' objects", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -196,7 +208,8 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 			stat.executeUpdate();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while updating the position of question", "updateQuestionPosition");
+			_logger.error("Error while updating the position of question",  t);
+			throw new RuntimeException("Error while updating the position of question", t);
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -223,7 +236,8 @@ public class QuestionDAO extends AbstractSurveyDAO implements IQuestionDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while saving a question in a sorted position", "saveQuestionInSortedPosition");
+			_logger.error("Error while saving a question in a sorted position",  t);
+			throw new RuntimeException("Error while saving a question in a sorted position", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}

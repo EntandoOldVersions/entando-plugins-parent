@@ -28,7 +28,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jpsurvey.aps.system.services.AbstractSurveyDAO;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Choice;
@@ -41,6 +43,8 @@ import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Survey;
  */
 public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 
+	private static final Logger _logger = LoggerFactory.getLogger(SurveyDAO.class);
+	
 	/**
 	 * This method loads a complete survey. 'Complete' here means all the elements found in the database
 	 * for the survey with the given ID, so check your assumptions because 'complete' is neither 'correct'
@@ -57,7 +61,8 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 			conn = this.getConnection();
 			survey = this.loadSurvey(conn, id);
 		} catch (Throwable t) {
-			processDaoException(t, "Error while loading the survey", "loadSurvey");
+			_logger.error("Error while loading the survey {}", id,  t);
+			throw new RuntimeException("Error while loading the survey", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -97,7 +102,8 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while loading the survey ID "+id, "loadSurvey");
+			_logger.error("Error while loading the survey ID {}", id,  t);
+			throw new RuntimeException("Error while loading a survey", t);
 		} finally {
 			closeDaoResources(res, stat);
 		}
@@ -144,8 +150,7 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 				survey.setImageDescriptions(prop);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "buildSurveyRecordFromResultSet", 
-			"Error while building a 'survey' object from the result set");
+			_logger.error("Error while building a 'survey' object from the result set", t);
 		}
 		return survey;
 	}
@@ -242,7 +247,8 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while saving the survey loadSurvey", "saveSurvey");
+			_logger.error("Error while saving the survey loadSurvey",  t);
+			throw new RuntimeException("Error while saving the survey loadSurvey", t);
 		} finally {
 			this.refreshExtraInfo(survey);
 			closeDaoResources(null, stat, conn);
@@ -270,7 +276,8 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while deleting the survey", "deleteSurvey");
+			_logger.error("Error while deleting the survey",  t);
+			throw new RuntimeException("Error while deleting the survey", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -365,7 +372,8 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			this.processDaoException(t, "Error while updating the survey", "updateSurvey");
+			_logger.error("Error while updating the survey",  t);
+			throw new RuntimeException("Error while updating the survey", t);
 		} finally {
 			this.refreshExtraInfo(survey);
 			closeDaoResources(null, stat, conn);
@@ -423,7 +431,8 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 				}
 			}
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error while searching for surveys", "searchSurvey");
+			_logger.error("Error while searching for surveys",  t);
+			throw new RuntimeException("Error while searching for surveys", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -440,7 +449,8 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 				list = survey.getQuestions();
 			}
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error getting the questions of a survey", "searchSurveyByIds");
+			_logger.error("Error getting the questions of a survey", t);
+			throw new RuntimeException("Error getting the questions of a survey", t);
 		}
 		return list;
 	}
@@ -557,7 +567,8 @@ public class SurveyDAO extends AbstractSurveyDAO implements ISurveyDAO {
 				utilizers.add(res.getInt(1));
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while loading resource utilizers", "loadResourceUtilizers");
+			_logger.error("Error while loading resource utilizers", t);
+			throw new RuntimeException("Error while loading resource utilizers", t);
 		} finally {
 			closeConnection(conn);
 		}

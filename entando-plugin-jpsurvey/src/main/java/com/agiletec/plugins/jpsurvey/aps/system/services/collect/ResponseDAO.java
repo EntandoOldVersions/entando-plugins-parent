@@ -25,10 +25,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.plugins.jpsurvey.aps.system.services.AbstractSurveyDAO;
 import com.agiletec.plugins.jpsurvey.aps.system.services.collect.model.SingleQuestionResponse;
 
 public class ResponseDAO extends AbstractSurveyDAO implements IResponseDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ResponseDAO.class);
 	
 	@Override
 	public void submitResponses(List<SingleQuestionResponse> responses) {
@@ -54,7 +59,8 @@ public class ResponseDAO extends AbstractSurveyDAO implements IResponseDAO {
 			stat.executeBatch();
 			conn.commit();
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error saving answers", "submitResponses");
+			_logger.error("Error saving answers",  t);
+			throw new RuntimeException("Error saving answers", t);
 		} finally {
 			this.closeDaoResources(null, stat, conn);
 		}
@@ -77,7 +83,8 @@ public class ResponseDAO extends AbstractSurveyDAO implements IResponseDAO {
 				map.put(choiceId, occurrences);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "loadQuestionStatistics id " + questionId, "loadQuestionStatistics");
+			_logger.error("error loadQuestionStatistics id by question {}", questionId,  t);
+			throw new RuntimeException("error loadQuestionStatistics id by question", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -106,7 +113,8 @@ public class ResponseDAO extends AbstractSurveyDAO implements IResponseDAO {
 			}
 			stat.executeUpdate();
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error saving vote", "saveResponse");
+			_logger.error("Error saving vote", t);
+			throw new RuntimeException("Error saving vote", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -139,7 +147,8 @@ public class ResponseDAO extends AbstractSurveyDAO implements IResponseDAO {
 			res = stat.executeQuery();
 			list = createListFromResultSet(res);
 		} catch (Throwable t) {
-			this.processDaoException(t, "Errore searching responseId", "loadResponseByIds");
+			_logger.error("Errore searching responseId", t);
+			throw new RuntimeException("Errore searching responseId", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -197,7 +206,8 @@ public class ResponseDAO extends AbstractSurveyDAO implements IResponseDAO {
 			}
 		}
 		catch (Throwable t) {
-			this.processDaoException(t, "Error building the vote result list", "createListFromResultSet");
+			_logger.error("Error building the vote result list",  t);
+			throw new RuntimeException("Error building the vote result list", t);
 		}
 		if (list.isEmpty()) return null;
 		return list;
@@ -211,7 +221,9 @@ public class ResponseDAO extends AbstractSurveyDAO implements IResponseDAO {
 			response.setChoiceId(res.getInt(3)); // 3
 			response.setFreeText(res.getString(4)); // 4
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error creating the 'response' onject form resulset", "createRecordFromResultSet");
+			_logger.error("Error creating the 'response' onject form resulset",  t);
+			throw new RuntimeException("Error creating the 'response' onject form resulset", t);
+			//this.processDaoException(t, "Error creating the 'response' onject form resulset", "createRecordFromResultSet");
 		}
 		return response;
 	}
@@ -234,7 +246,8 @@ public class ResponseDAO extends AbstractSurveyDAO implements IResponseDAO {
 			}
 			stat.execute();
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error deleting the object response", "deleteResponse");
+			_logger.error("Error deleting the object response",  t);
+			throw new RuntimeException("Error deleting the object response", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -249,7 +262,8 @@ public class ResponseDAO extends AbstractSurveyDAO implements IResponseDAO {
 			stat.setInt(1, questionId); // 1
 			stat.execute();
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error deleting responses by question ID "+questionId, "deleteResponseByQuestionId");
+			_logger.error("Error deleting responses by question ID {}",questionId, t);
+			throw new RuntimeException("Error deleting responses by question ID", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -264,7 +278,8 @@ public class ResponseDAO extends AbstractSurveyDAO implements IResponseDAO {
 			stat.setInt(1, choiceId); // 1
 			stat.execute();
 		} catch (Throwable t) {
-			this.processDaoException(t, "Error deleting responses by choice ID "+choiceId, "deleteResponseByQuestionId");
+			_logger.error("Error deleting responses by choice ID {}", choiceId,  t);
+			throw new RuntimeException("Error deleting responses by choice ID", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}

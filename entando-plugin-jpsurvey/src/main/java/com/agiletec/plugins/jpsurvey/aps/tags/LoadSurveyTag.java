@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.lang.ILangManager;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
@@ -34,6 +36,8 @@ import com.agiletec.plugins.jpsurvey.aps.system.services.survey.ISurveyManager;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.SurveyRecord;
 
 public class LoadSurveyTag extends TagSupport {
+
+	private static final Logger _logger = LoggerFactory.getLogger(LoadSurveyTag.class);
 	
 	public int doStartTag() throws JspException {
 		ISurveyManager surveyManager = (ISurveyManager) ApsWebApplicationUtils.getBean(SurveySystemConstants.SURVEY_MANAGER, pageContext);
@@ -61,7 +65,7 @@ public class LoadSurveyTag extends TagSupport {
 				this.pageContext.setAttribute(this.getVotedParamName(), new Boolean(voted));
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
+			_logger.error("error in doStartTag", t);
 			throw new JspException("Error in tag \"LoadSurveyTag\"", t);
 		}
 		return SKIP_BODY;

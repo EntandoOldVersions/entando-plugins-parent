@@ -20,15 +20,19 @@ package com.agiletec.plugins.jpsurvey.aps.system.services.survey;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jpsurvey.aps.system.services.AbstractSurveyDAO;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Choice;
 
 public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
-	
+
+	private static final Logger _logger = LoggerFactory.getLogger(ChoiceDAO.class);
+
 	@Override
 	public Choice loadChoice(int id) {
 		Choice choice = null;
@@ -52,11 +56,11 @@ public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
 				choice.setExtraInfo(surveyId, questionnaire, surveyTitle, questionTitle);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while loading the choice of ID "+id, "loadChoice");
+			_logger.error("Error while loading the choice of ID {}", id,  t);
+			throw new RuntimeException("Error while loading the choice of ID", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
-//		if (null != choice) this.loadChoiceExtraInformations(conn, choice);
 		return choice;
 	}
 	
@@ -68,7 +72,8 @@ public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
 			conn = this.getConnection();
 			saveChoice(conn, choice);
 		} catch (Throwable t) {
-			processDaoException(t, "Error while saving the 'choice' ID "+choice.getId(), "saveChoice");
+			_logger.error("Error while saving the 'choice' ID {}", choice.getId(),  t);
+			throw new RuntimeException("Error while saving the 'choice'", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -95,7 +100,8 @@ public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while saving the choice ID "+choice.getId()+" in the proper position "+choice.getPos(), "saveChoiceInSortedPosition");
+			_logger.error("Error while saving the choice ID  {} in the proper position", choice.getId(), choice.getPos(), t);
+			throw new RuntimeException("Error while saving", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -108,7 +114,8 @@ public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
 			conn = this.getConnection();
 			this.deleteChoice(conn,id);
 		} catch (Throwable t) {
-			processDaoException(t, "Error while deleting the 'choice' ID "+id, "deleteChoice");
+			_logger.error("Error while deleting the 'choice' ID {}", id,  t);
+			throw new RuntimeException("Error while deleting a 'choice'", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -121,7 +128,8 @@ public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
 			conn = this.getConnection();
 			this.deleteChoiceByQuestionId(conn, id);
 		} catch (Throwable t) {
-			processDaoException(t, "Error while deleting choices by question ID ", "deleteChoiceByQuestionId");
+			_logger.error("Error while deleting choices by question ID",  t);
+			throw new RuntimeException("Error while deleting choices by question ID", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -134,7 +142,8 @@ public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
 			conn = this.getConnection();
 			this.updateChoice(conn, choice);
 		} catch (Throwable t) {
-			processDaoException(t, "Error while updating a 'choice' ", "updateChoice");
+			_logger.error("Error while updating a 'choice'",  t);
+			throw new RuntimeException("Error while updating a 'choice'", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -169,7 +178,8 @@ public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Errore swapping position of two 'choice' objects", "changeQuestionPosition");
+			_logger.error("Errore swapping position of two 'choice' objects",  t);
+			throw new RuntimeException("Errore swapping position of two 'choice' objects", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -184,7 +194,8 @@ public class ChoiceDAO extends AbstractSurveyDAO implements IChoiceDAO {
 			stat.executeUpdate();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while updating the position of question", "updateChoicePosition");
+			_logger.error("Error while updating the position of question",  t);
+			throw new RuntimeException("Error while updating the position of question", t);
 		} finally {
 			closeDaoResources(null, stat);
 		}

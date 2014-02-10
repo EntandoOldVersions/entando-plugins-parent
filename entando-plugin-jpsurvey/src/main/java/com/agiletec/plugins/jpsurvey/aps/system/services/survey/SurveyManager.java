@@ -24,6 +24,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -40,6 +43,8 @@ import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.Survey;
 import com.agiletec.plugins.jpsurvey.aps.system.services.survey.model.SurveyRecord;
 
 public class SurveyManager extends AbstractService implements ISurveyManager, GroupUtilizer, ResourceUtilizer {
+
+	private static final Logger _logger = LoggerFactory.getLogger(SurveyManager.class);
 	
 	@Override
 	public void init() throws Exception {
@@ -51,7 +56,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			return this.getSurveyDAO().loadSurvey(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadSurvey");
+			_logger.error("Error while loading a complete survey", t);
 			throw new ApsSystemException("Error while loading a complete survey", t);
 		}
 	}
@@ -61,7 +66,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getSurveyDAO().saveSurvey(survey);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveSurvey");
+			_logger.error("Error while saving a complete survey", t);
 			throw new ApsSystemException("Error while saving a complete survey", t);
 		}
 	}
@@ -71,7 +76,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getSurveyDAO().deleteSurvey(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteSurvey");
+			_logger.error("Error while deleting a complete survey", t);
 			throw new ApsSystemException("Error while deleting a complete survey", t);
 		}
 	}
@@ -81,7 +86,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			return this.getQuestionDAO().loadQuestion(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadQuestion");
+			_logger.error("Error while loading a question with its choices", t);
 			throw new ApsSystemException("Error while loading a question with its choices", t);
 		}
 	}
@@ -91,7 +96,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			return this.getChoiceDAO().loadChoice(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadChoice");
+			_logger.error("Error while loading a choice", t);
 			throw new ApsSystemException("Error while loading a choice", t);
 		}
 	}
@@ -101,7 +106,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getChoiceDAO().saveChoice(choice);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveChoice");
+			_logger.error("Error while saving a choice", t);
 			throw new ApsSystemException("Error while saving a choice", t);
 		}
 	}
@@ -111,7 +116,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getChoiceDAO().saveChoiceInSortedPosition(choice);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveChoiceInSortedPosition");
+			_logger.error("Error while saving a choice in sorted position", t);
 			throw new ApsSystemException("Error while saving a choice in sorted position", t);
 		}
 	}
@@ -121,7 +126,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getChoiceDAO().deleteChoice(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteChoice");
+			_logger.error("Error while deleting the choice", t);
 			throw new ApsSystemException("Error while deleting the choice", t);
 		}
 	}
@@ -132,7 +137,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			choices = this.getQuestionDAO().getQuestionChoices(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getQuestionChoices");
+			_logger.error("Error while getting the choices of a question", t);
 			throw new ApsSystemException("Error while getting the choices of a question", t);
 		}
 		return choices;
@@ -144,7 +149,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			questions = this.getSurveyDAO().getSurveyQuestions(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getSurveyQuestions");
+			_logger.error("Error while getting the questions of a survey", t);
 			throw new ApsSystemException("Error while getting the questions of a survey", t);
 		}
 		return questions;
@@ -155,7 +160,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getQuestionDAO().saveQuestion(question);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveQuestion");
+			_logger.error("Error while saving a question", t);
 			throw new ApsSystemException("Error while saving a question", t);
 		}
 	}
@@ -165,7 +170,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getQuestionDAO().deleteQuestion(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteQuestion");
+			_logger.error("Error while deleting a question", t);
 			throw new ApsSystemException("Error while deleting a question", t);
 		}
 	}
@@ -175,7 +180,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getChoiceDAO().deleteChoiceByQuestionId(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteChoiceByQuestionId");
+			_logger.error("Error while deleting choices by their question ID", t);
 			throw new ApsSystemException("Error while deleting choices by their question ID ", t);
 		}
 	}
@@ -185,7 +190,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getChoiceDAO().updateChoice(choice);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateChoice");
+			_logger.error("Error while updating a choice", t);
 			throw new ApsSystemException("Error while updating a choice", t);
 		}
 	}
@@ -195,7 +200,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getQuestionDAO().updateQuestion(question);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateQuestion");
+			_logger.error("Error while updating a question", t);
 			throw new ApsSystemException("Error while updating a question", t);
 		}
 	}
@@ -205,7 +210,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getQuestionDAO().deleteQuestionBySurveyId(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteQuestionBySurveyId");
+			_logger.error("Error while deleting the questions of a survey", t);
 			throw new ApsSystemException("Error while deleting the questions of a survey", t);
 		}
 	}
@@ -215,7 +220,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getSurveyDAO().updateSurvey(survey);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateSurvey");
+			_logger.error("Error while deleting the questions of a survey", t);
 			throw new ApsSystemException("Error while deleting the questions of a survey", t);
 		}
 	}
@@ -234,7 +239,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 			List<Question> questions = survey.getQuestions();
 			this.getQuestionDAO().swapQuestionPosition(targetQuestion, questions, isUp);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "swapChoicePosition");
+			_logger.error("Error while swapping two choices in a question", t);
 			throw new ApsSystemException("Error while swapping two choices in a question", t);
 		}
 	}
@@ -250,7 +255,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 			//this.getChoiceDAO().swapChoicePosition(id, isUp);
 			this.getChoiceDAO().swapChoicePosition(choice, choices, isUp);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "swapChoicePosition");
+			_logger.error("Error while swapping two choices in a question", t);
 			throw new ApsSystemException("Error while swapping two choices in a question", t);
 		}
 	}
@@ -260,7 +265,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			this.getQuestionDAO().saveQuestionInSortedPosition(question);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveQuestionInSortedPosition");
+			_logger.error("Error while saving a question in a sorted position", t);
 			throw new ApsSystemException("Error while saving a question in a sorted position", t);
 		}
 	}
@@ -275,7 +280,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 			result = this.getSurveyDAO().searchSurvey(id, description, groups, isActive, 
 					isQuestionnaire, title, isPublic);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "searchSurvey");
+			_logger.error("Error while serching surveys", t);
 			throw new ApsSystemException("Error while serching surveys", t);
 		}
 		return result;
@@ -309,7 +314,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getSurveysByUser");
+			_logger.error("Errore loading the survey list available for user {}", userdetails.getUsername(), t);
 			throw new ApsSystemException("Errore loading the survey list available for user " + userdetails.getUsername(), t);
 		}
 		return result;
@@ -321,7 +326,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			list = this.getSurveyDAO().searchSurvey(null, null, null, true, null, null, null);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getActiveSurveyIds");
+			_logger.error("Error loading the active surveys list", t);
 			throw new ApsSystemException("Error loading the active surveys list", t);
 		}
 		return list;
@@ -333,7 +338,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 		try {
 			list = this.getSurveyDAO().searchSurvey(null, null, null, null, null, null, null);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getActiveSurveyIds");
+			_logger.error("Error loading the active surveys list", t);
 			throw new ApsSystemException("Error loading the active surveys list", t);
 		}
 		return list;
@@ -355,7 +360,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 				surveys.add(this.loadSurvey(id));
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getGroupUtilizers");
+			_logger.error("Error loading surveys by group {}",groupName, t);
 			throw new ApsSystemException("Error loading surveys by group " + groupName, t);
 		}
 		return surveys;
@@ -375,7 +380,7 @@ public class SurveyManager extends AbstractService implements ISurveyManager, Gr
 				surveys.add(this.loadSurvey(id));
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getGroupUtilizers");
+			_logger.error("Error loading surveys by resource {}", resourceId, t);
 			throw new ApsSystemException("Error loading surveys by resource " + resourceId, t);
 		}
 		return surveys;
