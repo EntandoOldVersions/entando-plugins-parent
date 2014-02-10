@@ -17,9 +17,10 @@
 */
 package org.entando.entando.plugins.jpuserprofile.apsadmin;
 
+import org.entando.entando.plugins.jpuserprofile.PluginConfigTestUtils;
+
 import com.agiletec.ConfigTestUtils;
 import com.agiletec.apsadmin.ApsAdminBaseTestCase;
-import org.entando.entando.plugins.jpuserprofile.PluginConfigTestUtils;
 
 /**
  * BaseTestCase Class for jpuserprofile apsadmin tests.

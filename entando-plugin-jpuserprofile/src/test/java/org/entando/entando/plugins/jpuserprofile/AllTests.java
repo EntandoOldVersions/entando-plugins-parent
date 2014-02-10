@@ -17,11 +17,11 @@
 */
 package org.entando.entando.plugins.jpuserprofile;
 
-import org.entando.entando.plugins.jpuserprofile.aps.TestApsSample;
-import org.entando.entando.plugins.jpuserprofile.apsadmin.TestApsAdminSample;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.entando.entando.plugins.jpuserprofile.aps.TestApsSample;
+import org.entando.entando.plugins.jpuserprofile.apsadmin.TestApsAdminSample;
 
 public class AllTests {
 	

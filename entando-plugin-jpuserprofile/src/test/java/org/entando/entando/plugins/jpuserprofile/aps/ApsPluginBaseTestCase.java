@@ -17,9 +17,10 @@
 */
 package org.entando.entando.plugins.jpuserprofile.aps;
 
+import org.entando.entando.plugins.jpuserprofile.PluginConfigTestUtils;
+
 import com.agiletec.ConfigTestUtils;
 import com.agiletec.aps.BaseTestCase;
-import org.entando.entando.plugins.jpuserprofile.PluginConfigTestUtils;
 
 public class ApsPluginBaseTestCase extends BaseTestCase {
 	
