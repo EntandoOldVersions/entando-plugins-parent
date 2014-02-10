@@ -18,8 +18,6 @@
 package com.agiletec.plugins.jpfacetnav.aps.system.services.content;
 
 import java.sql.Connection;
-
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -30,6 +28,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.plugins.jacms.aps.system.services.content.PublicContentSearcherDAO;
 
@@ -38,6 +39,8 @@ import com.agiletec.plugins.jacms.aps.system.services.content.PublicContentSearc
  * @author E.Santoboni
  */
 public class ContentFacetSearcherDAO extends PublicContentSearcherDAO implements IContentFacetSearcherDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ContentFacetSearcherDAO.class);
 	
 	@Override
 	public Map<String, Integer> getOccurrences(List<String> contentTypeCodes, List<String> facetNodeCodes, List<String> userGroupCodes) {
@@ -58,7 +61,8 @@ public class ContentFacetSearcherDAO extends PublicContentSearcherDAO implements
 				occurrences.put(facetNode, number);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error in loading occurrences", "getOccurrences");
+			_logger.error("Error in loading occurrences",  t);
+			throw new RuntimeException("Error in loading occurrences", t);
 		} finally {
 			closeDaoResources(result, stat, conn);
 		}
@@ -85,7 +89,8 @@ public class ContentFacetSearcherDAO extends PublicContentSearcherDAO implements
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error in loading list id contents", "searchForFacetNav");
+			_logger.error("Error in loading list id contents",  t);
+			throw new RuntimeException("Error in loading list id contents", t);
 		} finally {
 			closeDaoResources(result, stat, conn);
 		}
@@ -119,7 +124,7 @@ public class ContentFacetSearcherDAO extends PublicContentSearcherDAO implements
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error in creation statement.", "buildStatement");
+			_logger.error("Error in creation statement", t);
 		}
 		return stat;
 	}

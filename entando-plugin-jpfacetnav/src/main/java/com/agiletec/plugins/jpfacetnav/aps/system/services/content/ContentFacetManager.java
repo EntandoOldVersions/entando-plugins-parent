@@ -20,7 +20,9 @@ package com.agiletec.plugins.jpfacetnav.aps.system.services.content;
 import java.util.List;
 import java.util.Map;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 
@@ -29,10 +31,12 @@ import com.agiletec.aps.system.exception.ApsSystemException;
  * @author E.Santoboni
  */
 public class ContentFacetManager extends AbstractService implements IContentFacetManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ContentFacetManager.class);
 	
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getName() + ": initialized");
+		_logger.debug("{} ready", this.getName());
 	}
 	
 	@Override
@@ -41,7 +45,7 @@ public class ContentFacetManager extends AbstractService implements IContentFace
 		try {
 			items = this.getContentFacetSearcherDAO().loadContentsId(contentTypeCodes, facetNodeCodes, groupCodes);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadContentsId");
+			_logger.error("Error loading contents id", t);
 			throw new ApsSystemException("Error loading contents id", t);
 		}
 		return items;
@@ -53,7 +57,7 @@ public class ContentFacetManager extends AbstractService implements IContentFace
 		try {
 			occurrence = this.getContentFacetSearcherDAO().getOccurrences(contentTypeCodes, facetNodeCodes, groupCodes);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getOccurrences");
+			_logger.error("Error loading occurrences", t);
 			throw new ApsSystemException("Error loading occurrences", t);
 		}
 		return occurrence;

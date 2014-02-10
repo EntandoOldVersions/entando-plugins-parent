@@ -23,7 +23,9 @@ import java.util.Map;
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.tree.ITreeNode;
@@ -38,6 +40,8 @@ import com.agiletec.plugins.jpfacetnav.aps.system.services.content.showlet.IFace
  */
 public class FacetNavTreeTag extends AbstractFacetNavTag {
 
+	private static final Logger _logger = LoggerFactory.getLogger(FacetNavTreeTag.class);
+	
 	@Override
 	public int doStartTag() throws JspException {
 		ServletRequest request =  this.pageContext.getRequest();
@@ -53,7 +57,7 @@ public class FacetNavTreeTag extends AbstractFacetNavTag {
 			this.pageContext.setAttribute("occurrences", occurrences);
 			request.setAttribute(this.getRequiredFacetsParamName(), requiredFacets);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
+			_logger.error("Error in doStartTag", t);
 			throw new JspException("Error initialization tag", t);
 		}
 		return super.doStartTag();

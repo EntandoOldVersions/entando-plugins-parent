@@ -21,7 +21,9 @@ import java.util.List;
 
 import javax.servlet.jsp.JspException;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.tree.ITreeNode;
 import com.agiletec.aps.system.common.tree.ITreeNodeManager;
 
@@ -31,6 +33,8 @@ import com.agiletec.aps.system.common.tree.ITreeNodeManager;
  */
 public class HasToViewFacetNodeTag extends AbstractFacetNavTag {
 
+	private static final Logger _logger = LoggerFactory.getLogger(HasToViewFacetNodeTag.class);
+	
 	@Override
 	public int doStartTag() throws JspException {
 		List<String> requiredFacets = super.getRequiredFacets();
@@ -48,7 +52,7 @@ public class HasToViewFacetNodeTag extends AbstractFacetNavTag {
 				return super.doStartTag();
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
+			_logger.error("error in doStartTag", t);
 			throw new JspException("Error initialization tag", t);
 		}
 	}

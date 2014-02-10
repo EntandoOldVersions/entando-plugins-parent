@@ -23,7 +23,9 @@ import java.util.List;
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpfacetnav.aps.system.JpFacetNavSystemConstants;
@@ -34,6 +36,8 @@ import com.agiletec.plugins.jpfacetnav.aps.system.services.content.showlet.IFace
  * @author E.Santoboni
  */
 public class FacetNavResultTag extends AbstractFacetNavTag {
+
+	private static final Logger _logger = LoggerFactory.getLogger(FacetNavResultTag.class);
 	
 	@Override
 	public int doStartTag() throws JspException {
@@ -56,8 +60,8 @@ public class FacetNavResultTag extends AbstractFacetNavTag {
 				this.pageContext.setAttribute(this.getBreadCrumbsParamName(), super.getBreadCrumbs(requiredFacets, reqCtx));
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Errore inizializzazione tag", t);
+			_logger.error("error in startTag", t);
+			throw new JspException("error in startTag", t);
 		}
 		return super.doStartTag();
 	}
