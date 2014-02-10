@@ -17,7 +17,13 @@
 */
 package org.entando.entando.plugins.jpfrontshortcut.aps.tags;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import javax.servlet.ServletRequest;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.Widget;
@@ -26,15 +32,13 @@ import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
-
 /**
  * @author E.Santoboni
  */
 public class ContentModelTag extends TagSupport {
 
+	private static final Logger _logger = LoggerFactory.getLogger(ContentModelTag.class);
+	
 	@Override
 	public int doStartTag() throws JspException {
 		ServletRequest request = this.pageContext.getRequest();
@@ -52,8 +56,8 @@ public class ContentModelTag extends TagSupport {
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Error on do start tag", t);
+			_logger.error("error in doStartTag", t);
+			throw new JspException("Error in doStartTag", t);
 		}
 		this.release();
 		return super.doStartTag();
