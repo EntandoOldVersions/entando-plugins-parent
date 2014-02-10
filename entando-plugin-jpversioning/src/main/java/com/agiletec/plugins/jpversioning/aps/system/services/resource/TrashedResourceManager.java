@@ -18,21 +18,23 @@
 package com.agiletec.plugins.jpversioning.aps.system.services.resource;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.StringReader;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.entando.entando.aps.system.services.storage.IStorageManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.category.ICategoryManager;
@@ -46,9 +48,6 @@ import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInt
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceRecordVO;
 import com.agiletec.plugins.jacms.aps.system.services.resource.parse.ResourceHandler;
 import com.agiletec.plugins.jpversioning.aps.system.JpversioningSystemConstants;
-import java.io.InputStream;
-import java.util.ArrayList;
-import org.entando.entando.aps.system.services.storage.IStorageManager;
 
 /**
  * Manager of trashed resources.
@@ -56,12 +55,14 @@ import org.entando.entando.aps.system.services.storage.IStorageManager;
  */
 @Aspect
 public class TrashedResourceManager extends AbstractService implements ITrashedResourceManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(TrashedResourceManager.class);
 	
 	@Override
 	public void init() throws Exception {
 		this.checkTrashedResourceDiskFolder(this.getResourceTrashRootDiskSubFolder());
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized ");
-		ApsSystemUtils.getLogger().debug("Folder trashed resources: " + this.getResourceTrashRootDiskSubFolder());
+		_logger.debug("{} ready", this.getClass().getName());
+		_logger.debug("Folder trashed resources: {}", this.getResourceTrashRootDiskSubFolder());
 	}
 	
 	@Before("execution(* com.agiletec.plugins.jacms.aps.system.services.resource.IResourceManager.deleteResource(..)) && args(resource)")
@@ -75,7 +76,7 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
     	try {
     		resources = this.getTrashedResourceDAO().searchTrashedResourceIds(resourceTypeCode, text, allowedGroups);
     	} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "searchTrashedResourceIds");
+			_logger.error("Error while extracting trashed resources", t);
 			throw new ApsSystemException("Error while extracting trashed resources", t);
     	}
     	return resources;
@@ -88,10 +89,10 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 			ResourceRecordVO resourceVo = this.getTrashedResourceDAO().getTrashedResource(id);
 			if (null != resourceVo) {
 				resource = this.createResource(resourceVo);
-				ApsSystemUtils.getLogger().info("loaded trashed resource " + id);
+				_logger.info("loaded trashed resource {}", id);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadTrashedResource");
+			_logger.error("Error while loading trashed resource", t);
 			throw new ApsSystemException("Error while loading trashed resource", t);
 		}
 		return resource;
@@ -135,7 +136,7 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 	    		this.getResourceDAO().addResource(resource);
 				this.removeFromTrash(resource);
 			} catch (Throwable t) {
-				ApsSystemUtils.logThrowable(t, this, "restoreResource", "Error on restoring trashed resource");
+				_logger.error("Error on restoring trashed resource", t);
 				throw new ApsSystemException("Error on restoring trashed resource", t);
 			}
 		}
@@ -150,7 +151,7 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 				this.removeFromTrash(resource);
 			}
 		} catch (Throwable t) {
-    		ApsSystemUtils.logThrowable(t, this, "removeFromTrash");
+    		_logger.error("Error removing Trashed Resource", t);
     		throw new ApsSystemException("Error removing Trashed Resource", t);
 		}
 	}
@@ -179,7 +180,7 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 			//}
 			this.getTrashedResourceDAO().delTrashedResource(resource.getId());
 		} catch (Throwable t) {
-    		ApsSystemUtils.logThrowable(t, this, "removeFromTrash");
+    		_logger.error("Error removing Trashed Resource", t);
     		throw new ApsSystemException("Error removing Trashed Resource", t);
 		}
 	}
@@ -218,7 +219,7 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 				String path = paths.get(i);
 				this.getStorageManager().deleteFile(path, true);
 			}
-    		ApsSystemUtils.logThrowable(t, this, "addTrashedResource");
+    		_logger.error("Error adding Trashed Resource", t);
     		throw new ApsSystemException("Error adding Trashed Resource", t);
     	}
 	}
@@ -233,7 +234,7 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 				this.getStorageManager().createDirectory(dirPath, true);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "checkTrashedResourceDiskFolder");
+			_logger.error("Error on check Trashed disk folder", t);
     		throw new RuntimeException("Error on check Trashed disk folder", t);
 		}
 	}
@@ -271,7 +272,7 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
 			String path = this.getSubfolder(resource) + instance.getFileName();
 			return this.getStorageManager().getStream(path, true);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getTrashFileStream");
+			_logger.error("Error on extracting stream", t);
     		throw new ApsSystemException("Error on extracting stream", t);
 		}
 	}
@@ -314,7 +315,7 @@ public class TrashedResourceManager extends AbstractService implements ITrashedR
     		ResourceHandler handler = new ResourceHandler(resource, this.getCategoryManager());
     		parser.parse(is, handler);
     	} catch (Throwable t) {
-    		ApsSystemUtils.logThrowable(t, this, "fillEmptyResourceFromXml");
+    		_logger.error("Error on loading resource", t);
     		throw new ApsSystemException("Error on loading resource", t);
     	}
     }

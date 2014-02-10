@@ -25,9 +25,10 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.common.entity.parse.EntityHandler;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -43,12 +44,14 @@ import com.agiletec.plugins.jpversioning.aps.system.JpversioningSystemConstants;
  */
 @Aspect
 public class VersioningManager extends AbstractService implements IVersioningManager {
-	
+
+	private static final Logger _logger = LoggerFactory.getLogger(VersioningManager.class);
+
 	@Override
 	public void init() throws Exception {
 		String deleteMidVersions = this.getConfigManager().getParam(JpversioningSystemConstants.CONFIG_PARAM_DELETE_MID_VERSIONS);
 		this.setDeleteMidVersions("true".equalsIgnoreCase(deleteMidVersions));
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": inizializzato");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 	
 	@Before("execution(* com.agiletec.plugins.jacms.aps.system.services.content.IContentManager.saveContent(..)) && args(content)")
@@ -56,7 +59,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 		try {
 			this.saveContentVersion(content.getId());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "onSaveContent");
+			_logger.error("error in onSaveContent", t);
 		}
 	}
 	
@@ -65,7 +68,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 		try {
 			this.saveContentVersion(content.getId());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "onInsertOnLineContent");
+			_logger.error("error in onInsertOnLineContent", t);
 		}
 	}
 	
@@ -74,7 +77,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 		try {
 			this.saveContentVersion(content.getId());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "onRemoveOnLineContent");
+			_logger.error("error in onRemoveOnLineContent", t);
 		}
 	}
 	
@@ -83,7 +86,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 		try {
 			this.saveContentVersion(content.getId());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "onDeleteContent");
+			_logger.error("error in onDeleteContent", t);
 		}
 	}
 	
@@ -92,7 +95,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 		try {
 			return this.getVersioningDAO().getVersions(contentId);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getVersions");
+			_logger.error("Error loading version identifiers", t);
 			throw new ApsSystemException("Error loading version identifiers");
 		}
 	}
@@ -102,7 +105,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 		try {
 			return this.getVersioningDAO().getLastVersions(contentType, descr);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getLastVersions");
+			_logger.error("Error loading last version identifiers", t);
 			throw new ApsSystemException("Error loading last version identifiers");
 		}
 	}
@@ -112,7 +115,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 		try {
 			return this.getVersioningDAO().getVersion(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getVersion");
+			_logger.error("Error loading version of id {}", id, t);
 			throw new ApsSystemException("Error loading version of id " + id);
 		}
 	}
@@ -122,7 +125,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 		try {
 			return this.getVersioningDAO().getLastVersion(contentId);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getLastVersion");
+			_logger.error("Error loading last version for content {}", contentId, t);
 			throw new ApsSystemException("Error loading last version for content" + contentId);
 		}
 	}
@@ -143,7 +146,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveContentVersion");
+			_logger.error("error in Error saving version for content {}", contentId, t);
 			throw new ApsSystemException("Error saving version for content" + contentId);
 		}
 	}
@@ -155,7 +158,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 				this.getVersioningDAO().deleteWorkVersions(contentId, onlineVersion);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteWorkVersions");
+			_logger.error("Error in delete Work Versions", t);
 			throw new ApsSystemException("Errore in delete Work Versions", t);
 		}
 	}
@@ -165,7 +168,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 		try {
 			return this.createContentFromXml(contentVersion.getContentType(), contentVersion.getXml());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getContent");
+			_logger.error("Error loading Content from version xml", t);
 			throw new ApsSystemException("Error loading Content from version xml", t);
 		}
 	}
@@ -188,7 +191,7 @@ public class VersioningManager extends AbstractService implements IVersioningMan
 			parser.parse(is, handler);
 			return entityPrototype;
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "createEntityFromXml");
+			_logger.error("Error on creation entity. typecode: {} xml: {}", entityTypeCode, xml, t);
 			throw new ApsSystemException("Error on creation entity", t);
 		}
 	}

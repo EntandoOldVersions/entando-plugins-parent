@@ -26,12 +26,17 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 
 /**
  * @author E.Santoboni
  */
 public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(VersioningDAO.class);
 	
 	@Override
 	public List<Long> getVersions(String contentId) {
@@ -51,7 +56,8 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 				ids.add(res.getLong(1));
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error loading content version", "getVersions");
+			_logger.error("Error loading content version",  t);
+			throw new RuntimeException("Error loading content version", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -86,7 +92,8 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 				lastVersions.add(res.getLong(1));				
 			}			
 		} catch (Throwable t) {
-			processDaoException(t, "Error loading content versions", "getLastVersions");
+			_logger.error("Error loading content versions", t);
+			throw new RuntimeException("Error loading content versions", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -108,7 +115,8 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 				contentVersion = this.prepareContentVersionFromResultSet(res);
 			}			
 		} catch (Throwable t) {
-			processDaoException(t, "Error loading version", "getVersion");
+			_logger.error("Error loading version", t);
+			throw new RuntimeException("Error loading version", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -130,7 +138,8 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 				contentVersion = this.prepareContentVersionFromResultSet(res);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error loading last content version", "getLastVersion");
+			_logger.error("Error loading last content version", t);
+			throw new RuntimeException("Error loading last content version", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -163,7 +172,8 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error adding version record", "addVersionRecord");
+			_logger.error("Error adding version record", t);
+			throw new RuntimeException("Error adding version record", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -182,7 +192,8 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error deleting version", "deleteVersion");
+			_logger.error("Error deleting version", t);
+			throw new RuntimeException("Error deleting version", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -202,7 +213,8 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error deleting work versions", "deleteWorkVersions");
+			_logger.error("Error deleting work versions", t);
+			throw new RuntimeException("Error deleting work versions", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -218,7 +230,8 @@ public class VersioningDAO extends AbstractDAO implements IVersioningDAO {
 			res.next();
 			id = res.getLong(1) + 1; // N.B.: funziona anche per il primo record
 		} catch (Throwable t) {
-			processDaoException(t, "Error extracting next id", "extractNextId");
+			_logger.error("Error extracting next id",  t);
+			throw new RuntimeException("Error extracting next id", t);
 		} finally {
 			closeDaoResources(res, stat);
 		}

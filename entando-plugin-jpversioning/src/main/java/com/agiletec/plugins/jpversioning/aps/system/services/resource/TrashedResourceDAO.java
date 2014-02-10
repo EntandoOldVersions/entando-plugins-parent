@@ -25,6 +25,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
@@ -35,6 +38,8 @@ import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceRec
  * @author G.Cocco
  */
 public class TrashedResourceDAO extends AbstractDAO implements ITrashedResourceDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(TrashedResourceDAO.class);
 	
 	@Override
 	public ResourceRecordVO getTrashedResource(String id) {
@@ -56,7 +61,8 @@ public class TrashedResourceDAO extends AbstractDAO implements ITrashedResourceD
 				resourceVo.setXml(res.getString(4));
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error loading record for trashed resource", "getTrashedResource");
+			_logger.error("Error loading record for trashed resource",  t);
+			throw new RuntimeException("Error loading record for trashed resource", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -80,7 +86,8 @@ public class TrashedResourceDAO extends AbstractDAO implements ITrashedResourceD
 			conn.commit();
         } catch (Throwable t) {
         	this.executeRollback(conn);
-            processDaoException(t, "Error adding record for trashed resource", "addTrashedResource");
+            _logger.error("Error adding record for trashed resource",  t);
+			throw new RuntimeException("Error adding record for trashed resource", t);
         } finally {
             closeDaoResources(null, stat, conn);
         }
@@ -99,7 +106,8 @@ public class TrashedResourceDAO extends AbstractDAO implements ITrashedResourceD
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error removing record for trashed resource", "delTrashedResource");
+			_logger.error("Error removing record for trashed resource",  t);
+			throw new RuntimeException("Error removing record for trashed resource", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -122,7 +130,8 @@ public class TrashedResourceDAO extends AbstractDAO implements ITrashedResourceD
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in caricamento id risorse", "searchResourcesId");
+			_logger.error("Errore in caricamento id risorse", t);
+			throw new RuntimeException("Errore in caricamento id risorse", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -161,7 +170,8 @@ public class TrashedResourceDAO extends AbstractDAO implements ITrashedResourceD
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in fase di creazione statement", "buildStatement");
+			_logger.error("Errore in fase di creazione statement", t);
+			throw new RuntimeException("Errore in fase di creazione statement", t);
 		}
 		return stat;
 	}

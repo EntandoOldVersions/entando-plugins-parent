@@ -25,6 +25,8 @@ import java.util.Date;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 import com.agiletec.aps.system.common.AbstractDAO;
@@ -35,9 +37,12 @@ import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecordVO;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
+import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.UserRegManager;
 import com.agiletec.plugins.jpversioning.aps.system.services.versioning.ContentVersion;
 
 public class JpversioningTestHelper extends AbstractDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(JpversioningTestHelper.class);
 	
 	public JpversioningTestHelper(DataSource dataSource, ApplicationContext context) {
 		this.setDataSource(dataSource);
@@ -112,7 +117,8 @@ public class JpversioningTestHelper extends AbstractDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error adding VersionRecord", "addVersionRecord");
+			_logger.error("Error adding VersionRecord",  t);
+			throw new RuntimeException("Error adding VersionRecord", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -131,7 +137,8 @@ public class JpversioningTestHelper extends AbstractDAO {
 			stat.setString(5, resource.getXML());
 			stat.executeUpdate();
         } catch (Throwable t) {
-            processDaoException(t, "Error adding record for trashed resource", "addTrashedResource");
+            _logger.error("Error adding record for trashed resource",  t);
+			throw new RuntimeException("Error adding record for trashed resource", t);
         } finally {
             closeDaoResources(null, stat, conn);
         }
