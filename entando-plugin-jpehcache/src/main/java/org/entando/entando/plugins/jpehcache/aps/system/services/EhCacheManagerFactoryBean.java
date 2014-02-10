@@ -4,9 +4,6 @@
  */
 package org.entando.entando.plugins.jpehcache.aps.system.services;
 
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.util.FileTextReader;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +17,8 @@ import net.sf.ehcache.config.ConfigurationFactory;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -28,13 +26,17 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
 
+import com.agiletec.aps.util.FileTextReader;
+
 /**
  * @author Dmitriy Kopylenko
  * @author Juergen Hoeller
  * @author Eugenio Santoboni
  */
 public class EhCacheManagerFactoryBean implements FactoryBean<CacheManager>, InitializingBean, DisposableBean {
-	
+
+	private static final Logger _logger = LoggerFactory.getLogger(EhCacheManagerFactoryBean.class);
+
 	// Check whether EhCache 2.1+ CacheManager.create(Configuration) method is available...
 	private static final Method createWithConfiguration =
 			ClassUtils.getMethodIfAvailable(CacheManager.class, "create", Configuration.class);
@@ -128,7 +130,7 @@ public class EhCacheManagerFactoryBean implements FactoryBean<CacheManager>, Ini
 			byte[] bytes = text.getBytes("UTF-8");
 			is2 = new ByteArrayInputStream(bytes);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "extractEntandoConfig");
+			_logger.error("Error detected while extracting entando cache config", t);
 			throw new CacheException("Error detected while extracting entando cache config", t);
 		} finally {
 			is1.close();
