@@ -20,21 +20,24 @@ package com.agiletec.plugins.jpldap.aps.system.services.user;
 import java.util.Collections;
 import java.util.List;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.apache.commons.beanutils.BeanComparator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.user.IUserDAO;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.system.services.user.UserManager;
-
 import com.agiletec.plugins.jpldap.aps.system.LdapSystemConstants;
-import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * The Manager for LdapUser.
  * @author E.Santoboni
  */
 public class LdapUserManager extends UserManager implements ILdapUserManager {
-    
+
+	private static final Logger _logger = LoggerFactory.getLogger(LdapUserManager.class);
+	
     @Override
     public UserDetails getUser(String username, String password) throws ApsSystemException {
         if (!isActive()) {
@@ -44,8 +47,7 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
         try {
             user = this.getLdapUserDAO().loadUser(username, password);
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "getUser");
-            //throw new ApsSystemException("Error loading LDAP user" + username, t);
+        	_logger.error("error in getUser: {}", username, t);
         }
         if (null != user) {
             return user;
@@ -63,8 +65,7 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
         try {
             user = this.getLdapUserDAO().loadUser(username);
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "getUser");
-            //throw new ApsSystemException("Error loading LDAP user" + username, t);
+        	_logger.error("error in getUser: {}", username, t);
         }
         if (null != user) {
             return user;
@@ -87,8 +88,7 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
         try {
             users.addAll(this.getLdapUserDAO().searchUsers(text));
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "searchUsers");
-            //throw new ApsSystemException("Error searching users", t);
+        	_logger.error("error searching users by text '{}'", text , t);
         }
         if (null != users) {
             BeanComparator comparator = new BeanComparator("username");
@@ -111,8 +111,7 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
         try {
             usernames.addAll(this.getLdapUserDAO().searchUsernames(text));
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "searchUsernames");
-            //throw new ApsSystemException("Error searching usernames", t);
+        	_logger.error("error searching usernames by text '{}'", text , t);
         }
         if (null != usernames) {
             Collections.sort(usernames);
@@ -135,7 +134,7 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
             }
             return userDAO.searchUsers(text);
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "searchUsers");
+        	_logger.error("error in searchUsers", t);
             throw new ApsSystemException("Error loading users", t);
         }
     }
@@ -149,7 +148,7 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
 		try {
 			this.getLdapUserDAO().addUser(user);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addUser");
+			_logger.error("Error adding LDAP User {}",  user.getUsername(), t);
 			throw new ApsSystemException("Error adding LDAP User" + user.getUsername(), t);
 		}
 	}
@@ -163,7 +162,7 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
 		try {
 			this.getLdapUserDAO().changePassword(username, password);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "changePassword");
+			_logger.error("Error updating the password of the LDAP User for {}", username, t);
 			throw new ApsSystemException("Error updating the password of the LDAP User" + username, t);
 		}
 	}
@@ -176,7 +175,7 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
 		try {
 			this.getLdapUserDAO().deleteUser(user);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "removeUser");
+			_logger.error("Error deleting a ldap user", t);
 			throw new ApsSystemException("Error deleting a ldap user", t);
 		}
 	}
@@ -189,7 +188,7 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
 		try {
 			this.getLdapUserDAO().deleteUser(username);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "removeUser");
+			_logger.error("Error deleting a ldap user {}", username, t);
 			throw new ApsSystemException("Error deleting a ldap user", t);
 		}
 	}
@@ -203,7 +202,7 @@ public class LdapUserManager extends UserManager implements ILdapUserManager {
 		try {
 			this.getLdapUserDAO().updateUser(user);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateUser");
+			_logger.error("Error updating a ldap user", t);
 			throw new ApsSystemException("Error updating a ldap user", t);
 		}
 	}

@@ -17,7 +17,11 @@
 */
 package com.agiletec.plugins.jpldap.aps.system.services.user;
 
+import java.io.IOException;
 import java.net.ConnectException;
+import java.security.KeyManagementException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -27,34 +31,41 @@ import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.PartialResultException;
-import javax.naming.directory.*;
-
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
-import com.agiletec.aps.system.services.user.UserDetails;
-
-import com.agiletec.plugins.jpldap.aps.system.LdapSystemConstants;
-import com.agiletec.plugins.jpldap.aps.system.services.user.tls.MyTLSHostnameVerifier;
-import com.agiletec.plugins.jpldap.aps.system.services.user.tls.MyX509TrustManager;
-
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.BasicAttribute;
+import javax.naming.directory.BasicAttributes;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+import javax.naming.directory.ModificationItem;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
 import javax.naming.ldap.StartTlsRequest;
 import javax.naming.ldap.StartTlsResponse;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import sun.misc.BASE64Encoder;
+
+import com.agiletec.aps.system.ApsSystemUtils;
+import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
+import com.agiletec.aps.system.services.user.UserDetails;
+import com.agiletec.plugins.jpldap.aps.system.LdapSystemConstants;
+import com.agiletec.plugins.jpldap.aps.system.services.user.tls.MyTLSHostnameVerifier;
+import com.agiletec.plugins.jpldap.aps.system.services.user.tls.MyX509TrustManager;
 
 /**
  * The Data Access Object for LdapUser.
  * @author E.Santoboni
  */
 public class LdapUserDAO implements ILdapUserDAO {
-    
+
+	private static final Logger _logger = LoggerFactory.getLogger(LdapUserDAO.class);
+	
     @Override
 	public void addUser(UserDetails user) {
 		this.checkDn();
@@ -64,13 +75,13 @@ public class LdapUserDAO implements ILdapUserDAO {
 			Attributes attrs = this.createNewEntry(user);
 			dirCtx.createSubcontext(this.getEntryName(user), attrs);
 		} catch (ConnectException e) {
-            ApsSystemUtils.logThrowable(e, this, "addUser", "Error while adding user '" + user.getUsername() + "' : Directory not available");
+			_logger.error("Error while adding user '{}' : Directory not available", user.getUsername(), e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (CommunicationException e) {
-            ApsSystemUtils.logThrowable(e, this, "addUser", "Error while adding user '" + user.getUsername() + "' : Directory not available");
+         	_logger.error("Error while adding user '{}' : Directory not available", user.getUsername(), e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (PartialResultException e) {
-            ApsSystemUtils.logThrowable(e, this, "addUser", "Error while adding user '" + user.getUsername() + "' : Directory not available");
+        	_logger.error("Error while adding user '{}' : Directory not available", user.getUsername(), e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (Throwable t) {
             throw new RuntimeException("Error while adding user '" + user.getUsername() + "'", t);
@@ -101,15 +112,16 @@ public class LdapUserDAO implements ILdapUserDAO {
 			attrs.put(objclass);
 			result = dirCtx.createSubcontext(this.getBaseDn(), attrs);
 		} catch (ConnectException e) {
-            ApsSystemUtils.logThrowable(e, this, "checkDn", "Error while adding new OU : Directory not available");
+			_logger.error("Error while adding new OU : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (CommunicationException e) {
-            ApsSystemUtils.logThrowable(e, this, "checkDn", "Error while adding new OU : Directory not available");
+        	_logger.error("Error while adding new OU : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (PartialResultException e) {
-            ApsSystemUtils.logThrowable(e, this, "checkDn", "Error while adding new OU : Directory not available");
+        	_logger.error("Error while adding new OU : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (Throwable t) {
+        	_logger.error("Error while adding new OU.", t);
             throw new RuntimeException("Error while adding new OU ", t);
         } finally {
 			if (null != result) {
@@ -154,7 +166,7 @@ public class LdapUserDAO implements ILdapUserDAO {
 					sEncrypted = "{" + algorithm + "}" + (new BASE64Encoder()).encode(md.digest());
 				} catch (Exception e) {
 					sEncrypted = password;
-					ApsSystemUtils.logThrowable(e, this, "encryptLdapPassword", "Error while ncrypting Ldap Password");
+					_logger.error("Error while encrypting Ldap Password", e);
 				}
 			}
 		}
@@ -190,15 +202,16 @@ public class LdapUserDAO implements ILdapUserDAO {
 			dirCtx = this.getDirContext();
 			dirCtx.destroySubcontext(uid);
 		} catch (ConnectException e) {
-            ApsSystemUtils.logThrowable(e, this, "removeEntry", "Error while deleting user '" + uid + "' : Directory not available");
+            _logger.error("Error while deleting user '{}' : Directory not available", uid, e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (CommunicationException e) {
-            ApsSystemUtils.logThrowable(e, this, "removeEntry", "Error while deleting user '" + uid + "' : Directory not available");
+        	_logger.error("Error while deleting user '{}' : Directory not available", uid, e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (PartialResultException e) {
-            ApsSystemUtils.logThrowable(e, this, "removeEntry", "Error while deleting user '" + uid + "' : Directory not available");
+        	_logger.error("Error while deleting user '{}' : Directory not available", uid, e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (Throwable t) {
+        	_logger.error("Error while deleting user '{}'", t);
             throw new RuntimeException("Error while deleting user '" + uid + "'", t);
         } finally {
             closeDirContext(dirCtx);
@@ -238,13 +251,13 @@ public class LdapUserDAO implements ILdapUserDAO {
 			dirCtx = this.getDirContext();
 			dirCtx.modifyAttributes(uid, mods);
 		} catch (ConnectException e) {
-            ApsSystemUtils.logThrowable(e, this, "editEntry", "Error while editing user '" + uid + "' : Directory not available");
+			_logger.error("Error while editing user '{}' : Directory not available", uid, e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (CommunicationException e) {
-            ApsSystemUtils.logThrowable(e, this, "editEntry", "Error while editing user '" + uid + "' : Directory not available");
+        	_logger.error("Error while editing user '{}' : Directory not available", uid, e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (PartialResultException e) {
-            ApsSystemUtils.logThrowable(e, this, "editEntry", "Error while editing user '" + uid + "' : Directory not available");
+        	_logger.error("Error while editing user '{}' : Directory not available", uid, e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (Throwable t) {
             throw new RuntimeException("Error while editing user '" + uid + "'", t);
@@ -286,7 +299,7 @@ public class LdapUserDAO implements ILdapUserDAO {
             Attributes attrs = sr.getAttributes();
             user = this.createUserFromAttributes(attrs);
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "loadUser", "Error loading user " + username);
+        	_logger.error("Error loading user {}", username, t);
             throw new RuntimeException("Error loading user " + username, t);
         }
         return user;
@@ -309,13 +322,13 @@ public class LdapUserDAO implements ILdapUserDAO {
                 res = answer.next();
             }
         } catch (ConnectException e) {
-            ApsSystemUtils.logThrowable(e, this, "searchr", "Extracting SearchResult : Directory not available");
+        	_logger.error("Extracting SearchResult : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (CommunicationException e) {
-            ApsSystemUtils.logThrowable(e, this, "search", "Extracting SearchResult : Directory not available");
+        	_logger.error("Extracting SearchResult : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (PartialResultException e) {
-            ApsSystemUtils.logThrowable(e, this, "search", "Extracting SearchResult : Directory not available");
+        	_logger.error("Extracting SearchResult : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (Throwable t) {
             throw new RuntimeException("Error extracting serach result ", t);
@@ -359,16 +372,16 @@ public class LdapUserDAO implements ILdapUserDAO {
             }
             answer.close();
         } catch (ConnectException e) {
-            ApsSystemUtils.logThrowable(e, this, "isAuth", "Directory not available");
+        	_logger.error("Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (CommunicationException e) {
-            ApsSystemUtils.logThrowable(e, this, "isAuth", "Directory not available");
+        	_logger.error("Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (NamingException e) {
-            ApsSystemUtils.logThrowable(e, this, "isAuth", "user authentication '" + username + "' : Directory not available");
+        	_logger.error("user authentication '{}' : Directory not available", username, e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "isAuth", "Error verifying user authentication" + username);
+        	_logger.error("Error verifying user authentication {}", username, t);
             throw new RuntimeException("Error verifying user authentication " + username, t);
         } finally {
             this.closeDirContext(dirCtx);
@@ -447,16 +460,16 @@ public class LdapUserDAO implements ILdapUserDAO {
 				usernames.add((String) attrs.get(this.getUserIdAttributeName()).get(0));
             }
         } catch (ConnectException e) {
-            ApsSystemUtils.logThrowable(e, this, "searchUsernamesByFilterExpr", "Error loading users : Directory not available");
+        	_logger.error("Error loading users : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (CommunicationException e) {
-            ApsSystemUtils.logThrowable(e, this, "searchUsernamesByFilterExpr", "Error loading users : Directory not available");
+        	_logger.error("Error loading users : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (NamingException e) {
-            ApsSystemUtils.logThrowable(e, this, "searchUsernamesByFilterExpr", "Error loading users : Directory not available");
+        	_logger.error("Error loading users : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "searchUsernamesByFilterExpr", "Error loading users");
+        	_logger.error("Error loading users", t);
             throw new RuntimeException("Error loading users", t);
         } finally {
             this.closeDirContext(dirCtx);
@@ -484,16 +497,16 @@ public class LdapUserDAO implements ILdapUserDAO {
                 users.add(user);
             }
         } catch (ConnectException e) {
-            ApsSystemUtils.logThrowable(e, this, "searchUsersByFilterExpr", "Error loading users : Directory not available");
+        	_logger.error("Error loading users : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (CommunicationException e) {
-            ApsSystemUtils.logThrowable(e, this, "searchUsersByFilterExpr", "Error loading users : Directory not available");
+        	_logger.error("Error loading users : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (NamingException e) {
-            ApsSystemUtils.logThrowable(e, this, "searchUsersByFilterExpr", "Error loading users : Directory not available");
+        	_logger.error("Error loading users : Directory not available", e);
             //non rilancia eccezioni in maniera da non fermare i servizi in caso di non funzionamento della Directory
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "searchUsersByFilterExpr", "Error loading users");
+        	_logger.error("Error loading users ", t);
             throw new RuntimeException("Error loading users", t);
         } finally {
             this.closeDirContext(dirCtx);
@@ -517,9 +530,10 @@ public class LdapUserDAO implements ILdapUserDAO {
 						sslC.init(null, tm, null);
 						sslsf = sslC.getSocketFactory();
 					} catch(NoSuchAlgorithmException nSAE) {
-						ApsSystemUtils.logThrowable(nSAE, this, "Hier: " + nSAE.getMessage());
+						_logger.error("error Hier: {}", nSAE.getMessage(), nSAE);
+						//ApsSystemUtils.logThrowable(nSAE, this, "Hier: " + nSAE.getMessage());
 					} catch(KeyManagementException kME) {
-						ApsSystemUtils.logThrowable(kME, this, "Hier: " + kME.getMessage());
+						_logger.error("error Hier: {}", kME.getMessage(), kME);
 					}
 					tls.negotiate(sslsf);
 				} else {
@@ -534,7 +548,7 @@ public class LdapUserDAO implements ILdapUserDAO {
 				dirCtx = new InitialDirContext(this.getParams(false));
 			}
         } catch (IOException ex) {
-			ApsSystemUtils.logThrowable(ex, this, "IOException");
+        	_logger.error("error in getDirContext", ex);
 		} catch (NamingException e) {
             throw e;
         }
@@ -549,10 +563,11 @@ public class LdapUserDAO implements ILdapUserDAO {
 			}
             dirCtx.close();
         } catch (IOException ex) {
-			ApsSystemUtils.logThrowable(ex, this, "IOException");
+        	_logger.error("Error closing DirContext", ex);
 		} catch (NamingException e) {
+			_logger.error("Error closing DirContext", e);
             throw new RuntimeException("Error closing DirContext", e);
-        }
+		}
     }
     
     protected Hashtable<String, String> getParams(boolean isTls) {
