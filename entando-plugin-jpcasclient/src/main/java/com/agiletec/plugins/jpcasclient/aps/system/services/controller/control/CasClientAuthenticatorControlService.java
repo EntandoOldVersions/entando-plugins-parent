@@ -18,15 +18,16 @@
 package com.agiletec.plugins.jpcasclient.aps.system.services.controller.control;
 
 
-import java.util.logging.Level;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.jasig.cas.client.validation.Assertion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.controller.ControllerManager;
@@ -38,7 +39,6 @@ import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.system.common.AuthCommon;
 import com.agiletec.plugins.jpcasclient.aps.system.services.user.CasAuthProviderManager;
-import java.util.Date;
 
 /**
  * Extension of authentication service for managing CAS protocol
@@ -46,10 +46,12 @@ import java.util.Date;
  * @author G.Cocco
  * */
 public class CasClientAuthenticatorControlService extends AbstractControlService {
+
+	private static final Logger _logger =  LoggerFactory.getLogger(CasClientAuthenticatorControlService.class);
 	
 	@Override
     public void afterPropertiesSet() throws Exception {
-    	this._log.debug(this.getClass().getName() + ": initialized");
+    	_logger.debug("{} ready", this.getClass().getName());
 	}
 	
     /**
@@ -73,7 +75,7 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
 	@Override
 	public int service(RequestContext reqCtx, int status) {
 		String name = null;
-		this._log.trace("Invoked " + this.getClass().getName());
+		_logger.trace("Invoked {}", this.getClass().getName());
 		int retStatus = ControllerManager.INVALID_STATUS;
 		if (status == ControllerManager.ERROR) {
 			return status;
@@ -82,23 +84,23 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
 			HttpServletRequest req = reqCtx.getRequest();
 			//Punto 1
 			Assertion assertion = (Assertion) req.getSession().getAttribute(CasClientPluginSystemCostants.JPCASCLIENT_CONST_CAS_ASSERTION);
-			this._log.trace(" Assertion " + assertion);
+			_logger.trace(" Assertion {}", assertion);
 			if (null != assertion) {
 				AttributePrincipal attributePrincipal = assertion.getPrincipal();
 				name = attributePrincipal.getName();
-				this._log.trace(" Princ " + attributePrincipal);
-				this._log.trace(" Princ - Name " + attributePrincipal.getName());
+				_logger.trace(" Princ {}", attributePrincipal);
+				_logger.trace(" Princ - Name {}", attributePrincipal.getName());
 			}
-			this._log.trace("jpcasclient: request From User with Principal [CAS tiket validation]: " + name + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
+			_logger.trace("jpcasclient: request From User with Principal [CAS tiket validation]: " + name + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
 			HttpSession session = req.getSession();
 			if (null != name) {
 				String username = name;
 				if (getAuthCommon().hasRealmDomainInformation(name)) {
 					username = getAuthCommon().getUsernameFromPrincipal(name);
 				}
-				this._log.trace("Request From User with Username: " + username + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
+				_logger.trace("Request From User with Username: " + username + " - info: AuthType " + req.getAuthType() + " " + req.getProtocol() + " " + req.getRemoteAddr() + " " + req.getRemoteHost());
 				if (username != null) {
-					this._log.trace("jpcasclient: user is " + username);
+					_logger.trace("jpcasclient: user is {}", username);
 					UserDetails userOnSession = (UserDetails) session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
 					if (userOnSession == null || (userOnSession != null && !username.equals(userOnSession.getUsername()))) {
 						UserDetails user = this.getAuthenticationProvider().getUser(username);
@@ -110,7 +112,7 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
 									((AbstractUser) user).setPassword(userOnSession.getPassword());
 								}
 								session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
-								this._log.trace("jpcasclient: new user: " + user.getUsername());
+								_logger.trace("jpcasclient: new user: {}", user.getUsername());
 							}
 						} else {
 //                			req.setAttribute("wrongAccountCredential", new Boolean(true));
@@ -121,7 +123,7 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
 							((User) user).setLastAccess(new Date());
 							/* put in the session */
 							session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
-							this._log.trace("jpcasclient: new user created on the fly: " + user.getUsername());
+							_logger.trace("jpcasclient: new user created on the fly: {}", user.getUsername());
 						}
 					}
 				}
@@ -131,14 +133,14 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
 			String userName = req.getParameter("username");
 			String password = req.getParameter("password");
 			if (userName != null && password != null) {
-				_log.trace("user " + userName + " - password ******** ");
+				_logger.trace("user {}  - password ******** ", userName);
 				UserDetails user = this.getAuthenticationProvider().getUser(userName, password);
 				if (user != null) {
 					if (!user.isAccountNotExpired()) {
 						req.setAttribute("accountExpired", new Boolean(true));
 					} else {
 						session.setAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER, user);
-						_log.trace("Nuovo User: " + user.getUsername());
+						_logger.trace("New User: {}", user.getUsername());
 					}
 				} else {
 					req.setAttribute("wrongAccountCredential", new Boolean(true));
@@ -152,7 +154,7 @@ public class CasClientAuthenticatorControlService extends AbstractControlService
 			}
 			retStatus = ControllerManager.CONTINUE;
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "service", "Error in processing the request");
+			_logger.error("Error in processing the request", t);
 			retStatus = ControllerManager.ERROR;
 		}
 		return retStatus;

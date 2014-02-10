@@ -17,7 +17,6 @@
 */
 package com.agiletec.plugins.jpcasclient.aps.system.services.controller.control;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -31,7 +30,10 @@ import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.AssertionImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
 
 /**
@@ -41,6 +43,8 @@ import com.agiletec.aps.system.exception.ApsSystemException;
  * */
 public class CasClientTicketValidationUtil {
 
+	private static final Logger _logger =  LoggerFactory.getLogger(CasClientTicketValidationUtil.class);
+	
 	public CasClientTicketValidationUtil(String urlCasValidate) {
 		this._urlCasValidate = urlCasValidate;
 	}
@@ -74,8 +78,8 @@ public class CasClientTicketValidationUtil {
 				ApsSystemUtils.getLogger().info("CasClientTicketValidationUtil - Assertion: " + responseAssertion + " user: " + responseUser);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "validateTicket");
-			throw new ApsSystemException("Errore in CasClientTicketValidationUtil - validateTicket", t);
+			_logger.error("Error in CasClientTicketValidationUtil - validateTicket", t);
+			throw new ApsSystemException("Error in CasClientTicketValidationUtil - validateTicket", t);
 		}
 		if (null != responseAssertion && null != responseUser && responseAssertion.equalsIgnoreCase(_positiveResponse) && responseUser.length() > 0 ) {
 			assertion = new AssertionImpl(responseUser);
@@ -104,7 +108,7 @@ public class CasClientTicketValidationUtil {
 			client.executeMethod(authget);
 			body = authget.getResponseBodyAsString();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "CASgetMethod");
+			_logger.error("Error in CasClientTicketValidationUtil - CASgetMethod", t);
 			throw new RuntimeException("Error in CasClientTicketValidationUtil - CASgetMethod", t);
 		} finally {
 			authget.releaseConnection();

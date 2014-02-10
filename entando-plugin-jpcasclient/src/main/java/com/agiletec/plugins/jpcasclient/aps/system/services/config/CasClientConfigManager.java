@@ -17,7 +17,9 @@
 */
 package com.agiletec.plugins.jpcasclient.aps.system.services.config;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
@@ -26,6 +28,8 @@ import com.agiletec.plugins.jpcasclient.aps.system.services.config.parse.ConfigD
 
 public class CasClientConfigManager extends AbstractService implements ICasClientConfigManager {
 
+	private static final Logger _logger =  LoggerFactory.getLogger(CasClientConfigManager.class);
+	
 	@Override
 	public void init() throws Exception {
 		String configItem = this.getConfigManager().getConfigItem(CasClientPluginSystemCostants.JPCASCLIENT_CONFIG_ITEM);
@@ -48,8 +52,8 @@ public class CasClientConfigManager extends AbstractService implements ICasClien
 			this.getConfigManager().updateConfigItem(CasClientPluginSystemCostants.JPCASCLIENT_CONFIG_ITEM, configurationItem);
 			this.setClientConfig(config);
 		} catch (ApsSystemException t) {
-			ApsSystemUtils.logThrowable(t, this, "updateConfig");
-			throw new ApsSystemException("Errore in fase di aggiornamento configurazione mail", t);
+			_logger.error("Error updating config", t);
+			throw new ApsSystemException("Error updating config", t);
 		}
 	}
 

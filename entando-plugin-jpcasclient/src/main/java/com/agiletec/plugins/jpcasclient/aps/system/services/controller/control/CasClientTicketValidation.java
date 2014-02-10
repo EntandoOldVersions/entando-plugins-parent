@@ -20,8 +20,9 @@ package com.agiletec.plugins.jpcasclient.aps.system.services.controller.control;
 import javax.servlet.http.HttpServletRequest;
 
 import org.jasig.cas.client.validation.Assertion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.services.controller.ControllerManager;
 import com.agiletec.aps.system.services.controller.control.AbstractControlService;
@@ -38,13 +39,15 @@ import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientCon
  * @author zuanni G.Cocco
  * */
 public class CasClientTicketValidation extends AbstractControlService {
+
+	private static final Logger _logger =  LoggerFactory.getLogger(CasClientTicketValidation.class);
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		this.setCasClientConfig(this.getCasClientConfigManager().getClientConfig());
 		String urlCasValidate = this.getCasClientConfig().getCasValidateURL();
 		_ticketValidationUtil = new CasClientTicketValidationUtil(urlCasValidate);
-		this._log.debug(this.getClass().getName() + ": initialization");
+		_logger.debug("{} : ready", this.getClass().getName());
 	}
 	
 	/**
@@ -80,7 +83,7 @@ public class CasClientTicketValidation extends AbstractControlService {
 				retStatus = ControllerManager.REDIRECT;
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "service", "Error in processing the request");
+			_logger.error("Error in processing the request", t);
 		}
 		return retStatus;
 	}

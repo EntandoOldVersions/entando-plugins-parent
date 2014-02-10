@@ -22,7 +22,9 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.system.services.config.CasClientConfig;
@@ -30,6 +32,8 @@ import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientCon
 
 public class CasConfigParamTag extends TagSupport {
 
+	private static final Logger _logger =  LoggerFactory.getLogger(CasConfigParamTag.class);
+	
 	@Override
 	public int doStartTag() throws JspException {
 		ICasClientConfigManager clientConfigManager = 
@@ -59,7 +63,7 @@ public class CasConfigParamTag extends TagSupport {
 				this.pageContext.getOut().print(param);
 			}
 		} catch (IOException e) {
-			ApsSystemUtils.logThrowable(e, this, "doStartTag");
+			_logger.error("Error closing tag ", e);
 			throw new JspException("Error closing tag ", e);
 		}
 		return SKIP_BODY;

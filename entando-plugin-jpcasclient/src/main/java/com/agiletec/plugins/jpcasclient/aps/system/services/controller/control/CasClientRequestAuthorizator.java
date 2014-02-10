@@ -18,12 +18,13 @@
 package com.agiletec.plugins.jpcasclient.aps.system.services.controller.control;
 
 import java.util.HashMap;
-import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.controller.ControllerManager;
@@ -46,6 +47,8 @@ import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientCon
  * @author zuanni - G.Cocco
  * */
 public class CasClientRequestAuthorizator extends RequestAuthorizator {
+
+	private static final Logger _logger =  LoggerFactory.getLogger(CasClientRequestAuthorizator.class);
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -56,7 +59,7 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 	
 	@Override
 	public int service(RequestContext reqCtx, int status) {
-		_log.trace("Invoked " + this.getClass().getName());
+		_logger.trace("Invoked {}", this.getClass().getName());
 		int retStatus = ControllerManager.INVALID_STATUS;
 		if (status == ControllerManager.ERROR) {
 			return status;
@@ -77,7 +80,7 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 				if (authorized) {
 					retStatus = ControllerManager.CONTINUE;
 				} else if (SystemConstants.GUEST_USER_NAME.equals(currentUser.getUsername())) {
-					_log.info("CAS - user not authorized and guest");
+					_logger.info("CAS - user not authorized and guest");
 					CasClientUtils casClientUtils = new CasClientUtils();
 					String loginBaseUrl = this.getCasClientConfig().getCasLoginURL();
 					StringBuilder loginUrl = new StringBuilder(loginBaseUrl);
@@ -85,22 +88,22 @@ public class CasClientRequestAuthorizator extends RequestAuthorizator {
 					PageURL pageUrl = this.getUrlManager().createURL(reqCtx);
 					String serviceUrl = casClientUtils.getURLStringWithoutTicketParam(pageUrl, reqCtx);
 					loginUrl.append(serviceUrl);
-					_log.info("CAS - Redirecting to " + loginUrl.toString());
+					_logger.info("CAS - Redirecting to {}", loginUrl.toString());
 					reqCtx.addExtraParam(RequestContext.EXTRAPAR_REDIRECT_URL, loginUrl.toString());
 					retStatus = ControllerManager.REDIRECT;
 				} else {
-					_log.info("CAS - user authenticated but not authorized");
+					_logger.info("CAS - user authenticated but not authorized");
 					Lang currentLang = (Lang) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_LANG);
 	            	String notAuthPageCode = this.getCasClientConfig().getNotAuthPage();
 	            	IPage page = this.getPageManager().getPage(notAuthPageCode);
 	            	String url = this.getUrlManager().createUrl(page, currentLang, new HashMap<String, String>());
-	            	_log.info("CAS - Redirecting to " + url);
+	            	_logger.info("CAS - Redirecting to {}", url);
 	            	reqCtx.addExtraParam(RequestContext.EXTRAPAR_REDIRECT_URL, url);
 	            	retStatus = ControllerManager.REDIRECT;
 	            }
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "service", "Error in processing the request");
+			_logger.error("Error in processing the request", t);
 			retStatus = ControllerManager.ERROR;
 		}
 		return retStatus;

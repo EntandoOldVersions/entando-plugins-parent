@@ -20,13 +20,12 @@ import org.jasig.cas.client.session.HashMapBackedSessionMappingStorage;
 import org.jasig.cas.client.session.SessionMappingStorage;
 import org.jasig.cas.client.util.CommonUtils;
 import org.jasig.cas.client.util.XmlUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpcasclient.CasClientPluginSystemCostants;
 import com.agiletec.plugins.jpcasclient.aps.system.services.config.ICasClientConfigManager;
-
-import org.slf4j.Logger;
 
 /**
  * Implements the Single Sign Out protocol. It handles registering the session and destroying the session.
@@ -38,10 +37,12 @@ import org.slf4j.Logger;
  * @since 3.1
  */
 public class CasSingleSignOutFilter implements Filter {
+
+	private static final Logger _logger =  LoggerFactory.getLogger(CasSingleSignOutFilter.class);
 	
 	@Override
 	public void init(final FilterConfig filterConfig) throws ServletException {
-		_log = ApsSystemUtils.getLogger();
+		
 	}
 	
 	@Override
@@ -54,17 +55,17 @@ public class CasSingleSignOutFilter implements Filter {
 			if ("POST".equals(request.getMethod())) {
 				final String logoutRequest = request.getParameter("logoutRequest");
 				if (CommonUtils.isNotBlank(logoutRequest)) {
-					_log.debug("Logout request=[" + logoutRequest + "]");
+					_logger.debug("Logout request=[{}]", logoutRequest);
 					final String sessionIdentifier = XmlUtils.getTextForElement(logoutRequest, "SessionIndex");
 					if (CommonUtils.isNotBlank(sessionIdentifier)) {
 						final HttpSession session = SESSION_MAPPING_STORAGE.removeSessionByMappingId(sessionIdentifier);
 						if (session != null) {
 							String sessionID = session.getId();
-							_log.debug("Invalidating session [" + sessionID + "] for ST [" + sessionIdentifier + "]");
+							_logger.debug("Invalidating session [{}] for ST [{}]", sessionID, sessionIdentifier);
 							try {
 								session.invalidate();
 							} catch (final IllegalStateException e) {
-								ApsSystemUtils.logThrowable(e, this, "doFilter");
+								_logger.error("error in doFilter", e);
 							}
 						}
 						return;
@@ -75,7 +76,7 @@ public class CasSingleSignOutFilter implements Filter {
 				final HttpSession session = request.getSession();
 
 				if (session != null) {
-					_log.debug("Storing session identifier for " + session.getId());
+					_logger.debug("Storing session identifier for {}", session.getId());
 				}
 				if (CommonUtils.isNotBlank(artifact)) {
 					try {
@@ -109,7 +110,5 @@ public class CasSingleSignOutFilter implements Filter {
 	private final static String _artifactParameterName = "ticket";
 	
 	private static SessionMappingStorage SESSION_MAPPING_STORAGE = new HashMapBackedSessionMappingStorage();
-	
-	private static Logger _log;
 	
 }
