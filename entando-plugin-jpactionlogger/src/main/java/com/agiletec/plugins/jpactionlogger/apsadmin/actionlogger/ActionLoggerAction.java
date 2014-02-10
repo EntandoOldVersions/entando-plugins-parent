@@ -21,17 +21,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.apsadmin.system.BaseAction;
-
-import com.opensymphony.xwork2.Action;
-
 import org.entando.entando.aps.system.services.actionlog.IActionLogManager;
 import org.entando.entando.aps.system.services.actionlog.model.ActionLogRecord;
 import org.entando.entando.aps.system.services.actionlog.model.ActionLogRecordSearchBean;
 import org.entando.entando.aps.system.services.actionlog.model.IActionLogRecordSearchBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.agiletec.apsadmin.system.BaseAction;
+import com.opensymphony.xwork2.Action;
 
 public class ActionLoggerAction extends BaseAction implements IActionLoggerAction {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ActionLoggerAction.class);
 	
 	@Override
 	public List<Integer> getActionRecords() {
@@ -40,7 +42,7 @@ public class ActionLoggerAction extends BaseAction implements IActionLoggerActio
 			IActionLogRecordSearchBean searchBean = this.prepareSearchBean();
 			actionRecords = this.getActionLogManager().getActionRecords(searchBean);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getActionRecords");
+			_logger.error("error in getActionRecords", t);
 		}
 		return actionRecords;
 	}
@@ -50,7 +52,7 @@ public class ActionLoggerAction extends BaseAction implements IActionLoggerActio
 		try {
 			this.getActionLogManager().deleteActionRecord(this.getId());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "delete");
+			_logger.error("error in delete", t);
 			return FAILURE;
 		}
 		return Action.SUCCESS;
@@ -61,7 +63,7 @@ public class ActionLoggerAction extends BaseAction implements IActionLoggerActio
 		try {
 			actionRecord = this.getActionLogManager().getActionRecord(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getActionRecord");
+			_logger.error("error in getActionRecord", t);
 		}
 		return actionRecord;
 	}
