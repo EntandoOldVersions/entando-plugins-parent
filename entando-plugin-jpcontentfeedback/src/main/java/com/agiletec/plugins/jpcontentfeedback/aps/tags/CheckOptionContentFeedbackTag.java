@@ -21,12 +21,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsProperties;
 import com.agiletec.plugins.jpcontentfeedback.apsadmin.portal.specialwidget.ContentFeedbackWidgetAction;
-import com.agiletec.aps.system.services.page.Widget;
 
 /**
  * Tag di utilità per la verifica dei parametri di configurazione della showlet
@@ -37,6 +39,8 @@ import com.agiletec.aps.system.services.page.Widget;
  */
 public class CheckOptionContentFeedbackTag extends TagSupport {
 
+	private static final Logger _logger = LoggerFactory.getLogger(CheckOptionContentFeedbackTag.class);
+	
 	public int doStartTag() throws JspException {
 		try {
 			HttpServletRequest request =  (HttpServletRequest) this.pageContext.getRequest();
@@ -56,7 +60,7 @@ public class CheckOptionContentFeedbackTag extends TagSupport {
 				return SKIP_BODY;
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
+			_logger.error("error in doStartTag", t);
 			throw new JspException("Error during tag initialization ", t);
 		}
 	}

@@ -20,7 +20,9 @@ package com.agiletec.plugins.jpcontentfeedback.aps.tags;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.JpcontentfeedbackSystemConstants;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.comment.ICommentManager;
@@ -31,16 +33,19 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
  * @author D.Cherchi
  *
  */
-public class ContentCommentViewerTag extends TagSupport{
+public class ContentCommentViewerTag extends TagSupport {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ContentCommentViewerTag.class);
+	
 	 @Override
 		public int doStartTag() throws JspException {
 			try {
 				ICommentManager commentManager = (ICommentManager) ApsWebApplicationUtils.getBean(JpcontentfeedbackSystemConstants.COMMENTS_MANAGER, this.pageContext);
 				IComment comment = commentManager.getComment(this.getCommentId());
 				this.pageContext.setAttribute(this.getCommentName(), comment);
-			} catch (Throwable e) {
-				ApsSystemUtils.logThrowable(e, this, "doStartTag");
-				throw new JspException("Errore inizializzazione tag", e);
+			} catch (Throwable t) {
+				_logger.error("error in doStartTag", t);
+				throw new JspException("Error in doStartTag", t);
 			}
 			return EVAL_PAGE;
 		}

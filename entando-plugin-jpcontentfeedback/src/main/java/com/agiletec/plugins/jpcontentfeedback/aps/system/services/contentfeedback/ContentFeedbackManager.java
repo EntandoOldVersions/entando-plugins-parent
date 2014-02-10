@@ -17,7 +17,9 @@
 */
 package com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
@@ -25,10 +27,12 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.JpcontentfeedbackSystem
 
 public class ContentFeedbackManager extends AbstractService implements IContentFeedbackManager {
 
+	private static final Logger _logger = LoggerFactory.getLogger(ContentFeedbackManager.class);
+	
 	@Override
 	public void init() throws Exception {
 		this.loadConfigs();
-		ApsSystemUtils.getLogger().info(this.getClass().getName() + " ready");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 
 	private void loadConfigs() throws ApsSystemException {
@@ -36,12 +40,13 @@ public class ContentFeedbackManager extends AbstractService implements IContentF
 			ConfigInterface configManager = this.getConfigManager();
 			String xml = configManager.getConfigItem(JpcontentfeedbackSystemConstants.GLOBAL_CONFIG_ITEM);
 			if (xml == null) {
+				_logger.error("Configuration item not present: {}", JpcontentfeedbackSystemConstants.GLOBAL_CONFIG_ITEM);
 				throw new ApsSystemException("Configuration item not present: " + JpcontentfeedbackSystemConstants.GLOBAL_CONFIG_ITEM);
 			}
 			this.setConfig(new ContentFeedbackConfig(xml));
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
-			throw new ApsSystemException("Errore loading config", t);
+			_logger.error("Errore loading configs", t);
+			throw new ApsSystemException("Error loading config", t);
 		}
 	}
 
@@ -51,7 +56,7 @@ public class ContentFeedbackManager extends AbstractService implements IContentF
 			this.getConfigManager().updateConfigItem(JpcontentfeedbackSystemConstants.GLOBAL_CONFIG_ITEM, xml);
 			this.setConfig(config);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateConfig");
+			_logger.error("Error updating ContentFeedback config", t);
 			throw new ApsSystemException("Error updating ContentFeedback config", t);
 		}
 	}
@@ -59,7 +64,7 @@ public class ContentFeedbackManager extends AbstractService implements IContentF
 	@Override
 	public boolean isCommentActive() {
 		if (null == this.getConfig()) {
-			ApsSystemUtils.getLogger().error("ContentFeedbackConfig is null");
+			_logger.error("ContentFeedbackConfig is null");
 			return false;
 		}
 		String value = this.getConfig().getComment();
@@ -69,7 +74,7 @@ public class ContentFeedbackManager extends AbstractService implements IContentF
 	@Override
 	public boolean allowAnonymousComment() {
 		if (null == this.getConfig()) {
-			ApsSystemUtils.getLogger().error("ContentFeedbackConfig is null");
+			_logger.error("ContentFeedbackConfig is null");
 			return false;
 		}
 		if (!this.isCommentActive()) return false;
@@ -80,7 +85,7 @@ public class ContentFeedbackManager extends AbstractService implements IContentF
 	@Override
 	public boolean isCommentModerationActive() {
 		if (null == this.getConfig()) {
-			ApsSystemUtils.getLogger().error("ContentFeedbackConfig is null");
+			_logger.error("ContentFeedbackConfig is null");
 			return false;
 		}
 		String value = this.getConfig().getModeratedComment();
@@ -91,7 +96,7 @@ public class ContentFeedbackManager extends AbstractService implements IContentF
 	@Override
 	public boolean isRateContentActive() {
 		if (null == this.getConfig()) {
-			ApsSystemUtils.getLogger().error("ContentFeedbackConfig is null");
+			_logger.error("ContentFeedbackConfig is null");
 			return false;
 		}
 		String value = this.getConfig().getRateContent();
@@ -101,14 +106,13 @@ public class ContentFeedbackManager extends AbstractService implements IContentF
 	@Override
 	public boolean isRateCommentActive() {
 		if (null == this.getConfig()) {
-			ApsSystemUtils.getLogger().error("ContentFeedbackConfig is null");
+			_logger.error("ContentFeedbackConfig is null");
 			return false;
 		}
 		String value = this.getConfig().getRateComment();
 		return isCommentActive() && null != value && value.equalsIgnoreCase("true");
 	}
 	
-
 	public IContentFeedbackConfig getConfig() {
 		return _config;
 	}

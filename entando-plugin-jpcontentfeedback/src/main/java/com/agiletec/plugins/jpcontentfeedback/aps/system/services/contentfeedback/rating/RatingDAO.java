@@ -23,6 +23,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.model.IRating;
 import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedback.rating.model.IRatingSearchBean;
@@ -30,6 +33,8 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
 
 public class RatingDAO  extends AbstractDAO implements IRatingDAO{
 
+	private static final Logger _logger = LoggerFactory.getLogger(RatingDAO.class);
+	
 	@Override
 	public synchronized void addRating(IRating rating) {
 		Connection conn = null;
@@ -51,11 +56,11 @@ public class RatingDAO  extends AbstractDAO implements IRatingDAO{
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error adding a rating", "addRating");
+			_logger.error("Error adding a rating",  t);
+			throw new RuntimeException("Error adding a rating", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
-
 	}
 
 	@Override
@@ -73,7 +78,8 @@ public class RatingDAO  extends AbstractDAO implements IRatingDAO{
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error updating a rating", "updateRating");
+			_logger.error("Error updating a rating", t);
+			throw new RuntimeException("Error updating a rating", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -101,7 +107,8 @@ public class RatingDAO  extends AbstractDAO implements IRatingDAO{
 				rating.setVote(res.getInt("voters"), res.getInt("sumvote"));
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Errore while search rating", "getRating");
+			_logger.error("Error while search rating",  t);
+			throw new RuntimeException("Error while search rating", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -122,7 +129,8 @@ public class RatingDAO  extends AbstractDAO implements IRatingDAO{
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Errore while remove rating", "removeRating");
+			_logger.error("Error removing rating for comment {}", commentId, t);
+			throw new RuntimeException("Error while remove rating", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -143,11 +151,11 @@ public class RatingDAO  extends AbstractDAO implements IRatingDAO{
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Errore while remove rating", "removeContentRating");
+			_logger.error("Error removing rating for comment {}", contentId,  t);
+			throw new RuntimeException("Errore while remove rating", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
-
 	}
 
 	public void removeRatingInTransaction(Connection conn, int commentId) {
@@ -158,7 +166,8 @@ public class RatingDAO  extends AbstractDAO implements IRatingDAO{
 			stat.setInt(1, commentId);
 			stat.executeUpdate();
 		} catch (Throwable t) {
-			processDaoException(t, "Errore while remove rating", "removeRating");
+			_logger.error("Error removing rating for comment {}", commentId, t);
+			throw new RuntimeException("Error removing rating for comment", t);
 		} finally {
 			closeDaoResources(null, stat, null);
 		}

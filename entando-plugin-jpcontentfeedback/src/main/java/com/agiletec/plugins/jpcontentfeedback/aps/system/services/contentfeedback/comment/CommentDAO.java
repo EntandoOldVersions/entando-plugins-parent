@@ -29,6 +29,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -44,6 +46,8 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
  */
 public class CommentDAO  extends AbstractDAO implements ICommentDAO {
 
+	private static final Logger _logger = LoggerFactory.getLogger(CommentDAO.class);
+	
 	@Override
 	public void addComment(IComment comment) {
 		Connection conn = null;
@@ -62,7 +66,8 @@ public class CommentDAO  extends AbstractDAO implements ICommentDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error adding a comment", "addComment");
+			_logger.error("Error adding a comment",  t);
+			throw new RuntimeException("Error adding a comment", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -83,7 +88,8 @@ public class CommentDAO  extends AbstractDAO implements ICommentDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error deleting a comment", "deleteComment");
+			_logger.error("Error deleting a comment",  t);
+			throw new RuntimeException("Error deleting a comment", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -106,7 +112,8 @@ public class CommentDAO  extends AbstractDAO implements ICommentDAO {
 				comments.add(commentId);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in caricamento lista id commenti", "searchCommentsId");
+			_logger.error("Error loading comments list",  t);
+			throw new RuntimeException("Error loading comments list", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -176,7 +183,8 @@ public class CommentDAO  extends AbstractDAO implements ICommentDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error updating a status comment", "updateStatus");
+			_logger.error("Error updating comment status to {} for comment {} ", status, id,  t);
+			throw new RuntimeException("Error updating comment status", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -199,7 +207,8 @@ public class CommentDAO  extends AbstractDAO implements ICommentDAO {
 				comment=this.popualteComment(res);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error load comment", "getComment");
+			_logger.error("Error load comment {}", id, t);
+			throw new RuntimeException("Error load comment", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}

@@ -17,13 +17,6 @@
 */
 package com.agiletec.plugins.jpcontentfeedback.aps.tags;
 
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.RequestContext;
-import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.page.Widget;
-import com.agiletec.aps.tags.InternalServletTag;
-import com.agiletec.aps.tags.InternalServletTag.ResponseWrapper;
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -31,6 +24,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.agiletec.aps.system.RequestContext;
+import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.page.Widget;
+import com.agiletec.aps.tags.InternalServletTag;
 
 /**
  * Tag che consente la visualisualizzazione del blocco jpcontentFeedback per la publicazione del rating del contenuto,
@@ -38,6 +38,8 @@ import org.apache.commons.lang.StringUtils;
  * @author D.Cherchi
  */
 public class FeedbackIntroTag extends InternalServletTag {
+
+	private static final Logger _logger = LoggerFactory.getLogger(FeedbackIntroTag.class);
 	
 	@Override
 	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget widget) throws ServletException, IOException {
@@ -79,7 +81,7 @@ public class FeedbackIntroTag extends InternalServletTag {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(actionPath);
 			requestDispatcher.include(request, responseWrapper);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "includeShowlet", "Error including showlet");
+			_logger.error("Error including widget ", t);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/aps/jsp/system/internalServlet_error.jsp");
 			requestDispatcher.include(request, responseWrapper);
 		}

@@ -19,8 +19,9 @@ package com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedba
 
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.keygenerator.IKeyGeneratorManager;
@@ -33,9 +34,11 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
 @Aspect
 public class RatingManager extends AbstractService implements IRatingManager{
 
+	private static final Logger _logger = LoggerFactory.getLogger(RatingManager.class);
+	
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getName() + ": initialized");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 
 	@Override
@@ -57,7 +60,7 @@ public class RatingManager extends AbstractService implements IRatingManager{
 			}
             this.notifyEvent(contentId, -1, ContentFeedbackChangedEvent.CONTENT_RATING, ContentFeedbackChangedEvent.INSERT_OPERATION_CODE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addRatingToContent");
+			_logger.error("Error add rating{} to content {}",vote, contentId, t);
 			throw new ApsSystemException("Error add rating to content", t);
 		}
 	}
@@ -81,7 +84,7 @@ public class RatingManager extends AbstractService implements IRatingManager{
 			}
             this.notifyEvent(null, commentId, ContentFeedbackChangedEvent.COMMENT_RATING, ContentFeedbackChangedEvent.INSERT_OPERATION_CODE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addRatingToComment");
+			_logger.error("Error add rating {} to comment {}", vote, commentId, t);
 			throw new ApsSystemException("Error add rating to comment", t);
 		}
 	}
@@ -94,7 +97,7 @@ public class RatingManager extends AbstractService implements IRatingManager{
 			searchBean.setContentId(contentId);
 			rating = this.getRatingDAO().getRating(searchBean);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getRating");
+			_logger.error("Error loading content rating for content {}", contentId, t);
 			throw new ApsSystemException("Error get content rating", t);
 		}
 		return rating;
@@ -108,7 +111,7 @@ public class RatingManager extends AbstractService implements IRatingManager{
 			searchBean.setCommentId(commentId);
 			rating = this.getRatingDAO().getRating(searchBean);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getCommentRating");
+			_logger.error("Error loading comment rating for comment {}", commentId, t);
 			throw new ApsSystemException("Error get comment rating", t);
 		}
 		return rating;
@@ -121,7 +124,7 @@ public class RatingManager extends AbstractService implements IRatingManager{
 			this.getRatingDAO().removeContentRating(content.getId());
             this.notifyEvent(content.getId(), -1, ContentFeedbackChangedEvent.CONTENT_RATING, ContentFeedbackChangedEvent.REMOVE_OPERATION_CODE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteContentRating");
+			_logger.error("Error while remove content rating", t);
 			throw new ApsSystemException("Error while remove content rating", t);
 		}
 	}

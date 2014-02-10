@@ -23,8 +23,9 @@ import java.util.List;
 
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.keygenerator.IKeyGeneratorManager;
@@ -37,9 +38,11 @@ import com.agiletec.plugins.jpcontentfeedback.aps.system.services.contentfeedbac
 @Aspect
 public class CommentManager extends AbstractService implements ICommentManager {
 
+	private static final Logger _logger = LoggerFactory.getLogger(CommentManager.class);
+	
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getName() + ": initialized");
+		_logger.debug("{} ready", this.getName());
 	}
 	
 	@Override
@@ -51,7 +54,7 @@ public class CommentManager extends AbstractService implements ICommentManager {
 			this.getCommentDAO().addComment(comment);
             this.notifyEvent(comment.getContentId(), -1, ContentFeedbackChangedEvent.CONTENT_COMMENT, ContentFeedbackChangedEvent.INSERT_OPERATION_CODE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addComment");
+			_logger.error("error in add comment", t);
 			throw new ApsSystemException("Error add comment", t);
 		}
 	}
@@ -69,8 +72,8 @@ public class CommentManager extends AbstractService implements ICommentManager {
 			}
             this.notifyEvent(contentId, -1, ContentFeedbackChangedEvent.CONTENT_COMMENT, ContentFeedbackChangedEvent.REMOVE_OPERATION_CODE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteAllComments");
-			throw new ApsSystemException("Error while remove all comment", t);
+			_logger.error("Error deleting all comments", t);
+			throw new ApsSystemException("Error deleting all comments", t);
 		}
 	}
 	
@@ -80,7 +83,7 @@ public class CommentManager extends AbstractService implements ICommentManager {
 			this.getCommentDAO().deleteComment(id);
             this.notifyEvent(null, id, ContentFeedbackChangedEvent.CONTENT_COMMENT, ContentFeedbackChangedEvent.REMOVE_OPERATION_CODE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deleteComment");
+			_logger.error("Error deleting comment {}", id, t);
 			throw new ApsSystemException("Error while remove comment", t);
 		}
 	}
@@ -91,7 +94,7 @@ public class CommentManager extends AbstractService implements ICommentManager {
 		try {
 			comment = this.getCommentDAO().getComment(id);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getComment");
+			_logger.error("error loading comment {}", id, t);
 			throw new ApsSystemException("Error while extract comment", t);
 		}
 		return comment;
@@ -103,7 +106,7 @@ public class CommentManager extends AbstractService implements ICommentManager {
 		try {
 			commentIds = this.getCommentDAO().searchCommentsId(searchBean);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "searchCommentIds");
+			_logger.error("Error in search comments", t);
 			throw new ApsSystemException("Error while search comment", t);
 		}
 		return commentIds;
@@ -115,7 +118,7 @@ public class CommentManager extends AbstractService implements ICommentManager {
 			this.getCommentDAO().updateStatus(id, status);
             this.notifyEvent(null, id, ContentFeedbackChangedEvent.CONTENT_COMMENT, ContentFeedbackChangedEvent.UPDATE_OPERATION_CODE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateCommentStatus");
+			_logger.error("error updating comment status to {} for comment {} ", status, id, t);
 			throw new ApsSystemException("Error while update comment status", t);
 		}
 	}
