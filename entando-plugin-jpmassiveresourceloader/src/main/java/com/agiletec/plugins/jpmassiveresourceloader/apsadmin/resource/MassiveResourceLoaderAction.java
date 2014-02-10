@@ -27,8 +27,9 @@ import java.util.List;
 import javax.activation.MimetypesFileTypeMap;
 
 import org.apache.struts2.ServletActionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.aps.system.services.category.Category;
@@ -43,6 +44,8 @@ import com.agiletec.plugins.jacms.apsadmin.resource.AbstractResourceAction;
  * @author E.Santoboni
  */
 public class MassiveResourceLoaderAction extends AbstractResourceAction implements IMassiveResourceLoaderAction {
+
+	private static final Logger _logger = LoggerFactory.getLogger(MassiveResourceLoaderAction.class);
 	
 	@Override
 	public String save() {
@@ -52,7 +55,7 @@ public class MassiveResourceLoaderAction extends AbstractResourceAction implemen
 			File folder = new File(this.getFolder());
 			this.addFolder(folder, "/", this.isRecursive(), bean, resourcePrototype);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "save");
+			_logger.error("error in save", t);
 			return FAILURE;
 		}
 		return SUCCESS;
@@ -106,7 +109,7 @@ public class MassiveResourceLoaderAction extends AbstractResourceAction implemen
 				categories.remove(categoryCode);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "joinRemoveCategory");
+			_logger.error("error in joinRemoveCategory", t);
 			return FAILURE;
 		}
 		return SUCCESS;
@@ -154,8 +157,7 @@ public class MassiveResourceLoaderAction extends AbstractResourceAction implemen
     	try {
     		isDuplicated = resourcePrototype.exists(fileName);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "isDuplicatedFile", 
-					"Error while check duplicate file - master file name '" + fileName + "'");
+			_logger.error("Error while check duplicate file - master file name '{}'",fileName, t);
 		}
     	return isDuplicated;
 	}
@@ -266,7 +268,7 @@ public class MassiveResourceLoaderAction extends AbstractResourceAction implemen
 				try {
 					this._maximumSize = Long.parseLong(maxSizeParam);
 				} catch (Throwable t) {
-					ApsSystemUtils.getLogger().error("Error parsing param 'maxSize' - value '" + maxSizeParam + "' - message " + t.getMessage());
+					_logger.error("Error parsing param 'maxSize' - value '{}' - message ", maxSizeParam , t);
 				}
 			}
 		}
