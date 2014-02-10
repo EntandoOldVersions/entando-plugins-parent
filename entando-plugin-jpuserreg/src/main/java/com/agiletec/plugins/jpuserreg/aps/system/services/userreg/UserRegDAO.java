@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 
 /**
@@ -34,6 +37,8 @@ import com.agiletec.aps.system.common.AbstractDAO;
  * @author zuanni
  * */
 public class UserRegDAO extends AbstractDAO implements IUserRegDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(UserRegDAO.class);
 	
 	@Override
 	public void addActivationToken(String username, String token, Date regtime, String type) {
@@ -51,7 +56,8 @@ public class UserRegDAO extends AbstractDAO implements IUserRegDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error adding token for account activation", "addActivationToken");
+			_logger.error("Error adding token for account activation. user: {}", username,  t);
+			throw new RuntimeException("Error adding token for account activation", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -72,7 +78,8 @@ public class UserRegDAO extends AbstractDAO implements IUserRegDAO {
 				username = res.getString("username");
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error getting Username from token", "getUsernameFromToken");
+			_logger.error("Error getting Username from token",  t);
+			throw new RuntimeException("Error getting Username from token", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}
@@ -92,7 +99,8 @@ public class UserRegDAO extends AbstractDAO implements IUserRegDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error removing consumed Token", "removeConsumedToken");
+			_logger.error("Error removing consumed Token",  t);
+			throw new RuntimeException("Error removing consumed Token", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -112,7 +120,8 @@ public class UserRegDAO extends AbstractDAO implements IUserRegDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error in clear old tokens", "clearOldAccountRequests");
+			_logger.error("Error in clear old tokens", t);
+			throw new RuntimeException("Error in clear old tokens", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -131,7 +140,8 @@ public class UserRegDAO extends AbstractDAO implements IUserRegDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error in clear tokens by username", "clearTokenByUsername");
+			_logger.error("Error in clear tokens by username {}", username,  t);
+			throw new RuntimeException("Error in clear tokens by username", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -155,7 +165,8 @@ public class UserRegDAO extends AbstractDAO implements IUserRegDAO {
 				usernames.add(username);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error ", "oldAccountsNotActivated");
+			_logger.error("error extracting oldAccountsNotActivated",  t);
+			throw new RuntimeException("error extracting oldAccountsNotActivated", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}

@@ -32,7 +32,6 @@ import java.util.Map.Entry;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.common.entity.IEntityManager;
@@ -64,8 +63,11 @@ import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.IUserReg
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.model.Template;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.parse.UserRegConfigDOM;
 import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.util.ShaEncoder;
+
 import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
 import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manager for operations of user account registration.
@@ -76,10 +78,12 @@ import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 @Aspect
 public class UserRegManager extends AbstractService implements IUserRegManager {
 
+	private static final Logger _logger = LoggerFactory.getLogger(UserRegManager.class);
+	
 	@Override
 	public void init() throws Exception {
 		this.loadConfigs();
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 
 	private void loadConfigs() throws ApsSystemException {
@@ -93,7 +97,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			IUserRegConfig config = userRegConfigDom.extractConfig(xml);
 			this.setUserRegConfig(config);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
+			_logger.error("Error in init", t);
 			throw new ApsSystemException("Error in init", t);
 		}
 	}
@@ -109,7 +113,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			this.getConfigManager().updateConfigItem(JpUserRegSystemConstants.USER_REG_CONFIG_ITEM, xml);
 			this.setUserRegConfig(config);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveUserRegConfig");
+			_logger.error("Errore in fase di aggiornamento configurazione user reg", t);
 			throw new ApsSystemException("Errore in fase di aggiornamento configurazione user reg", t);
 		}
 	}
@@ -135,7 +139,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			try {
 				this.getUserRegDAO().clearTokenByUsername(username);
 			} catch (Throwable t) {
-				ApsSystemUtils.logThrowable(t, this, "deleteUser", "Error removing username " + username);
+				_logger.error("Error removing username {}", username, t);
 			}
 		}
 	}
@@ -153,7 +157,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			this.getUserManager().addUser(user);
 			this.getUserRegDAO().addActivationToken(userProfile.getUsername(), token, new Date(), IUserRegDAO.ACTIVATION_TOKEN_TYPE);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "regAccount");
+			_logger.error("Error in Account registration", t);
 			throw new ApsSystemException("Error in Account registration", t);
 		}
 	}
@@ -168,7 +172,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 				this.reactivationByUserName(userName);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "reactivationByEmail");
+			_logger.error("Error in request for Account Reactivation", t);
 			throw new ApsSystemException("Error in request for Account Reactivation", t);
 		}
 	}
@@ -188,7 +192,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			userManager.changePassword(username, password);// Per salvare password non in chiaro
 			this.getUserRegDAO().removeConsumedToken(token);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "activateUser");
+			_logger.error("Error in Account activation", t);
 			throw new ApsSystemException("Error in Account activation", t);
 		}
 	}
@@ -206,7 +210,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			userManager.changePassword(username, password);// Per salvare password non in chiaro
 			this.getUserRegDAO().removeConsumedToken(token);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "reactivateUser");
+			_logger.error("Error in Account activation", t);
 			throw new ApsSystemException("Error in Account activation", t);
 		}
 	}
@@ -234,7 +238,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 				this.getUserManager().updateUser(user);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "deactivateUser");
+			_logger.error("Error in Account deactivation", t);
 			throw new ApsSystemException("Error in Account deactivation", t);
 		}
 	}
@@ -262,7 +266,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			}
 			return usernames;
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getUsernamesFromEmail");
+			_logger.error("Error searching users with email {}", email, t);
 			throw new ApsSystemException("Error searching users with email " + email, t);
 		}
 	}
@@ -278,7 +282,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 				this.sendAlertReactivateUser(profile, token);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "reactivationByUserName");
+			_logger.error("Error in request for Account Reactivation. username: {}", username, t);
 			throw new ApsSystemException("Error in request for Account Reactivation", t);
 		}
 	}
