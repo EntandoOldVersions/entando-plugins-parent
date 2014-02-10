@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.notifier.model.ContentStatusChangedEventInfo;
@@ -35,6 +38,8 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.services.notifier.model
  * @author E.Santoboni
  */
 public class WorkflowNotifierDAO extends AbstractDAO implements IWorkflowNotifierDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(WorkflowNotifierDAO.class);
 	
 	@Override
 	public void saveContentEvent(ContentStatusChangedEventInfo contentEvent) throws ApsSystemException {
@@ -56,8 +61,8 @@ public class WorkflowNotifierDAO extends AbstractDAO implements IWorkflowNotifie
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Errore in salvataggio evento cambiamento stato contenuto " + 
-					contentEvent.getContentId(), "saveContentStatusChangedInfo");
+			_logger.error("Error saving content change event for content {}", contentEvent.getContentId(),  t);
+			throw new RuntimeException("Error saving content change event", t);
 		} finally {
 			this.closeDaoResources(null, stat, conn);
 		}
@@ -91,7 +96,8 @@ public class WorkflowNotifierDAO extends AbstractDAO implements IWorkflowNotifie
 				contentTypeEvents.add(event);
 			}
 		} catch (Throwable t) {
-			this.processDaoException(t, "Errore in caricamento contenuti da notificare", "getContentsToNotify");
+			_logger.error("Error loading contents to notify",  t);
+			throw new RuntimeException("Error loading contents to notify", t);
 		} finally {
 			this.closeDaoResources(res, stat, conn);
 		}
@@ -115,7 +121,8 @@ public class WorkflowNotifierDAO extends AbstractDAO implements IWorkflowNotifie
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			this.processDaoException(t, "Errore in aggiunta record tabella", "addContentSearchRecord");
+			_logger.error("Error in update events",  t);
+			throw new RuntimeException("Error in update events", t);
 		} finally {
 			this.closeDaoResources(null, stat, conn);
 		}
@@ -132,8 +139,9 @@ public class WorkflowNotifierDAO extends AbstractDAO implements IWorkflowNotifie
 				id = res.getInt(1);
 			}
 			id = id + 1; // N.B.: funziona anche per il primo record
-		} catch (Throwable e) {
-			this.processDaoException(e, "Errore in estrazione ultimo id", "newId");
+		} catch (Throwable t) {
+			_logger.error("Error loading last id",  t);
+			throw new RuntimeException("Error loading last id", t);
 		} finally {
 			this.closeDaoResources(res, stat);
 		}

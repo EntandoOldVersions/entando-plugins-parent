@@ -27,8 +27,11 @@ import java.util.Map.Entry;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
+import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.common.entity.model.attribute.ITextAttribute;
@@ -57,18 +60,17 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model.Workflow;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
 
-import org.entando.entando.aps.system.services.userprofile.IUserProfileManager;
-import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
 @Aspect
 public class WorkflowNotifierManager extends AbstractService implements IWorkflowNotifierManager {
-	
+
+	private static final Logger _logger = LoggerFactory.getLogger(WorkflowNotifierManager.class);
+
 	@Override
 	public void init() throws Exception {
 		this.loadConfigs();
 		this.openScheduler();
-		ApsSystemUtils.getLogger().debug(this.getName() + ": inizializzato " +
-				"servizio notificatore cambiamento stato contenuti");
+		_logger.debug("{}: ready", this.getClass().getName());
 	}
 	
 	@Override
@@ -92,8 +94,8 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 			WorkflowNotifierDOM configDOM = new WorkflowNotifierDOM();
 			this.setNotifierConfig(configDOM.extractConfig(xml));
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
-			throw new ApsSystemException("Errore in fase di inizializzazione", t);
+			_logger.error("Error loading configs", t);
+			throw new ApsSystemException("Error loading configs", t);
 		}
 	}
 
@@ -113,7 +115,7 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 				this.saveContentStatusChanged(currentContent);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "traceContent", "Error notifying content status change");
+			_logger.error("Error notifying content status change", t);
 		}
 	}
 
@@ -138,8 +140,8 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 			this.closeScheduler();
 			this.openScheduler();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "saveNotifierConfig");
-			throw new ApsSystemException("Errore in fase di salvataggio configurazione notificatore", t);
+			_logger.error("Error saving configs", t);
+			throw new ApsSystemException("Error saving configs", t);
 		}
 	}
 
@@ -155,8 +157,7 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 				statusChangedInfo.setStatus(content.getStatus());
 				this.getNotifierDAO().saveContentEvent(statusChangedInfo);
 			} catch (Throwable t) {
-				ApsSystemUtils.logThrowable(t, this, "saveContentStatusChanged", 
-						"Error saving content status changed event" + content.getId());
+				_logger.error("Error saving content status changed event for content {}", content.getId(), t);
 			}
 		}
 	}
@@ -196,7 +197,7 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 	public void sendMails() throws ApsSystemException {
 		try {
 			Map<String, List<ContentStatusChangedEventInfo>> statusChangedInfos = this.getNotifierDAO().getEventsToNotify();
-			ApsSystemUtils.getLogger().trace("Found " + statusChangedInfos.size() + " events to notify");
+			_logger.trace("Found {} events to notify", statusChangedInfos.size());
 			if (statusChangedInfos.size()>0) {
 				Map<String, List<ContentStatusChangedEventInfo>> contentsForUsers = this.prepareContentsForUsers(statusChangedInfos);
 				Iterator<String> iter = contentsForUsers.keySet().iterator();
@@ -209,12 +210,12 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 				for (List<ContentStatusChangedEventInfo> contentsForType : statusChangedInfos.values()) {
 					notifiedContents.addAll(contentsForType);
 				}
-				ApsSystemUtils.getLogger().trace("Notified " + notifiedContents.size() + " events");
+				_logger.trace("Notified {} events", notifiedContents.size());
 				this.getNotifierDAO().signNotifiedEvents(notifiedContents);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "sendMails");
-			throw new ApsSystemException("Errore in fase di invio mail di notifica", t);
+			_logger.error("error sending emails ", t);
+			throw new ApsSystemException("error sending emails", t);
 		}
 	}
 
@@ -233,7 +234,7 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 			String contentType = (notifierConfig.isHtml()) ? IMailManager.CONTENTTYPE_TEXT_HTML : IMailManager.CONTENTTYPE_TEXT_PLAIN;
 			this.getMailManager().sendMail(text, subject, mailAddresses, null, null, senderCode, contentType);
 		} catch(Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "sendMail", "Error sending mail to user " + username);
+			_logger.error("Error sending mail to user {}", username, t);
 		}
 	}
 	
@@ -413,8 +414,8 @@ public class WorkflowNotifierManager extends AbstractService implements IWorkflo
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "filterUsersForRole");
-			throw new ApsSystemException("Errore nel filtro degli utenti in base al ruolo", t);
+			_logger.error("error extracting users by role {}", roleName, t);
+			throw new ApsSystemException("error extracting users by  role", t);
 		}
 		return usersForContentType;
 	}

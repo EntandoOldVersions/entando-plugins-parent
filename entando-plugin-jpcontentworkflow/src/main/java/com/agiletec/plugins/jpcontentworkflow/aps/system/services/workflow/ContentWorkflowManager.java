@@ -22,6 +22,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -42,6 +45,8 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.parse
  * @author E.Santoboni
  */
 public class ContentWorkflowManager extends AbstractService implements IContentWorkflowManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ContentWorkflowManager.class);
 	
 	@Override
 	public void init() throws Exception {
@@ -59,7 +64,7 @@ public class ContentWorkflowManager extends AbstractService implements IContentW
 			ContentWorkflowDOM configDOM = new ContentWorkflowDOM();
 			this.setWorkflowConfig(configDOM.extractConfig(xml));
 		} catch (Exception e) {
-			ApsSystemUtils.logThrowable(e, this, "loadConfig");
+			_logger.error("error loading configs", e);
 		}
 	}
 	
@@ -108,7 +113,7 @@ public class ContentWorkflowManager extends AbstractService implements IContentW
 			this.setWorkflowConfig(config);
 		} catch (Exception e) {
 			this.loadConfig();
-			ApsSystemUtils.logThrowable(e, this, "updateWorkflow");
+			_logger.error("Error updating workflow for content {}", workflow.getTypeCode(), e);
 			throw new ApsSystemException("Error updating workflow for content " + workflow.getTypeCode(), e);
 		}
 	}
@@ -123,7 +128,7 @@ public class ContentWorkflowManager extends AbstractService implements IContentW
 		List<WorkflowSearchFilter> filters = new ArrayList<WorkflowSearchFilter>();
 		try {
 			List<SmallContentType> contentTypes = this.getManagingContentTypes(user);
-			boolean isSupervisor = this.getAuthorizationManager().isAuthOnPermission(user, Permission.SUPERVISOR);
+			boolean isSupervisor = this.getAuthorizationManager().isAuthOnPermission(user, Permission.CONTENT_SUPERVISOR);
 			for (int i = 0; i < contentTypes.size(); i++) {
 				SmallContentType type = contentTypes.get(i);
 				Workflow workflow = this.getWorkflow(type.getCode());
@@ -134,7 +139,7 @@ public class ContentWorkflowManager extends AbstractService implements IContentW
 				filters.add(filter);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getWorkflowSearchFilters");
+			_logger.error("Error extracting workflow search filters by user {}", user, t);
 			throw new ApsSystemException("Error extracting workflow search filters by user " + user, t);
 		}
 		return filters;
@@ -179,8 +184,8 @@ public class ContentWorkflowManager extends AbstractService implements IContentW
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getManagingContentTypes");
-			throw new ApsSystemException("Error extracting managing types by user " + user, t);
+			_logger.error("Error extracting types by user {}", user, t);
+			throw new ApsSystemException("Error extracting types by user " + user, t);
 		}
 		return types;
 	}

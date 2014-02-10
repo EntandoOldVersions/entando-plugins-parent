@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.entity.model.EntitySearchFilter;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model.WorkflowSearchFilter;
 
@@ -32,6 +35,8 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model
  */
 public class ContentSearcherDAO extends com.agiletec.plugins.jacms.aps.system.services.content.WorkContentSearcherDAO 
 		implements IContentSearcherDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ContentSearcherDAO.class);
 	
 	@Override
 	public List<String> loadContentsId(List<WorkflowSearchFilter> workflowFilters, String[] categories,
@@ -49,7 +54,8 @@ public class ContentSearcherDAO extends com.agiletec.plugins.jacms.aps.system.se
 			result = stat.executeQuery();
 			this.flowResult(contentsId, filters, result);
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in caricamento lista id contenuti", "loadContentsId");
+			_logger.error("Error loading content list",  t);
+			throw new RuntimeException("Error loading content list", t);
 		} finally {
 			closeDaoResources(result, stat, conn);
 		}
@@ -85,7 +91,8 @@ public class ContentSearcherDAO extends com.agiletec.plugins.jacms.aps.system.se
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in fase di creazione statement", "buildStatement");
+			_logger.error("Error creating statement",  t);
+			throw new RuntimeException("Error creating statement", t);
 		}
 		return stat;
 	}

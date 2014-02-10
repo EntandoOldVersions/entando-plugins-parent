@@ -20,7 +20,9 @@ package com.agiletec.plugins.jpcontentworkflow.aps.system.services.content;
 import java.util.Collection;
 import java.util.List;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.common.entity.model.EntitySearchFilter;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -30,10 +32,12 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model
  * @author E.Santoboni
  */
 public class ContentSearcherManager extends AbstractService implements IContentSearcherManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ContentSearcherManager.class);
 	
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 	
 	@Override
@@ -42,7 +46,7 @@ public class ContentSearcherManager extends AbstractService implements IContentS
 		try {
 			return this.getContentSearcherDAO().loadContentsId(workflowFilters, categories, filters, userGroupCodes);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadContentsId", "Error loading content identifiers filtered for workflow");
+			_logger.error("Error loading content identifiers filtered for workflow", t);
 			throw new ApsSystemException("Error loading content identifiers filtered for workflow", t);
 		}
 	}

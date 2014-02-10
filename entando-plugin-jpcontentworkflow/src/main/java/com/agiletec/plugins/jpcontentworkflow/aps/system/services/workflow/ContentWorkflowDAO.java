@@ -23,12 +23,17 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 
 /**
  * @author E.Santoboni
  */
 public class ContentWorkflowDAO extends AbstractDAO implements IContentWorkflowDAO {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ContentWorkflowDAO.class);
 	
 	@Override
 	public List<String> searchUsedSteps(String typeCode) {
@@ -45,7 +50,8 @@ public class ContentWorkflowDAO extends AbstractDAO implements IContentWorkflowD
 				steps.add(res.getString(1));
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in ricerca step utilizzati", "searchContentTypeSteps");
+			_logger.error("Error searching steps for type {}", typeCode,  t);
+			throw new RuntimeException("Error searching steps by type ", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}

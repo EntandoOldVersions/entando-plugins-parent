@@ -17,7 +17,9 @@
 */
 package com.agiletec.plugins.jpcontentworkflow.aps.system.services.content.helper;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.role.Permission;
 import com.agiletec.aps.system.services.user.UserDetails;
@@ -32,6 +34,8 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.services.workflow.model
  * @author E.Santoboni
  */
 public class ContentAuthorizationHelper extends com.agiletec.plugins.jacms.aps.system.services.content.helper.ContentAuthorizationHelper {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ContentAuthorizationHelper.class);
 	
 	@Override
 	public boolean isAuthToEdit(UserDetails user, Content content) throws ApsSystemException {
@@ -51,7 +55,7 @@ public class ContentAuthorizationHelper extends com.agiletec.plugins.jacms.aps.s
 				String status = content.getStatus();
 				if (!Content.STATUS_NEW.equals(status) && !Content.STATUS_DRAFT.equals(status)) {
 					if (Content.STATUS_READY.equals(status) || Content.STATUS_PUBLIC.equals(status)) {
-						isAllowed = this.getAuthorizationManager().isAuthOnPermission(user, Permission.SUPERVISOR);
+						isAllowed = this.getAuthorizationManager().isAuthOnPermission(user, Permission.CONTENT_SUPERVISOR);
 					} else {
 						Step step = workflow.getStep(status);
 						if (step != null) {
@@ -63,8 +67,8 @@ public class ContentAuthorizationHelper extends com.agiletec.plugins.jacms.aps.s
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "isAuthToEdit");
-			throw new ApsSystemException("Error verifing conte authority by user " + user, t);
+			_logger.error("Error verifing content authority by user {}", user, t);
+			throw new ApsSystemException("Error verifing content authority by user " + user, t);
 		}
 		return isAllowed;
 	}

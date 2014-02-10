@@ -17,7 +17,9 @@
 */
 package com.agiletec.plugins.jpcontentworkflow.aps.system.services.notifier.scheduler;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpcontentworkflow.aps.system.services.notifier.IWorkflowNotifierManager;
 
@@ -25,6 +27,8 @@ import com.agiletec.plugins.jpcontentworkflow.aps.system.services.notifier.IWork
  * @author E.Santoboni
  */
 public class MailSenderTask extends Task {
+
+	private static final Logger _logger = LoggerFactory.getLogger(MailSenderTask.class);
 	
 	public MailSenderTask(IWorkflowNotifierManager notifierManager) {
 		this._notifierManager = notifierManager;
@@ -35,7 +39,7 @@ public class MailSenderTask extends Task {
 		try {
 			this._notifierManager.sendMails();
 		} catch (ApsSystemException e) {
-			ApsSystemUtils.logThrowable(e, this, "execute");
+			_logger.error("error in execute", e);
 		}
 	}
 	
