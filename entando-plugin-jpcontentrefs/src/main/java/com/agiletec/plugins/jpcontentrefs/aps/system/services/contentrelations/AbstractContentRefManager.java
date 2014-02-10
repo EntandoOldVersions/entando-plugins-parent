@@ -21,18 +21,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.SmallContentType;
-import org.slf4j.Logger;
 
 /**
  * @author E.Santoboni
  */
 public abstract class AbstractContentRefManager extends AbstractService implements IContentRefManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(AbstractContentRefManager.class);
+	
 	
 	@Override
 	public void init() throws Exception {
@@ -52,8 +57,8 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 				this.setContentTypeElements(catDom.getContentTypes());
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadContentTypeCategory");
-			throw new ApsSystemException("Errorloading content type element", t);
+			_logger.error("Error loading content type element", t);
+			throw new ApsSystemException("Error loading content type element", t);
 		}
 	}
 	
@@ -82,7 +87,7 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 			
 			this.updateConfig();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "addCategoryRelation");
+			_logger.error("Error adding Category Relation for contentType ", contentType, t);
 			throw new ApsSystemException("Error adding Category Relation", t);
 		}
 	}
@@ -96,7 +101,7 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 			contentTypeElements.remove(categoryCode);
 			this.updateConfig();
 		} catch (ApsSystemException e) {
-			ApsSystemUtils.logThrowable(e, this, "removeRelation");
+			_logger.error("error removing relation {}/{}", categoryCode, contentType, e);
 			throw e;
 		}
 	}
@@ -108,8 +113,8 @@ public abstract class AbstractContentRefManager extends AbstractService implemen
 			String xml = dom.getXMLDocument();
 			this.getConfigInterface().updateConfigItem(this.getConfigItemName(), xml);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateConfig");
-			throw new ApsSystemException("Error adding item " + this.getConfigItemName(), t);
+			_logger.error("Error updating item {}", this.getConfigItemName(), t);
+			throw new ApsSystemException("Error updating item " + this.getConfigItemName(), t);
 		}
 	}
 	
