@@ -26,6 +26,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.group.Group;
@@ -37,6 +40,8 @@ import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.util.SmallEv
  * @author E.Santoboni
  */
 public class EventsOfDayTagDAO extends AbstractDAO implements IEventsOfDayTagDAO {
+
+	private static final Logger _logger =  LoggerFactory.getLogger(EventsOfDayTagDAO.class);
 	
 	public List<SmallEventOfDay> loadSmallEventsOfDay(EventsOfDayDataBean bean) 
 			throws ApsSystemException {
@@ -64,7 +69,8 @@ public class EventsOfDayTagDAO extends AbstractDAO implements IEventsOfDayTagDAO
 					bean.getAttributeNameStart(), bean.getAttributeNameEnd());
 			
 		} catch (Throwable t) {
-			processDaoException(t, "Errore in caricamento lista id smallEvents", "loadContentsId");
+			_logger.error("Error loading smallEvents list",  t);
+			throw new RuntimeException("Error loading smallEvents list", t);
 		} finally {
 			closeDaoResources(result, stat, conn);
 		}

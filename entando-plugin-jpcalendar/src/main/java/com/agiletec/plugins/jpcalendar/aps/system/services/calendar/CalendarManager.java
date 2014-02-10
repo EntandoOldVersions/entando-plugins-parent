@@ -27,7 +27,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.authorization.IAuthorizationManager;
@@ -42,7 +44,6 @@ import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpcalendar.aps.system.services.CalendarConstants;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.util.EventsOfDayDataBean;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.util.SmallEventOfDay;
-import org.slf4j.Logger;
 
 /**
  * Service for calendar data.
@@ -50,12 +51,14 @@ import org.slf4j.Logger;
  */
 @SuppressWarnings("serial")
 public class CalendarManager extends AbstractService implements PublicContentChangedObserver, ICalendarManager {
+
+	private static final Logger _logger =  LoggerFactory.getLogger(CalendarManager.class);
 	
 	@Override
 	public void init() throws ApsSystemException {
 		this.loadConfig();
 		this.initFirstYear();
-		ApsSystemUtils.getLogger().debug(this.getName() + ": initialized");
+		_logger.debug("{} ready. ", this.getName());
 	}
 	
 	@Override
@@ -65,21 +68,16 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 	}
 	
 	@Override
-	public int[] getEventsForMonth(Calendar requiredMonth, UserDetails user)
-			throws ApsSystemException {
-		Logger log = ApsSystemUtils.getLogger();
-		log.info("Required calendar for month "
-					+ DateConverter.getFormattedDate(requiredMonth.getTime(),
-							"MMMM yyyy"));
+	public int[] getEventsForMonth(Calendar requiredMonth, UserDetails user) throws ApsSystemException {
+		_logger.debug("Required calendar for month {}", DateConverter.getFormattedDate(requiredMonth.getTime(),"MMMM yyyy"));
 		int[] eventsForMonth = new int[31];
 		List<Group> groups = this.getAuthorizationManager().getUserGroups(user);
 		Set<String> groupForSearch = this.getGroupsForSearch(groups);
 		Iterator<String> iter = groupForSearch.iterator();
 		while (iter.hasNext()) {
 			String groupName = (String) iter.next();
-			log.trace("User " + user.getUsername() + " of group " + groupName);
-			int[] eventsForMonthOfGroup = this.searchEventsForMonth(
-					requiredMonth, groupName);
+			_logger.trace("User {} of group {}", user.getUsername(), groupName);
+			int[] eventsForMonthOfGroup = this.searchEventsForMonth(requiredMonth, groupName);
 			for (int i = 0; i < eventsForMonthOfGroup.length; i++) {
 				eventsForMonth[i] = eventsForMonth[i]
 						+ eventsForMonthOfGroup[i];
@@ -182,8 +180,8 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 			CalendarConfigDOM dom = new CalendarConfigDOM(xml);
 			this.setConfig(dom.extractConfig());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadConfig");
-			throw new ApsSystemException("Error on initialization", t);
+			_logger.error("Error loading config", t);
+			throw new ApsSystemException("Error loading config", t);
 		}
 	}
 
@@ -192,8 +190,8 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 			//this._firstYear = this.getCalendarDao().getFirstYear(_managedContentType, _managedDateStartAttribute);
 			this._firstYear = this.getCalendarDao().getFirstYear(this.getManagedContentType(), this.getManagedDateStartAttribute());
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "initFirstYear");
-			throw new ApsSystemException("Error on initialization", t);
+			_logger.error("Error on initFirst", t);
+			throw new ApsSystemException("Error on initFirstYear", t);
 		}
 	}
 	
@@ -247,7 +245,7 @@ public class CalendarManager extends AbstractService implements PublicContentCha
 			this.release();
 			this.initFirstYear();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateConfig");
+			_logger.error("Error updating config", t);
 			throw new ApsSystemException("Error updating config", t);
 		}
 	}

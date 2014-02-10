@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.AbstractDAO;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.util.DateEventInfo;
@@ -37,6 +40,8 @@ import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.util.DateEve
  * @author E.Santoboni
  */
 public class CalendarDAO extends AbstractDAO implements ICalendarDAO {
+
+	private static final Logger _logger =  LoggerFactory.getLogger(CalendarDAO.class);
 	
 	@Override
 	public int[] loadCalendar(Calendar requiredMonth, String groupName, String contentType, 
@@ -76,7 +81,8 @@ public class CalendarDAO extends AbstractDAO implements ICalendarDAO {
 				year = cal.get(Calendar.YEAR);
     		}
     	} catch (Throwable t) {
-			processDaoException(t,"Error in search for first year", "getFirstYear");
+			_logger.error("Error in search for first year. contenttype: {} attribute:{}", contentType, attributeName,  t);
+			throw new RuntimeException("Error in search for first year", t);
     	} finally {
     		closeDaoResources(res, stat, conn);
     	}
@@ -114,7 +120,8 @@ public class CalendarDAO extends AbstractDAO implements ICalendarDAO {
 				}
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error loading calendar", "loadCalendar");
+			_logger.error("Error loading calendar",  t);
+			throw new RuntimeException("Error loading calendar", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}

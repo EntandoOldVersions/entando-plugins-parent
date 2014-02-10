@@ -17,14 +17,18 @@
 */
 package com.agiletec.plugins.jpcalendar.aps.system.services.calendar;
 
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.exception.ApsSystemException;
 import java.io.StringReader;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.agiletec.aps.system.exception.ApsSystemException;
+
 
 /**
  * Support Class for XML parsing of jpcalendar plugin
@@ -42,6 +46,8 @@ import org.jdom.output.XMLOutputter;
  */
 public class CalendarConfigDOM {
 	
+	private static final Logger _logger =  LoggerFactory.getLogger(CalendarConfigDOM.class);
+
 	protected CalendarConfigDOM() {}
 	
 	protected CalendarConfigDOM(String xmlText) throws ApsSystemException {
@@ -100,8 +106,8 @@ public class CalendarConfigDOM {
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "extractConfig", "Error extracting config");
-			throw new ApsSystemException("Error parsing extracting", t);
+			_logger.error("Error extracting config", t);
+			throw new ApsSystemException("Error extracting config", t);
 		}
 		return config;
 	}
@@ -113,7 +119,7 @@ public class CalendarConfigDOM {
 		try {
 			this._doc = builder.build(reader);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "decodeDOM", "Error parsing config: " + t.getMessage());
+			_logger.error("Error parsing config {}", xmlText, t);
 			throw new ApsSystemException("Error parsing config", t);
 		}
 	}

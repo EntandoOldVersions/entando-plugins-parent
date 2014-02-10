@@ -20,7 +20,9 @@ package org.entando.entando.plugins.jpcalendar.apsadmin.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.common.entity.model.attribute.DateAttribute;
 import com.agiletec.aps.system.exception.ApsSystemException;
@@ -36,6 +38,8 @@ import com.agiletec.plugins.jpcalendar.aps.system.services.calendar.ICalendarMan
  * @author E.Santoboni
  */
 public class CalendarConfigAction extends BaseAction {
+
+	private static final Logger _logger =  LoggerFactory.getLogger(CalendarConfigAction.class);
 	
 	@Override
 	public void validate() {
@@ -61,7 +65,7 @@ public class CalendarConfigAction extends BaseAction {
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "validate", "Error validating config");
+			_logger.error("Error validating config", t);
 		}
 	}
 	
@@ -74,7 +78,7 @@ public class CalendarConfigAction extends BaseAction {
 				this.setEndDateAttributeName(config.getEndAttributeName());
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "edit");
+			_logger.error("error in edit", t);
 			return FAILURE;
 		}
 		return SUCCESS;
@@ -102,7 +106,7 @@ public class CalendarConfigAction extends BaseAction {
 			this.getCalendarManager().updateConfig(config);
 			this.addActionMessage(this.getText("message.calendarConfig.updated"));
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "save");
+			_logger.error("error in save", t);
 			return FAILURE;
 		}
 		return SUCCESS;
@@ -123,7 +127,7 @@ public class CalendarConfigAction extends BaseAction {
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getAllowedFilterTypes");
+			_logger.error("Error extracting allowed filter types", t);
 			throw new ApsSystemException("Error extracting allowed filter types", t);
 		}
 		return attributes;

@@ -23,7 +23,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
@@ -37,6 +39,8 @@ import com.agiletec.plugins.jpcalendar.aps.tags.util.ApsCalendar;
  */
 public class CalendarTag extends TagSupport {
 
+	private static final Logger _logger =  LoggerFactory.getLogger(CalendarTag.class);
+	
 	public int doStartTag() throws JspException {
 		
 		CalendarTagHelper calendarTagHelper = 
@@ -100,8 +104,8 @@ public class CalendarTag extends TagSupport {
 					firstYear, lastYear));
 
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Errore inizializzazione tag", t);
+			_logger.error("error in doStartTag", t);
+			throw new JspException("error in doStartTag", t);
 		}
 		return EVAL_BODY_INCLUDE;
 	}
