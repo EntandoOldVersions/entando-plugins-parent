@@ -23,7 +23,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
@@ -34,6 +36,8 @@ import com.agiletec.plugins.jpcmstagcloud.aps.system.services.tagcloud.ITagCloud
  * @author E.Santoboni
  */
 public class ContentListTag extends TagSupport {
+
+	private static final Logger _logger =  LoggerFactory.getLogger(ContentListTag.class);
 	
 	@Override
 	public int doStartTag() throws JspException {
@@ -46,8 +50,8 @@ public class ContentListTag extends TagSupport {
 			this.pageContext.setAttribute(this.getListName(), contentsId);
 			request.setAttribute("tagCategoryCode", tagCategoryCode);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Errore tag", t);
+			_logger.error("error in doStartTag", t);
+			throw new JspException("error in doStartTag", t);
 		}
 		return super.doStartTag();
 	}

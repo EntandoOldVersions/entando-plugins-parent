@@ -28,7 +28,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.agiletec.aps.system.ApsSystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.common.entity.model.EntitySearchFilter;
 import com.agiletec.aps.system.common.tree.ITreeNode;
@@ -53,10 +56,12 @@ import com.agiletec.plugins.jpcmstagcloud.aps.system.JpcmstagcloudSystemConstant
  */
 public class TagCloudManager extends AbstractService 
         implements ITagCloudManager, PublicContentChangedObserver {
-    
+
+	private static final Logger _logger = LoggerFactory.getLogger(TagCloudManager.class);
+	
     public void init() throws Exception {
         this.checkCategoryRoot();
-        ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
+        _logger.debug("{}: ready ", this.getClass().getName());
     }
     
     private void checkCategoryRoot() {
@@ -79,9 +84,9 @@ public class TagCloudManager extends AbstractService
             tagCloudRoot.setParent(root);
             tagCloudRoot.setParentCode(root.getCode());
             this.getCategoryManager().addCategory(tagCloudRoot);
-            ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": TagCloud category root Created ");
+            _logger.debug("TagCloud category root Created ");
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "checkCategoryRoot");
+        	_logger.error("Error on adding tag cloud category root", t);
             throw new RuntimeException("Error on adding tag cloud category root", t);
         }
     }
@@ -90,7 +95,7 @@ public class TagCloudManager extends AbstractService
         try {
             this.refresh();
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "updateFromPublicContentChanged", "Error refreshing service");
+        	_logger.error("Error refreshing service", t);
         }
     }
     
@@ -108,7 +113,7 @@ public class TagCloudManager extends AbstractService
         try {
             Category root = this.getCategoryManager().getCategory(this.getTagCloudCategoryRoot());
             if (root == null || root.getChildren() == null || root.getChildren().length == 0) {
-                ApsSystemUtils.getLogger().error("Category Root '" + this.getTagCloudCategoryRoot() + "' null or dosn't has children");
+                _logger.error("Category Root '{}' null or dosn't has children", this.getTagCloudCategoryRoot());
                 return new HashMap<ITreeNode, Integer>();
             }
             Set<String> userGroupCodes = this.getGroupsForSearch(currentUser);
@@ -132,7 +137,7 @@ public class TagCloudManager extends AbstractService
                 cloudInfos.put(this.getCategoryManager().getCategory(categoryCode), cloudInfosSmall.get(categoryCode));
             }
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "getCloudInfos");
+        	_logger.error("Error extracting cloud Infos by user {}", currentUser, t);
             throw new ApsSystemException("Error extracting cloud Infos by user " + currentUser, t);
         }
         return cloudInfos;
@@ -146,7 +151,7 @@ public class TagCloudManager extends AbstractService
             String[] categories = {categoryCode};
             contentsId = this.getContentManager().loadPublicContentsId(categories, filters, userGroupCodes);
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "loadPublicTaggedContentsId");
+        	_logger.error("Error extracting cloud Infos by user {}", currentUser, t);
             throw new ApsSystemException("Error extracting cloud Infos by user " + currentUser, t);
         }
         return contentsId;

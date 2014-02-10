@@ -28,8 +28,9 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.common.tree.ITreeNode;
@@ -46,6 +47,8 @@ import com.agiletec.plugins.jpcmstagcloud.aps.tags.util.CloudInfoBean;
  */
 public class TagCloudBuilderTag extends TagSupport {
 	
+	private static final Logger _logger =  LoggerFactory.getLogger(TagCloudBuilderTag.class);
+	
 	@Override
 	public int doStartTag() throws JspException {
 		ITagCloudManager tagCloudManager = (ITagCloudManager) ApsWebApplicationUtils.getBean(JpcmstagcloudSystemConstants.TAG_CLOUD_MANAGER, this.pageContext);
@@ -58,8 +61,8 @@ public class TagCloudBuilderTag extends TagSupport {
 			List<CloudInfoBean> cloudBeans = this.buildCloudsInfoBeans(occurrences);
 			this.pageContext.setAttribute(this.getCloudBeansVar(), cloudBeans);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doStartTag");
-			throw new JspException("Error during tag initialization ", t);
+			_logger.error("Error in doStartTag", t);
+			throw new JspException("Error in doStartTag", t);
 		}
 		return super.doStartTag();
 	}
@@ -86,7 +89,7 @@ public class TagCloudBuilderTag extends TagSupport {
 			BeanComparator comparator = new BeanComparator("title");
 			Collections.sort(beans, comparator);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "buildCloudsInfoBeans");
+			_logger.error("Error building Cloud info", t);
 			throw new ApsSystemException("Error building Cloud info", t);
 		}
 		return beans;
