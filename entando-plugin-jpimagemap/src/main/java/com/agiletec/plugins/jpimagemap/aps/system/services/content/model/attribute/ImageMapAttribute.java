@@ -17,6 +17,7 @@
 */
 package com.agiletec.plugins.jpimagemap.aps.system.services.content.model.attribute;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
@@ -26,14 +27,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.agiletec.aps.system.common.entity.model.AttributeFieldError;
+import com.agiletec.aps.system.common.entity.model.AttributeTracer;
 import com.agiletec.aps.system.common.entity.model.attribute.AbstractComplexAttribute;
 import com.agiletec.aps.system.common.entity.model.attribute.AttributeInterface;
 import com.agiletec.aps.system.common.entity.model.attribute.DefaultJAXBAttribute;
 import com.agiletec.aps.system.exception.ApsSystemException;
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.common.entity.model.AttributeFieldError;
-import com.agiletec.aps.system.common.entity.model.AttributeTracer;
 import com.agiletec.plugins.jacms.aps.system.JacmsSystemConstants;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.extraAttribute.ImageAttribute;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.extraAttribute.JAXBLinkValue;
@@ -46,13 +48,13 @@ import com.agiletec.plugins.jpimagemap.aps.system.services.content.model.attribu
 import com.agiletec.plugins.jpimagemap.aps.system.services.content.model.attribute.model.JAXBImageMapValue;
 import com.agiletec.plugins.jpimagemap.aps.system.services.content.model.attribute.util.LinkedArea;
 
-import java.awt.Rectangle;
-
 /**
  * Rappresenta un informazione tipo ImageMap.
  * @author E.Santoboni - G.Cocco
  */
 public class ImageMapAttribute extends AbstractComplexAttribute implements ResourceAttributeInterface {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ImageMapAttribute.class);
 	
 	@Override
 	public void setRenderingLang(String langCode) {
@@ -254,7 +256,7 @@ public class ImageMapAttribute extends AbstractComplexAttribute implements Resou
 				}
 			}
         } catch (Exception e) {
-            ApsSystemUtils.logThrowable(e, this, "valueFrom", "Error extracting linked area from jaxbAttribute");
+        	_logger.error("Error extracting linked area from jaxbAttribute", e);
         }
     }
     
@@ -298,7 +300,7 @@ public class ImageMapAttribute extends AbstractComplexAttribute implements Resou
 				this.isIntersected(area, areaTracer, errors);
 			}
         } catch (Throwable t) {
-            ApsSystemUtils.logThrowable(t, this, "validate");
+        	_logger.error("Error validating image map attribute", t);
             throw new RuntimeException("Error validating image map attribute", t);
         }
         return errors;
