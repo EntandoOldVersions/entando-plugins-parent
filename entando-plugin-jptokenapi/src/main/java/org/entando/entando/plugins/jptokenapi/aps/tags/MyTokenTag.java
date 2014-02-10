@@ -17,23 +17,27 @@
 */
 package org.entando.entando.plugins.jptokenapi.aps.tags;
 
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.SystemConstants;
-import com.agiletec.aps.system.services.user.UserDetails;
-import com.agiletec.aps.util.ApsWebApplicationUtils;
-
 import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
+
 import org.entando.entando.plugins.jptokenapi.aps.system.JpTokenApiSystemConstants;
 import org.entando.entando.plugins.jptokenapi.aps.system.token.IApiTokenizerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.agiletec.aps.system.SystemConstants;
+import com.agiletec.aps.system.services.user.UserDetails;
+import com.agiletec.aps.util.ApsWebApplicationUtils;
 
 /**
  * @author E.Santoboni
  */
 public class MyTokenTag extends TagSupport {
+
+	private static final Logger _logger = LoggerFactory.getLogger(MyTokenTag.class);
 	
 	@Override
 	public int doEndTag() throws JspException {
@@ -48,7 +52,7 @@ public class MyTokenTag extends TagSupport {
 			this._value = apiTokenizerManager.getToken(currentUser.getUsername());
 			this.evalValue();
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "doEndTag");
+			_logger.error("error in doEndTag", t);
 			throw new JspException("Error closing tag ", t);
 		}
 		this.release();
@@ -62,7 +66,7 @@ public class MyTokenTag extends TagSupport {
 			try {
 				this.pageContext.getOut().print(this.getValue());
 			} catch (IOException e) {
-				ApsSystemUtils.logThrowable(e, this, "evalValue");
+				_logger.error("error in evalValue", e);
 				throw new JspException("Error evaling value", e);
 			}
 		}

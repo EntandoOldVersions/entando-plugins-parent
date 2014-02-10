@@ -17,19 +17,23 @@
 */
 package org.entando.entando.plugins.jptokenapi.aps.system.token;
 
-import com.agiletec.aps.system.common.AbstractDAO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.agiletec.aps.system.common.AbstractDAO;
 
 /**
  * @author E.Santoboni
  */
 public class ApiTokenDAO extends AbstractDAO implements IApiTokenDAO {
-	
+
+	private static final Logger _logger = LoggerFactory.getLogger(ApiTokenDAO.class);
+
 	@Override
 	public String updateToken(String username) {
 		Connection conn = null;
@@ -47,7 +51,8 @@ public class ApiTokenDAO extends AbstractDAO implements IApiTokenDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while updating token", "updateToken");
+			_logger.error("Error while updating token for user {}", username, t);
+			throw new RuntimeException("Error while updating token", t);
 		} finally {
 			closeDaoResources(null, stat, conn);
 		}
@@ -64,7 +69,8 @@ public class ApiTokenDAO extends AbstractDAO implements IApiTokenDAO {
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
-			processDaoException(t, "Error while deleting a token", "removeToken");
+			_logger.error("Error while deleting token by username {}", username,  t);
+			throw new RuntimeException("Error while deleting token by username", t);
 		} finally {
 			closeConnection(conn);
 		}
@@ -77,7 +83,8 @@ public class ApiTokenDAO extends AbstractDAO implements IApiTokenDAO {
 			stat.setString(1, username);
 			stat.executeUpdate();
 		} catch (Throwable t) {
-			processDaoException(t, "Error while deleting a token", "removeToken");
+			_logger.error("Error while deleting a token for user {}", username,  t);
+			throw new RuntimeException("Error while deleting a token", t);
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -111,7 +118,8 @@ public class ApiTokenDAO extends AbstractDAO implements IApiTokenDAO {
 				data = res.getString(1);
 			}
 		} catch (Throwable t) {
-			processDaoException(t, "Error while loading data", "get");
+			_logger.error("Error while loading data",  t);
+			throw new RuntimeException("Error while loading data", t);
 		} finally {
 			closeDaoResources(res, stat, conn);
 		}

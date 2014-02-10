@@ -17,22 +17,25 @@
 */
 package org.entando.entando.plugins.jptokenapi.aps.system.token;
 
-import com.agiletec.aps.system.ApsSystemUtils;
-import com.agiletec.aps.system.common.AbstractService;
-import com.agiletec.aps.system.exception.ApsSystemException;
-
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.agiletec.aps.system.common.AbstractService;
+import com.agiletec.aps.system.exception.ApsSystemException;
 
 /**
  * @author E.Santoboni
  */
 @Aspect
 public class ApiTokenizerManager extends AbstractService implements IApiTokenizerManager {
+
+	private static final Logger _logger = LoggerFactory.getLogger(ApiTokenizerManager.class);
 	
 	@Override
 	public void init() throws Exception {
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": initialized");
+		_logger.debug("{} ready", this.getClass().getName());
 	}
 	
 	@Override
@@ -41,7 +44,7 @@ public class ApiTokenizerManager extends AbstractService implements IApiTokenize
 		try {
 			username = this.getApiTokenDAO().getUser(token);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getUser", "Error extracting user by token '" + token + "'");
+			_logger.error("Error extracting user by token {}", token, t);
 			throw new ApsSystemException("Error extracting user by token '" + token + "'", t);
 		}
 		return username;
@@ -53,7 +56,7 @@ public class ApiTokenizerManager extends AbstractService implements IApiTokenize
 		try {
 			token = this.getApiTokenDAO().getToken(username);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getToken", "Error extracting token by username '" + username + "'");
+			_logger.error("Error extracting token by username {}", username, t);
 			throw new ApsSystemException("Error extracting token by username '" + username + "'", t);
 		}
 		return token;
@@ -65,7 +68,7 @@ public class ApiTokenizerManager extends AbstractService implements IApiTokenize
 		try {
 			token = this.getApiTokenDAO().updateToken(username);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateToken", "Error updating token by username '" + username + "'");
+			_logger.error("Error updating token by username {}", username, t);
 			throw new ApsSystemException("Error updating token by username '" + username + "'", t);
 		}
 		return token;
@@ -76,7 +79,7 @@ public class ApiTokenizerManager extends AbstractService implements IApiTokenize
 		try {
 			this.updateToken((String) username);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "changePassword", "Error updating token by username '" + username + "'");
+			_logger.error("Error updating token by username {}", username, t);
 		}
 	}
 	
