@@ -37,7 +37,6 @@ import com.agiletec.plugins.jacms.aps.system.services.content.IContentManager;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jacms.aps.system.services.content.model.ContentRecordVO;
 import com.agiletec.plugins.jacms.aps.system.services.resource.model.ResourceInterface;
-import com.agiletec.plugins.jpuserreg.aps.system.services.userreg.UserRegManager;
 import com.agiletec.plugins.jpversioning.aps.system.services.versioning.ContentVersion;
 
 public class JpversioningTestHelper extends AbstractDAO {
