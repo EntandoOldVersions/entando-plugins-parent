@@ -28,11 +28,11 @@
 					<%-- The addon group --%>
 					<span class="input-group-addon">
 						<%-- Icon --%>
-						<span class="icon fa fa-file-text-o fa-lg" title="<s:text name="label.search.by"/>&#32;<s:text name="Date"/>"></span>
-						<span class="sr-only"><s:text name="label.search.by" />&#32;<s:text name="Date"/></span>
+						<span class="icon fa fa-file-text-o fa-lg" title="<s:text name="label.search.by"/>&#32;<s:text name="actiondate"/>"></span>
+						<span class="sr-only"><s:text name="label.search.by" />&#32;<s:text name="actiondate"/></span>
 					</span>
 					<%-- The main input --%>
-					<wpsf:textfield useTabindexAutoIncrement="true" cssClass="form-control input-lg datepicker" id="jpactionlogger_dateStart_cal" name="start" placeholder="Date: dd/MM/yyyy" />
+					<wpsf:textfield useTabindexAutoIncrement="true" cssClass="form-control input-lg datepicker" id="jpactionlogger_dateStart_cal" name="start" placeholder="%{getText('actiondate')} (dd/MM/yyyy)" />
 					<%-- The search buttons --%>
 					<span class="input-group-btn">
 						<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.search')}" type="button" cssClass="btn btn-primary btn-lg">
