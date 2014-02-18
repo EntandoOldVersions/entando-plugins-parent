@@ -32,7 +32,7 @@
 						<span class="sr-only"><s:text name="label.search.by" />&#32;<s:text name="Date"/></span>
 					</span>
 					<%-- The main input --%>
-					<wpsf:textfield useTabindexAutoIncrement="true" cssClass="form-control input-lg" id="jpactionlogger_dateStart_cal" name="start" placeholder="Date: dd/MM/yyyy" />
+					<wpsf:textfield useTabindexAutoIncrement="true" cssClass="form-control input-lg datepicker" id="jpactionlogger_dateStart_cal" name="start" placeholder="Date: dd/MM/yyyy" />
 					<%-- The search buttons --%>
 					<span class="input-group-btn">
 						<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.search')}" type="button" cssClass="btn btn-primary btn-lg">
@@ -54,7 +54,7 @@
 								<div class="form-group">
 									<label for="jpactionlogger_dateEnd_cal" class="control-label col-sm-2 text-right"><s:text name="end" /></label>
 									<div class="col-sm-5">
-										<wpsf:textfield useTabindexAutoIncrement="true"	cssClass="form-control" id="jpactionlogger_dateEnd_cal" name="end" placeholder="dd/MM/yyyy" />
+										<wpsf:textfield useTabindexAutoIncrement="true"	cssClass="form-control datepicker" id="jpactionlogger_dateEnd_cal" name="end" placeholder="dd/MM/yyyy" />
 									</div>
 								</div>
 							<%--Form Field User--%>
