@@ -1,21 +1,28 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
 <%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
-<%@ taglib prefix="wp" uri="/aps-core" %>
-<h1><a href="<s:url action="entryPoint" />" title="<s:text name="note.goToSomewhere" />: <s:text name="jpstats.header.statistics" />"><s:text name="jpstats.header.statistics" /></a></h1>
-<div id="main">
-	<h2><s:text name="jpstats.title.stats.trash" /></h2>
-	<s:form action="delete">
-		<p>
+<h1 class="panel panel-default title-page">
+    <span class="panel-body display-block"> <a  href="<s:url action="entryPoint" />" title="<s:text name="note.goToSomewhere" />: <s:text name="jpstats.header.statistics" />"><s:text name="jpstats.header.statistics" /></a> &#32/&#32 <s:text name="jpstats.title.stats.trash" /></span>      
+</h1>
+<div id="main">    
+    <s:form action="delete">
+		<p class="sr-only">
 			<s:hidden name="startDate" ></s:hidden>
 			<s:hidden name="endDate" ></s:hidden>
-			<s:text name="jpstas.note.delete.are.you.sure" />
-			<em><s:date name="startDate" format="dd/MM/yyyy HH:mm" />&#32;&mdash;&#32;<s:date name="endDate" format="dd/MM/yyyy HH:mm" /></em>
-			&#32;
-			?
-			&#32;
-			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.confirm')}" cssClass="button" />
-		</p>
+       </p>
+       <div class="alert alert-warning">
+          <p>
+            <s:text name="jpstas.note.delete.are.you.sure" />
+          <code><s:date name="startDate" format="dd/MM/yyyy HH:mm" />&#32;&mdash;&#32;<s:date name="endDate" format="dd/MM/yyyy HH:mm" /></code>
+			&#32;?&#32;
+          </p>         
+           <div class="text-center margin-large-top"> 
+               <s:submit useTabindexAutoIncrement="true"  type="button" action="delete" cssClass="btn btn-warning btn-lg">
+                <span class="icon fa fa-times-circle"></span>&#32;
+                <s:text name="label.remove" />
+              </s:submit>
+           </div>		
+       </div>
 	</s:form>
-
 </div>
