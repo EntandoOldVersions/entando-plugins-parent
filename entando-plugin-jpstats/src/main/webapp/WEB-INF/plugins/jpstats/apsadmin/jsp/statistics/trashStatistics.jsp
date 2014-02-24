@@ -3,7 +3,7 @@
 <%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
 <%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
 <h1 class="panel panel-default title-page">
-    <span class="panel-body display-block"> <a  href="<s:url action="entryPoint" />" title="<s:text name="note.goToSomewhere" />: <s:text name="jpstats.header.statistics" />"><s:text name="jpstats.header.statistics" /></a> &#32/&#32 <s:text name="jpstats.title.stats.trash" /></span>      
+    <span class="panel-body display-block"> <a  href="<s:url action="entryPoint" />" title="<s:text name="note.goToSomewhere" />: <s:text name="jpstats.header.statistics" />"><s:text name="jpstats.header.statistics" /></a>&#32;/&#32;<s:text name="jpstats.title.stats.trash" /></span>      
 </h1>
 <div id="main">    
     <s:form action="delete">

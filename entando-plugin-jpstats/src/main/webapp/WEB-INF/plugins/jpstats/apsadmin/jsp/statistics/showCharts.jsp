@@ -4,7 +4,7 @@
 <%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
 <%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
 <h1 class="panel panel-default title-page">
-	<span class="panel-body display-block"> <a  href="<s:url action="entryPoint" />" title="<s:text name="note.goToSomewhere" />: <s:text name="jpstats.header.statistics" />"><s:text name="jpstats.header.statistics" /></a> &#32;/&#32; <s:text name="jpstats.title.stats.detail" /></span>
+	<span class="panel-body display-block"> <a  href="<s:url action="entryPoint" />" title="<s:text name="note.goToSomewhere" />: <s:text name="jpstats.header.statistics" />"><s:text name="jpstats.header.statistics" /></a>&#32;/&#32;<s:text name="jpstats.title.stats.detail" /></span>
 </h1>
 <div id="main">
 		<%--Error management--%>
@@ -25,16 +25,16 @@
 	<%-- Hits --%>
 	<s:if test="selectedTypes.contains('hits')">
 				<s:set name="hitsProducer" value="hitsTimeData"></s:set>
-			<s:if test="#hitsProducer != null">
-								<s:set var="xaxisLabelVar" value="%{getText('label.axis.intervallo')}" scope="page" />
+    <s:if test="#hitsProducer != null">
+        <s:set var="xaxisLabelVar" value="%{getText('label.axis.intervallo')}" scope="page" />
 				<s:set var="yaxisLabelVar" value="%{getText('label.axis.hits')}" scope="page" />
 				<cewolf:chart id="hitsChart" type="verticalXYBar" xaxislabel="${xaxisLabelVar}" yaxislabel="${yaxisLabelVar}" showlegend="false"><cewolf:colorpaint color="#FFFFFF" />
 					<cewolf:data>
 						<cewolf:producer id="hitsProducer" />
 					</cewolf:data>
 				</cewolf:chart>
-				<p><img width="800" src="<cewolf:imgurl chartid="hitsChart" height="500" width="800" renderer="cewolf" mime="image/png" />"  class="img-rounded img-responsive"></p>
-			</s:if>
+				<p><img src="<cewolf:imgurl chartid="hitsChart" height="500" width="800" renderer="cewolf" mime="image/png" />"  class="img-rounded img-responsive"></p>
+    </s:if>
 		</s:if>
 	<%-- Top pages --%>
 	<s:if test="selectedTypes.contains('topPages')">
@@ -47,7 +47,7 @@
 						<cewolf:producer id="topPagesProducer" />
 					</cewolf:data>
 				</cewolf:chart>
-								<p><img width="800" src="<cewolf:imgurl chartid="topPagesChart" height="500" width="800" renderer="cewolf" mime="image/png" />"  class="img-rounded img-responsive"></p>
+								<p><img src="<cewolf:imgurl chartid="topPagesChart" height="500" width="800" renderer="cewolf" mime="image/png" />"  class="img-rounded img-responsive"></p>
 			</s:if>
 	</s:if>
 	<%-- TopContents --%>
@@ -61,7 +61,7 @@
 					<cewolf:producer id="topContentsProducer" />
 				</cewolf:data>
 			</cewolf:chart>
-						<p><img width="800" src="<cewolf:imgurl chartid="topContentsChart" height="500" width="800" renderer="cewolf" mime="image/png" />"  class="img-rounded img-responsive"></p>
+						<p><img src="<cewolf:imgurl chartid="topContentsChart" height="500" width="800" renderer="cewolf" mime="image/png" />"  class="img-rounded img-responsive"></p>
 		</s:if>
 	</s:if>
 	<%-- Averages --%>
