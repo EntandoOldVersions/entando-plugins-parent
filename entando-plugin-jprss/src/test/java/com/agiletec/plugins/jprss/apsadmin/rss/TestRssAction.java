@@ -86,6 +86,7 @@ public class TestRssAction extends ApsAdminPluginBaseTestCase {
 		this.initAction(NAMESPACE, "save");
 		this.addParameter("strutsAction", "1");
 		this.addParameter("contentType", "ART");
+		this.addParameter("filters", "");
 		String result = this.executeAction();
 		assertEquals(Action.INPUT, result);
 		Map fieldErrors = this.getAction().getFieldErrors();
