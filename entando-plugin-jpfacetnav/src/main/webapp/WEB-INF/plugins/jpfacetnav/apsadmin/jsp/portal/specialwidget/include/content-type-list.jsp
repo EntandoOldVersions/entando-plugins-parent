@@ -2,39 +2,37 @@
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
 <%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
-<fieldset>
-	<legend><s:text name="jpfacetnav.title.contentTypes" /></legend>
-	<p class="noscreen">
-		<wpsf:hidden name="contentTypesFilter" />
-	</p>
-	<p>
-		<label for="contentTypeCode" class="basic-mint-label"><s:text name="label.type"/>:</label>
-		<wpsf:select useTabindexAutoIncrement="true" name="contentTypeCode" id="contentTypeCode" list="contentTypes" listKey="code" listValue="descr" cssClass="text" />
-		<wpsf:submit useTabindexAutoIncrement="true" action="joinContentType" value="%{getText('label.add')}" cssClass="button" />
-	</p>
-	<s:if test="%{contentTypeCodes.size()>0}">
-		<table class="generic" summary="<s:text name="jpfacetnav.note.contentTypes.summary"/>">
-			<caption><span><s:text name="jpfacetnav.title.contentTypes.associated"/></span></caption>
-			<tr>
-				<th><s:text name="jpfacetnav.label.contentType"/></th>
-				<th class="icon"><abbr title="<s:text name="label.remove" />">&ndash;</abbr></th>
-			</tr>
-			<s:iterator value="contentTypeCodes" id="currentContentTypeCode" status="rowstatus">
-			<tr>
-				<td>
-					<wpsa:set name="currentContentType" value="%{getContentType(#currentContentTypeCode)}" />
-					<input type="hidden" name="contentTypeCodes" value="<s:property value="#currentContentTypeCode" />" id="contentTypeCodes-<s:property value="#rowstatus.index" />"/>
-					<s:property value="#currentContentType.descr"/>
-				</td>
-				<td class="icon">
-					<wpsa:actionParam action="removeContentType" var="actionName" >
-						<wpsa:actionSubParam name="contentTypeCode" value="%{#currentContentTypeCode}" />
-					</wpsa:actionParam>
-					<s:set name="iconImagePath" id="iconImagePath"><wp:resourceURL/>administration/common/img/icons/delete.png</s:set>
-					<wpsf:submit useTabindexAutoIncrement="true" action="%{#actionName}" type="image" src="%{#iconImagePath}" value="%{getText('label.remove')}" title="%{getText('label.remove')}: %{#currentContentType.descr}" />
-				</td>
-			</tr>
-			</s:iterator>
-		</table>
-	</s:if>
+<fieldset class="margin-large-top">
+  <legend class="margin-small-bottom"><s:text name="jpfacetnav.title.contentTypes" /></legend>
+  <p class="sr-only">
+    <wpsf:hidden name="contentTypesFilter" />
+  </p>
+  <div class="input-group margin-base-vertical">
+    <label for="contentTypeCode" class="sr-only"><s:text name="label.type"/></label>
+      <wpsf:select name="contentTypeCode" id="contentTypeCode" list="contentTypes" listKey="code" listValue="descr"  cssClass="form-control "/>
+      <span class="input-group-btn">
+        <wpsf:submit action="joinContentType" type="button" cssClass="btn btn-default" >
+          <span class="icon fa fa-plus-circle"></span>
+          <s:text name="label.add" />
+        </wpsf:submit>
+      </span>
+  </div>
+  <s:if test="%{contentTypeCodes.size()>0}">
+    <s:iterator value="contentTypeCodes" id="currentContentTypeCode" status="rowstatus">
+      <wpsa:set name="currentFacet" value="%{getFacet(#currentFacetCode)}" />
+      <span class="label label-default label-sm pull-left padding-small-top padding-small-bottom margin-small-right margin-small-bottom">
+        <wpsa:set name="currentContentType" value="%{getContentType(#currentContentTypeCode)}" />
+        <abbr title="<s:property value="#currentContentType.descr"/>">
+          <s:property value="#currentContentType.descr" />
+        </abbr>&#32;
+        <wpsa:actionParam action="removeContentType" var="actionName" >
+          <wpsa:actionSubParam name="contentTypeCode" value="%{#currentContentTypeCode}" />
+        </wpsa:actionParam>
+        <wpsf:submit type="button" action="%{#actionName}" title="%{getText('label.remove') + ' ' + #currentContentTypeCode.defaultFullTitle}" cssClass="btn btn-default btn-xs badge">
+           <span class="icon fa fa-times"></span>
+           <span class="sr-only">x</span>
+        </wpsf:submit>
+      </span>
+    </s:iterator>
+  </s:if>
 </fieldset>
