@@ -21,11 +21,11 @@ import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.apsadmin.system.BaseAction;
 import static com.agiletec.apsadmin.system.BaseAction.FAILURE;
-import com.agiletec.plugins.jpmail.aps.services.JpmailSystemConstants;
 import com.agiletec.plugins.jpmail.aps.services.mail.IMailManager;
 import com.agiletec.plugins.jpmail.aps.services.mail.MailConfig;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import java.io.InputStream;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.entando.entando.aps.system.services.userprofile.model.IUserProfile;
 
@@ -83,8 +83,20 @@ public class SmtpConfigAction extends BaseAction implements ISmtpConfigAction {
 			String mailSubject = this.getText("test.mail.text");
 			String[] mailAddresses = {mail};
 			try {
-				this.getMailManager().sendMailForTest(mailText, mailSubject, mailAddresses, "CODE1");
+				String sender = this.getMailManager().getMailConfig().getSender("CODE1");
+				if(null == sender){
+					Map<String, String> senders = this.getMailManager().getMailConfig().getSenders();
+					if(senders.entrySet().iterator().hasNext()){
+						sender = senders.entrySet().iterator().next().getKey();
+					} else {
+						throw new ApsSystemException(this.getText("note.mail.nosender"));
+					}
+				}
+				this.getMailManager().sendMailForTest(mailText, mailSubject, mailAddresses, sender);
 				this.addActionMessage(this.getText("note.mail.ok"));
+			} catch (ApsSystemException t) {
+				this.addActionError(this.getText("note.mail.nosender"));
+				ApsSystemUtils.logThrowable(t, this, "testMail");
 			} catch (Throwable t) {
 				this.addActionError(this.getText("note.mail.ko"));
 				ApsSystemUtils.logThrowable(t, this, "testMail");
