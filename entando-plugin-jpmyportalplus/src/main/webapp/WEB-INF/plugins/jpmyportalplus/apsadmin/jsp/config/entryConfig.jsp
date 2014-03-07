@@ -99,7 +99,7 @@
 			<table class="table table-bordered">
 				<tr>
                                     <th class="text-center text-nowap col-xs-6 col-sm-3 col-md-3 col-lg-3" scope="col"><abbr title="<s:text name="label.remove" />">&ndash;</abbr></th>
-                                    <th scope="col">Showlet</th>
+                                    <th scope="col">Widget</th>
 				</tr>
 
 				<s:iterator var="showletCode" value="#showletTypeCodes" status="rowstatus">
@@ -108,7 +108,7 @@
                                             <wpsa:actionParam action="removeWidget" var="actionName" ><wpsa:actionSubParam name="showletCode" value="%{#showletCode}" /></wpsa:actionParam>
                                             <wpsf:submit type="button" src="%{#iconImagePath}" action="%{#actionName}" value="%{getText('label.remove')}" title="%{getText('label.remove') + ': ' + getTitle(#showletCode, #showletType.getTitles())}" cssClass="btn btn-warning btn-xs">
                                                 <span class="icon fa fa-times-circle-o"></span>
-                                            </wpsf:submit>    
+                                            </wpsf:submit>
                                         </td>
                                         <td>
                                             <wpsa:set var="showletType" value="%{getShowletType(#showletCode)}" />
@@ -126,8 +126,8 @@
                     <span class="icon fa fa-floppy-o"></span>&#32;
                     <s:text name="%{getText('label.save')}"/>
                 </wpsf:submit>
-            </div>    
+            </div>
 	</div>
-    </div>    
+    </div>
 </s:form>
 </div>
