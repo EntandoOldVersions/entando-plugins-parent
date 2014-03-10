@@ -3,94 +3,128 @@
 <%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
 <%@ taglib uri="/aps-core" prefix="wp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<h1><s:text name="title.workflowManagement" /></h1>
+<h1 class="panel panel-default title-page">
+	<span class="panel-body display-block">
+		<s:text name="title.workflowManagement" />
+		&#32;/&#32;
+		<s:text name="title.workflowNotifierManagement.config" />
+	</span>
+</h1>
 <div id="main">
-	<h2><s:text name="title.workflowNotifierManagement.config" /></h2> 
-  
-	<s:form action="save" >
+	<s:form action="save" cssClass="">
 		<s:if test="hasFieldErrors()">
-			<div class="message message_error">	
-				<h3><s:text name="message.title.FieldErrors" /></h3>
-				<ul>
-					<s:iterator value="fieldErrors">
-						<s:iterator value="value"><li><s:property escape="false" /></li></s:iterator>
-					</s:iterator>
-				</ul>
+			<div class="alert alert-danger alert-dismissable fade in">
+				<button class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
+				<h2 class="h4 margin-none"><s:text name="message.title.FieldErrors" /></h2>
+					<ul class="margin-base-top">
+						<s:iterator value="fieldErrors">
+							<s:iterator value="value">
+								<li><s:property escape="false" /></li>
+							</s:iterator>
+						</s:iterator>
+					</ul>
 			</div>
 		</s:if>
 		<s:if test="hasActionErrors()">
-			<div class="message message_error">	
-				<h3><s:text name="message.title.ActionErrors" /></h3>
-				<ul>
-					<s:iterator value="actionErrors">
-						<li><s:property escape="false" /></li>
+			<div class="alert alert-danger alert-dismissable fade in">
+				<button class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
+				<h2 class="h4 margin-none"><s:text name="message.title.FieldErrors" /></h2>
+					<ul class="margin-base-top">
+						<s:iterator value="actionErrors">
+						<li><s:property escape="false"/></li>
 					</s:iterator>
-				</ul>
+					</ul>
 			</div>
 		</s:if>
-		
-		<fieldset class="margin-more-top">
+
+		<fieldset class="col-xs-12">
 			<legend><s:text name="notifier.generalSettings" /></legend>
-			<p>
-				<wpsf:checkbox useTabindexAutoIncrement="true" name="config.active" id="active" cssClass="radiocheck" />&nbsp;
-				<label for="active"><s:text name="label.active" /></label>
-			</p>
+				<div class="form-group">
+					<div class="checkbox">
+						<label for="active">
+							<wpsf:checkbox name="config.active" id="active" />&nbsp;
+							<s:text name="label.active" />
+						</label>
+					</div>
+				</div>
 		</fieldset>
-		
-		<fieldset>
+
+		<fieldset class="col-xs-12">
 			<legend><s:text name="label.schedulerSettings" /></legend>
-			<p>
-				<label for="hoursDelay" class="basic-mint-label"><s:text name="label.hoursDelay" />:</label>
+			<div class="form-group">
+				<label for="hoursDelay"><s:text name="label.hoursDelay" /></label>
 				<s:set name="hoursDelayVar" value="%{hoursDelay}" scope="page" />
-				<select name="config.hoursDelay" id="hoursDelay">
+				<select name="config.hoursDelay" id="hoursDelay" class="form-control">
 					<c:forEach begin="1" end="10" varStatus="status">
-						<option <c:if test="${(status.count*24) == hoursDelayVar}">selected="selected"</c:if> 
+						<option <c:if test="${(status.count*24) == hoursDelayVar}">selected="selected"</c:if>
 							value="<c:out value="${status.count*24}" />" ><c:out value="${status.count*24}" /></option>
 					</c:forEach>
 				</select>
-			</p>
-			<p>
-				<label for="jpcontentworkflownotifier_date_cal" class="basic-mint-label"><s:text name="label.startDate" />:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="startDate" id="jpcontentworkflownotifier_date_cal" cssClass="text" />&nbsp;<span class="monospace"><s:text name="label.startDatePattern" /></span>
-			</p>
-			<p>
-				<span class="bold"><s:text name="notifier.time"/></span>&nbsp;
-				<wpsf:select useTabindexAutoIncrement="true" list="%{getCounterArray(0, 24)}" name="hour" id="hour"/>:
-				<wpsf:select useTabindexAutoIncrement="true" list="%{getCounterArray(0, 60)}" name="minute" id="minute"/>
-			</p>
+			</div>
+			<div class="form-group">
+				<label for="jpcontentworkflownotifier_date_cal"><s:text name="label.startDate" /></label>
+				<wpsf:textfield name="startDate" id="jpcontentworkflownotifier_date_cal" cssClass="form-control datepicker" />
+				<span clasS="help-block">
+					<s:text name="label.startDatePattern" />
+				</span>
+			</div>
+			<div class="form-group row">
+				<div class="col-xs-12">
+					<label><s:text name="notifier.time"/></label>
+				</div>
+				<div class="col-xs-3">
+					<label for="hour" class="sr-only">Hour</label>
+					<wpsf:select list="%{getCounterArray(0, 24)}" name="hour" id="hour" cssClass="form-control" />
+				</div>
+				<div class="col-xs-1 text-center" style="max-width: 0.5em; width: 0.5em;">:</div>
+				<div class="col-xs-3">
+					<label for="minute" class="sr-only">Minute</label>
+					<wpsf:select list="%{getCounterArray(0, 60)}" name="minute" id="minute" cssClass="form-control" />
+				</div>
+			</div>
 		</fieldset>
-		
-		<fieldset>
+
+		<fieldset class="col-xs-12 margin-large-top">
 			<legend><s:text name="label.mailSettings" /></legend>
-			<p>
-				<label for="senderCode" class="basic-mint-label"><s:text name="label.senderCode"/>:</label>
-				<wpsf:select useTabindexAutoIncrement="true" name="config.senderCode" id="senderCode" list="senderCodes" />
-			</p>
-			<p>
-				<wpsf:checkbox useTabindexAutoIncrement="true" name="config.html" id="html" cssClass="radiocheck" />&nbsp; 
-				<label for="html"><s:text name="label.html" /></label>
-			</p>
-			<p>
-				<label for="subject" class="basic-mint-label"><s:text name="label.subject" />:</label>
-				<wpsf:textfield useTabindexAutoIncrement="true" name="config.subject" id="subject" cssClass="text"/>
-			</p>
-			<p>
-				<label for="jpcontentworkflow_header" class="basic-mint-label"><s:text name="label.header" />:</label>
-				<wpsf:textarea useTabindexAutoIncrement="true" name="config.header" id="jpcontentworkflow_header" cols="50" rows="10" cssClass="text"/> 
-			</p>
-			<p>
-				<label for="jpcontentworkflow_template" class="basic-mint-label"><s:text name="label.template" />:</label>
-				<wpsf:textarea useTabindexAutoIncrement="true" name="config.template" id="jpcontentworkflow_template" cols="50" rows="10" cssClass="text"/>
-			</p>
-			<p>
-				<label for="jpcontentworkflow_footer" class="basic-mint-label"><s:text name="label.footer" />:</label>
-				<wpsf:textarea useTabindexAutoIncrement="true" name="config.footer" id="jpcontentworkflow_footer" cols="50" rows="10" cssClass="text"/>
-			</p>
+			<div class="form-group">
+				<label for="senderCode"><s:text name="label.senderCode"/></label>
+				<wpsf:select name="config.senderCode" id="senderCode" list="senderCodes" cssClass="form-control" />
+			</div>
+			<div class="form-group">
+				<div class="form-group">
+					<div class="checkbox">
+						<label for="html">
+							<wpsf:checkbox name="config.html" id="html" />&nbsp;
+							<s:text name="label.html" />
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="subject"><s:text name="label.subject" /></label>
+				<wpsf:textfield name="config.subject" id="subject" cssClass="form-control"/>
+			</div>
+			<div class="form-group">
+				<label for="jpcontentworkflow_header"><s:text name="label.header" /></label>
+				<wpsf:textarea name="config.header" id="jpcontentworkflow_header" cols="50" rows="10" cssClass="form-control"/>
+			</div>
+			<div class="form-group">
+				<label for="jpcontentworkflow_template"><s:text name="label.template" /></label>
+				<wpsf:textarea name="config.template" id="jpcontentworkflow_template" cols="50" rows="10" cssClass="form-control"/>
+			</div>
+			<div class="form-group">
+				<label for="jpcontentworkflow_footer"><s:text name="label.footer" /></label>
+				<wpsf:textarea name="config.footer" id="jpcontentworkflow_footer" cols="50" rows="10" cssClass="form-control"/>
+			</div>
 		</fieldset>
-		<p class="centerText">
-			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.save')}" cssClass="button" />
-		</p>
-		
+		<div class="form-horizontal">
+			<div class="form-group">
+				<div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
+					<wpsf:submit type="button" cssClass="btn btn-primary btn-block">
+						<s:text name="label.save" />
+					</wpsf:submit>
+				</div>
+			</div>
+		</div>
 	</s:form>
 </div>

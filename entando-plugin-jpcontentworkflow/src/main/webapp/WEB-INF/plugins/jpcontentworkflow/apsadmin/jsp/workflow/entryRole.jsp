@@ -1,71 +1,68 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib uri="/aps-core" prefix="wp" %>
-<%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
-<%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
-<h1><s:text name="title.workflowManagement" /><%-- anchor print --%>
-	<a href="<s:url action="list" />" title="<s:text name="label.list" />">
-		<img src="<wp:resourceURL/>administration/common/img/icons/32x32/general-list.png" alt="<s:text name="label.list" />" />
-	</a>
-</h1> 
-
+<%@ taglib prefix="wp" uri="/aps-core" %>
+<%@ taglib prefix="wpsa" uri="/apsadmin-core" %>
+<%@ taglib prefix="wpsf" uri="/apsadmin-form" %>
+<h1 class="panel panel-default title-page">
+	<span class="panel-body display-block">
+		<a href="<s:url action="list" />"><s:text name="title.workflowManagement" /></a>
+		&#32;/&#32;
+		<s:text name="title.workflowManagement.editRole" />
+	</span>
+</h1>
 <div id="main">
-	<h2><s:text name="title.workflowManagement.editRole" /></h2>
-	<%-- 
-	<dl>
-		<dt>
-			<s:text name="label.contentType" />
-		</dt>
-			<dd>
-				<s:property value="contentType.descr"/>
-			</dd>
-		<dt>
-			Legenda  
-		</dt>
-		<dd>
-			<s:text name="label.mainRole" />
-		</dd>
-	</dl>
-	--%>
-	<p>
-		<s:text name="note.workingOn" />:&#32;
-		<s:text name="label.contentType" />&#32;
-		<em><s:property value="contentType.descr"/></em>
-	</p>
-	
-	<s:form action="saveRole" >
+	<s:form action="saveRole" cssClass="form-horizontal">
 		<s:if test="hasFieldErrors()">
-			<div class="message message_error">
-				<h3><s:text name="message.title.FieldErrors" /></h3>	
-				<ul>
-					<s:iterator value="fieldErrors">
-						<s:iterator value="value">
-						<li><s:property escape="false" /></li>
+			<div class="alert alert-danger alert-dismissable fade in">
+				<button class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
+				<h2 class="h4 margin-none"><s:text name="message.title.FieldErrors" /></h2>
+					<ul class="margin-base-top">
+						<s:iterator value="fieldErrors">
+							<s:iterator value="value">
+								<li><s:property escape="false" /></li>
+							</s:iterator>
 						</s:iterator>
-					</s:iterator>
-				</ul>
+					</ul>
 			</div>
 		</s:if>
 		<s:if test="hasActionErrors()">
-			<div class="message message_error">	
-				<h3><s:text name="message.title.ActionErrors" /></h3>
-				<ul>
-					<s:iterator value="actionErrors">
+			<div class="alert alert-danger alert-dismissable fade in">
+				<button class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
+				<h2 class="h4 margin-none"><s:text name="message.title.FieldErrors" /></h2>
+					<ul class="margin-base-top">
+						<s:iterator value="actionErrors">
 						<li><s:property escape="false"/></li>
 					</s:iterator>
-				</ul>
+					</ul>
 			</div>
 		</s:if>
-		
-		<fieldset class="margin-more-top">
-			<legend><s:text name="label.info" /></legend>
-			<p>
+		<div class="form-group">
+			<div class="col-xs-12">
+				<label><s:text name="label.contentType" /></label>
+				<span class="form-control-static display-block"><s:property value="contentType.descr"/></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-12">
 				<wpsf:hidden name="typeCode" />
-				<label for="jpcontentworkflow_role" class="basic-mint-label"><s:text name="label.role" />:</label>
-				<wpsf:select useTabindexAutoIncrement="true" name="role" id="jpcontentworkflow_role" headerKey="" headerValue="%{getText('label.none')}" list="roles" listKey="name" listValue="description" />
-			</p>
-		</fieldset> 
-		<p class="centerText">
-			<wpsf:submit useTabindexAutoIncrement="true" value="%{getText('label.save')}" cssClass="button" />
-		</p>
+					<label for="jpcontentworkflow_role"><s:text name="label.role" /></label>
+					<wpsf:select
+						name="role"
+						id="jpcontentworkflow_role"
+						headerKey=""
+						headerValue="%{getText('label.none')}"
+						list="roles"
+						listKey="name" listValue="description"
+						cssClass="form-control"
+						/>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
+				<wpsf:submit type="button" cssClass="btn btn-primary btn-block">
+					<span class="icon fa fa-save"></span>&#32;
+					<s:text name="label.save" />
+				</wpsf:submit>
+			</div>
+		</div>
 	</s:form>
 </div>
