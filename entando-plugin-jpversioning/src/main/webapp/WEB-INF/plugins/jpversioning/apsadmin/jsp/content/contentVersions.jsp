@@ -5,7 +5,7 @@
 <fieldset>
 	<legend><s:text name="jpversioning.label.history" /></legend>
 	<s:set name="contentVersionsList" value="%{contentVersions}"/>
-	
+
 	<s:if test="%{#contentVersionsList == null || !#contentVersionsList.size() > 0}">
 		<p><s:text name="jpversioning.message.no.previous.revisions" /></p>
 	</s:if>
@@ -14,38 +14,45 @@
 			<p>
 				<wpsf:hidden name="contentId" value="%{content.id}" />
 			</p>
-				
+
 			<s:set name="group" value="#groupContent" />
 			<div class="pager">
 				<p><s:text name="list.pagerIntro" />&#32;<s:property value="#group.size" />&#32;<s:text name="list.pagerOutro" /><br />
-				<s:text name="label.page" />: [<s:property value="#group.currItem" />/<s:property value="#group.maxItem" />].</p>				
+				<s:text name="label.page" />: [<s:property value="#group.currItem" />/<s:property value="#group.maxItem" />].</p>
 				<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pager_formBlock.jsp" />
 			</div>
-			
+
 			<table class="generic" summary="<s:text name="note.jpversioning.contentList.summary" />">
-				<caption><span><s:text name="title.jpversioning.versionList" /></span></caption> 
+				<caption><span><s:text name="title.jpversioning.versionList" /></span></caption>
 				<tr>
 					<th><abbr title="<s:text name="jpversioning.version.full" />"><s:text name="jpversioning.version.short" /></abbr></th>
 					<th><s:text name="jpversioning.label.description" /></th>
 					<th><s:text name="jpversioning.label.lastVersion" /></th>
 					<th><s:text name="jpversioning.label.username" /></th>
-					<th class="icon"><abbr title="<s:text name="jpversioning.recover.full" />"><s:text name="jpversioning.recover.short" /></abbr></th>
-				</tr>
-			
+					<th class="text-center">
+						<abbr title="<s:text name="name.onLine" />">P</abbr>
+					</th>
+ 				</tr>
+
 				<s:iterator id="versionId">
 				<s:set name="contentVersion" value="%{getContentVersion(#versionId)}" />
 				<tr>
-					<td><span class="monospace"><s:property value="#contentVersion.version" /></span></td>
-					<td>
-						<a href="<s:url action="preview" namespace="/do/jpversioning/Content/Versioning">
+					<td class="text-center text-nowrap">
+						<div class="btn-group btn-group-xs">
+							<%-- edit --%>
+							<a class="btn btn-default" href="<s:url action="preview" namespace="/do/jpversioning/Content/Versioning">
 							   <s:param name="versionId" value="#contentVersion.id" />
 							   <s:param name="contentId" value="%{content.id}" />
 							   <s:param name="fromEdit" value="true" />
 							   <s:param name="contentOnSessionMarker" value="contentOnSessionMarker" />
-						   </s:url>" ><s:property value="#contentVersion.descr" /></a>
+						   </s:url>" >
+							  <span class="sr-only"><s:text name="label.edit" />&#32;<s:property value="#model.description" /></span>
+								<span class="icon fa fa-info"></span>
+							</a>
 				    </td>
+					<td><span class="monospace"><s:property value="#contentVersion.version" /></span></td>
 					<td><span class="monospace">
-						<s:date name="#contentVersion.versionDate" format="dd/MM/yyyy HH:mm" /></span> 
+						<s:date name="#contentVersion.versionDate" format="dd/MM/yyyy HH:mm" /></span>
 					</td>
 					<td><s:property value="#contentVersion.username" /></td>
 					<td class="icon">
@@ -59,7 +66,7 @@
 						</a>
 					</td>
 				</tr>
-				</s:iterator>			
+				</s:iterator>
 			</table>
 			<div class="pager">
 				<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pager_formBlock.jsp" />
@@ -67,4 +74,3 @@
 		</wpsa:subset>
 	</s:else>
 </fieldset>
-
