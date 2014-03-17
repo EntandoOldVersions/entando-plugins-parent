@@ -69,7 +69,7 @@
 						<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pager_formBlock.jsp" />
 					</div>
     		<div class="table-responsive">
-    			<table class="table table-bordered" summary="<s:text name="note.jpversioning.contentList.summary" />">
+    			<table class="table table-bordered">
     						<caption class="sr-only"><span><s:text name="title.jpversioning.contentList" /></span></caption>
     						<tr>
     							<th><s:text name="jpversioning.label.description" /></th>
