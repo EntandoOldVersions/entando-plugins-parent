@@ -11,7 +11,7 @@
 	</s:if>
 	<s:else>
 		<wpsa:subset source="#contentVersionsList" count="5" objectName="groupContent" advanced="true" offset="5">
-			<p>
+			<p class="sr-only">
 				<wpsf:hidden name="contentId" value="%{content.id}" />
 			</p>
 
@@ -22,16 +22,15 @@
 				<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pager_formBlock.jsp" />
 			</div>
 
-			<table class="generic" summary="<s:text name="note.jpversioning.contentList.summary" />">
-				<caption><span><s:text name="title.jpversioning.versionList" /></span></caption>
+    		<div class="table-responsive">
+    			<table class="table table-bordered">
+				<caption class="sr-only"><span><s:text name="title.jpversioning.versionList" /></span></caption>
 				<tr>
-					<th><abbr title="<s:text name="jpversioning.version.full" />"><s:text name="jpversioning.version.short" /></abbr></th>
-					<th><s:text name="jpversioning.label.description" /></th>
-					<th><s:text name="jpversioning.label.lastVersion" /></th>
+					<th class="text-center padding-large-left padding-large-right"><abbr title="<s:text name="label.actions" />">&ndash;</abbr></th>
+					<th  class="text-center"><abbr title="<s:text name="jpversioning.version.full" />"><s:text name="jpversioning.version.short" /></abbr></th>
+					<th class="text-center"><s:text name="jpversioning.label.description" /></th>
+					<th class="text-center"><s:text name="jpversioning.label.lastVersion" /></th>
 					<th><s:text name="jpversioning.label.username" /></th>
-					<th class="text-center">
-						<abbr title="<s:text name="name.onLine" />">P</abbr>
-					</th>
  				</tr>
 
 				<s:iterator id="versionId">
@@ -44,30 +43,31 @@
 							   <s:param name="versionId" value="#contentVersion.id" />
 							   <s:param name="contentId" value="%{content.id}" />
 							   <s:param name="fromEdit" value="true" />
-							   <s:param name="contentOnSessionMarker" value="contentOnSessionMarker" />
-						   </s:url>" >
-							  <span class="sr-only"><s:text name="label.edit" />&#32;<s:property value="#model.description" /></span>
+							   <s:param name="contentOnSessionMarker" value="contentOnSessionMarker" /></s:url>" >
+							<span class="sr-only"><s:text name="label.edit" />&#32;<s:property value="#model.description" /></span>
 								<span class="icon fa fa-info"></span>
 							</a>
-				    </td>
-					<td><span class="monospace"><s:property value="#contentVersion.version" /></span></td>
-					<td><span class="monospace">
-						<s:date name="#contentVersion.versionDate" format="dd/MM/yyyy HH:mm" /></span>
-					</td>
-					<td><s:property value="#contentVersion.username" /></td>
-					<td class="icon">
-						<a href="<s:url action="entryRecover" namespace="/do/jpversioning/Content/Versioning" >
+							<a class="btn btn-default" href="<s:url action="entryRecover" namespace="/do/jpversioning/Content/Versioning" >
 							   <s:param name="versionId" value="#contentVersion.id" />
 							   <s:param name="contentId" value="%{content.id}" />
 							   <s:param name="fromEdit" value="true" />
-							   <s:param name="contentOnSessionMarker" value="contentOnSessionMarker" />
-						   </s:url>" title="<s:text name="jpversioning.label.restore" />:&#32;<s:property value="#contentVersion.version" />" >
-						<img src="<wp:resourceURL/>plugins/jpversioning/administration/img/icons/edit-undo.png" alt="<s:text name="jpversioning.label.restore" />" />
-						</a>
+							   <s:param name="contentOnSessionMarker" value="contentOnSessionMarker" /></s:url>" title="<s:text name="jpversioning.label.restore" />:&#32;<s:property value="#contentVersion.version" />" >
+						   <span class="sr-only"><s:text name="label.edit" />&#32;<s:property value="#model.description" /></span>
+							<span class="icon fa fa-reply"></span>
+							</a>
+				    </td>
+				    <td class="text-center text-nowrap"><code><s:property value="#contentVersion.version" /></code></td>
+					<td><s:property value="#contentVersion.descr" /></td>
+					<td class="text-center text-nowrap">
+						<code>
+						<s:date name="#contentVersion.versionDate" format="dd/MM/yyyy HH:mm" />
+						</code>
 					</td>
+					<td><s:property value="#contentVersion.username" /></td>
 				</tr>
 				</s:iterator>
 			</table>
+			</div>
 			<div class="pager">
 				<s:include value="/WEB-INF/apsadmin/jsp/common/inc/pager_formBlock.jsp" />
 			</div>

@@ -65,8 +65,8 @@
 						<div class="text-right no-margin">
 							<a href="<s:url action="remove" ><s:param name="resourceId" value="%{#resourceid}" /><s:param name="resourceTypeCode" value="%{resourceTypeCode}" /></s:url>" title="<s:text name="label.remove" />: <s:property value="#resource.descr" /> "><span class="icon fa fa-times-circle text-warning"></span></a>
 						</div>
-						<a href="<s:property value="%{#resource.documentPath}" />" title="<s:text name="jpversioning.label.restore" />" ><span class="icon fa fa-reply"></span>&#32;
-						</a>
+						<a href="<s:url action="restore" ><s:param name="resourceId" value="%{#resourceid}" /><s:param name="resourceTypeCode" value="%{resourceTypeCode}" /></s:url>" title="<s:text name="jpversioning.label.restore" />" ><span class="icon fa fa-reply"></span></a>
+
 						<s:set var="fileDescr" value="#resource.descr" />
 						<s:if test='%{#fileDescr.length()>90}'>
 							<s:set var="fileDescr" value='%{#fileDescr.substring(0,30)+"..."+#fileDescr.substring(#fileDescr.length()-30)}' />
