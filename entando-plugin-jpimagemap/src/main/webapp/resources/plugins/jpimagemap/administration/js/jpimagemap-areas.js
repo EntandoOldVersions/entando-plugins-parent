@@ -1,11 +1,11 @@
 window.addEvent("domready", function() {
-//	
+//
 
 	var draggable = document.id("areas").getElement(".area-current");
 	var droppables = document.id("areas").getElements(".area-blocked");
 	var container = document.id("areas");
 	var messagebox = document.id("messages");
-	
+
 	container.addEvents({
 		"mousewheel:relay(div.area)": function(ev) {
 			ev.preventDefault();
@@ -20,8 +20,8 @@ window.addEvent("domready", function() {
 			ev.preventDefault();
 			var oldOpacity = ev.target.getStyle("opacity").toFloat();
 			var newOpacity = 1;
-			if (oldOpacity < 1) { 
-				newOpacity = 1; 
+			if (oldOpacity < 1) {
+				newOpacity = 1;
 			}
 			else if(oldOpacity==1){
 				newOpacity = 0.3;
@@ -30,13 +30,13 @@ window.addEvent("domready", function() {
 			//console.log("mousewheel",ev.wheel,"target",ev.target,"oldOpacity",oldOpacity,"newOpacity",newOpacity);
 		}
 	});
-	
+
 	draggable.store("name",draggable.get("text"));
-	
+
 	var getAreaName = function(area) {
-		return area.get("text");   
+		return area.get("text");
 	};
-	
+
 	var applyConflict = function(droppable) {
 		var str = "";
 		droppable.each(function(item){
@@ -45,12 +45,12 @@ window.addEvent("domready", function() {
 		messagebox.set("text",ImageMapAttribute_fieldError_linkedAreaElement_intersectedArea + " ("+str+")");
 		document.getElement("input[type=submit]").set("disabled","disabled");
 	};
-	
+
 	var removeConflict = function(droppable) {
 		messagebox.set("text","");
 		document.getElement("input[type=submit]").removeProperty("disabled");
 	};
-	
+
 	var checkOverlap = function(shape1,shape2) {
 		var overlap = false;
 		if (shape1 != shape2) {
@@ -69,20 +69,20 @@ window.addEvent("domready", function() {
 				}
 			};
 			if (((objDim.shape1.top + objDim.shape1.h) >= objDim.shape2.top) && ( (objDim.shape2.top+objDim.shape2.h ) >= objDim.shape1.top)) {
-				//overlapV = true; 
+				//overlapV = true;
 				if ( (objDim.shape2.left <= (objDim.shape1.left+objDim.shape1.w) )&& ( (objDim.shape2.left+objDim.shape2.w) >= objDim.shape1.left )  ) {
 					//overlapO = true;
 					overlap = true;
-					//this.setOverlap([shape1, shape2], "on");				
+					//this.setOverlap([shape1, shape2], "on");
 				}
-			} else { 
+			} else {
 				//this.setOverlap([shape1, shape2], "off");
 			}
 		}
 		objDim = null;
     	return overlap;
 	};
-	
+
 	var checkShapeOverlap =  function(shape) {
 		var overlappingShapes = [];
 		for (var i =0;i<droppables.length;i++) {
@@ -93,7 +93,7 @@ window.addEvent("domready", function() {
 		}
 		return overlappingShapes;
 	};
-	
+
 	var applyPosition = function(shape) {
 		var pos = shape.getPosition(shape.getParent());
 		var dim = shape.getDimensions();
@@ -103,7 +103,9 @@ window.addEvent("domready", function() {
 				right: pos.x+dim.width,
 				bottom: pos.y+dim.height
 		};
-		shape.set("title", shape.retrieve("name") + ": "+ obj.left +", "+ obj.top +", "+ obj.right +", "+ obj.bottom);
+		var title = shape.retrieve("name") + ": "+ obj.left +", "+ obj.top +", "+ obj.right +", "+ obj.bottom;
+		title = title.clean();
+		shape.set("title",  title);
 		shape.set("html", shape.retrieve("name") + "<br /><span class=\"dim\">" + dim.width + "x" + dim.height+"</span>");
 		document.getElement('input[name=top]').set("value",obj.top);
 		document.getElement('input[name=left]').set("value",obj.left);
@@ -111,7 +113,7 @@ window.addEvent("domready", function() {
 		document.getElement('input[name=bottom]').set("value",obj.bottom);
 		document.getElement('input[name=width]').set("value",dim.width);
 		document.getElement('input[name=height]').set("value",dim.height);
-		
+
 	};
 
 	//handler
@@ -123,7 +125,7 @@ window.addEvent("domready", function() {
 			right: pos.x+dim.width,
 			bottom: pos.y+dim.height
 	};
-	
+
 	var h = new Element("span", {
 		"class": "handler",
 		styles: {
@@ -133,7 +135,7 @@ window.addEvent("domready", function() {
 		text: ""
 	}).inject(container);
 	//handler
-	
+
 	new Drag.Move(draggable, {
 		snap: 1,
         container: container,
@@ -149,7 +151,7 @@ window.addEvent("domready", function() {
         	};
         	h.setStyle("top", obj.top+dim.height);
 			h.setStyle("left", obj.left+dim.width);
-			
+
         	var check = checkShapeOverlap(element);
         	if (check.length>0) {
         		applyConflict(check);
@@ -158,7 +160,7 @@ window.addEvent("domready", function() {
         		removeConflict();
         	}
         	applyPosition(element);
-        	
+
         },
         onDrop: function(element, droppable){
         	var check = checkShapeOverlap(element);
@@ -171,7 +173,7 @@ window.addEvent("domready", function() {
         	applyPosition(element);
         }
     });
-	
+
 	draggable.makeResizable({
 		snap: 1,
 		handle: h,
@@ -206,7 +208,7 @@ window.addEvent("domready", function() {
         	applyPosition(element);
 		}
 	});
-	
+
 	var check = checkShapeOverlap(draggable);
 	if (check.length>0) {
 		applyConflict(check);
