@@ -1,6 +1,24 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="wp" uri="/aps-core" %>
 <%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
+<s:include value="/WEB-INF/apsadmin/jsp/common/layouts/assets-common.jsp" />
+<s:include value="/WEB-INF/apsadmin/jsp/common/layouts/assets-more/inc/snippet-datepicker.jsp" />
+
+<script type="text/javascript" src="<wp:resourceURL />administration/js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="<wp:resourceURL />administration/js/ckeditor/adapters/jquery.js"></script>
+
+<script type="text/javascript">
+	jQuery(function() {
+		$('[data-toggle="entando-hypertext"]').ckeditor({
+			customConfig : '/portalexample/resources/administration/js/ckeditor/entando-ckeditor_config.js',
+			EntandoLinkActionPath: "/portalexample/do/jacms/Content/Hypertext/entandoInternalLink.action?contentOnSessionMarker=ANN_newContent",
+			language: '<s:property value="locale" />'
+		});
+	});
+</script>
+
+
+<%--
 <s:include value="/WEB-INF/apsadmin/jsp/common/template/defaultExtraResources.jsp" />
 <s:include value="/WEB-INF/apsadmin/jsp/common/template/extraresources/inc/snippet-calendar.jsp" />
 <script type="text/javascript">
@@ -9,7 +27,6 @@
 <s:set name="lang" value="defaultLang" />
 //per attributo Date
 <s:iterator value="contact.attributes" var="attribute">
-<%-- INIZIALIZZAZIONE TRACCIATORE --%>
 
 <wpsa:tracerFactory var="attributeTracer" lang="%{#lang.code}" />
 
@@ -46,7 +63,6 @@ window.addEvent('domready', function() { myCal_<s:property value="%{#attributeTr
 <s:if test="htmlEditorCode != 'none'">
 
 	<s:iterator value="userProfile.attributeList" id="attribute">
-	<%-- INIZIALIZZAZIONE TRACCIATORE --%>
 	<wpsa:tracerFactory var="attributeTracer" lang="%{#lang.code}" />
 
 	<s:if test="#attribute.type == 'Hypertext'">
@@ -156,8 +172,6 @@ window.addEvent('domready', function() { myCal_<s:property value="%{#attributeTr
 
 </s:if>
 //fine attributo Hypertext
-
-<%-- tooltips --%>
 <s:if test="#myClient == 'advanced'">
 window.addEvent('domready', function(){
 	var myTips = new Tips('.attribute-meta-tip', {
@@ -195,3 +209,4 @@ window.addEvent('domready', function(){
 
 
 //--><!]]></script>
+--%>

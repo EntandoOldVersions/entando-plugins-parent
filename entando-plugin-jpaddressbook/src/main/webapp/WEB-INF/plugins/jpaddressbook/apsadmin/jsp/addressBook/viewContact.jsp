@@ -1,210 +1,107 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib uri="/aps-core" prefix="wp" %>
-<%@ taglib uri="/apsadmin-core" prefix="wpsa" %>
-<%@ taglib uri="/apsadmin-form" prefix="wpsf" %>
-<s:set var="targetNS" value="%{'/do/jpaddressbook/AddressBook'}" />
-<h1><s:text name="title.contactManagement" /><jsp:include page="/WEB-INF/apsadmin/jsp/common/inc/operations-context-general.jsp" /></h1>
-
+<%@ taglib prefix="wp" uri="/aps-core"  %>
+<%@ taglib prefix="wpsa" uri="/apsadmin-core"  %>
+<%@ taglib prefix="wpsf" uri="/apsadmin-form"  %>
+<h1 class="panel panel-default title-page">
+	<span class="panel-body display-block">
+		<a href="<s:url action="list" />">
+			<s:text name="title.contactManagement" />
+		</a>
+		&#32;/&#32;
+		<s:text name="jpaddressbook.title.details" />
+	</span>
+</h1>
 <div id="main">
-	
-	<h2><s:text name="jpaddressbook.title.details" /></h2>
-	
-	<%-- START CICLO ATTRIBUTI --%>
-	<s:set name="lang" value="defaultLang" /> 
-	<dl class="table-display">
-		<s:iterator value="contact.attributes" id="attribute">
-			<s:if test="#attribute.active">
-				<%-- INIZIALIZZAZIONE TRACCIATORE --%>
-				<wpsa:tracerFactory var="attributeTracer" lang="%{#lang.code}" />
-				
-				<s:if test="%{#attribute.type == 'Monotext' && !(#attribute.getTextForLang(#lang.code) == null || #attribute.getTextForLang(#lang.code) == '')}">
-					<%-- ############# ATTRIBUTO TESTO MONOLINGUA ############# --%>
-					<dt>
-						<span class="important"><s:property value="%{#attribute.name}" /></span>
-					</dt>
-					<dd>
-						<s:if test="%{#attribute.getTextForLang(#lang.code) == null || #attribute.getTextForLang(#lang.code) == ''}">
-							&ndash;
-						</s:if>
-						<s:else>
-							<s:property value="%{#attribute.getTextForLang(#lang.code)}" />
-						</s:else>
-					</dd>
-				</s:if>
-				
-				<s:elseif test="%{#attribute.type == 'Text' && !(#attribute.getTextForLang(#lang.code) == null || #attribute.getTextForLang(#lang.code) == '')}">
-					<%-- ############# ATTRIBUTO TESTO ############# --%>
-					<dt>
-						<span class="important"><s:property value="%{#attribute.name}" /></span>
-					</dt>
-					<dd>
-						<s:if test="%{#attribute.getTextForLang(#lang.code) == null || #attribute.getTextForLang(#lang.code) == ''}">
-							&ndash;
-						</s:if>
-						<s:else>				
-							<s:property value="%{#attribute.getTextForLang(#lang.code)}" />
-						</s:else>
-					</dd>
-				</s:elseif>
-				
-				<s:elseif test="%{#attribute.type == 'Longtext' && !(#attribute.getTextForLang(#lang.code) == null || #attribute.getTextForLang(#lang.code) == '')}">
-					<%-- ############# ATTRIBUTO Longtext ############# --%>
-					<dt>
-						<span class="important"><s:property value="%{#attribute.name}" /></span>
-					</dt>
-					<dd>
-						<s:if test="%{#attribute.getTextForLang(#lang.code) == null || #attribute.getTextForLang(#lang.code) == ''}">
-							&ndash;
-						</s:if>
-						<s:else>	
-							<s:property value="%{#attribute.getTextForLang(#lang.code)}" />
-						</s:else>				
-					</dd>
-				</s:elseif>
-				
-				<s:elseif test="%{#attribute.type == 'Hypertext' && !(#attribute.textMap[#lang.code] == null || #attribute.textMap[#lang.code] == '')}">
-					<%-- ############# ATTRIBUTO Hypertext ############# --%>
-					<dt>
-						<span class="important"><s:property value="%{#attribute.name}" /></span>
-					</dt>
-					<dd>
-						<s:if test="%{#attribute.textMap[#lang.code] == null || #attribute.textMap[#lang.code] == ''}">
-							&ndash;
-						</s:if> 
-						<s:else>	
-							<s:property value="%{#attribute.textMap[#lang.code]}" />
-						</s:else>				
-					</dd>
-				</s:elseif>
-				
-				<s:elseif test="#attribute.type == 'Boolean'">
-					<%-- ############# ATTRIBUTO Boolean ############# --%>
-					<dt>
-						<span class="important"><s:property value="%{#attribute.name}" /></span>
-					</dt>
-					<dd>
-						<s:if test="%{#attribute.value == true}"><s:text name="label.yes"/></s:if>
-						<s:else><s:text name="label.no"/></s:else>
-					</dd>
-				</s:elseif>
-				
-				<s:elseif test="#attribute.type == 'ThreeState'">
-					<%-- ############# ATTRIBUTO ThreeState ############# --%>
-					<dt>
-						<span class="important"><s:property value="%{#attribute.name}" /></span>
-					</dt>
-					<dd>
-						<s:if test="%{#attribute.booleanValue == null}"><s:text name="label.bothYesAndNo"/></s:if>
-						<s:elseif test="%{#attribute.booleanValue != null && #attribute.booleanValue == true}"><s:text name="label.yes"/></s:elseif>
-						<s:elseif test="%{#attribute.booleanValue != null && #attribute.booleanValue == false}"><s:text name="label.no"/></s:elseif>			
-					</dd>
-				</s:elseif>
-				
-				<s:elseif test="%{#attribute.type == 'Number' !(#attribute.value == null || #attribute.value == '')}">
-					<%-- ############# ATTRIBUTO Number ############# --%>
-					<dt>
-						<span class="important"><s:property value="%{#attribute.name}" /></span>
-					</dt>
-					<dd>
-						<s:if test="%{#attribute.value == null || #attribute.value == ''}">
-							&ndash;
-						</s:if> 
-						<s:else>	
-							<s:property value="#attribute.value" />
-						</s:else>
-					</dd>
-				</s:elseif>
-				
-				<s:elseif test="%{#attribute.type == 'Date' !(#attribute.getFormattedDate('dd/MM/yyyy') == null || #attribute.getFormattedDate('dd/MM/yyyy') == '')}">
-					<%-- ############# ATTRIBUTO Date ############# --%>
-					<dt>
-						<span class="important"><s:property value="%{#attribute.name}" /></span>
-					</dt>
-					<dd>
-						<s:if test="%{#attribute.getFormattedDate('dd/MM/yyyy') == null || #attribute.getFormattedDate('dd/MM/yyyy') == ''}">
-							&ndash;
-						</s:if>
-						<s:else>
-							<s:property value="#attribute.getFormattedDate('dd/MM/yyyy')" />
-						</s:else>
-					</dd>
-				</s:elseif>
-				
-				<s:elseif test="%{#attribute.type == 'Enumerator' !(#attribute.getText() == null || #attribute.getText() == '')}">
-					<%-- ############# ATTRIBUTO TESTO Enumerator ############# --%>
-					<dt>
-						<span class="important"><s:property value="%{#attribute.name}" /></span>
-					</dt>
-					<dd>
-						<s:if test="%{#attribute.getText() == null || #attribute.getText() == ''}">
-							&ndash;
-						</s:if>
-						<s:else>
-							<s:property value="%{#attribute.getText()}" />
-						</s:else>				
-					</dd>
-				</s:elseif>
-				
-				<s:elseif test="#attribute.type == 'CheckBox'">
-					<%-- ############# ATTRIBUTO CheckBox ############# --%>
-					<dt>
-						<span class="important"><s:property value="%{#attribute.name}" /></span>
-					</dt>
-					<dd>
-						<s:set name="checkedValue" value="%{#attribute.booleanValue != null && #attribute.booleanValue ==true}" />
-						<s:if test="%{#checkedValue}"><s:text name="label.yes"/></s:if>
-						<s:else><s:text name="label.no"/></s:else> 
-					</dd>
-				</s:elseif>
-				
-			</s:if> 
-		</s:iterator> 
-		<dt><span class="important">Contatto Pubblico</span></dt>
-		<dd>
-			<s:if test="contact.publicContact"><s:text name="label.yes"/></s:if>
-			<s:else><s:text name="label.no"/></s:else>
-		</dd>
-	</dl>
-	
-	<%-- liste --%>
-	<s:iterator value="contact.attributes" var="attribute">
+	<%--<legend class="accordion_toggler"><s:text name="jpaddressbook.title.details" /></legend>--%>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<s:set name="lang" value="defaultLang" />
+				<s:iterator value="contact.attributes" var="attribute" status="attributeListStatus"><%-- content.attributeList iterator --%>
+					<s:if test="#attribute.active">
+						<div class="form-group"><%-- form-group --%>
+							<wpsa:tracerFactory var="attributeTracer" lang="%{#lang.code}" /><%-- tracer init --%>
+							<s:if test="null != #attribute.description"><s:set var="attributeLabelVar" value="#attribute.description" /></s:if>
+							<s:else><s:set var="attributeLabelVar" value="#attribute.name" /></s:else>
+							<label><s:property value="#attributeLabelVar" /></label>
+						 	<div class="input-group"><%--input-group --%>
+								<s:if test="#attribute.type == 'Monotext' || #attribute.type == 'Text' || #attribute.type == 'Longtext' || #attribute.type == 'Enumerator'">
+									<s:if test="#lang.default">
+										<div>
+											<s:include value="/WEB-INF/apsadmin/jsp/entity/view/textAttribute.jsp" />
+										</div>
+									</s:if>
+									<s:else>
+										<s:if test="%{(#attribute.isMultilingual()) && (#attribute.getTextForLang(#lang.code)!=null)}">
+												<div>
+													<s:include value="/WEB-INF/apsadmin/jsp/entity/view/textAttribute.jsp" />
+												</div>
+										</s:if>
+										<s:else>
+												<div class="text-muted">
+													<s:property value="#attribute.getText()" />
+											</div>
+										</s:else>
+									</s:else>
+								</s:if>
+								<s:elseif test="#attribute.type == 'Attach'">
+									<p><s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/view/attachAttribute.jsp" /></p>
+								</s:elseif>
+								<s:elseif test="#attribute.type == 'Boolean' || #attribute.type == 'CheckBox'">
+									<s:include value="/WEB-INF/apsadmin/jsp/entity/view/checkBoxAttribute.jsp" />
+								</s:elseif>
+								<s:elseif test="#attribute.type == 'Date'">
+									<p><s:include value="/WEB-INF/apsadmin/jsp/entity/view/dateAttribute.jsp" /></p>
+								</s:elseif>
+								<s:elseif test="#attribute.type == 'Hypertext'">
+									<div><s:include value="/WEB-INF/apsadmin/jsp/entity/view/hypertextAttribute.jsp" /></div>
+								</s:elseif>
+								<s:elseif test="#attribute.type == 'Image'">
+									<p><s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/view/imageAttribute.jsp" /></p>
+								</s:elseif>
+								<s:elseif test="#attribute.type == 'Link'">
+									<s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/view/linkAttribute.jsp" />
+								</s:elseif>
+								<s:elseif test="#attribute.type == 'Number'">
+									<p><s:include value="/WEB-INF/apsadmin/jsp/entity/view/numberAttribute.jsp" /></p>
+								</s:elseif>
+								<s:elseif test="#attribute.type == 'ThreeState'">
+									<s:include value="/WEB-INF/apsadmin/jsp/entity/view/threeStateAttribute.jsp" />
+								</s:elseif>
+								<s:elseif test="#attribute.type == 'Timestamp'">
+									<s:include value="/WEB-INF/apsadmin/jsp/entity/view/timestampAttribute.jsp" />
+								</s:elseif>
 
-		<s:if test="#attribute.type == 'Monolist'">
-			<%-- ############# ATTRIBUTO Monolist ############# --%>
-			<%-- TODO TO-DO --%>
-			<h3><s:property value="#attribute.name" /></h3>
-			<s:if test="%{#attribute == null || #attribute == ''}">
-				&ndash;
-			</s:if>
-			<s:else>
-				<s:include value="/WEB-INF/apsadmin/jsp/entity/view/monolistAttribute.jsp" />
-			</s:else>				
-		</s:if>
-			
-		<s:elseif test="#attribute.type == 'List'">
-			<%-- ############# ATTRIBUTO List ############# --%>
-			<%-- TODO TO-DO --%>
-			<h3><s:property value="#attribute.name" /></h3>
-			<s:if test="%{#attribute == null || #attribute == ''}">
-				&ndash;
-			</s:if>
-			<s:else>
-				<s:include value="/WEB-INF/apsadmin/jsp/entity/view/listAttribute.jsp" />
-			</s:else>
-		</s:elseif>
-			
-		<s:elseif test="#attribute.type == 'Composite'">
-			<%-- ############# ATTRIBUTO Composite ############# --%>
-			<%-- TODO TO-DO --%>
-			<h3><s:property value="#attribute.name" /></h3>
-			<s:if test="%{#attribute == null || #attribute == ''}">
-				&ndash;
-			</s:if>
-			<s:else>
-				<s:include value="/WEB-INF/apsadmin/jsp/entity/view/compositeAttribute.jsp" />
-			</s:else>
-		</s:elseif>
-
-	</s:iterator> 
+								<s:elseif test="#attribute.type == 'Composite'">
+									<s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/view/compositeAttribute.jsp" />
+								</s:elseif>
+								<s:elseif test="#attribute.type == 'List'">
+									<s:include value="/WEB-INF/apsadmin/jsp/entity/view/listAttribute.jsp" />
+								</s:elseif>
+								<s:elseif test="#attribute.type == 'Monolist'">
+									<s:include value="/WEB-INF/plugins/jacms/apsadmin/jsp/content/view/monolistAttribute.jsp" />
+								</s:elseif>
+								<wpsa:hookPoint key="jacms.contentDetails.attributeExtra" objectName="hookPointElements_jacms_contentDetails_attributeExtra">
+									<s:iterator value="#hookPointElements_jacms_contentDetails_attributeExtra" var="hookPointElementVar">
+										<wpsa:include value="%{#hookPointElementVar.filePath}"></wpsa:include>
+									</s:iterator>
+								</wpsa:hookPoint>
+							</div><%--input-group --%>
+						</div><%-- form-group --%>
+					</s:if>
+					<s:if test="!#attributeListStatus.last"><hr /></s:if>
+				</s:iterator><%-- content.attributeList iterator --%>
+		</div>
+	</div>
+	<s:set var="contact" value="%{contact}" />
+	<s:set value="userProfilePrototype" var="%{getUserProfilePrototype()}" />
+	<a
+		href="<s:url action="downloadvcard" namespace="/do/jpaddressbook/VCard">
+			<s:param name="entityId" value="%{#contact.id}"></s:param>
+		</s:url>"
+		title="<s:text name="jpaddressbook.download.vcard" />:&#32;<s:property value="#contact.getValue(#userProfilePrototype.firstNameAttributeName)"/>&#32;<s:property value="#contact.getValue(#userProfilePrototype.surnameAttributeName)"/>"
+		class="btn btn-default"
+		>
+		<span class="icon fa fa-download"></span>&#32;Download VCard
+	</a>
 	<%-- END CICLO ATTRIBUTI --%>
 </div>
