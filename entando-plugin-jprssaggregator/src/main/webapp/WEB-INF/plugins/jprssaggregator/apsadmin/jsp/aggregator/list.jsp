@@ -65,7 +65,7 @@
 					<td>
 							<s:property value="#item.descr" />
 							<a
-								title="[<s:property value="#item.link" />]"
+								title="<s:property value="#item.link" />"
 								href="<s:property value="#item.link" />"
 								>
 									<span class="icon fa fa-globe"></span>

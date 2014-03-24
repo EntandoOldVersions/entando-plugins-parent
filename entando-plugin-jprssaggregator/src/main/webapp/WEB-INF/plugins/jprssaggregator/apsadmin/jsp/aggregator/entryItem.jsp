@@ -90,7 +90,7 @@
 		<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 			<div class="col-xs-12">
 				<label for="rss_descr"><s:text name="jprssaggregator.rssAggregator.description" /></label>
-				<wpsf:textfield useTabindexAutoIncrement="true" id="rss_descr" name="descr" cssClass="form-control" />
+				<wpsf:textfield id="rss_descr" name="descr" cssClass="form-control" />
 				<s:if test="#fieldHasFieldErrorVar">
 					<span class="help-block text-danger">
 						<s:iterator value="%{#fieldFieldErrorsVar}"><s:property />&#32;</s:iterator>
@@ -105,7 +105,7 @@
 		<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 			<div class="col-xs-12">
 				<label for="rss_link"><s:text name="jprssaggregator.rssAggregator.url" /></label>
-				<wpsf:textfield useTabindexAutoIncrement="true" id="rss_link" name="link" cssClass="form-control" />
+				<wpsf:textfield id="rss_link" name="link" cssClass="form-control" />
 				<s:if test="#fieldHasFieldErrorVar">
 					<span class="help-block text-danger">
 						<s:iterator value="%{#fieldFieldErrorsVar}"><s:property />&#32;</s:iterator>
@@ -120,7 +120,7 @@
 		<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 			<div class="col-xs-12">
 				<label for="rss_delay"><s:text name="jprssaggregator.rssAggregator.delay" /></label>
-				<wpsf:select useTabindexAutoIncrement="true" cssClass="form-control" name="delay" id="rss_delay" list="delays" listKey="key" listValue="value" value="#delay" />
+				<wpsf:select cssClass="form-control" name="delay" id="rss_delay" list="delays" listKey="key" listValue="value" value="#delay" />
 				<s:if test="#fieldHasFieldErrorVar">
 					<span class="help-block text-danger">
 						<s:iterator value="%{#fieldFieldErrorsVar}"><s:property />&#32;</s:iterator>
