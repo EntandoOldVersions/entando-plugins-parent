@@ -22,6 +22,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.entando.entando.aps.system.services.widgettype.WidgetType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,14 +31,13 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.page.Widget;
-import com.agiletec.aps.tags.ExecWidgetTag;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 
 /**
  * @author E.Santoboni
  */
 public class WidgetReplicatorTag extends TagSupport {
-
+	
 	private static final Logger _logger = LoggerFactory.getLogger(WidgetReplicatorTag.class);
 	
 	@Override
@@ -45,40 +45,41 @@ public class WidgetReplicatorTag extends TagSupport {
 		ServletRequest req =  this.pageContext.getRequest();
 		RequestContext reqCtx = (RequestContext) req.getAttribute(RequestContext.REQCTX);
 		try {
-			Widget currentShowlet = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
-			String pageCode = currentShowlet.getConfig().getProperty("pageCodeParam");
+			Widget currentWidget = (Widget) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET);
+			String pageCode = currentWidget.getConfig().getProperty("pageCodeParam");
 			IPageManager pageManager = (IPageManager) ApsWebApplicationUtils.getBean(SystemConstants.PAGE_MANAGER, this.pageContext);
 			IPage targetPage = pageManager.getPage(pageCode);
 			if (null != targetPage) {
-				String frameIdString = currentShowlet.getConfig().getProperty("frameIdParam");
+				String frameIdString = currentWidget.getConfig().getProperty("frameIdParam");
 				int frameId = Integer.parseInt(frameIdString);
-				Widget[] showlets = targetPage.getWidgets();
-				if (showlets.length>=frameId) {
-					Widget targetShowlet = targetPage.getWidgets()[frameId];
-					if (null != targetShowlet) {
-						reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET, targetShowlet);
-						WidgetType WidgetType = targetShowlet.getType();
-						if (WidgetType.isLogic()) {
-							WidgetType = WidgetType.getParentType();
+				Widget[] widgets = targetPage.getWidgets();
+				if (widgets.length >= frameId) {
+					Widget targetWidget = targetPage.getWidgets()[frameId];
+					if (null != targetWidget) {
+						reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET, targetWidget);
+						WidgetType widgetType = targetWidget.getType();
+						if (widgetType.isLogic()) {
+							widgetType = widgetType.getParentType();
 						}
-						String pluginCode = WidgetType.getPluginCode();
+						String pluginCode = widgetType.getPluginCode();
 						boolean isPluginShowlet = (null != pluginCode && pluginCode.trim().length()>0);
-						StringBuffer jspPath = new StringBuffer("/WEB-INF/");
+						StringBuilder jspPath = new StringBuilder("/WEB-INF/");
 						if (isPluginShowlet) {
 							jspPath.append("plugins/").append(pluginCode.trim()).append("/");
 						}
-						jspPath.append(ExecWidgetTag.WIDGET_LOCATION).append(WidgetType.getCode()).append(".jsp");
-
+						jspPath.append(WIDGET_LOCATION).append(widgetType.getCode()).append(".jsp");
 						this.pageContext.include(jspPath.toString());
 					}
 				}
 			}
 		} catch (Throwable t) {
-			String msg = "Errore in preelaborazione showlets";
+			String msg = "Errore in preelaborazione widgets";
 			_logger.error("error in doEndTag", t);
 			throw new JspException(msg, t);
 		}
 		return EVAL_PAGE;
 	}
-
+	
+	public final static String WIDGET_LOCATION = "aps/jsp/widgets/";
+	
 }
