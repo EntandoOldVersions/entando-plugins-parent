@@ -1,9 +1,8 @@
-INSERT INTO sysconfig ( version, item, descr, config ) VALUES ( 'production', 'jpwebmail_config',
-'Configurazione del servizio WebMail', '<webmailConfig>
+INSERT INTO sysconfig (version, item, descr, config) VALUES ('production', 'jpwebmail_config', 'Configurazione del servizio WebMail', '<webmailConfig>
 	<certificates>
 		<enable>true</enable>
 		<lazyCheck>true</lazyCheck>
-		<certPath>/home/agile/workspace/jAPSIntra/build/temp</certPath>
+		<certPath>/home/agile/workspace/entando/build/temp</certPath>
 		<debugOnConsole>true</debugOnConsole>
 	</certificates>
 	<localhost>hostname</localhost>
@@ -24,18 +23,16 @@ INSERT INTO sysconfig ( version, item, descr, config ) VALUES ( 'production', 'j
 		<trash>Trashcan</trash>
 		<sent>Sent</sent>
 	</folder>
-</webmailConfig>' );
+</webmailConfig>');
 
 
-INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked ) VALUES
-	( 'jpwebmail_small', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked ) VALUES ('jpwebmail_small', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Webmail - Service Intro</property>
 <property key="it">Webmail - Intro Servizio</property>
 </properties>', NULL, 'jpwebmail', NULL, NULL, 1 );
 
-INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked ) VALUES
-	( 'jpwebmail_navigation', '<?xml version="1.0" encoding="UTF-8"?>
+INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked ) VALUES ('jpwebmail_navigation', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
 <property key="en">Webmail - Navigation</property>
 <property key="it">Webmail - Navigazione</property>
@@ -44,8 +41,6 @@ INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, parenttypecode
 <property key="actionPath">/ExtStr2/do/jpwebmail/Portal/WebMail/intro</property>
 </properties>', 0 );
 
-
--- Etichette:
 
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpwebmail_HAVE', 'it', 'Hai' );
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpwebmail_HAVE', 'en', 'You have' );
