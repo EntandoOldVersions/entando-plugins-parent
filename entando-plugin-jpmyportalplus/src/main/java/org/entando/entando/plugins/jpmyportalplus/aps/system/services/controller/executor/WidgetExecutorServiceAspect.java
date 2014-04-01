@@ -38,7 +38,7 @@ import javax.servlet.http.HttpSession;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 
-import org.entando.entando.aps.system.services.controller.executor.WidgetExecutorService;
+import org.entando.entando.aps.system.services.controller.executor.AbstractWidgetExecutorService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * @author E.Santoboni
  */
 @Aspect
-public class WidgetExecutorServiceAspect extends WidgetExecutorService {
+public class WidgetExecutorServiceAspect extends AbstractWidgetExecutorService {
 	
 	private static final Logger _logger = LoggerFactory.getLogger(WidgetExecutorServiceAspect.class);
 	

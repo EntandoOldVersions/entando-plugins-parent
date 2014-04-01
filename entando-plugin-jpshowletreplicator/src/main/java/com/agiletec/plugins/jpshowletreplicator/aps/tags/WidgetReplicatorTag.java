@@ -32,6 +32,7 @@ import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
+import org.entando.entando.aps.system.services.controller.executor.WidgetExecutorService;
 
 /**
  * @author E.Santoboni
@@ -80,6 +81,6 @@ public class WidgetReplicatorTag extends TagSupport {
 		return EVAL_PAGE;
 	}
 	
-	public final static String WIDGET_LOCATION = "aps/jsp/widgets/";
+	public final static String WIDGET_LOCATION = WidgetExecutorService.WIDGET_LOCATION;
 	
 }
