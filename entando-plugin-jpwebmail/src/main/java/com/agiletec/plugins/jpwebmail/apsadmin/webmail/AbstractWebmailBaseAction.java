@@ -96,6 +96,20 @@ public abstract class AbstractWebmailBaseAction extends BaseAction implements IW
 		}
 	}
 	
+	protected void checkFolder(Folder folder) {
+		if (null == folder) {
+			return;
+		}
+		try {
+			if (!folder.isOpen()) {
+				this.checkStore();
+				folder.open(Folder.READ_ONLY);
+			}
+		} catch (Exception t) {
+			_logger.error("Error checking folder ", t);
+		}
+	}
+	
 	public String getCurrentFolderName() {
 		if (null == this._currentFolderName) {
 			this.setCurrentFolderName("INBOX");

@@ -121,10 +121,7 @@ public class WebmailAction extends AbstractWebmailBaseAction implements IWebMail
 	protected boolean isFlag(Message message, Flag flag) {
 		try {
 			Folder folder = message.getFolder();
-			if (!folder.isOpen()) {
-				super.checkStore();
-				folder.open(Folder.READ_ONLY);
-			}			
+			super.checkFolder(folder);
 			return message.isSet(flag);
 		} catch (Throwable t) {
 			_logger.error("Error checking flag '" + flag + "' on message ", t);

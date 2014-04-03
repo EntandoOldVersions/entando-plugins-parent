@@ -126,6 +126,7 @@ public class AbstractMessageAction extends AbstractWebmailBaseAction {
 	public String getContent(Message message) {
 		try {
 			Object content = message.getContent();
+			this.checkFolder(message.getFolder());
 			if (content instanceof String) {
 				boolean isHtmlText = WebMailHelper.isHtmlContent((String) content);
 				if (isHtmlText) {
@@ -158,7 +159,7 @@ public class AbstractMessageAction extends AbstractWebmailBaseAction {
 				return buffer.toString();
 			}
 		} catch (Throwable t) {
-			String subject = "Oggetto mail";
+			String subject = "Mail Object";
 			try {
 				subject = message.getSubject();
 			} catch (MessagingException e) {
@@ -244,7 +245,7 @@ public class AbstractMessageAction extends AbstractWebmailBaseAction {
 		try {
 			return MimeUtility.decodeText(WebMailHelper.joinAddress(message.getRecipients(type)));
 		} catch (Throwable t) {
-			String subject = "Oggetto mail";
+			String subject = "Mail Object";
 			try {
 				subject = message.getSubject();
 			} catch (Throwable tt) {
@@ -259,6 +260,7 @@ public class AbstractMessageAction extends AbstractWebmailBaseAction {
 		List<AttachmentInfo> infos = new ArrayList<AttachmentInfo>();
 		try {
 			Object content = message.getContent();
+			this.checkFolder(message.getFolder());
 			if (content instanceof MimeMultipart) {
 				MimeMultipart multipart = (MimeMultipart) content;
 				for (int x = 0; x < multipart.getCount(); x++) {
@@ -285,7 +287,7 @@ public class AbstractMessageAction extends AbstractWebmailBaseAction {
 	            }
 			}
 		} catch (Throwable t) {
-			String subject = "Oggetto mail";
+			String subject = "Mail Object";
 			try {
 				subject = message.getSubject();
 			} catch (MessagingException e) {
