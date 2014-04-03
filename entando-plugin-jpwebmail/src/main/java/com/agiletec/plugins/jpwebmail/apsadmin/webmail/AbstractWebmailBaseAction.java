@@ -20,14 +20,17 @@ import javax.mail.Folder;
 import javax.mail.MessagingException;
 import javax.mail.Store;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.apsadmin.system.BaseAction;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * @version 1.0
  * @author E.Santoboni
  */
 public abstract class AbstractWebmailBaseAction extends BaseAction implements IWebMailBaseAction {
+	
+	private static final Logger _logger = LoggerFactory.getLogger(AbstractWebmailBaseAction.class);
 	
 	public Folder[] getMainFolders() throws Throwable {
 		Folder folder = this.getStore().getDefaultFolder();
@@ -44,8 +47,9 @@ public abstract class AbstractWebmailBaseAction extends BaseAction implements IW
 			}
 			return child;
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getCurrentChildrenFolders", 
-					"Errore in estrazione figli di cartella " + this.getCurrentFolderName());
+			_logger.error("Error extracting folder's children for " + this.getCurrentFolderName(), t);
+			//ApsSystemUtils.logThrowable(t, this, "getCurrentChildrenFolders", 
+			//		"Errore in estrazione figli di cartella " + this.getCurrentFolderName());
 		}
 		return new Folder[0];
 	}
@@ -55,6 +59,7 @@ public abstract class AbstractWebmailBaseAction extends BaseAction implements IW
 		try {
 			return this.getStore().getFolder(currentFolder);
 		} catch (MessagingException e) {
+			_logger.error("Error extracting folder " + currentFolder, e);
 			throw new RuntimeException("Errore in estrazione cartella " + currentFolder, e);
 		}
 	}
@@ -66,12 +71,14 @@ public abstract class AbstractWebmailBaseAction extends BaseAction implements IW
 			try {
 				folder.close(false);
 			} catch (MessagingException e) {
-				throw new RuntimeException("Errore in chiusura folder " + folder.getName());
+				_logger.error("Error closing folder " + folder.getName(), e);
+				throw new RuntimeException("Errore in chiusura folder " + folder.getName(), e);
 			}
 		}
 	}
 	
 	protected Store getStore() {
+		this.checkStore();
 		return this._store;
 	}
 	@Override
@@ -79,8 +86,20 @@ public abstract class AbstractWebmailBaseAction extends BaseAction implements IW
 		this._store = store;
 	}
 	
+	protected void checkStore() {
+		if (!this._store.isConnected()) {
+			try {
+				this._store.connect();
+			} catch (Exception e) {
+				_logger.error("Error checking store ", e);
+			}
+		}
+	}
+	
 	public String getCurrentFolderName() {
-		if (null == this._currentFolderName) this.setCurrentFolderName("INBOX");
+		if (null == this._currentFolderName) {
+			this.setCurrentFolderName("INBOX");
+		}
 		return _currentFolderName;
 	}
 	public void setCurrentFolderName(String currentFolderName) {

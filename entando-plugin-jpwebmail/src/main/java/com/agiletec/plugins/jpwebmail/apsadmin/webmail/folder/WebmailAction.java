@@ -24,22 +24,24 @@ import javax.mail.Address;
 import javax.mail.FetchProfile;
 import javax.mail.Folder;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Flags.Flag;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.IWebMailManager;
 import com.agiletec.plugins.jpwebmail.apsadmin.util.CurrentFolderMessagesInfo;
 import com.agiletec.plugins.jpwebmail.apsadmin.webmail.AbstractWebmailBaseAction;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Classe per le operazioni di visualizzazione delle cartelle.
- * @version 1.0
  * @author E.Santoboni
  */
 public class WebmailAction extends AbstractWebmailBaseAction implements IWebMailAction {
+	
+	private static final Logger _logger = LoggerFactory.getLogger(WebmailAction.class);
 	
 	@Override
 	public String execute() throws Exception {
@@ -48,7 +50,6 @@ public class WebmailAction extends AbstractWebmailBaseAction implements IWebMail
 	}
 	
 	@Override
-	//TODO CHIEDERE A WILLIAM
 	public String moveIntoFolder() {
 		return SUCCESS;
 	}
@@ -73,7 +74,7 @@ public class WebmailAction extends AbstractWebmailBaseAction implements IWebMail
 			//	messageList = folderInfos.getMessages();
 			//}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getMessages");
+			_logger.error("Error extracting messages", t);
 			throw t;
 		}
 		return messageList;
@@ -119,12 +120,14 @@ public class WebmailAction extends AbstractWebmailBaseAction implements IWebMail
 	}
 	protected boolean isFlag(Message message, Flag flag) {
 		try {
+			Folder folder = message.getFolder();
+			if (!folder.isOpen()) {
+				super.checkStore();
+				folder.open(Folder.READ_ONLY);
+			}			
 			return message.isSet(flag);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-			System.out.println("ERRORE IN CONTROLLO FLAG '" + flag 
-					+ "' su messaggio ");
-			ApsSystemUtils.logThrowable(e, this, "getMessages", "ERRORE IN CONTROLLO FLAG '" + flag + "' su messaggio ");
+		} catch (Throwable t) {
+			_logger.error("Error checking flag '" + flag + "' on message ", t);
 		}
 		return false;
 	}
