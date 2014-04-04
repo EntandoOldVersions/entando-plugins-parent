@@ -44,6 +44,7 @@ public class WebMailConfig implements Cloneable {
 		config.setSmtpPort(this.getSmtpPort());
 		config.setSmtpUserName(this.getSmtpUserName());
 		config.setSmtpPassword(this.getSmtpPassword());
+		config.setSmtpProtocol(this.getSmtpProtocol());
 		
 		config.setTrashFolderName(this.getTrashFolderName());
 		config.setSentFolderName(this.getSentFolderName());
@@ -77,6 +78,13 @@ public class WebMailConfig implements Cloneable {
 	}
 	public void setSmtpPort(Integer smtpPort) {
 		this._smtpPort = smtpPort;
+	}
+	
+	public void setSmtpProtocol(Integer smtpProtocol) {
+		this._smtpProtocol = smtpProtocol;
+	}
+	public Integer getSmtpProtocol() {
+		return _smtpProtocol;
 	}
 	
 	public boolean isSmtpEntandoUserAuth() {
@@ -193,6 +201,29 @@ public class WebMailConfig implements Cloneable {
 		this._certificateDebugOnConsole = certificateDebugOnConsole;
 	}
 	
+	/**
+	 * Return true if mail configuration expects an anonymous authentication.<br/>
+	 * NOTE: an anonymous authentication occurs whenever the username and the
+	 * associated password are <b>not</b> provided <b>and</b> no security
+	 * encapsulation protocol is specified.
+	 * @return True if the username and the password are not provided
+	 */
+	public boolean hasAnonimousSmtpAuth() {
+		return (((null == this._smtpUserName || this._smtpUserName.length() == 0)
+				&& (null == this._smtpPassword || this._smtpPassword.length() == 0)) && 
+				!this.hasSecureSmtp());
+	}
+	
+	/**
+	 * Return true if the mail transport uses a secure connection.
+	 * @return true if the selected encapsulation protocol is SSL or TLS
+	 */
+	public boolean hasSecureSmtp() {
+		if (null == this._smtpProtocol || 
+				this._smtpProtocol == PROTO_STD) return false;
+		return true;
+	}
+	
 	private boolean _certificateEnable;
 	private boolean _certificateLazyCheck;
 	private String	_certificatePath;
@@ -210,6 +241,7 @@ public class WebMailConfig implements Cloneable {
 	private String _smtpUserName;
 	private String _smtpPassword;
 	private Integer _smtpPort;
+	private Integer _smtpProtocol;
 	private boolean _debug;
 	private boolean _smtpEntandoUserAuth;
 	
@@ -217,5 +249,9 @@ public class WebMailConfig implements Cloneable {
 	
 	private String _trashFolderName;
 	private String _sentFolderName;
+	
+	public static final int PROTO_STD = 0;
+	public static final int PROTO_SSL = 1;
+	public static final int PROTO_TLS = 2;
 	
 }

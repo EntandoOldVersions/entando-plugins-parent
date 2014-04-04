@@ -256,10 +256,34 @@
 				<s:set var="currentFieldErrorsVar" value="%{null}" />
 				<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
 				<s:set var="controlGroupErrorClassVar" value="%{null}" />
-
-
+				
 			</div>
+			
+			
+			<div class="form-group">
+				<label for="smtpPort"><s:text name="label.smtp.security" /></label>
 
+				<div class="radio">
+					<s:text name="label.smtp.standard"/>
+					<wpsf:radio id="smtpstd" name="config.smtpProtocol" value="0" checked="%{config.smtpProtocol == 0}" cssClass="radio" />
+				</div>
+				<div class="radio">
+					<s:text name="label.smtp.ssl"/>
+					<wpsf:radio id="smtpssl" name="smtpProtocol" value="1" checked="%{config.smtpProtocol == 1}" cssClass="radio" />
+				</div>    
+				<div class="radio">
+					<s:text name="label.smtp.tls"/>
+					<wpsf:radio id="smtptls" name="smtpProtocol" value="2" checked="%{config.smtpProtocol == 2}" cssClass="radio" />    
+				</div>
+				<%--
+				<div class="form-group">
+					<label for="config.smtpTimeout"><s:text name="label.smtpTimeout" /></label>
+					<wpsf:textfield name="config.smtpTimeout" id="config.smtpTimeout" cssClass="form-control" />
+				</div>
+				--%>
+			</div>
+			
+			
 			<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 				<label class="checkbox">
 					<wpsf:checkbox name="config.debug" id="config.debug" cssClass="radiocheck"/>

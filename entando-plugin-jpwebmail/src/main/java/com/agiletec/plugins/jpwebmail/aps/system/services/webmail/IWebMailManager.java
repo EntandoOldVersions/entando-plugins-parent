@@ -77,10 +77,12 @@ public interface IWebMailManager {
 	
 	/**
 	 * Crea e restituisce un muovo messaggio vuoto.
+	 * @param username Lo username dell'utente mittente.
+	 * @param password La password dell'utente mittente.
 	 * @return Il nuovo messaggio vuoto.
 	 * @throws ApsSystemException In caso di errore.
 	 */
-	public MimeMessage createNewEmptyMessage() throws ApsSystemException;
+	public MimeMessage createNewEmptyMessage(String username, String password) throws ApsSystemException;
 	
 	/**
 	 * Restituisce il nome completo (comprensivo delle sottocartelle) della cartella 

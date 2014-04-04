@@ -81,6 +81,18 @@ public class WebMailConfigDOM {
 			Integer smtpPortValue = (smtpPort==null || smtpPort.length()==0) ? null : new Integer(smtpPort);
 			config.setSmtpPort(smtpPortValue);
 			
+			String proto = smtpElem.getChildText(SMTP_PROTOCOL_CHILD);
+			if (null != proto) {
+				if (proto.equalsIgnoreCase(PROTO_SSL)) {
+					config.setSmtpProtocol(WebMailConfig.PROTO_SSL);
+				} else if (proto.equalsIgnoreCase(PROTO_TLS)) {
+					config.setSmtpProtocol(WebMailConfig.PROTO_TLS);
+				} else {
+					// any unknown protocol will disable encryption
+					config.setSmtpProtocol(WebMailConfig.PROTO_STD);
+				}
+			}
+			
 			Element certElem = root.getChild(CERTIFICATES_ELEM);
 			String enable = certElem.getChildText(CERTIFICATES_ENABLE_CHILD);
 			config.setCertificateEnable(Boolean.parseBoolean(enable));
@@ -177,6 +189,18 @@ public class WebMailConfigDOM {
 			Integer smtpPort = config.getSmtpPort();
 			smtpPortElem.addContent(smtpPort==null ? "" : smtpPort.toString());
 			smtpElem.addContent(smtpPortElem);
+			if (null != config.getSmtpProtocol()) {
+				Element protocolElem = new Element(SMTP_PROTOCOL_CHILD);
+				if (config.getSmtpProtocol() == WebMailConfig.PROTO_SSL) {
+					protocolElem.addContent(PROTO_SSL);
+				} else if (config.getSmtpProtocol() == WebMailConfig.PROTO_TLS) {
+					protocolElem.addContent(PROTO_TLS);
+				} else {
+					// any other (unsupported) protocol falls back to STD (no security transport layer)
+					protocolElem.addContent(PROTO_STD);
+				}
+				smtpElem.addContent(protocolElem);
+			}
 			root.addContent(smtpElem);
 			
 			Element folderElem = new Element(FOLDER_ELEM);
@@ -246,9 +270,14 @@ public class WebMailConfigDOM {
 	private static final String SMTP_USER_CHILD= "user";
 	private static final String SMTP_PASSWORD_CHILD= "password";
 	private static final String SMTP_PORT_CHILD= "port";
+	private static final String SMTP_PROTOCOL_CHILD = "security";
 
 	private static final String FOLDER_ELEM = "folder";
 	private static final String FOLDER_TRASH_CHILD = "trash";
 	private static final String FOLDER_SENT_CHILD = "sent";
+	
+	private static final String PROTO_SSL = "ssl";
+	private static final String PROTO_TLS = "tls";
+	private static final String PROTO_STD = "std";
 	
 }

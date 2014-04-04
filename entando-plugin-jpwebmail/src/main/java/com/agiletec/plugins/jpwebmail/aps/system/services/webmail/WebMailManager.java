@@ -18,6 +18,7 @@ package com.agiletec.plugins.jpwebmail.aps.system.services.webmail;
 
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
@@ -94,7 +95,7 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 		Store store = null;
 		try {
 			// Get session
-			Session session = this.createSession();
+			Session session = this.createSession(false, null, null);
 			// Get the store
 			store = session.getStore(this.getConfig().getImapProtocol());
 			// Connect to store
@@ -118,9 +119,9 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 	}
 	
 	@Override
-	public MimeMessage createNewEmptyMessage() throws ApsSystemException {
+	public MimeMessage createNewEmptyMessage(String username, String password) throws ApsSystemException {
 		try {
-			Session session = this.createSession();
+			Session session = this.createSession(true, username, password);
 			return new JpMimeMessage(session);
 		} catch (Throwable t) {
 			_logger.error("Error creating void message", t);
@@ -139,26 +140,47 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 	
 	@Override
 	public void sendMail(MimeMessage msg, String username, String password) throws ApsSystemException {
-		Session session = (msg instanceof JpMimeMessage) ? ((JpMimeMessage) msg).getSession() : this.createSession();
 		WebMailConfig config = this.getConfig();
 		String smtpUsername = (config.isSmtpEntandoUserAuth()) ? username : config.getSmtpUserName();
 		String smtpPassword = (config.isSmtpEntandoUserAuth()) ? password : config.getSmtpPassword();
+		//Session session = this.createSession(true, smtpUsername, smtpPassword);
+		Session session = (msg instanceof JpMimeMessage) ? ((JpMimeMessage) msg).getSession() : this.createSession(true, smtpUsername, smtpPassword);
 		Transport bus = null;
 		try {
 			bus = session.getTransport("smtp");
-			Integer port = config.getSmtpPort();
+			if (config.hasAnonimousSmtpAuth()) {
+				bus.connect();
+			}
+			//Integer port = config.getSmtpPort();
+			/*
+			System.out.println("----------------------------");
+			System.out.println("config.getSmtpHost() \t" + config.getSmtpHost());
+			System.out.println("port.intValue() \t" + port.intValue());
+			System.out.println("smtpUsername \t" + smtpUsername);
+			System.out.println("smtpPassword \t" + smtpPassword);
+			System.out.println("----------------------------");
+			*/
+			/*
 			if ((smtpUsername != null && smtpUsername.trim().length()>0) && 
 					(smtpPassword != null && smtpPassword.trim().length()>0)) {
 				if (port != null && port.intValue() > 0) {
+					System.out.println("INIZIO 1");
 					bus.connect(config.getSmtpHost(), port.intValue(), smtpUsername, smtpPassword);
+					System.out.println("FINE 1");
 				} else {
+					System.out.println("INIZIO 2");
 					bus.connect(config.getSmtpHost(), smtpUsername, smtpPassword);
+					System.out.println("FINE 2");
 				}
 			} else {
+				System.out.println("INIZIO 3");
 				bus.connect();
+				System.out.println("FINE 3");
 			}
+			*/
+			//bus.connect();
 			msg.saveChanges();
-			Transport.send(msg);
+			bus.send(msg);
 		} catch (Throwable t) {
 			_logger.error("Error sending mail", t);
 			//ApsSystemUtils.logThrowable(t, this, "sendMail", "Error sending mail");
@@ -172,8 +194,9 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 	 * Prepara la Session per l'invio della mail, inoltre effettua l'handshake SSL con l'host di destinazione quando richiesto. 
 	 * @return La Session pronta per l'uso.
 	 */
-	protected Session createSession() throws ApsSystemException {
-		Properties properties = System.getProperties();
+	protected Session createSession(boolean sentMail, String username, String password) throws ApsSystemException {
+		//Properties properties = System.getProperties();
+		Properties properties = new Properties();
 		WebMailConfig config = this.getConfig();
 		String imapProtocol = config.getImapProtocol();
 		String host = config.getImapHost();
@@ -209,16 +232,53 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			properties.setProperty("mail.imap.ssl.protocols", "SSL");
 			properties.setProperty("mail.imap.starttls.enable", "true");
 		}
-		properties.put("mail.smtp.host", config.getSmtpHost());
-		Integer smtpPort = config.getSmtpPort();
-		if (smtpPort != null && smtpPort.intValue()>0) {
-			properties.put("mail.smtp.port", smtpPort.toString());
-		}
+		
 		if (config.getLocalhost() != null && config.getLocalhost().trim().length() > 0) {
 			properties.put("mail.smtp.localhost", config.getLocalhost());
 		}
-		//ApsSystemUtils.getLogger().info("");
-		return Session.getInstance(properties, null);
+		
+		//SMTP START
+		properties.put("mail.smtp.host", config.getSmtpHost());
+		Integer smtpPort = config.getSmtpPort();
+		if (smtpPort != null && smtpPort.intValue()>0) {
+			//System.out.println("SETTATO " + smtpPort.toString());
+			properties.put("mail.smtp.port", smtpPort.toString());
+		} else {
+			//System.out.println("SETTATO NIENTEEEEEE " + smtpPort.toString());
+		}
+		
+		int timeout = DEFAULT_SMTP_TIMEOUT;
+		Integer timeoutParam = null;//config.getSmtpTimeout();
+		if (null != timeoutParam && timeoutParam.intValue() != 0) {
+			timeout = timeoutParam;
+		}
+		properties.put("mail.smtp.connectiontimeout", timeout);
+		properties.put("mail.smtp.timeout", timeout);
+		
+		Session session = null;
+		
+		//if (sentMail) {
+		if (sentMail && !config.hasAnonimousSmtpAuth()) {
+			properties.put("mail.smtp.auth", "true");
+			switch (config.getSmtpProtocol()) {
+				case WebMailConfig.PROTO_SSL:
+					properties.put("mail.smtp.socketFactory.port", smtpPort.toString());
+					properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+					properties.put("mail.transport.protocol", "smtps");
+					break;
+				case WebMailConfig.PROTO_TLS:
+					properties.put("mail.smtp.starttls.enable", "true");
+					break;
+				case WebMailConfig.PROTO_STD:
+					//do nothing just use previous properties WITH the authenticator
+					break;
+			}
+			Authenticator auth = new SMTPAuthenticator(username, password);
+			session = Session.getInstance(properties, auth);
+		} else {
+			session = Session.getDefaultInstance(properties);
+		}
+		return session;
 	}
 	
 	/**
@@ -287,5 +347,7 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 	private CertificateHandler  _certificateHandler;
 	
 	private ConfigInterface _configManager;
+	
+	public static final int DEFAULT_SMTP_TIMEOUT = 5000;
 	
 }

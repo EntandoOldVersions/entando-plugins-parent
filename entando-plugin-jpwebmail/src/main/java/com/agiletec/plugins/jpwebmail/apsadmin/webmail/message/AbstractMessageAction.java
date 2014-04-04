@@ -39,7 +39,6 @@ import com.agiletec.plugins.jpwebmail.apsadmin.webmail.AbstractWebmailBaseAction
  * Classe action astratta base per la gestione dei mesaggi singoli.
  * La classe fornisce i metodi base per la visualizzazione dei messaggi singoli e per 
  * la creazione di nuovi messaggi come reply (o forward) di messaggi singoli preesistenti.
- * @version 1.0
  * @author E.Santoboni
  */
 public class AbstractMessageAction extends AbstractWebmailBaseAction {
@@ -125,8 +124,8 @@ public class AbstractMessageAction extends AbstractWebmailBaseAction {
 	 */
 	public String getContent(Message message) {
 		try {
-			Object content = message.getContent();
 			this.checkFolder(message.getFolder());
+			Object content = message.getContent();
 			if (content instanceof String) {
 				boolean isHtmlText = WebMailHelper.isHtmlContent((String) content);
 				if (isHtmlText) {
@@ -259,8 +258,8 @@ public class AbstractMessageAction extends AbstractWebmailBaseAction {
 	public List<AttachmentInfo> getAttachmentInfos(Message message) {
 		List<AttachmentInfo> infos = new ArrayList<AttachmentInfo>();
 		try {
-			Object content = message.getContent();
 			this.checkFolder(message.getFolder());
+			Object content = message.getContent();
 			if (content instanceof MimeMultipart) {
 				MimeMultipart multipart = (MimeMultipart) content;
 				for (int x = 0; x < multipart.getCount(); x++) {

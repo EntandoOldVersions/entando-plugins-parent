@@ -79,7 +79,16 @@ public class NewMessageAction extends AbstractMessageAction implements INewMessa
 	@Override
 	public String newMessage() {
 		try {
-			MimeMessage message = this.getWebMailManager().createNewEmptyMessage();
+			UserDetails currentUser = this.getCurrentUser();
+			WebMailConfig webMailConfig = this.getWebMailManager().getConfiguration();
+			String userPassword = null;
+			if (webMailConfig.isUseEntandoUserPassword()) {
+				userPassword = currentUser.getPassword();
+			} else {
+				String passwordSessionParam = JpwebmailSystemConstants.SESSIONPARAM_CURRENT_MAIL_USER_PASSWORD;
+				userPassword = (String) this.getRequest().getSession().getAttribute(passwordSessionParam);
+			}
+			MimeMessage message = this.getWebMailManager().createNewEmptyMessage(currentUser.getUsername(), userPassword);
 			String from = this.getUserMailHelper().getEmailAddress(this.getCurrentUser());
 			message.setFrom(new InternetAddress(from));
 			Multipart multiPart = new MimeMultipart();
@@ -175,11 +184,10 @@ public class NewMessageAction extends AbstractMessageAction implements INewMessa
 	public String send() {
 		String sentFolderName = this.getWebMailManager().getSentFolderName();
 		try {
+			super.checkStore();
 			MimeMessage message = this.getMessage();
 			UserDetails currentUser = this.getCurrentUser();
-			
 			WebMailConfig webMailConfig = this.getWebMailManager().getConfiguration();
-			
 			String userPassword = null;
 			if (webMailConfig.isUseEntandoUserPassword()) {
 				userPassword = currentUser.getPassword();

@@ -18,6 +18,7 @@ INSERT INTO sysconfig (version, item, descr, config) VALUES ('production', 'jpwe
 		<user></user>
 		<password></password>
 		<port></port>
+		<security>std</security>
 	</smtp>
 	<folder>
 		<!-- Nomi completo della cartella di sistema (se esistono comprensivo delle cartelle parenti con il separatore ".") -->
