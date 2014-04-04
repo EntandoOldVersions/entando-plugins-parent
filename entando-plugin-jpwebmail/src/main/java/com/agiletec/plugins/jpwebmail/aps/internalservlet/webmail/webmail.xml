@@ -24,7 +24,9 @@
 		
 		<action name="doLogin" class="jpwebmailWebMailLoginAction" method="doLogin">
             <result name="input" type="dispatcher">/WEB-INF/plugins/jpwebmail/aps/jsp/internalservlet/webmail/login.jsp</result>
-            <result type="frontRedirectAction">intro</result>
+            <result type="frontRedirectAction">
+				<param name="actionName">intro</param>
+			</result>
 			<interceptor-ref name="entandoFrontEndFreeValidationStack">
         		<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
         	</interceptor-ref>

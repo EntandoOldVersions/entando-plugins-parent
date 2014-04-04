@@ -29,7 +29,7 @@
 				USER <c:out value="${sessionScope.currentUser.username}"/>
 				<br />
 				<form class="navbar-search pull-left" action="<wp:url />" method="get">
-					<input type="text" name="webmailPassword" class="search-query span2" placeholder="<wp:i18n key="jpwebmail_WEBMAIL_PASSWORD" />" x-webkit-speech="x-webkit-speech" />
+					<input type="password" name="webmailPassword" class="search-query span2" placeholder="<wp:i18n key="jpwebmail_WEBMAIL_PASSWORD" />" x-webkit-speech="x-webkit-speech" />
 				</form>
 			</c:when>
 			<c:otherwise>

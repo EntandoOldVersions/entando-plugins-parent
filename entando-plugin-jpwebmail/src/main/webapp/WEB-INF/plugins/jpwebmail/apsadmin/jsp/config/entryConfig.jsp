@@ -269,11 +269,11 @@
 				</div>
 				<div class="radio">
 					<s:text name="label.smtp.ssl"/>
-					<wpsf:radio id="smtpssl" name="smtpProtocol" value="1" checked="%{config.smtpProtocol == 1}" cssClass="radio" />
+					<wpsf:radio id="smtpssl" name="config.smtpProtocol" value="1" checked="%{config.smtpProtocol == 1}" cssClass="radio" />
 				</div>    
 				<div class="radio">
 					<s:text name="label.smtp.tls"/>
-					<wpsf:radio id="smtptls" name="smtpProtocol" value="2" checked="%{config.smtpProtocol == 2}" cssClass="radio" />    
+					<wpsf:radio id="smtptls" name="config.smtpProtocol" value="2" checked="%{config.smtpProtocol == 2}" cssClass="radio" />    
 				</div>
 				<%--
 				<div class="form-group">
