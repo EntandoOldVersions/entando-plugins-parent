@@ -21,6 +21,7 @@ import javax.mail.MessagingException;
 import javax.mail.Store;
 
 import com.agiletec.apsadmin.system.BaseAction;
+import com.agiletec.plugins.jpwebmail.aps.system.JpwebmailSystemConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,7 +113,7 @@ public abstract class AbstractWebmailBaseAction extends BaseAction implements IW
 	
 	public String getCurrentFolderName() {
 		if (null == this._currentFolderName) {
-			this.setCurrentFolderName("INBOX");
+			this.setCurrentFolderName(JpwebmailSystemConstants.INBOX_FOLDER);
 		}
 		return _currentFolderName;
 	}

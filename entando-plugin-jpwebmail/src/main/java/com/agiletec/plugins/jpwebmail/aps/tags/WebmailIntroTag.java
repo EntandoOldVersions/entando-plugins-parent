@@ -28,11 +28,11 @@ import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpwebmail.aps.system.JpwebmailSystemConstants;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.IWebMailManager;
+import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.WebMailConfig;
 import com.agiletec.plugins.jpwebmail.aps.tags.util.WebMailIntroInfo;
 
 /**
- * Tag estrattore delle informazioni da erogare nella 
- * showlet introduttiva al servizio webmail.
+ * Tag estrattore delle informazioni da erogare nel widget introduttivo al servizio webmail.
  * @author E.Santoboni
  */
 public class WebmailIntroTag extends TagSupport {
@@ -42,20 +42,46 @@ public class WebmailIntroTag extends TagSupport {
 		HttpSession session = this.pageContext.getSession();
 		IWebMailManager webmailManager = (IWebMailManager) ApsWebApplicationUtils.getBean(JpwebmailSystemConstants.WEBMAIL_MANAGER, pageContext);
 		Store store = null;
+		UserDetails currentUser = (UserDetails) session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
+		WebMailConfig webMailConfig = null;
 		WebMailIntroInfo info = new WebMailIntroInfo();
 		try {
-			UserDetails currentUser = (UserDetails) session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
-			if (currentUser.getUsername().equals(SystemConstants.GUEST_USER_NAME)) return super.doStartTag();
-			if (currentUser.getUsername().equals(SystemConstants.ADMIN_USER_NAME) && !this.isCheckAdmin()) return super.doStartTag();
-			store = webmailManager.initInboxConnection(currentUser.getUsername(), currentUser.getPassword());
+			webMailConfig = webmailManager.getConfiguration();
+			if (currentUser.getUsername().equals(SystemConstants.GUEST_USER_NAME)) {
+				return super.doStartTag();
+			}
+			if (currentUser.getUsername().equals(SystemConstants.ADMIN_USER_NAME) && !this.isCheckAdmin()) {
+				return super.doStartTag();
+			}
+			String userPassword = null;
+			if (webMailConfig.isUseEntandoUserPassword()) {
+				userPassword = currentUser.getPassword();
+			} else {
+				String passwordSessionParam = JpwebmailSystemConstants.SESSIONPARAM_CURRENT_MAIL_USER_PASSWORD;
+				String userPasswordRequestParam = this.pageContext.getRequest().getParameter("webmailPassword");
+				if (null != userPasswordRequestParam) {
+					session.setAttribute(passwordSessionParam, userPasswordRequestParam);
+				}
+				userPassword = (String) session.getAttribute(passwordSessionParam);
+				if (null == userPassword) {
+					this.pageContext.setAttribute(this.getRequiredLoginVar(), Boolean.TRUE);
+					return super.doStartTag();
+				}
+			}
+			store = webmailManager.initInboxConnection(currentUser.getUsername(), userPassword);
 		} catch (Throwable t) {
 			webmailManager.closeConnection(store);
 			this.pageContext.setAttribute(this.getVar(), info);
 			ApsSystemUtils.logThrowable(t, this, "doStartTag");
+			if (!currentUser.getUsername().equals(SystemConstants.GUEST_USER_NAME) 
+					&& null != webMailConfig 
+					&& !webMailConfig.isUseEntandoUserPassword()) {
+				this.pageContext.setAttribute(this.getRequiredLoginVar(), Boolean.TRUE);
+			}
 			return super.doStartTag();
 		}
 		try {
-			Folder inboxFolder = store.getFolder("INBOX");
+			Folder inboxFolder = store.getFolder(JpwebmailSystemConstants.INBOX_FOLDER);
 			info.setExistMailbox(true);
 			info.setMessageCount(inboxFolder.getMessageCount());
 			info.setNewMessageCount(inboxFolder.getNewMessageCount());
@@ -74,6 +100,7 @@ public class WebmailIntroTag extends TagSupport {
 	public void release() {
 		super.release();
 		this._var = null;
+		this.setRequiredLoginVar(null);
 		this._checkAdmin = false;
 	}
 	
@@ -84,6 +111,16 @@ public class WebmailIntroTag extends TagSupport {
 		this._var = var;
 	}
 	
+	public String getRequiredLoginVar() {
+		if (null == this._requiredLoginVar) {
+			return "jpwebmail_loginRequired";
+		}
+		return _requiredLoginVar;
+	}
+	public void setRequiredLoginVar(String requiredLoginVar) {
+		this._requiredLoginVar = requiredLoginVar;
+	}
+	
 	public boolean isCheckAdmin() {
 		return _checkAdmin;
 	}
@@ -92,6 +129,7 @@ public class WebmailIntroTag extends TagSupport {
 	}
 	
 	private String _var;
+	private String _requiredLoginVar;
 	private boolean _checkAdmin = false;
 	
 }

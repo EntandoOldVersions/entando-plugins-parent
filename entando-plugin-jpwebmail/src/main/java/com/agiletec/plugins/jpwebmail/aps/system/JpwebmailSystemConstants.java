@@ -30,8 +30,9 @@ public interface JpwebmailSystemConstants {
 	
 	public static final String WEBMAIL_CONFIG_ITEM = "jpwebmail_config";
 	
+	public static final String SESSIONPARAM_CURRENT_MESSAGE_ON_EDIT = "jpwebmail_currentMessageOnEdit";
 	
-	public static final String CURRENT_MESSAGE_ON_EDIT = "currentMessageOnEdit";
+	public static final String SESSIONPARAM_CURRENT_MAIL_USER_PASSWORD = "jpwebmail_currentMailUserPassword";
 	
 	public static final String INBOX_FOLDER = "INBOX";
 	

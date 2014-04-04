@@ -30,12 +30,12 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
 
-import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpwebmail.aps.system.JpwebmailSystemConstants;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.IWebMailManager;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -43,24 +43,21 @@ import org.slf4j.LoggerFactory;
  */
 public class NewMessageActionHelper implements INewMessageActionHelper {
 	
-	private static final org.slf4j.Logger _logger = LoggerFactory.getLogger(NewMessageActionHelper.class);
+	private static final Logger _logger = LoggerFactory.getLogger(NewMessageActionHelper.class);
 	
 	@Override
 	public MimeMessage updateMessageOnSession(HttpServletRequest request) throws ApsSystemException {
-		MimeMessage message = (MimeMessage) request.getSession().getAttribute(JpwebmailSystemConstants.CURRENT_MESSAGE_ON_EDIT);
+		MimeMessage message = (MimeMessage) request.getSession().getAttribute(JpwebmailSystemConstants.SESSIONPARAM_CURRENT_MESSAGE_ON_EDIT);
 		try {
             if (null != message) {
             	this.setRecipients("recipientsTo", RecipientType.TO, request, message);
             	this.setRecipients("recipientsCc", RecipientType.CC, request, message);
             	this.setRecipients("recipientsBcc", RecipientType.BCC, request, message);
-            	
             	String subject = request.getParameter("subject");
             	if (subject != null) {
             		message.setSubject(subject, "UTF-8");
             	}
-            	
             	String textContent = request.getParameter("content");
-            	
             	MimeMultipart multipart = (MimeMultipart) message.getContent();
             	BodyPart textBodyPart = multipart.getBodyPart(0);
             	textBodyPart.setContent(textContent, "TEXT/PLAIN; charset=UTF-8");

@@ -81,7 +81,7 @@ public class AddressBookAction extends BaseAction implements IAddressBookAction 
 	
 	@Override
 	public String joinRecipients() {
-		MimeMessage currentMessage = (MimeMessage) this.getRequest().getSession().getAttribute(JpwebmailSystemConstants.CURRENT_MESSAGE_ON_EDIT);
+		MimeMessage currentMessage = (MimeMessage) this.getRequest().getSession().getAttribute(JpwebmailSystemConstants.SESSIONPARAM_CURRENT_MESSAGE_ON_EDIT);
 		if (null == this.getSelectedReceivers()) {
 			return SUCCESS;
 		}
@@ -194,14 +194,14 @@ public class AddressBookAction extends BaseAction implements IAddressBookAction 
 		this._actualRecipient = actualRecipient;
 	}
 	
-	public INewMessageActionHelper getNewMessageHelper() {
+	protected INewMessageActionHelper getNewMessageHelper() {
 		return _newMessageHelper;
 	}
 	public void setNewMessageHelper(INewMessageActionHelper newMessageHelper) {
 		this._newMessageHelper = newMessageHelper;
 	}
 	
-	public IAddressBookManager getAddressBookManager() {
+	protected IAddressBookManager getAddressBookManager() {
 		return _addressBookManager;
 	}
 	public void setAddressBookManager(IAddressBookManager addressBookManager) {

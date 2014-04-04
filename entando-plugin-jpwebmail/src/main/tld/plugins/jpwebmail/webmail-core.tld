@@ -16,8 +16,14 @@
 		<attribute>
 			<description></description>
 			<name>var</name>
-			<required>yes</required>
-			<rtexprvalue>false</rtexprvalue>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>requiredLoginVar</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>
@@ -26,7 +32,7 @@
 			</description>
 			<name>checkAdmin</name>
 			<required>false</required>
-			<rtexprvalue>false</rtexprvalue>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	

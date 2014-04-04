@@ -23,7 +23,6 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 
 /**
  * Interfaccia dei servizi gestore della WebMail.
- * @version 1.0
  * @author E.Santoboni
  */
 public interface IWebMailManager {
@@ -32,8 +31,11 @@ public interface IWebMailManager {
 	 * Restituisce la configurazione del servizio WebMail.
 	 * @return La configurazione del servizio WebMail.
 	 * @throws ApsSystemException In caso di errore.
+	 * @deprecated use getConfiguration()
 	 */
 	public WebMailConfig loadConfig() throws ApsSystemException;
+	
+	public WebMailConfig getConfiguration() throws ApsSystemException;
 	
 	/**
 	 * Aggiorna la configurazione del servizio WebMail.

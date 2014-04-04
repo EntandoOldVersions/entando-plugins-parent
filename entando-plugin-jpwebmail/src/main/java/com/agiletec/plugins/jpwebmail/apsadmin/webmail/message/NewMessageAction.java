@@ -47,12 +47,12 @@ import com.agiletec.plugins.jpwebmail.aps.system.JpwebmailSystemConstants;
 import com.agiletec.plugins.jpwebmail.aps.system.services.addressbook.IAddressBookManager;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.IUserMailHelper;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.IWebMailManager;
+import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.WebMailConfig;
 import com.agiletec.plugins.jpwebmail.apsadmin.util.AttachmentInfo;
 import com.agiletec.plugins.jpwebmail.apsadmin.webmail.message.helper.FileHelper;
 import com.agiletec.plugins.jpwebmail.apsadmin.webmail.message.helper.INewMessageActionHelper;
 
 /**
- * @version 1.0
  * @author E.Santoboni
  */
 public class NewMessageAction extends AbstractMessageAction implements INewMessageAction {
@@ -87,7 +87,7 @@ public class NewMessageAction extends AbstractMessageAction implements INewMessa
 			textBodyPart.setContent("", "TEXT/PLAIN; charset=UTF-8");
 			multiPart.addBodyPart(textBodyPart);
 			message.setContent(multiPart, "UTF-8");
-			this.getRequest().getSession().setAttribute(JpwebmailSystemConstants.CURRENT_MESSAGE_ON_EDIT, message);
+			this.getRequest().getSession().setAttribute(JpwebmailSystemConstants.SESSIONPARAM_CURRENT_MESSAGE_ON_EDIT, message);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "reply");
 			return FAILURE;
@@ -139,7 +139,7 @@ public class NewMessageAction extends AbstractMessageAction implements INewMessa
 	        	this.replyAttachments(message, multiPart);
 	        }
 			reply.setContent(multiPart, "UTF-8");
-			this.getRequest().getSession().setAttribute(JpwebmailSystemConstants.CURRENT_MESSAGE_ON_EDIT, reply);
+			this.getRequest().getSession().setAttribute(JpwebmailSystemConstants.SESSIONPARAM_CURRENT_MESSAGE_ON_EDIT, reply);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "reply");
 			return FAILURE;
@@ -168,7 +168,7 @@ public class NewMessageAction extends AbstractMessageAction implements INewMessa
 	}
 	
 	public MimeMessage getMessage() {
-		return (MimeMessage) this.getRequest().getSession().getAttribute(JpwebmailSystemConstants.CURRENT_MESSAGE_ON_EDIT);
+		return (MimeMessage) this.getRequest().getSession().getAttribute(JpwebmailSystemConstants.SESSIONPARAM_CURRENT_MESSAGE_ON_EDIT);
 	}
 	
 	@Override
@@ -177,7 +177,17 @@ public class NewMessageAction extends AbstractMessageAction implements INewMessa
 		try {
 			MimeMessage message = this.getMessage();
 			UserDetails currentUser = this.getCurrentUser();
-			this.getWebMailManager().sendMail(message, currentUser.getUsername(), currentUser.getPassword());
+			
+			WebMailConfig webMailConfig = this.getWebMailManager().getConfiguration();
+			
+			String userPassword = null;
+			if (webMailConfig.isUseEntandoUserPassword()) {
+				userPassword = currentUser.getPassword();
+			} else {
+				String passwordSessionParam = JpwebmailSystemConstants.SESSIONPARAM_CURRENT_MAIL_USER_PASSWORD;
+				userPassword = (String) this.getRequest().getSession().getAttribute(passwordSessionParam);
+			}
+			this.getWebMailManager().sendMail(message, currentUser.getUsername(), userPassword);
 			Folder dfolder = this.getStore().getFolder(sentFolderName);
 			if (null == dfolder) {
 				this.addActionMessage(this.getText("SENT_FOLDER_NULL"));

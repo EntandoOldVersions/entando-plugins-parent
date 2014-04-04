@@ -27,7 +27,9 @@ import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpwebmail.aps.system.JpwebmailSystemConstants;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.IWebMailManager;
+import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.WebMailConfig;
 import com.agiletec.plugins.jpwebmail.apsadmin.webmail.IWebMailBaseAction;
+
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
@@ -39,7 +41,19 @@ public class WebMailStoreFactoryInterceptor extends AbstractInterceptor {
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		IWebMailManager webmailManager = (IWebMailManager) ApsWebApplicationUtils.getBean(JpwebmailSystemConstants.WEBMAIL_MANAGER, ServletActionContext.getRequest());
-		Store store = this.getStore(webmailManager);
+		WebMailConfig webMailConfig = webmailManager.getConfiguration();
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		UserDetails currentUser = (UserDetails) session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
+		String userPassword = null;
+		if (webMailConfig.isUseEntandoUserPassword()) {
+			userPassword = currentUser.getPassword();
+		} else {
+			userPassword = (String) session.getAttribute(JpwebmailSystemConstants.SESSIONPARAM_CURRENT_MAIL_USER_PASSWORD);
+			if (null == userPassword) {
+				return "executeWebmailLogin";
+			}
+		}
+		Store store = this.getStore(currentUser, userPassword, webmailManager);
 		if (null == store) return "noStore";
 		IWebMailBaseAction webMailAction = (IWebMailBaseAction) invocation.getAction();
 		webMailAction.setStore(store);
@@ -49,12 +63,10 @@ public class WebMailStoreFactoryInterceptor extends AbstractInterceptor {
 		return result;
 	}
 	
-	private Store getStore(IWebMailManager webmailManager) {
-		HttpSession session = ServletActionContext.getRequest().getSession();
-		UserDetails currentUser = (UserDetails) session.getAttribute(SystemConstants.SESSIONPARAM_CURRENT_USER);
+	private Store getStore(UserDetails currentUser, String userPassword, IWebMailManager webmailManager) {
 		Store store = null;
 		try {
-			store = webmailManager.initInboxConnection(currentUser.getUsername(), currentUser.getPassword());
+			store = webmailManager.initInboxConnection(currentUser.getUsername(), userPassword);
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "getStore");
 			return null;

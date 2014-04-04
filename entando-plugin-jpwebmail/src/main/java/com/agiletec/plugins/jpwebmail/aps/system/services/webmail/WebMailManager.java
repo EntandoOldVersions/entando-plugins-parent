@@ -65,7 +65,13 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 	}
 	
 	@Override
+	@Deprecated
 	public WebMailConfig loadConfig() throws ApsSystemException {
+		return this.getConfiguration();
+	}
+	
+	@Override
+	public WebMailConfig getConfiguration() throws ApsSystemException {
 		return this.getConfig().clone();
 	}
 	
@@ -135,8 +141,8 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 	public void sendMail(MimeMessage msg, String username, String password) throws ApsSystemException {
 		Session session = (msg instanceof JpMimeMessage) ? ((JpMimeMessage) msg).getSession() : this.createSession();
 		WebMailConfig config = this.getConfig();
-		String smtpUsername = (config.isSmtpJapsUserAuth()) ? username : config.getSmtpUserName();
-		String smtpPassword = (config.isSmtpJapsUserAuth()) ? password : config.getSmtpPassword();
+		String smtpUsername = (config.isSmtpEntandoUserAuth()) ? username : config.getSmtpUserName();
+		String smtpPassword = (config.isSmtpEntandoUserAuth()) ? password : config.getSmtpPassword();
 		Transport bus = null;
 		try {
 			bus = session.getTransport("smtp");

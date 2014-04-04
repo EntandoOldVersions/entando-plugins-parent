@@ -7,17 +7,31 @@
 	
     <package name="jpwebmail_do/jpwebmail/Portal/WebMail" namespace="/do/jpwebmail/Portal/WebMail" extends="entando-front-default">
     	
-    	<interceptors>
+		<interceptors>
     		<interceptor name="jpwebmailStoreFactoryInterceptor" class="com.agiletec.plugins.jpwebmail.apsadmin.system.WebMailStoreFactoryInterceptor" />
 		</interceptors>
-    	
-    	<global-results>
-    		<result name="noStore" type="dispatcher">/WEB-INF/plugins/jpwebmail/aps/jsp/internalservlet/webmail/noStore.jsp</result>
+		
+		<global-results>
+    		<result name="executeWebmailLogin" type="chain">loginWebmail</result>
+			<result name="noStore" type="dispatcher">/WEB-INF/plugins/jpwebmail/aps/jsp/internalservlet/webmail/noStore.jsp</result>
     		<result name="failure" type="dispatcher">/WEB-INF/plugins/jpwebmail/aps/jsp/internalservlet/webmail/error.jsp</result>
 		</global-results>
-    	
+		
+		<action name="loginWebmail" class="jpwebmailWebMailLoginAction" method="login">
+            <result type="dispatcher">/WEB-INF/plugins/jpwebmail/aps/jsp/internalservlet/webmail/login.jsp</result>
+			<interceptor-ref name="entandoFrontEndFreeStack" />
+        </action>
+		
+		<action name="doLogin" class="jpwebmailWebMailLoginAction" method="doLogin">
+            <result name="input" type="dispatcher">/WEB-INF/plugins/jpwebmail/aps/jsp/internalservlet/webmail/login.jsp</result>
+            <result type="chain">intro</result>
+			<interceptor-ref name="entandoFrontEndFreeValidationStack">
+        		<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
+        	</interceptor-ref>
+        </action>
+		
 		<action name="intro" class="jpwebmailWebMailAction">
-            <result type="dispatcher">/WEB-INF/plugins/jpwebmail/aps/jsp/internalservlet/webmail/webmailInbox.jsp</result>
+			<result type="dispatcher">/WEB-INF/plugins/jpwebmail/aps/jsp/internalservlet/webmail/webmailInbox.jsp</result>
             <interceptor-ref name="jpwebmailStoreFactoryInterceptor"></interceptor-ref>
         	<interceptor-ref name="entandoFrontEndFreeStack">
         		<param name="chain.includeParameters">fieldErrors,actionErrors,actionMessages</param>
@@ -113,7 +127,6 @@
             <result name="input" type="chain">forwardIntroNewMail</result>
         	<result type="chain">forwardIntroNewMail</result>
         	<interceptor-ref name="jpwebmailStoreFactoryInterceptor"></interceptor-ref>
-			<!-- <interceptor-ref name="fileUpload"><param name="maximumSize">10485760</param></interceptor-ref> --><!-- maximun Size = 10 Mb -->
 			<interceptor-ref name="apsFileUpload" />
 			<interceptor-ref name="entandoFrontEndFreeValidationStack" />
         </action>

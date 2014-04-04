@@ -26,8 +26,8 @@ public class WebMailConfig implements Cloneable {
 		WebMailConfig config = new WebMailConfig();
 		
 		config.setLocalhost(this.getLocalhost());
-		
 		config.setDomainName(this.getDomainName());
+		config.setUseEntandoUserPassword(this.isUseEntandoUserPassword());
 		
 		config.setCertificateEnable(this.isCertificateEnable());
 		config.setCertificateLazyCheck(this.isCertificateLazyCheck());
@@ -39,7 +39,7 @@ public class WebMailConfig implements Cloneable {
 		config.setImapProtocol(this.getImapProtocol());
 		
 		config.setDebug(this.isDebug());
-		config.setSmtpJapsUserAuth(this.isSmtpJapsUserAuth());
+		config.setSmtpEntandoUserAuth(this.isSmtpEntandoUserAuth());
 		config.setSmtpHost(this.getSmtpHost());
 		config.setSmtpPort(this.getSmtpPort());
 		config.setSmtpUserName(this.getSmtpUserName());
@@ -79,11 +79,20 @@ public class WebMailConfig implements Cloneable {
 		this._smtpPort = smtpPort;
 	}
 	
-	public boolean isSmtpJapsUserAuth() {
-		return _smtpJapsUserAuth;
+	public boolean isSmtpEntandoUserAuth() {
+		return _smtpEntandoUserAuth;
 	}
+	public void setSmtpEntandoUserAuth(boolean smtpEntandoUserAuth) {
+		this._smtpEntandoUserAuth = smtpEntandoUserAuth;
+	}
+	
+	@Deprecated
+	public boolean isSmtpJapsUserAuth() {
+		return this.isSmtpEntandoUserAuth();
+	}
+	@Deprecated
 	public void setSmtpJapsUserAuth(boolean smtpJapsUserAuth) {
-		this._smtpJapsUserAuth = smtpJapsUserAuth;
+		this.setSmtpEntandoUserAuth(smtpJapsUserAuth);
 	}
 	
 	public boolean isDebug() {
@@ -105,6 +114,13 @@ public class WebMailConfig implements Cloneable {
 	}
 	public void setDomainName(String domainName) {
 		this._domainName = domainName;
+	}
+	
+	public boolean isUseEntandoUserPassword() {
+		return _useEntandoUserPassword;
+	}
+	public void setUseEntandoUserPassword(boolean useEntandoUserPassword) {
+		this._useEntandoUserPassword = useEntandoUserPassword;
 	}
 	
 	public String getImapHost() {
@@ -183,8 +199,8 @@ public class WebMailConfig implements Cloneable {
 	private boolean _certificateDebugOnConsole;
 	
 	private String _localhost;
-	
 	private String _domainName;
+	private boolean _useEntandoUserPassword; //Use Entando password
 	
 	private String _imapHost;
 	private Integer _imapPort;
@@ -195,7 +211,7 @@ public class WebMailConfig implements Cloneable {
 	private String _smtpPassword;
 	private Integer _smtpPort;
 	private boolean _debug;
-	private boolean _smtpJapsUserAuth;
+	private boolean _smtpEntandoUserAuth;
 	
 	private String _tempDiskRootFolder;
 	

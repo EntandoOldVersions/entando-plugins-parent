@@ -5,6 +5,7 @@ INSERT INTO sysconfig (version, item, descr, config) VALUES ('production', 'jpwe
 		<certPath>/home/agile/workspace/entando/build/temp</certPath>
 		<debugOnConsole>true</debugOnConsole>
 	</certificates>
+	<entandoUserPassword>true</entandoUserPassword>
 	<localhost>hostname</localhost>
 	<domain>tiscali.it</domain>
 	<imap>
@@ -287,3 +288,6 @@ INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpwebmail_
 
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpwebmail_NO_LOGIN', 'it', 'Devi effettuare il login' );
 INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpwebmail_NO_LOGIN', 'en', 'You must login' );
+
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpwebmail_WEBMAIL_PASSWORD', 'it', 'Password' );
+INSERT INTO localstrings ( keycode, langcode, stringvalue ) VALUES ( 'jpwebmail_WEBMAIL_PASSWORD', 'en', 'Password' );

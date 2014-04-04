@@ -32,12 +32,22 @@
 				</ul>
 			</div>
 		</s:if>
-
+		
 		<fieldset class="col-xs-12 margin-large-top">
 			<legend><s:text name="title.jpwebMail.config" /></legend>
 			<div class="form-group">
 				<label for="config.domainName"><s:text name="label.domainName" /></label>
 				<wpsf:textfield name="config.domainName" id="config.domainName" cssClass="form-control" />
+			</div>
+			<div class="form-group">
+				<label class="checkbox">
+					<wpsf:checkbox name="config.useEntandoUserPassword" id="config.useEntandoUserPassword" cssClass="radiocheck"/>
+					&#32;<s:text name="label.useEntandoUserPassword" />
+				</label>
+			</div>
+			<div class="form-group">
+				<label for="config.localhost"><s:text name="label.localhost" /></label>
+				<wpsf:textfield name="config.localhost" id="config.localhost" cssClass="form-control" />
 			</div>
 		</fieldset>
 

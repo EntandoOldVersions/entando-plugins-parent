@@ -57,12 +57,22 @@ public class WebMailConfigDOM {
 				config.setLocalhost(localhost);
 			}
 			
+			String useEntandoUserPasswordElem = root.getChildText(ENTANDO_PASSWORD_ELEM);
+			if (null != useEntandoUserPasswordElem) {
+				config.setUseEntandoUserPassword(Boolean.parseBoolean(useEntandoUserPasswordElem));
+			} else {
+				config.setUseEntandoUserPassword(true);
+			}
+			
 			Element smtpElem = root.getChild(SMTP_ELEM);
 			String debug = smtpElem.getAttributeValue(SMTP_DEBUG_ATTR);
-			config.setDebug(new Boolean(debug).booleanValue());
+			config.setDebug(Boolean.parseBoolean(debug));
 			
-			String japsUserAuth = smtpElem.getAttributeValue(SMTP_JAPS_USER_AUTH_ATTR);
-			config.setSmtpJapsUserAuth(new Boolean(japsUserAuth).booleanValue());
+			String entandoUserAuth = smtpElem.getAttributeValue(SMTP_JAPS_USER_AUTH_ATTR);
+			if (null == entandoUserAuth) {
+				entandoUserAuth = smtpElem.getAttributeValue(SMTP_ENTANDO_USER_AUTH_ATTR);
+			}
+			config.setSmtpEntandoUserAuth(Boolean.parseBoolean(entandoUserAuth));
 			
 			config.setSmtpHost(smtpElem.getChildText(SMTP_HOST_CHILD));
 			config.setSmtpUserName(smtpElem.getChildText(SMTP_USER_CHILD));
@@ -73,13 +83,13 @@ public class WebMailConfigDOM {
 			
 			Element certElem = root.getChild(CERTIFICATES_ELEM);
 			String enable = certElem.getChildText(CERTIFICATES_ENABLE_CHILD);
-			config.setCertificateEnable(new Boolean(enable).booleanValue());
+			config.setCertificateEnable(Boolean.parseBoolean(enable));
 			String lazyCheck = 	certElem.getChildText(CERTIFICATES_LAZYCHECK_CHILD);
-			config.setCertificateLazyCheck(new Boolean(lazyCheck).booleanValue());
+			config.setCertificateLazyCheck(Boolean.parseBoolean(lazyCheck));
 			String certificatePath = certElem.getChildText(CERTIFICATES_CERTPATH_CHILD);
 			config.setCertificatePath(certificatePath);
 			String debugOnConsole = certElem.getChildText(CERTIFICATES_DEBUGONCONSOLE_CHILD);
-			config.setCertificateDebugOnConsole(new Boolean(debugOnConsole).booleanValue());
+			config.setCertificateDebugOnConsole(Boolean.parseBoolean(debugOnConsole));
 			
 			Element imapElem = root.getChild(IMAP_ELEM);
 			config.setImapHost(imapElem.getChildText(IMAP_HOST_CHILD));
@@ -119,6 +129,9 @@ public class WebMailConfigDOM {
 				domainElem.addContent(new CDATA(config.getDomainName()));
 				root.addContent(domainElem);
 			}
+			Element entandoUserPasswordElem = new Element(ENTANDO_PASSWORD_ELEM);
+			entandoUserPasswordElem.addContent(String.valueOf(config.isUseEntandoUserPassword()));
+			root.addContent(entandoUserPasswordElem);
 			
 			Element certificatesElem = new Element(CERTIFICATES_ELEM);
 			Element enableElem = new Element(CERTIFICATES_ENABLE_CHILD);
@@ -150,7 +163,7 @@ public class WebMailConfigDOM {
 			
 			Element smtpElem = new Element(SMTP_ELEM);
 			smtpElem.setAttribute(SMTP_DEBUG_ATTR, String.valueOf(config.isDebug()));
-			smtpElem.setAttribute(SMTP_JAPS_USER_AUTH_ATTR, String.valueOf(config.isSmtpJapsUserAuth()));
+			smtpElem.setAttribute(SMTP_ENTANDO_USER_AUTH_ATTR, String.valueOf(config.isSmtpEntandoUserAuth()));
 			Element smtpHostElem = new Element(IMAP_HOST_CHILD);
 			smtpHostElem.addContent(new CDATA(config.getSmtpHost()));
 			smtpElem.addContent(smtpHostElem);
@@ -216,8 +229,8 @@ public class WebMailConfigDOM {
 	private static final String CERTIFICATES_DEBUGONCONSOLE_CHILD = "debugOnConsole";
 	
 	private static final String LOCALHOST_ELEM = "localhost";
-	
 	private static final String DOMAIN_ELEM = "domain";
+	private static final String ENTANDO_PASSWORD_ELEM = "entandoUserPassword";
 	
 	private static final String IMAP_ELEM = "imap";
 	private static final String IMAP_HOST_CHILD = "host";
@@ -226,7 +239,9 @@ public class WebMailConfigDOM {
 	
 	private static final String SMTP_ELEM = "smtp";
 	private static final String SMTP_DEBUG_ATTR = "debug";
+	@Deprecated
 	private static final String SMTP_JAPS_USER_AUTH_ATTR = "japsUserAuth";
+	private static final String SMTP_ENTANDO_USER_AUTH_ATTR = "entandoUserAuth";
 	private static final String SMTP_HOST_CHILD= "host";
 	private static final String SMTP_USER_CHILD= "user";
 	private static final String SMTP_PASSWORD_CHILD= "password";

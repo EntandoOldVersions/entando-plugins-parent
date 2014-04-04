@@ -16,6 +16,11 @@
 		<property name="webMailManager" ref="jpwebmailWebMailManager" />
 	</bean>
 	
+	<bean id="jpwebmailWebMailLoginAction" scope="prototype" 
+			class="org.entando.entando.plugins.jpwebmail.apsadmin.login.WebMailLoginAction" parent="abstractBaseAction" >
+		<property name="webMailManager" ref="jpwebmailWebMailManager" />
+	</bean>
+	
 	<bean id="jpwebmailNewMessageActionHelper" 
 			class="com.agiletec.plugins.jpwebmail.apsadmin.webmail.message.helper.NewMessageActionHelper" >
 		<property name="webMailManager" ref="jpwebmailWebMailManager" />
