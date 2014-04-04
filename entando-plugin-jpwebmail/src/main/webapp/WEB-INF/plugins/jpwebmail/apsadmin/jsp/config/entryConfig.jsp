@@ -9,9 +9,9 @@
 <div id="main">
 	<s:form action="save">
 		<s:if test="hasActionMessages()">
-			<div class="alert alert-success alert-dismissable fade in">
+			<div class="alert alert-danger alert-dismissable fade in">
 				<button class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
-				<h2 class="h4 margin-none"><s:text name="messages.confirm" /></h2>
+				<h2 class="h4 margin-none"><s:text name="messages.error" /></h2>
 				<ul class="margin-base-top">
 					<s:iterator value="actionMessages">
 						<li><s:property escape="false" /></li>
@@ -20,43 +20,98 @@
 			</div>
 		</s:if>
 		<s:if test="hasFieldErrors()">
-			<div class="alert alert-success alert-dismissable fade in">
+			<div class="alert alert-danger alert-dismissable fade in">
 				<button class="close" data-dismiss="alert"><span class="icon fa fa-times"></span></button>
-				<h2 class="h4 margin-none"><s:text name="messages.confirm" /></h2>
-				<ul class="margin-base-top">
-					<s:iterator value="fieldErrors">
-						<s:iterator value="value">
+				<h2 class="h4 margin-none">
+					<s:text name="messages.error" />
+					&ensp;
+					<span
+						class=" text-muted icon fa fa-question-circle cursor-pointer"
+						title="<s:text name="label.all" />"
+						data-toggle="collapse"
+						data-target="#content-field-messages"></span>
+				</h2>
+				<ul class="collapse margin-small-top" id="content-field-messages">
+					<s:iterator value="fieldErrors" var="e">
+						<s:iterator value="#e.value">
 							<li><s:property escape="false" /></li>
 						</s:iterator>
 					</s:iterator>
 				</ul>
 			</div>
 		</s:if>
-		
+
+
 		<fieldset class="col-xs-12 margin-large-top">
 			<legend><s:text name="title.jpwebMail.config" /></legend>
-			<div class="form-group">
+
+			<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.domainName']}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+			<s:set var="controlGroupErrorClassVar" value="''" />
+			<s:if test="#currentFieldHasFieldErrorVar">
+				<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+			</s:if>
+			<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 				<label for="config.domainName"><s:text name="label.domainName" /></label>
 				<wpsf:textfield name="config.domainName" id="config.domainName" cssClass="form-control" />
+				<s:if test="#currentFieldHasFieldErrorVar">
+					<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+				</s:if>
 			</div>
+			<s:set var="currentFieldErrorsVar" value="%{null}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+			<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
+
+
+
+
+			<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.localhost']}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+			<s:set var="controlGroupErrorClassVar" value="''" />
+			<s:if test="#currentFieldHasFieldErrorVar">
+				<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+			</s:if>
+			<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
+				<label for="config.localhost"><s:text name="label.localhost" /></label>
+				<wpsf:textfield name="config.localhost" id="config.localhost" cssClass="form-control" />
+				<s:if test="#currentFieldHasFieldErrorVar">
+					<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+				</s:if>
+			</div>
+			<s:set var="currentFieldErrorsVar" value="%{null}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+			<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
 			<div class="form-group">
 				<label class="checkbox">
 					<wpsf:checkbox name="config.useEntandoUserPassword" id="config.useEntandoUserPassword" cssClass="radiocheck"/>
 					&#32;<s:text name="label.useEntandoUserPassword" />
 				</label>
 			</div>
-			<div class="form-group">
-				<label for="config.localhost"><s:text name="label.localhost" /></label>
-				<wpsf:textfield name="config.localhost" id="config.localhost" cssClass="form-control" />
-			</div>
+
 		</fieldset>
 
 		<fieldset class="col-xs-12 margin-large-top">
 			<legend><s:text name="label.certificates" /></legend>
-			<div class="form-group">
+
+			<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.certificatePath']}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+			<s:set var="controlGroupErrorClassVar" value="''" />
+			<s:if test="#currentFieldHasFieldErrorVar">
+				<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+			</s:if>
+			<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 				<label for="config.certificatePath"><s:text name="label.certificatePath" /></label>
 				<wpsf:textfield name="config.certificatePath" id="config.certificatePath" cssClass="form-control"/>
+				<s:if test="#currentFieldHasFieldErrorVar">
+					<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+				</s:if>
 			</div>
+			<s:set var="currentFieldErrorsVar" value="%{null}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+			<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
 
 			<div class="form-group">
 				<label class="checkbox">
@@ -72,48 +127,140 @@
 					&#32;<s:text name="label.certificateDebugOnConsole" />
 				</label>
 			</div>
-
 		</fieldset>
 
 		<fieldset class="col-xs-12 margin-large-top">
-			<legend><s:text name="label.imap" /></legend>
+			<legend><abbr title="Internet Message Access Protocol"><s:text name="label.imap" /></abbr></legend>
 			<div class="row">
-					<div class="form-group col-md-4 col-lg-4">
+
+					<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.imapHost']}" />
+					<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+					<s:set var="controlGroupErrorClassVar" value="''" />
+					<s:if test="#currentFieldHasFieldErrorVar">
+						<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+					</s:if>
+					<div class="form-group<s:property value="#controlGroupErrorClassVar" /> col-md-4 col-lg-4">
 						<label for="config.imapHost"><s:text name="label.imapHost" /></label>
 						<wpsf:textfield name="config.imapHost" id="config.imapHost" cssClass="form-control"/>
+						<s:if test="#currentFieldHasFieldErrorVar">
+							<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+						</s:if>
 					</div>
-					<div class="form-group col-md-4 col-lg-4">
+					<s:set var="currentFieldErrorsVar" value="%{null}" />
+					<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+					<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
+					<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.imapPort']}" />
+					<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+					<s:set var="controlGroupErrorClassVar" value="''" />
+					<s:if test="#currentFieldHasFieldErrorVar">
+						<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+					</s:if>
+					<div class="form-group<s:property value="#controlGroupErrorClassVar" /> col-md-4 col-lg-4">
 						<label for="config.imapPort"><s:text name="label.imapPort" /></label>
 						<wpsf:textfield placeholder="usualy 143, or IMAPS 993" name="config.imapPort" id="config.imapPort" cssClass="form-control"/>
+						<s:if test="#currentFieldHasFieldErrorVar">
+							<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+						</s:if>
 					</div>
-					<div class="form-group col-md-4 col-lg-4">
+					<s:set var="currentFieldErrorsVar" value="%{null}" />
+					<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+					<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
+
+					<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.imapProtocol']}" />
+					<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+					<s:set var="controlGroupErrorClassVar" value="''" />
+					<s:if test="#currentFieldHasFieldErrorVar">
+						<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+					</s:if>
+					<div class="form-group<s:property value="#controlGroupErrorClassVar" /> col-md-4 col-lg-4">
 						<label for="config.imapProtocol"><s:text name="label.imapProtocol" /></label>
 						<wpsf:textfield name="config.imapProtocol" id="config.imapProtocol" cssClass="form-control" />
+						<s:if test="#currentFieldHasFieldErrorVar">
+							<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+						</s:if>
 					</div>
+					<s:set var="currentFieldErrorsVar" value="%{null}" />
+					<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+					<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
 			</div>
 		</fieldset>
 
 		<fieldset class="col-xs-12 margin-large-top">
-			<legend><s:text name="label.smtp" /></legend>
+			<legend><abbr title="Simple Mail Transfer Protocol"><s:text name="label.smtp" /></abbr></legend>
 			<div class="row">
-				<div class="form-group col-md-6 col-lg-6">
+
+				<s:set var="smptHostErrorsVar" value="%{fieldErrors['config.smtpHost']}" />
+				<s:set var="smptHostHasErrorVar" value="#smptHostErrorsVar != null && !#smptHostErrorsVar.isEmpty()" />
+				<s:set var="smtpHostcontrolGroupErrorClassVar" value="''" />
+				<s:if test="#smptHostHasErrorVar">
+					<s:set var="smtpHostcontrolGroupErrorClassVar" value="' has-error'" />
+				</s:if>
+				<s:set var="smtpPortErrorsVar" value="%{fieldErrors['config.smtpPort']}" />
+				<s:set var="smtpPortHasFieldErrorVar" value="#smtpPortErrorsVar != null && !#smtpPortErrorsVar.isEmpty()" />
+				<s:set var="smtpPortcontrolGroupErrorClassVar" value="''" />
+				<s:if test="#smtpPortHasFieldErrorVar">
+					<s:set var="smtpPortcontrolGroupErrorClassVar" value="' has-error'" />
+				</s:if>
+
+				<div class="form-group<s:property value="#smtpHostcontrolGroupErrorClassVar" /> col-md-6 col-lg-6">
 					<label for="config.smtpHost"><s:text name="label.smtpHost" /></label>
 					<wpsf:textfield name="config.smtpHost" id="config.smtpHost" cssClass="form-control" />
+					<s:if test="#smptHostHasErrorVar||#smtpPortHasFieldErrorVar">
+						<p class="text-danger padding-small-vertical">&nbsp;<s:iterator value="#smptHostErrorsVar"><s:property />&emsp;</s:iterator></p>
+					</s:if>
 				</div>
-				<div class="form-group col-md-6 col-lg-6">
+
+				<div class="form-group<s:property value="#smtpPortcontrolGroupErrorClassVar" /> col-md-6 col-lg-6">
 					<label for="config.smtpPort"><s:text name="label.smtpPort" /></label>
 					<wpsf:textfield placeholder="usually 25, for smtps 465" name="config.smtpPort" id="config.smtpPort" cssClass="form-control" />
+					<s:if test="#smptHostHasErrorVar||#smtpPortHasFieldErrorVar">
+						<p class="text-danger padding-small-vertical">&nbsp;<s:iterator value="#smtpPortErrorsVar"><s:property />&emsp;</s:iterator></p>
+					</s:if>
 				</div>
-				<div class="form-group col-md-6 col-lg-6">
+
+
+
+				<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.smtpUserName']}" />
+				<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+				<s:set var="controlGroupErrorClassVar" value="''" />
+				<s:if test="#currentFieldHasFieldErrorVar">
+					<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+				</s:if>
+				<div class="form-group<s:property value="#controlGroupErrorClassVar" /> col-md-6 col-lg-6">
 					<label for="config.smtpUserName"><s:text name="label.smtpUserName" /></label>
 					<wpsf:textfield name="config.smtpUserName" id="config.smtpUserName" cssClass="form-control"/>
+					<s:if test="#currentFieldHasFieldErrorVar">
+						<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+					</s:if>
 				</div>
-				<div class="form-group col-md-6 col-lg-6">
+				<s:set var="currentFieldErrorsVar" value="%{null}" />
+				<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+				<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
+				<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.smtpPassword']}" />
+				<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+				<s:set var="controlGroupErrorClassVar" value="''" />
+				<s:if test="#currentFieldHasFieldErrorVar">
+					<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+				</s:if>
+				<div class="form-group<s:property value="#controlGroupErrorClassVar" /> col-md-6 col-lg-6">
 					<label for="config.smtpPassword"><s:text name="label.smtpPassword" /></label>
-					<wpsf:textfield name="config.smtpPassword" id="config.smtpPassword" cssClass="form-control" />
+					<wpsf:password name="config.smtpPassword" id="config.smtpPassword" cssClass="form-control" />
+					<s:if test="#currentFieldHasFieldErrorVar">
+						<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+					</s:if>
 				</div>
+				<s:set var="currentFieldErrorsVar" value="%{null}" />
+				<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+				<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
+
 			</div>
-			<div class="form-group">
+
+			<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 				<label class="checkbox">
 					<wpsf:checkbox name="config.debug" id="config.debug" cssClass="radiocheck"/>
 					&#32;<s:text name="label.debug" />
@@ -127,26 +274,67 @@
 
 		<fieldset class="col-xs-12 margin-large-top">
 			<legend><s:text name="label.folders" /></legend>
-			<div class="form-group">
+
+			<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.trashFolderName']}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+			<s:set var="controlGroupErrorClassVar" value="''" />
+			<s:if test="#currentFieldHasFieldErrorVar">
+				<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+			</s:if>
+			<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 				<label for="config.trashFolderName"><s:text name="label.trashFolderName" /></label>
 				<wpsf:textfield name="config.trashFolderName" id="config.trashFolderName" cssClass="form-control" />
+				<s:if test="#currentFieldHasFieldErrorVar">
+					<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+				</s:if>
 			</div>
-			<div class="form-group">
+			<s:set var="currentFieldErrorsVar" value="%{null}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+			<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
+			<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.sentFolderName']}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+			<s:set var="controlGroupErrorClassVar" value="''" />
+			<s:if test="#currentFieldHasFieldErrorVar">
+				<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+			</s:if>
+			<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 				<label for="config.sentFolderName"><s:text name="label.sentFolderName" /></label>
 				<wpsf:textfield name="config.sentFolderName" id="config.sentFolderName" cssClass="form-control" />
+				<s:if test="#currentFieldHasFieldErrorVar">
+					<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+				</s:if>
 			</div>
+			<s:set var="currentFieldErrorsVar" value="%{null}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+			<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
 		</fieldset>
 
 		<fieldset class="col-xs-12 margin-large-top">
 			<legend><s:text name="label.tempDiskRootFolder" /></legend>
-			<div class="form-group">
+
+			<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.tempDiskRootFolder']}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
+			<s:set var="controlGroupErrorClassVar" value="''" />
+			<s:if test="#currentFieldHasFieldErrorVar">
+				<s:set var="controlGroupErrorClassVar" value="' has-error'" />
+			</s:if>
+			<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 				<label for="config.tempDiskRootFolder"><s:text name="label.tempDiskRootFolder" /></label>
 				<wpsf:textfield placeholder="/secret/temporary/folder/" name="config.tempDiskRootFolder" id="config.tempDiskRootFolder" cssClass="form-control" />
+				<s:if test="#currentFieldHasFieldErrorVar">
+					<p class="text-danger padding-small-vertical"><s:iterator value="#currentFieldErrorsVar"><s:property />&emsp;</s:iterator></p>
+				</s:if>
 			</div>
+			<s:set var="currentFieldErrorsVar" value="%{null}" />
+			<s:set var="currentFieldHasFieldErrorVar" value="%{null}" />
+			<s:set var="controlGroupErrorClassVar" value="%{null}" />
+
 		</fieldset>
 
 		<div class="form-horizontal">
-			<div class="form-group">
+			<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 				<div class="col-xs-12 col-sm-4 col-md-3 margin-small-vertical">
 					<wpsf:submit type="button" cssClass="btn btn-primary btn-block">
 						<span class="icon fa fa-floppy-o"></span>&#32;
