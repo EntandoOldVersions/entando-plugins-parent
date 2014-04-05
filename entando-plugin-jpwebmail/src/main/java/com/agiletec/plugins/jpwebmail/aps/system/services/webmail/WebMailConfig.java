@@ -39,7 +39,7 @@ public class WebMailConfig implements Cloneable {
 		config.setImapProtocol(this.getImapProtocol());
 		
 		config.setDebug(this.isDebug());
-		config.setSmtpEntandoUserAuth(this.isSmtpEntandoUserAuth());
+		config.setSmtpAuth(this.getSmtpAuth());
 		config.setSmtpHost(this.getSmtpHost());
 		config.setSmtpPort(this.getSmtpPort());
 		config.setSmtpUserName(this.getSmtpUserName());
@@ -86,21 +86,28 @@ public class WebMailConfig implements Cloneable {
 	public Integer getSmtpProtocol() {
 		return _smtpProtocol;
 	}
-	
+
+	/*
 	public boolean isSmtpEntandoUserAuth() {
-		return _smtpEntandoUserAuth;
+	return _smtpEntandoUserAuth;
 	}
 	public void setSmtpEntandoUserAuth(boolean smtpEntandoUserAuth) {
-		this._smtpEntandoUserAuth = smtpEntandoUserAuth;
+	this._smtpEntandoUserAuth = smtpEntandoUserAuth;
 	}
-	
 	@Deprecated
 	public boolean isSmtpJapsUserAuth() {
-		return this.isSmtpEntandoUserAuth();
+	return this.isSmtpEntandoUserAuth();
 	}
 	@Deprecated
 	public void setSmtpJapsUserAuth(boolean smtpJapsUserAuth) {
-		this.setSmtpEntandoUserAuth(smtpJapsUserAuth);
+	this.setSmtpEntandoUserAuth(smtpJapsUserAuth);
+	}
+	*/
+	public Integer getSmtpAuth() {
+		return _smtpAuth;
+	}
+	public void setSmtpAuth(Integer smtpAuth) {
+		this._smtpAuth = smtpAuth;
 	}
 	
 	public boolean isDebug() {
@@ -201,29 +208,6 @@ public class WebMailConfig implements Cloneable {
 		this._certificateDebugOnConsole = certificateDebugOnConsole;
 	}
 	
-	/**
-	 * Return true if mail configuration expects an anonymous authentication.<br/>
-	 * NOTE: an anonymous authentication occurs whenever the username and the
-	 * associated password are <b>not</b> provided <b>and</b> no security
-	 * encapsulation protocol is specified.
-	 * @return True if the username and the password are not provided
-	 */
-	public boolean hasAnonimousSmtpAuth() {
-		return (((null == this._smtpUserName || this._smtpUserName.length() == 0)
-				&& (null == this._smtpPassword || this._smtpPassword.length() == 0)) && 
-				!this.hasSecureSmtp());
-	}
-	
-	/**
-	 * Return true if the mail transport uses a secure connection.
-	 * @return true if the selected encapsulation protocol is SSL or TLS
-	 */
-	public boolean hasSecureSmtp() {
-		if (null == this._smtpProtocol || 
-				this._smtpProtocol == PROTO_STD) return false;
-		return true;
-	}
-	
 	private boolean _certificateEnable;
 	private boolean _certificateLazyCheck;
 	private String	_certificatePath;
@@ -243,7 +227,8 @@ public class WebMailConfig implements Cloneable {
 	private Integer _smtpPort;
 	private Integer _smtpProtocol;
 	private boolean _debug;
-	private boolean _smtpEntandoUserAuth;
+	//private boolean _smtpEntandoUserAuth;
+	private Integer _smtpAuth;
 	
 	private String _tempDiskRootFolder;
 	
@@ -253,5 +238,11 @@ public class WebMailConfig implements Cloneable {
 	public static final int PROTO_STD = 0;
 	public static final int PROTO_SSL = 1;
 	public static final int PROTO_TLS = 2;
+	
+	public static final int SMTP_AUTH_ANONYMOUS = 0;
+	public static final int SMTP_AUTH_ENTANDO_USER = 1;
+	public static final int SMTP_AUTH_ENTANDO_USER_WITH_DOMAIN = 2;
+	public static final int SMTP_AUTH_CUSTOM = 3;
+	
 	
 }

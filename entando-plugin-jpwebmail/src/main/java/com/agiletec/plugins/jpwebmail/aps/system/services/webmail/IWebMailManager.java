@@ -62,13 +62,6 @@ public interface IWebMailManager {
 	/**
 	 * Effettua la spedizione di una mail.
 	 * @param msg Il messaggio da spedire.
-	 * @throws ApsSystemException In caso di errore nella spedizione.
-	 */
-	public void sendMail(MimeMessage msg) throws ApsSystemException;
-	
-	/**
-	 * Effettua la spedizione di una mail.
-	 * @param msg Il messaggio da spedire.
 	 * @param username Lo username dell'utente mittente.
 	 * @param password La password dell'utente mittente.
 	 * @throws ApsSystemException In caso di errore nella spedizione.

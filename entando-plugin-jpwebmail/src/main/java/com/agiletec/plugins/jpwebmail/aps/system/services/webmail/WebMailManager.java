@@ -33,6 +33,7 @@ import com.agiletec.aps.system.services.baseconfig.ConfigInterface;
 import com.agiletec.plugins.jpwebmail.aps.system.JpwebmailSystemConstants;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.parse.WebMailConfigDOM;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.utils.CertificateHandler;
+import org.apache.commons.lang.StringUtils;
 
 import org.slf4j.LoggerFactory;
 
@@ -121,7 +122,9 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 	@Override
 	public MimeMessage createNewEmptyMessage(String username, String password) throws ApsSystemException {
 		try {
-			Session session = this.createSession(true, username, password);
+			String smtpUsername = this.checkSmtpAuthUsername(username);
+			String smtpPassword = this.checkSmtpAuthUserPassword(password);
+			Session session = this.createSession(true, smtpUsername, smtpPassword);
 			return new JpMimeMessage(session);
 		} catch (Throwable t) {
 			_logger.error("Error creating void message", t);
@@ -131,51 +134,31 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 	}
 	
 	@Override
-	public void sendMail(MimeMessage msg) throws ApsSystemException {
-		WebMailConfig config = this.getConfig();
-		String username = config.getSmtpUserName();
-		String password = config.getSmtpPassword();
-		this.sendMail(msg, username, password);
-	}
-	
-	@Override
 	public void sendMail(MimeMessage msg, String username, String password) throws ApsSystemException {
-		WebMailConfig config = this.getConfig();
-		String smtpUsername = (config.isSmtpEntandoUserAuth()) ? username : config.getSmtpUserName();
-		String smtpPassword = (config.isSmtpEntandoUserAuth()) ? password : config.getSmtpPassword();
+		//WebMailConfig config = this.getConfig();
+		String smtpUsername = this.checkSmtpAuthUsername(username);
+		String smtpPassword = this.checkSmtpAuthUserPassword(password);
+		//String smtpUsername = (config.isSmtpEntandoUserAuth()) ? username : config.getSmtpUserName();
+		//String smtpPassword = (config.isSmtpEntandoUserAuth()) ? password : config.getSmtpPassword();
 		//Session session = this.createSession(true, smtpUsername, smtpPassword);
 		Session session = (msg instanceof JpMimeMessage) ? ((JpMimeMessage) msg).getSession() : this.createSession(true, smtpUsername, smtpPassword);
 		Transport bus = null;
 		try {
 			bus = session.getTransport("smtp");
-			if (config.hasAnonimousSmtpAuth()) {
+			//StringUtils.isEmpty(bus)
+			if (StringUtils.isBlank(smtpUsername) && StringUtils.isBlank(smtpPassword)) {
 				bus.connect();
 			}
-			//Integer port = config.getSmtpPort();
-			/*
-			System.out.println("----------------------------");
-			System.out.println("config.getSmtpHost() \t" + config.getSmtpHost());
-			System.out.println("port.intValue() \t" + port.intValue());
-			System.out.println("smtpUsername \t" + smtpUsername);
-			System.out.println("smtpPassword \t" + smtpPassword);
-			System.out.println("----------------------------");
-			*/
 			/*
 			if ((smtpUsername != null && smtpUsername.trim().length()>0) && 
 					(smtpPassword != null && smtpPassword.trim().length()>0)) {
 				if (port != null && port.intValue() > 0) {
-					System.out.println("INIZIO 1");
 					bus.connect(config.getSmtpHost(), port.intValue(), smtpUsername, smtpPassword);
-					System.out.println("FINE 1");
 				} else {
-					System.out.println("INIZIO 2");
 					bus.connect(config.getSmtpHost(), smtpUsername, smtpPassword);
-					System.out.println("FINE 2");
 				}
 			} else {
-				System.out.println("INIZIO 3");
 				bus.connect();
-				System.out.println("FINE 3");
 			}
 			*/
 			//bus.connect();
@@ -188,6 +171,48 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 		} finally {
 			closeTransport(bus);
 		}
+	}
+	
+	private String checkSmtpAuthUsername(String username) {
+		WebMailConfig config = this.getConfig();
+		String usernameToReturn = null;
+		switch (config.getSmtpAuth()) {
+			case WebMailConfig.SMTP_AUTH_ANONYMOUS:
+				break;
+			case WebMailConfig.SMTP_AUTH_ENTANDO_USER:
+				usernameToReturn = username;
+				break;
+			case WebMailConfig.SMTP_AUTH_ENTANDO_USER_WITH_DOMAIN:
+				usernameToReturn = username;
+				String suffix = "@"+config.getDomainName();
+				if (!usernameToReturn.endsWith(suffix)) {
+					usernameToReturn += suffix;
+				}
+				break;
+			case WebMailConfig.SMTP_AUTH_CUSTOM:
+				usernameToReturn = config.getSmtpUserName();
+				break;
+		}
+		return usernameToReturn;
+	}
+	
+	private String checkSmtpAuthUserPassword(String password) {
+		WebMailConfig config = this.getConfig();
+		String userPasswordToReturn = null;
+		switch (config.getSmtpAuth()) {
+			case WebMailConfig.SMTP_AUTH_ANONYMOUS:
+				break;
+			case WebMailConfig.SMTP_AUTH_ENTANDO_USER:
+				userPasswordToReturn = password;
+				break;
+			case WebMailConfig.SMTP_AUTH_ENTANDO_USER_WITH_DOMAIN:
+				userPasswordToReturn = password;
+				break;
+			case WebMailConfig.SMTP_AUTH_CUSTOM:
+				userPasswordToReturn = config.getSmtpPassword();
+				break;
+		}
+		return userPasswordToReturn;
 	}
 	
 	/**
@@ -241,10 +266,7 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 		properties.put("mail.smtp.host", config.getSmtpHost());
 		Integer smtpPort = config.getSmtpPort();
 		if (smtpPort != null && smtpPort.intValue()>0) {
-			//System.out.println("SETTATO " + smtpPort.toString());
 			properties.put("mail.smtp.port", smtpPort.toString());
-		} else {
-			//System.out.println("SETTATO NIENTEEEEEE " + smtpPort.toString());
 		}
 		
 		int timeout = DEFAULT_SMTP_TIMEOUT;
@@ -257,8 +279,7 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 		
 		Session session = null;
 		
-		//if (sentMail) {
-		if (sentMail && !config.hasAnonimousSmtpAuth()) {
+		if (sentMail) {
 			properties.put("mail.smtp.auth", "true");
 			switch (config.getSmtpProtocol()) {
 				case WebMailConfig.PROTO_SSL:

@@ -35,9 +35,9 @@ import org.jdom.output.Format;
 public class WebMailConfigDOM {
 	
 	/**
-	 * Extract the jpmail configuration from an xml.
+	 * Extract the jpwebmail configuration from an xml.
 	 * @param xml The xml containing the configuration.
-	 * @return The jpmail configuration.
+	 * @return The jpwebmail configuration.
 	 * @throws ApsSystemException In case of parsing errors.
 	 */
 	public WebMailConfig extractConfig(String xml) throws ApsSystemException {
@@ -68,11 +68,19 @@ public class WebMailConfigDOM {
 			String debug = smtpElem.getAttributeValue(SMTP_DEBUG_ATTR);
 			config.setDebug(Boolean.parseBoolean(debug));
 			
+			/*
 			String entandoUserAuth = smtpElem.getAttributeValue(SMTP_JAPS_USER_AUTH_ATTR);
 			if (null == entandoUserAuth) {
 				entandoUserAuth = smtpElem.getAttributeValue(SMTP_ENTANDO_USER_AUTH_ATTR);
 			}
 			config.setSmtpEntandoUserAuth(Boolean.parseBoolean(entandoUserAuth));
+			*/
+			String auth = smtpElem.getAttributeValue(SMTP_AUTH_ATTR);
+			if (null != auth) {
+				config.setSmtpAuth(Integer.parseInt(auth));
+			} else {
+				config.setSmtpAuth(WebMailConfig.SMTP_AUTH_ANONYMOUS);
+			}
 			
 			config.setSmtpHost(smtpElem.getChildText(SMTP_HOST_CHILD));
 			config.setSmtpUserName(smtpElem.getChildText(SMTP_USER_CHILD));
@@ -123,8 +131,8 @@ public class WebMailConfigDOM {
 	}
 	
 	/**
-	 * Create an xml containing the jpmail configuration.
-	 * @param config The jpmail configuration.
+	 * Create an xml containing the jpwebmail configuration.
+	 * @param config The jpwebmail configuration.
 	 * @return The xml containing the configuration.
 	 * @throws ApsSystemException In case of errors.
 	 */
@@ -175,7 +183,7 @@ public class WebMailConfigDOM {
 			
 			Element smtpElem = new Element(SMTP_ELEM);
 			smtpElem.setAttribute(SMTP_DEBUG_ATTR, String.valueOf(config.isDebug()));
-			smtpElem.setAttribute(SMTP_ENTANDO_USER_AUTH_ATTR, String.valueOf(config.isSmtpEntandoUserAuth()));
+			smtpElem.setAttribute(SMTP_AUTH_ATTR, String.valueOf(config.getSmtpAuth()));
 			Element smtpHostElem = new Element(IMAP_HOST_CHILD);
 			smtpHostElem.addContent(new CDATA(config.getSmtpHost()));
 			smtpElem.addContent(smtpHostElem);
@@ -263,9 +271,10 @@ public class WebMailConfigDOM {
 	
 	private static final String SMTP_ELEM = "smtp";
 	private static final String SMTP_DEBUG_ATTR = "debug";
-	@Deprecated
-	private static final String SMTP_JAPS_USER_AUTH_ATTR = "japsUserAuth";
-	private static final String SMTP_ENTANDO_USER_AUTH_ATTR = "entandoUserAuth";
+	//@Deprecated
+	//private static final String SMTP_JAPS_USER_AUTH_ATTR = "japsUserAuth";
+	//private static final String SMTP_ENTANDO_USER_AUTH_ATTR = "entandoUserAuth";
+	private static final String SMTP_AUTH_ATTR = "auth";
 	private static final String SMTP_HOST_CHILD= "host";
 	private static final String SMTP_USER_CHILD= "user";
 	private static final String SMTP_PASSWORD_CHILD= "password";

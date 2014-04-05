@@ -220,8 +220,29 @@
 						<p class="text-danger padding-small-vertical">&nbsp;<s:iterator value="#smtpPortErrorsVar"><s:property />&emsp;</s:iterator></p>
 					</s:if>
 				</div>
-
-
+			</div>
+			
+			<div class="form-group">
+				<label for="smtpAuth"><s:text name="label.smtp.auth" /></label>
+				<div class="radio">
+					<s:text name="label.smtp.auth.anonymous"/>
+					<wpsf:radio id="smtpAuthAnonymous" name="config.smtpAuth" value="0" checked="%{config.smtpAuth == 0}" cssClass="radio" />
+				</div>
+				<div class="radio">
+					<s:text name="label.smtp.auth.entando"/>
+					<wpsf:radio id="smtpAuthEntando" name="config.smtpAuth" value="1" checked="%{config.smtpAuth == 1}" cssClass="radio" />
+				</div>
+				<div class="radio">
+					<s:text name="label.smtp.auth.entandoWithDomain"/>
+					<wpsf:radio id="smtpAuthEntandoWithDomain" name="config.smtpAuth" value="2" checked="%{config.smtpAuth == 2}" cssClass="radio" />    
+				</div>
+				<div class="radio">
+					<s:text name="label.smtp.auth.custom"/>
+					<wpsf:radio id="smtpAuthCustom" name="config.smtpAuth" value="3" checked="%{config.smtpAuth == 3}" cssClass="radio" />    
+				</div>
+			</div>
+			
+			<div class="row">
 
 				<s:set var="currentFieldErrorsVar" value="%{fieldErrors['config.smtpUserName']}" />
 				<s:set var="currentFieldHasFieldErrorVar" value="#currentFieldErrorsVar != null && !#currentFieldErrorsVar.isEmpty()" />
@@ -283,16 +304,17 @@
 				--%>
 			</div>
 			
-			
 			<div class="form-group<s:property value="#controlGroupErrorClassVar" />">
 				<label class="checkbox">
 					<wpsf:checkbox name="config.debug" id="config.debug" cssClass="radiocheck"/>
 					&#32;<s:text name="label.debug" />
 				</label>
+				<%--
 				<label class="checkbox">
 					<wpsf:checkbox name="config.smtpEntandoUserAuth" id="config.smtpEntandoUserAuth" cssClass="radiocheck" />
 					&#32;<s:text name="label.smtpEntandoUserAuth" />
 				</label>
+				--%>
 			</div>
 		</fieldset>
 
