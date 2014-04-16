@@ -52,6 +52,7 @@ import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.role.IRoleManager;
 import com.agiletec.aps.system.services.role.Role;
 import com.agiletec.aps.system.services.url.IURLManager;
+import com.agiletec.aps.system.services.user.AbstractUser;
 import com.agiletec.aps.system.services.user.IUserManager;
 import com.agiletec.aps.system.services.user.User;
 import com.agiletec.aps.system.services.user.UserDetails;
@@ -151,7 +152,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			user.setDisabled(true);
 			user.setUsername(userProfile.getUsername());
 			user.setProfile(userProfile);
-			user.setPassword("");
+			user.setPassword("changeit");
 			String token = this.createToken(userProfile.getUsername());
 			this.sendAlertRegProfile((IUserProfile) user.getProfile(), token);
 			this.getUserManager().addUser(user);
@@ -182,14 +183,18 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 		try {
 			IUserManager userManager = this.getUserManager();
 			this.clearOldAccountRequests();
-			User user = (User) userManager.getUser(username);
-			user.setLastPasswordChange(new Date());
+			AbstractUser user = (AbstractUser) userManager.getUser(username);
+			if(user instanceof User){
+ 				((User) user).setLastPasswordChange(new Date());
+				((User) user).setDisabled(false);
+				this.loadUserDefaultRoles((User) user);
+				this.loadUserDefaultGroups((User) user);
+			}
 			user.setPassword(password);
-			user.setDisabled(false);
-			this.loadUserDefaultRoles(user);
-			this.loadUserDefaultGroups(user);
 			userManager.updateUser(user);
-			userManager.changePassword(username, password);// Per salvare password non in chiaro
+			if(user instanceof User){
+				userManager.changePassword(username, password);// Per salvare password non in chiaro
+			}
 			this.getUserRegDAO().removeConsumedToken(token);
 		} catch (Throwable t) {
 			_logger.error("Error in Account activation", t);
