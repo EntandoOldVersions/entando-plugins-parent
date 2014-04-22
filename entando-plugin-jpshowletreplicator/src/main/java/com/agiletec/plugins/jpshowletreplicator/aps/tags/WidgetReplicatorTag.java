@@ -32,6 +32,7 @@ import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.IPageManager;
 import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
+import org.entando.entando.aps.system.services.controller.executor.AbstractWidgetExecutorService;
 import org.entando.entando.aps.system.services.controller.executor.WidgetExecutorService;
 
 /**
@@ -59,6 +60,8 @@ public class WidgetReplicatorTag extends TagSupport {
 					if (null != targetWidget) {
 						reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_WIDGET, targetWidget);
 						WidgetType widgetType = targetWidget.getType();
+						String jspPath = widgetType.getJspPath();
+						/*
 						if (widgetType.isLogic()) {
 							widgetType = widgetType.getParentType();
 						}
@@ -69,7 +72,8 @@ public class WidgetReplicatorTag extends TagSupport {
 							jspPath.append("plugins/").append(pluginCode.trim()).append("/");
 						}
 						jspPath.append(WIDGET_LOCATION).append(widgetType.getCode()).append(".jsp");
-						this.pageContext.include(jspPath.toString());
+						*/
+						this.pageContext.include(jspPath);
 					}
 				}
 			}
@@ -80,7 +84,5 @@ public class WidgetReplicatorTag extends TagSupport {
 		}
 		return EVAL_PAGE;
 	}
-	
-	public final static String WIDGET_LOCATION = WidgetExecutorService.WIDGET_LOCATION;
 	
 }
