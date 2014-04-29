@@ -187,9 +187,9 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 			if(user instanceof User){
  				((User) user).setLastPasswordChange(new Date());
 				((User) user).setDisabled(false);
-				this.loadUserDefaultRoles((User) user);
-				this.loadUserDefaultGroups((User) user);
 			}
+			this.loadUserDefaultRoles(user);
+			this.loadUserDefaultGroups(user);
 			user.setPassword(password);
 			userManager.updateUser(user);
 			if(user instanceof User){
@@ -412,7 +412,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 		this.getMailManager().sendMail(text, subject, eMail, null, null, config.getEMailSenderCode());
 	}
 
-	private void loadUserDefaultRoles(User user) throws ApsSystemException {
+	private void loadUserDefaultRoles(AbstractUser user) throws ApsSystemException {
 		Set<String> roleNames = this.getConfig().getRoles();
 		if (null != roleNames) {
 			Iterator<String> it = roleNames.iterator();
@@ -424,7 +424,7 @@ public class UserRegManager extends AbstractService implements IUserRegManager {
 		}
 	}
 
-	private void loadUserDefaultGroups(User user) throws ApsSystemException {
+	private void loadUserDefaultGroups(AbstractUser user) throws ApsSystemException {
 		Set<String> groupNames = this.getConfig().getGroups();
 		if (null != groupNames) {
 			Iterator<String> it = groupNames.iterator();
