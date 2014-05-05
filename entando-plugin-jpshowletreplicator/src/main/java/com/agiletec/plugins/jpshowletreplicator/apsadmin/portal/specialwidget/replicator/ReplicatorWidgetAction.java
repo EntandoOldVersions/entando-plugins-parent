@@ -30,15 +30,13 @@ import com.agiletec.aps.system.services.group.Group;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Widget;
 import com.agiletec.aps.util.ApsProperties;
-import com.agiletec.apsadmin.portal.helper.IPageActionHelper;
 import com.agiletec.apsadmin.portal.specialwidget.SimpleWidgetConfigAction;
 import com.agiletec.apsadmin.system.ITreeAction;
-import com.opensymphony.xwork2.Action;
 
 /**
  * @author E.Santoboni
  */
-public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements IReplicatorWidgetAction, ITreeAction {
+public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements ITreeAction {
 
 	private static final Logger _logger = LoggerFactory.getLogger(ReplicatorWidgetAction.class);
 	
@@ -65,8 +63,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 			return FAILURE;
 		}
 	}
-
-	@Override
+	
 	public String resetConfig() {
 		try {
 			this.createValuedShowlet();
@@ -79,8 +76,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 		}
 		return SUCCESS;
 	}
-
-	@Override
+	
 	public String browseFrames() {
 		try {
 			this.createValuedShowlet();
@@ -95,8 +91,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 		}
 		return SUCCESS;
 	}
-
-	@Override
+	
 	public String selectFrame() {
 		try {
 			this.createValuedShowlet();
@@ -106,7 +101,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 		} catch (Throwable t) {
 			_logger.error("error in selectFrame", t);
 		}
-		return Action.SUCCESS;
+		return SUCCESS;
 	}
 
 	public IPage getTargetPage() {
@@ -120,26 +115,26 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 		boolean checked = false;
 		String selectedNode = this.getPageCodeParam();
 		if (null == selectedNode || selectedNode.trim().length() == 0) {
-			this.addActionError(this.getText("error.noPageSelected"));
+			this.addFieldError("pageCodeParam", this.getText("error.noPageSelected"));
 		} else {
 			IPage targetPage = this.getPage(selectedNode);
 			if (targetPage == null) {
-				this.addActionError(this.getText("error.noPageSelected"));
+				this.addFieldError("pageCodeParam", this.getText("error.noPageSelected"));
 			} else {
 				if (this.getFrameIdParam() == null) {
-					this.addActionError(this.getText("error.invalidWidgetType"));
+					this.addFieldError("frameIdParam", this.getText("error.invalidWidgetType"));
 				} else {
 					int frame = this.getFrameIdParam().intValue();
-					if (selectedNode.equals(this.getPageCode()) && frame==this.getFrame()) {
-						this.addActionError(this.getText("error.target.currentFrame"));
+					if (selectedNode.equals(this.getPageCode()) && frame == this.getFrame()) {
+						this.addFieldError("frameIdParam", this.getText("error.target.currentFrame"));
 					} else {
-						Widget[] showlets = targetPage.getWidgets();
-						if (showlets.length <= frame) {
-							this.addActionError(this.getText("error.invalidWidgetType"));
+						Widget[] widgets = targetPage.getWidgets();
+						if (widgets.length <= frame) {
+							this.addFieldError("frameIdParam", this.getText("error.invalidWidgetType"));
 						} else {
-							Widget showlet = showlets[frame];
-							if (showlet != null && this.getInvalidShowletTypes().contains(showlet.getType().getCode())) {
-								this.addActionError(this.getText("error.invalidWidgetType"));
+							Widget widget = widgets[frame];
+							if (widget != null && this.getInvalidShowletTypes().contains(widget.getType().getCode())) {
+								this.addFieldError("frameIdParam", this.getText("error.invalidWidgetType"));
 							} else {
 								checked = true;
 							}
@@ -270,14 +265,7 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 	public void setTreeNodeActionMarkerCode(String treeNodeActionMarkerCode) {
 		this._treeNodeActionMarkerCode = treeNodeActionMarkerCode;
 	}
-
-	protected IPageActionHelper getPageActionHelper() {
-		return _pageActionHelper;
-	}
-	public void setPageActionHelper(IPageActionHelper pageActionHelper) {
-		this._pageActionHelper = pageActionHelper;
-	}
-
+	
 	private String _pageCodeParam;
 	private Integer _frameIdParam;
 
@@ -289,7 +277,5 @@ public class ReplicatorWidgetAction extends SimpleWidgetConfigAction implements 
 	private Set<String> _treeNodesToOpen = new HashSet<String>();
 
 	private String _treeNodeActionMarkerCode;
-
-	private IPageActionHelper _pageActionHelper;
 
 }

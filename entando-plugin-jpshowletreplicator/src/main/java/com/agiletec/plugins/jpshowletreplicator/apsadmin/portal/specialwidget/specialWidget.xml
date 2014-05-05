@@ -5,7 +5,7 @@
 
 <struts>
 	
-    <package name="jpshowletreplicator_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="entando-default">
+    <package name="jpwidgetreplicator_do/Page/SpecialWidget" namespace="/do/Page/SpecialWidget" extends="entando-default">
     	
     	<!-- ##### WIDGET REPLICATOR **** ENTRY POINT ##### -->
     	<action name="replicatorConfig" class="jpwidgetreplicatorReplicatorWidgetAction">
@@ -18,7 +18,7 @@
         
     </package>
 	
-	<package name="jpshowletreplicator_do/jpshowletreplicator/Page/SpecialWidget/Replicator" namespace="/do/jpshowletreplicator/Page/SpecialWidget/Replicator" extends="entando-default">
+	<package name="jpwidgetreplicator_do/jpshowletreplicator/Page/SpecialWidget/Replicator" namespace="/do/jpshowletreplicator/Page/SpecialWidget/Replicator" extends="entando-default">
 		
 		<global-results>
     		<result name="pageTree" type="chain">

@@ -17,19 +17,17 @@
 */
 package org.entando.entando.plugins.jpshowletreplicator;
 
-import org.entando.entando.plugins.jpshowletreplicator.aps.TestApsSample;
-import org.entando.entando.plugins.jpshowletreplicator.apsadmin.TestApsAdminSample;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.entando.entando.plugins.jpshowletreplicator.apsadmin.portal.specialwidget.TestReplicatorWidgetAction;
 
 public class AllTests {
 	
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Change me with a suitable description");
-
-		suite.addTestSuite(TestApsSample.class);
-		suite.addTestSuite(TestApsAdminSample.class);
+		TestSuite suite = new TestSuite("Replicator plugin tests");
+		
+		suite.addTestSuite(TestReplicatorWidgetAction.class);
 		
 		return suite;
 	}
