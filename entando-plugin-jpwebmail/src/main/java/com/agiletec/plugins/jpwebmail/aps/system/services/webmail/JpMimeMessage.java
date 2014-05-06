@@ -27,13 +27,19 @@ public class JpMimeMessage extends MimeMessage {
 	
 	protected JpMimeMessage(Session session) {
 		super(session);
-		this._session = session;
+		//this._session = session;
 	}
 	
+	@Override
+	public Session getSession() {
+		return super.getSession();
+	}
+	
+	/*
 	protected Session getSession() {
 		return _session;
 	}
 	
 	private Session _session;
-	
+	*/
 }

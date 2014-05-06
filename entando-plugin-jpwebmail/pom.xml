@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-		<version>4.0.1-SNAPSHOT</version>
+		<version>4.1.1-EEE-SNAPSHOT</version>
 	</parent>
 	<artifactId>entando-plugin-jpwebmail</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
@@ -55,27 +55,27 @@
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>dsn</artifactId>
-			<version>1.4.4</version>
+			<version>1.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>imap</artifactId>
-			<version>1.4.4</version>
+			<version>1.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>pop3</artifactId>
-			<version>1.4.4</version>
+			<version>1.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>mailapi</artifactId>
-			<version>1.4.4</version>
+			<version>1.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>smtp</artifactId>
-			<version>1.4.4</version>
+			<version>1.5.1</version>
 		</dependency>
 	</dependencies>
 </project>
