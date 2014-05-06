@@ -17,8 +17,6 @@
 package com.agiletec.plugins.jpwebmail.aps.system.services.webmail;
 
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
@@ -35,16 +33,20 @@ import com.agiletec.plugins.jpwebmail.aps.system.JpwebmailSystemConstants;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.parse.WebMailConfigDOM;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.utils.CertificateHandler;
 
+import org.slf4j.LoggerFactory;
+
 /**
  * Servizio gestore della WebMail.
  * @author E.Santoboni
  */
 public class WebMailManager extends AbstractService implements IWebMailManager {
 	
+	private static final org.slf4j.Logger _logger = LoggerFactory.getLogger(WebMailManager.class);
+	
 	@Override
 	public void init() throws Exception {
 		this.loadConfigs();
-		ApsSystemUtils.getLogger().debug(this.getClass().getName() + ": inizialized");
+		_logger.debug(this.getClass().getName() + ": inizialized");
 	}
 	
 	private void loadConfigs() throws ApsSystemException {
@@ -56,7 +58,8 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			WebMailConfigDOM contactConfigDom = new WebMailConfigDOM();
 			this.setConfig(contactConfigDom.extractConfig(xml));
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "loadConfigs");
+			_logger.error("Error loading config", t);
+			//ApsSystemUtils.logThrowable(t, this, "loadConfigs");
 			throw new ApsSystemException("Error loading config", t);
 		}
 	}
@@ -73,14 +76,15 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			this.getConfigManager().updateConfigItem(JpwebmailSystemConstants.WEBMAIL_CONFIG_ITEM, xml);
 			this.setConfig(config);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateConfig", "Error updating Web Mail Service configuration");
+			_logger.error("Error updating Web Mail Service configuration", t);
+			//ApsSystemUtils.logThrowable(t, this, "updateConfig", "Error updating Web Mail Service configuration");
 			throw new ApsSystemException("Error updating Web Mail Service configuration", t);
 		}
 	}
 	
 	@Override
 	public Store initInboxConnection(String username, String password) throws ApsSystemException {
-		Logger log = ApsSystemUtils.getLogger();
+		//Logger log = ApsSystemUtils.getLogger();
 		Store store = null;
 		try {
 			// Get session
@@ -88,17 +92,20 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			// Get the store
 			store = session.getStore(this.getConfig().getImapProtocol());
 			// Connect to store
-			if (log.isLoggable(Level.INFO)) {
-				log.info("Connection of user " + username);
-			}
+			//if (log.isLoggable(Level.INFO)) {
+			//	log.info("Connection of user " + username);
+			//}
+			_logger.info("Connection of user " + username);
 //			 System.out.print("** tentivo di connessione con protocollo"+this.getConfig().getImapProtocol()+"" +
 //			 		" a "+this.getConfig().getImapHost()+" ["+this.getConfig().getImapPort()+"]\n");
 			store.connect(this.getConfig().getImapHost(), username, password);
 		} catch (NoSuchProviderException e) {
-			ApsSystemUtils.logThrowable(e, this, "initInboxConnection", "Provider " + this.getConfig().getImapHost() + " non raggiungibile");
+			_logger.error("Error opening Provider connection", e);
+			//ApsSystemUtils.logThrowable(e, this, "initInboxConnection", "Provider " + this.getConfig().getImapHost() + " non raggiungibile");
 			throw new ApsSystemException("Error opening Provider connection", e);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "initInboxConnection", "Error opening Provider connection");
+			_logger.error("Error opening Provider connection", t);
+			//ApsSystemUtils.logThrowable(t, this, "initInboxConnection", "Error opening Provider connection");
 			throw new ApsSystemException("Error opening Provider connection", t);
 		}
 		return store;
@@ -110,7 +117,8 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			Session session = this.createSession();
 			return new JpMimeMessage(session);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "createNewEmptyMessage", "Error creating void message");
+			_logger.error("Error creating void message", t);
+			//ApsSystemUtils.logThrowable(t, this, "createNewEmptyMessage", "Error creating void message");
 			throw new ApsSystemException("Error creating void message", t);
 		}
 	}
@@ -146,7 +154,8 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			msg.saveChanges();
 			Transport.send(msg);
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "sendMail", "Error sending mail");
+			_logger.error("Error sending mail", t);
+			//ApsSystemUtils.logThrowable(t, this, "sendMail", "Error sending mail");
 			throw new ApsSystemException("Error sending mail", t);
 		} finally {
 			closeTransport(bus);
@@ -183,9 +192,11 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 		this.getCertificateHandler().aquireCertificate(host, port.intValue(), imapProtocol, config);
 		// verifica se si possa procedere in sicurezza con la connessione all'host
 		if (!this.getCertificateHandler().proceedWithConnection()) {
-			ApsSystemUtils.getLogger().info("Connection to host '" + host + "' not trusted");
+			_logger.info("Connection to host '" + host + "' not trusted");
+			//ApsSystemUtils.getLogger().info("Connection to host '" + host + "' not trusted");
 		} else {
-			ApsSystemUtils.getLogger().info("Connection to host '" + host + "' trusted");
+			_logger.info("Connection to host '" + host + "' trusted");
+			//ApsSystemUtils.getLogger().info("Connection to host '" + host + "' trusted");
 		}
 		properties.setProperty("mail.imap.timeout", "5000");
 		if (imapProtocol.equalsIgnoreCase("imaps")) {			
@@ -200,7 +211,7 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 		if (config.getLocalhost() != null && config.getLocalhost().trim().length() > 0) {
 			properties.put("mail.smtp.localhost", config.getLocalhost());
 		}
-		ApsSystemUtils.getLogger().info("");
+		//ApsSystemUtils.getLogger().info("");
 		return Session.getInstance(properties, null);
 	}
 	
@@ -214,6 +225,7 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 			try {
 				transport.close();
 			} catch (MessagingException e) {
+				_logger.error("Error closing connection", e);
 				throw new ApsSystemException("Error closing connection", e);
 			}
 		}
@@ -224,6 +236,7 @@ public class WebMailManager extends AbstractService implements IWebMailManager {
 		try {
 			if (null != store) store.close();
 		} catch (Throwable t) {
+			_logger.error("Error closing connection", t);
 			ApsSystemUtils.logThrowable(t, this, "closeConnection", "Error closing connection");
 		}
 	}

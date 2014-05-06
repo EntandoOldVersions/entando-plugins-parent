@@ -36,11 +36,14 @@ import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpwebmail.aps.system.JpwebmailSystemConstants;
 import com.agiletec.plugins.jpwebmail.aps.system.services.webmail.IWebMailManager;
 
+import org.slf4j.LoggerFactory;
+
 /**
- * @version 1.0
  * @author E.Santoboni
  */
 public class NewMessageActionHelper implements INewMessageActionHelper {
+	
+	private static final org.slf4j.Logger _logger = LoggerFactory.getLogger(NewMessageActionHelper.class);
 	
 	@Override
 	public MimeMessage updateMessageOnSession(HttpServletRequest request) throws ApsSystemException {
@@ -63,7 +66,8 @@ public class NewMessageActionHelper implements INewMessageActionHelper {
             	textBodyPart.setContent(textContent, "TEXT/PLAIN; charset=UTF-8");
             }
         } catch (Throwable t) {
-        	ApsSystemUtils.getLogger().throwing("NewMessageActionHelper", "updateMessageOnSession", t);
+			_logger.error("updateMessageOnSession", t);
+        	//ApsSystemUtils.getLogger().throwing("NewMessageActionHelper", "updateMessageOnSession", t);
         	throw new RuntimeException("Errore in updateMessageOnSession", t);
         }
 		return message;
@@ -80,7 +84,8 @@ public class NewMessageActionHelper implements INewMessageActionHelper {
 				this.setRecipients(type, message, recipientsArray, recPattern);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.getLogger().throwing("ContentActionHelper", "setRecipients", t);
+			_logger.error("setRecipients", t);
+			//ApsSystemUtils.getLogger().throwing("ContentActionHelper", "setRecipients", t);
 			throw new ApsSystemException("Errore in estrazione recipients " + paramName, t);
 		}
 	}
@@ -120,12 +125,14 @@ public class NewMessageActionHelper implements INewMessageActionHelper {
 		return newChildren;
 	}
 	
+	@Override
 	public void deleteUserWebMailTempDirectory(UserDetails currentUser) {
 		String dirPath = this.getUserWebMailDiskRootFolder(currentUser);
 		File dir = new File(dirPath);
 		FileHelper.deleteDir(dir, dirPath);
 	}
 	
+	@Override
 	public String getUserWebMailDiskRootFolder(UserDetails currentUser) {
 		try {
 			String root = this.getTempRootFolder();

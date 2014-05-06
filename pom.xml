@@ -62,9 +62,7 @@
 		-->
 		<module>entando-plugin-jpfastcontentedit</module>
 		<module>entando-plugin-jpgeoref</module>
-		<!--
-		<module>entando-plugin-jpwebmail</module>**
-		-->
+		<module>entando-plugin-jpwebmail</module>
 		<module>entando-plugin-jpimagemap</module>
 		<module>entando-plugin-jpphotogallery</module>
 		<module>entando-plugin-jprssaggregator</module>

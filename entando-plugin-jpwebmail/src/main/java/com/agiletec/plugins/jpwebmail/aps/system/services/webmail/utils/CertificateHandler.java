@@ -75,7 +75,7 @@ public class CertificateHandler {
 					System.setProperty("javax.net.ssl.trustStoreType","JKS");
 					ApsSystemUtils.getLogger().info("'"+_certificateInUse+"' e password inseriti nelle proprietà di sistema");
 				} catch (Throwable t) {
-					ApsSystemUtils.getLogger().throwing(this.getClass().getName(), "Certificates ["+t.getLocalizedMessage()+"]",t);					
+					ApsSystemUtils.getLogger().error(this.getClass().getName(), "Certificates ["+t.getLocalizedMessage()+"]",t);					
 				}
 			} else {			
 				this._checkPerformed = true;
