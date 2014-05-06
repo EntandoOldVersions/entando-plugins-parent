@@ -4,7 +4,7 @@
 	<parent>
         <artifactId>entando-plugins-parent</artifactId>
 		<groupId>org.entando.entando.plugins</groupId>
-		<version>4.0.1-SNAPSHOT</version>
+		<version>4.1.1-SNAPSHOT</version>
     </parent>
 	<artifactId>entando-plugin-jpldap</artifactId>
 	<groupId>org.entando.entando.plugins</groupId>
