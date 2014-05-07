@@ -54,5 +54,3 @@ INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_ERROR_INFO', 'it', 'Si è verificato un errore, riprovare.');
 INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('JPMYPORTALPLUS_ERROR_INFO', 'en', 'An error has occurred, retry.');
 
-INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpmyportalplus_RESET_INTRO', 'it', 'Cancella la configurazione Utente');
-INSERT INTO localstrings(keycode, langcode, stringvalue) VALUES ('jpmyportalplus_RESET_INTRO', 'en', 'Reset user configuration');
