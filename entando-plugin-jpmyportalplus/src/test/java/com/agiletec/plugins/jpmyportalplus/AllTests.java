@@ -18,19 +18,19 @@
 package com.agiletec.plugins.jpmyportalplus;
 
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.TestMyPortalConfigManager;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.TestPageModelManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.TestPageUserConfigManager;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.TestMyPortalPageModelManager;
 
 public class AllTests {
 	
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Change me with a suitable description");
-
+		TestSuite suite = new TestSuite("My Portal Plugin suite test");
+		
 		suite.addTestSuite(TestMyPortalConfigManager.class);
-		//suite.addTestSuite(TestPageModelManager.class);
+		suite.addTestSuite(TestMyPortalPageModelManager.class);
 		suite.addTestSuite(TestPageUserConfigManager.class);
 		
 		return suite;
