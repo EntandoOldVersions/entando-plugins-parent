@@ -17,6 +17,8 @@
 */
 package com.agiletec.plugins.jpmyportalplus.aps.internalservlet;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -39,6 +41,9 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
 
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.IMyPortalPageModelManager;
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalFrameConfig;
+
 /**
  * @author E.Santoboni
  */
@@ -52,11 +57,11 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 			Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
 			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
 
-			Widget showletToMove = showletsToRender[this.getStartFramePos()];
-			Integer statusShowletToMoveInteger = this.getCustomShowletStatus() != null ? this.getCustomShowletStatus()[this.getStartFramePos()] : null;
-			int statusShowletToMove = (statusShowletToMoveInteger == null) ? 0 : statusShowletToMoveInteger;
+			Widget widgetToMove = showletsToRender[this.getStartFramePos()];
+			Integer statusWidgetToMoveInteger = this.getCustomShowletStatus() != null ? this.getCustomShowletStatus()[this.getStartFramePos()] : null;
+			int statusWidgetToMove = (statusWidgetToMoveInteger == null) ? 0 : statusWidgetToMoveInteger;
 			WidgetUpdateInfoBean frameTargetUpdate =
-				new WidgetUpdateInfoBean(this.getTargetFramePos(), showletToMove, statusShowletToMove);
+				new WidgetUpdateInfoBean(this.getTargetFramePos(), widgetToMove, statusWidgetToMove);
 			this.addUpdateInfoBean(frameTargetUpdate);
 			Widget showletOnFrameDest = showletsToRender[this.getTargetFramePos()];
 			Integer statusShowletOnFrameDestInteger = this.getCustomShowletStatus() != null ? this.getCustomShowletStatus()[this.getTargetFramePos()] : null;
@@ -78,7 +83,7 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		try {
 			IPage currentPage = this.getCurrentPage();
 			WidgetUpdateInfoBean resetFrame =
-				new WidgetUpdateInfoBean(this.getFrameToEmpty(), this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
+				new WidgetUpdateInfoBean(this.getFrameToEmpty(), this.getWidgetVoid(), IPageUserConfigManager.STATUS_OPEN);
 			this.addUpdateInfoBean(resetFrame);
 			this.executeUpdateUserConfig(currentPage);
 		} catch (Throwable t) {
@@ -101,11 +106,11 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 			IPage currentPage = this.getCurrentPage();
 			CustomPageConfig config = this.getCustomPageConfig();
 			Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
-			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
-			Widget showlet = showletsToRender[this.getFrameToResize()];
-			if (null == showlet) return true;
+			Widget[] widgetsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			Widget widget = widgetsToRender[this.getFrameToResize()];
+			if (null == widget) return true;
 			WidgetUpdateInfoBean resizingFrame =
-				new WidgetUpdateInfoBean(this.getFrameToResize(), showlet, status);
+				new WidgetUpdateInfoBean(this.getFrameToResize(), widget, status);
 			this.addUpdateInfoBean(resizingFrame);
 			this.executeUpdateUserConfig(currentPage);
 		} catch (Throwable t) {
@@ -165,12 +170,17 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 			throw new ApsSystemException("Error on updating session params", t);
 		}
 	}
-
+	
+	@Deprecated
 	protected Widget getShowletVoid() {
-		Widget voidShowlet = new Widget();
-		voidShowlet.setType(this.getPageUserConfigManager().getVoidShowlet());
-		voidShowlet.setConfig(new ApsProperties());
-		return voidShowlet;
+		return this.getWidgetVoid();
+	}
+
+	protected Widget getWidgetVoid() {
+		Widget voidWidget = new Widget();
+		voidWidget.setType(this.getPageUserConfigManager().getVoidShowlet());
+		voidWidget.setConfig(new ApsProperties());
+		return voidWidget;
 	}
 
 	protected boolean executeUpdateUserConfig(IPage currentPage) throws ApsSystemException {
@@ -262,11 +272,15 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		WidgetUpdateInfoBean[] infos = this.getUpdateInfos();
 		int len = infos.length;
 		WidgetUpdateInfoBean[] newInfos = new WidgetUpdateInfoBean[len + 1];
-		for(int i=0; i < len; i++){
+		for (int i = 0; i < len; i++){
 			newInfos[i] = infos[i];
 		}
 		newInfos[len] = toAdd;
 		this.setUpdateInfos(newInfos);
+	}
+	
+	protected Map<Integer, MyPortalFrameConfig> getMyPortalModelConfig(String modelCode) {
+		return this.getMyPortalPageModelManager().getPageModelConfig(modelCode);
 	}
 
 	public String getCurrentPageCode() {
@@ -339,15 +353,21 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 	public void setUserManager(IUserManager userManager) {
 		this._userManager = userManager;
 	}
-
-	public IWidgetTypeManager getWidgetTypeManager() {
+	
+	protected IWidgetTypeManager getWidgetTypeManager() {
 		return _widgetTypeManager;
 	}
-
 	public void setWidgetTypeManager(IWidgetTypeManager widgetTypeManager) {
 		this._widgetTypeManager = widgetTypeManager;
 	}
-
+	
+	protected IMyPortalPageModelManager getMyPortalPageModelManager() {
+		return _myPortalPageModelManager;
+	}
+	public void setMyPortalPageModelManager(IMyPortalPageModelManager myPortalPageModelManager) {
+		this._myPortalPageModelManager = myPortalPageModelManager;
+	}
+	
 	private String _currentPageCode;
 
 	private Integer _startFramePos;
@@ -356,12 +376,13 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 	private Integer _frameToResize;
 
 	private WidgetUpdateInfoBean[] _updateInfos = new WidgetUpdateInfoBean[0];
-
+	
 	private HttpServletResponse _servletResponse;
-
+	
 	private IPageManager _pageManager;
 	private IPageUserConfigManager _pageUserConfigManager;
 	private IUserManager _userManager;
 	private IWidgetTypeManager _widgetTypeManager;
-
+	private IMyPortalPageModelManager _myPortalPageModelManager;
+	
 }

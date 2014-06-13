@@ -32,7 +32,7 @@ public class TestPageModelManager extends ApsPluginBaseTestCase {
 		super.setUp();
 		this.init();
 	}
-
+	/*
 	public void testGetPageModel_1() throws Throwable {
 		PageModel pageModel = this._pageModelManager.getPageModel("home");
 		assertNotNull(pageModel);
@@ -67,7 +67,7 @@ public class TestPageModelManager extends ApsPluginBaseTestCase {
 			} else assertNull(frame.getColumn());
 		}
 	}
-	
+	*/
 	private void init() throws Exception {
 		try {
 			this._pageModelManager = (IPageModelManager) this.getService(SystemConstants.PAGE_MODEL_MANAGER);

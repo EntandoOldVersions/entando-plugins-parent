@@ -20,6 +20,7 @@ package com.agiletec.plugins.jpmyportalplus.aps.tags;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -33,13 +34,15 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.pagemodel.PageModel;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.tags.util.FrameSelectItem;
+
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.IMyPortalPageModelManager;
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalFrameConfig;
 
 /**
  * Returns the list of select items to use in the select inside the frame swap function of each widget
@@ -54,23 +57,28 @@ public class FrameSelectItemTag extends TagSupport {
 		RequestContext reqCtx = (RequestContext) this.pageContext.getRequest().getAttribute(RequestContext.REQCTX);
 		List<FrameSelectItem> selectItems = new ArrayList<FrameSelectItem>();
 		IPageUserConfigManager pageUserConfigManager = (IPageUserConfigManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.PAGE_USER_CONFIG_MANAGER, pageContext);
+		IMyPortalPageModelManager myportalModelConfigManager = 
+						(IMyPortalPageModelManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.MYPORTAL_MODEL_CONFIG_MANAGER, this.pageContext);
 		try {
 			Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
 			IPage currentPage = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
-			MyPortalPageModel pageModel = (MyPortalPageModel) currentPage.getModel();
-			Integer currentColumnId = pageModel.getFrameConfigs()[currentFrame].getColumn();
+			PageModel pageModel = currentPage.getModel();
+			Map<Integer, MyPortalFrameConfig> modelConfig = myportalModelConfigManager.getPageModelConfig(pageModel.getCode());
+			MyPortalFrameConfig currentFrameConfig = (null != modelConfig) ? modelConfig.get(currentFrame) : null;
+			Integer currentColumnId = (null != currentFrameConfig) ? currentFrameConfig.getColumn() : null;
 			if (null == currentColumnId) {
 				return super.doStartTag();
 			}
 			Lang currentLang = (Lang) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_LANG);
 			Widget[] customShowletConfig = this.getCustomShowletConfig(currentPage, pageUserConfigManager);
 			Widget[] showletsToRender = pageUserConfigManager.getShowletsToRender(currentPage, customShowletConfig);
-
 			String voidShowletCode = pageUserConfigManager.getVoidShowlet().getCode();
 			for (int i = 0; i < showletsToRender.length; i++) {
-				Frame frame = pageModel.getFrameConfigs()[i];
-				Integer columnId = frame.getColumn();
-				if (frame.isLocked() || null == columnId || i == currentFrame.intValue()) continue;
+				//Frame frame = pageModel.getConfiguration()[i];
+				MyPortalFrameConfig frameConfig = (null != modelConfig) ? modelConfig.get(i) : null;
+				//Integer columnId = frame.getColumn();
+				if (null == frameConfig || frameConfig.isLocked() || null == frameConfig.getColumn() || i == currentFrame.intValue()) continue;
+				Integer columnId = frameConfig.getColumn();
 				Widget showlet = showletsToRender[i];
 				if (columnId.equals(currentColumnId)) {
 					if (showlet != null && !showlet.getType().getCode().equals(voidShowletCode)) {

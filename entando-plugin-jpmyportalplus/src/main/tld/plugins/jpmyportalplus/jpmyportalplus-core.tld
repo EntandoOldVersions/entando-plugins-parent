@@ -5,7 +5,7 @@
   <tlib-version>2.2</tlib-version>
   <short-name>jpmyportalplus-core</short-name>
   <uri>/jpmyportalplus-core</uri>
-	
+	<!--
 	<tag>
 		<description>
 			<![CDATA[Esecuzione preliminare delle showlet.
@@ -16,7 +16,7 @@
 		<tag-class>com.agiletec.plugins.jpmyportalplus.aps.tags.MyPortalExecWidgetTag</tag-class>
 		<body-content>empty</body-content>
 	</tag>
-	
+	-->
 	<tag>
 		<description><![CDATA[]]></description>
 		<name>isCurrentFrameClosed</name>

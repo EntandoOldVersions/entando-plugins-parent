@@ -19,16 +19,18 @@ package com.agiletec.plugins.jpmyportalplus.aps.internalservlet.ajax;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.pagemodel.PageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.internalservlet.AbstractFrontAction;
 import com.agiletec.plugins.jpmyportalplus.aps.internalservlet.util.FrameSelectItem;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
+
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalFrameConfig;
 
 /**
  * @author E.Santoboni
@@ -93,8 +95,11 @@ public class AjaxFrontAction extends AbstractFrontAction {
 		this.setSelectItems(selectItems);
 		try {
 			IPage currentPage = this.getCurrentPage();
-			MyPortalPageModel pageModel = (MyPortalPageModel) currentPage.getModel();
-			Integer currentColumnId = pageModel.getFrameConfigs()[this.getFrameWhereOpenSection()].getColumn();
+			PageModel pageModel = currentPage.getModel();
+			Map<Integer, MyPortalFrameConfig> modelConfig = super.getMyPortalModelConfig(pageModel.getCode());
+			MyPortalFrameConfig currentFrameConfig = (null != modelConfig) ? modelConfig.get(this.getFrameWhereOpenSection()) : null;
+			Integer currentColumnId = (null != currentFrameConfig) ? currentFrameConfig.getColumn() : null;
+			//Integer currentColumnId = pageModel.getFrameConfigs()[this.getFrameWhereOpenSection()].getColumn();
 			if (null == currentColumnId) {
 				return SUCCESS;
 			}
@@ -104,10 +109,12 @@ public class AjaxFrontAction extends AbstractFrontAction {
 			Lang currentLang = this.getCurrentLang();
 			String voidShowletCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
 			for (int i = 0; i < showletsToRender.length; i++) {
-				Frame frame = pageModel.getFrameConfigs()[i];
-				Integer columnId = frame.getColumn();
-				if (frame.isLocked() || null == columnId || i == this.getFrameWhereOpenSection().intValue()) continue;
+				//Frame frame = pageModel.getFrameConfigs()[i];
+				//Integer columnId = frame.getColumn();
+				MyPortalFrameConfig frameConfig = (null != modelConfig) ? modelConfig.get(i) : null;
+				if (null == frameConfig || frameConfig.isLocked() || null == frameConfig.getColumn() || i == this.getFrameWhereOpenSection().intValue()) continue;
 				Widget widget = showletsToRender[i];
+				Integer columnId = frameConfig.getColumn();
 				if (columnId.equals(currentColumnId)) {
 					if (widget != null && !widget.getType().getCode().equals(voidShowletCode)) {
 						FrameSelectItem item = new FrameSelectItem(currentColumnId, columnId, widget, i, currentLang);

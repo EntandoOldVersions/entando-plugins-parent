@@ -28,6 +28,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.entando.entando.aps.system.services.widgettype.WidgetType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,14 +38,16 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.pagemodel.Frame;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.tags.util.WidgetCheckInfo;
+
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.IMyPortalPageModelManager;
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalFrameConfig;
 
 /**
  * Returns the list of widget (in form of {@link WidgetCheckInfo}) to use into the function of page configuration.
@@ -54,11 +57,14 @@ public class CustomizableWidgetsTag extends TagSupport {
 
 	private static final Logger _logger = LoggerFactory.getLogger(CustomizableWidgetsTag.class);
 	
+	@Override
     public int doStartTag() throws JspException {
         RequestContext reqCtx = (RequestContext) this.pageContext.getRequest().getAttribute(RequestContext.REQCTX);
         List<WidgetCheckInfo> checkInfos = new ArrayList<WidgetCheckInfo>();
         IPageUserConfigManager pageUserConfigManager = (IPageUserConfigManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.PAGE_USER_CONFIG_MANAGER, pageContext);
-        try {
+        IMyPortalPageModelManager myportalModelConfigManager = 
+						(IMyPortalPageModelManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.MYPORTAL_MODEL_CONFIG_MANAGER, this.pageContext);
+		try {
             Lang currentLang = (Lang) this.pageContext.getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_LANG);
             IPage currentPage = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
             Widget[] customShowletConfig = this.getCustomShowletConfig(currentPage);
@@ -66,10 +72,12 @@ public class CustomizableWidgetsTag extends TagSupport {
             List<String> allowedShowlets = new ArrayList<String>();
             Map<String, WidgetType> customizableShowlets = this.getCustomizableShowlets(pageUserConfigManager);
             allowedShowlets.addAll(customizableShowlets.keySet());
-            Frame[] frames = ((MyPortalPageModel) currentPage.getModel()).getFrameConfigs();
+			Map<Integer, MyPortalFrameConfig> modelConfig = myportalModelConfigManager.getPageModelConfig(currentPage.getModel().getCode());
+            Frame[] frames = currentPage.getModel().getConfiguration();
             for (int i = 0; i < frames.length; i++) {
-                Frame frame = frames[i];
-                if (!frame.isLocked()) {
+                //Frame frame = frames[i];
+				MyPortalFrameConfig frameConfig = (null != modelConfig) ? modelConfig.get(i) : null;
+                if (null != frameConfig && !frameConfig.isLocked()) {
                     Widget showlet = showletsToRender[i];
                     if (null != showlet && allowedShowlets.contains(showlet.getType().getCode())) {
                         WidgetCheckInfo info = new WidgetCheckInfo(showlet.getType(), true, currentLang);

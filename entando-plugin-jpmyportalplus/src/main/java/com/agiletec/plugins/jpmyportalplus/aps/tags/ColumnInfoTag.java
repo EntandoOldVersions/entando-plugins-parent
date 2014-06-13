@@ -17,6 +17,8 @@
 */
 package com.agiletec.plugins.jpmyportalplus.aps.tags;
 
+import java.util.Map;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -27,9 +29,13 @@ import org.slf4j.LoggerFactory;
 import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.IPage;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
+import com.agiletec.aps.system.services.pagemodel.Frame;
+import com.agiletec.aps.system.services.pagemodel.PageModel;
+import com.agiletec.aps.util.ApsWebApplicationUtils;
+import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
 
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.IMyPortalPageModelManager;
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalFrameConfig;
 
 /**
  * @author E.Santoboni
@@ -46,12 +52,15 @@ public class ColumnInfoTag extends TagSupport {
 			IPage currPage = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
 			String value = null;
 			if (null == this.getParamName() || this.getParamName().equals(PARAM_NAME_FIRST_FRAME_ID)) {
-				MyPortalPageModel model = (MyPortalPageModel) currPage.getModel();
-				Frame[] frames = model.getFrameConfigs();
+				IMyPortalPageModelManager myportalModelConfigManager = 
+						(IMyPortalPageModelManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.MYPORTAL_MODEL_CONFIG_MANAGER, this.pageContext);
+				PageModel model = currPage.getModel();
+				Map<Integer, MyPortalFrameConfig> modelConfig = myportalModelConfigManager.getPageModelConfig(model.getCode());
+				Frame[] frames = model.getConfiguration();
 				for (int i = 0; i < frames.length; i++) {
 					Frame frame = frames[i];
-					//FIXME attenzione: getColumn può essere null
-					if (null != frame.getColumn() && (frame.getColumn().equals(this.getColumnId()))) {
+					MyPortalFrameConfig frameConfig = (null != modelConfig) ? modelConfig.get(i) : null;
+					if (null != frameConfig && null != frameConfig.getColumn() && (frameConfig.getColumn().equals(this.getColumnId()))) {
 						value = String.valueOf(frame.getPos());
 					}
 					if (null != value) break;

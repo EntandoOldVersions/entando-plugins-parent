@@ -22,6 +22,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 
@@ -38,8 +39,10 @@ import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Widget;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
+import com.agiletec.aps.system.services.pagemodel.Frame;
+
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.IMyPortalPageModelManager;
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalFrameConfig;
 
 /**
  * @author E.Santoboni
@@ -53,8 +56,10 @@ public class CustomPageConfig {
 		this.setConfig(new Widget[frames]);
 		this.setStatus(new Integer[frames]);
 	}
-
-	public CustomPageConfig(Cookie cookie, IPage page, IWidgetTypeManager showletTypeManager, Set<String> allowedShowlets, String voidShowletCode) throws ApsSystemException {
+	
+	public CustomPageConfig(Cookie cookie, IPage page, 
+			IWidgetTypeManager showletTypeManager, IMyPortalPageModelManager myPortalPageModelManager, 
+			Set<String> allowedShowlets, String voidShowletCode) throws ApsSystemException {
 		String value;
 		try {
 			value = URLDecoder.decode(cookie.getValue(),"UTF-8");
@@ -67,7 +72,10 @@ public class CustomPageConfig {
 		String tmp = value.replace("\\", "");
 		value=tmp;
 		try {
-			Frame[] frames = ((MyPortalPageModel) page.getModel()).getFrameConfigs();
+			//Frame[] frames = ((MyPortalPageModel) page.getModel()).getFrameConfigs();
+			Frame[] frames = page.getModel().getConfiguration();
+			String modelCode = page.getModel().getCode();
+			Map<Integer, MyPortalFrameConfig> myPortalConfig = myPortalPageModelManager.getPageModelConfig(modelCode);
 			int frameNumber = frames.length;
 			JSONParser parser = new JSONParser();
 			JSONObject positions = (JSONObject) parser.parse(value);
@@ -75,7 +83,10 @@ public class CustomPageConfig {
 			this.setConfig(new Widget[frameNumber]);
 			this.setStatus(new Integer[frameNumber]);
 			for (int i = 0; i < frameNumber; i++) {
-				if (frames[i].isLocked()) continue;
+				//Frame frame = frames[i];
+				//boolean isMyPortalFrame = (frame instanceof MyPortalFrame);
+				MyPortalFrameConfig frameConfig = (null != myPortalConfig) ? myPortalConfig.get(i) : null;
+				if (null == frameConfig || frameConfig.isLocked()) continue;
 				JSONObject frame = (JSONObject) positions.get(String.valueOf(i));
 				if (null == frame) continue;
 				Object showletCode = frame.get("code");
@@ -86,7 +97,7 @@ public class CustomPageConfig {
 				if (showletCode.equals(voidShowletCode) || allowedShowlets.contains(showletCode) || this.isViewerType(type)) {
 					showlet = new Widget();
 					showlet.setType(type);
-                                        /*
+                    /*
 					JSONObject showletConfig = (JSONObject) frame.get("config");
 					if (null != showletConfig) {
 						ApsProperties properties = new ApsProperties();
@@ -101,7 +112,7 @@ public class CustomPageConfig {
 						}
 						showlet.setConfig(properties);
 					}
-                                        */
+                    */
 				}
 				if (null != showlet) {
 					this.getConfig()[i] = showlet;

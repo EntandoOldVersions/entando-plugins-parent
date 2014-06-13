@@ -1,13 +1,24 @@
 INSERT INTO pagemodels(code, descr, frames, plugincode) VALUES ('jpmyportalplus_pagemodel', 'My Portal', '<frames>
-<frame pos="0" locked="true"><descr>Header</descr></frame>
-<frame pos="1" column="1" locked="false"><descr>Left Column I</descr><defaultWidget code="jpmyportalplus_void" /></frame>
-<frame pos="2" column="1" locked="false"><descr>Left Column II</descr><defaultWidget code="jpmyportalplus_void" /></frame>
-<frame pos="3" column="2" locked="false"><descr>Middle Column I</descr><defaultWidget code="jpmyportalplus_void" /></frame>
-<frame pos="4" column="2" locked="false"><descr>Middle Column II</descr><defaultWidget code="jpmyportalplus_void" /></frame>
-<frame pos="5" column="3" locked="false"><descr>Right Column I</descr><defaultWidget code="jpmyportalplus_void" /></frame>
-<frame pos="6" column="3" locked="false"><descr>Right Column II</descr><defaultWidget code="jpmyportalplus_void" /></frame>
-<frame pos="7" locked="true"><descr>Footer</descr></frame>
+<frame pos="0" ><descr>Header</descr></frame>
+<frame pos="1"><descr>Left Column I</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="2"><descr>Left Column II</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="3"><descr>Middle Column I</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="4"><descr>Middle Column II</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="5"><descr>Right Column I</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="6"><descr>Right Column II</descr><defaultWidget code="jpmyportalplus_void" /></frame>
+<frame pos="7"><descr>Footer</descr></frame>
 </frames>', 'jpmyportalplus');
+
+INSERT INTO jpmyportalplus_modelconfig(code, config) VALUES ('jpmyportalplus_pagemodel', '<frames>
+<frame pos="0" locked="true"></frame>
+<frame pos="1" column="1" locked="false"></frame>
+<frame pos="2" column="1" locked="false"></frame>
+<frame pos="3" column="2" locked="false"></frame>
+<frame pos="4" column="2" locked="false"></frame>
+<frame pos="5" column="3" locked="false"></frame>
+<frame pos="6" column="3" locked="false"></frame>
+<frame pos="7" locked="true"></frame>
+</frames>');
 
 INSERT INTO widgetcatalog(code, titles, parameters, plugincode, parenttypecode, defaultconfig,locked) VALUES (
 'jpmyportalplus_void',

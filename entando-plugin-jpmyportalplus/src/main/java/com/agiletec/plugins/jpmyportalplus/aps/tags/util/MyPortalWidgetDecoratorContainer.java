@@ -17,6 +17,7 @@
 */
 package com.agiletec.plugins.jpmyportalplus.aps.tags.util;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -26,40 +27,46 @@ import com.agiletec.aps.system.RequestContext;
 import com.agiletec.aps.system.SystemConstants;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.pagemodel.PageModel;
 import com.agiletec.aps.tags.util.BaseFrameDecoratorContainer;
 import com.agiletec.aps.util.ApsWebApplicationUtils;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
+
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.IMyPortalPageModelManager;
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalFrameConfig;
 
 /**
  * @author E.Santoboni
  */
 public class MyPortalWidgetDecoratorContainer extends BaseFrameDecoratorContainer {
-
+	
 	private static final Logger _logger = LoggerFactory.getLogger(MyPortalWidgetDecoratorContainer.class);
 	
 	@Override
-	public boolean needsDecoration(Widget showlet, RequestContext reqCtx) {
+	public boolean needsDecoration(Widget widget, RequestContext reqCtx) {
 		try {
 			IPage page = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
 			Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
 			IMyPortalConfigManager myportalConfigManager =
 					(IMyPortalConfigManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.MYPORTAL_CONFIG_MANAGER, reqCtx.getRequest());
-			Set<String> allowedShowlet = myportalConfigManager.getConfig().getAllowedShowlets();
-			MyPortalPageModel model = (MyPortalPageModel) page.getModel();
-			Frame currentFrameObject = model.getFrameConfigs()[currentFrame];
-			return (!currentFrameObject.isLocked() && allowedShowlet.contains(showlet.getType().getCode()));
+			IMyPortalPageModelManager myportalModelConfigManager =
+					(IMyPortalPageModelManager) ApsWebApplicationUtils.getBean(JpmyportalplusSystemConstants.MYPORTAL_MODEL_CONFIG_MANAGER, reqCtx.getRequest());
+			Set<String> allowedWidgets = myportalConfigManager.getConfig().getAllowedWidgets();
+			PageModel model = page.getModel();
+			Map<Integer, MyPortalFrameConfig> modelConfig = myportalModelConfigManager.getPageModelConfig(model.getCode());
+			MyPortalFrameConfig frameConfig = (null != modelConfig) ? modelConfig.get(currentFrame) : null;
+			if (null == frameConfig) return false;
+			return (!frameConfig.isLocked() && allowedWidgets.contains(widget.getType().getCode()));
 		} catch (Throwable t) {
 			_logger.error("Error checking widget decorators", t);
 			throw new RuntimeException("Error checking widget decorators", t);
 		}
 	}
-
+	
 	@Override
 	public boolean isShowletDecorator() {
 		return true;
 	}
-
+	
 }

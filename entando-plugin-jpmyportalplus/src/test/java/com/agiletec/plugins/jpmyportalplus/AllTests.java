@@ -30,7 +30,7 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Change me with a suitable description");
 
 		suite.addTestSuite(TestMyPortalConfigManager.class);
-		suite.addTestSuite(TestPageModelManager.class);
+		//suite.addTestSuite(TestPageModelManager.class);
 		suite.addTestSuite(TestPageUserConfigManager.class);
 		
 		return suite;

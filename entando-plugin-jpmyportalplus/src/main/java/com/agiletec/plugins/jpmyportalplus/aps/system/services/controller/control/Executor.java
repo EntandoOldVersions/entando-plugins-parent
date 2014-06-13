@@ -17,23 +17,11 @@
 */
 package com.agiletec.plugins.jpmyportalplus.aps.system.services.controller.control;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.agiletec.aps.system.RequestContext;
-import com.agiletec.aps.system.services.controller.ControllerManager;
-import com.agiletec.aps.system.services.controller.control.ControlServiceInterface;
-
 /**
  * @author M.Diana - E.Santoboni
  */
-public class Executor implements ControlServiceInterface {
-
+public class Executor /*implements ControlServiceInterface*/ {
+	/*
 	private static final Logger _logger = LoggerFactory.getLogger(Executor.class);
 	
 	@Override
@@ -79,5 +67,5 @@ public class Executor implements ControlServiceInterface {
 	private String _mainJspPath;
 	
 	public static final String DEFAULT_MAIN_JSP_PATH = "/WEB-INF/aps/jsp/system/main.jsp";
-
+	*/
 }

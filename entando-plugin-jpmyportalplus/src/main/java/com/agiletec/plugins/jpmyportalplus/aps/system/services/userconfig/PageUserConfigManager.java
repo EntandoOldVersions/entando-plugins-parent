@@ -42,11 +42,12 @@ import com.agiletec.aps.system.services.pagemodel.IPageModelManager;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.IMyPortalConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.CustomPageConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.PageUserConfigBean;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
+import java.util.Map;
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.IMyPortalPageModelManager;
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalFrameConfig;
 
 /**
  * @author E.Santoboni
@@ -108,7 +109,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 				return null;
 			}
 			MyPortalConfig mPortalConfig = this.getMyPortalConfigManager().getConfig();
-			customConfig = new CustomPageConfig(cookie, page, this.getWidgetTypeManager(),
+			customConfig = new CustomPageConfig(cookie, page, this.getWidgetTypeManager(), this.getMyPortalPageModelManager(), 
 					mPortalConfig.getAllowedShowlets(), this.getVoidShowletCode());
 			for (int i = 0; i < customConfig.getConfig().length; i++) {
 				Widget showlet = customConfig.getConfig()[i];
@@ -165,12 +166,14 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 				ApsSystemUtils.getLogger().error(message);
 				return defaultWidgets;
 			}
-			Frame[] frames = ((MyPortalPageModel) page.getModel()).getFrameConfigs();
+			String modelCode = page.getModel().getCode();
+			Map<Integer, MyPortalFrameConfig> config = this.getMyPortalPageModelManager().getPageModelConfig(modelCode);
 			int widgetNumber = defaultWidgets.length;
 			mergedWidgets = new Widget[widgetNumber];
 			for (int scan = 0; scan < widgetNumber; scan++) {
 				Widget customWidget = customShowlets[scan];
-				if (null == customWidget || frames[scan].isLocked()) {
+				MyPortalFrameConfig frameConfig = (null != config) ? config.get(scan) : null;
+				if (null == customWidget || (null == frameConfig) || (frameConfig.isLocked())) {
 					mergedWidgets[scan] = defaultWidgets[scan];
 				} else {
 					mergedWidgets[scan] = customWidget;
@@ -318,20 +321,27 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	public void setAuthorizationManager(IAuthorizationManager authorizationManager) {
 		this._authorizationManager = authorizationManager;
 	}
-
+	
 	public IWidgetTypeManager getWidgetTypeManager() {
 		return _widgetTypeManager;
 	}
-
 	public void setWidgetTypeManager(IWidgetTypeManager widgetTypeManager) {
 		this._widgetTypeManager = widgetTypeManager;
 	}
-
+	
+	protected IMyPortalPageModelManager getMyPortalPageModelManager() {
+		return _myPortalPageModelManager;
+	}
+	public void setMyPortalPageModelManager(IMyPortalPageModelManager myPortalPageModelManager) {
+		this._myPortalPageModelManager = myPortalPageModelManager;
+	}
+	
 	private IPageUserConfigDAO _pageUserConfigDAO;
 	private IPageModelManager _pageModelManager;
 	private IMyPortalConfigManager _myPortalConfigManager;
 	private IWidgetTypeManager _widgetTypeManager;
 
 	private IAuthorizationManager _authorizationManager;
+	private IMyPortalPageModelManager _myPortalPageModelManager;
 
 }

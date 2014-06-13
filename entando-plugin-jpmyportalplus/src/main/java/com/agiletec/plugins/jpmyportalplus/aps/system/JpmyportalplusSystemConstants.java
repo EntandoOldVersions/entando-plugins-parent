@@ -26,6 +26,8 @@ public interface JpmyportalplusSystemConstants {
 	
 	public static final String MYPORTAL_CONFIG_MANAGER = "jpmyportalplusMyPortalConfigManager";
 	
+	public static final String MYPORTAL_MODEL_CONFIG_MANAGER = "jpmyportalplusMyPortalPageModelManager";
+	
 	public static final String PAGE_USER_CONFIG_MANAGER = "jpmyportalplusPageUserConfigManager";
 	
 	/**

@@ -23,11 +23,13 @@ import java.util.Map;
 import com.agiletec.aps.system.ApsSystemUtils;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.pagemodel.Frame;
+import com.agiletec.aps.system.services.pagemodel.PageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.internalservlet.AbstractFrontAction;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
+
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalFrameConfig;
 
 /**
  * @author E.Santoboni
@@ -65,7 +67,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 			}
 			Widget[] customShowlets = super.getCustomShowletConfig();
 			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
-			MyPortalPageModel pageModel = (MyPortalPageModel) currentPage.getModel();
+			PageModel pageModel = currentPage.getModel();
 			Integer[] columnFrames = this.calculateColumnFrames(pageModel);
 			boolean isFrameDestBusy = this.calculateFrameDestOnSwapAjax(showletsToRender, columnFrames);
 			if (this.getStartFramePos().equals(this.getTargetFramePos())) {
@@ -76,7 +78,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 			if (!isFrameDestBusy) {
 				//frame destinazione non occupato
 				WidgetUpdateInfoBean frameStartUpdate =
-					new WidgetUpdateInfoBean(this.getStartFramePos(), this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
+					new WidgetUpdateInfoBean(this.getStartFramePos(), this.getWidgetVoid(), IPageUserConfigManager.STATUS_OPEN);
 				this.addUpdateInfoBean(frameStartUpdate);
 				WidgetUpdateInfoBean frameTargetUpdate = this.buildShowletToMoveUpdateInfo(showletsToRender);
 				this.addUpdateInfoBean(frameTargetUpdate);
@@ -113,18 +115,23 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 		}
 		return SUCCESS;
 	}
-
-	private Integer[] calculateColumnFrames(MyPortalPageModel pageModel) throws Throwable {
+	
+	private Integer[] calculateColumnFrames(PageModel pageModel) throws Throwable {
 		//System.out.println("Partenza " + this.getStartFramePos() +
 		//		" - POSIZIONE PREC  " + this.getTargetPrevFramePos() +
 		//		" - POSIZIONE SUCC " + this.getTargetNextFramePos());
 		Integer[] frames = new Integer[0];
+		Map<Integer, MyPortalFrameConfig> myPortalModelConfig = super.getMyPortalModelConfig(pageModel.getCode());
 		try {
 			Integer columnDest = null;
 			if (null != this.getTargetPrevFramePos()) {
-				columnDest = pageModel.getFrameConfigs()[this.getTargetPrevFramePos()].getColumn();
+				MyPortalFrameConfig targetPrevFrameConfig = (null != myPortalModelConfig) ? myPortalModelConfig.get(this.getTargetPrevFramePos()) : null;
+				columnDest = (null != targetPrevFrameConfig) ? targetPrevFrameConfig.getColumn() : null;
+				//pageModel.getFrameConfigs()[this.getTargetPrevFramePos()].getColumn();
 				if (null != this.getTargetNextFramePos()) {
-					Integer columnDestCheck = pageModel.getFrameConfigs()[this.getTargetNextFramePos()].getColumn();
+					MyPortalFrameConfig targetNextFrameConfig = (null != myPortalModelConfig) ? myPortalModelConfig.get(this.getTargetNextFramePos()) : null;
+					Integer columnDestCheck = (null != targetNextFrameConfig) ? targetNextFrameConfig.getColumn() : null;
+					//pageModel.getFrameConfigs()[this.getTargetNextFramePos()].getColumn();
 					if (null == columnDestCheck || null == columnDest) {
 						throw new RuntimeException("QUALCHE MARCATORE COLONNA NULLO - Colonna '" + columnDest + "' di POSIZIONE PREC  " + this.getTargetPrevFramePos() +
 								" - colonna '" + columnDestCheck + "' di POSIZIONE SUCC " + this.getTargetNextFramePos());
@@ -134,15 +141,19 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 					}
 				}
 			} else {
-				columnDest = pageModel.getFrameConfigs()[this.getTargetNextFramePos()].getColumn();
+				MyPortalFrameConfig targetNextFrameConfig = (null != myPortalModelConfig) ? myPortalModelConfig.get(this.getTargetNextFramePos()) : null;
+				columnDest = (null != targetNextFrameConfig) ? targetNextFrameConfig.getColumn() : null;
+				//pageModel.getFrameConfigs()[this.getTargetNextFramePos()].getColumn();
 			}
 			if (null == columnDest) {
 				throw new RuntimeException("MARCATORE COLONNA NULLO di POSIZIONE PREC  " + this.getTargetPrevFramePos() +
 						" o di POSIZIONE SUCC " + this.getTargetNextFramePos());
 			}
-			for (int i = 0; i < pageModel.getFrameConfigs().length; i++) {
-				Frame frame = pageModel.getFrameConfigs()[i];
-				if (null != frame.getColumn() && frame.getColumn().equals(columnDest)) {
+			Frame[] pageModelFrames = pageModel.getConfiguration();
+			for (int i = 0; i < pageModelFrames.length; i++) {
+				//Frame frame = pageModelFrames[i];
+				MyPortalFrameConfig frameConfig = (null != myPortalModelConfig) ? myPortalModelConfig.get(i) : null;
+				if (null != frameConfig && null != frameConfig.getColumn() && frameConfig.getColumn().equals(columnDest)) {
 					frames = this.addFrame(frames, i);
 					//System.out.println("COLONNA " + columnDest + " - FRAME " + i);
 				}
@@ -321,7 +332,7 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 		if (!endFramePos.equals(this.getStartFramePos())) {
 			//System.out.println("SVUOTAMENTO FRAME PARTENZA");
 			WidgetUpdateInfoBean frameStartUpdate =
-				new WidgetUpdateInfoBean(this.getStartFramePos(), this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
+				new WidgetUpdateInfoBean(this.getStartFramePos(), this.getWidgetVoid(), IPageUserConfigManager.STATUS_OPEN);
 			this.addUpdateInfoBean(frameStartUpdate);
 		} else {
 			//System.out.println("CASO IN CUI IL FRAME DI PARTENZA E' IL DESTINATARIO DI UN FRAME SWITCHATO");

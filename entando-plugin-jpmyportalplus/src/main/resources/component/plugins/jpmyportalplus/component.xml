@@ -9,6 +9,7 @@
 		<tableMapping>
 			<datasource name="portDataSource">
 				<class>org.entando.entando.plugins.jpmyportalplus.aps.system.init.portdb.UserPageConfig</class>
+				<class>org.entando.entando.plugins.jpmyportalplus.aps.system.init.portdb.PageModelConfig</class>
 			</datasource>
 		</tableMapping>
 		<environment code="production">

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.entando.entando.aps.system.services.widgettype.WidgetType;
@@ -31,15 +32,17 @@ import com.agiletec.aps.system.exception.ApsSystemException;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.pagemodel.Frame;
+import com.agiletec.aps.system.services.pagemodel.PageModel;
 import com.agiletec.aps.system.services.url.IURLManager;
 import com.agiletec.aps.system.services.user.UserDetails;
 import com.agiletec.plugins.jpmyportalplus.aps.internalservlet.AbstractFrontAction;
 import com.agiletec.plugins.jpmyportalplus.aps.internalservlet.IFrontAction;
 import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConstants;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.Frame;
-import com.agiletec.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModel;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigManager;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.WidgetUpdateInfoBean;
+
+import org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalFrameConfig;
 
 /**
  * @author E.Santoboni
@@ -106,24 +109,26 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 			//for (int i = 0; i < showletsToAdd.size(); i++) {
 			//	System.out.println("DA AGGIUNGERE + " + showletsToAdd.get(i));
 			//}
-
-			String voidShowletCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
-			Frame[] frames = ((MyPortalPageModel) currentPage.getModel()).getFrameConfigs();
+			PageModel pageModel = currentPage.getModel();
+			Map<Integer, MyPortalFrameConfig> myPortalModel = super.getMyPortalModelConfig(pageModel.getCode());
+			String voidWidgetCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
+			Frame[] frames = pageModel.getConfiguration();
 			for (int i = 0; i < frames.length; i++) {
-				Frame frame = frames[i];
-				if (!frame.isLocked()) {
+				//Frame frame = frames[i];
+				MyPortalFrameConfig frameConfig = (null != myPortalModel) ? myPortalModel.get(i) : null;
+				if (null != frameConfig && !frameConfig.isLocked()) {
 					boolean isFrameToFlow = framesToFlow.contains(i);
 					if (isFrameToFlow) {
 						if (showletsToAdd.size()>0) {
 							this.addNewWidgetUpdateInfo(showletsToAdd, i, isFrameToFlow);
 						} else {
-							Widget showletToInsert = this.getShowletVoid();
+							Widget showletToInsert = this.getWidgetVoid();
 							WidgetUpdateInfoBean infoBean = new WidgetUpdateInfoBean(i, showletToInsert, IPageUserConfigManager.STATUS_OPEN);
 							this.addUpdateInfoBean(infoBean);
 						}
 					} else {
 						Widget showlet = showletsToRender[i];
-						if ((null == showlet || (null != showlet && showlet.getType().getCode().equals(voidShowletCode))) && showletsToAdd.size()>0) {
+						if ((null == showlet || (showlet.getType().getCode().equals(voidWidgetCode))) && showletsToAdd.size()>0) {
 							this.addNewWidgetUpdateInfo(showletsToAdd, i, isFrameToFlow);
 						}
 					}
@@ -141,11 +146,15 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 	protected List<Integer> getFramesToFlow(Widget[] showletsToRender, IPage currentPage) throws Throwable {
 		List<Integer> framesToFlow = new ArrayList<Integer>();
 		try {
+			PageModel pageModel = currentPage.getModel();
+			Map<Integer, MyPortalFrameConfig> myPortalModel = super.getMyPortalModelConfig(pageModel.getCode());
 			String voidShowletCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
-			Frame[] frames = ((MyPortalPageModel) currentPage.getModel()).getFrameConfigs();
+			Frame[] frames = pageModel.getConfiguration();
 			for (int i = 0; i < frames.length; i++) {
-				Frame frame = frames[i];
-				if (!frame.isLocked()) {
+				//Frame frame = frames[i];
+				MyPortalFrameConfig frameConfig = (null != myPortalModel) ? myPortalModel.get(i) : null;
+				if (null != frameConfig && !frameConfig.isLocked()) {
+				//if (!frame.isLocked()) {
 					Widget showlet = showletsToRender[i];
 					if (null != showlet &&
 							!showlet.getType().getCode().equals(voidShowletCode) &&
@@ -167,10 +176,14 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 			if (null != this.getShowletToShow()) {
 				showletsToAdd.addAll(this.getShowletToShow());
 			}
-			Frame[] frames = ((MyPortalPageModel) currentPage.getModel()).getFrameConfigs();
+			PageModel pageModel = currentPage.getModel();
+			Map<Integer, MyPortalFrameConfig> myPortalModel = super.getMyPortalModelConfig(pageModel.getCode());
+			Frame[] frames = pageModel.getConfiguration();
 			for (int i = 0; i < frames.length; i++) {
-				Frame frame = frames[i];
-				if (!frame.isLocked()) {
+				//Frame frame = frames[i];
+				MyPortalFrameConfig frameConfig = (null != myPortalModel) ? myPortalModel.get(i) : null;
+				if (null != frameConfig && !frameConfig.isLocked()) {
+				//if (!frame.isLocked()) {
 					Widget showlet = showletsToRender[i];
 					if (null != showlet) {
 						showletsToAdd.remove(showlet.getType().getCode());

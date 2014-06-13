@@ -2,8 +2,31 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:aop="http://www.springframework.org/schema/aop"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+    
+	<aop:aspectj-autoproxy />
+    
+	<bean id="jpmyportalplusWidgetExecutorServiceAspect" 
+		  class="org.entando.entando.plugins.jpmyportalplus.aps.system.services.controller.executor.WidgetExecutorServiceAspect" />
+	
+	<bean id="jpmyportalplusMyPortalPageModelManager" class="org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.MyPortalPageModelManager" 
+			parent="abstractService" >
+		<property name="pageModelDAO" >
+			<bean class="org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel.PageModelDAO">
+				<property name="dataSource" ref="portDataSource" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="jpmyportalplusPageModelConfigManager" class="com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.PageUserConfigDAO">
+		<property name="dataSource" ref="portDataSource" />
+		<property name="pageManager" ref="PageManager" />
+		<property name="pageModelManager" ref="PageModelManager" />
+		<property name="widgetTypeManager" ref="WidgetTypeManager" />
+	</bean>
 	
 	<bean id="jpmyportalplusPageUserConfigDAO" class="com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.PageUserConfigDAO">
 		<property name="dataSource" ref="portDataSource" />
@@ -27,6 +50,7 @@
 		<property name="widgetTypeManager" ref="WidgetTypeManager" />
 		<property name="authorizationManager" ref="AuthorizationManager" />
 		<property name="pageUserConfigDAO" ref="jpmyportalplusPageUserConfigDAO" />
+		<property name="myPortalPageModelManager" ref="jpmyportalplusMyPortalPageModelManager" />
 	</bean>
 	
 	<bean id="jpmyportalplusWidgetDecorationContainer" class="com.agiletec.plugins.jpmyportalplus.aps.tags.util.MyPortalWidgetDecoratorContainer" >

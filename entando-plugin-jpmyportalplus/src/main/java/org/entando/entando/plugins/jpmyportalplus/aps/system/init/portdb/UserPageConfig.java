@@ -53,7 +53,7 @@ public class UserPageConfig implements ExtendedColumnDefinition {
 			dataType = DataType.STRING, 
 			width = 40, 
 			canBeNull = false)
-	private String _showletCode;
+	private String _widgetCode;
 	
 	@DatabaseField(columnName = "config", 
 			dataType = DataType.LONG_STRING)

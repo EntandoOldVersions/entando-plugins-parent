@@ -25,13 +25,22 @@ import java.util.Set;
  */
 public class MyPortalConfig {
 	
+	@Deprecated
 	public Set<String> getAllowedShowlets() {
-		return _allowedShowlets;
+		return this.getAllowedWidgets();
 	}
+	@Deprecated
 	public void setAllowedShowlets(Set<String> allowedShowlets) {
-		this._allowedShowlets = allowedShowlets;
+		this.setAllowedWidgets(allowedShowlets);
 	}
 	
-	private Set<String> _allowedShowlets;
+	public Set<String> getAllowedWidgets() {
+		return _allowedWidgets;
+	}
+	public void setAllowedWidgets(Set<String> allowedWidgets) {
+		this._allowedWidgets = allowedWidgets;
+	}
+	
+	private Set<String> _allowedWidgets;
 	
 }
