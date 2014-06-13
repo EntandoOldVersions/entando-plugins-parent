@@ -5,18 +5,7 @@
   <tlib-version>2.2</tlib-version>
   <short-name>jpmyportalplus-core</short-name>
   <uri>/jpmyportalplus-core</uri>
-	<!--
-	<tag>
-		<description>
-			<![CDATA[Esecuzione preliminare delle showlet.
-			Se l'utente è loggato e possiede una configurazione personalizzata, la pagina conterrà le showlet personalizzate per il modello della pagina corrente.
-			Da usare esclusivamente nella main.jsp.]]>
-		</description>
-		<name>execWidget</name>
-		<tag-class>com.agiletec.plugins.jpmyportalplus.aps.tags.MyPortalExecWidgetTag</tag-class>
-		<body-content>empty</body-content>
-	</tag>
-	-->
+	
 	<tag>
 		<description><![CDATA[]]></description>
 		<name>isCurrentFrameClosed</name>
