@@ -17,18 +17,19 @@
 */
 package org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel;
 
+import com.agiletec.aps.system.common.AbstractDAO;
+import com.agiletec.aps.system.exception.ApsSystemException;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.agiletec.aps.system.common.AbstractDAO;
-import com.agiletec.aps.system.exception.ApsSystemException;
-import java.sql.PreparedStatement;
 
 /**
  * @author E.Santoboni
@@ -65,8 +66,8 @@ public class PageModelDAO extends AbstractDAO implements IPageModelDAO {
 		Map<Integer, MyPortalFrameConfig> config = null;
 		try {
 			if (null != xmlFrames && xmlFrames.length() > 0) {
-				MyPortalPageModelDOM pageModelDOM = new MyPortalPageModelDOM(xmlFrames);
-				config = pageModelDOM.getModelConfig();
+				MyPortalPageModelDOM dom = new MyPortalPageModelDOM(xmlFrames);
+				config = dom.getModelConfig();
 			}
 		} catch (Throwable t) {
 			_logger.error("Error building the page model code '{}'", code, t);
@@ -78,27 +79,63 @@ public class PageModelDAO extends AbstractDAO implements IPageModelDAO {
 	@Override
 	public void deleteModelConfiguration(String code) {
 		Connection conn = null;
-		PreparedStatement stat = null;
 		try {
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
-			stat = conn.prepareStatement(DELETE_PAGEMODEL_CONFIGURATION);
-			stat.setString(1, code);
-			stat.executeUpdate();
+			this.deleteModelConfiguration(code, conn);
 			conn.commit();
 		} catch (Throwable t) {
 			this.executeRollback(conn);
 			_logger.error("Error while deleting a model configuration",  t);
 			throw new RuntimeException("Error while deleting a model configuration", t);
 		} finally {
+			this.closeConnection(conn);
+		}
+	}
+	
+	@Override
+	public void updateModelConfig(String code, Map<Integer, MyPortalFrameConfig> configuration) {
+		Connection conn = null;
+		PreparedStatement stat = null;
+		try {
+			conn = this.getConnection();
+			conn.setAutoCommit(false);
+			this.deleteModelConfiguration(code, conn);
+			stat = conn.prepareStatement(ADD_PAGEMODEL_CONFIGURATION);
+			stat.setString(1, code);
+			MyPortalPageModelDOM dom = new MyPortalPageModelDOM(configuration);
+			stat.setString(2, dom.getXMLDocument());
+			stat.executeUpdate();
+			conn.commit();
+		} catch (Throwable t) {
+			this.executeRollback(conn);
+			_logger.error("Error while updating a model configuration",  t);
+			throw new RuntimeException("Error while updating a model configuration", t);
+		} finally {
 			this.closeDaoResources(null, stat, conn);
 		}
 	}
 	
+	protected void deleteModelConfiguration(String code, Connection conn) throws Throwable {
+		PreparedStatement stat = null;
+		try {
+			stat = conn.prepareStatement(DELETE_PAGEMODEL_CONFIGURATION);
+			stat.setString(1, code);
+			stat.executeUpdate();
+		} catch (Throwable t) {
+			throw t;
+		} finally {
+			this.closeDaoResources(null, stat);
+		}
+	}
+	
 	private final String ALL_PAGEMODEL_CONFIG = 
-		"SELECT code, config FROM jpmyportalplus_modelconfig";
+			"SELECT code, config FROM jpmyportalplus_modelconfig";
 	
 	private static final String DELETE_PAGEMODEL_CONFIGURATION =
 			"DELETE FROM jpmyportalplus_modelconfig WHERE code = ?";
+	
+	private static final String ADD_PAGEMODEL_CONFIGURATION =
+			"INSERT INTO jpmyportalplus_modelconfig(code, config) VALUES ( ? , ? )";
 	
 }

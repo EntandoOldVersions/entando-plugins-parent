@@ -13,27 +13,36 @@
 			class="com.agiletec.plugins.jpmyportalplus.apsadmin.config.ConfigAction" parent="abstractBaseAction" >
 		<property name="myPortalConfigManager" ref="jpmyportalplusMyPortalConfigManager" />
 		<property name="widgetTypeManager" ref="WidgetTypeManager" />
-		<property name="stockShowletCodes"><value>${showlets.stock}</value></property>
+		<property name="stockWidgetCodes"><value>${widgets.stock}</value></property>
 	</bean>
 	
 	<bean id="widgetTypeAction" scope="prototype" 
 			class="com.agiletec.plugins.jpmyportalplus.apsadmin.portal.WidgetTypeAction" parent="abstractPortalAction">
+		<property name="guiFragmentManager" ref="GuiFragmentManager" />
 		<property name="myPortalConfigManager" ref="jpmyportalplusMyPortalConfigManager" />
 	</bean>
 	
 	<bean id="jpmyportalplusUserWidgetTypeEntryHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
-		<property name="filePath"><value>/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/showlet-entry-jack.jsp</value></property>
+		<property name="filePath"><value>/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/widget-entry-jack.jsp</value></property>
 		<property name="hookPointKey"><value>core.showletType.entry</value></property>
 	</bean>
 	
 	<bean id="jpmyportalplusWidgetTypeListThHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
-		<property name="filePath"><value>/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/showlet-list-table-th-jack.jsp</value></property>
+		<property name="filePath"><value>/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/widget-list-table-th-jack.jsp</value></property>
 		<property name="hookPointKey"><value>core.showletType.list.table.th</value></property>
 	</bean>
 	
 	<bean id="jpmyportalplusWidgetTypeListTdHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
-		<property name="filePath"><value>/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/showlet-list-table-td-jack.jsp</value></property>
+		<property name="filePath"><value>/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/widget-list-table-td-jack.jsp</value></property>
 		<property name="hookPointKey"><value>core.showletType.list.table.td</value></property>
+	</bean>
+	
+	<!-- ******************** -->
+	
+	<bean id="jpmyportalPageModelConfigAction" scope="prototype" 
+			class="org.entando.entando.plugins.jpmyportalplus.apsadmin.portal.model.PageModelConfigAction" parent="abstractBaseAction">
+		<property name="pageModelManager" ref="PageModelManager" />
+		<property name="myPortalPageModelManager" ref="jpmyportalplusMyPortalPageModelManager" />
 	</bean>
 	
 </beans>

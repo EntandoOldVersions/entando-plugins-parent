@@ -7,6 +7,8 @@
 	
 	<!-- ### entando-plugin-jpmyportalplus ### -->
 	<include file="com/agiletec/plugins/jpmyportalplus/aps/internalservlet/myportalplus.xml" />
-	<include file="com/agiletec/plugins/jpmyportalplus/apsadmin/config/config.xml"/>
+	<include file="com/agiletec/plugins/jpmyportalplus/apsadmin/config/config.xml" />
+	
+	<include file="org/entando/entando/plugins/jpmyportalplus/apsadmin/portal/model/pageModelConfig.xml" />
 	
 </struts>

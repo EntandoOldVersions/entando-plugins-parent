@@ -24,16 +24,18 @@ import org.slf4j.LoggerFactory;
 
 import com.agiletec.aps.system.common.AbstractService;
 import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.pagemodel.events.PageModelChangedEvent;
+import com.agiletec.aps.system.services.pagemodel.events.PageModelChangedObserver;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
 /**
- * Servizio di gestione dei modelli di pagina.
- * @author M.Diana - E.Santoboni
+ * Manager of page models definition for my portal.
+ * @author E.Santoboni
  */
 @Aspect
-public class MyPortalPageModelManager extends AbstractService implements IMyPortalPageModelManager {
+public class MyPortalPageModelManager extends AbstractService implements IMyPortalPageModelManager, PageModelChangedObserver {
 
 	private static final Logger _logger = LoggerFactory.getLogger(MyPortalPageModelManager.class);
 	
@@ -44,30 +46,35 @@ public class MyPortalPageModelManager extends AbstractService implements IMyPort
 	}
 	
 	@Override
+	public void updateFromPageModelChanged(PageModelChangedEvent event) {
+		String pageModelCode = (null != event && null != event.getPageModel()) ? event.getPageModel().getCode() : null;
+		if (null != pageModelCode && null != this.getPageModelConfig(pageModelCode)) {
+			try {
+				this.refresh();
+			} catch (Throwable ex) {
+				_logger.error("Error on service refresh", ex);
+			}
+		}
+	}
+	
+	@Override
 	public Map<Integer, MyPortalFrameConfig> getPageModelConfig(String code) {
 		return this._configuration.get(code);
 	}
 	
-	/*
-	@AfterReturning(pointcut = "execution(* com.agiletec.aps.system.services.user.IUserManager.getUser(..))", returning = "user")
-    public void injectProfile(Object pageModel) {
-        if (user != null) {
-            AbstractUser userDetails = (AbstractUser) user;
-            if (null == userDetails.getProfile()) {
-                try {
-                    IUserProfile profile = this.getProfile(userDetails.getUsername());
-                    userDetails.setProfile(profile);
-                } catch (Throwable t) {
-                	_logger.error("Error injecting profile on user {}", userDetails.getUsername(), t);
-                    //ApsSystemUtils.logThrowable(t, this, "injectProfile", "Error injecting profile on user " + userDetails.getUsername());
-                }
-            }
-        }
-    }
-	*/
+	@Override
+	public void updateModelConfig(String code, Map<Integer, MyPortalFrameConfig> configuration) throws ApsSystemException {
+		try {
+			this.getPageModelDAO().updateModelConfig(code, configuration);
+			this._configuration.put(code, configuration);
+		} catch (Throwable t) {
+			_logger.error("Error updating page model configuration", t);
+			throw new ApsSystemException("Error updating page model configuration", t);
+		}
+	}
 	
 	@Before("execution(* com.agiletec.aps.system.services.pagemodel.IPageModelManager.deletePageModel(..)) && args(code)")
-    public void deleteProfile(String code) {
+    public void deleteConfiguration(String code) {
         try {
 			this.getPageModelDAO().deleteModelConfiguration(code);
 			this._configuration.remove(code);
@@ -93,9 +100,6 @@ public class MyPortalPageModelManager extends AbstractService implements IMyPort
 		this._pageModelDao = pageModelDAO;
 	}
 	
-	/**
-	 * Map dei modelli di pagina configurati nel sistema
-	 */
 	private Map<String, Map<Integer, MyPortalFrameConfig>> _configuration;
 	
 	private IPageModelDAO _pageModelDao;

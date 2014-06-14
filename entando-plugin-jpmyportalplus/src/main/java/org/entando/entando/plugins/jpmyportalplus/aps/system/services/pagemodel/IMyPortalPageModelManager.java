@@ -16,6 +16,7 @@
 */
 package org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel;
 
+import com.agiletec.aps.system.exception.ApsSystemException;
 import java.util.Map;
 
 /**
@@ -24,5 +25,7 @@ import java.util.Map;
 public interface IMyPortalPageModelManager {
 	
 	public Map<Integer, MyPortalFrameConfig> getPageModelConfig(String name);
+	
+	public void updateModelConfig(String code, Map<Integer, MyPortalFrameConfig> configuration) throws ApsSystemException;
 	
 }

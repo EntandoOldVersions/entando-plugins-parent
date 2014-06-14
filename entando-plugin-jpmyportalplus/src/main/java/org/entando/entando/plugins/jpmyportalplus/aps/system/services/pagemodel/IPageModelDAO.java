@@ -26,6 +26,9 @@ public interface IPageModelDAO {
 	
 	public Map<String, Map<Integer, MyPortalFrameConfig>> loadModelConfigs();
 	
-	public void deleteModelConfiguration(String code);
+	public void updateModelConfig(String code, Map<Integer, MyPortalFrameConfig> configuration);
+	
+	public void deleteModelConfiguration(String code)
+	;
 	
 }

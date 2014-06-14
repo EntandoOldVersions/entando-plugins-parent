@@ -60,14 +60,14 @@ public class WidgetTypeAction extends com.agiletec.apsadmin.portal.WidgetTypeAct
 			if (this.isCustomizable()) {
 				MyPortalConfig config = this.getMyPortalConfigManager().getConfig();
 				if (swappable) {
-					config.getAllowedShowlets().add(this.getWidgetTypeCode());
+					config.getAllowedWidgets().add(this.getWidgetTypeCode());
 				} else {
-					config.getAllowedShowlets().remove(this.getWidgetTypeCode());
+					config.getAllowedWidgets().remove(this.getWidgetTypeCode());
 				}
 				this.getMyPortalConfigManager().saveConfig(config);
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "updateShowletTypeConfig");
+			ApsSystemUtils.logThrowable(t, this, "updateWidgetTypeConfig");
 			return FAILURE;
 		}
 		return SUCCESS;
@@ -85,7 +85,7 @@ public class WidgetTypeAction extends com.agiletec.apsadmin.portal.WidgetTypeAct
 	public boolean isSwappableType(String showletTypeCode) {
 		boolean swappable = false;
 		try {
-			Set<String> swappables = this.getMyPortalConfigManager().getConfig().getAllowedShowlets();
+			Set<String> swappables = this.getMyPortalConfigManager().getConfig().getAllowedWidgets();
 			swappable = (swappables != null && swappables.contains(showletTypeCode));
 		} catch (Throwable t) {
 			ApsSystemUtils.logThrowable(t, this, "isSwappableType");

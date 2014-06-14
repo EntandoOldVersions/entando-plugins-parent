@@ -5,17 +5,21 @@
 
 <tiles-definitions>
 	
-    <!-- ********* INIZIO Area Configurazione Servizio ********* -->
-    
     <definition extends="layout.default" name="admin.jpmyportalplus.config.entry">
 		<put-attribute name="title" value="title.jpmyportalplus.config" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/config/entryConfig.jsp" />
 	</definition>
-    <definition extends="layout.default" name="admin.jpmyportalplus.config.savedConfirmation">
+    
+	<definition extends="layout.default" name="admin.jpmyportalplus.config.savedConfirmation">
 		<put-attribute name="title" value="title.jpmyportalplus.config" />
 		<put-attribute name="body" value="/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/config/savedConfirmation.jsp" />
 	</definition>
 	
-    <!-- ********* FINE Area Configurazione Servizio ********* -->
+    <!-- ********************************* -->
+	
+	<definition extends="layout.default" name="admin.jpmyportalplus.modelConfig.entry">
+		<put-attribute name="title" value="title.jpmyportalplus.config" />
+		<put-attribute name="body" value="/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/model/pagemodel-config.jsp" />
+	</definition>
     
 </tiles-definitions>

@@ -17,19 +17,28 @@
 */
 package org.entando.entando.plugins.jpmyportalplus.aps.system.services.pagemodel;
 
+import com.agiletec.aps.system.exception.ApsSystemException;
+import com.agiletec.aps.system.services.page.Widget;
+import com.agiletec.aps.system.services.pagemodel.Frame;
+import com.agiletec.aps.util.ApsProperties;
+import com.agiletec.aps.util.ApsPropertiesDOM;
+
 import java.io.StringReader;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.agiletec.aps.system.exception.ApsSystemException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author E.Santoboni
@@ -42,7 +51,34 @@ public class MyPortalPageModelDOM {
 		this.decodeDOM(xmlText);
 		this.buildFrames();
 	}
-
+	
+	public MyPortalPageModelDOM(Map<Integer, MyPortalFrameConfig> configuration) throws ApsSystemException {
+		this._modelConfig = configuration;
+		this._doc = new Document();
+		Element root = new Element("frames");
+		this._doc.setRootElement(root);
+		if (null != configuration && !configuration.isEmpty()) {
+			List<Integer> positions = new ArrayList<Integer>();
+			positions.addAll(configuration.keySet());
+			Collections.sort(positions);
+			for (int i = 0; i < positions.size(); i++) {
+				Integer position = positions.get(i);
+				MyPortalFrameConfig config = configuration.get(position);
+				if (null != config) {
+					Element frameElement = new Element(TAB_FRAME);
+					frameElement.setAttribute(ATTRIBUTE_POS, String.valueOf(position.intValue()));
+					String locked = config.isLocked() ? Boolean.TRUE.toString() : Boolean.FALSE.toString();
+					frameElement.setAttribute("locked", locked);
+					String column = (null != config.getColumn()) ? String.valueOf(config.getColumn().intValue()) : null;
+					if (null != column) {
+						frameElement.setAttribute("column", column);
+					}
+					root.addContent(frameElement);
+				}
+			}
+		}
+	}
+	
 	private void decodeDOM(String xmlText) throws ApsSystemException {
 		SAXBuilder builder = new SAXBuilder();
 		builder.setValidation(false);
@@ -64,13 +100,12 @@ public class MyPortalPageModelDOM {
 			}
 		}
 	}
-
+	
 	private void buildFrame(Element frameElement) throws ApsSystemException {
 		int pos = Integer.parseInt(frameElement.getAttributeValue(ATTRIBUTE_POS));
 		MyPortalFrameConfig frameConfig = new MyPortalFrameConfig();
 		String fixed = frameElement.getAttributeValue("locked");
-		if (null == fixed || fixed.equals("true")) {
-			//frame.setLocked(true);
+		if (null == fixed || fixed.equals(Boolean.TRUE.toString())) {
 			frameConfig.setLocked(true);
 		}
 		String column = frameElement.getAttributeValue("column");
@@ -82,6 +117,14 @@ public class MyPortalPageModelDOM {
 			}
 		}
 		this.getModelConfig().put(pos, frameConfig);
+	}
+	
+	public String getXMLDocument(){
+		XMLOutputter out = new XMLOutputter();
+		Format format = Format.getPrettyFormat();
+		format.setIndent("\t");
+		out.setFormat(format);
+		return out.outputString(this._doc);
 	}
 	
 	private Document _doc;
