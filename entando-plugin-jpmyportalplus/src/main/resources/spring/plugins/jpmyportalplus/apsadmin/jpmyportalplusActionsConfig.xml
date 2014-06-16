@@ -39,6 +39,11 @@
 	
 	<!-- ******************** -->
 	
+	<bean id="jpmyportalplusPageModelListActionHookPoint" class="com.agiletec.apsadmin.system.plugin.HookPointElementContainer" >
+		<property name="filePath"><value>/WEB-INF/plugins/jpmyportalplus/apsadmin/jsp/portal/model/pageModel-list-action-jack.jsp</value></property>
+		<property name="hookPointKey"><value>core.pageModel.list.action</value></property>
+	</bean>
+	
 	<bean id="jpmyportalPageModelConfigAction" scope="prototype" 
 			class="org.entando.entando.plugins.jpmyportalplus.apsadmin.portal.model.PageModelConfigAction" parent="abstractBaseAction">
 		<property name="pageModelManager" ref="PageModelManager" />

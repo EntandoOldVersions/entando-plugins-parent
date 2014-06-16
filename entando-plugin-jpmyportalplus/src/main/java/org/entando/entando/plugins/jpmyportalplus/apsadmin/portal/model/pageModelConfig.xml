@@ -5,7 +5,7 @@
 
 <struts>
 	
-    <package name="jpmyportal_do/jpmyportal/modelconfig" namespace="/do/jpmyportalplus/modelconfig" extends="entando-default">
+    <package name="jpmyportalplus_do/jpmyportalplus/modelconfig" namespace="/do/jpmyportalplus/modelconfig" extends="entando-default">
     	
     	<action name="edit" class="jpmyportalPageModelConfigAction" method="edit">
             <result name="pageModelList" type="chain">
