@@ -26,5 +26,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+
+	<tag>
+		<description>
+			<![CDATA[Extract the list of steps related to the typeCode of the current content]]>
+		</description>
+		<name>contentSteps</name>
+		<tag-class>com.agiletec.plugins.jpcontentworkflow.apsadmin.tags.ContentStepsTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description><![CDATA[the nome of the var holding the result]]></description>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 	
 </taglib>
