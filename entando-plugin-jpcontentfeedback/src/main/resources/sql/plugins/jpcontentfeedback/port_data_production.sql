@@ -39,7 +39,7 @@ INSERT INTO localstrings (keycode, langcode, stringvalue) VALUES ('jpcontentfeed
 
 INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked) VALUES ('content_feedback_viewer', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">Content Feedback - Publish a Content</property>
+<property key="en">Content Feedback - Publish Content</property>
 <property key="it">Feedback Contenuti - Pubblica un Contenuto</property>
 </properties>', '<config>
 	<parameter name="contentId">Content ID</parameter>
