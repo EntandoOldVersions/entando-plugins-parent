@@ -32,7 +32,7 @@
 </p>
 <ol>
 	<li><p><a href="<wp:info key="systemParam" paramName="applicationBaseURL" />do/Page/viewTree.action?selectedNode=<wp:currentPage param="code" />&amp;action%3Aconfigure=Configure">Publish a content in this page from the Page Tree</a></p></li>
-	<li><p>Use the widget <em>Front Shortcut Contents - Publish a Content</em> to place a content in a position</p></li>
+	<li><p>Use the widget <em>Front Shortcut Contents - Publish Content</em> to place content in a position</p></li>
 	<li>
 		<p><a href="<wp:url paramRepeat="false" />">Come back here</a> logged in (as administrator or as any other user with permission "Content Editing" and corresponding group as well) and notice the new link near the content appeared.</p>
 	</li>

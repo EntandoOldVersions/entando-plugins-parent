@@ -1,7 +1,7 @@
 INSERT INTO widgetcatalog ( code, titles, parameters, plugincode, locked )
 	VALUES ( 'jpfastcontentedit_content_viewer_list', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">Contents - Publish a List of Contents Editables from Front-End</property>
+<property key="en">Contents - Publish List of Editable Content</property>
 <property key="it">Contenuti - Pubblica una Lista di contenuti editabili da Front-End</property>
 </properties>', '<config>
 	<parameter name="contentType">Content Type (mandatory)</parameter>

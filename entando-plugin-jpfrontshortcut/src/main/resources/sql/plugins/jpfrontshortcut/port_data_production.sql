@@ -1,6 +1,6 @@
 INSERT INTO widgetcatalog (code, titles, parameters, plugincode, parenttypecode, defaultconfig, locked, maingroup) VALUES ('jpfrontshortcut_content_viewer', '<?xml version="1.0" encoding="UTF-8"?>
 <properties>
-<property key="en">Front Shortcut Contents - Publish a Content</property>
+<property key="en">Front Shortcut Contents - Publish Content</property>
 <property key="it">Front Shortcut Contenuti - Pubblica un Contenuto</property>
 </properties>', '<config>
 	<parameter name="contentId">Content ID</parameter>
