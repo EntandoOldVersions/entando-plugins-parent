@@ -38,22 +38,23 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.model.
  * @author E.Santoboni
  */
 public interface IPageUserConfigManager {
-
-	public PageUserConfigBean getUserConfig(UserDetails user) throws ApsSystemException;
-
+	
 	@Deprecated
 	public PageUserConfigBean getUserConfig(String username) throws ApsSystemException;
-
-	/**
-	 * @deprecated Use {@link #getCustomizableWidgets(UserDetails)} instead
-	 */
+	
+	public PageUserConfigBean getUserConfig(UserDetails user) throws ApsSystemException;
+	
+	@Deprecated
 	public List<WidgetType> getCustomizableShowlets(UserDetails user) throws ApsSystemException;
 
 	public List<WidgetType> getCustomizableWidgets(UserDetails user) throws ApsSystemException;
 
 	public CustomPageConfig getGuestPageConfig(IPage page, HttpServletRequest request) throws ApsSystemException;
-
+	
+	@Deprecated
 	public Widget[] getShowletsToRender(IPage page, Widget[] customShowlets) throws ApsSystemException;
+	
+	public Widget[] getWidgetsToRender(IPage page, Widget[] customWidgets) throws ApsSystemException;
 
 	public void updateUserPageConfig(String username, IPage page, WidgetUpdateInfoBean[] updateInfo) throws ApsSystemException;
 
@@ -62,9 +63,12 @@ public interface IPageUserConfigManager {
 	public void removeUserPageConfig(String username, IPage page) throws ApsSystemException;
 
 	public void removeGuestPageConfig(IPage page, HttpServletRequest request, HttpServletResponse response) throws ApsSystemException;
-
+	
+	@Deprecated
 	public WidgetType getVoidShowlet();
-
+	
+	public WidgetType getVoidWidget();
+	
 	public static final int STATUS_OPEN = 0;//DEFAULT STATUS
 	public static final int STATUS_CLOSE = 1;
 

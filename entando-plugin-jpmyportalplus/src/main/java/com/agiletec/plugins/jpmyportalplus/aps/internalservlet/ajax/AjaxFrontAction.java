@@ -105,23 +105,23 @@ public class AjaxFrontAction extends AbstractFrontAction {
 			}
 			CustomPageConfig config = this.getCustomPageConfig();
 			Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
-			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			Widget[] widgetsToRender = this.getPageUserConfigManager().getWidgetsToRender(currentPage, customShowlets);
 			Lang currentLang = this.getCurrentLang();
-			String voidShowletCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
-			for (int i = 0; i < showletsToRender.length; i++) {
+			String voidWidgetCode = this.getPageUserConfigManager().getVoidWidget().getCode();
+			for (int i = 0; i < widgetsToRender.length; i++) {
 				//Frame frame = pageModel.getFrameConfigs()[i];
 				//Integer columnId = frame.getColumn();
 				MyPortalFrameConfig frameConfig = (null != modelConfig) ? modelConfig.get(i) : null;
 				if (null == frameConfig || frameConfig.isLocked() || null == frameConfig.getColumn() || i == this.getFrameWhereOpenSection().intValue()) continue;
-				Widget widget = showletsToRender[i];
+				Widget widget = widgetsToRender[i];
 				Integer columnId = frameConfig.getColumn();
 				if (columnId.equals(currentColumnId)) {
-					if (widget != null && !widget.getType().getCode().equals(voidShowletCode)) {
+					if (widget != null && !widget.getType().getCode().equals(voidWidgetCode)) {
 						FrameSelectItem item = new FrameSelectItem(currentColumnId, columnId, widget, i, currentLang);
 						selectItems.add(item);
 					}
 				} else {
-					if (widget == null || widget.getType().getCode().equals(voidShowletCode)) {
+					if (widget == null || widget.getType().getCode().equals(voidWidgetCode)) {
 						boolean check = this.check(columnId);
 						if (!check) {
 							FrameSelectItem item = new FrameSelectItem(currentColumnId, columnId, null, i, currentLang);

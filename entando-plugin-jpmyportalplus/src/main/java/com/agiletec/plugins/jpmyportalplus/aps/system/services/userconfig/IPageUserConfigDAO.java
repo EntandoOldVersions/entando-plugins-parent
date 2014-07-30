@@ -38,20 +38,26 @@ public interface IPageUserConfigDAO {
 	 * @return bean The bean containing the myportal customization of the current user, null otherwise.
 	 */
 	public PageUserConfigBean getUserConfig(String username);
-
-	/**
-	 * Return from the configuration the list of the showlets currently configurable.
-	 * @param config class that maps the jpmyportal configuration
-	 * @return the list of showlets, null otherwise
-	 */
+	
+	@Deprecated
 	public List<WidgetType> buildCustomizableShowletsList(MyPortalConfig config);
-
-	public void syncCustomization(List<WidgetType> configurableShowlets, String voidShowletCode);
+	
+	/**
+	 * Return from the configuration the list of the widgets currently configurable.
+	 * @param config class that maps the jpmyportal configuration
+	 * @return the list of widgets, null otherwise
+	 */
+	public List<WidgetType> buildCustomizableWidgetsList(MyPortalConfig config);
+	
+	public void syncCustomization(List<WidgetType> configurableWidgets, String voidWidgetCode);
 
 	public void updateUserPageConfig(String username, IPage page, WidgetUpdateInfoBean[] updateInfos);
 
 	public void removeUserPageConfig(String username, String pageCode, Integer framePosition);
-
-	public void removeUnauthorizedShowlet(String username, String showletCode);
-
+	
+	@Deprecated
+	public void removeUnauthorizedShowlet(String username, String widgetCode);
+	
+	public void removeUnauthorizedWidget(String username, String showletCode);
+	
 }

@@ -66,14 +66,14 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	public PageUserConfigBean getUserConfig(UserDetails user) throws ApsSystemException {
 		PageUserConfigBean pageUserBean = null;
 		try {
-			List<WidgetType> customizables = this.getMyPortalConfigManager().getCustomizableShowlets();
+			List<WidgetType> customizables = this.getMyPortalConfigManager().getCustomizableWidgets();
 			for (int i = 0; i < customizables.size(); i++) {
 				WidgetType type = customizables.get(i);
 				String mainGroup = type.getMainGroup();
 				if (null != mainGroup
 						&& !mainGroup.equals(Group.FREE_GROUP_NAME)
 						&& !this.getAuthorizationManager().isAuthOnGroup(user, mainGroup)) {
-					this.getPageUserConfigDAO().removeUnauthorizedShowlet(user.getUsername(), type.getCode());
+					this.getPageUserConfigDAO().removeUnauthorizedWidget(user.getUsername(), type.getCode());
 				}
 			}
 			pageUserBean = this.getPageUserConfigDAO().getUserConfig(user.getUsername());
@@ -110,7 +110,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			}
 			MyPortalConfig mPortalConfig = this.getMyPortalConfigManager().getConfig();
 			customConfig = new CustomPageConfig(cookie, page, this.getWidgetTypeManager(), this.getMyPortalPageModelManager(), 
-					mPortalConfig.getAllowedShowlets(), this.getVoidShowletCode());
+					mPortalConfig.getAllowedWidgets(), this.getVoidShowletCode());
 			for (int i = 0; i < customConfig.getConfig().length; i++) {
 				Widget showlet = customConfig.getConfig()[i];
 				if (null != showlet) {
@@ -151,18 +151,24 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	private String getCookieName(IPage page) {
 		return "guestPageConfig_" + page.getCode();
 	}
-
+	
 	@Override
+	@Deprecated
 	public Widget[] getShowletsToRender(IPage page, Widget[] customShowlets) throws ApsSystemException {
+		return this.getWidgetsToRender(page, customShowlets);
+	}
+	
+	@Override
+	public Widget[] getWidgetsToRender(IPage page, Widget[] customWidgets) throws ApsSystemException {
 		Widget[] mergedWidgets = null;
 		try {
 			Widget[] defaultWidgets = page.getWidgets();
-			if (null == customShowlets) {
+			if (null == customWidgets) {
 				return defaultWidgets;
 			}
-			if (defaultWidgets.length != customShowlets.length) {
+			if (defaultWidgets.length != customWidgets.length) {
 				String message = "Page '" + page.getCode() + "' Frame numbers " +
-					defaultWidgets.length + " not equals than custom showlet frames " + customShowlets.length;
+					defaultWidgets.length + " not equals than custom showlet frames " + customWidgets.length;
 				ApsSystemUtils.getLogger().error(message);
 				return defaultWidgets;
 			}
@@ -171,7 +177,7 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			int widgetNumber = defaultWidgets.length;
 			mergedWidgets = new Widget[widgetNumber];
 			for (int scan = 0; scan < widgetNumber; scan++) {
-				Widget customWidget = customShowlets[scan];
+				Widget customWidget = customWidgets[scan];
 				MyPortalFrameConfig frameConfig = (null != config) ? config.get(scan) : null;
 				if (null == customWidget || (null == frameConfig) || (frameConfig.isLocked())) {
 					mergedWidgets[scan] = defaultWidgets[scan];
@@ -181,39 +187,37 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			}
 		} catch (Throwable t) {
 			_logger.error("Error building the widget array to render", t);
-			throw new ApsSystemException("Error building the showlet array to render", t);
+			throw new ApsSystemException("Error building the widget array to render", t);
 		}
 		return mergedWidgets;
 	}
-
-	/**
-	 * @deprecated Use {@link #getCustomizableWidgets(UserDetails)} instead
-	 */
+	
 	@Override
+	@Deprecated
 	public List<WidgetType> getCustomizableShowlets(UserDetails user) throws ApsSystemException {
-		return getCustomizableWidgets(user);
+		return this.getCustomizableWidgets(user);
 	}
-
+	
 	@Override
 	public List<WidgetType> getCustomizableWidgets(UserDetails user) throws ApsSystemException {
-		List<WidgetType> customizableShowletsForUser = new ArrayList<WidgetType>();
-		if (null == user) return customizableShowletsForUser;
+		List<WidgetType> customizableWidgetsForUser = new ArrayList<WidgetType>();
+		if (null == user) return customizableWidgetsForUser;
 		try {
-			List<WidgetType> customizableShowlets = this.getMyPortalConfigManager().getCustomizableShowlets();
-			for (int i = 0; i < customizableShowlets.size(); i++) {
-				WidgetType type = customizableShowlets.get(i);
+			List<WidgetType> customizableWidgets = this.getMyPortalConfigManager().getCustomizableWidgets();
+			for (int i = 0; i < customizableWidgets.size(); i++) {
+				WidgetType type = customizableWidgets.get(i);
 				String mainGroup = type.getMainGroup();
 				if (null == mainGroup
 						|| mainGroup.equals(Group.FREE_GROUP_NAME)
 						|| this.getAuthorizationManager().isAuthOnGroup(user, mainGroup)) {
-					customizableShowletsForUser.add(type);
+					customizableWidgetsForUser.add(type);
 				}
 			}
 		} catch (Throwable t) {
 			_logger.error("Error extracting customizable widgets user '{}'", user.getUsername(), t);
 			throw new ApsSystemException("Error extracting customizable widgets user '" + user.getUsername() + "'", t);
 		}
-		return customizableShowletsForUser;
+		return customizableWidgetsForUser;
 	}
 
 	@Override
@@ -265,17 +269,29 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 	public void removeUserPageConfig(String pageCode) throws ApsSystemException {
 		this.removeConfig(pageCode, null);
 	}
-
+	
+	@Deprecated
 	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.joinShowlet(..)) && args(pageCode, showlet, pos)")
-	public void removeUserPageConfig(String pageCode, Widget showlet, int pos) throws ApsSystemException {
+	public void removeShowletConfigForJoin(String pageCode, Widget showlet, int pos) throws ApsSystemException {
 		this.removeConfig(pageCode, pos);
 	}
-
+	
+	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.joinWidget(..)) && args(pageCode, showlet, pos)")
+	public void removeWidgetConfigForJoin(String pageCode, Widget showlet, int pos) throws ApsSystemException {
+		this.removeConfig(pageCode, pos);
+	}
+	
+	@Deprecated
 	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.removeShowlet(..)) && args(pageCode, pos)")
-	public void removeUserPageConfig(String pageCode, int pos) throws ApsSystemException {
+	public void removeShowletConfigForDelete(String pageCode, int pos) throws ApsSystemException {
 		this.removeConfig(pageCode, pos);
 	}
-
+	
+	@Before("execution(* com.agiletec.aps.system.services.page.IPageManager.removeWidget(..)) && args(pageCode, pos)")
+	public void removeWidgetConfigForDelete(String pageCode, int pos) throws ApsSystemException {
+		this.removeConfig(pageCode, pos);
+	}
+	
 	private void removeConfig(String pageCode, Integer pos) throws ApsSystemException {
 		try {
 			this.getPageUserConfigDAO().removeUserPageConfig(null, pageCode, pos);
@@ -284,16 +300,27 @@ public class PageUserConfigManager extends AbstractService implements IPageUserC
 			throw new ApsSystemException("Error removing Page user Config", t);
 		}
 	}
+	
+	@Override
+	@Deprecated
+	public WidgetType getVoidShowlet() {
+		return this.getVoidWidget();
+	}
 
 	@Override
-	public WidgetType getVoidShowlet() {
-		return this.getWidgetTypeManager().getWidgetType(this.getVoidShowletCode());
+	public WidgetType getVoidWidget() {
+		return this.getWidgetTypeManager().getWidgetType(this.getVoidWidgetCode());
 	}
-
+	
+	@Deprecated
 	protected String getVoidShowletCode() {
-		return this.getMyPortalConfigManager().getVoidShowletCode();
+		return this.getVoidWidgetCode();
 	}
-
+	
+	protected String getVoidWidgetCode() {
+		return this.getMyPortalConfigManager().getVoidWidgetCode();
+	}
+	
 	protected IPageUserConfigDAO getPageUserConfigDAO() {
 		return _pageUserConfigDAO;
 	}

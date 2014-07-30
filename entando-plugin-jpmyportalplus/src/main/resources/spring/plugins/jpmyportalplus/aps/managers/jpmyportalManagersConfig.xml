@@ -35,10 +35,10 @@
 		<property name="widgetTypeManager" ref="WidgetTypeManager" />
 	</bean>
 	
-	<!-- NOTA! Attenzione al parametro 'voidShowletCode' che si assegna qui sotto e non altrove -->
+	<!-- NOTA! Attenzione al parametro 'voidWidgetCode' che si assegna qui sotto e non altrove -->
 	<bean id="jpmyportalplusMyPortalConfigManager" class="com.agiletec.plugins.jpmyportalplus.aps.system.services.config.MyPortalConfigManager" 
 			parent="abstractService" >
-		<property name="voidShowletCode"><value>jpmyportalplus_void</value></property>
+		<property name="voidWidgetCode"><value>jpmyportalplus_void</value></property>
 		<property name="configManager" ref="BaseConfigManager" />
 		<property name="pageUserConfigDAO" ref="jpmyportalplusPageUserConfigDAO" />
 	</bean>

@@ -32,6 +32,7 @@ import com.agiletec.plugins.jpmyportalplus.aps.system.JpmyportalplusSystemConsta
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.model.MyPortalConfig;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.config.parse.MyPortalPlusConfigDOM;
 import com.agiletec.plugins.jpmyportalplus.aps.system.services.userconfig.IPageUserConfigDAO;
+import java.util.Iterator;
 
 /**
  * @author E.Santoboni
@@ -43,17 +44,36 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 	@Override
 	public void init() throws Exception {
 		this.loadConfig();
-		this.buildCustomizableShowletsSet();
+		this.buildCustomizableWidgetsSet();
 		this.syncPageModelUserDatabase();
-		_logger.debug("{} ready. the code of the'void widget is '{}'", this.getClass().getName(), _voidShowletCode);
+		_logger.debug("{} ready. the code of the 'void' widget is '{}'", this.getClass().getName(), this.getVoidWidgetCode());
 	}
 	
 	@Override
 	public void updateFromShowletTypeChanged(WidgetTypeChangedEvent event) {
+		if (null == event) {
+			return;
+		}
 		try {
-			this.init();
+			if (event.getOperationCode() == WidgetTypeChangedEvent.REMOVE_OPERATION_CODE) {
+				MyPortalConfig config = this.getConfig();
+				if (null == config) {
+					return;
+				}
+				Iterator<String> iter = config.getAllowedWidgets().iterator();
+				while (iter.hasNext()) {
+					String widgetTypeCode = iter.next();
+					if (widgetTypeCode.equals(event.getWidgetTypeCode())) {
+						config.getAllowedWidgets().remove(widgetTypeCode);
+						this.saveConfig(config);
+						return;
+					}
+				}
+			} else {
+				this.init();
+			}
 		} catch (Throwable t) {
-			_logger.error("Error on init after ShowletTypeChanged", t);
+			_logger.error("Error on init after WidgetTypeChangedEvent", t);
 		}
 	}
 	
@@ -61,7 +81,7 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 		try {
 			String xml = this.getConfigManager().getConfigItem(JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM);
 			if (xml == null) {
-				throw new ApsSystemException("Missing configuration item: "+ JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM);
+				throw new ApsSystemException("Missing configuration item: " + JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM);
 			}
 			MyPortalPlusConfigDOM configDom = new MyPortalPlusConfigDOM();
 			this.setConfig(configDom.extractConfig(xml));
@@ -72,14 +92,15 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 	}
 	
 	/**
-	 * Get from the configuration the list of the showlets that can be customized in a page model.
+	 * Get from the configuration the list of the widgets that can be customized in a page model.
 	 */
-	private void buildCustomizableShowletsSet() {
-		List<WidgetType> showlets = this.getPageUserConfigDAO().buildCustomizableShowletsList(this.getConfig());
-		this.setCustomizableShowlets(showlets);
+	private void buildCustomizableWidgetsSet() {
+		List<WidgetType> widgets = this.getPageUserConfigDAO().buildCustomizableWidgetsList(this.getConfig());
+		this.setCustomizableWidgets(widgets);
 	}
+	
 	private void syncPageModelUserDatabase() {
-		this.getPageUserConfigDAO().syncCustomization(this.getCustomizableShowlets(), this.getVoidShowletCode());
+		this.getPageUserConfigDAO().syncCustomization(this.getCustomizableWidgets(), this.getVoidWidgetCode());
 	}
 	
 	@Override
@@ -97,7 +118,7 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 			String xml = configDom.createConfigXml(config);
 			this.getConfigManager().updateConfigItem(JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM, xml);
 			this.setConfig(config);
-			this.buildCustomizableShowletsSet();
+			this.buildCustomizableWidgetsSet();
 			this.syncPageModelUserDatabase();
 		} catch (Throwable t) {
 			_logger.error("Error saving myportal configuration", t);
@@ -106,19 +127,39 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 	}
 	
 	@Override
+	@Deprecated
 	public List<WidgetType> getCustomizableShowlets() {
-		return _customizableShowlets;
+		return this.getCustomizableWidgets();
 	}
+	@Deprecated
 	public void setCustomizableShowlets(List<WidgetType> customizableShowlets) {
-		this._customizableShowlets = customizableShowlets;
+		this.setCustomizableWidgets(customizableShowlets);
 	}
 	
 	@Override
-	public String getVoidShowletCode() {
-		return _voidShowletCode;
+	public List<WidgetType> getCustomizableWidgets() {
+		return _customizableWidgets;
 	}
+	public void setCustomizableWidgets(List<WidgetType> customizableWidgets) {
+		this._customizableWidgets = customizableWidgets;
+	}
+	
+	@Override
+	@Deprecated
+	public String getVoidShowletCode() {
+		return this.getVoidWidgetCode();
+	}
+	@Deprecated
 	public void setVoidShowletCode(String voidShowletCode) {
-		this._voidShowletCode = voidShowletCode;
+		this.setVoidWidgetCode(voidShowletCode);
+	}
+	
+	@Override
+	public String getVoidWidgetCode() {
+		return _voidWidgetCode;
+	}
+	public void setVoidWidgetCode(String voidWidgetCode) {
+		this._voidWidgetCode = voidWidgetCode;
 	}
 	
 	protected IPageUserConfigDAO getPageUserConfigDAO() {
@@ -135,9 +176,9 @@ public class MyPortalConfigManager extends AbstractService implements IMyPortalC
 		this._configManager = configManager;
 	}
 	
-	private List<WidgetType> _customizableShowlets;
+	private List<WidgetType> _customizableWidgets;
 	
-	private String _voidShowletCode;
+	private String _voidWidgetCode;
 	private ConfigInterface _configManager;
 	private IPageUserConfigDAO _pageUserConfigDAO;
 	

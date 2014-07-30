@@ -70,24 +70,23 @@ public class TestMyPortalConfigManager extends ApsPluginBaseTestCase {
 		assertNull(showlets[7]);
 	}
 
-	public void testGetShowletToRender() throws Throwable {
+	public void testGetWidgetsToRender() throws Throwable {
 		UserDetails user = this.getUser("editorCustomers");
 		PageUserConfigBean config = this._pageUserConfigManager.getUserConfig(user);
 		IPage page = this._pageManager.getPage("jpmyportalplus_testpage");
 		CustomPageConfig pageConfig = config.getConfig().get("jpmyportalplus_testpage");
-		Widget[] showlets = this._pageUserConfigManager.getShowletsToRender(page, pageConfig.getConfig());
+		Widget[] widgets = this._pageUserConfigManager.getWidgetsToRender(page, pageConfig.getConfig());
 
-		assertEquals(8, showlets.length);
+		assertEquals(8, widgets.length);
 
-		assertEquals("login_form", showlets[0].getType().getCode());
-		assertEquals("jpmyportalplus_void", showlets[1].getType().getCode());
-		assertEquals("jpmyportalplus_test_widget_1", showlets[2].getType().getCode());
-		assertEquals("jpmyportalplus_sample_widget", showlets[3].getType().getCode());
-		assertEquals("jpmyportalplus_test_widget_3", showlets[4].getType().getCode());
-		assertNull(showlets[5]);
-		assertEquals("jpmyportalplus_test_widget_3", showlets[6].getType().getCode());
-		assertNull(showlets[7]);
-
+		assertEquals("login_form", widgets[0].getType().getCode());
+		assertEquals("jpmyportalplus_void", widgets[1].getType().getCode());
+		assertEquals("jpmyportalplus_test_widget_1", widgets[2].getType().getCode());
+		assertEquals("jpmyportalplus_sample_widget", widgets[3].getType().getCode());
+		assertEquals("jpmyportalplus_test_widget_3", widgets[4].getType().getCode());
+		assertNull(widgets[5]);
+		assertEquals("jpmyportalplus_test_widget_3", widgets[6].getType().getCode());
+		assertNull(widgets[7]);
 	}
 
 	private void init() throws Exception {

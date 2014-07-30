@@ -34,11 +34,18 @@ public interface IMyPortalConfigManager {
 	
 	public void saveConfig(MyPortalConfig config) throws ApsSystemException;
 	
-	/**
-	 * Get the list of the showlet that cannot be handled by the jpmyportal plugin
-	 */
+	@Deprecated
 	public List<WidgetType> getCustomizableShowlets();
 	
+	/**
+	 * Get the list of the widget that cannot be handled by the jpmyportal plugin
+	 * @return list of the widget
+	 */
+	public List<WidgetType> getCustomizableWidgets();
+	
+	@Deprecated
 	public String getVoidShowletCode();
+	
+	public String getVoidWidgetCode();
 	
 }

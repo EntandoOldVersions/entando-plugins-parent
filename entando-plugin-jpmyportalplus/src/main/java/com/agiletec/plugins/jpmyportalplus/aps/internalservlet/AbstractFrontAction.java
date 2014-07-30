@@ -54,22 +54,20 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		try {
 			IPage currentPage = this.getCurrentPage();
 			CustomPageConfig config = this.getCustomPageConfig();
-			Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
-			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
-
-			Widget widgetToMove = showletsToRender[this.getStartFramePos()];
-			Integer statusWidgetToMoveInteger = this.getCustomShowletStatus() != null ? this.getCustomShowletStatus()[this.getStartFramePos()] : null;
+			Widget[] customWidgets = (null == config || config.getConfig() == null) ? null : config.getConfig();
+			Widget[] widgetsToRender = this.getPageUserConfigManager().getWidgetsToRender(currentPage, customWidgets);
+			Widget widgetToMove = widgetsToRender[this.getStartFramePos()];
+			Integer statusWidgetToMoveInteger = this.getCustomWidgetStatus() != null ? this.getCustomWidgetStatus()[this.getStartFramePos()] : null;
 			int statusWidgetToMove = (statusWidgetToMoveInteger == null) ? 0 : statusWidgetToMoveInteger;
 			WidgetUpdateInfoBean frameTargetUpdate =
 				new WidgetUpdateInfoBean(this.getTargetFramePos(), widgetToMove, statusWidgetToMove);
 			this.addUpdateInfoBean(frameTargetUpdate);
-			Widget showletOnFrameDest = showletsToRender[this.getTargetFramePos()];
-			Integer statusShowletOnFrameDestInteger = this.getCustomShowletStatus() != null ? this.getCustomShowletStatus()[this.getTargetFramePos()] : null;
-			int statusShowletOnFrameDest = (statusShowletOnFrameDestInteger == null) ? 0 : statusShowletOnFrameDestInteger;
-			WidgetUpdateInfoBean frameStartUpdate =
-				new WidgetUpdateInfoBean(this.getStartFramePos(), showletOnFrameDest, statusShowletOnFrameDest);
+			Widget widgetOnFrameDest = widgetsToRender[this.getTargetFramePos()];
+			Integer statusWidgetOnFrameDestInteger = this.getCustomWidgetStatus() != null ? this.getCustomWidgetStatus()[this.getTargetFramePos()] : null;
+			int statusWidgetOnFrameDest = (statusWidgetOnFrameDestInteger == null) ? 0 : statusWidgetOnFrameDestInteger;
+			WidgetUpdateInfoBean frameStartUpdate = 
+					new WidgetUpdateInfoBean(this.getStartFramePos(), widgetOnFrameDest, statusWidgetOnFrameDest);
 			this.addUpdateInfoBean(frameStartUpdate);
-
 			this.executeUpdateUserConfig(currentPage);
 			this.updateSessionParams();
 		} catch (Throwable t) {
@@ -105,8 +103,8 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		try {
 			IPage currentPage = this.getCurrentPage();
 			CustomPageConfig config = this.getCustomPageConfig();
-			Widget[] customShowlets = (null == config || config.getConfig() == null) ? null : config.getConfig();
-			Widget[] widgetsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			Widget[] customWidgets = (null == config || config.getConfig() == null) ? null : config.getConfig();
+			Widget[] widgetsToRender = this.getPageUserConfigManager().getWidgetsToRender(currentPage, customWidgets);
 			Widget widget = widgetsToRender[this.getFrameToResize()];
 			if (null == widget) return true;
 			WidgetUpdateInfoBean resizingFrame =
@@ -175,14 +173,14 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 	protected Widget getShowletVoid() {
 		return this.getWidgetVoid();
 	}
-
+	
 	protected Widget getWidgetVoid() {
 		Widget voidWidget = new Widget();
-		voidWidget.setType(this.getPageUserConfigManager().getVoidShowlet());
+		voidWidget.setType(this.getPageUserConfigManager().getVoidWidget());
 		voidWidget.setConfig(new ApsProperties());
 		return voidWidget;
 	}
-
+	
 	protected boolean executeUpdateUserConfig(IPage currentPage) throws ApsSystemException {
 		try {
 			UserDetails currentUser = super.getCurrentUser();
@@ -197,14 +195,14 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		}
 		return true;
 	}
-
+	
 	private PageUserConfigBean createNewPageUserConfig(WidgetUpdateInfoBean[] infos, UserDetails currentUser, IPage currentPage) {
 		PageUserConfigBean bean = new PageUserConfigBean(currentUser.getUsername());
 		CustomPageConfig pageConfig = this.createNewPageConfig(infos, currentPage);
 		bean.getConfig().put(currentPage.getCode(), pageConfig);
 		return bean;
 	}
-
+	
 	private void updatePageConfig(CustomPageConfig customUserPageConfig, WidgetUpdateInfoBean[] infos) {
 		for (int i = 0; i < infos.length; i++) {
 			WidgetUpdateInfoBean updateInfo = infos[i];
@@ -218,37 +216,47 @@ public abstract class AbstractFrontAction extends BaseAction implements IFrontAc
 		this.updatePageConfig(pageConfig, infos);
 		return pageConfig;
 	}
-
+	
+	@Deprecated
 	protected Widget[] getCustomShowletConfig() throws Throwable {
-		Widget[] customShowlets = null;
+		return this.getCustomWidgetConfig();
+	}
+	
+	protected Widget[] getCustomWidgetConfig() throws Throwable {
+		Widget[] customWidgets = null;
 		try {
 			CustomPageConfig customPageConfig = this.getCustomPageConfig();
 			if (null != customPageConfig) {
-				customShowlets = customPageConfig.getConfig();
+				customWidgets = customPageConfig.getConfig();
 			}
 		} catch (Throwable t) {
-			String message = "Errore in estrazione custom showlets";
-			ApsSystemUtils.logThrowable(t, this, "getCustomShowletConfig", message);
+			String message = "Errore in estrazione custom widgets";
+			ApsSystemUtils.logThrowable(t, this, "getCustomWidgetConfig", message);
 			throw new ApsSystemException(message, t);
 		}
-		return customShowlets;
+		return customWidgets;
 	}
-
+	
+	@Deprecated
 	protected Integer[] getCustomShowletStatus() throws Throwable {
-		Integer[] customShowletStatus = null;
+		return this.getCustomWidgetStatus();
+	}
+	
+	protected Integer[] getCustomWidgetStatus() throws Throwable {
+		Integer[] customWidgetStatus = null;
 		try {
 			CustomPageConfig customPageConfig = this.getCustomPageConfig();
 			if (null != customPageConfig) {
-				customShowletStatus = customPageConfig.getStatus();
+				customWidgetStatus = customPageConfig.getStatus();
 			}
 		} catch (Throwable t) {
-			String message = "Errore in estrazione custom showlet status";
-			ApsSystemUtils.logThrowable(t, this, "getCustomShowletStatus", message);
+			String message = "Errore in estrazione custom widget status";
+			ApsSystemUtils.logThrowable(t, this, "getCustomWidgetStatus", message);
 			throw new ApsSystemException(message, t);
 		}
-		return customShowletStatus;
+		return customWidgetStatus;
 	}
-
+	
 	protected CustomPageConfig getCustomPageConfig() {
 		IPage currentPage = this.getCurrentPage();
 		CustomPageConfig config = (CustomPageConfig) this.getRequest().getSession().getAttribute(JpmyportalplusSystemConstants.SESSIONPARAM_CURRENT_CUSTOM_PAGE_CONFIG);

@@ -78,7 +78,7 @@ public class WidgetTypeAction extends com.agiletec.apsadmin.portal.WidgetTypeAct
 		if (null == type) return false;
 		List<WidgetTypeParameter> typeParameters = type.getTypeParameters();
 		if (!type.isUserType() && !type.isLogic() && (null != typeParameters && typeParameters.size() > 0)) return false;
-		if (type.getCode().equals(this.getMyPortalConfigManager().getVoidShowletCode())) return false;
+		if (type.getCode().equals(this.getMyPortalConfigManager().getVoidWidgetCode())) return false;
 		return true;
 	}
 	

@@ -54,21 +54,21 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 		//System.out.println("Partenza " + this.getStartFramePos() +
 		//		" - ARRIVO  " + this.getTargetFramePos());
 		try {
-			Widget[] customShowlets = super.getCustomShowletConfig();
+			Widget[] customWidgets = super.getCustomWidgetConfig();
 			IPage currentPage = this.getCurrentPage();
-			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			Widget[] widgetsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customWidgets);
+			
+			Widget movedWidget = widgetsToRender[this.getStartFramePos()];
+			Integer movedWidgetStatusInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[this.getStartFramePos()] : null;
+			int movedWidgetStatus = (movedWidgetStatusInteger == null) ? 0 : movedWidgetStatusInteger;
+			WidgetUpdateInfoBean movedWidgetUpdateInfo = new WidgetUpdateInfoBean(this.getTargetFramePos(), movedWidget, movedWidgetStatus);
+			this.addUpdateInfoBean(movedWidgetUpdateInfo);
 
-			Widget movedShowlet = showletsToRender[this.getStartFramePos()];
-			Integer movedShowletStatusInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[this.getStartFramePos()] : null;
-			int movedShowletStatus = (movedShowletStatusInteger == null) ? 0 : movedShowletStatusInteger;
-			WidgetUpdateInfoBean movedShowletUpdateInfo = new WidgetUpdateInfoBean(this.getTargetFramePos(), movedShowlet, movedShowletStatus);
-			this.addUpdateInfoBean(movedShowletUpdateInfo);
-
-			Widget showletToMove = showletsToRender[this.getTargetFramePos()];
-			Integer showletToMoveStatusInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[this.getTargetFramePos()] : null;
-			int showletToMoveStatus = (showletToMoveStatusInteger == null) ? 0 : showletToMoveStatusInteger;
-			WidgetUpdateInfoBean showletToMoveUpdateInfo = new WidgetUpdateInfoBean(this.getStartFramePos(), showletToMove, showletToMoveStatus);
-			this.addUpdateInfoBean(showletToMoveUpdateInfo);
+			Widget widgetToMove = widgetsToRender[this.getTargetFramePos()];
+			Integer widgetToMoveStatusInteger = super.getCustomShowletStatus() != null ? super.getCustomShowletStatus()[this.getTargetFramePos()] : null;
+			int widgetToMoveStatus = (widgetToMoveStatusInteger == null) ? 0 : widgetToMoveStatusInteger;
+			WidgetUpdateInfoBean widgetToMoveUpdateInfo = new WidgetUpdateInfoBean(this.getStartFramePos(), widgetToMove, widgetToMoveStatus);
+			this.addUpdateInfoBean(widgetToMoveUpdateInfo);
 
 			super.executeUpdateUserConfig(currentPage);
 			this.updateSessionParams();
@@ -94,18 +94,18 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 	@Override
 	public String addWidgets() {
 		try {
-			Widget[] customShowlets = super.getCustomShowletConfig();
+			Widget[] customWidgets = super.getCustomWidgetConfig();
 			IPage currentPage = this.getCurrentPage();
-			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			Widget[] widgetsToRender = this.getPageUserConfigManager().getWidgetsToRender(currentPage, customWidgets);
 
 			//for (int i = 0; i < this.getShowletToShow().size(); i++) {
 			//	System.out.println("DA MOSTRARE " + this.getShowletToShow().get(i));
 			//}
-			List<Integer> framesToFlow = this.getFramesToFlow(showletsToRender, currentPage);
+			List<Integer> framesToFlow = this.getFramesToFlow(widgetsToRender, currentPage);
 			//for (int i = 0; i < framesToFlow.size(); i++) {
 			//	System.out.println("DA ELIMINARE - " + framesToFlow.get(i));
 			//}
-			List<String> showletsToAdd = this.getShowletsToAdd(showletsToRender, currentPage);
+			List<String> widgetsToAdd = this.getShowletsToAdd(widgetsToRender, currentPage);
 			//for (int i = 0; i < showletsToAdd.size(); i++) {
 			//	System.out.println("DA AGGIUNGERE + " + showletsToAdd.get(i));
 			//}
@@ -119,17 +119,17 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 				if (null != frameConfig && !frameConfig.isLocked()) {
 					boolean isFrameToFlow = framesToFlow.contains(i);
 					if (isFrameToFlow) {
-						if (showletsToAdd.size()>0) {
-							this.addNewWidgetUpdateInfo(showletsToAdd, i, isFrameToFlow);
+						if (widgetsToAdd.size()>0) {
+							this.addNewWidgetUpdateInfo(widgetsToAdd, i, isFrameToFlow);
 						} else {
 							Widget showletToInsert = this.getWidgetVoid();
 							WidgetUpdateInfoBean infoBean = new WidgetUpdateInfoBean(i, showletToInsert, IPageUserConfigManager.STATUS_OPEN);
 							this.addUpdateInfoBean(infoBean);
 						}
 					} else {
-						Widget showlet = showletsToRender[i];
-						if ((null == showlet || (showlet.getType().getCode().equals(voidWidgetCode))) && showletsToAdd.size()>0) {
-							this.addNewWidgetUpdateInfo(showletsToAdd, i, isFrameToFlow);
+						Widget showlet = widgetsToRender[i];
+						if ((null == showlet || (showlet.getType().getCode().equals(voidWidgetCode))) && widgetsToAdd.size()>0) {
+							this.addNewWidgetUpdateInfo(widgetsToAdd, i, isFrameToFlow);
 						}
 					}
 				}
@@ -143,38 +143,42 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 		return SUCCESS;
 	}
 
-	protected List<Integer> getFramesToFlow(Widget[] showletsToRender, IPage currentPage) throws Throwable {
+	protected List<Integer> getFramesToFlow(Widget[] widgetsToRender, IPage currentPage) throws Throwable {
 		List<Integer> framesToFlow = new ArrayList<Integer>();
 		try {
 			PageModel pageModel = currentPage.getModel();
 			Map<Integer, MyPortalFrameConfig> myPortalModel = super.getMyPortalModelConfig(pageModel.getCode());
-			String voidShowletCode = this.getPageUserConfigManager().getVoidShowlet().getCode();
+			String voidWidgetCode = this.getPageUserConfigManager().getVoidWidget().getCode();
 			Frame[] frames = pageModel.getConfiguration();
 			for (int i = 0; i < frames.length; i++) {
 				//Frame frame = frames[i];
 				MyPortalFrameConfig frameConfig = (null != myPortalModel) ? myPortalModel.get(i) : null;
 				if (null != frameConfig && !frameConfig.isLocked()) {
 				//if (!frame.isLocked()) {
-					Widget showlet = showletsToRender[i];
-					if (null != showlet &&
-							!showlet.getType().getCode().equals(voidShowletCode) &&
-							(null == this.getShowletToShow() || !this.getShowletToShow().contains(showlet.getType().getCode()))) {
+					Widget widget = widgetsToRender[i];
+					if (null != widget && !widget.getType().getCode().equals(voidWidgetCode) &&
+							(null == this.getWidgetToShow() || !this.getWidgetToShow().contains(widget.getType().getCode()))) {
 						framesToFlow.add(i);
 					}
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getShowletsToHide", "Error on extracting showlet to hide");
-			throw new ApsSystemException("Error on extracting showlet to hide", t);
+			ApsSystemUtils.logThrowable(t, this, "getFramesToFlow", "Error on extracting frames to flow");
+			throw new ApsSystemException("Error on extracting frames to flow", t);
 		}
 		return framesToFlow;
 	}
-
+	
+	@Deprecated
 	protected List<String> getShowletsToAdd(Widget[] showletsToRender, IPage currentPage) throws Throwable {
-		Set<String> showletsToAdd = new HashSet<String>();
+		return this.getWidgetsToAdd(showletsToRender, currentPage);
+	}
+	
+	protected List<String> getWidgetsToAdd(Widget[] widgetsToRender, IPage currentPage) throws Throwable {
+		Set<String> widgetsToAdd = new HashSet<String>();
 		try {
-			if (null != this.getShowletToShow()) {
-				showletsToAdd.addAll(this.getShowletToShow());
+			if (null != this.getWidgetToShow()) {
+				widgetsToAdd.addAll(this.getWidgetToShow());
 			}
 			PageModel pageModel = currentPage.getModel();
 			Map<Integer, MyPortalFrameConfig> myPortalModel = super.getMyPortalModelConfig(pageModel.getCode());
@@ -184,36 +188,36 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 				MyPortalFrameConfig frameConfig = (null != myPortalModel) ? myPortalModel.get(i) : null;
 				if (null != frameConfig && !frameConfig.isLocked()) {
 				//if (!frame.isLocked()) {
-					Widget showlet = showletsToRender[i];
-					if (null != showlet) {
-						showletsToAdd.remove(showlet.getType().getCode());
+					Widget widget = widgetsToRender[i];
+					if (null != widget) {
+						widgetsToAdd.remove(widget.getType().getCode());
 					}
 				}
 			}
 		} catch (Throwable t) {
-			ApsSystemUtils.logThrowable(t, this, "getShowletsToAdd", "Error on extracting showlet to add");
-			throw new ApsSystemException("Error on extracting showlet to add", t);
+			ApsSystemUtils.logThrowable(t, this, "getWidgetsToAdd", "Error on extracting widget to add");
+			throw new ApsSystemException("Error on extracting widget to add", t);
 		}
-		List<String> codes = new ArrayList<String>(showletsToAdd);
+		List<String> codes = new ArrayList<String>(widgetsToAdd);
 		Collections.sort(codes);
 		return codes;
 	}
 
-	protected void addNewWidgetUpdateInfo(List<String> showletsToAdd, int framePos, boolean frameToFlow) {
+	protected void addNewWidgetUpdateInfo(List<String> widgetsToAdd, int framePos, boolean frameToFlow) {
 		WidgetUpdateInfoBean infoBean = null;
-		Widget showletToInsert = null;
-		String typeCode = showletsToAdd.get(0);
+		Widget widgetToInsert = null;
+		String typeCode = widgetsToAdd.get(0);
 		WidgetType type = this.getWidgetTypeManager().getWidgetType(typeCode);
 		if (null != type) {
-			showletsToAdd.remove(typeCode);
-			showletToInsert = new Widget();
-			showletToInsert.setType(type);
+			widgetsToAdd.remove(typeCode);
+			widgetToInsert = new Widget();
+			widgetToInsert.setType(type);
 		}
-		if (null != showletToInsert) {
-			infoBean = new WidgetUpdateInfoBean(framePos, showletToInsert, IPageUserConfigManager.STATUS_OPEN);
+		if (null != widgetToInsert) {
+			infoBean = new WidgetUpdateInfoBean(framePos, widgetToInsert, IPageUserConfigManager.STATUS_OPEN);
 			this.addUpdateInfoBean(infoBean);
 		} else if (frameToFlow) {
-			infoBean = new WidgetUpdateInfoBean(framePos, this.getShowletVoid(), IPageUserConfigManager.STATUS_OPEN);
+			infoBean = new WidgetUpdateInfoBean(framePos, this.getWidgetVoid(), IPageUserConfigManager.STATUS_OPEN);
 			this.addUpdateInfoBean(infoBean);
 		}
 	}
@@ -282,22 +286,31 @@ public class StandardFrontAction extends AbstractFrontAction implements IFrontAc
 	public String openSwapSection() {
 		throw new RuntimeException("ACTION NOT SUPPORTED - openSwapSection");
 	}
-
+	
+	@Deprecated
 	public List<String> getShowletToShow() {
-		return _showletToShow;
+		return this.getWidgetToShow();
 	}
+	@Deprecated
 	public void setShowletToShow(List<String> showletToShow) {
-		this._showletToShow = showletToShow;
+		this.setWidgetToShow(showletToShow);
 	}
-
+	
+	public List<String> getWidgetToShow() {
+		return _widgetToShow;
+	}
+	public void setWidgetToShow(List<String> widgetToShow) {
+		this._widgetToShow = widgetToShow;
+	}
+	
 	protected IURLManager getUrlManager() {
 		return _urlManager;
 	}
 	public void setUrlManager(IURLManager urlManager) {
 		this._urlManager = urlManager;
 	}
-
-	private List<String> _showletToShow;
+	
+	private List<String> _widgetToShow;
 
 	private IURLManager _urlManager;
 

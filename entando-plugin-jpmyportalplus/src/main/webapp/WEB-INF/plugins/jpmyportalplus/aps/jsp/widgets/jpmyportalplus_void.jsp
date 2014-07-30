@@ -1,1 +1,1 @@
-<%-- this is an empty showlet. --%>
+<%-- this is an empty widget. --%>

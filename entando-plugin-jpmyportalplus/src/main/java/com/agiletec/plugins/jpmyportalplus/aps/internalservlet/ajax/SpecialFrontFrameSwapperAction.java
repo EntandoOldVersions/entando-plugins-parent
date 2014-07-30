@@ -65,8 +65,8 @@ public class SpecialFrontFrameSwapperAction extends AbstractFrontAction {
 				ApsSystemUtils.getLogger().debug("Page '" + currentPage.getCode() + "' - No swap to do");
 				return SUCCESS;
 			}
-			Widget[] customShowlets = super.getCustomShowletConfig();
-			Widget[] showletsToRender = this.getPageUserConfigManager().getShowletsToRender(currentPage, customShowlets);
+			Widget[] customWidgets = super.getCustomWidgetConfig();
+			Widget[] showletsToRender = this.getPageUserConfigManager().getWidgetsToRender(currentPage, customWidgets);
 			PageModel pageModel = currentPage.getModel();
 			Integer[] columnFrames = this.calculateColumnFrames(pageModel);
 			boolean isFrameDestBusy = this.calculateFrameDestOnSwapAjax(showletsToRender, columnFrames);

@@ -140,7 +140,7 @@ public class ConfigAction extends AbstractPortalAction implements IConfigAction 
 		if (null == type) return;
 		List<WidgetTypeParameter> typeParameters = type.getTypeParameters();
 		if (!type.isUserType() && !type.isLogic() && (null != typeParameters && typeParameters.size() > 0)) return;
-		if (type.getCode().equals(this.getMyPortalConfigManager().getVoidShowletCode())) return;
+		if (type.getCode().equals(this.getMyPortalConfigManager().getVoidWidgetCode())) return;
 		super.addFlavourWidgetType(mapCode, type, mapping);
 	}
 	

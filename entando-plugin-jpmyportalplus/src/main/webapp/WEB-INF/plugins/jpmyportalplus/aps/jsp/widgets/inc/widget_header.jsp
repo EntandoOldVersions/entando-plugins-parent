@@ -95,30 +95,28 @@ class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero 
 		<a href="<c:out value="${opencloseActionURL}" />" class="btn btn-mini btn-info button-toggler-open-close" title="toggle open close"><i class="<c:out value="icon-chevron-${isClosed ? 'down' : 'up'}" />"></i><span class="sr-only">toggle open/close</span></a>&#32;<%-- class="openClose": referenziato in jpmyportalplus.js, apre e chiude il contenuto di "editcontentBox" e "content" --%>
 	</div>
 	<div class="widget-draggable"> <%-- class="dragdrop_draggable_area": classe css referenziata in jpmyportalplus.js, serve per dichiarare qual'è l'elemento "maniglia" per il trascinamento. --%>
-			<h1 class="pull-right">
-			<c:choose>
-				<c:when test="${!empty showletTitle}">
-					<c:out value="${showletTitle}" escapeXml="false" />
-				</c:when>
-				<c:otherwise>
-					<wp:currentWidget param="title" />
-				</c:otherwise>
-			</c:choose>
-			</h1>
+		<h1 class="pull-right">
+		<c:choose>
+			<c:when test="${!empty showletTitle}">
+				<c:out value="${showletTitle}" escapeXml="false" />
+			</c:when>
+			<c:otherwise>
+				<wp:currentWidget param="title" />
+			</c:otherwise>
+		</c:choose>
+		</h1>
 	</div>
-
+	
+	<%-- class="editContent" : referenziato in jpmyportalplus.js, fa funzionare l'apertura del box di configurazione --%>
+	<div class="clearfix"></div>
+	<div class="editContentBox <c:if test="${!isEditFormOpen}">hide</c:if>">
 		<%--
-		 --%>
-		<%-- class="editContent" : referenziato in jpmyportalplus.js, fa funzionare l'apertura del box di configurazione --%>
-		<div class="clearfix"></div>
-		<div class="editContentBox <c:if test="${!isEditFormOpen}">hide</c:if>">
-			<%--
-			<wp:internalServlet actionPath="/ExtStr2/do/jpmyportalplus/front/ajax/openConfigSection.action" />
-			--%>
-		</div>
-		<div class="clearfix widget-border-bottom"></div>
-		<%-- class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero e proprio, si apre e si chiude alla pressione di "class"openClose"" --%>
-		<div class="widget-body margin-medium-all padding-medium-bottom <c:if test="${isClosed}">hide</c:if>">
+		<wp:internalServlet actionPath="/ExtStr2/do/jpmyportalplus/front/ajax/openConfigSection.action" />
+		--%>
+	</div>
+	<div class="clearfix widget-border-bottom"></div>
+	<%-- class="content" : referenziato in jpmyportalplus.js, circonda il contenuto vero e proprio, si apre e si chiude alla pressione di "class"openClose"" --%>
+	<div class="widget-body margin-medium-all padding-medium-bottom <c:if test="${isClosed}">hide</c:if>">
 
 <%-- reset dei parametri --%>
 <c:set var="removeActionURL" value="${null}" />

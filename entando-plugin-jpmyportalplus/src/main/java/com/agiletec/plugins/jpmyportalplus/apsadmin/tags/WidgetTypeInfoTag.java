@@ -63,7 +63,7 @@ public class WidgetTypeInfoTag extends com.agiletec.apsadmin.tags.WidgetTypeInfo
 		if (null == type) return false;
 		List<WidgetTypeParameter> typeParameters = type.getTypeParameters();
 		if (!type.isUserType() && !type.isLogic() && (null != typeParameters && typeParameters.size() > 0)) return false;
-		if (type.getCode().equals(myPortalConfigManager.getVoidShowletCode())) return false;
+		if (type.getCode().equals(myPortalConfigManager.getVoidWidgetCode())) return false;
 		return true;
 	}
 	

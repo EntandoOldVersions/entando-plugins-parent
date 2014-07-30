@@ -40,6 +40,7 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 
 import org.entando.entando.aps.system.services.controller.executor.AbstractWidgetExecutorService;
+import org.entando.entando.aps.system.services.widgettype.IWidgetTypeManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,9 +108,12 @@ public class WidgetExecutorServiceAspect extends AbstractWidgetExecutorService {
 			List<IFrameDecoratorContainer> decorators = this.extractDecorators(reqCtx);
 			for (int frame = 0; frame < customWidgets.length; frame++) {
 				Widget widget = customWidgets[frame];
-				if (null != widget) {
-					reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME, new Integer(frame));
-					widgetOutput[frame] = this.buildWidgetOutput(reqCtx, widget, decorators);
+				if (null != widget && null != widget.getType()) {
+					IWidgetTypeManager widgetTypeManager = (IWidgetTypeManager) ApsWebApplicationUtils.getBean(SystemConstants.WIDGET_TYPE_MANAGER, req);
+					if (null != widgetTypeManager.getWidgetType(widget.getType().getCode())) {
+						reqCtx.addExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME, new Integer(frame));
+						widgetOutput[frame] = this.buildWidgetOutput(reqCtx, widget, decorators);
+					}
 				}
 			}
 		} catch (Throwable t) {

@@ -52,25 +52,25 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	private static final Logger _logger = LoggerFactory.getLogger(PageUserConfigDAO.class);
 	
 	@Override
-	public void syncCustomization(List<WidgetType> allowedShowlets, String voidShowletCode) {
-		Set<String> allowedShowletCodes = this.getAllowedShowletCodes(allowedShowlets);
+	public void syncCustomization(List<WidgetType> allowedWidgets, String voidWidgetCode) {
+		Set<String> allowedWidgetCodes = this.getAllowedWidgetCodes(allowedWidgets);
 		Connection conn = null;
 		PreparedStatement stat = null;
 		ResultSet res = null;
 		try {
 			conn = this.getConnection();
-			stat = conn.prepareStatement(GET_CONFIGURED_SHOWLET_CODE);
+			stat = conn.prepareStatement(GET_CONFIGURED_WIDGET_CODE);
 			res = stat.executeQuery();
 			while (res.next()) {
 				String currentCode = res.getString(1);
 				WidgetType currentConfiguredShowlet = this.getWidgetTypeManager().getWidgetType(currentCode);
 				if (null == currentConfiguredShowlet) {
 					_logger.warn("{}: deleting unknown widget '{}' from the configuration bean", JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM, currentCode);
-					this.purgeConfigurationFromInvalidShowlets(conn, currentCode);
+					this.purgeConfigurationFromInvalidWidgets(conn, currentCode);
 				} else {
-					if (!allowedShowletCodes.contains(currentCode) && !currentCode.equals(voidShowletCode)) {
-						_logger.info("{}: removing the no longer configurable showlet '{}' from the configuration bean", JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM, currentCode);
-						this.purgeConfigurationFromInvalidShowlets(conn, currentCode);
+					if (!allowedWidgetCodes.contains(currentCode) && !currentCode.equals(voidWidgetCode)) {
+						_logger.info("{}: removing the no longer configurable Widget '{}' from the configuration bean", JpmyportalplusSystemConstants.MYPORTALPLUS_CONFIG_ITEM, currentCode);
+						this.purgeConfigurationFromInvalidWidgets(conn, currentCode);
 					}
 				}
 			}
@@ -82,13 +82,13 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		}
 	}
 
-	private Set<String> getAllowedShowletCodes(List<WidgetType> allowedShowlets) {
+	private Set<String> getAllowedWidgetCodes(List<WidgetType> allowedWidgets) {
 		Set<String> codes = new HashSet<String>();
-		if (null == allowedShowlets) {
+		if (null == allowedWidgets) {
 			return codes;
 		}
-		for (int i = 0; i < allowedShowlets.size(); i++) {
-			WidgetType type = allowedShowlets.get(i);
+		for (int i = 0; i < allowedWidgets.size(); i++) {
+			WidgetType type = allowedWidgets.get(i);
 			if (null != type) {
 				codes.add(type.getCode());
 			}
@@ -96,21 +96,27 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		return codes;
 	}
 
-	private void purgeConfigurationFromInvalidShowlets(Connection conn, String code) throws ApsSystemException {
+	private void purgeConfigurationFromInvalidWidgets(Connection conn, String code) throws ApsSystemException {
 		PreparedStatement stat = null;
 		try {
-			stat = conn.prepareStatement(DELETE_USER_CONFIG_BY_SHOWLET_CODE);
+			stat = conn.prepareStatement(DELETE_USER_CONFIG_BY_WIDGETS_CODE);
 			stat.setString(1, code);
 			stat.execute();
 		} catch (Throwable t) {
-			throw new ApsSystemException("ERROR: could not remove invalid showlets from the customization database",t);
+			throw new ApsSystemException("ERROR: could not remove invalid widgets from the customization database",t);
 		} finally {
 			closeDaoResources(null, stat);
 		}
 	}
+	
+	@Override
+	@Deprecated
+	public List<WidgetType> buildCustomizableShowletsList(MyPortalConfig config) {
+		return this.buildCustomizableWidgetsList(config);
+	}
 
 	@Override
-	public List<WidgetType> buildCustomizableShowletsList(MyPortalConfig config) {
+	public List<WidgetType> buildCustomizableWidgetsList(MyPortalConfig config) {
 		List<WidgetType> result = new ArrayList<WidgetType>();
 		List<WidgetType> allShowlets = null;
 		if (null == config) {
@@ -118,10 +124,10 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		}
 		allShowlets = this.getWidgetTypeManager().getWidgetTypes();
 		if (null != allShowlets) {
-			Set<String> allowedShowletsCode = config.getAllowedShowlets();
-			if (allowedShowletsCode != null && allowedShowletsCode.size() > 0) {
+			Set<String> allowedWidgetsCode = config.getAllowedWidgets();
+			if (allowedWidgetsCode != null && allowedWidgetsCode.size() > 0) {
 				for (WidgetType currentType : allShowlets) {
-					if (allowedShowletsCode.contains(currentType.getCode())) {
+					if (allowedWidgetsCode.contains(currentType.getCode())) {
 						result.add(currentType);
 					}
 				}
@@ -188,7 +194,6 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 		} catch (Throwable t) {
 			_logger.error("Error while adding a user config record",  t);
 			throw new RuntimeException("Error while adding a user config record", t);
-			//processDaoException(t, "Error while adding a user config record", "addUserConfig");
 		} finally {
 			closeDaoResources(null, stat);
 		}
@@ -225,13 +230,13 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	}
 
 	/**
-	 * Create a showlet with a given code and optional configuration.
-	 * @param widgetcode the code of the showlet
-	 * @param config the configuration for the current showlet
+	 * Create a widget with a given code and optional configuration.
+	 * @param widgetcode the code of the widget
+	 * @param config the configuration for the current widget
 	 * @return a new object with the given code and configuration
 	 * @throws ApsSystemException if the given code is unknown or faulting XML configuration
 	 */
-	private Widget createShowletFromRecord(String widgetcode, String config) throws ApsSystemException {
+	private Widget createWidgetFromRecord(String widgetcode, String config) throws ApsSystemException {
 		Widget newShowlet = new Widget();
 		WidgetType inheritedType = this.getWidgetTypeManager().getWidgetType(widgetcode);
 		newShowlet.setType(inheritedType);
@@ -258,8 +263,8 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 				}
 				String currentShowletCode = res.getString(3);
 				String currentConfig = res.getString(4);
-				Widget showlet = this.createShowletFromRecord(currentShowletCode, currentConfig);
-				pageConfig.getConfig()[currentFramePos] = showlet;
+				Widget widget = this.createWidgetFromRecord(currentShowletCode, currentConfig);
+				pageConfig.getConfig()[currentFramePos] = widget;
 				int status = res.getInt(5);
 				pageConfig.getStatus()[currentFramePos] = status;
 			}
@@ -300,17 +305,23 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 			closeDaoResources(null, stat, conn);
 		}
 	}
+	
+	@Override
+	@Deprecated
+	public void removeUnauthorizedShowlet(String username, String showletCode) {
+		this.removeUnauthorizedWidget(username, showletCode);
+	}
 
 	@Override
-	public void removeUnauthorizedShowlet(String username, String showletCode) {
+	public void removeUnauthorizedWidget(String username, String widgetCode) {
 		Connection conn = null;
 		PreparedStatement stat = null;
 		try {
 			conn = this.getConnection();
 			conn.setAutoCommit(false);
-			stat = conn.prepareStatement(DELETE_UNAUTHORIZATED_SHOWLETS);
+			stat = conn.prepareStatement(DELETE_UNAUTHORIZATED_WIDGETS);
 			stat.setString(1, username);
-			stat.setString(2, showletCode);
+			stat.setString(2, widgetCode);
 			stat.execute();
 			conn.commit();
 		} catch (Throwable t) {
@@ -335,11 +346,10 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	public void setPageModelManager(IPageModelManager pageModelManager) {
 		this._pageModelManager = pageModelManager;
 	}
-
-	public IWidgetTypeManager getWidgetTypeManager() {
+	
+	protected IWidgetTypeManager getWidgetTypeManager() {
 		return _widgetTypeManager;
 	}
-
 	public void setWidgetTypeManager(IWidgetTypeManager widgetTypeManager) {
 		this._widgetTypeManager = widgetTypeManager;
 	}
@@ -364,13 +374,13 @@ public class PageUserConfigDAO extends AbstractDAO implements IPageUserConfigDAO
 	private final String GET_USER_CONFIG =
 		"SELECT pagecode, framepos, widgetcode, config, closed FROM jpmyportalplus_userpageconfig WHERE username = ? ORDER BY pagecode";
 
-	private final String GET_CONFIGURED_SHOWLET_CODE =
+	private final String GET_CONFIGURED_WIDGET_CODE =
 		"SELECT widgetcode FROM jpmyportalplus_userpageconfig GROUP BY widgetcode";
 
-	private final String DELETE_USER_CONFIG_BY_SHOWLET_CODE =
+	private final String DELETE_USER_CONFIG_BY_WIDGETS_CODE =
 		"DELETE FROM jpmyportalplus_userpageconfig WHERE widgetcode = ? ";
 
-	private final String DELETE_UNAUTHORIZATED_SHOWLETS =
+	private final String DELETE_UNAUTHORIZATED_WIDGETS =
 			"DELETE FROM jpmyportalplus_userpageconfig WHERE username = ? AND widgetcode = ? ";
 
 }
