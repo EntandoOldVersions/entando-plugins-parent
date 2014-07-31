@@ -65,7 +65,7 @@ public class MyPortalWidgetDecoratorContainer extends BaseFrameDecoratorContaine
 	}
 	
 	@Override
-	public boolean isShowletDecorator() {
+	public boolean isWidgetDecorator() {
 		return true;
 	}
 	

@@ -54,8 +54,10 @@
 	</bean>
 	
 	<bean id="jpmyportalplusWidgetDecorationContainer" class="com.agiletec.plugins.jpmyportalplus.aps.tags.util.MyPortalWidgetDecoratorContainer" >
-		<property name="headerPath"><value>/WEB-INF/plugins/jpmyportalplus/aps/jsp/widgets/inc/widget_header.jsp</value></property>
-		<property name="footerPath"><value>/WEB-INF/plugins/jpmyportalplus/aps/jsp/widgets/inc/widget_footer.jsp</value></property>
+		<property name="headerJspPath"><value>/WEB-INF/plugins/jpmyportalplus/aps/jsp/widgets/inc/widget_header.jsp</value></property>
+		<property name="headerFragmentCode"><value>jpmyportalplus_widgetdecoration_header</value></property>
+		<property name="footerJspPath"><value>/WEB-INF/plugins/jpmyportalplus/aps/jsp/widgets/inc/widget_footer.jsp</value></property>
+		<property name="footerFragmentCode"><value>jpmyportalplus_widgetdecoration_footer</value></property>
 		<property name="order"><value>50</value></property>
 	</bean>
 	
