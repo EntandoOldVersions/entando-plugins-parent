@@ -42,7 +42,7 @@ public class FeedbackIntroTag extends InternalServletTag {
 	private static final Logger _logger = LoggerFactory.getLogger(FeedbackIntroTag.class);
 	
 	@Override
-	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget widget) throws ServletException, IOException {
+	protected void includeWidget(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget widget) throws ServletException, IOException {
 		HttpServletRequest request = reqCtx.getRequest();
 		try {
 			String actionPath = this.extractIntroActionPath(reqCtx, widget);
@@ -58,7 +58,7 @@ public class FeedbackIntroTag extends InternalServletTag {
 			}
 			reqCtx.addExtraParam(EXTRAPAR_STATIC_ACTION, this.isStaticAction());
 			StringBuilder params = new StringBuilder();
-			// 1) showlet 2) tag 3)request
+			// 1) widget 2) tag 3)request
 			String contentId = null;
 			if (null != this.getContentId()) {
 				contentId = this.getContentId();
@@ -77,7 +77,6 @@ public class FeedbackIntroTag extends InternalServletTag {
 				reqCtx.getRequest().setAttribute("extraParamNames", redirectParams);
 			}
 			actionPath = actionPath + "?" + params.toString();
-
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(actionPath);
 			requestDispatcher.include(request, responseWrapper);
 		} catch (Throwable t) {
