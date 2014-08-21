@@ -35,13 +35,13 @@ import javax.servlet.ServletException;
 public class HeadInfoStaticInternalServletTag extends InternalServletTag {
 	
 	@Override
-	protected void includeShowlet(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget widget) throws ServletException, IOException {
+	protected void includeWidget(RequestContext reqCtx, ResponseWrapper responseWrapper, Widget widget) throws ServletException, IOException {
 		IPage page = (IPage) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_PAGE);
 		Integer currentFrame = (Integer) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_FRAME);
 		PageModel pageModel = page.getModel();
 		int frames = pageModel.getFrames().length;
 		if (frames == (currentFrame.intValue() + 1)) {
-			super.includeShowlet(reqCtx, responseWrapper, widget);
+			super.includeWidget(reqCtx, responseWrapper, widget);
 		}
 	}
 	
