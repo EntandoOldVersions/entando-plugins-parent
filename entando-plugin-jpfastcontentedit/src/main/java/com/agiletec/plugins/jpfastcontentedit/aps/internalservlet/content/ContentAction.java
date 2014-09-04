@@ -31,10 +31,13 @@ import com.agiletec.aps.system.common.notify.NotifyManager;
 import com.agiletec.aps.system.services.lang.Lang;
 import com.agiletec.aps.system.services.page.IPage;
 import com.agiletec.aps.system.services.url.IURLManager;
+
 import com.agiletec.plugins.jacms.aps.system.services.content.model.Content;
 import com.agiletec.plugins.jpfastcontentedit.aps.internalservlet.content.helper.IContentActionHelper;
 import com.agiletec.plugins.jpfastcontentedit.aps.system.JpFastContentEditSystemConstants;
+
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Classe action delegata alla redazione del contenuto in Front-End.
@@ -43,7 +46,9 @@ import org.slf4j.Logger;
  * @author E.Santoboni
  */
 public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.ContentAction implements IContentAction, ServletResponseAware {
-
+	
+	private static final Logger _logger = LoggerFactory.getLogger(ContentAction.class);
+	
 	@Override
 	public String edit() {
 		String result = super.edit();
@@ -148,27 +153,33 @@ public class ContentAction extends com.agiletec.plugins.jacms.apsadmin.content.C
 	 */
 	protected String getDestForwardPath(String contentId) {
 		RequestContext reqCtx = (RequestContext) this.getRequest().getAttribute(RequestContext.REQCTX);
-		Lang currentLang = null;
-		if (null != reqCtx) {
-			currentLang = (Lang) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_LANG);
-		} else {
-			currentLang = this.getLangManager().getDefaultLang();
+		String url = null;
+		try {
+			Lang currentLang = null;
+			if (null != reqCtx) {
+				currentLang = (Lang) reqCtx.getExtraParam(SystemConstants.EXTRAPAR_CURRENT_LANG);
+			} else {
+				currentLang = this.getLangManager().getDefaultLang();
+			}
+			IPage pageDestCode = null;
+			String pageDestCodeString = (String) this.getRequest().getSession().getAttribute(JpFastContentEditSystemConstants.FINAL_DEST_PAGE_PARAM_NAME);
+			if (null == pageDestCodeString || null == (pageDestCode = this.getPageManager().getPage(pageDestCodeString))) {
+				pageDestCode = this.getPageManager().getRoot();
+			}
+			this.getRequest().getSession().removeAttribute(JpFastContentEditSystemConstants.FINAL_DEST_PAGE_PARAM_NAME);
+			Map<String, String> params = null;
+			if (null != contentId) {
+				params = new HashMap<String, String>();
+				params.put(SystemConstants.K_CONTENT_ID_PARAM, contentId);
+			}
+			url = this.getUrlManager().createUrl(pageDestCode, currentLang, params, true, this.getRequest());
+		} catch (Throwable t) {
+			_logger.error("Error creating url destination", t);
+			throw new RuntimeException("Error creating url destination", t);
 		}
-		IPage pageDestCode = null;
-		String pageDestCodeString = (String) this.getRequest().getSession().getAttribute(JpFastContentEditSystemConstants.FINAL_DEST_PAGE_PARAM_NAME);
-		if (null == pageDestCodeString || null == (pageDestCode = this.getPageManager().getPage(pageDestCodeString))) {
-			pageDestCode = this.getPageManager().getRoot();
-		}
-		this.getRequest().getSession().removeAttribute(JpFastContentEditSystemConstants.FINAL_DEST_PAGE_PARAM_NAME);
-		Map<String, String> params = null;
-		if (null != contentId) {
-			params = new HashMap<String, String>();
-			params.put(SystemConstants.K_CONTENT_ID_PARAM, contentId);
-		}
-		String url = this.getUrlManager().createUrl(pageDestCode, currentLang, params);
 		return url;
 	}
-
+	
 	@Override
 	protected boolean isUserAllowed(Content content) {
 		boolean userAllowed = super.isUserAllowed(content);
