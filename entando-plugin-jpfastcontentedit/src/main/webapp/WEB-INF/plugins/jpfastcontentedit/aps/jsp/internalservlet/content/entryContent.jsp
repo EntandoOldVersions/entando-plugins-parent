@@ -168,9 +168,9 @@
                                     <i class="icon-tags icon-white"></i>&nbsp;&nbsp;
                                     <s:property value="%{getGroupsMap()[#groupName].getDescr()}" />&#32;
                                     <%-- chiedere ad andrea se può rifatorizzare --%>
-                                    <s:submit action="%{#actionName}" type="button" theme="simple" cssClass="btn btn-link btn-small" title="%{#labelRemove}" >
+                                    <wpsf:submit action="%{#actionName}" type="button" theme="simple" cssClass="btn btn-link btn-small" title="%{#labelRemove}" >
                                         <span class="<s:property value="%{#removeIcon}"/>"></span>
-                                    </s:submit>
+                                    </wpsf:submit>
                                     <%-- value="%{#labelRemove}"  --%>
                                 </span>                                                            
                             </li>
@@ -207,9 +207,9 @@
                                     <i class="icon-tags icon-white"></i>&nbsp;&nbsp;
                                     <s:property value="#contentCategory.getFullTitle(currentLang.code)"/>&#32;
                                     <%-- chiedere ad andrea se può rifatorizzare --%>
-                                    <s:submit action="%{#actionName}" type="button" theme="simple" cssClass="btn btn-link btn-small" title="%{#labelRemove}" >
+                                    <wpsf:submit action="%{#actionName}" type="button" theme="simple" cssClass="btn btn-link btn-small" title="%{#labelRemove}" >
                                         <span class="<s:property value="%{#removeIcon}"/>"></span>
-                                    </s:submit>
+                                    </wpsf:submit>
                                     <%-- value="%{#labelRemove}"  --%>
                                 </span>                                    
                             </li>
